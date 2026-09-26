@@ -1,5 +1,5 @@
 ---
-description: Verifica una unidad lógica, actualiza estado y crea commits locales en español.
+description: Verifica una unidad lógica, actualiza estado cuando corresponde y crea commits locales en español.
 agent: dev-lead
 ---
 
@@ -11,9 +11,10 @@ agent: dev-lead
 4. Determina nivel y pruebas relevantes.
 5. Si corresponde, delega pruebas/review.
 6. No continúes con fallos bloqueantes.
-7. Actualiza `STATE.md` si cambió materialmente.
+7. Actualiza `STATE.md` solo si cambió materialmente el trabajo actual, un bloqueo, el siguiente paso, la rama activa o un checkpoint relevante; no por cambios rutinarios de metadata, idioma, stack, requisitos, contenido o configuración.
 8. Agrupa cambios por unidad lógica.
-9. Stagea únicamente archivos relacionados.
-10. Crea commits Conventional Commits en español.
-11. Confirma hashes y estado final.
-12. No hagas push.
+9. Si la tarea modificó archivos y está totalmente terminada y verificada, stagea únicamente la unidad relacionada y crea automáticamente el commit local, sin preguntar al usuario.
+10. No crees commit si la tarea está incompleta, fue solo diagnóstico o exploración, existen errores bloqueantes o el usuario pidió explícitamente no hacer commits.
+11. Usa Conventional Commits, deriva el mensaje del diff y escribe la descripción en español.
+12. Confirma hashes y estado final cuando exista commit.
+13. Nunca hagas push automático.

@@ -70,21 +70,21 @@ No delegues una tarea trivial solo para cumplir un ritual.
 
 ## Flujo
 
-- DIRECT: especialista → verificación.
+- DIRECT: inspección breve → modificación solo de archivos estrictamente necesarios → verificación proporcional. Usa un flujo ligero, sin Architect, Reviewer completo, branch ni documentación adicional, salvo que el riesgo lo justifique.
 - TASK: criterios → especialista → pruebas → review proporcional.
 - STRUCTURAL: requisitos → arquitectura → criterios → implementación incremental → pruebas → review → checkpoint → staging/rollback si aplica.
 
 ## Git
 
-Los commits se generan después de inspeccionar el diff real.
-
-Formato: `tipo: descripción en español`
-
-No hagas push sin aprobación.
+- Cuando una tarea modificó archivos y está totalmente terminada y verificada, crea automáticamente un commit local por defecto. No preguntes al usuario si quiere el commit.
+- No crees commit si la tarea está incompleta, fue solo diagnóstico o exploración, existen errores bloqueantes o el usuario pidió explícitamente no hacer commits.
+- Antes de crear el commit, inspecciona `git status` y el diff real; stagea únicamente la unidad relacionada.
+- Usa Conventional Commits con formato `tipo: descripción en español` y deriva el mensaje del diff.
+- Nunca hagas push automático; requiere aprobación.
 
 ## Estado
 
-Actualiza `STATE.md` solo cuando cambie materialmente el estado del proyecto.
+Actualiza `STATE.md` solo cuando cambie materialmente el trabajo actual, un bloqueo, el siguiente paso, la rama activa o un checkpoint relevante. No lo toques por rutina ante cambios de metadata, idioma, stack, requisitos, contenido o configuración que no alteren el estado operativo.
 
 ## Escalado humano
 

@@ -35,7 +35,9 @@ Evalúa el riesgo por separado. Producción, DNS, autenticación, pagos o DB pue
 
 ## Proporcionalidad
 
-No actives Architect, Reviewer completo, branches o documentación formal para tareas triviales. No omitas planificación, pruebas o revisión en cambios estructurales o de alto riesgo.
+En tareas `DIRECT`, modifica solo los archivos estrictamente necesarios y usa un flujo ligero, sin Architect, Reviewer completo, branch ni documentación adicional, salvo que el riesgo lo justifique.
+
+No omitas planificación, pruebas o revisión en cambios estructurales o de alto riesgo.
 
 ## Fuente vigente
 
@@ -77,6 +79,10 @@ Antes de añadir una dependencia:
 
 ## Git
 
+Dev Lead crea automáticamente un commit local por defecto cuando una tarea que modificó archivos está totalmente terminada y verificada. No pregunta al usuario si quiere el commit.
+
+No crea commit si la tarea está incompleta, fue solo diagnóstico o exploración, existen errores bloqueantes o el usuario pidió explícitamente no hacer commits.
+
 Antes de un commit:
 
 1. `git status`;
@@ -104,7 +110,7 @@ No declares una tarea terminada solo porque escribiste código. La evidencia deb
 ## Estado
 
 - `PROJECT.md`: contexto estable.
-- `STATE.md`: estado actual y breve.
+- `STATE.md`: estado operativo actual y breve. Solo se actualiza si cambia materialmente el trabajo actual, un bloqueo, el siguiente paso, la rama activa o un checkpoint relevante. Metadata, idioma, stack, requisitos, contenido o configuración que no cambien el estado operativo no justifican tocarlo por rutina.
 - `DECISIONS.md`: decisiones importantes.
 - `REQUIREMENTS.md`: requisitos y criterios.
 - `docs/features/`: specs grandes.

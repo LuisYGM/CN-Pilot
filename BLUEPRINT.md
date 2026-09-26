@@ -48,9 +48,9 @@ El perfil define contexto y capacidades disponibles; no obliga a ejecutar todo e
 ## Niveles de trabajo
 
 ### DIRECT
-Cambio pequeño, localizado y reversible.
+Cambio pequeño, localizado y reversible. Modifica solo los archivos estrictamente necesarios y sigue un flujo ligero, sin Architect, Reviewer completo, branch ni documentación adicional, salvo que el riesgo lo justifique.
 
-`identificar → modificar → verificar → commit si corresponde`
+`identificar → modificar lo mínimo → verificar → commit local automático según la política Git`
 
 ### TASK
 Cambio acotado con lógica o impacto.
@@ -73,7 +73,7 @@ TASK y STRUCTURAL deben convertir requisitos en condiciones verificables cuando 
 ## Memoria del proyecto
 
 - `PROJECT.md`: contexto relativamente estable.
-- `STATE.md`: estado operativo breve.
+- `STATE.md`: estado operativo breve. Solo cambia materialmente ante variaciones en el trabajo actual, bloqueos, siguiente paso, rama activa o checkpoints relevantes; no por cambios rutinarios de metadata, idioma, stack, requisitos, contenido o configuración.
 - `DECISIONS.md`: decisiones importantes.
 - `REQUIREMENTS.md`: requisitos.
 - `docs/features/`: specs importantes.
@@ -85,7 +85,7 @@ La inicialización debe inspeccionar primero las reglas, la versión del Bluepri
 
 Antes de editar, presentará un resumen simple y centrado en el proyecto: qué se construirá, propósito y público, stack conocido, alcance inicial y pendientes relevantes. No expondrá archivos, categorías, reglas internas ni la distinción entre hechos e inferencias salvo que sean útiles para una decisión del proyecto. La única confirmación será «¿Inicializo el proyecto con esta información?» y una respuesta simple bastará; Dev Lead distribuirá después la información internamente entre `PROJECT.md`, `REQUIREMENTS.md`, `STATE.md` y `DECISIONS.md`.
 
-`DECISIONS.md` solo registrará decisiones importantes con alternativas razonables, que condicionen la arquitectura o el desarrollo futuro, sean costosas de cambiar o hayan sido decididas explícitamente por el usuario. Requisitos, páginas, alcance y workflow no son decisiones automáticamente. Las reglas operativas se aplican internamente y no se trasladan al usuario para recordarlas o confirmarlas. El onboarding no desarrolla páginas, componentes ni funcionalidades. Tras revisar diff y estado Git, puede crear únicamente el commit local `chore: inicializar proyecto`; nunca hará push.
+`DECISIONS.md` solo registrará decisiones importantes con alternativas razonables, que condicionen la arquitectura o el desarrollo futuro, sean costosas de cambiar o hayan sido decididas explícitamente por el usuario. Requisitos, páginas, alcance y workflow no son decisiones automáticamente. Las reglas operativas se aplican internamente y no se trasladan al usuario para recordarlas o confirmarlas. El onboarding no desarrolla páginas, componentes ni funcionalidades. Tras revisar el diff y el estado Git, si hay cambios válidos y la inicialización quedó terminada y verificada, crea automáticamente el commit local `chore: inicializar proyecto`, salvo las exclusiones generales de la política Git; nunca hace push.
 
 ## Contenido
 
@@ -97,11 +97,13 @@ Antes de editar, presentará un resumen simple y centrado en el proyecto: qué s
 
 ## Git
 
+- Dev Lead crea automáticamente un commit local por defecto cuando una tarea modificó archivos y quedó totalmente terminada y verificada; no pregunta al usuario si quiere hacerlo.
+- No crea commit si la tarea está incompleta, fue solo diagnóstico o exploración, existen errores bloqueantes o el usuario lo prohibió explícitamente.
 - Conventional Commits.
 - Descripciones siempre en español.
 - Mensajes basados en el diff real.
-- Unidades lógicas.
-- Push bajo aprobación humana por defecto.
+- Stage limitado a la unidad lógica relacionada.
+- Nunca hace push automático.
 - Operaciones destructivas bloqueadas.
 
 ## Versionado

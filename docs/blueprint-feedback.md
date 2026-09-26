@@ -40,6 +40,26 @@ Elevar la abstracción del onboarding: resumir qué se construirá, propósito, 
 **Status:**
 Resolved.
 
+## BF-003 — DIRECT actualiza estado sin cambio operativo y queda sin commit
+
+**Contexto:**
+Tarea `DIRECT` para definir la primera fase solo en español.
+
+**Comportamiento observado:**
+El agente actualizó correctamente el contexto, pero modificó `STATE.md` sin un cambio operativo y dejó la tarea terminada sin commit local.
+
+**Comportamiento esperado:**
+Las tareas `DIRECT` deben modificar solo los archivos estrictamente necesarios y seguir un flujo ligero. `STATE.md` solo debe cambiar ante una variación material del estado operativo. Dev Lead debe crear automáticamente un commit local al terminar y verificar una tarea con cambios, salvo las exclusiones definidas, sin preguntar al usuario y sin hacer push.
+
+**Impacto:**
+Medium.
+
+**Mejora propuesta:**
+Definir de forma coherente la proporcionalidad de `DIRECT`, los criterios estrictos de actualización de `STATE.md` y la política de commit local automático con sus excepciones.
+
+**Status:**
+Resolved.
+
 ## Plantilla reutilizable
 
 ### BF-XXX — [Título]
