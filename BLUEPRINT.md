@@ -72,6 +72,8 @@ Cambio importante, de arquitectura o riesgo alto.
 
 `requirements → architecture → plan → branch → implementación incremental → tests → review → checkpoint → staging → acceptance → production`
 
+La fase de planificación produce un artefacto versionado cuando la especificación, arquitectura, plan o criterios vayan a utilizarse posteriormente. «No escribir código todavía» no impide persistir documentación; solo una instrucción explícita de no modificar el repositorio evita escribirla. Las especificaciones de funcionalidades van en `docs/features/`, la arquitectura transversal en `docs/architecture/` y las decisiones aprobadas en `DECISIONS.md` o `docs/decisions/`. Una planificación completa y verificada crea su commit local automático y nunca hace push.
+
 ## Riesgo
 
 Complejidad y riesgo se evalúan por separado. Un cambio pequeño puede elevarse si afecta producción, DB, autenticación, pagos, DNS, servidor o información sensible.

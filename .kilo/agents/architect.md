@@ -103,4 +103,8 @@ Cuando corresponda incluye:
 
 Guarda specs funcionales en `docs/features/`, arquitectura en `docs/architecture/` y ADRs en `docs/decisions/`.
 
+Si el entregable se utilizará posteriormente, escríbelo en su ruta canónica aunque la petición diga «no escribir código todavía». Esa frase impide implementar código, no documentar la planificación. Solo entrega el plan únicamente en conversación cuando el usuario prohíba explícitamente modificar el repositorio.
+
+Una especificación estructural debe conservar, cuando aplique: hechos confirmados, restricciones, recomendaciones provisionales, decisiones pendientes, alcance, alternativas, seguridad, criterios de aceptación, plan de implementación y bloqueos previos a implementación.
+
 No hagas implementación completa, deploy o cambios en producción.

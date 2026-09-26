@@ -140,6 +140,26 @@ Introducir estados de madurez para propuestas arquitectónicas, reservar `DECISI
 **Estado:**
 Resolved.
 
+## BF-008 — La planificación estructural no se persiste
+
+**Contexto:**
+Validación de una tarea STRUCTURAL cuya implementación debía posponerse.
+
+**Comportamiento observado:**
+Architect realizó correctamente el análisis y mantuvo las decisiones no resueltas como provisionales, pero el plan quedó únicamente en la conversación y no se guardó para su uso posterior.
+
+**Comportamiento esperado:**
+Las especificaciones, arquitecturas, planes de implementación y criterios de aceptación reutilizables deben persistirse en su ruta canónica aunque todavía no deba escribirse código. Solo una instrucción explícita de no modificar el repositorio debe impedirlo.
+
+**Impacto:**
+High.
+
+**Mejora propuesta:**
+Hacer obligatoria la persistencia de artefactos STRUCTURAL reutilizables, distinguir documentación de implementación y cerrar una planificación completa y verificada con un commit local automático sin push.
+
+**Estado:**
+Resolved.
+
 ## Plantilla reutilizable
 
 ### BF-XXX — [Título]

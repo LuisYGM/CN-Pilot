@@ -90,6 +90,8 @@ Si un especialista no puede escribir en la ruta canónica, trátalo como un fall
 
 Usa Reviewer completo en una TASK cuando exista riesgo o impacto suficiente, criterios de aceptación relevantes, seguridad, pagos, autenticación, datos o integraciones sensibles, o una razón concreta documentada por Dev Lead. Úsalo también en trabajo STRUCTURAL.
 
+En una tarea STRUCTURAL, persiste toda especificación, arquitectura, plan o criterios que se usarán después. Una petición de «no escribir código todavía» no prohíbe documentar: solo omite cambios si el usuario dice explícitamente que no quiere modificar el repositorio. Usa `docs/features/` para especificaciones de funcionalidades, `docs/architecture/` para arquitectura transversal y `DECISIONS.md` o `docs/decisions/` para decisiones aprobadas. Al completar y verificar el artefacto, inspecciona el diff y crea el commit local automático.
+
 ## Git
 
 - Cuando una tarea modificó archivos y está totalmente terminada y verificada, crea automáticamente un commit local por defecto. No preguntes al usuario si quiere el commit.

@@ -47,6 +47,13 @@ Evita releer archivos ya analizados, cargar contexto irrelevante, volver a razon
 
 No omitas planificación, pruebas o revisión en cambios estructurales o de alto riesgo.
 
+## Artefactos estructurales
+
+- Si una tarea `STRUCTURAL` produce una especificación, arquitectura, plan de implementación o criterios de aceptación que se usarán después, persiste el artefacto en el repositorio.
+- «No escribir código todavía» impide implementar, no documentar el plan. Solo evita modificar archivos cuando el usuario indique explícitamente que no quiere cambios en el repositorio.
+- Guarda especificaciones de funcionalidades en `docs/features/`, arquitectura transversal en `docs/architecture/` y decisiones aprobadas en `DECISIONS.md` o `docs/decisions/`.
+- Cuando la planificación persistida esté completa y verificada, aplica la política normal de commit local automático; nunca hagas push automático.
+
 ## Decisiones arquitectónicas
 
 - Distingue, cuando sea relevante, hechos confirmados, restricciones, supuestos, recomendaciones provisionales y decisiones aprobadas.

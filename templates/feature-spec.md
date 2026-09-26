@@ -24,7 +24,11 @@
 
 ### Supuestos
 
+### Alternativas
+
 ### Recomendaciones provisionales
+
+### Decisiones pendientes
 
 ### Decisiones aprobadas
 
@@ -33,6 +37,12 @@
 ## Dependencias
 
 ## Riesgos
+
+## Seguridad
+
+## Plan de implementación
+
+## Bloqueos previos a implementación
 
 ## Pruebas
 
