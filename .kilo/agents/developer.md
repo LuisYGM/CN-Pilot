@@ -4,12 +4,12 @@ mode: subagent
 steps: 50
 permission:
   read:
-    "*": allow
-    ".env": ask
-    ".env.*": ask
-    "**/.env": ask
-    "**/.env.*": ask
+    ".env": deny
+    ".env.*": deny
+    "**/.env": deny
+    "**/.env.*": deny
     "secrets/**": deny
+    "*": allow
   glob: allow
   grep: allow
   skill: allow
@@ -17,26 +17,21 @@ permission:
   webfetch: allow
   task: deny
   edit:
-    "*": allow
-    ".kilo/**": deny
-    "AGENTS.md": deny
-    "BLUEPRINT.md": deny
-    "CHANGELOG.md": deny
-    ".blueprint-version": deny
     ".env": deny
     ".env.*": deny
     "**/.env": deny
     "**/.env.*": deny
     "secrets/**": deny
+    ".kilo/**": deny
+    "AGENTS.md": deny
+    "BLUEPRINT.md": deny
+    "CHANGELOG.md": deny
+    ".blueprint-version": deny
+    "profiles/**": deny
+    "templates/**": deny
+    "docs/blueprint-feedback.md": deny
+    "*": allow
   bash:
-    "*": ask
-    "git status*": allow
-    "git diff*": allow
-    "git log*": allow
-    "php -l *": allow
-    "npm test*": allow
-    "npm run test*": allow
-    "npx eslint*": allow
     "git add*": deny
     "git commit*": deny
     "git push*": deny
@@ -44,6 +39,20 @@ permission:
     "git rebase*": deny
     "git reset*": deny
     "git clean*": deny
+    "git checkout*": deny
+    "git switch*": deny
+    "git restore*": deny
+    "git stash*": deny
+    "git cherry-pick*": deny
+    "git revert*": deny
+    "git status*": allow
+    "git diff*": allow
+    "git log*": allow
+    "php -l *": allow
+    "npm test*": allow
+    "npm run test*": allow
+    "npx eslint*": allow
+    "*": ask
 ---
 
 # Developer

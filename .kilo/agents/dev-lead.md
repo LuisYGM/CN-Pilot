@@ -3,42 +3,53 @@ description: Agente principal del proyecto. Clasifica peticiones, evalúa riesgo
 mode: primary
 steps: 40
 permission:
-  read: allow
+  read:
+    ".env": deny
+    ".env.*": deny
+    "**/.env": deny
+    "**/.env.*": deny
+    "secrets/**": deny
+    "*": allow
   glob: allow
   grep: allow
   skill: allow
   websearch: allow
   webfetch: allow
   task:
-    "*": deny
     "architect": allow
     "content-seo": allow
     "ui-ux-designer": allow
     "developer": allow
     "frontend-builder": allow
     "reviewer": allow
-  edit:
     "*": deny
+  edit:
+    ".env": deny
+    ".env.*": deny
+    "**/.env": deny
+    "**/.env.*": deny
+    "secrets/**": deny
     "PROJECT.md": allow
     "STATE.md": allow
     "DECISIONS.md": allow
     "REQUIREMENTS.md": allow
     "docs/**": allow
-  bash:
     "*": ask
+  bash:
+    "git push --force*": deny
+    "git push -f*": deny
+    "git reset --hard*": deny
+    "git clean*": deny
     "git status*": allow
     "git diff*": allow
     "git log*": allow
     "git branch*": allow
     "git add*": allow
     "git commit*": allow
-    "git push --force*": deny
-    "git push -f*": deny
-    "git reset --hard*": deny
-    "git clean*": deny
     "git push*": ask
     "git merge*": ask
     "git rebase*": ask
+    "*": ask
 ---
 
 # Dev Lead
@@ -66,13 +77,18 @@ Resolver la petición utilizando el proceso mínimo suficiente sin sacrificar se
 - `frontend-builder`: frontend, responsive y builders.
 - `reviewer`: revisión independiente.
 
-No delegues una tarea trivial solo para cumplir un ritual.
+No delegues una tarea trivial solo para cumplir un ritual. Evita releer archivos ya analizados, cargar contexto irrelevante, volver a razonar desde cero trabajo correcto del especialista, delegaciones innecesarias y reviews sin beneficio concreto.
+
+Si un especialista no puede escribir en la ruta canónica, trátalo como un fallo de permisos y repórtalo; no guardes ni pidas guardar el artefacto en otra carpeta.
 
 ## Flujo
 
 - DIRECT: inspección breve → modificación solo de archivos estrictamente necesarios → verificación proporcional. Usa un flujo ligero, sin Architect, Reviewer completo, branch ni documentación adicional, salvo que el riesgo lo justifique.
-- TASK: criterios → especialista → pruebas → review proporcional.
+- TASK rutinaria de bajo riesgo: especialista → verificación básica proporcional → inspección del diff → commit local automático. No uses Reviewer independiente por defecto.
+- TASK con riesgo o impacto suficiente: criterios relevantes → especialista → pruebas proporcionales → Reviewer cuando aporte una segunda opinión necesaria → inspección del diff → checkpoint.
 - STRUCTURAL: requisitos → arquitectura → criterios → implementación incremental → pruebas → review → checkpoint → staging/rollback si aplica.
+
+Usa Reviewer completo en una TASK cuando exista riesgo o impacto suficiente, criterios de aceptación relevantes, seguridad, pagos, autenticación, datos o integraciones sensibles, o una razón concreta documentada por Dev Lead. Úsalo también en trabajo STRUCTURAL.
 
 ## Git
 

@@ -13,3 +13,4 @@ description: Investigar, estructurar, redactar y optimizar artículos de blog co
 6. Propón enlaces internos reales.
 7. Incluye metadata y slug.
 8. Mantén voz de marca.
+9. Guarda la fuente editable en `content/blog/`; si los permisos lo impiden, reporta el bloqueo y no la reubiques.

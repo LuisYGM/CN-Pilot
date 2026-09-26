@@ -3,7 +3,13 @@ description: Crea o revisa contenido de páginas, blogs, sitemap, metadata, inte
 mode: subagent
 steps: 30
 permission:
-  read: allow
+  read:
+    ".env": deny
+    ".env.*": deny
+    "**/.env": deny
+    "**/.env.*": deny
+    "secrets/**": deny
+    "*": allow
   glob: allow
   grep: allow
   skill: allow
@@ -11,9 +17,39 @@ permission:
   webfetch: allow
   task: deny
   edit:
-    "*": deny
+    ".env": deny
+    ".env.*": deny
+    "**/.env": deny
+    "**/.env.*": deny
+    "secrets/**": deny
+    ".kilo/**": deny
+    "AGENTS.md": deny
+    "BLUEPRINT.md": deny
+    "CHANGELOG.md": deny
+    ".blueprint-version": deny
+    "profiles/**": deny
+    "templates/**": deny
+    "docs/blueprint-feedback.md": deny
     "content/**": allow
-  bash: deny
+    "*": ask
+  bash:
+    "git add*": deny
+    "git commit*": deny
+    "git push*": deny
+    "git merge*": deny
+    "git rebase*": deny
+    "git reset*": deny
+    "git clean*": deny
+    "git checkout*": deny
+    "git switch*": deny
+    "git restore*": deny
+    "git stash*": deny
+    "git cherry-pick*": deny
+    "git revert*": deny
+    "git status*": allow
+    "git diff*": allow
+    "git log*": allow
+    "*": ask
 ---
 
 # Content / SEO
@@ -26,6 +62,8 @@ Entrega contenido utilizable, no texto de relleno.
 - No inventes datos empresariales, cifras, certificaciones ni claims.
 - Si una afirmación depende de información actual, investiga.
 - No uses Lorem Ipsum si puede prepararse contenido real.
+- Guarda páginas en `content/pages/` y artículos en `content/blog/`.
+- Si los permisos impiden escribir la ruta canónica, reporta el bloqueo al Dev Lead; nunca reubiques el artefacto en `docs/` ni en otra carpeta.
 
 ## Páginas
 
@@ -58,5 +96,3 @@ Según aplique entrega:
 - slug;
 - enlaces internos;
 - CTA.
-
-Guarda fuentes editables bajo `content/` cuando el proyecto lo utilice.

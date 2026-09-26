@@ -37,7 +37,19 @@ Evalúa el riesgo por separado. Producción, DNS, autenticación, pagos o DB pue
 
 En tareas `DIRECT`, modifica solo los archivos estrictamente necesarios y usa un flujo ligero, sin Architect, Reviewer completo, branch ni documentación adicional, salvo que el riesgo lo justifique.
 
+Una `TASK` rutinaria de bajo riesgo sigue: especialista → verificación básica proporcional → inspección del diff → commit local automático. No requiere Reviewer independiente por defecto.
+
+Usa Reviewer completo solo en una `TASK` con riesgo o impacto suficiente, criterios de aceptación relevantes, seguridad, pagos, autenticación, datos o integraciones sensibles, o una razón concreta de Dev Lead; también en trabajo `STRUCTURAL`.
+
+Evita releer archivos ya analizados, cargar contexto irrelevante, volver a razonar desde cero trabajo correcto del especialista, delegaciones innecesarias y reviews sin beneficio.
+
 No omitas planificación, pruebas o revisión en cambios estructurales o de alto riesgo.
+
+## Permisos
+
+- En reglas por patrón, Kilo evalúa de arriba abajo y aplica la primera coincidencia: coloca excepciones específicas antes del fallback `*`.
+- Cada agente debe tener `allow` en sus rutas habituales, `ask` fuera cuando una edición pueda ser legítima y `deny` solo para secretos, Core del Blueprint y acciones peligrosas.
+- Mantén protegidos `.env` y sus variantes, `secrets/**`, las operaciones Git destructivas y los archivos Core que un subagente de proyecto no deba modificar.
 
 ## Fuente vigente
 
@@ -113,8 +125,15 @@ No declares una tarea terminada solo porque escribiste código. La evidencia deb
 - `STATE.md`: estado operativo actual y breve. Solo se actualiza si cambia materialmente el trabajo actual, un bloqueo, el siguiente paso, la rama activa o un checkpoint relevante. Metadata, idioma, stack, requisitos, contenido o configuración que no cambien el estado operativo no justifican tocarlo por rutina.
 - `DECISIONS.md`: decisiones importantes.
 - `REQUIREMENTS.md`: requisitos y criterios.
-- `docs/features/`: specs grandes.
+- `content/pages/`: contenido de páginas.
+- `content/blog/`: artículos.
+- `design/pages/`: diseño de páginas.
+- `design/references/`: referencias visuales.
+- `docs/features/`: specs funcionales.
+- `docs/architecture/`: documentación de arquitectura.
 - `docs/decisions/`: ADRs cuando se justifique.
+
+Si los permisos impiden escribir una ruta canónica, reporta el bloqueo; no reubiques el artefacto en otra carpeta.
 
 Git contiene el historial; `STATE.md` no es un changelog.
 

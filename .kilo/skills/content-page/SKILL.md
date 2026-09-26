@@ -7,4 +7,6 @@ description: Crear contenido estructurado para páginas web antes o durante el d
 
 Entrega según aplique: objetivo, audiencia, propuesta principal, H1, hero, secciones H2/H3, CTAs, enlaces internos, metatitle, metadescription, slug y notas para diseño.
 
+Guarda la fuente editable en `content/pages/`. Si los permisos lo impiden, reporta el bloqueo y no la reubiques.
+
 No inventes información que deba proporcionar el cliente.

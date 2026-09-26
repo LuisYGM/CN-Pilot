@@ -2,7 +2,7 @@
 
 Specs visuales y referencias cuando se necesiten.
 
-Sugerencia:
+Ubicaciones canónicas:
 
 ```text
 design/

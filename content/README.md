@@ -2,7 +2,7 @@
 
 Fuente versionada de contenido cuando se necesite.
 
-Sugerencia:
+Ubicaciones canónicas:
 
 ```text
 content/

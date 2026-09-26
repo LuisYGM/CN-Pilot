@@ -60,6 +60,46 @@ Definir de forma coherente la proporcionalidad de `DIRECT`, los criterios estric
 **Status:**
 Resolved.
 
+## BF-004 — Permisos restrictivos provocan una ubicación incorrecta
+
+**Contexto:**
+TASK de contenido para preparar una página.
+
+**Comportamiento observado:**
+`content-seo` no pudo escribir en su área habitual por el orden efectivo de las reglas de permisos. Dev Lead esquivó el bloqueo guardando el contenido en `docs/features/contenido-inicio.md`, fuera de su ubicación canónica.
+
+**Comportamiento esperado:**
+Cada agente debe poder editar su área habitual y solicitar permiso fuera cuando sea legítimo, manteniendo `deny` para secretos, Core protegido y acciones peligrosas. El contenido de páginas pertenece a `content/pages/`; un bloqueo debe reportarse como problema de permisos, no resolverse reubicando el artefacto.
+
+**Impacto:**
+High.
+
+**Mejora propuesta:**
+Ordenar las reglas específicas antes del fallback según la prioridad real de Kilo, ampliar permisos proporcionales y establecer rutas canónicas obligatorias para contenido, diseño y documentación técnica.
+
+**Status:**
+Resolved.
+
+## BF-005 — Una TASK rutinaria activa un flujo desproporcionado
+
+**Contexto:**
+Preparación del contenido inicial de una sola página.
+
+**Comportamiento observado:**
+La tarea consumió aproximadamente 142K tokens y casi 11 minutos por lecturas, razonamiento, delegaciones y revisión independiente sin beneficio proporcional.
+
+**Comportamiento esperado:**
+Una TASK sencilla y de bajo riesgo debe seguir aproximadamente: Dev Lead → Content/SEO → verificación básica → inspección del diff → commit local automático, sin Reviewer independiente por defecto.
+
+**Impacto:**
+High.
+
+**Mejora propuesta:**
+Reservar Reviewer completo para riesgo, impacto, criterios de aceptación relevantes, áreas sensibles, trabajo STRUCTURAL o una razón concreta; evitar contexto irrelevante, relecturas, análisis duplicado y delegaciones innecesarias.
+
+**Status:**
+Resolved.
+
 ## Plantilla reutilizable
 
 ### BF-XXX — [Título]

@@ -45,6 +45,10 @@ El perfil define contexto y capacidades disponibles; no obliga a ejecutar todo e
 - **Frontend / Builder:** HTML/CSS/JS, responsive, Bricks y Elementor.
 - **Reviewer:** revisión independiente.
 
+## Permisos
+
+Las reglas por patrón se ordenan de lo específico a lo general porque Kilo aplica la primera coincidencia. Cada agente tiene `allow` en su área habitual, `ask` fuera cuando una edición puede ser legítima y `deny` para secretos, Core del Blueprint que no le corresponde y operaciones peligrosas. Reviewer permanece en lectura y verificación.
+
 ## Niveles de trabajo
 
 ### DIRECT
@@ -53,9 +57,11 @@ Cambio pequeño, localizado y reversible. Modifica solo los archivos estrictamen
 `identificar → modificar lo mínimo → verificar → commit local automático según la política Git`
 
 ### TASK
-Cambio acotado con lógica o impacto.
+Cambio acotado con lógica o impacto. Una TASK rutinaria de bajo riesgo no requiere Reviewer independiente por defecto.
 
-`analizar → especialista → implementar → tests proporcionales → review proporcional → checkpoint`
+`especialista → verificación básica proporcional → inspección del diff → commit local automático`
+
+Reviewer completo se reserva para una TASK con riesgo o impacto suficiente, criterios de aceptación relevantes, seguridad, pagos, autenticación, datos o integraciones sensibles, o una razón concreta de Dev Lead.
 
 ### STRUCTURAL
 Cambio importante, de arquitectura o riesgo alto.
@@ -76,7 +82,8 @@ TASK y STRUCTURAL deben convertir requisitos en condiciones verificables cuando 
 - `STATE.md`: estado operativo breve. Solo cambia materialmente ante variaciones en el trabajo actual, bloqueos, siguiente paso, rama activa o checkpoints relevantes; no por cambios rutinarios de metadata, idioma, stack, requisitos, contenido o configuración.
 - `DECISIONS.md`: decisiones importantes.
 - `REQUIREMENTS.md`: requisitos.
-- `docs/features/`: specs importantes.
+- `docs/features/`: specs funcionales.
+- `docs/architecture/`: documentación de arquitectura.
 - `docs/decisions/`: ADRs.
 
 ## Onboarding de proyectos
@@ -89,11 +96,13 @@ Antes de editar, presentará un resumen simple y centrado en el proyecto: qué s
 
 ## Contenido
 
-`content/` puede actuar como fuente versionada para voz de marca, sitemap, páginas, artículos, metadata y enlazado. No usar Lorem Ipsum si existe contenido real o puede prepararse.
+`content/` puede actuar como fuente versionada para voz de marca, sitemap, metadata y enlazado. Las páginas se guardan en `content/pages/` y los artículos en `content/blog/`. No usar Lorem Ipsum si existe contenido real o puede prepararse.
 
 ## Diseño
 
-`design/` puede contener design system, componentes, specs, referencias y enlaces/IDs de Figma.
+`design/` puede contener design system, componentes, specs y enlaces/IDs de Figma. Los diseños de páginas se guardan en `design/pages/` y las referencias en `design/references/`.
+
+Si los permisos impiden escribir una ruta canónica, se reporta el bloqueo y no se reubica el artefacto en otra carpeta.
 
 ## Git
 
@@ -148,7 +157,7 @@ No todos los proyectos usan todas las fases.
 
 ## Principio de contexto
 
-El Blueprint puede ser completo sin cargarlo entero en cada tarea. Los agentes deben usar solo archivos, skills y documentación relevantes.
+El Blueprint puede ser completo sin cargarlo entero en cada tarea. Los agentes deben usar solo archivos, skills y documentación relevantes; evitar releer lo ya analizado, rehacer razonamientos correctos del especialista, delegar sin necesidad o activar reviews sin beneficio.
 
 ## Criterio de éxito
 

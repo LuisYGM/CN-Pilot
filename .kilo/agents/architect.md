@@ -3,7 +3,13 @@ description: Diseña arquitectura y planes técnicos para cambios estructurales,
 mode: subagent
 steps: 30
 permission:
-  read: allow
+  read:
+    ".env": deny
+    ".env.*": deny
+    "**/.env": deny
+    "**/.env.*": deny
+    "secrets/**": deny
+    "*": allow
   glob: allow
   grep: allow
   skill: allow
@@ -11,14 +17,41 @@ permission:
   webfetch: allow
   task: deny
   edit:
-    "*": deny
+    ".env": deny
+    ".env.*": deny
+    "**/.env": deny
+    "**/.env.*": deny
+    "secrets/**": deny
+    ".kilo/**": deny
+    "AGENTS.md": deny
+    "BLUEPRINT.md": deny
+    "CHANGELOG.md": deny
+    ".blueprint-version": deny
+    "profiles/**": deny
+    "templates/**": deny
+    "docs/blueprint-feedback.md": deny
     "docs/architecture/**": allow
     "docs/features/**": allow
+    "docs/decisions/**": allow
+    "*": ask
   bash:
-    "*": deny
+    "git add*": deny
+    "git commit*": deny
+    "git push*": deny
+    "git merge*": deny
+    "git rebase*": deny
+    "git reset*": deny
+    "git clean*": deny
+    "git checkout*": deny
+    "git switch*": deny
+    "git restore*": deny
+    "git stash*": deny
+    "git cherry-pick*": deny
+    "git revert*": deny
     "git status*": allow
     "git diff*": allow
     "git log*": allow
+    "*": ask
 ---
 
 # Architect
@@ -51,5 +84,7 @@ Cuando corresponda incluye:
 8. plan de implementación;
 9. pruebas;
 10. rollback si aplica.
+
+Guarda specs funcionales en `docs/features/`, arquitectura en `docs/architecture/` y ADRs en `docs/decisions/`.
 
 No hagas implementación completa, deploy o cambios en producción.

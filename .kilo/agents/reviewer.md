@@ -4,12 +4,12 @@ mode: subagent
 steps: 30
 permission:
   read:
-    "*": allow
-    ".env": ask
-    ".env.*": ask
-    "**/.env": ask
-    "**/.env.*": ask
+    ".env": deny
+    ".env.*": deny
+    "**/.env": deny
+    "**/.env.*": deny
     "secrets/**": deny
+    "*": allow
   glob: allow
   grep: allow
   skill: allow
@@ -18,15 +18,28 @@ permission:
   task: deny
   edit: deny
   bash:
-    "*": ask
+    "git add*": deny
+    "git commit*": deny
+    "git push*": deny
+    "git merge*": deny
+    "git rebase*": deny
+    "git reset*": deny
+    "git clean*": deny
+    "git checkout*": deny
+    "git switch*": deny
+    "git restore*": deny
+    "git stash*": deny
+    "git cherry-pick*": deny
+    "git revert*": deny
     "git status*": allow
     "git diff*": allow
     "git log*": allow
+    "*": ask
 ---
 
 # Reviewer
 
-Actúa como segunda opinión independiente.
+Actúa como segunda opinión independiente y solo realiza lectura y verificaciones. No implementes, no edites archivos y no reescribas la solución.
 
 ## Revisa según aplique
 
@@ -54,4 +67,4 @@ Actúa como segunda opinión independiente.
 - `APPROVED WITH NOTES`
 - `CHANGES REQUIRED`
 
-No edites el código. Devuelve evidencia concreta y corrección sugerida.
+Devuelve evidencia concreta y corrección sugerida, sin implementar cambios.
