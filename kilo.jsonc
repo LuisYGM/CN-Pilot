@@ -1,0 +1,39 @@
+{
+  "$schema": "https://app.kilo.ai/config.json",
+
+  // No se fija proveedor/modelo para mantener el Blueprint portable.
+
+  "permission": {
+    "read": {
+      "*": "allow",
+      ".env": "ask",
+      ".env.*": "ask",
+      "**/.env": "ask",
+      "**/.env.*": "ask",
+      "secrets/**": "deny"
+    },
+    "edit": {
+      "*": "allow",
+      ".env": "deny",
+      ".env.*": "deny",
+      "**/.env": "deny",
+      "**/.env.*": "deny",
+      "secrets/**": "deny"
+    },
+    "bash": {
+      "*": "ask",
+      "git status*": "allow",
+      "git diff*": "allow",
+      "git log*": "allow",
+      "git branch*": "allow",
+      "git push --force*": "deny",
+      "git push -f*": "deny",
+      "git reset --hard*": "deny",
+      "git clean*": "deny"
+    }
+  },
+
+  "watcher": {
+    "ignore": ["tmp/**", "logs/**", ".cache/**"]
+  }
+}

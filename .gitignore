@@ -1,0 +1,35 @@
+# Environment / secrets
+.env
+.env.*
+!.env.example
+secrets/
+
+# Dependencies / caches
+node_modules/
+.cache/
+.cache-*/
+tmp/
+temp/
+
+# Logs
+*.log
+logs/
+
+# Tests
+coverage/
+.phpunit.result.cache
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editors
+.idea/
+*.swp
+*.swo
+
+# Local archives
+*.zip
+*.tar
+*.tar.gz

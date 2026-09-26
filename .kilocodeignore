@@ -1,0 +1,7 @@
+.env
+.env.*
+secrets/
+tmp/
+temp/
+logs/
+coverage/
