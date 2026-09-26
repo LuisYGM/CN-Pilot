@@ -79,6 +79,12 @@ TASK y STRUCTURAL deben convertir requisitos en condiciones verificables cuando 
 - `docs/features/`: specs importantes.
 - `docs/decisions/`: ADRs.
 
+## Onboarding de proyectos
+
+La inicialización debe inspeccionar primero las reglas, la versión del Blueprint, las plantillas de contexto y la implementación existente. La primera ronda será breve y natural: preguntará solo los temas previstos que sigan faltando y nunca repetirá información inferida con fiabilidad. El sistema inferirá el contexto disponible y marcará como `Pending` lo desconocido. Las preguntas y el resumen traducirán las inferencias a lenguaje natural, sin mostrar nombres ni estructuras internas salvo que ayuden realmente a tomar una decisión.
+
+Antes de editar, presentará hechos, inferencias, pendientes y archivos previstos, y requerirá confirmación explícita; una corrección material exige resumir y confirmar de nuevo. Solo entonces actualizará `PROJECT.md`, `REQUIREMENTS.md`, `STATE.md` y `DECISIONS.md` cuando corresponda. Puede recomendar ignores justificados en el resumen, pero no editará `.gitignore` durante este workflow. El onboarding no desarrolla páginas, componentes ni funcionalidades. Tras revisar diff y estado Git, puede crear únicamente el commit local `chore: inicializar proyecto`; nunca hará push.
+
 ## Contenido
 
 `content/` puede actuar como fuente versionada para voz de marca, sitemap, páginas, artículos, metadata y enlazado. No usar Lorem Ipsum si existe contenido real o puede prepararse.

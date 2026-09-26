@@ -12,6 +12,7 @@
 - Política Git con commits en español.
 - Permisos y seguridad.
 - Templates y documentación operativa.
+- `/new-project` usa onboarding conversacional, infiere datos del proyecto, acepta información pendiente y solicita confirmación antes de modificar archivos.
 
 ### Status
 
