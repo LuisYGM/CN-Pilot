@@ -1,4 +1,4 @@
-# Blueprint Feedback
+# Feedback del Blueprint
 
 ## BF-001 — El onboarding solicita campos internos manualmente
 
@@ -17,7 +17,7 @@ Medium.
 **Mejora propuesta:**
 Reestructurar `/new-project` para priorizar la inspección, evitar preguntas inferibles o con terminología interna, aceptar incertidumbre y exigir una confirmación informada antes de actualizar el contexto del proyecto.
 
-**Status:**
+**Estado:**
 Resolved.
 
 ## BF-002 — El resumen expone la estructura interna del Blueprint
@@ -37,7 +37,7 @@ Medium.
 **Mejora propuesta:**
 Elevar la abstracción del onboarding: resumir qué se construirá, propósito, público, stack, alcance y pendientes relevantes, y cerrar con una única confirmación simple sin exponer destinos internos ni pedir confirmaciones adicionales.
 
-**Status:**
+**Estado:**
 Resolved.
 
 ## BF-003 — DIRECT actualiza estado sin cambio operativo y queda sin commit
@@ -57,7 +57,7 @@ Medium.
 **Mejora propuesta:**
 Definir de forma coherente la proporcionalidad de `DIRECT`, los criterios estrictos de actualización de `STATE.md` y la política de commit local automático con sus excepciones.
 
-**Status:**
+**Estado:**
 Resolved.
 
 ## BF-004 — Permisos restrictivos provocan una ubicación incorrecta
@@ -77,7 +77,7 @@ High.
 **Mejora propuesta:**
 Ordenar las reglas específicas antes del fallback según la prioridad real de Kilo, ampliar permisos proporcionales y establecer rutas canónicas obligatorias para contenido, diseño y documentación técnica.
 
-**Status:**
+**Estado:**
 Resolved.
 
 ## BF-005 — Una TASK rutinaria activa un flujo desproporcionado
@@ -97,7 +97,47 @@ High.
 **Mejora propuesta:**
 Reservar Reviewer completo para riesgo, impacto, criterios de aceptación relevantes, áreas sensibles, trabajo STRUCTURAL o una razón concreta; evitar contexto irrelevante, relecturas, análisis duplicado y delegaciones innecesarias.
 
-**Status:**
+**Estado:**
+Resolved.
+
+## BF-006 — Documentación operativa generada en el idioma incorrecto
+
+**Contexto:**
+Inicialización y generación de documentación para proyectos creados desde el Blueprint.
+
+**Comportamiento observado:**
+Archivos técnicos como `PROJECT.md`, `STATE.md`, `DECISIONS.md`, `REQUIREMENTS.md` y templates destinados a personas conservaban headings, instrucciones y placeholders en inglés.
+
+**Comportamiento esperado:**
+Los nombres, rutas, IDs, claves y valores técnicos permanecen en inglés, mientras el contenido humano se genera en español por defecto o en el idioma de trabajo definido explícitamente por el proyecto. `/new-project` debe sustituir o eliminar placeholders heredados que ya no describan el proyecto real.
+
+**Impacto:**
+Medium.
+
+**Mejora propuesta:**
+Establecer una convención explícita de idioma, traducir la documentación base y los templates humanos, y limpiar durante la inicialización los mensajes residuales del Blueprint.
+
+**Estado:**
+Resolved.
+
+## BF-007 — Recomendaciones provisionales tratadas como decisiones aprobadas
+
+**Contexto:**
+Prueba STRUCTURAL sobre almacenamiento de solicitudes de contacto en WordPress.
+
+**Comportamiento observado:**
+Architect recomendó una custom table como almacenamiento operativo sin marcar la propuesta como provisional, aunque seguían pendientes volumen, retención, duplicación con Fluent Forms, roles de acceso y lifecycle del dato.
+
+**Comportamiento esperado:**
+Architect debe distinguir hechos, restricciones, supuestos, recomendaciones provisionales y decisiones aprobadas. Si una incógnita puede cambiar materialmente la arquitectura, la propuesta permanece `PROVISIONAL`, explicita alternativas y tradeoffs y no se implementa ni se registra como decisión hasta resolver los puntos bloqueantes.
+
+**Impacto:**
+High.
+
+**Mejora propuesta:**
+Introducir estados de madurez para propuestas arquitectónicas, reservar `DECISIONS.md` y ADRs para decisiones suficientemente establecidas y exigir en WordPress la evaluación previa de capacidades nativas y del stack existente.
+
+**Estado:**
 Resolved.
 
 ## Plantilla reutilizable
@@ -119,5 +159,5 @@ Low / Medium / High.
 **Mejora propuesta:**
 Corrección propuesta.
 
-**Status:**
+**Estado:**
 Open / Testing / Resolved.

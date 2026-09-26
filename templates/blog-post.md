@@ -1,17 +1,17 @@
-# Blog: [Title]
+# Blog: [Título]
 
-## Primary keyword
-## Search intent
+## Keyword principal
+## Intención de búsqueda
 
 ## Meta
-- Title:
-- Description:
+- Título:
+- Descripción:
 - Slug:
 
-## Outline
+## Estructura
 
-## Article
+## Artículo
 
-## Internal links
+## Enlaces internos
 ## CTA
-## Sources / verification notes
+## Fuentes y notas de verificación

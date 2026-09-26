@@ -1,30 +1,30 @@
-# Project
+# Proyecto
 
 > Completar mediante `/new-project`.
 
-## Identity
+## Identidad
 
-- **Name:** Pending
-- **Profile:** Pending
-- **Repository:** Pending
-- **Blueprint version:** 1.0.0-draft
+- **Nombre:** Pending
+- **Perfil:** Pending
+- **Repositorio:** Pending
+- **Versión del Blueprint:** 1.0.0-draft
 
-## Objective
+## Objetivo
 
 Pending.
 
-## Scope
+## Alcance
 
-### In scope
+### Incluido
 - Pending.
 
-### Out of scope
+### Fuera de alcance
 - Pending.
 
 ## Stack
 - Pending.
 
-## Capabilities
+## Capacidades
 
 ```yaml
 content: false
@@ -37,7 +37,7 @@ membership: false
 custom-api: false
 ```
 
-## Environments
+## Entornos
 
 ```yaml
 local: true
@@ -45,10 +45,10 @@ staging: false
 production: false
 ```
 
-## Constraints
+## Restricciones
 - Pending.
 
-## Important URLs
+## URLs importantes
 
 - Local: Pending
 - Staging: Pending

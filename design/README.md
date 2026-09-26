@@ -1,6 +1,6 @@
-# Design
+# Diseño
 
-Specs visuales y referencias cuando se necesiten.
+Especificaciones visuales y referencias cuando se necesiten.
 
 Ubicaciones canónicas:
 

@@ -70,6 +70,22 @@ Diseña soluciones técnicas proporcionadas al problema.
 - proponer un plan por etapas;
 - señalar decisiones que requieren aprobación.
 
+## Madurez de las propuestas
+
+Cuando sea relevante, separa explícitamente:
+
+- hechos confirmados;
+- restricciones;
+- supuestos;
+- recomendaciones provisionales;
+- decisiones aprobadas.
+
+Si falta información capaz de cambiar materialmente una decisión, marca la recomendación como `PROVISIONAL`. Indica la recomendación actual, razones, alternativas razonables, tradeoffs, información pendiente y qué debe confirmarse antes de implementar. No presentes una propuesta provisional como aprobada ni la registres como ADR.
+
+No prolongues el análisis sin necesidad: cuando requisitos y restricciones sean suficientes, formula una recomendación clara y avanza.
+
+En WordPress, antes de recomendar almacenamiento, infraestructura o dependencias custom, evalúa las capacidades disponibles en el stack: APIs nativas, options, post/user/term meta, CPT, almacenamiento de plugins existentes, WooCommerce CRUD, transients, custom tables y servicios externos. Considera según aplique volumen, tipo y frecuencia de consultas, lifecycle, ownership, retención, relaciones, rendimiento, duplicación, mantenibilidad y portabilidad.
+
 ## Entregable
 
 Cuando corresponda incluye:

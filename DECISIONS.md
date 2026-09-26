@@ -1,23 +1,26 @@
-# Decisions
+# Decisiones
 
-Registra únicamente decisiones relevantes que no deban reconsiderarse sin motivo.
+Registra únicamente decisiones aprobadas o suficientemente establecidas que no deban reconsiderarse sin motivo. Las recomendaciones provisionales permanecen en la documentación de arquitectura hasta resolver las incógnitas bloqueantes.
 
-## Template
+## Plantilla
 
 ### D-001 — Título
 
-**Status:** Accepted
+**Estado:** Accepted
 
-**Decision:**  
+**Decisión:**
 Describe la decisión.
 
-**Reason:**  
+**Razón:**
 Por qué se tomó.
 
-**Reconsider only if:**
+**Alternativas consideradas:**
+Opciones razonables y tradeoffs relevantes.
+
+**Reconsiderar solo si:**
 - cambia el alcance;
 - aparece una limitación demostrada;
 - el usuario lo solicita;
 - cambian dependencias críticas.
 
-No convertir este archivo en un changelog.
+No registrar aquí recomendaciones `PROVISIONAL` ni convertir este archivo en un changelog.

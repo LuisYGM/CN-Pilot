@@ -1,18 +1,18 @@
-# Review Report
+# Reporte de revisión
 
-## Scope
-## Evidence reviewed
+## Alcance
+## Evidencia revisada
 
-## Findings
+## Hallazgos
 
 ### CRITICAL
 ### HIGH
 ### MEDIUM
 ### LOW
 
-## Acceptance criteria
+## Criterios de aceptación
 - AC1:
 - AC2:
 
-## Result
+## Resultado
 APPROVED / APPROVED WITH NOTES / CHANGES REQUIRED

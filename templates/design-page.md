@@ -1,13 +1,13 @@
-# Design Spec: [Page]
+# Especificación de diseño: [Página]
 
-## Source content
-## References
-## Layout
-## Components
-## Desktop
-## Tablet
-## Mobile
-## Interactions
-## Accessibility notes
-## Assets
-## Open questions
+## Contenido fuente
+## Referencias
+## Estructura visual
+## Componentes
+## Escritorio
+## Tableta
+## Móvil
+## Interacciones
+## Notas de accesibilidad
+## Recursos
+## Preguntas abiertas

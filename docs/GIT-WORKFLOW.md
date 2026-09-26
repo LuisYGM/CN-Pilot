@@ -1,4 +1,4 @@
-# Git Workflow
+# Flujo de trabajo de Git
 
 ## Principios
 
@@ -24,7 +24,7 @@ content: actualizar textos de la página de servicios
 docs: documentar proceso de despliegue
 ```
 
-## Branches
+## Ramas
 
 ```text
 feature/carga-comprobantes

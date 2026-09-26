@@ -1,9 +1,9 @@
-# Profile: maintenance
+# Perfil: maintenance
 
-## Use when
+## Usar cuando
 El sitio ya existe y el trabajo principal son bugs, cambios, mejoras y mantenimiento.
 
-## Typical flow
+## Flujo habitual
 `Request → Classification → Specialist → Verification → Checkpoint`
 
 La inspección de la fuente vigente es especialmente importante.

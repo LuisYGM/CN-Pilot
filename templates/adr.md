@@ -1,18 +1,22 @@
-# ADR-XXX: [Decision]
+# ADR-XXX: [Decisión]
 
-- **Status:** Proposed
-- **Date:** YYYY-MM-DD
+- **Estado:** Accepted
+- **Fecha:** YYYY-MM-DD
 
-## Context
+> Crear un ADR solo cuando la decisión esté aprobada o suficientemente establecida. Mantener las recomendaciones `PROVISIONAL` en `docs/architecture/`.
 
-## Decision
+## Contexto
 
-## Alternatives considered
+## Decisión aprobada
 
-## Consequences
+## Razones
 
-### Positive
+## Alternativas consideradas
 
-### Negative / tradeoffs
+## Consecuencias
 
-## Reconsider if
+### Positivas
+
+### Negativas y tradeoffs
+
+## Reconsiderar si

@@ -6,6 +6,10 @@
 
 Sistema portable y versionado para desarrollar proyectos web con agentes de IA sin depender de una única máquina, persona o proyecto. Debe servir tanto para mantenimiento pequeño como para proyectos grandes desde cero.
 
+## Convención de idioma
+
+La estructura técnica permanece en inglés: archivos, carpetas, agentes, skills, workflows, profiles, capabilities, claves internas, tecnologías y valores consumidos por el sistema. La documentación y el contenido destinados a personas se generan en español por defecto. Si un proyecto define explícitamente otro idioma de trabajo, se adapta el contenido humano sin traducir identificadores técnicos.
+
 ## Arquitectura conceptual
 
 ```text
@@ -72,9 +76,17 @@ Cambio importante, de arquitectura o riesgo alto.
 
 Complejidad y riesgo se evalúan por separado. Un cambio pequeño puede elevarse si afecta producción, DB, autenticación, pagos, DNS, servidor o información sensible.
 
-## Acceptance Criteria
+## Criterios de aceptación
 
 TASK y STRUCTURAL deben convertir requisitos en condiciones verificables cuando aporte valor.
+
+## Madurez de decisiones arquitectónicas
+
+Architect distingue, cuando sea relevante, hechos confirmados, restricciones, supuestos, recomendaciones provisionales y decisiones aprobadas. Si una incógnita pendiente puede cambiar materialmente la arquitectura, la propuesta permanece `PROVISIONAL` e indica razones, alternativas, tradeoffs, información pendiente y qué debe confirmarse antes de implementar.
+
+Cuando requisitos y restricciones son suficientes, Architect puede recomendar con claridad y avanzar. Developer no convierte una recomendación provisional en código si persisten puntos bloqueantes. `DECISIONS.md` y los ADRs se reservan para decisiones aprobadas o suficientemente establecidas.
+
+En WordPress se evalúan primero las capacidades disponibles en Core y el stack existente antes de añadir almacenamiento, infraestructura o dependencias custom; la elección considera, según aplique, volumen, consultas, lifecycle, ownership, retención, relaciones, rendimiento, duplicación, mantenibilidad y portabilidad.
 
 ## Memoria del proyecto
 
@@ -135,13 +147,13 @@ Cuando aplique:
 
 La autonomía disminuye al aumentar el riesgo.
 
-## Deploy
+## Despliegue
 
 `preflight → backup/checkpoint → deploy manifest → deploy → smoke test`
 
 Si falla: `rollback`.
 
-## Testing
+## Pruebas
 
 Pruebas proporcionales: syntax, lint, unit, integration, browser/e2e, smoke, responsive y accessibility cuando correspondan.
 

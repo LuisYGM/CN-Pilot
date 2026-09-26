@@ -1,12 +1,12 @@
-# Profile: landing-page
+# Perfil: landing-page
 
-## Use when
+## Usar cuando
 Página de campaña o landing de alcance reducido.
 
-## Common capabilities
+## Capacidades habituales
 content, seo, design, frontend, analytics, forms.
 
-## Typical flow
+## Flujo habitual
 `Content → Design → Frontend → Review`
 
 Evitar arquitectura propia de una aplicación grande si no la requiere.

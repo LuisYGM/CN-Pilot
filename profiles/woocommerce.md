@@ -1,15 +1,15 @@
-# Profile: woocommerce
+# Perfil: woocommerce
 
-## Use when
+## Usar cuando
 Tienda o feature cuyo dominio principal depende de WooCommerce.
 
-## Common capabilities
+## Capacidades habituales
 wordpress, woocommerce, payments, frontend, backend, security, performance.
 
-## Typical structural flow
+## Flujo estructural habitual
 `Requirements → Architecture → Developer → Frontend → Security/QA → Staging`
 
-## Common skills
+## Skills habituales
 `wordpress`, `woocommerce`, `security-review`, `testing-strategy`, `database-migrations`, `frontend-responsive`.
 
 Checkout, pagos y pedidos se consideran superficies de riesgo elevado.

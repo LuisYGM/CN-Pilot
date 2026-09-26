@@ -1,4 +1,4 @@
-# Project Lifecycle
+# Ciclo de vida del proyecto
 
 Fases disponibles:
 
@@ -15,11 +15,11 @@ Fases disponibles:
 
 No todos los proyectos pasan por todas.
 
-## Full project
+## Proyecto completo
 `Discovery → Requirements → Architecture → Content → Design → Development → QA → Staging → Acceptance → Production → Maintenance`
 
-## Maintenance
+## Mantenimiento
 `Request → Classification → Specialist → Verification → Checkpoint`
 
-## Structural feature
+## Funcionalidad estructural
 `Requirements → Architecture → Feature branch → Implementation → Tests → Independent review → Checkpoint → Staging`

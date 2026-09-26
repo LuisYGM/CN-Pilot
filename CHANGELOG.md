@@ -2,7 +2,7 @@
 
 ## [1.0.0-draft] - 2026-09-25
 
-### Added
+### Añadido
 
 - Arquitectura inicial.
 - Siete agentes Core.
@@ -14,6 +14,6 @@
 - Templates y documentación operativa.
 - `/new-project` usa onboarding conversacional, infiere datos del proyecto, acepta información pendiente y solicita confirmación antes de modificar archivos.
 
-### Status
+### Estado
 
 Versión candidata; requiere pruebas piloto antes de `1.0.0`.

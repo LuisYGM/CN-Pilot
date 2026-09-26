@@ -1,16 +1,16 @@
-# Project Handoff
+# Documentación de entrega del proyecto
 
-## Project summary
+## Resumen del proyecto
 ## Stack
-## Repository
-## Environments
-## Architecture
-## Dependencies
-## Deployment
-## Backups
-## Maintenance
-## Known risks
-## Pending work
-## Access ownership
+## Repositorio
+## Entornos
+## Arquitectura
+## Dependencias
+## Despliegue
+## Copias de seguridad
+## Mantenimiento
+## Riesgos conocidos
+## Trabajo pendiente
+## Propiedad de accesos
 
 Listar accesos que deben conservarse, nunca contraseñas o tokens.

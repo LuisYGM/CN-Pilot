@@ -1,15 +1,15 @@
-# Profile: wordpress-site
+# Perfil: wordpress-site
 
-## Use when
+## Usar cuando
 Sitio corporativo, institucional, blog o portal cuyo CMS principal es WordPress.
 
-## Common capabilities
+## Capacidades habituales
 content, seo, design, wordpress, forms, frontend, performance, security.
 
-## Typical structural flow
+## Flujo estructural habitual
 `Requirements → Content → Design → Frontend → Developer → Reviewer → Staging`
 
-## Common skills
+## Skills habituales
 `wordpress`, `bricks` o `elementor`, `frontend-responsive`, `content-page`, `technical-seo`, `performance-review`, `accessibility-review`.
 
 No activar WooCommerce si no se utiliza.

@@ -1,23 +1,23 @@
-# Page: [Name]
+# Página: [Nombre]
 
-## Objective
-## Audience
-## Search intent
-## Primary keyword
+## Objetivo
+## Audiencia
+## Intención de búsqueda
+## Keyword principal
 
 ## Meta
-- Title:
-- Description:
+- Título:
+- Descripción:
 - Slug:
 
 ## Hero
 ### H1
-### Copy
-### Primary CTA
-### Secondary CTA
+### Texto
+### CTA principal
+### CTA secundario
 
-## Sections
+## Secciones
 
-## Internal links
+## Enlaces internos
 
-## Notes for design
+## Notas para diseño

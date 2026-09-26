@@ -1,21 +1,21 @@
-# Current State
+# Estado actual
 
 > Mantener breve; Git contiene el historial.
 
-## Working on
-Project initialization.
-
-## Completed
-- Blueprint created.
-
-## Blocked
-None.
-
-## Next
-Run `/new-project`.
-
-## Current branch
+## Trabajando en
 Pending.
 
-## Last checkpoint
+## Completado
+- Pending.
+
+## Bloqueos
+- Ninguno.
+
+## Siguiente paso
+Ejecutar `/new-project`.
+
+## Rama actual
+Pending.
+
+## Último checkpoint
 Pending.

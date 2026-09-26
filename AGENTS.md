@@ -1,11 +1,13 @@
-# Project Agent Instructions
+# Instrucciones para agentes del proyecto
 
 Estas instrucciones aplican a cualquier agente del repositorio.
 
 ## Idioma
 
 - Responde en español salvo solicitud contraria.
-- Estructura técnica y nombres pueden estar en inglés.
+- Mantén en inglés la estructura técnica y los identificadores: nombres de archivos y carpetas, agentes, skills, workflows, profiles, capabilities, claves internas, tecnologías, valores `true` / `false` y otros tokens que el sistema consuma.
+- Genera en español por defecto los headings, instrucciones, descripciones y demás contenido destinado a personas en documentación, contenido, diseño, specs, reportes, manifests, handoffs y templates.
+- Si el proyecto define explícitamente otro idioma de trabajo, adapta a ese idioma el contenido humano sin traducir identificadores técnicos.
 - Todos los mensajes de commit deben estar en español.
 - Conserva los prefijos de Conventional Commits en inglés: `feat`, `fix`, `style`, `refactor`, `perf`, `seo`, `content`, `docs`, `test`, `chore`.
 
@@ -44,6 +46,15 @@ Usa Reviewer completo solo en una `TASK` con riesgo o impacto suficiente, criter
 Evita releer archivos ya analizados, cargar contexto irrelevante, volver a razonar desde cero trabajo correcto del especialista, delegaciones innecesarias y reviews sin beneficio.
 
 No omitas planificación, pruebas o revisión en cambios estructurales o de alto riesgo.
+
+## Decisiones arquitectónicas
+
+- Distingue, cuando sea relevante, hechos confirmados, restricciones, supuestos, recomendaciones provisionales y decisiones aprobadas.
+- Si una incógnita pendiente puede cambiar materialmente la arquitectura, conserva la propuesta como `PROVISIONAL` y declara qué debe confirmarse antes de implementarla.
+- Una recomendación importante debe incluir razones, alternativas razonables, tradeoffs e información pendiente sin convertir el análisis en un proceso interminable.
+- Developer no implementa automáticamente una recomendación provisional mientras existan puntos bloqueantes.
+- `DECISIONS.md` y los ADRs registran decisiones aprobadas o suficientemente establecidas, no cualquier recomendación.
+- En WordPress, evalúa primero las capacidades nativas y del stack existente antes de introducir almacenamiento, infraestructura o dependencias custom.
 
 ## Permisos
 
@@ -115,7 +126,7 @@ Bloqueados por defecto:
 
 Cambios relevantes en producción requieren aprobación. Antes de una operación riesgosa define cómo revertirla.
 
-## Definition of Done
+## Definición de terminado
 
 No declares una tarea terminada solo porque escribiste código. La evidencia debe ser proporcional: inspección, tests, lint, syntax check, criterios de aceptación, review, smoke test o verificación visual.
 

@@ -1,19 +1,19 @@
-# Deploy Manifest
+# Manifiesto de despliegue
 
-## Environment
-## Source
-## Destination
+## Entorno
+## Origen
+## Destino
 
-## Included
+## Incluido
 -
 
-## Excluded
-- secrets
-- local environment files
-- unrelated uploads/data
+## Excluido
+- secretos
+- archivos de entorno local
+- uploads o datos no relacionados
 
 ## Preflight
-## Backup / checkpoint
+## Backup o checkpoint
 ## Smoke tests
 ## Rollback
-## Approval
+## Aprobación

@@ -1,4 +1,4 @@
-# Blueprint Manifest
+# Manifiesto del Blueprint
 
 - 7 agentes
 - 19 skills

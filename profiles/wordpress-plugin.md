@@ -1,13 +1,13 @@
-# Profile: wordpress-plugin
+# Perfil: wordpress-plugin
 
-## Use when
+## Usar cuando
 El entregable principal es un plugin WordPress.
 
-## Common capabilities
+## Capacidades habituales
 wordpress, php, backend, api, database, security, testing.
 
-## Typical structural flow
+## Flujo estructural habitual
 `Requirements → Architecture → Developer → Tests → Reviewer → Package/Deploy`
 
-## Common skills
+## Skills habituales
 `wordpress`, `wordpress-plugin`, `api-integration`, `database-migrations`, `security-review`, `testing-strategy`.

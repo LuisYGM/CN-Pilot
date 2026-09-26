@@ -29,14 +29,16 @@ agent: dev-lead
    No separes hechos de inferencias ni muestres destinos internos, listas de archivos, reglas operativas o recomendaciones de `.gitignore`.
 10. La única pregunta de confirmación será: «¿Inicializo el proyecto con esta información?». Una respuesta simple como «Sí» es suficiente. Si la persona realiza una corrección material, actualiza el resumen y repite esa misma pregunta antes de editar.
 11. Solo después de la confirmación, Dev Lead distribuirá internamente la información entre `PROJECT.md`, `REQUIREMENTS.md`, `STATE.md` y `DECISIONS.md`, sin pedir a la persona que elija destino, archivo o clasificación.
-12. Actualiza `DECISIONS.md` solo para decisiones importantes que cumplan al menos una de estas condiciones:
+12. Genera el contenido humano en el idioma de trabajo definido explícitamente por el proyecto; si no existe uno, usa español. Mantén en inglés nombres de archivos, carpetas, claves, valores e identificadores técnicos.
+13. Sustituye o elimina todos los placeholders, ejemplos y mensajes heredados del Blueprint que ya no describan el proyecto real. En particular, no conserves en `STATE.md` textos como `Blueprint created.`, `Project initialization.` o instrucciones para ejecutar `/new-project` después de inicializar.
+14. Actualiza `DECISIONS.md` solo para decisiones importantes que cumplan al menos una de estas condiciones:
     - tienen alternativas razonables;
     - condicionan la arquitectura o el desarrollo futuro;
     - son costosas de cambiar posteriormente;
     - fueron decididas explícitamente por la persona.
     Requisitos, páginas, alcance y workflow no son decisiones automáticamente.
-13. Aplica internamente las reglas operativas del Blueprint, incluida la prohibición de hacer push. No las traslades a la persona para que las recuerde ni las incluyas como elementos a confirmar.
-14. Durante la inicialización no desarrolles páginas, componentes ni funcionalidades.
-15. Revisa el diff y `git status`; comprueba que no se sobrescribieron cambios manuales ni se incluyeron cambios ajenos. No reescribas la historia Git.
-16. Si existen cambios válidos de inicialización, incluye únicamente esos archivos y crea el commit local `chore: inicializar proyecto`.
-17. Nunca hagas push.
+15. Aplica internamente las reglas operativas del Blueprint, incluida la prohibición de hacer push. No las traslades a la persona para que las recuerde ni las incluyas como elementos a confirmar.
+16. Durante la inicialización no desarrolles páginas, componentes ni funcionalidades.
+17. Revisa el diff y `git status`; comprueba que no se sobrescribieron cambios manuales ni se incluyeron cambios ajenos. No reescribas la historia Git.
+18. Si existen cambios válidos de inicialización, incluye únicamente esos archivos y crea el commit local `chore: inicializar proyecto`.
+19. Nunca hagas push.

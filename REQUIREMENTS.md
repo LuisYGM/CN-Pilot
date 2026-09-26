@@ -1,23 +1,23 @@
-# Requirements
+# Requisitos
 
-## Functional requirements
+## Requisitos funcionales
 - Pending.
 
-## Non-functional requirements
-- Performance: Pending.
-- Security: Pending.
-- Accessibility: Pending.
+## Requisitos no funcionales
+- Rendimiento: Pending.
+- Seguridad: Pending.
+- Accesibilidad: Pending.
 - SEO: Pending.
-- Browser/device support: Pending.
+- Compatibilidad con navegadores y dispositivos: Pending.
 
-## Constraints
+## Restricciones
 - Pending.
 
-## Acceptance criteria
+## Criterios de aceptación
 - Pending.
 
-## Dependencies
+## Dependencias
 - Pending.
 
-## Out of scope
+## Fuera de alcance
 - Pending.

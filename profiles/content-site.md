@@ -1,12 +1,12 @@
-# Profile: content-site
+# Perfil: content-site
 
-## Use when
+## Usar cuando
 Contenido, blog, centro de conocimiento o SEO es central.
 
-## Common capabilities
+## Capacidades habituales
 content, seo, design, wordpress, editorial-workflow.
 
-## Typical flow
+## Flujo habitual
 `Information Architecture → Content → SEO → Design → Publication → Review`
 
 Mantener fuentes versionadas en `content/` cuando sea viable.

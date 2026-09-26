@@ -1,6 +1,6 @@
-# Kilo Code Setup
+# Configuración de Kilo Code
 
-## Requirements
+## Requisitos
 - VS Code
 - Kilo Code
 - Git
@@ -21,26 +21,26 @@ En Kilo Code:
 
 El Blueprint no fija un modelo en los agentes para mantener portabilidad.
 
-## Verify agents
+## Verificar agentes
 
 Deben estar disponibles:
 `dev-lead`, `architect`, `content-seo`, `ui-ux-designer`, `developer`, `frontend-builder`, `reviewer`.
 
 `dev-lead` es primario; los demás son subagentes.
 
-## Verify skills
+## Verificar skills
 
 Ubicación: `.kilo/skills/<name>/SKILL.md`.
 
 Si modificas skills durante una sesión, usa `/reload` o inicia otra.
 
-## Verify workflows
+## Verificar workflows
 
 Ubicación: `.kilo/commands/`.
 
 Primera acción recomendada: `/new-project`.
 
-## Security
+## Seguridad
 
 - No pegues API keys en archivos.
 - No subas `.env`.

@@ -14,3 +14,6 @@ description: Desarrollo y mantenimiento de WordPress usando APIs nativas, hooks,
 7. No asumir que un builder controla toda la fuente de verdad.
 8. Antes de cambios en DB/options, identificar rollback.
 9. Verificar logs/errores apropiados al entorno.
+10. Antes de introducir almacenamiento o infraestructura custom, evaluar APIs nativas, options, post/user/term meta, CPT, almacenamiento de plugins existentes, WooCommerce CRUD, transients, custom tables y servicios externos.
+11. Comparar según aplique volumen, consultas, lifecycle, ownership, retención, relaciones, rendimiento, duplicación, mantenibilidad y portabilidad; no asumir una opción universalmente correcta.
+12. Si falta información capaz de cambiar materialmente la elección, mantenerla como recomendación `PROVISIONAL` y no implementarla hasta resolver los puntos bloqueantes.

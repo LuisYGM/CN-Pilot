@@ -1,30 +1,42 @@
-# Feature: [Name]
+# Funcionalidad: [Nombre]
 
-## Objective
+## Objetivo
 
-## Context
+## Contexto
 
-## Scope
+## Alcance
 
-### In scope
+### Incluido
 
-### Out of scope
+### Fuera de alcance
 
-## Requirements
+## Requisitos
 
-## Acceptance criteria
+## Criterios de aceptación
 - AC1:
 - AC2:
 
-## Architecture / approach
+## Arquitectura y enfoque
 
-## Dependencies
+### Hechos confirmados
 
-## Risks
+### Restricciones
 
-## Testing
+### Supuestos
+
+### Recomendaciones provisionales
+
+### Decisiones aprobadas
+
+### Información pendiente
+
+## Dependencias
+
+## Riesgos
+
+## Pruebas
 
 ## Rollback
 
-## Status
+## Estado
 Proposed / Approved / In progress / Done

@@ -1,6 +1,6 @@
-# Team Workflow
+# Flujo de trabajo del equipo
 
-## New project
+## Proyecto nuevo
 
 1. Crear repo desde GitHub Template.
 2. Clonar con GitHub Desktop.
@@ -9,15 +9,15 @@
 5. Ejecutar `/new-project`.
 6. Trabajar.
 
-## Shared project
+## Proyecto compartido
 
 Antes de trabajar: Pull, leer PROJECT/STATE/DECISIONS y comprobar rama.
 
-## Feature work
+## Trabajo en funcionalidades
 
 Para features estructurales:
 branch → implementación → checkpoint → push manual → Pull Request → review → merge.
 
-## Blueprint improvements
+## Mejoras del Blueprint
 
 Una mejora general descubierta en un proyecto debe aplicarse y probarse en el repositorio maestro del Blueprint, incrementando versión/CHANGELOG. Los proyectos existentes no se actualizan silenciosamente.

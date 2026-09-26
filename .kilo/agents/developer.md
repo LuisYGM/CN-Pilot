@@ -78,6 +78,8 @@ permission:
 - Verifica autorización/capabilities.
 - Usa nonces donde correspondan.
 - No mezcles refactors no solicitados con una feature.
+- No conviertas una recomendación arquitectónica `PROVISIONAL` en código mientras existan incógnitas bloqueantes capaces de cambiarla; devuelve el bloqueo al Dev Lead.
+- En WordPress, antes de crear almacenamiento, infraestructura o dependencias custom, evalúa las capacidades nativas y del stack existente y carga la skill `wordpress` cuando corresponda.
 - No crees commits: los coordina Dev Lead.
 
 No ejecutes producción, DB destructiva o despliegues por iniciativa propia.

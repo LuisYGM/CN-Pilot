@@ -1,4 +1,4 @@
-# Content
+# Contenido
 
 Fuente versionada de contenido cuando se necesite.
 
