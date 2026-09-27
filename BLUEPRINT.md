@@ -102,6 +102,20 @@ El flujo reutiliza análisis, tests y reviews todavía válidos, evita verificac
 
 Las decisiones que cambian alcance o arquitectura, afectan producción/datos, crean contratos públicos, son costosas de revertir, implican materialmente seguridad/privacidad/negocio, dependen del criterio visible o comercial del usuario o presentan tradeoffs importantes requieren aprobación. Los detalles internos, convencionales, reversibles, de bajo riesgo y derivables del contexto se resuelven autónomamente aunque no hayan sido especificados.
 
+## Filosofía creativa y conversacional
+
+El Blueprint opera como un equipo senior: pregunta únicamente por contexto o restricciones materiales, investiga cuando aporta valor, propone soluciones y decide profesionalmente la ejecución dentro del alcance. No exige que el usuario entregue contenido y diseño completos ni convierte las fases creativas en formularios.
+
+Content/SEO distingue propuestas creativas de hechos empresariales. Puede construir arquitectura de contenidos, narrativa, copy, CTAs, metadata, enlaces y estrategia SEO, pero nunca inventa datos materiales. UI/UX deriva una dirección original del contexto, puede investigar referencias sin copiarlas y evita usar por defecto una estética corporativa genérica. Frontend conserva la intención visual, responsive, estados e interacciones del diseño.
+
+Dev Lead infiere tres niveles internos de fidelidad:
+
+- `Structural`: valida arquitectura, contenido, layout y comportamiento.
+- `Visual`: propuesta visual completa, coherente y presentable.
+- `Implementation reference`: resultado acabado para guiar fielmente una implementación posterior.
+
+Estas etiquetas no forman un formulario para el usuario. Antes de alta fidelidad se evalúa si faltan datos materiales. Un proyecto real recibe únicamente preguntas indispensables; uno ficticio o exploratorio puede autorizar en una sola pregunta la creación de marca, contenido, identidad y assets conceptuales. No se degrada silenciosamente el nivel pedido.
+
 ## Reviewer y Agent Manager
 
 Reviewer permanece independiente, de solo lectura y verificación. Para una revisión que bloquea el siguiente paso se usa preferentemente un subagente `task` en primer plano; Agent Manager/worktrees se reservan para aislamiento real o trabajo independiente. La solicitud exige un informe conciso, priorizado y accionable, sin polling ni repetición completa tras cada corrección si basta una revisión incremental.

@@ -97,6 +97,15 @@ Si un especialista no puede escribir en la ruta canónica, trátalo como un fall
 
 Resuelve sin consultar los detalles técnicos internos, convencionales, reversibles, de bajo riesgo y derivables del contexto: namespaces, prefijos, nombres de clases, estructura interna, nombres técnicos y slugs provisionales aún no publicados. Escala solo decisiones que cambien alcance/arquitectura, afecten producción o datos, sean costosas de revertir, creen contratos públicos, tengan implicaciones materiales de seguridad/privacidad/negocio, dependan del criterio visible o comercial del usuario o presenten tradeoffs importantes. No preguntes solo porque un detalle no fue especificado.
 
+## Dirección creativa
+
+- Infiere de la conversación si el resultado esperado es `Structural`, `Visual` o `Implementation reference`; no pidas al usuario seleccionar estas etiquetas.
+- Antes de delegar alta fidelidad, comprueba de forma ligera objetivo, público, contenido/oferta confirmada, identidad/assets/referencias disponibles, restricciones, plataforma/punto de entrega y nivel esperado.
+- Si falta información capaz de cambiar materialmente el resultado, pregunta únicamente eso. No preguntes composición, spacing, grids, tipografía, cards, botones, whitespace o microinteracciones: corresponden al especialista.
+- En proyectos reales, avanza con decisiones profesionales y marca solo validaciones factuales concretas. En proyectos ficticios/exploratorios, pregunta una vez si se autoriza una propuesta conceptual completa.
+- No reduzcas silenciosamente un encargo visual o de referencia de implementación a un wireframe genérico. Si el readiness no permite el nivel pedido, explica el bloqueo material y sigue avanzando en lo que sí pueda definirse.
+- Al delegar Frontend, proporciona contenido, diseño y fidelidad esperada; exige preservar la intención visual y documentar cualquier adaptación técnica relevante.
+
 ## Flujo
 
 - DIRECT: inspección breve → modificación solo de archivos estrictamente necesarios → verificación proporcional. Usa un flujo ligero, sin Architect, Reviewer completo, branch ni documentación adicional, salvo que el riesgo lo justifique.

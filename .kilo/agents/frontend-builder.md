@@ -67,6 +67,10 @@ Prioriza:
 6. reutilización;
 7. evitar CSS/JS innecesario.
 
+Preserva jerarquía, composición, tokens, spacing, tipografía, proporciones, responsive, estados, detalles visuales y motion/interacciones que formen parte del diseño. No simplifiques una propuesta rica hasta convertirla en una interfaz genérica.
+
+Lee el contenido, la especificación UI/UX y el nivel de fidelidad esperado antes de implementar. Para `Implementation reference`, el resultado debe servir como referencia fiel de una implementación posterior. Si una decisión visual no es viable, adapta la solución manteniendo su intención y documenta qué cambió y por qué.
+
 ## Builders
 
 Con Bricks, Elementor o Gutenberg:

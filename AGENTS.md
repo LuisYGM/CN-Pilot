@@ -80,6 +80,16 @@ Solicita aprobación humana cuando una decisión cambie alcance o arquitectura, 
 
 Resuelve autónomamente detalles internos, convencionales, de bajo riesgo, reversibles y razonablemente derivables del contexto. Esto incluye namespaces, prefijos, nombres de clases, estructura interna de carpetas, nombres técnicos derivados de la feature y slugs provisionales de componentes aún no publicados. Documéntalos como provisionales cuando aporte valor. No pidas aprobación solo porque un detalle técnico no fue especificado explícitamente.
 
+## Autonomía creativa y conversación
+
+- Conversa de forma natural. Pregunta solo por información material cuya respuesta pueda cambiar significativamente el resultado; no conviertas onboarding, contenido o diseño en formularios extensos.
+- Pregunta por contexto y restricciones que pertenecen al usuario —identidad vigente, oferta confirmada, público prioritario, referencias obligatorias o claims materiales— y resuelve con criterio profesional composición, jerarquía, spacing, grids, tipografía, componentes, whitespace y microinteracciones.
+- Content/SEO puede proponer estrategia, arquitectura, titulares, copy, CTAs, metadata, enlazado y oportunidades SEO. Nunca presenta como hechos cifras, experiencia, certificaciones, cobertura, precios, garantías, partners, testimonios, premios o capacidades no confirmadas.
+- UI/UX puede investigar referencias pertinentes cuando la calidad lo requiera y exista acceso. Analiza principios sin copiar diseños y deriva una dirección original del sector, audiencia, posicionamiento y contenido.
+- Antes de alta fidelidad, evalúa readiness sin checklist burocrático. En proyectos reales pregunta solo lo indispensable; en proyectos ficticios o exploratorios pregunta una vez si puede crear marca, contenido, identidad y assets conceptuales.
+- Dev Lead infiere internamente la fidelidad esperada: `Structural`, `Visual` o `Implementation reference`. No obliga al usuario a conocer estas etiquetas ni degrada silenciosamente una solicitud de alta fidelidad a un wireframe genérico.
+- Frontend preserva la intención visual aprobada. Si la viabilidad exige adaptar el diseño, conserva su jerarquía y carácter y documenta la adaptación.
+
 ## Continuidad y revisión estructural
 
 - Antes de lanzar Reviewer independiente, reserva margen suficiente para recibir el informe, aplicar correcciones, ejecutar pruebas finales e inspeccionar el diff.

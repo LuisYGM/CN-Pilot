@@ -12,5 +12,6 @@ description: Implementar o revisar responsive, CSS Grid/Flexbox, tipografía flu
 5. Trata los breakpoints como overrides condicionales, no como fases. No añadas reglas si el diseño ya funciona.
 6. Si utilizas media queries descendentes, genera sus `max-width` desde la configuración versionada.
 7. Si el alcance incluye implementación directa en un builder configurable, mapea la convención al builder. Si termina en handoff manual, documenta la fuente de verdad para quien maquete después.
-8. Evita overflow horizontal y prueba textos largos, botones, formularios, estados, targets táctiles y foco visible.
-9. Verifica únicamente los rangos y puntos de cambio relevantes para el componente.
+8. Conserva jerarquía, composición, proporciones, tipografía, spacing y comportamiento del diseño; no uses responsive como excusa para aplanar su intención visual.
+9. Evita overflow horizontal y prueba textos largos, botones, formularios, estados, targets táctiles y foco visible.
+10. Verifica únicamente los rangos y puntos de cambio relevantes para el componente.

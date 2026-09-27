@@ -3,6 +3,11 @@
 Completar solo las secciones aplicables al punto de entrega acordado.
 
 ## Resumen del proyecto
+## Fidelidad alcanzada
+Referencia estructural / Propuesta visual / Referencia final de implementación
+
+## Elementos provisionales y validaciones pendientes
+## Adaptaciones entre diseño e implementación
 ## Mapa de artefactos
 Referencia: `docs/ARTIFACTS.md`
 
