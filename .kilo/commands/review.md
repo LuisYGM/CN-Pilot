@@ -5,10 +5,10 @@ agent: dev-lead
 
 # Review
 
-1. Obtén `git status` y `git diff`.
+1. Si existe Git, obtén `git status` y `git diff`. Si no existe, revisa directamente los archivos y artefactos afectados sin tratarlo como bloqueo.
 2. Identifica requisitos/criterios.
 3. Reutiliza un informe previo si revisa el mismo alcance y sigue siendo válido.
-4. Si el siguiente paso depende del resultado, delega a `reviewer` mediante `task` en primer plano. Usa Agent Manager/worktree solo si se necesita aislamiento real o una sesión independiente.
+4. Si el siguiente paso depende del resultado, delega a `reviewer` mediante `task` en primer plano. Usa Agent Manager/worktree solo si existe Git y se necesita aislamiento real o una sesión independiente.
 5. Solicita un informe final conciso, priorizado y accionable; no hagas polling.
 6. Carga reviews específicas si aplican: seguridad, performance, accessibility, SEO o testing.
 7. Clasifica hallazgos.

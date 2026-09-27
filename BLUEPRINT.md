@@ -8,11 +8,11 @@ Sistema portable y versionado para desarrollar proyectos web con agentes de IA s
 
 ## Principio local-first y modo de entrega
 
-El Blueprint prepara y versiona el trabajo localmente por defecto. La plataforma objetivo, el alcance del repositorio y el modo de entrega son dimensiones independientes: un destino WordPress, Bricks, Elementor o WooCommerce no implica automáticamente implementación dentro de esa plataforma.
+El Blueprint prepara el trabajo localmente por defecto y lo versiona cuando Git está disponible. La plataforma objetivo, el alcance del repositorio y el modo de entrega son dimensiones independientes: un destino WordPress, Bricks, Elementor o WooCommerce no implica automáticamente implementación dentro de esa plataforma.
 
 Cada proyecto define hasta dónde llega el repositorio y cómo se entrega cada artefacto: trabajo manual posterior, integración/MCP opcional o implementación completa desde el repositorio. Diferentes entregables pueden tener destinos distintos. El núcleo no depende de ningún proveedor o MCP; si una integración no está disponible o queda fuera de alcance, se produce un handoff completo y el flujo se detiene en el punto acordado.
 
-`/new-project` inicializa una sola vez el contexto de cada repositorio creado desde el Blueprint; no significa «crear una web nueva». Puede describir trabajo nuevo o un sistema existente y debe preservar como fuente de verdad la implementación vigente que corresponda.
+`/new-project` inicializa una sola vez el contexto de cada carpeta de proyecto creada desde el Blueprint; no significa «crear una web nueva». Puede describir trabajo nuevo o un sistema existente y debe preservar como fuente de verdad la implementación vigente que corresponda.
 
 ## Capas de configuración
 
@@ -38,7 +38,7 @@ PROJECT
 → ACCEPTANCE CRITERIA
 → DEFINITION OF DONE
 → REVIEW
-→ GIT CHECKPOINT
+→ OPTIONAL GIT CHECKPOINT
 ```
 
 ## Perfiles
@@ -72,21 +72,21 @@ Las reglas por patrón se ordenan de lo específico a lo general porque Kilo apl
 ### DIRECT
 Cambio pequeño, localizado y reversible. Modifica solo los archivos estrictamente necesarios y sigue un flujo ligero, sin Architect, Reviewer completo, branch ni documentación adicional, salvo que el riesgo lo justifique.
 
-`identificar → modificar lo mínimo → verificar → commit local automático según la política Git`
+`identificar → modificar lo mínimo → verificar → commit local automático si Git existe`
 
 ### TASK
 Cambio acotado con lógica o impacto. Una TASK rutinaria de bajo riesgo no requiere Reviewer independiente por defecto.
 
-`especialista → verificación básica proporcional → inspección del diff → commit local automático`
+`especialista → verificación básica proporcional → inspección de cambios → commit local automático si Git existe`
 
 Reviewer completo se reserva para una TASK con riesgo o impacto suficiente, criterios de aceptación relevantes, seguridad, pagos, autenticación, datos o integraciones sensibles, o una razón concreta de Dev Lead.
 
 ### STRUCTURAL
 Cambio importante, de arquitectura o riesgo alto.
 
-`requirements → architecture → plan → branch → implementación incremental → tests → review → checkpoint → staging → acceptance → production`
+`requirements → architecture → plan → branch si aplica → implementación incremental → tests → review → checkpoint → staging → acceptance → production`
 
-La fase de planificación produce un artefacto versionado cuando la especificación, arquitectura, plan o criterios vayan a utilizarse posteriormente. «No escribir código todavía» no impide persistir documentación; solo una instrucción explícita de no modificar el repositorio evita escribirla. Las especificaciones de funcionalidades van en `docs/features/`, la arquitectura transversal en `docs/architecture/` y las decisiones aprobadas en `DECISIONS.md` o `docs/decisions/`. Una planificación completa y verificada crea su commit local automático y nunca hace push.
+La fase de planificación produce un artefacto persistido cuando la especificación, arquitectura, plan o criterios vayan a utilizarse posteriormente. «No escribir código todavía» no impide persistir documentación; solo una instrucción explícita de no modificar la carpeta del proyecto evita escribirla. Las especificaciones de funcionalidades van en `docs/features/`, la arquitectura transversal en `docs/architecture/` y las decisiones aprobadas en `DECISIONS.md` o `docs/decisions/`. Una planificación completa y verificada crea su commit local si Git existe; sin Git queda guardada localmente.
 
 El flujo reutiliza análisis, tests y reviews todavía válidos, evita verificaciones duplicadas y reserva margen antes de Reviewer para recibir hallazgos, corregir, probar y cerrar. Si una sesión debe continuar, recupera el estado vigente y ejecuta únicamente el trabajo pendiente.
 
@@ -121,7 +121,7 @@ En WordPress se evalúan primero las capacidades disponibles en Core y el stack 
 ## Memoria del proyecto
 
 - `PROJECT.md`: contexto relativamente estable.
-- `STATE.md`: estado operativo breve. Solo cambia materialmente ante variaciones en el trabajo actual, bloqueos, siguiente paso, rama activa o checkpoints relevantes; no por cambios rutinarios de metadata, idioma, stack, requisitos, contenido o configuración.
+- `STATE.md`: estado operativo breve. Solo cambia materialmente ante variaciones en el trabajo actual, bloqueos, siguiente paso, rama activa si aplica o checkpoints relevantes; no por cambios rutinarios de metadata, idioma, stack, requisitos, contenido, configuración o ausencia de Git.
 - `DECISIONS.md`: decisiones importantes.
 - `REQUIREMENTS.md`: requisitos.
 - `docs/features/`: specs funcionales.
@@ -130,13 +130,13 @@ En WordPress se evalúan primero las capacidades disponibles en Core y el stack 
 
 ## Onboarding de proyectos
 
-`/new-project` se ejecuta una sola vez para inicializar el contexto del repositorio; no equivale a crear una web nueva. Debe inspeccionar primero las reglas, la versión del Blueprint, las plantillas de contexto y la implementación existente. La primera ronda será breve y natural: preguntará solo los temas previstos que sigan faltando y nunca repetirá información inferida con fiabilidad.
+`/new-project` se ejecuta una sola vez para inicializar el contexto de la carpeta del proyecto; no equivale a crear una web nueva. Debe inspeccionar primero las reglas, la versión del Blueprint, las plantillas de contexto y la implementación existente. La primera ronda será breve y natural: preguntará solo los temas previstos que sigan faltando y nunca repetirá información inferida con fiabilidad.
 
 El sistema inferirá si se parte de un proyecto nuevo o existente, objetivo, plataforma/stack, alcance del repositorio, punto y modo de entrega, fuentes de verdad y destinos distintos por entregable. Marcará como `Pending` lo desconocido sin convertir estos conceptos en un formulario técnico para el usuario.
 
 Antes de editar, presentará un resumen simple y centrado en el proyecto: trabajo previsto, propósito y público, stack conocido, qué se preparará en el repositorio, hasta dónde llegará, cómo continuará después y pendientes relevantes. No expondrá archivos, categorías, reglas internas ni la distinción entre hechos e inferencias salvo que sean útiles para una decisión del proyecto. La única confirmación será «¿Inicializo el proyecto con esta información?» y una respuesta simple bastará; Dev Lead distribuirá después la información internamente entre `PROJECT.md`, `REQUIREMENTS.md`, `STATE.md` y `DECISIONS.md`.
 
-`DECISIONS.md` solo registrará decisiones importantes con alternativas razonables, que condicionen la arquitectura o el desarrollo futuro, sean costosas de cambiar o hayan sido decididas explícitamente por el usuario. Requisitos, páginas, alcance y workflow no son decisiones automáticamente. Las reglas operativas se aplican internamente y no se trasladan al usuario para recordarlas o confirmarlas. El onboarding no desarrolla páginas, componentes ni funcionalidades. Tras revisar el diff y el estado Git, si hay cambios válidos y la inicialización quedó terminada y verificada, crea automáticamente el commit local `chore: inicializar proyecto`, salvo las exclusiones generales de la política Git; nunca hace push.
+`DECISIONS.md` solo registrará decisiones importantes con alternativas razonables, que condicionen la arquitectura o el desarrollo futuro, sean costosas de cambiar o hayan sido decididas explícitamente por el usuario. Requisitos, páginas, alcance y workflow no son decisiones automáticamente. Las reglas operativas se aplican internamente y no se trasladan al usuario para recordarlas o confirmarlas. El onboarding no desarrolla páginas, componentes ni funcionalidades. Tras verificar los archivos, si Git existe revisa status/diff y crea el commit local `chore: inicializar proyecto`; sin Git finaliza correctamente sin commit.
 
 ## Contenido
 
@@ -150,7 +150,10 @@ Si los permisos impiden escribir una ruta canónica, se reporta el bloqueo y no 
 
 ## Git
 
-- Dev Lead crea automáticamente un commit local por defecto cuando una tarea modificó archivos y quedó totalmente terminada y verificada; no pregunta al usuario si quiere hacerlo.
+- Git es una capacidad opcional: el Blueprint funciona en carpetas sin Git, repositorios locales y repositorios con GitHub u otros remotos.
+- Sin Git se omiten comandos, ramas, hashes, worktrees y commits; se verifican los archivos directamente y la ausencia no se trata como bloqueo.
+- El Blueprint nunca ejecuta `git init` salvo solicitud explícita o alcance confirmado.
+- Cuando Git existe, Dev Lead crea automáticamente un commit local por defecto cuando una tarea modificó archivos y quedó totalmente terminada y verificada; no pregunta al usuario si quiere hacerlo.
 - No crea commit si la tarea está incompleta, fue solo diagnóstico o exploración, existen errores bloqueantes o el usuario lo prohibió explícitamente.
 - Conventional Commits.
 - Descripciones siempre en español.

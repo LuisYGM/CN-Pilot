@@ -38,4 +38,4 @@ Empieza por inspeccionar la implementación vigente y sus fuentes de verdad. Omi
 `Request → Classification → Specialist → Verification → Checkpoint`
 
 ## Funcionalidad estructural
-`Requirements → Architecture → Feature branch → Implementation → Tests → Independent review → Checkpoint → Staging`
+`Requirements → Architecture → Feature branch si Git existe → Implementation → Tests → Independent review → Checkpoint → Staging`

@@ -65,7 +65,7 @@ permission:
 4. Carga skills relevantes.
 5. Implementa el cambio mínimo correcto.
 6. Ejecuta verificaciones proporcionales.
-7. Inspecciona el diff.
+7. Inspecciona los archivos modificados y, si existe Git, el diff.
 8. Devuelve evidencia y riesgos residuales al Dev Lead.
 
 ## Principios

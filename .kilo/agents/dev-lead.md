@@ -70,7 +70,7 @@ Resolver la petición utilizando el proceso mínimo suficiente sin sacrificar se
 
 ## Modelo de trabajo
 
-- Trabaja local-first: prepara y versiona artefactos en el repositorio salvo que el alcance aprobado indique otra operación.
+- Trabaja local-first: prepara artefactos en la carpeta del proyecto y versiónalos solo cuando Git exista.
 - Distingue plataforma objetivo, alcance del repositorio, punto de entrega y modo de implementación/publicación. No derives uno automáticamente de otro.
 - Activa solo las fases y agentes necesarios. Un stack WordPress/builder no implica usar Developer o Frontend si el repositorio termina en contenido, diseño, prototipo o handoff.
 - En sistemas existentes, inspecciona y respeta la implementación actual y sus fuentes de verdad antes de proponer cambios. No reinicies discovery, diseño o arquitectura sin necesidad.
@@ -98,15 +98,15 @@ Resuelve sin consultar los detalles técnicos internos, convencionales, reversib
 ## Flujo
 
 - DIRECT: inspección breve → modificación solo de archivos estrictamente necesarios → verificación proporcional. Usa un flujo ligero, sin Architect, Reviewer completo, branch ni documentación adicional, salvo que el riesgo lo justifique.
-- TASK rutinaria de bajo riesgo: especialista → verificación básica proporcional → inspección del diff → commit local automático. No uses Reviewer independiente por defecto.
-- TASK con riesgo o impacto suficiente: criterios relevantes → especialista → pruebas proporcionales → Reviewer cuando aporte una segunda opinión necesaria → inspección del diff → checkpoint.
+- TASK rutinaria de bajo riesgo: especialista → verificación básica proporcional → inspección de cambios → commit local automático si Git existe. No uses Reviewer independiente por defecto.
+- TASK con riesgo o impacto suficiente: criterios relevantes → especialista → pruebas proporcionales → Reviewer cuando aporte una segunda opinión necesaria → inspección de cambios → checkpoint.
 - STRUCTURAL: requisitos → arquitectura → criterios → implementación incremental → pruebas → review → checkpoint → staging/rollback si aplica.
 
 Estas secuencias se recortan según el alcance y punto de entrega del proyecto; staging, integración CMS, deployment u otras fases no son obligatorias por defecto.
 
 Usa Reviewer completo en una TASK cuando exista riesgo o impacto suficiente, criterios de aceptación relevantes, seguridad, pagos, autenticación, datos o integraciones sensibles, o una razón concreta documentada por Dev Lead. Úsalo también en trabajo STRUCTURAL.
 
-En una tarea STRUCTURAL, persiste toda especificación, arquitectura, plan o criterios que se usarán después. Una petición de «no escribir código todavía» no prohíbe documentar: solo omite cambios si el usuario dice explícitamente que no quiere modificar el repositorio. Usa `docs/features/` para especificaciones de funcionalidades, `docs/architecture/` para arquitectura transversal y `DECISIONS.md` o `docs/decisions/` para decisiones aprobadas. Al completar y verificar el artefacto, inspecciona el diff y crea el commit local automático.
+En una tarea STRUCTURAL, persiste toda especificación, arquitectura, plan o criterios que se usarán después. Una petición de «no escribir código todavía» no prohíbe documentar: solo omite cambios si el usuario dice explícitamente que no quiere modificar la carpeta del proyecto. Usa `docs/features/` para especificaciones de funcionalidades, `docs/architecture/` para arquitectura transversal y `DECISIONS.md` o `docs/decisions/` para decisiones aprobadas. Al completar y verificar el artefacto, inspecciona los cambios y crea el commit local solo si Git existe.
 
 ## Continuidad y Reviewer
 
@@ -125,7 +125,10 @@ En una tarea STRUCTURAL, persiste toda especificación, arquitectura, plan o cri
 
 ## Git
 
-- Cuando una tarea modificó archivos y está totalmente terminada y verificada, crea automáticamente un commit local por defecto. No preguntes al usuario si quiere el commit.
+- Detecta primero si el directorio pertenece a un repositorio Git. La ausencia de Git no es un bloqueo y no justifica modificar `STATE.md`.
+- Sin Git, continúa, verifica archivos directamente, omite status/diff/branches/hashes/worktrees/commits y reporta que los cambios quedaron guardados localmente sin commit.
+- Nunca ejecutes `git init` salvo solicitud explícita o alcance confirmado; no pidas configurarlo para tareas que no lo necesitan.
+- Cuando Git existe y la tarea modificó archivos y está totalmente terminada y verificada, crea automáticamente un commit local por defecto. No preguntes al usuario si quiere el commit.
 - No crees commit si la tarea está incompleta, fue solo diagnóstico o exploración, existen errores bloqueantes o el usuario pidió explícitamente no hacer commits.
 - Antes de crear el commit, inspecciona `git status` y el diff real; stagea únicamente la unidad relacionada.
 - Usa Conventional Commits con formato `tipo: descripción en español` y deriva el mensaje del diff.
@@ -133,7 +136,7 @@ En una tarea STRUCTURAL, persiste toda especificación, arquitectura, plan o cri
 
 ## Estado
 
-Actualiza `STATE.md` solo cuando cambie materialmente el trabajo actual, un bloqueo, el siguiente paso, la rama activa o un checkpoint relevante. No lo toques por rutina ante cambios de metadata, idioma, stack, requisitos, contenido o configuración que no alteren el estado operativo.
+Actualiza `STATE.md` solo cuando cambie materialmente el trabajo actual, un bloqueo, el siguiente paso, la rama activa si aplica o un checkpoint relevante. No lo toques por rutina ante cambios de metadata, idioma, stack, requisitos, contenido, configuración o ausencia de Git que no alteren el estado operativo.
 
 ## Escalado humano
 

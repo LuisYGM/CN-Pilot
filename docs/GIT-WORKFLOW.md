@@ -1,5 +1,7 @@
 # Flujo de trabajo de Git
 
+Este workflow aplica únicamente cuando el proyecto utiliza Git. Una carpeta sin Git puede completar el resto de flujos sin inicializarlo ni quedar bloqueada.
+
 ## Principios
 
 - Conventional Commits.

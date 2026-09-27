@@ -27,7 +27,7 @@ No cargues contexto irrelevante.
 
 ## Modelo local-first y entrega
 
-- Prepara y versiona el trabajo localmente en el repositorio por defecto.
+- Prepara el trabajo localmente en la carpeta del proyecto y, si existe Git, versiónalo en el repositorio.
 - Separa la plataforma objetivo del alcance del repositorio y del modo de entrega. Que el destino use WordPress, Bricks, Elementor, WooCommerce u otro CMS/builder no autoriza ni obliga a implementar dentro de esa plataforma.
 - Respeta el punto de entrega acordado por entregable: contenido, diseño, frontend/prototipo, handoff, integración CMS o deployment. No ejecutes fases posteriores por rutina.
 - Un mismo proyecto puede combinar destinos distintos por entregable, como maquetación manual, publicación mediante MCP o desarrollo completo local.
@@ -56,7 +56,7 @@ Evalúa el riesgo por separado. Producción, DNS, autenticación, pagos o DB pue
 
 En tareas `DIRECT`, modifica solo los archivos estrictamente necesarios y usa un flujo ligero, sin Architect, Reviewer completo, branch ni documentación adicional, salvo que el riesgo lo justifique.
 
-Una `TASK` rutinaria de bajo riesgo sigue: especialista → verificación básica proporcional → inspección del diff → commit local automático. No requiere Reviewer independiente por defecto.
+Una `TASK` rutinaria de bajo riesgo sigue: especialista → verificación básica proporcional → inspección de cambios → commit local automático si Git existe. No requiere Reviewer independiente por defecto.
 
 Usa Reviewer completo solo en una `TASK` con riesgo o impacto suficiente, criterios de aceptación relevantes, seguridad, pagos, autenticación, datos o integraciones sensibles, o una razón concreta de Dev Lead; también en trabajo `STRUCTURAL`.
 
@@ -86,10 +86,10 @@ Resuelve autónomamente detalles internos, convencionales, de bajo riesgo, rever
 
 ## Artefactos estructurales
 
-- Si una tarea `STRUCTURAL` produce una especificación, arquitectura, plan de implementación o criterios de aceptación que se usarán después, persiste el artefacto en el repositorio.
-- «No escribir código todavía» impide implementar, no documentar el plan. Solo evita modificar archivos cuando el usuario indique explícitamente que no quiere cambios en el repositorio.
+- Si una tarea `STRUCTURAL` produce una especificación, arquitectura, plan de implementación o criterios de aceptación que se usarán después, persiste el artefacto en la carpeta del proyecto.
+- «No escribir código todavía» impide implementar, no documentar el plan. Solo evita modificar archivos cuando el usuario indique explícitamente que no quiere cambios en la carpeta del proyecto.
 - Guarda especificaciones de funcionalidades en `docs/features/`, arquitectura transversal en `docs/architecture/` y decisiones aprobadas en `DECISIONS.md` o `docs/decisions/`.
-- Cuando la planificación persistida esté completa y verificada, aplica la política normal de commit local automático; nunca hagas push automático.
+- Cuando la planificación persistida esté completa y verificada, aplica la política Git si está disponible; sin Git, conserva los archivos localmente y reporta el cierre sin commit.
 
 ## Decisiones arquitectónicas
 
@@ -146,11 +146,23 @@ Antes de añadir una dependencia:
 
 ## Git
 
-Dev Lead crea automáticamente un commit local por defecto cuando una tarea que modificó archivos está totalmente terminada y verificada. No pregunta al usuario si quiere el commit.
+Git es opcional. El proyecto puede operar como carpeta local, repositorio Git local o repositorio con cualquier remoto. Su ausencia no bloquea inicialización, contenido, diseño, desarrollo, handoff, MCP ni verificaciones basadas en archivos.
+
+Si no existe repositorio Git:
+
+- continúa trabajando y verifica directamente los archivos;
+- no ejecutes `git init` ni pidas configurar Git salvo que la tarea lo requiera explícitamente;
+- no registres la ausencia como bloqueo en `STATE.md`;
+- omite status, diff, branches, hashes, worktrees y commits;
+- informa al finalizar que los cambios quedaron guardados localmente y no hubo commit porque Git no está inicializado.
+
+Puede registrarse «Control de versiones: no inicializado» como contexto estable, nunca como bloqueo. `git init` solo se ejecuta por solicitud explícita o si forma parte del alcance confirmado.
+
+Cuando Git existe, Dev Lead crea automáticamente un commit local por defecto si una tarea que modificó archivos está totalmente terminada y verificada. No pregunta al usuario si quiere el commit.
 
 No crea commit si la tarea está incompleta, fue solo diagnóstico o exploración, existen errores bloqueantes o el usuario pidió explícitamente no hacer commits.
 
-Antes de un commit:
+Antes de un commit, cuando Git existe:
 
 1. `git status`;
 2. `git diff`;
@@ -177,7 +189,7 @@ No declares una tarea terminada solo porque escribiste código. La evidencia deb
 ## Estado
 
 - `PROJECT.md`: contexto estable.
-- `STATE.md`: estado operativo actual y breve. Solo se actualiza si cambia materialmente el trabajo actual, un bloqueo, el siguiente paso, la rama activa o un checkpoint relevante. Metadata, idioma, stack, requisitos, contenido o configuración que no cambien el estado operativo no justifican tocarlo por rutina.
+- `STATE.md`: estado operativo actual y breve. Solo se actualiza si cambia materialmente el trabajo actual, un bloqueo, el siguiente paso, la rama activa si aplica o un checkpoint relevante. Metadata, idioma, stack, requisitos, contenido, configuración o ausencia de Git que no cambien el estado operativo no justifican tocarlo por rutina.
 - `DECISIONS.md`: decisiones importantes.
 - `REQUIREMENTS.md`: requisitos y criterios.
 - `content/pages/`: contenido de páginas.
@@ -190,7 +202,7 @@ No declares una tarea terminada solo porque escribiste código. La evidencia deb
 
 Si los permisos impiden escribir una ruta canónica, reporta el bloqueo; no reubiques el artefacto en otra carpeta.
 
-Git contiene el historial; `STATE.md` no es un changelog.
+Git contiene el historial cuando existe; `STATE.md` no es un changelog.
 
 ## Autonomía
 

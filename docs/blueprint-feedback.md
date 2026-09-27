@@ -232,6 +232,26 @@ Reviewer terminó y entregó correctamente su informe. El worktree específico d
 **Limitación conocida:**
 Kilo puede dejar worktrees residuales cuya propiedad no sea identificable desde Agent Manager. Deben conservarse hasta verificar su origen y estado, reportarse con precisión y gestionarse mediante cleanup seguro; nunca deben eliminarse automáticamente sin esa evidencia.
 
+## BF-012 — Git tratado incorrectamente como requisito de trabajo
+
+**Contexto:**
+P02 inicializado correctamente en una carpeta local sin repositorio Git.
+
+**Comportamiento observado:**
+Dev Lead continuó la inicialización, pero registró la ausencia de Git como bloqueo en `STATE.md`, aunque el trabajo no dependía de control de versiones.
+
+**Comportamiento esperado:**
+El Blueprint debe funcionar en carpetas sin Git, repositorios locales o repositorios con cualquier remoto. Sin Git continúa trabajando, verifica archivos directamente, omite operaciones exclusivas de Git y reporta el guardado local sin considerar el proyecto bloqueado ni ejecutar `git init`.
+
+**Impacto:**
+High.
+
+**Mejora propuesta:**
+Hacer condicional toda la política Git, adaptar onboarding, checkpoint, commit, review, handoff y flujos habituales, y reservar `git init` para una solicitud explícita o un alcance confirmado.
+
+**Estado:**
+Resolved.
+
 ## Plantilla reutilizable
 
 ### BF-XXX — [Título]

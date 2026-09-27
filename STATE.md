@@ -1,6 +1,6 @@
 # Estado actual
 
-> Mantener breve; Git contiene el historial.
+> Mantener breve; si existe Git, contiene el historial.
 
 ## Trabajando en
 Pending.
@@ -14,8 +14,8 @@ Pending.
 ## Siguiente paso
 Ejecutar `/new-project`.
 
-## Rama actual
+## Rama actual (si aplica)
 Pending.
 
-## Último checkpoint
+## Último checkpoint Git (si aplica)
 Pending.

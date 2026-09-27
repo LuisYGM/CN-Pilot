@@ -14,7 +14,7 @@ Está diseñado para proyectos pequeños o grandes y puede adaptarse a WordPress
 - Los agentes trabajan con el mínimo contexto necesario.
 - Los permisos técnicos complementan las instrucciones.
 - No se declara una tarea terminada sin evidencia proporcional.
-- Git forma parte del flujo normal de trabajo.
+- Git es opcional; cuando existe, forma parte del flujo normal de trabajo.
 - Todos los mensajes de commit se escriben en español.
 - Producción y operaciones destructivas requieren control humano.
 - El Blueprint debe seguir siendo portable entre equipos y ordenadores.
@@ -36,6 +36,8 @@ Sube esta carpeta a GitHub como `web-project-blueprint` y activa **Template repo
 7. Selecciona el agente `dev-lead`.
 8. Ejecuta `/new-project`.
 
+Alternativamente, copia el Blueprint a una carpeta local sin Git y sigue desde el paso 4. No es necesario ejecutar `git init`.
+
 ### 3. Trabajar normalmente
 
 Habla con `dev-lead` en lenguaje natural. Debe:
@@ -48,9 +50,9 @@ Habla con `dev-lead` en lenguaje natural. Debe:
 6. verificar el resultado;
 7. crear checkpoints/commits cuando corresponda.
 
-### 4. Git y GitHub Desktop
+### 4. Git opcional y GitHub Desktop
 
-Kilo puede crear commits locales. El usuario mantiene por defecto el control de `push`, `merge`, `rebase` y despliegues.
+Si existe repositorio, Kilo puede crear commits locales y el usuario mantiene el control de `push`, `merge`, `rebase` y despliegues. Sin Git, los cambios quedan guardados localmente y el resto del Blueprint continúa funcionando.
 
 ## Archivos principales
 

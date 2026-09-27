@@ -8,6 +8,7 @@ Completar solo las secciones aplicables al punto de entrega acordado.
 ## Destino por entregable
 ## Stack
 ## Repositorio
+## Control de versiones (si aplica)
 ## Fuentes de verdad
 ## Entornos
 ## Arquitectura
