@@ -2,6 +2,8 @@
 
 **Versión:** `1.0.0-draft`
 
+Documento de referencia para maintainers del Blueprint. Un usuario nuevo debe empezar por [`docs/START-HERE.md`](docs/START-HERE.md); no necesita leer esta especificación para trabajar.
+
 ## Objetivo
 
 Sistema portable y versionado para desarrollar proyectos web con agentes de IA sin depender de una única máquina, persona o proyecto. Debe servir tanto para mantenimiento pequeño como para proyectos grandes desde cero.

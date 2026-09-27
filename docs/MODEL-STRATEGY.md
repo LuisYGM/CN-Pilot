@@ -12,7 +12,7 @@ La selección real pertenece a la configuración global o personal de Kilo de ca
 - los modelos, variantes y credenciales locales no se versionan;
 - cambiar de proveedor no requiere modificar el Blueprint ni sus agentes.
 
-La configuración compartible del proyecto y la separación entre preferencias locales y secretos se describen en `docs/CONFIGURATION.md`.
+La configuración compartible del proyecto y la separación entre preferencias locales y secretos se describen en [Configuración del Blueprint](CONFIGURATION.md). Los pasos operativos de instalación están en [Configuración de Kilo](KILO-SETUP.md).
 
 ## Tiers recomendados
 

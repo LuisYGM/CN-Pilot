@@ -1,111 +1,58 @@
 # Web Project Blueprint
 
-Blueprint portable para iniciar, desarrollar, revisar, versionar y mantener proyectos web con Kilo Code y Git/GitHub.
+Blueprint portable para iniciar, desarrollar, revisar y mantener proyectos web con Kilo Code. Organiza contexto, agentes especializados, workflows y artefactos sin imponer un proveedor de IA, un CMS, un método de entrega ni Git.
 
 **Versión:** `1.0.0-draft`
 
-Está diseñado para proyectos pequeños o grandes y puede adaptarse a WordPress, WooCommerce, plugins, Bricks, Elementor, HTML/CSS/JS, PHP, APIs, landing pages y proyectos de contenido.
+Sirve para proyectos nuevos o existentes: HTML/CSS/JS, WordPress, WooCommerce, plugins, themes, Bricks, Elementor, PHP, APIs, contenido y SEO. El repositorio puede terminar en contenido, diseño, código, handoff manual, integración mediante MCP o deployment, según el alcance real.
 
-## Principios
+## Empieza aquí
 
-- La complejidad del proceso debe ser proporcional al cambio.
-- Inspeccionar antes de modificar.
-- Diagnosticar no significa modificar.
-- Los agentes trabajan con el mínimo contexto necesario.
-- Los permisos técnicos complementan las instrucciones.
-- No se declara una tarea terminada sin evidencia proporcional.
-- Git es opcional; cuando existe, forma parte del flujo normal de trabajo.
-- Todos los mensajes de commit se escriben en español.
-- Producción y operaciones destructivas requieren control humano.
-- El Blueprint debe seguir siendo portable entre equipos y ordenadores.
+1. **Primer día:** sigue [`docs/START-HERE.md`](docs/START-HERE.md).
+2. **Configura Kilo:** consulta [`docs/KILO-SETUP.md`](docs/KILO-SETUP.md).
+3. **Elige modelos:** aplica [`docs/MODEL-STRATEGY.md`](docs/MODEL-STRATEGY.md) en tu configuración personal.
+4. **Inicializa la carpeta:** habla con `dev-lead` y ejecuta `/new-project` una sola vez.
+5. **Trabaja normalmente:** describe la tarea en lenguaje natural; Dev Lead selecciona agentes, skills y profundidad del proceso.
 
-## Inicio rápido
+Git es opcional. Sin Git, el Blueprint trabaja y verifica archivos localmente. Con Git, crea commits locales cuando corresponde, pero nunca hace `push` automático.
 
-### 1. Repositorio maestro
+## Cómo se usa
 
-Sube esta carpeta a GitHub como `web-project-blueprint` y activa **Template repository**.
+Normalmente solo interactúas con **Dev Lead**. No necesitas seleccionar manualmente agents, profiles, capabilities, skills o rutas internas. `/new-project` tampoco crea una web: inicializa el contexto de la carpeta, tanto para proyectos nuevos como para sistemas existentes.
 
-### 2. Crear un proyecto nuevo
+Principios operativos:
 
-1. En GitHub pulsa **Use this template**.
-2. Crea un repositorio nuevo.
-3. Clónalo con GitHub Desktop.
-4. Ábrelo en VS Code.
-5. Abre Kilo Code.
-6. Configura una sola vez tus modelos globales de Kilo si todavía no lo has hecho.
-7. Selecciona el agente `dev-lead`.
-8. Ejecuta `/new-project`.
+- trabajo local-first y proceso proporcional al riesgo;
+- inspección de la implementación vigente antes de modificarla;
+- plataforma objetivo, alcance del repositorio y punto de entrega tratados por separado;
+- MCP y deployment opcionales, nunca activados por defecto;
+- conversaciones naturales en lugar de formularios técnicos;
+- decisiones internas reversibles resueltas por el agente y control humano para alcance, producción, datos, seguridad y decisiones costosas.
 
-Alternativamente, copia el Blueprint a una carpeta local sin Git y sigue desde el paso 4. No es necesario ejecutar `git init`.
+## Mapa de documentación
 
-### 3. Trabajar normalmente
+### Usuario del Blueprint
 
-Habla con `dev-lead` en lenguaje natural. Debe:
+- [`docs/START-HERE.md`](docs/START-HERE.md): recorrido práctico, filosofía, escenarios y ubicación de entregables.
+- [`docs/TROUBLESHOOTING.md`](docs/TROUBLESHOOTING.md): problemas habituales y recuperación segura.
+- [`docs/ARTIFACTS.md`](docs/ARTIFACTS.md): índice de entregables reales del proyecto.
+- [`docs/LIFECYCLE.md`](docs/LIFECYCLE.md): fases posibles y puntos de entrega.
 
-1. entender la petición;
-2. clasificarla como `DIRECT`, `TASK` o `STRUCTURAL`;
-3. evaluar el riesgo;
-4. cargar solo las skills necesarias;
-5. delegar a los subagentes apropiados;
-6. verificar el resultado;
-7. crear checkpoints/commits cuando corresponda.
+### Configuración y trabajo del equipo
 
-### 4. Git opcional y GitHub Desktop
+- [`docs/KILO-SETUP.md`](docs/KILO-SETUP.md): instalación y configuración personal de Kilo.
+- [`docs/MODEL-STRATEGY.md`](docs/MODEL-STRATEGY.md): tiers provider-agnostic y control de coste.
+- [`docs/CONFIGURATION.md`](docs/CONFIGURATION.md): responsive, MCP, deployment, configuración local y secretos.
+- [`docs/GIT-WORKFLOW.md`](docs/GIT-WORKFLOW.md): commits, ramas y operación con o sin remoto.
+- [`docs/TEAM-WORKFLOW.md`](docs/TEAM-WORKFLOW.md): colaboración y continuidad entre personas.
+- [`docs/SECURITY.md`](docs/SECURITY.md): línea base de seguridad.
 
-Si existe repositorio, Kilo puede crear commits locales y el usuario mantiene el control de `push`, `merge`, `rebase` y despliegues. Sin Git, los cambios quedan guardados localmente y el resto del Blueprint continúa funcionando.
+### Maintainers del Blueprint
 
-## Archivos principales
+- [`BLUEPRINT.md`](BLUEPRINT.md): especificación completa del sistema.
+- [`AGENTS.md`](AGENTS.md): reglas universales para agentes.
+- [`MANIFEST.md`](MANIFEST.md): inventario de Blueprint Core.
+- [`docs/blueprint-feedback.md`](docs/blueprint-feedback.md): pruebas y limitaciones observadas.
+- [`CHANGELOG.md`](CHANGELOG.md): historial de versiones.
 
-- `AGENTS.md`: reglas universales.
-- `BLUEPRINT.md`: especificación del sistema.
-- `MANIFEST.md`: inventario de la infraestructura heredada del Blueprint.
-- `PROJECT.md`: contexto estable del proyecto.
-- `STATE.md`: estado operativo actual.
-- `DECISIONS.md`: decisiones importantes.
-- `REQUIREMENTS.md`: requisitos y criterios.
-- `.blueprint-version`: versión del Blueprint.
-- `.kilo/agents/`: agentes.
-- `.kilo/skills/`: procedimientos reutilizables.
-- `.kilo/commands/`: workflows/slash commands.
-- `profiles/`: perfiles de proyecto.
-- `config/`: convenciones universales versionadas.
-- `templates/`: ejemplos opcionales que no se activan por defecto.
-- `docs/CONFIGURATION.md`: responsive, MCP, configuración local y deployment opcional.
-- `docs/MODEL-STRATEGY.md`: tiers de capacidad y configuración personal de modelos.
-- `docs/ARTIFACTS.md`: mapa de entregables reales producidos para el proyecto.
-
-## Agentes Core
-
-- `dev-lead`
-- `architect`
-- `content-seo`
-- `ui-ux-designer`
-- `developer`
-- `frontend-builder`
-- `reviewer`
-
-## Workflows principales
-
-- `/new-project`
-- `/plan`
-- `/content`
-- `/design`
-- `/debug`
-- `/review`
-- `/checkpoint`
-- `/commit`
-- `/pre-deploy`
-- `/deploy-staging`
-- `/handoff`
-
-## Modelos y Kilo
-
-El Blueprint es provider-agnostic: los agentes describen responsabilidades y capacidad esperada, pero no contienen IDs de proveedores o modelos. Cada desarrollador elige OpenAI, Anthropic, Google u otro proveedor compatible y configura sus asignaciones globales una sola vez en Kilo.
-
-Esa configuración personal no se hereda al clonar el template y no debe versionarse. Cambiar de proveedor o mapear los mismos agentes a otros modelos no requiere modificar el Blueprint. Usa `templates/kilo/global-models.example.jsonc` como referencia inactiva y evita asignar el modelo más potente a todas las tareas.
-
-Consulta `docs/KILO-SETUP.md` para el onboarding y `docs/MODEL-STRATEGY.md` para los tiers y criterios de coste.
-
-## Estado
-
-`1.0.0-draft` es una versión candidata. Antes de promoverla a `1.0.0` debe probarse con casos reales y registrar problemas en `docs/blueprint-feedback.md`.
+El contexto de cada proyecto vive en `PROJECT.md`, `REQUIREMENTS.md`, `STATE.md` y `DECISIONS.md`. Los entregables se conservan en sus rutas canónicas, como `content/`, `design/`, `docs/features/`, `docs/architecture/` o las carpetas de código del stack.

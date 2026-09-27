@@ -3,8 +3,8 @@
 ## Requisitos
 - VS Code
 - Kilo Code
-- Git
-- GitHub Desktop (opcional/recomendado)
+- Git (opcional)
+- GitHub Desktop (opcional, si se utiliza Git/GitHub)
 - herramientas del stack del proyecto
 
 ## Configuración personal de proveedor y modelos
@@ -19,13 +19,11 @@ En Kilo Code:
 4. Completa la autenticación mediante el mecanismo seguro ofrecido por Kilo y el proveedor.
 5. Verifica que los modelos elegidos estén disponibles.
 
-Después, integra en `~/.config/kilo/kilo.jsonc` las asignaciones que necesites. `templates/kilo/global-models.example.jsonc` ofrece un ejemplo provider-agnostic con placeholders conceptuales; no es una configuración activa y no contiene credenciales.
+Después, integra en `~/.config/kilo/kilo.jsonc` las asignaciones que necesites. [`templates/kilo/global-models.example.jsonc`](../templates/kilo/global-models.example.jsonc) ofrece un ejemplo provider-agnostic con placeholders conceptuales; no es una configuración activa y no contiene credenciales. Sigue los tiers y criterios de coste de [Estrategia de modelos](MODEL-STRATEGY.md).
 
-No reemplaces a ciegas una configuración global existente: incorpora únicamente las claves necesarias. Sustituye los placeholders por IDs reales y adapta `variant` a los niveles admitidos por el proveedor. Cuando existan niveles de razonamiento, usa `medium` por defecto y reserva `high` para tareas complejas o sensibles.
+No reemplaces a ciegas una configuración global existente: incorpora únicamente las claves necesarias. Sustituye los placeholders por IDs reales y adapta `variant` a los niveles admitidos por el proveedor.
 
-La configuración global/personal no se incluye al clonar el repositorio. Puede ser diferente en cada máquina y no debe versionarse. Cambiar de proveedor o asignar otro modelo a un agente no requiere editar el Blueprint. Consulta `docs/MODEL-STRATEGY.md` para los tiers recomendados y el criterio de coste.
-
-No uses el modelo más potente para todos los agentes: reserva los modelos caros para coordinación, arquitectura o revisión compleja cuando aporten valor. Las tareas rutinarias, los subagentes genéricos, el small model y la compactación deben favorecer opciones balanced o económicas.
+La configuración global/personal no se incluye al clonar el repositorio. Puede ser diferente en cada máquina y no debe versionarse. Cambiar de proveedor o asignar otro modelo a un agente no requiere editar el Blueprint.
 
 ## Verificar agentes
 
@@ -45,6 +43,8 @@ Si modificas skills durante una sesión, usa `/reload` o inicia otra.
 Ubicación: `.kilo/commands/`.
 
 Primera acción recomendada: `/new-project`.
+
+El recorrido completo del primer día está en [Empieza aquí](START-HERE.md).
 
 ## Seguridad
 

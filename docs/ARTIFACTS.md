@@ -1,7 +1,7 @@
 # Artefactos del proyecto
 
 > Este archivo registra los artefactos creados específicamente para este proyecto.
-> La infraestructura heredada del Blueprint se documenta en `MANIFEST.md`.
+> La infraestructura heredada del Blueprint se documenta en [`MANIFEST.md`](../MANIFEST.md).
 
 Forma parte del contexto operativo y no se registra a sí mismo como artefacto. Tampoco incluye normalmente `PROJECT.md`, `REQUIREMENTS.md`, `STATE.md`, `DECISIONS.md` ni archivos internos irrelevantes.
 

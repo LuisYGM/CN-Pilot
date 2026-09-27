@@ -1,17 +1,10 @@
 # Flujo de trabajo del equipo
 
-## Proyecto nuevo
-
-1. Crear repo desde GitHub Template o copiar el Blueprint a una carpeta local.
-2. Clonar con GitHub Desktop si el proyecto utiliza Git/GitHub.
-3. Abrir en VS Code.
-4. Configurar proveedor personal en Kilo.
-5. Ejecutar `/new-project`.
-6. Trabajar. La ausencia de Git no bloquea este flujo.
+El onboarding individual está en [Empieza aquí](START-HERE.md). Este documento cubre únicamente continuidad y colaboración del equipo.
 
 ## Proyecto compartido
 
-Antes de trabajar: Pull, leer PROJECT/STATE/DECISIONS y comprobar rama.
+Si el proyecto usa Git, haz Pull y comprueba la rama. En todos los casos, revisa `PROJECT.md`, `STATE.md`, `DECISIONS.md`, `REQUIREMENTS.md` y `docs/ARTIFACTS.md` según la tarea antes de modificar archivos.
 
 ## Trabajo en funcionalidades
 
@@ -22,4 +15,4 @@ Para features estructurales:
 
 ## Mejoras del Blueprint
 
-Una mejora general descubierta en un proyecto debe aplicarse y probarse en el repositorio maestro del Blueprint, incrementando versión/CHANGELOG. Los proyectos existentes no se actualizan silenciosamente.
+Una mejora general descubierta en un proyecto debe aplicarse y probarse en el repositorio maestro del Blueprint. El maintainer la incorpora a una release y actualiza versión/`CHANGELOG.md` cuando corresponda; los proyectos existentes no se actualizan silenciosamente.

@@ -1,5 +1,7 @@
 # Configuración del Blueprint
 
+Fuente de verdad para las capas de configuración compartible, responsive, MCP, deployment opcional y secretos locales. La selección personal de modelos se documenta en [Estrategia de modelos](MODEL-STRATEGY.md).
+
 ## Capas de configuración
 
 - **Convenciones universales:** fuentes versionadas y portables que aplican por defecto, como `config/responsive.json`.
