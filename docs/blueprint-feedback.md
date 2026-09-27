@@ -252,6 +252,26 @@ Hacer condicional toda la política Git, adaptar onboarding, checkpoint, commit,
 **Estado:**
 Resolved.
 
+## BF-013 — Paralelización con Agent Manager hereda un modelo costoso
+
+**Contexto:**
+P10 con varias sesiones paralelas lanzadas mediante Agent Manager.
+
+**Comportamiento observado:**
+Las sesiones heredaron el modelo de la sesión que las creó y varias tareas utilizaron simultáneamente un tier más costoso de lo necesario. Agent Manager se usó como mecanismo de paralelización aunque un subagente `task` habría sido suficiente en parte del trabajo.
+
+**Comportamiento esperado:**
+Dev Lead debe usar `task` por defecto para trabajo integrado en la tarea actual y reservar Agent Manager para aislamiento, worktrees/branches, alternativas concurrentes, trabajo independiente o sesiones top-level separadas. La estrategia debe ser `economical/balanced by default, escalate on demand`; un tier superior solo se activa temporalmente por complejidad o riesgo concreto. No deben abrirse por defecto más de dos sesiones Agent Manager pagadas simultáneamente; más de dos requiere confirmación.
+
+**Impacto:**
+High.
+
+**Mejora propuesta:**
+Formalizar la estrategia provider-agnostic de capacidad, hacer explícita la evaluación `task` frente a Agent Manager, advertir sobre la herencia de modelos y añadir un límite de coste para sesiones paralelas pagadas.
+
+**Estado:**
+Resolved.
+
 ## Plantilla reutilizable
 
 ### BF-XXX — [Título]

@@ -92,6 +92,10 @@ Resuelve autónomamente detalles internos, convencionales, de bajo riesgo, rever
 
 ## Continuidad y revisión estructural
 
+- `task` es el mecanismo predeterminado para delegar trabajo que pertenece a la tarea actual y no necesita branch, worktree, filesystem aislado ni conversación top-level separada. No uses Agent Manager solo porque varias tareas puedan ejecutarse en paralelo.
+- Reserva Agent Manager para aislamiento real, branch/worktree independiente, alternativas concurrentes, trabajo realmente independiente o una sesión top-level separada. Antes de usarlo, evalúa si un subagente `task` es suficiente.
+- Aplica **economical/balanced by default, escalate on demand**: la configuración concreta de proveedor, modelo y variante es local. Usa un tier superior solo temporalmente ante una razón concreta de complejidad o riesgo y vuelve después al baseline económico/balanceado. No fijes permanentemente el modelo más potente a ningún agente.
+- No abras por defecto más de dos sesiones Agent Manager pagadas simultáneamente. Solicita confirmación antes de iniciar más de dos cuando el beneficio real lo justifique. Revisa la herencia de modelo de las sesiones Agent Manager desde el punto de vista de coste.
 - Antes de lanzar Reviewer independiente, reserva margen suficiente para recibir el informe, aplicar correcciones, ejecutar pruebas finales e inspeccionar el diff.
 - Para una revisión dependiente del flujo actual, prefiere un subagente `task` en primer plano. Usa Agent Manager/worktree solo cuando se necesite aislamiento real o trabajo independiente de nivel superior.
 - No hagas polling. Solicita al Reviewer un resultado final conciso, priorizado y accionable; tras correcciones, limita la revisión a los cambios y regresiones relevantes salvo que el riesgo exija repetirla completa.

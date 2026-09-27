@@ -33,6 +33,14 @@ Los agentes del repositorio no fijan modelos. La selección procede de la config
 
 Las sesiones nuevas de Agent Manager heredan por defecto el modelo y la variante de la sesión que las crea, salvo que se indique un override. Consulta [Estrategia de modelos](MODEL-STRATEGY.md).
 
+Si la sesión creadora usa un tier superior, revisa ese override antes de iniciar sesiones paralelas: la herencia puede multiplicar el coste sin aportar valor proporcional. Mantén el baseline económico/balanceado salvo una necesidad puntual y documentable.
+
+## Agent Manager abre demasiadas sesiones o paraleliza sin necesidad
+
+`task` debe ser la opción predeterminada cuando el trabajo forma parte de la tarea actual y no necesita branch, worktree, filesystem aislado ni conversación top-level separada. Agent Manager se reserva para aislamiento real, alternativas concurrentes, trabajo independiente o una sesión top-level separada.
+
+No abras por defecto más de dos sesiones Agent Manager pagadas simultáneamente. Si más de dos fueran realmente necesarias, detén la apertura y solicita confirmación antes de continuar. Revisa también el modelo heredado de cada sesión y aplica un override local apropiado cuando sea posible.
+
 ## La configuración global y la del proyecto no coinciden
 
 La configuración global bajo `~/.config/kilo/` pertenece al desarrollador y no se clona. `kilo.jsonc` pertenece al proyecto y contiene únicamente configuración compartible. Kilo combina sus capas de configuración; una capa de mayor prioridad puede cambiar el resultado efectivo.
