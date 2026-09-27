@@ -25,6 +25,15 @@ Cuando sea relevante consulta:
 
 No cargues contexto irrelevante.
 
+## Modelo local-first y entrega
+
+- Prepara y versiona el trabajo localmente en el repositorio por defecto.
+- Separa la plataforma objetivo del alcance del repositorio y del modo de entrega. Que el destino use WordPress, Bricks, Elementor, WooCommerce u otro CMS/builder no autoriza ni obliga a implementar dentro de esa plataforma.
+- Respeta el punto de entrega acordado por entregable: contenido, diseño, frontend/prototipo, handoff, integración CMS o deployment. No ejecutes fases posteriores por rutina.
+- Un mismo proyecto puede combinar destinos distintos por entregable, como maquetación manual, publicación mediante MCP o desarrollo completo local.
+- Trata MCPs e integraciones como capas opcionales y portables. Úsalos solo si están disponibles, autorizados y dentro del alcance; si no, produce un handoff suficiente y detente en el punto acordado.
+- En proyectos existentes, inspecciona primero la implementación vigente, identifica sus fuentes de verdad y activa únicamente agentes y fases necesarios para la tarea.
+
 ## Clasificación
 
 Toda petición debe tratarse como:

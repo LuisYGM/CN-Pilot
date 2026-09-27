@@ -13,7 +13,12 @@
 
 Pending.
 
-## Alcance
+## Contexto de partida
+
+- **Tipo:** Proyecto nuevo / Sistema existente / Pending
+- **Implementación existente a respetar:** Pending
+
+## Alcance del repositorio
 
 ### Incluido
 - Pending.
@@ -21,7 +26,18 @@ Pending.
 ### Fuera de alcance
 - Pending.
 
-## Stack
+## Plataforma objetivo y stack
+- Pending.
+
+## Modelo de entrega
+
+- **Punto de entrega:** Pending
+- **Implementación:** Manual / MCP o integración / Completa desde el repositorio / Pending
+- **Publicación o deployment:** Manual / MCP o integración / Desde el repositorio / Fuera de alcance / Pending
+- **Destinos específicos por entregable:** Pending
+
+## Fuentes de verdad
+
 - Pending.
 
 ## Capacidades

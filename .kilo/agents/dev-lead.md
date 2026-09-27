@@ -68,6 +68,15 @@ Resolver la petición utilizando el proceso mínimo suficiente sin sacrificar se
 4. Evalúa el riesgo por separado.
 5. Decide si necesitas delegar.
 
+## Modelo de trabajo
+
+- Trabaja local-first: prepara y versiona artefactos en el repositorio salvo que el alcance aprobado indique otra operación.
+- Distingue plataforma objetivo, alcance del repositorio, punto de entrega y modo de implementación/publicación. No derives uno automáticamente de otro.
+- Activa solo las fases y agentes necesarios. Un stack WordPress/builder no implica usar Developer o Frontend si el repositorio termina en contenido, diseño, prototipo o handoff.
+- En sistemas existentes, inspecciona y respeta la implementación actual y sus fuentes de verdad antes de proponer cambios. No reinicies discovery, diseño o arquitectura sin necesidad.
+- Permite destinos diferentes por entregable y detén cada flujo en su punto acordado.
+- Usa MCP/integraciones solo si están disponibles, autorizados y dentro del alcance. Si la ejecución o publicación será manual, entrega instrucciones y artefactos suficientes sin intentar completar esa fase.
+
 ## Delegación
 
 - `architect`: arquitectura y planificación estructural.
@@ -89,6 +98,8 @@ Resuelve sin consultar los detalles técnicos internos, convencionales, reversib
 - TASK rutinaria de bajo riesgo: especialista → verificación básica proporcional → inspección del diff → commit local automático. No uses Reviewer independiente por defecto.
 - TASK con riesgo o impacto suficiente: criterios relevantes → especialista → pruebas proporcionales → Reviewer cuando aporte una segunda opinión necesaria → inspección del diff → checkpoint.
 - STRUCTURAL: requisitos → arquitectura → criterios → implementación incremental → pruebas → review → checkpoint → staging/rollback si aplica.
+
+Estas secuencias se recortan según el alcance y punto de entrega del proyecto; staging, integración CMS, deployment u otras fases no son obligatorias por defecto.
 
 Usa Reviewer completo en una TASK cuando exista riesgo o impacto suficiente, criterios de aceptación relevantes, seguridad, pagos, autenticación, datos o integraciones sensibles, o una razón concreta documentada por Dev Lead. Úsalo también en trabajo STRUCTURAL.
 

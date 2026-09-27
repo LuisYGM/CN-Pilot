@@ -6,6 +6,14 @@
 
 Sistema portable y versionado para desarrollar proyectos web con agentes de IA sin depender de una única máquina, persona o proyecto. Debe servir tanto para mantenimiento pequeño como para proyectos grandes desde cero.
 
+## Principio local-first y modo de entrega
+
+El Blueprint prepara y versiona el trabajo localmente por defecto. La plataforma objetivo, el alcance del repositorio y el modo de entrega son dimensiones independientes: un destino WordPress, Bricks, Elementor o WooCommerce no implica automáticamente implementación dentro de esa plataforma.
+
+Cada proyecto define hasta dónde llega el repositorio y cómo se entrega cada artefacto: trabajo manual posterior, integración/MCP opcional o implementación completa desde el repositorio. Diferentes entregables pueden tener destinos distintos. El núcleo no depende de ningún proveedor o MCP; si una integración no está disponible o queda fuera de alcance, se produce un handoff completo y el flujo se detiene en el punto acordado.
+
+`/new-project` inicializa una sola vez el contexto de cada repositorio creado desde el Blueprint; no significa «crear una web nueva». Puede describir trabajo nuevo o un sistema existente y debe preservar como fuente de verdad la implementación vigente que corresponda.
+
 ## Convención de idioma
 
 La estructura técnica permanece en inglés: archivos, carpetas, agentes, skills, workflows, profiles, capabilities, claves internas, tecnologías y valores consumidos por el sistema. La documentación y el contenido destinados a personas se generan en español por defecto. Si un proyecto define explícitamente otro idioma de trabajo, se adapta el contenido humano sin traducir identificadores técnicos.
@@ -116,9 +124,11 @@ En WordPress se evalúan primero las capacidades disponibles en Core y el stack 
 
 ## Onboarding de proyectos
 
-La inicialización debe inspeccionar primero las reglas, la versión del Blueprint, las plantillas de contexto y la implementación existente. La primera ronda será breve y natural: preguntará solo los temas previstos que sigan faltando y nunca repetirá información inferida con fiabilidad. El sistema inferirá el contexto disponible y marcará como `Pending` lo desconocido, sin pedir al usuario que decida dónde o cómo guardarlo.
+`/new-project` se ejecuta una sola vez para inicializar el contexto del repositorio; no equivale a crear una web nueva. Debe inspeccionar primero las reglas, la versión del Blueprint, las plantillas de contexto y la implementación existente. La primera ronda será breve y natural: preguntará solo los temas previstos que sigan faltando y nunca repetirá información inferida con fiabilidad.
 
-Antes de editar, presentará un resumen simple y centrado en el proyecto: qué se construirá, propósito y público, stack conocido, alcance inicial y pendientes relevantes. No expondrá archivos, categorías, reglas internas ni la distinción entre hechos e inferencias salvo que sean útiles para una decisión del proyecto. La única confirmación será «¿Inicializo el proyecto con esta información?» y una respuesta simple bastará; Dev Lead distribuirá después la información internamente entre `PROJECT.md`, `REQUIREMENTS.md`, `STATE.md` y `DECISIONS.md`.
+El sistema inferirá si se parte de un proyecto nuevo o existente, objetivo, plataforma/stack, alcance del repositorio, punto y modo de entrega, fuentes de verdad y destinos distintos por entregable. Marcará como `Pending` lo desconocido sin convertir estos conceptos en un formulario técnico para el usuario.
+
+Antes de editar, presentará un resumen simple y centrado en el proyecto: trabajo previsto, propósito y público, stack conocido, qué se preparará en el repositorio, hasta dónde llegará, cómo continuará después y pendientes relevantes. No expondrá archivos, categorías, reglas internas ni la distinción entre hechos e inferencias salvo que sean útiles para una decisión del proyecto. La única confirmación será «¿Inicializo el proyecto con esta información?» y una respuesta simple bastará; Dev Lead distribuirá después la información internamente entre `PROJECT.md`, `REQUIREMENTS.md`, `STATE.md` y `DECISIONS.md`.
 
 `DECISIONS.md` solo registrará decisiones importantes con alternativas razonables, que condicionen la arquitectura o el desarrollo futuro, sean costosas de cambiar o hayan sido decididas explícitamente por el usuario. Requisitos, páginas, alcance y workflow no son decisiones automáticamente. Las reglas operativas se aplican internamente y no se trasladan al usuario para recordarlas o confirmarlas. El onboarding no desarrolla páginas, componentes ni funcionalidades. Tras revisar el diff y el estado Git, si hay cambios válidos y la inicialización quedó terminada y verificada, crea automáticamente el commit local `chore: inicializar proyecto`, salvo las exclusiones generales de la política Git; nunca hace push.
 
@@ -179,9 +189,9 @@ Considerar según aplique: sanitización, escaping, auth, capabilities, nonce/CS
 
 ## Ciclo de vida
 
-`Discovery → Architecture → Content → Design → Development → QA → Staging → Acceptance → Production → Maintenance`
+`Content → Design → Frontend/Prototype → Handoff → CMS Integration → Deployment`
 
-No todos los proyectos usan todas las fases.
+Las fases son puntos posibles de entrega, no una secuencia obligatoria. Un flujo puede empezar o terminar en cualquiera de ellas y omitir las demás. En sistemas existentes se inspecciona primero la implementación actual y solo se activan las fases necesarias. El destino puede variar por entregable dentro del mismo proyecto.
 
 ## Principio de contexto
 

@@ -7,10 +7,13 @@ agent: dev-lead
 
 1. Lee proyecto, decisiones y estado.
 2. Identifica stack/dependencias reales.
-3. Resume arquitectura.
-4. Documenta entornos y deploy sin secretos.
-5. Documenta mantenimiento/backups.
-6. Registra riesgos y pendientes.
-7. Lista accesos que el propietario debe conservar, sin contraseñas/tokens.
-8. Usa `templates/handoff.md`.
-9. Verifica que un desarrollador nuevo pueda continuar.
+3. Confirma el alcance del repositorio, el punto de entrega y el destino de cada entregable.
+4. Identifica las fuentes de verdad que debe respetar quien continúe.
+5. Resume la arquitectura necesaria para continuar.
+6. Documenta el procedimiento manual o mediante MCP/integración sin asumir que deployment forma parte del alcance.
+7. Documenta entornos, mantenimiento y backups que realmente apliquen, sin secretos.
+8. Registra trabajo fuera de alcance, riesgos y pendientes.
+9. Lista accesos que el propietario debe conservar, sin contraseñas/tokens.
+10. Usa `templates/handoff.md`.
+11. Omite o marca como no aplicables las secciones posteriores al punto de entrega; no inventes fases.
+12. Verifica que la persona o sistema que recibe cada entregable pueda continuar desde el punto acordado.
