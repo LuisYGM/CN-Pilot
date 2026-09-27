@@ -1,21 +1,42 @@
 # Artefactos del proyecto
 
-Mapa de entregables y documentación específica producida para el proyecto. Este archivo forma parte del contexto operativo y no se registra a sí mismo como artefacto.
+> Este archivo registra los artefactos creados específicamente para este proyecto.
+> La infraestructura heredada del Blueprint se documenta en `MANIFEST.md`.
 
-No incluir normalmente infraestructura heredada del Blueprint (`.kilo/`, `config/`, `templates/`, `AGENTS.md`, `BLUEPRINT.md`, `MANIFEST.md`) ni archivos de contexto como `PROJECT.md`, `REQUIREMENTS.md`, `STATE.md` y `DECISIONS.md`.
+Forma parte del contexto operativo y no se registra a sí mismo como artefacto. Tampoco incluye normalmente `PROJECT.md`, `REQUIREMENTS.md`, `STATE.md`, `DECISIONS.md` ni archivos internos irrelevantes.
 
-## Uso
+## Formato
 
-- Crear una sección solo cuando exista al menos un artefacto de esa categoría.
-- Registrar la ruta, un propósito breve y, cuando aporte valor, estado y responsabilidad/origen.
-- Usar responsabilidad/origen para aclarar ownership o procedencia útil, no como etiqueta permanente de contenido generado por IA.
-- Usar estados simples según corresponda: `Draft`, `Review`, `Approved`, `Implemented`, `Published` o `Deprecated`.
-- Actualizar el mapa al crear, eliminar, mover o renombrar un artefacto significativo, o cuando cambie materialmente su estado o función.
-- No actualizarlo por cada edición interna que no cambie el propósito, estado o capacidad de descubrir el artefacto.
+Organiza los artefactos por categorías que existan realmente en el proyecto, como Contenido, Diseño, Implementación frontend, Plugins, Arquitectura o Handoff.
 
 Formato recomendado por categoría:
 
-| Ruta | Estado | Propósito | Responsable/origen |
-| --- | --- | --- | --- |
+| Artefacto | Estado | Propósito |
+| --- | --- | --- |
 
-Elimina columnas que no aporten valor. No conserves filas de ejemplo ni secciones vacías en un proyecto inicializado.
+Usa la ruta canónica como artefacto. Si responsabilidad u origen aportan información material, puede añadirse una columna breve; nunca se utiliza para etiquetar contenido como generado por IA.
+
+## Estados
+
+- `Draft`
+- `Review`
+- `Approved`
+- `Implemented`
+- `Published`
+- `Deprecated`
+
+No todos los artefactos necesitan estado ni deben recorrer la secuencia completa; si una categoría no lo necesita, la columna puede omitirse. Si una implementación también fue verificada mediante QA, puede anotarse de forma breve cuando aporte valor, sin ampliar innecesariamente el catálogo.
+
+## Reglas
+
+- Mantener únicamente artefactos significativos del proyecto.
+- No crear categorías vacías ni conservar filas de ejemplo.
+- No añadir fechas, hashes, tamaños ni historial de cambios.
+- No convertir este archivo en un changelog o sistema de project management.
+- No duplicar `MANIFEST.md` ni el contenido de los entregables.
+- No registrar archivos internos irrelevantes ni marcar archivos como generados por IA.
+- Mantener el mapa legible en pocos segundos.
+
+## Actualización
+
+Actualiza el registro únicamente cuando aparece o desaparece un artefacto significativo, se mueve o renombra, cambia materialmente su propósito o cambia de estado de forma relevante. Una edición menor de contenido o código no requiere modificar este archivo.
