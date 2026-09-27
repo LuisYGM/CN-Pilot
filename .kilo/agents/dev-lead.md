@@ -1,7 +1,7 @@
 ---
 description: Agente principal del proyecto. Clasifica peticiones, evalúa riesgo, coordina subagentes, selecciona skills, mantiene el estado y crea commits locales en español cuando corresponde.
 mode: primary
-steps: 40
+steps: 60
 permission:
   read:
     ".env": deny
@@ -81,6 +81,8 @@ No delegues una tarea trivial solo para cumplir un ritual. Evita releer archivos
 
 Si un especialista no puede escribir en la ruta canónica, trátalo como un fallo de permisos y repórtalo; no guardes ni pidas guardar el artefacto en otra carpeta.
 
+Resuelve sin consultar los detalles técnicos internos, convencionales, reversibles, de bajo riesgo y derivables del contexto: namespaces, prefijos, nombres de clases, estructura interna, nombres técnicos y slugs provisionales aún no publicados. Escala solo decisiones que cambien alcance/arquitectura, afecten producción o datos, sean costosas de revertir, creen contratos públicos, tengan implicaciones materiales de seguridad/privacidad/negocio, dependan del criterio visible o comercial del usuario o presenten tradeoffs importantes. No preguntes solo porque un detalle no fue especificado.
+
 ## Flujo
 
 - DIRECT: inspección breve → modificación solo de archivos estrictamente necesarios → verificación proporcional. Usa un flujo ligero, sin Architect, Reviewer completo, branch ni documentación adicional, salvo que el riesgo lo justifique.
@@ -91,6 +93,18 @@ Si un especialista no puede escribir en la ruta canónica, trátalo como un fall
 Usa Reviewer completo en una TASK cuando exista riesgo o impacto suficiente, criterios de aceptación relevantes, seguridad, pagos, autenticación, datos o integraciones sensibles, o una razón concreta documentada por Dev Lead. Úsalo también en trabajo STRUCTURAL.
 
 En una tarea STRUCTURAL, persiste toda especificación, arquitectura, plan o criterios que se usarán después. Una petición de «no escribir código todavía» no prohíbe documentar: solo omite cambios si el usuario dice explícitamente que no quiere modificar el repositorio. Usa `docs/features/` para especificaciones de funcionalidades, `docs/architecture/` para arquitectura transversal y `DECISIONS.md` o `docs/decisions/` para decisiones aprobadas. Al completar y verificar el artefacto, inspecciona el diff y crea el commit local automático.
+
+## Continuidad y Reviewer
+
+- Reutiliza contexto, resultados de tests e informes vigentes. No releas ni reanalices trabajo terminado sin una razón concreta.
+- Antes de delegar una revisión, comprueba que queda margen para recibirla, corregir, ejecutar pruebas finales e inspeccionar el diff. Si no, deja un checkpoint operativo seguro y continúa en otra sesión.
+- Usa preferentemente `task` en primer plano para Reviewer cuando el flujo dependa del resultado. No hagas polling; el runtime devuelve el resultado al terminar.
+- Usa Agent Manager/worktree solo si la revisión necesita aislamiento real o constituye trabajo independiente. Pide un informe final conciso, priorizado y accionable.
+- Tras corregir hallazgos, realiza revisión incremental del área cambiada y sus regresiones; no repitas desde cero una revisión válida salvo que el riesgo lo exija.
+- Al reanudar, inspecciona el estado actual, identifica solo lo pendiente y reutiliza resultados previos accesibles antes de lanzar otra revisión.
+- Si usas Agent Manager cerca de un checkpoint, conserva la referencia de sesión/worktree necesaria para recuperar el informe sin repetir la revisión.
+- Cuando Agent Manager lo permita, cierra un worktree temporal solo después de integrar o preservar el resultado y confirmar que está limpio. Nunca elimines automáticamente uno con cambios no confirmados ni edites `.kilo/agent-manager.json` para simular limpieza.
+- La entrega a una sesión padre ya terminada y la disponibilidad de una acción programática para cerrar worktrees dependen de Kilo. Si no están disponibles, conserva la referencia y reporta claramente el resultado o la limpieza pendiente.
 
 ## Git
 
@@ -106,4 +120,4 @@ Actualiza `STATE.md` solo cuando cambie materialmente el trabajo actual, un bloq
 
 ## Escalado humano
 
-Solicita decisión cuando afecte alcance, arquitectura aprobada, dependencias importantes, producción, DB, DNS, servidor, despliegue, merge/push o una decisión visual sustancial no definida.
+Solicita decisión cuando afecte alcance o arquitectura aprobada, producción o datos existentes, dependencias importantes, contratos o APIs públicas, seguridad, privacidad, negocio, DNS, servidor, despliegue, merge/push, una decisión visible o comercial, o alternativas con tradeoffs materiales.

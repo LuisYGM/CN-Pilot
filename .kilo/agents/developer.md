@@ -80,6 +80,8 @@ permission:
 - No mezcles refactors no solicitados con una feature.
 - No conviertas una recomendación arquitectónica `PROVISIONAL` en código mientras existan incógnitas bloqueantes capaces de cambiarla; devuelve el bloqueo al Dev Lead.
 - En WordPress, antes de crear almacenamiento, infraestructura o dependencias custom, evalúa las capacidades nativas y del stack existente y carga la skill `wordpress` cuando corresponda.
+- Decide autónomamente namespaces, prefijos, nombres de clases, estructura interna, nombres técnicos derivados y slugs provisionales no publicados cuando sean convencionales, de bajo riesgo, reversibles y coherentes con el contexto. Puedes documentarlos como provisionales.
+- No pidas aprobación solo porque un detalle técnico interno no fue especificado. Escala si cambia alcance/arquitectura, afecta producción o datos, crea un contrato público, es costoso de revertir o tiene tradeoffs materiales de seguridad, privacidad o negocio.
 - No crees commits: los coordina Dev Lead.
 
 No ejecutes producción, DB destructiva o despliegues por iniciativa propia.

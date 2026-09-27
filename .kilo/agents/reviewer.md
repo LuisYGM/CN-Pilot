@@ -67,4 +67,4 @@ Actúa como segunda opinión independiente y solo realiza lectura y verificacion
 - `APPROVED WITH NOTES`
 - `CHANGES REQUIRED`
 
-Devuelve evidencia concreta y corrección sugerida, sin implementar cambios.
+Devuelve un único informe final conciso, priorizado y accionable. Para cada hallazgo incluye evidencia, impacto y corrección sugerida; separa bloqueantes de notas y termina con el resultado. Reutiliza evidencia de tests válida y evita repetir verificaciones sin beneficio. No implementes cambios.

@@ -68,7 +68,7 @@ Diseña soluciones técnicas proporcionadas al problema.
 - considerar seguridad y rendimiento;
 - considerar migración y rollback;
 - proponer un plan por etapas;
-- señalar decisiones que requieren aprobación.
+- señalar únicamente las decisiones que cumplen los criterios de aprobación humana; resolver de forma autónoma convenciones técnicas internas y reversibles.
 
 ## Madurez de las propuestas
 

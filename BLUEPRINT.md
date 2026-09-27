@@ -74,6 +74,18 @@ Cambio importante, de arquitectura o riesgo alto.
 
 La fase de planificación produce un artefacto versionado cuando la especificación, arquitectura, plan o criterios vayan a utilizarse posteriormente. «No escribir código todavía» no impide persistir documentación; solo una instrucción explícita de no modificar el repositorio evita escribirla. Las especificaciones de funcionalidades van en `docs/features/`, la arquitectura transversal en `docs/architecture/` y las decisiones aprobadas en `DECISIONS.md` o `docs/decisions/`. Una planificación completa y verificada crea su commit local automático y nunca hace push.
 
+El flujo reutiliza análisis, tests y reviews todavía válidos, evita verificaciones duplicadas y reserva margen antes de Reviewer para recibir hallazgos, corregir, probar y cerrar. Si una sesión debe continuar, recupera el estado vigente y ejecuta únicamente el trabajo pendiente.
+
+## Autonomía técnica
+
+Las decisiones que cambian alcance o arquitectura, afectan producción/datos, crean contratos públicos, son costosas de revertir, implican materialmente seguridad/privacidad/negocio, dependen del criterio visible o comercial del usuario o presentan tradeoffs importantes requieren aprobación. Los detalles internos, convencionales, reversibles, de bajo riesgo y derivables del contexto se resuelven autónomamente aunque no hayan sido especificados.
+
+## Reviewer y Agent Manager
+
+Reviewer permanece independiente, de solo lectura y verificación. Para una revisión que bloquea el siguiente paso se usa preferentemente un subagente `task` en primer plano; Agent Manager/worktrees se reservan para aislamiento real o trabajo independiente. La solicitud exige un informe conciso, priorizado y accionable, sin polling ni repetición completa tras cada corrección si basta una revisión incremental.
+
+Las sesiones separadas de Agent Manager tienen transcript y ciclo de vida propios; no existe garantía del Blueprint de entregar un resultado a una sesión padre ya terminada. Si el informe sigue accesible, se reutiliza. Los worktrees temporales se cierran mediante funciones soportadas por Kilo solo cuando el resultado fue integrado o preservado y el worktree está limpio; nunca se elimina uno con cambios no confirmados. Si Kilo no expone un control seguro, se reporta la limpieza pendiente en lugar de editar `.kilo/agent-manager.json` o fingir automatización.
+
 ## Riesgo
 
 Complejidad y riesgo se evalúan por separado. Un cambio pequeño puede elevarse si afecta producción, DB, autenticación, pagos, DNS, servidor o información sensible.

@@ -160,6 +160,66 @@ Hacer obligatoria la persistencia de artefactos STRUCTURAL reutilizables, distin
 **Estado:**
 Resolved.
 
+## BF-009 — Confirmaciones excesivas para decisiones técnicas internas
+
+**Contexto:**
+Implementación STRUCTURAL de un componente nuevo aún no publicado.
+
+**Comportamiento observado:**
+Developer interrumpió el flujo para pedir aprobación de slug provisional, namespace, prefijo y nombres técnicos derivados, aunque eran detalles internos, reversibles y de bajo riesgo.
+
+**Comportamiento esperado:**
+Los agentes deben resolver autónomamente las convenciones técnicas internas derivables del contexto y reservar la aprobación humana para decisiones con impacto material en alcance, arquitectura, producción, datos, contratos públicos, seguridad, privacidad, negocio o experiencia visible.
+
+**Impacto:**
+Medium.
+
+**Mejora propuesta:**
+Definir criterios explícitos de escalado y autonomía, permitiendo documentar como provisionales los detalles internos sin interrumpir al usuario solo porque no fueron especificados.
+
+**Estado:**
+Resolved.
+
+## BF-010 — Límite de pasos insuficiente para cerrar un flujo STRUCTURAL
+
+**Contexto:**
+Flujo completo con Architect, Developer, implementación, tests, Reviewer, correcciones, tests finales y commit.
+
+**Comportamiento observado:**
+Dev Lead alcanzó su límite de pasos antes de procesar la revisión y cerrar la unidad, aunque actuó correctamente al no crear un commit incompleto.
+
+**Comportamiento esperado:**
+El flujo debe evitar relecturas, delegaciones, polling, verificaciones y reviews duplicadas; debe reservar margen para correcciones y cierre, y disponer de un límite razonable para una ejecución STRUCTURAL legítima.
+
+**Impacto:**
+High.
+
+**Mejora propuesta:**
+Optimizar continuaciones y revisiones, reutilizar resultados todavía válidos y aumentar únicamente el límite de Dev Lead de 40 a 60 pasos, manteniendo acotados los especialistas.
+
+**Estado:**
+Resolved.
+
+## BF-011 — Reviewer y worktree quedan huérfanos al terminar la sesión padre
+
+**Contexto:**
+Revisión independiente lanzada como sesión de Agent Manager en un worktree temporal cuando Dev Lead estaba cerca de su límite.
+
+**Comportamiento observado:**
+Reviewer terminó con hallazgos útiles después de que la sesión solicitante dejara de estar disponible; el resultado no se entregó automáticamente y quedó un worktree que requirió recuperación y limpieza manual.
+
+**Comportamiento esperado:**
+Las revisiones dependientes deben usar preferentemente un subagente `task` ligado al flujo, reservar margen de procesamiento y reutilizar informes accesibles. Los worktrees temporales limpios deben cerrarse mediante funciones soportadas, sin eliminar nunca cambios no confirmados.
+
+**Impacto:**
+High.
+
+**Mejora propuesta:**
+Reducir el uso de Agent Manager para revisiones secuenciales, evitar polling y revisiones duplicadas, crear checkpoints antes del límite y documentar que Kilo —no el Blueprint— controla la entrega a sesiones terminadas y la disponibilidad de limpieza programática segura.
+
+**Estado:**
+Resolved.
+
 ## Plantilla reutilizable
 
 ### BF-XXX — [Título]

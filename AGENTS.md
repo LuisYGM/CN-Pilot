@@ -47,6 +47,23 @@ Evita releer archivos ya analizados, cargar contexto irrelevante, volver a razon
 
 No omitas planificación, pruebas o revisión en cambios estructurales o de alto riesgo.
 
+## Decisiones técnicas y aprobación
+
+Solicita aprobación humana cuando una decisión cambie alcance o arquitectura, afecte producción o datos existentes, sea costosa de revertir, cree contratos o APIs públicas, tenga implicaciones materiales de seguridad/privacidad/negocio, sea visible o comercial y dependa del criterio del usuario, o presente alternativas con tradeoffs importantes.
+
+Resuelve autónomamente detalles internos, convencionales, de bajo riesgo, reversibles y razonablemente derivables del contexto. Esto incluye namespaces, prefijos, nombres de clases, estructura interna de carpetas, nombres técnicos derivados de la feature y slugs provisionales de componentes aún no publicados. Documéntalos como provisionales cuando aporte valor. No pidas aprobación solo porque un detalle técnico no fue especificado explícitamente.
+
+## Continuidad y revisión estructural
+
+- Antes de lanzar Reviewer independiente, reserva margen suficiente para recibir el informe, aplicar correcciones, ejecutar pruebas finales e inspeccionar el diff.
+- Para una revisión dependiente del flujo actual, prefiere un subagente `task` en primer plano. Usa Agent Manager/worktree solo cuando se necesite aislamiento real o trabajo independiente de nivel superior.
+- No hagas polling. Solicita al Reviewer un resultado final conciso, priorizado y accionable; tras correcciones, limita la revisión a los cambios y regresiones relevantes salvo que el riesgo exija repetirla completa.
+- Si falta margen, crea primero un checkpoint operativo seguro y continúa de forma controlada. Al reanudar, recupera el estado actual, identifica solo lo pendiente y reutiliza tests y reviews que sigan siendo válidos.
+- Si una entrega automática falla pero el informe sigue accesible en otra sesión, reutilízalo antes de crear otra revisión.
+- Si se usa Agent Manager cerca de un checkpoint, conserva la referencia de sesión/worktree necesaria para recuperar el resultado sin repetir el trabajo.
+- Cierra worktrees temporales mediante las capacidades soportadas por Agent Manager solo después de integrar o conservar el resultado y verificar que no tienen cambios pendientes. Nunca elimines automáticamente un worktree con cambios no confirmados.
+- El Blueprint no puede garantizar la entrega de resultados a una sesión padre ya terminada ni la limpieza automática en todas las versiones de Kilo; cuando la plataforma no exponga control seguro, conserva la referencia de la sesión/worktree y reporta la limpieza pendiente.
+
 ## Artefactos estructurales
 
 - Si una tarea `STRUCTURAL` produce una especificación, arquitectura, plan de implementación o criterios de aceptación que se usarán después, persiste el artefacto en el repositorio.
@@ -162,6 +179,11 @@ Pide aprobación ante:
 - cambio de tecnología/arquitectura aprobada;
 - dependencia importante;
 - cambio de alcance;
+- contrato o API pública;
+- decisión costosa o difícil de revertir;
+- implicación material de seguridad, privacidad o negocio;
+- decisión visible o comercial dependiente del criterio del usuario;
+- alternativas con tradeoffs importantes;
 - operación destructiva;
 - deploy;
 - push/merge;
