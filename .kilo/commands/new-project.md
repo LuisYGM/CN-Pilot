@@ -9,7 +9,7 @@ agent: dev-lead
 
 1. Antes de preguntar o modificar archivos, inspecciona en este orden:
    - `AGENTS.md` y `.blueprint-version`;
-   - las plantillas `PROJECT.md`, `REQUIREMENTS.md`, `STATE.md` y `DECISIONS.md`;
+   - las plantillas `PROJECT.md`, `REQUIREMENTS.md`, `STATE.md`, `DECISIONS.md` y `docs/ARTIFACTS.md`;
    - la estructura e implementación existente: manifiestos, configuración, documentación, código, assets y `.gitignore`;
    - el estado Git y el remote, solo si existen.
 2. Preserva la implementación y los cambios manuales existentes. No preguntes nada que pueda inferirse con fiabilidad de la inspección.
@@ -50,7 +50,8 @@ agent: dev-lead
     Requisitos, páginas, alcance y workflow no son decisiones automáticamente.
 15. Aplica internamente las reglas operativas del Blueprint, incluida la prohibición de hacer push. No las traslades a la persona para que las recuerde ni las incluyas como elementos a confirmar.
 16. Durante la inicialización no desarrolles páginas, componentes ni funcionalidades.
-17. Comprueba siempre los archivos modificados y que no se sobrescribió trabajo manual. Si existe Git, revisa además diff/status y evita cambios ajenos.
-18. Si existe Git y la inicialización produjo cambios válidos, incluye únicamente esos archivos y crea el commit local `chore: inicializar proyecto`.
-19. Si no existe Git, no ejecutes `git init`, no registres su ausencia como bloqueo y finaliza informando que los cambios quedaron guardados localmente sin commit. Registra «Control de versiones: no inicializado» en `PROJECT.md` solo si aporta contexto.
-20. Nunca hagas push.
+17. Conserva `docs/ARTIFACTS.md` como registro base sin secciones vacías ni entregables falsos. No registres Blueprint Core ni Project Context; incorpora solo artefactos significativos, reales y verificables que una persona deba poder descubrir si ya existen.
+18. Comprueba siempre los archivos modificados y que no se sobrescribió trabajo manual. Si existe Git, revisa además diff/status y evita cambios ajenos.
+19. Si existe Git y la inicialización produjo cambios válidos, incluye únicamente esos archivos y crea el commit local `chore: inicializar proyecto`.
+20. Si no existe Git, no ejecutes `git init`, no registres su ausencia como bloqueo y finaliza informando que los cambios quedaron guardados localmente sin commit. Registra «Control de versiones: no inicializado» en `PROJECT.md` solo si aporta contexto.
+21. Nunca hagas push.

@@ -20,6 +20,14 @@ El repositorio separa convenciones universales, configuración específica compa
 
 Los MCPs y workflows de deployment no se activan por defecto. Sus ejemplos viven bajo `templates/` y solo se integran cuando el alcance los confirma. `kilo.jsonc` puede versionar configuración MCP no sensible; credenciales, tokens y ajustes locales permanecen fuera de Git. Consulta `docs/CONFIGURATION.md`.
 
+## Capas de archivos y artefactos
+
+- **Blueprint Core:** infraestructura heredada y reusable. `MANIFEST.md` describe esta capa y no los entregables del proyecto.
+- **Project Context:** memoria operativa (`PROJECT.md`, `REQUIREMENTS.md`, `STATE.md`, `DECISIONS.md`) y su índice de artefactos.
+- **Project Artifacts:** entregables reales creados para el proyecto, conservados en sus rutas canónicas sin carpetas artificiales ni etiquetas permanentes de origen IA.
+
+`docs/ARTIFACTS.md` existe como registro base vacío y se convierte en el mapa legible de Project Artifacts. Se organiza solo con categorías presentes y estados simples cuando aportan valor. Se actualiza ante altas, bajas, movimientos o cambios materiales de estado/propósito, no por cada edición interna. Funciona mediante inspección de archivos con o sin Git.
+
 ## Convención de idioma
 
 La estructura técnica permanece en inglés: archivos, carpetas, agentes, skills, workflows, profiles, capabilities, claves internas, tecnologías y valores consumidos por el sistema. La documentación y el contenido destinados a personas se generan en español por defecto. Si un proyecto define explícitamente otro idioma de trabajo, se adapta el contenido humano sin traducir identificadores técnicos.
@@ -127,6 +135,7 @@ En WordPress se evalúan primero las capacidades disponibles en Core y el stack 
 - `docs/features/`: specs funcionales.
 - `docs/architecture/`: documentación de arquitectura.
 - `docs/decisions/`: ADRs.
+- `docs/ARTIFACTS.md`: índice de entregables reales del proyecto.
 
 ## Onboarding de proyectos
 

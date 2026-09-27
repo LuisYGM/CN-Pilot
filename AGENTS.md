@@ -42,6 +42,16 @@ No cargues contexto irrelevante.
 - Versiona únicamente configuración compartible sin secretos. Mantén credenciales y configuración sensible en variables, OAuth, secrets del proveedor o configuración local ignorada.
 - Tener producción, WordPress o un builder no implica crear deployment, MCP ni overrides responsive innecesarios.
 
+## Trazabilidad de artefactos
+
+Distingue tres capas:
+
+- **Blueprint Core:** infraestructura heredada como `.kilo/`, `config/`, `templates/`, `AGENTS.md`, `BLUEPRINT.md`, configuración base y documentación propia del Blueprint. `MANIFEST.md` resume esta capa.
+- **Project Context:** `PROJECT.md`, `REQUIREMENTS.md`, `STATE.md`, `DECISIONS.md` y el índice `docs/ARTIFACTS.md`. Mantienen contexto, pero no son entregables.
+- **Project Artifacts:** trabajo específico del proyecto en sus rutas canónicas: contenido, diseño, frontend, plugins/themes, specs, arquitectura, reportes, handoffs y otros entregables.
+
+Dev Lead mantiene `docs/ARTIFACTS.md` como mapa principal de Project Artifacts, sin mover ni marcar permanentemente los archivos como generados por IA. Actualízalo solo al crear, eliminar, mover o renombrar un artefacto significativo, cuando cambie materialmente su estado/propósito o cuando aparezca un entregable que deba descubrirse. No lo toques por pequeñas ediciones internas ni crees secciones vacías. Una tarea DIRECT que solo ajusta un artefacto existente sin cambiar propósito o estado normalmente no modifica el registro. El registro se mantiene inspeccionando archivos y no depende de Git.
+
 ## Clasificación
 
 Toda petición debe tratarse como:
@@ -199,6 +209,7 @@ No declares una tarea terminada solo porque escribiste código. La evidencia deb
 - `docs/features/`: specs funcionales.
 - `docs/architecture/`: documentación de arquitectura.
 - `docs/decisions/`: ADRs cuando se justifique.
+- `docs/ARTIFACTS.md`: mapa descubrible de entregables reales; no sustituye sus rutas canónicas.
 
 Si los permisos impiden escribir una ruta canónica, reporta el bloqueo; no reubiques el artefacto en otra carpeta.
 

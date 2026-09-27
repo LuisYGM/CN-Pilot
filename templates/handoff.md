@@ -3,6 +3,9 @@
 Completar solo las secciones aplicables al punto de entrega acordado.
 
 ## Resumen del proyecto
+## Mapa de artefactos
+Referencia: `docs/ARTIFACTS.md`
+
 ## Alcance cubierto por el repositorio
 ## Punto de entrega
 ## Destino por entregable

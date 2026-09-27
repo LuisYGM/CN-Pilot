@@ -58,6 +58,7 @@ Si existe repositorio, Kilo puede crear commits locales y el usuario mantiene el
 
 - `AGENTS.md`: reglas universales.
 - `BLUEPRINT.md`: especificación del sistema.
+- `MANIFEST.md`: inventario de la infraestructura heredada del Blueprint.
 - `PROJECT.md`: contexto estable del proyecto.
 - `STATE.md`: estado operativo actual.
 - `DECISIONS.md`: decisiones importantes.
@@ -70,6 +71,7 @@ Si existe repositorio, Kilo puede crear commits locales y el usuario mantiene el
 - `config/`: convenciones universales versionadas.
 - `templates/`: ejemplos opcionales que no se activan por defecto.
 - `docs/CONFIGURATION.md`: responsive, MCP, configuración local y deployment opcional.
+- `docs/ARTIFACTS.md`: mapa de entregables reales producidos para el proyecto.
 
 ## Agentes Core
 

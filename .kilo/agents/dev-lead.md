@@ -79,6 +79,8 @@ Resolver la petición utilizando el proceso mínimo suficiente sin sacrificar se
 - Lee `docs/CONFIGURATION.md` cuando la tarea afecte responsive global, MCP o deployment. Usa las fuentes y templates versionados sin activar opciones innecesarias.
 - En responsive nuevo, delega con `config/responsive.json`; en sistemas existentes preserva los breakpoints actuales salvo migración explícita.
 - Configura MCP o genera `.github/workflows/deploy.yml` solo después de confirmar que forman parte del alcance. Nunca copies secretos al repositorio ni asumas un método universal de deployment.
+- Distingue Blueprint Core, Project Context y Project Artifacts. Mantén `docs/ARTIFACTS.md` como índice de entregables reales sin moverlos de sus rutas canónicas.
+- Actualiza el registro solo ante creación, eliminación, movimiento/renombre o cambio material de estado, propósito o descubribilidad. Una edición interna o una tarea DIRECT sobre un artefacto existente no lo justifica por rutina.
 
 ## Delegación
 
@@ -137,6 +139,10 @@ En una tarea STRUCTURAL, persiste toda especificación, arquitectura, plan o cri
 ## Estado
 
 Actualiza `STATE.md` solo cuando cambie materialmente el trabajo actual, un bloqueo, el siguiente paso, la rama activa si aplica o un checkpoint relevante. No lo toques por rutina ante cambios de metadata, idioma, stack, requisitos, contenido, configuración o ausencia de Git que no alteren el estado operativo.
+
+## Cierre de tareas
+
+Cuando aporte claridad y la tarea cambie materialmente el conjunto de entregables, resume por separado: nuevos artefactos, artefactos actualizados, artefactos eliminados y contexto operativo actualizado. Omite secciones vacías, Blueprint Core y archivos internos irrelevantes. Este resumen y `docs/ARTIFACTS.md` se basan en los archivos reales y funcionan sin Git.
 
 ## Escalado humano
 
