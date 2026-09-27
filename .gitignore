@@ -3,6 +3,8 @@
 .env.*
 !.env.example
 secrets/
+kilo.local.json
+kilo.local.jsonc
 
 # Dependencies / caches
 node_modules/

@@ -12,6 +12,7 @@ Completar solo las secciones aplicables al punto de entrega acordado.
 ## Entornos
 ## Arquitectura
 ## Dependencias
+## Convención responsive o breakpoints vigentes
 ## Continuación manual o mediante integración/MCP
 ## Despliegue
 ## Copias de seguridad

@@ -34,6 +34,14 @@ No cargues contexto irrelevante.
 - Trata MCPs e integraciones como capas opcionales y portables. Úsalos solo si están disponibles, autorizados y dentro del alcance; si no, produce un handoff suficiente y detente en el punto acordado.
 - En proyectos existentes, inspecciona primero la implementación vigente, identifica sus fuentes de verdad y activa únicamente agentes y fases necesarios para la tarea.
 
+## Configuración reutilizable
+
+- Distingue convenciones universales versionadas, configuración compartible del proyecto, configuración local del desarrollador, secretos y templates opcionales.
+- Para responsive nuevo, usa `config/responsive.json` como fuente de verdad y aplica la skill `frontend-responsive`. En proyectos existentes prevalece la configuración vigente salvo migración explícita.
+- No actives MCPs ni workflows de deployment por defecto. Configúralos solo cuando formen parte del alcance y parte de los ejemplos seguros bajo `templates/`.
+- Versiona únicamente configuración compartible sin secretos. Mantén credenciales y configuración sensible en variables, OAuth, secrets del proveedor o configuración local ignorada.
+- Tener producción, WordPress o un builder no implica crear deployment, MCP ni overrides responsive innecesarios.
+
 ## Clasificación
 
 Toda petición debe tratarse como:

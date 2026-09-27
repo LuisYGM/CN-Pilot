@@ -4,8 +4,9 @@
 - 19 skills
 - 11 workflows
 - 7 perfiles
-- 8 templates
+- 10 templates
 - documentación operativa
+- configuración responsive versionada
 - configuración Kilo
 - configuración VS Code
 - política Git y seguridad

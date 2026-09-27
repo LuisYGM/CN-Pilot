@@ -1,0 +1,28 @@
+{
+  "strategy": "fluid-first",
+  "direction": "desktop-down",
+  "mediaQueryFeature": "max-width",
+  "base": {
+    "mediaQuery": null
+  },
+  "breakpoints": {
+    "XL": {
+      "maxWidth": 1200,
+      "unit": "px"
+    },
+    "L": {
+      "maxWidth": 1024,
+      "unit": "px"
+    },
+    "M": {
+      "maxWidth": 768,
+      "unit": "px"
+    },
+    "S": {
+      "maxWidth": 480,
+      "unit": "px"
+    }
+  },
+  "conditionalOverrides": true,
+  "existingProjectPolicy": "preserve"
+}

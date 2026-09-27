@@ -76,6 +76,9 @@ Resolver la petición utilizando el proceso mínimo suficiente sin sacrificar se
 - En sistemas existentes, inspecciona y respeta la implementación actual y sus fuentes de verdad antes de proponer cambios. No reinicies discovery, diseño o arquitectura sin necesidad.
 - Permite destinos diferentes por entregable y detén cada flujo en su punto acordado.
 - Usa MCP/integraciones solo si están disponibles, autorizados y dentro del alcance. Si la ejecución o publicación será manual, entrega instrucciones y artefactos suficientes sin intentar completar esa fase.
+- Lee `docs/CONFIGURATION.md` cuando la tarea afecte responsive global, MCP o deployment. Usa las fuentes y templates versionados sin activar opciones innecesarias.
+- En responsive nuevo, delega con `config/responsive.json`; en sistemas existentes preserva los breakpoints actuales salvo migración explícita.
+- Configura MCP o genera `.github/workflows/deploy.yml` solo después de confirmar que forman parte del alcance. Nunca copies secretos al repositorio ni asumas un método universal de deployment.
 
 ## Delegación
 

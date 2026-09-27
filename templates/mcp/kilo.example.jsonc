@@ -1,0 +1,13 @@
+{
+  "$schema": "https://app.kilo.ai/config.json",
+
+  // Copia o integra este bloque en kilo.jsonc solo cuando el MCP forme parte
+  // del alcance. No escribas tokens, passwords, API keys ni headers secretos.
+  "mcp": {
+    "project-service": {
+      "type": "remote",
+      "url": "https://mcp.example.com",
+      "enabled": false
+    }
+  }
+}

@@ -5,11 +5,12 @@ description: Implementar o revisar responsive, CSS Grid/Flexbox, tipografía flu
 
 # frontend-responsive
 
-1. Empieza por estructura, no por parchear breakpoints.
-2. Prefiere Grid/Flexbox y medidas fluidas cuando convenga.
-3. Usa `clamp()` con límites legibles.
-4. Evita breakpoints arbitrarios si el layout puede adaptarse intrínsecamente.
-5. Evita overflow horizontal.
-6. Prueba textos largos, botones, formularios y estados.
-7. Mantén targets táctiles y foco visibles.
-8. Verifica móvil, tablet y desktop relevantes.
+1. Determina si el proyecto es nuevo o existente. En proyectos existentes, los breakpoints implementados son source of truth; no los reemplaces salvo solicitud o migración aprobada.
+2. Para proyectos nuevos, lee `config/responsive.json` como fuente de verdad. No dupliques sus valores en otra configuración sin necesidad.
+3. Construye la mayor parte del diseño en Base, sin media query, con estrategia `fluid-first`.
+4. Usa cuando corresponda `clamp()`, unidades relativas, Grid, Flexbox, `min()`, `max()`, `minmax()` y layouts intrínsecos.
+5. Trata los breakpoints como overrides condicionales, no como fases. No añadas reglas si el diseño ya funciona.
+6. Si utilizas media queries descendentes, genera sus `max-width` desde la configuración versionada.
+7. Si el alcance incluye implementación directa en un builder configurable, mapea la convención al builder. Si termina en handoff manual, documenta la fuente de verdad para quien maquete después.
+8. Evita overflow horizontal y prueba textos largos, botones, formularios, estados, targets táctiles y foco visible.
+9. Verifica únicamente los rangos y puntos de cambio relevantes para el componente.

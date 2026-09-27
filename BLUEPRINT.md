@@ -14,6 +14,12 @@ Cada proyecto define hasta dónde llega el repositorio y cómo se entrega cada a
 
 `/new-project` inicializa una sola vez el contexto de cada repositorio creado desde el Blueprint; no significa «crear una web nueva». Puede describir trabajo nuevo o un sistema existente y debe preservar como fuente de verdad la implementación vigente que corresponda.
 
+## Capas de configuración
+
+El repositorio separa convenciones universales, configuración específica compartible del proyecto, configuración local del desarrollador, secretos y templates opcionales. `config/responsive.json` es la fuente versionada para responsive de proyectos nuevos; los proyectos existentes conservan sus breakpoints salvo migración aprobada.
+
+Los MCPs y workflows de deployment no se activan por defecto. Sus ejemplos viven bajo `templates/` y solo se integran cuando el alcance los confirma. `kilo.jsonc` puede versionar configuración MCP no sensible; credenciales, tokens y ajustes locales permanecen fuera de Git. Consulta `docs/CONFIGURATION.md`.
+
 ## Convención de idioma
 
 La estructura técnica permanece en inglés: archivos, carpetas, agentes, skills, workflows, profiles, capabilities, claves internas, tecnologías y valores consumidos por el sistema. La documentación y el contenido destinados a personas se generan en español por defecto. Si un proyecto define explícitamente otro idioma de trabajo, se adapta el contenido humano sin traducir identificadores técnicos.

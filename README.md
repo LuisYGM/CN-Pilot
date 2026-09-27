@@ -65,6 +65,9 @@ Kilo puede crear commits locales. El usuario mantiene por defecto el control de 
 - `.kilo/skills/`: procedimientos reutilizables.
 - `.kilo/commands/`: workflows/slash commands.
 - `profiles/`: perfiles de proyecto.
+- `config/`: convenciones universales versionadas.
+- `templates/`: ejemplos opcionales que no se activan por defecto.
+- `docs/CONFIGURATION.md`: responsive, MCP, configuración local y deployment opcional.
 
 ## Agentes Core
 
