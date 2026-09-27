@@ -61,8 +61,11 @@ Resuelve autónomamente detalles internos, convencionales, de bajo riesgo, rever
 - Si falta margen, crea primero un checkpoint operativo seguro y continúa de forma controlada. Al reanudar, recupera el estado actual, identifica solo lo pendiente y reutiliza tests y reviews que sigan siendo válidos.
 - Si una entrega automática falla pero el informe sigue accesible en otra sesión, reutilízalo antes de crear otra revisión.
 - Si se usa Agent Manager cerca de un checkpoint, conserva la referencia de sesión/worktree necesaria para recuperar el resultado sin repetir el trabajo.
-- Cierra worktrees temporales mediante las capacidades soportadas por Agent Manager solo después de integrar o conservar el resultado y verificar que no tienen cambios pendientes. Nunca elimines automáticamente un worktree con cambios no confirmados.
-- El Blueprint no puede garantizar la entrega de resultados a una sesión padre ya terminada ni la limpieza automática en todas las versiones de Kilo; cuando la plataforma no exponga control seguro, conserva la referencia de la sesión/worktree y reporta la limpieza pendiente.
+- Finalizar una sesión no demuestra que su worktree esté desregistrado ni que la carpeta física haya desaparecido. No afirmes que fue cerrado o eliminado sin verificar el estado real.
+- Para limpiar un worktree temporal, conserva primero el resultado, verifica que no tenga cambios pendientes, comprueba `git worktree list`, usa un mecanismo seguro soportado, ejecuta `git worktree prune` cuando corresponda y vuelve a comprobar el listado.
+- Si una ruta bajo `.kilo/worktrees/` ya no aparece en `git worktree list`, trátala como carpeta huérfana. No asumas que puede borrarse automáticamente; repórtala para limpieza segura.
+- Nunca elimines automáticamente un worktree con cambios no confirmados. Si Kilo no permite completar o verificar la limpieza, informa que sigue pendiente y describe por separado sesión, registro Git y carpeta física.
+- El Blueprint no puede garantizar la entrega a una sesión padre terminada ni que Agent Manager elimine registros o carpetas en todas las versiones; no edites `.kilo/agent-manager.json` ni presentes una acción no verificada como completada.
 
 ## Artefactos estructurales
 

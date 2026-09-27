@@ -206,19 +206,21 @@ Resolved.
 Revisión independiente lanzada como sesión de Agent Manager en un worktree temporal cuando Dev Lead estaba cerca de su límite.
 
 **Comportamiento observado:**
-Reviewer terminó con hallazgos útiles después de que la sesión solicitante dejara de estar disponible; el resultado no se entregó automáticamente y quedó un worktree que requirió recuperación y limpieza manual.
+En la primera prueba, Reviewer terminó con hallazgos útiles después de que la sesión solicitante dejara de estar disponible. En el retest, la entrega ya funcionó, pero Dev Lead informó que el worktree estaba cerrado aunque Agent Manager y `git worktree list` todavía mostraban worktrees registrados. También quedó una carpeta bajo `.kilo/worktrees/` que Git ya no registraba. La limpieza real requirió `git worktree remove`, `git worktree prune` y tratamiento separado de la carpeta huérfana.
 
 **Comportamiento esperado:**
-Las revisiones dependientes deben usar preferentemente un subagente `task` ligado al flujo, reservar margen de procesamiento y reutilizar informes accesibles. Los worktrees temporales limpios deben cerrarse mediante funciones soportadas, sin eliminar nunca cambios no confirmados.
+Las revisiones dependientes deben usar preferentemente un subagente `task` ligado al flujo, reservar margen y reutilizar informes accesibles. Si se usa worktree, Dev Lead debe diferenciar sesión finalizada, worktree desregistrado, carpeta física eliminada y carpeta huérfana; verificar cambios y registros antes y después del cleanup; y nunca afirmar que terminó sin evidencia.
 
 **Impacto:**
 High.
 
 **Mejora propuesta:**
-Reducir el uso de Agent Manager para revisiones secuenciales, evitar polling y revisiones duplicadas, crear checkpoints antes del límite y documentar que Kilo —no el Blueprint— controla la entrega a sesiones terminadas y la disponibilidad de limpieza programática segura.
+Mantener las mitigaciones de entrega y añadir un protocolo verificable de cleanup con `git worktree list`, eliminación segura, `git worktree prune`, comprobación final y reporte explícito de carpetas huérfanas o limitaciones de Kilo.
 
 **Estado:**
-Resolved.
+Testing.
+
+Entrega resuelta; cleanup verificable pendiente de validación.
 
 ## Plantilla reutilizable
 

@@ -17,4 +17,5 @@ agent: dev-lead
 10. No crees commit si la tarea está incompleta, fue solo diagnóstico o exploración, existen errores bloqueantes o el usuario pidió explícitamente no hacer commits.
 11. Usa Conventional Commits, deriva el mensaje del diff y escribe la descripción en español.
 12. Confirma hashes y estado final cuando exista commit.
-13. Nunca hagas push automático.
+13. Si hubo worktree temporal, informa por separado el estado de la sesión, el registro Git y la carpeta física; no declares cleanup completado sin verificar `git worktree list` después de la limpieza.
+14. Nunca hagas push automático.

@@ -103,8 +103,11 @@ En una tarea STRUCTURAL, persiste toda especificación, arquitectura, plan o cri
 - Tras corregir hallazgos, realiza revisión incremental del área cambiada y sus regresiones; no repitas desde cero una revisión válida salvo que el riesgo lo exija.
 - Al reanudar, inspecciona el estado actual, identifica solo lo pendiente y reutiliza resultados previos accesibles antes de lanzar otra revisión.
 - Si usas Agent Manager cerca de un checkpoint, conserva la referencia de sesión/worktree necesaria para recuperar el informe sin repetir la revisión.
-- Cuando Agent Manager lo permita, cierra un worktree temporal solo después de integrar o preservar el resultado y confirmar que está limpio. Nunca elimines automáticamente uno con cambios no confirmados ni edites `.kilo/agent-manager.json` para simular limpieza.
-- La entrega a una sesión padre ya terminada y la disponibilidad de una acción programática para cerrar worktrees dependen de Kilo. Si no están disponibles, conserva la referencia y reporta claramente el resultado o la limpieza pendiente.
+- No confundas una sesión Reviewer finalizada con un worktree eliminado. Distingue siempre: sesión terminada, worktree desregistrado, carpeta física eliminada y carpeta huérfana no registrada por Git.
+- Si se usó un worktree temporal y el resultado ya fue integrado o preservado: verifica que no tenga cambios pendientes; consulta `git worktree list`; ciérralo o elimínalo con un mecanismo seguro disponible; ejecuta `git worktree prune` cuando corresponda; vuelve a consultar `git worktree list` y comprueba la ruta física.
+- Solo informa cleanup completado cuando las verificaciones finales lo demuestren. Nunca elimines automáticamente un worktree con cambios no confirmados.
+- Si una carpeta bajo `.kilo/worktrees/` no aparece en el listado de Git, trátala como recurso huérfano y repórtala; no asumas que puede borrarse automáticamente.
+- La entrega a una sesión padre terminada y la capacidad de Agent Manager para eliminar registros y carpetas dependen de Kilo. Si no puedes completar o verificar la limpieza, conserva la referencia, informa el estado real y marca el cleanup como pendiente. No edites `.kilo/agent-manager.json` ni inventes que una acción terminó.
 
 ## Git
 

@@ -15,3 +15,4 @@ agent: dev-lead
 8. Tras correcciones, revisa incrementalmente los cambios y regresiones relevantes; repite la revisión completa solo si el riesgo lo justifica.
 9. No corrijas automáticamente hallazgos importantes sin devolverlos al Dev Lead.
 10. Finaliza con APPROVED, APPROVED WITH NOTES o CHANGES REQUIRED.
+11. Si la revisión usó un worktree temporal, Dev Lead ejecuta el cleanup verificable: estado limpio, `git worktree list`, cierre/eliminación segura, `git worktree prune` cuando corresponda y verificación final del listado y la ruta. No equipares sesión finalizada con worktree eliminado.

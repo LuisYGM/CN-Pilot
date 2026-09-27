@@ -84,7 +84,9 @@ Las decisiones que cambian alcance o arquitectura, afectan producción/datos, cr
 
 Reviewer permanece independiente, de solo lectura y verificación. Para una revisión que bloquea el siguiente paso se usa preferentemente un subagente `task` en primer plano; Agent Manager/worktrees se reservan para aislamiento real o trabajo independiente. La solicitud exige un informe conciso, priorizado y accionable, sin polling ni repetición completa tras cada corrección si basta una revisión incremental.
 
-Las sesiones separadas de Agent Manager tienen transcript y ciclo de vida propios; no existe garantía del Blueprint de entregar un resultado a una sesión padre ya terminada. Si el informe sigue accesible, se reutiliza. Los worktrees temporales se cierran mediante funciones soportadas por Kilo solo cuando el resultado fue integrado o preservado y el worktree está limpio; nunca se elimina uno con cambios no confirmados. Si Kilo no expone un control seguro, se reporta la limpieza pendiente en lugar de editar `.kilo/agent-manager.json` o fingir automatización.
+Las sesiones separadas de Agent Manager tienen transcript y ciclo de vida propios; no existe garantía del Blueprint de entregar un resultado a una sesión padre ya terminada. Si el informe sigue accesible, se reutiliza.
+
+El cleanup distingue cuatro estados: sesión finalizada, worktree desregistrado de Git, carpeta física eliminada y carpeta huérfana no registrada. Dev Lead solo declara la limpieza completada después de verificar ausencia de cambios, consultar `git worktree list`, usar mecanismos seguros, ejecutar `git worktree prune` cuando corresponda y volver a comprobar el listado y la ruta. Nunca elimina automáticamente un worktree con cambios no confirmados ni una carpeta huérfana cuya eliminación segura no pueda demostrar. Si Kilo no expone control suficiente, reporta el estado real y la limpieza pendiente en lugar de editar `.kilo/agent-manager.json` o fingir automatización.
 
 ## Riesgo
 
