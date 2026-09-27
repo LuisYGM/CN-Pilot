@@ -178,7 +178,10 @@ Medium.
 Definir criterios explícitos de escalado y autonomía, permitiendo documentar como provisionales los detalles internos sin interrumpir al usuario solo porque no fueron especificados.
 
 **Estado:**
-Resolved.
+Validated.
+
+**Resultado del retest:**
+Los agentes resolvieron autónomamente naming, slug, namespace, prefijos y otras decisiones técnicas internas y reversibles sin solicitar confirmaciones innecesarias.
 
 ## BF-010 — Límite de pasos insuficiente para cerrar un flujo STRUCTURAL
 
@@ -198,7 +201,10 @@ High.
 Optimizar continuaciones y revisiones, reutilizar resultados todavía válidos y aumentar únicamente el límite de Dev Lead de 40 a 60 pasos, manteniendo acotados los especialistas.
 
 **Estado:**
-Resolved.
+Validated.
+
+**Resultado del retest:**
+Dev Lead completó los flujos probados sin alcanzar nuevamente el límite de pasos y reutilizó correctamente el trabajo previo.
 
 ## BF-011 — Reviewer y worktree quedan huérfanos al terminar la sesión padre
 
@@ -218,9 +224,13 @@ High.
 Mantener las mitigaciones de entrega y añadir un protocolo verificable de cleanup con `git worktree list`, eliminación segura, `git worktree prune`, comprobación final y reporte explícito de carpetas huérfanas o limitaciones de Kilo.
 
 **Estado:**
-Testing.
+Validated con limitación conocida de Kilo.
 
-Entrega resuelta; cleanup verificable pendiente de validación.
+**Resultado del retest:**
+Reviewer terminó y entregó correctamente su informe. El worktree específico de la revisión se eliminó del registro Git junto con su carpeta física y rama temporal, y Agent Manager dejó de mostrar la sesión/worktree correspondiente. Ante otro worktree detached cuya propiedad no podía confirmarse, Dev Lead no lo eliminó a ciegas y reportó su estado real.
+
+**Limitación conocida:**
+Kilo puede dejar worktrees residuales cuya propiedad no sea identificable desde Agent Manager. Deben conservarse hasta verificar su origen y estado, reportarse con precisión y gestionarse mediante cleanup seguro; nunca deben eliminarse automáticamente sin esa evidencia.
 
 ## Plantilla reutilizable
 
@@ -242,4 +252,4 @@ Low / Medium / High.
 Corrección propuesta.
 
 **Estado:**
-Open / Testing / Resolved.
+Open / Testing / Resolved / Validated.
