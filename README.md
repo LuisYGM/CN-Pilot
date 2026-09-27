@@ -32,7 +32,7 @@ Sube esta carpeta a GitHub como `web-project-blueprint` y activa **Template repo
 3. Clónalo con GitHub Desktop.
 4. Ábrelo en VS Code.
 5. Abre Kilo Code.
-6. Configura tu proveedor/modelo si todavía no lo has hecho.
+6. Configura una sola vez tus modelos globales de Kilo si todavía no lo has hecho.
 7. Selecciona el agente `dev-lead`.
 8. Ejecuta `/new-project`.
 
@@ -71,6 +71,7 @@ Si existe repositorio, Kilo puede crear commits locales y el usuario mantiene el
 - `config/`: convenciones universales versionadas.
 - `templates/`: ejemplos opcionales que no se activan por defecto.
 - `docs/CONFIGURATION.md`: responsive, MCP, configuración local y deployment opcional.
+- `docs/MODEL-STRATEGY.md`: tiers de capacidad y configuración personal de modelos.
 - `docs/ARTIFACTS.md`: mapa de entregables reales producidos para el proyecto.
 
 ## Agentes Core
@@ -97,13 +98,13 @@ Si existe repositorio, Kilo puede crear commits locales y el usuario mantiene el
 - `/deploy-staging`
 - `/handoff`
 
-## OpenAI y Kilo
+## Modelos y Kilo
 
-Las credenciales del proveedor de IA no deben guardarse en este repositorio.
+El Blueprint es provider-agnostic: los agentes describen responsabilidades y capacidad esperada, pero no contienen IDs de proveedores o modelos. Cada desarrollador elige OpenAI, Anthropic, Google u otro proveedor compatible y configura sus asignaciones globales una sola vez en Kilo.
 
-Configura OpenAI desde Kilo Code en **Settings → Providers → OpenAI**. Este Blueprint no fija un modelo para que cada desarrollador pueda elegirlo sin modificar el repo.
+Esa configuración personal no se hereda al clonar el template y no debe versionarse. Cambiar de proveedor o mapear los mismos agentes a otros modelos no requiere modificar el Blueprint. Usa `templates/kilo/global-models.example.jsonc` como referencia inactiva y evita asignar el modelo más potente a todas las tareas.
 
-Consulta `docs/KILO-SETUP.md`.
+Consulta `docs/KILO-SETUP.md` para el onboarding y `docs/MODEL-STRATEGY.md` para los tiers y criterios de coste.
 
 ## Estado
 

@@ -6,7 +6,7 @@ Inventario de la infraestructura heredada del Blueprint. No sustituye `docs/ARTI
 - 19 skills
 - 11 workflows
 - 7 perfiles
-- 10 templates
+- 11 templates
 - documentación operativa
 - registro base de artefactos del proyecto
 - configuración responsive versionada
