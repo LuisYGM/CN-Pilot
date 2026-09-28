@@ -1,6 +1,6 @@
 # Web Project Blueprint — Especificación V1
 
-**Versión:** `1.0.0`
+**Versión:** `1.0.1`
 
 Documento de referencia para maintainers del Blueprint. Un usuario nuevo debe empezar por [`docs/START-HERE.md`](docs/START-HERE.md); no necesita leer esta especificación para trabajar.
 

@@ -8,7 +8,7 @@
 - **Perfil:** Pending
 - **Repositorio o carpeta:** Pending
 - **Control de versiones:** Git local / Git con remoto / No inicializado / Pending
-- **Versión del Blueprint:** 1.0.0
+- **Versión del Blueprint:** 1.0.1
 
 ## Objetivo
 
