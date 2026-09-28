@@ -53,11 +53,21 @@ Actúa como segunda opinión independiente y solo realiza lectura y verificacion
 - estructura nativa y semántica;
 - responsabilidad de Containers y Blocks;
 - wrappers justificados y ausencia de `div soup`;
-- Grid-first, responsive y editabilidad en builders;
+- layout-intent (Grid/Flex), responsive y editabilidad en builders;
 - uso de schemas y recuperación segura ante fallos de integraciones;
 - compatibilidad;
 - edge cases;
 - mantenibilidad.
+
+## Revisión proporcional
+
+Cuando exista una referencia visual aprobada, distingue:
+
+- **Structural QA:** semántica, jerarquía, árbol, wrappers, mantenibilidad, responsive estructural y scope.
+- **Visual QA:** proporciones, spacing, tipografía, jerarquía visual, composición y paridad con la referencia.
+- **SEO QA:** metadata, keyword, checks del plugin, indexación, canonical, schema y warnings pendientes.
+
+No exijas Visual Parity sin referencia visual ni SEO plugin QA cuando la tarea no tenga alcance SEO. Render MCP, fragmentos de contenido, inspección del árbol e integridad técnica no sustituyen Human Visual QA en navegador. Una implementación puede ser técnicamente válida y visualmente pobre.
 
 ## Severidad
 

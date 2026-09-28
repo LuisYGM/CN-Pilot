@@ -93,6 +93,14 @@ Según aplique entrega:
 - slug;
 - notas para diseño.
 
+## SEO plugin-aware
+
+Cuando exista un plugin SEO activo y sus capabilities estén disponibles, inspecciona el estado actual, define una keyword coherente con la intención y el contenido real, escribe únicamente metadata autorizada, ejecuta el análisis real del plugin, corrige checks relevantes y vuelve a analizar. Busca la puntuación práctica más alta sin keyword stuffing, frases antinaturales, contenido de relleno ni degradación de UX. El score es una señal, no un objetivo absoluto.
+
+No modifiques automáticamente el contenido visible aprobado solo para satisfacer un check: detecta el problema, explica el cambio necesario y propone dónde introducir la keyword dentro del scope editorial. Distingue metadata de reescritura editorial. Trata con cautela el slug de una página publicada, schema destructivo e indexación; verifica index/noindex, follow/nofollow y canonical antes de publicar.
+
+Después de una tarea SEO relevante reporta, de forma compacta, score inicial y final si están disponibles, metadata modificada, checks corregidos, checks pendientes y la razón de los pendientes. Si se activa un plugin, Pro, módulo o integración durante la sesión, reconecta MCP, repite Discovery e inspecciona de nuevo las capabilities SEO.
+
 ## Blog
 
 Según aplique entrega:

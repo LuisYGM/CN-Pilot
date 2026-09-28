@@ -375,6 +375,84 @@ Medium.
 **Estado:**
 Validated.
 
+## BF-018 — High-Fidelity UI/UX & Builder Workflow
+
+**Contexto:**
+Implementación real de una página visualmente importante en WordPress/Bricks.
+
+**Problema observado:**
+Una implementación puede ser técnicamente válida y tener una estructura builder-native limpia, pero diferir significativamente del diseño aprobado cuando no existe una dirección visual, un prototipo de alta fidelidad, una pasada explícita de fidelidad ni una revisión visual humana.
+
+**Solución:**
+Formalizar proporcionalmente el flujo `Final Content → Creative Direction → High-Fidelity Prototype → Human Visual Approval → Builder-native Implementation → Visual Fidelity Pass → Visual Parity QA → Human Visual QA → Publish` para páginas visualmente importantes, sin exigirlo en cambios pequeños o sin referencia aprobada. Tratar el contenido final como editorial source of truth y el prototipo aprobado como visual source of truth.
+
+**Reglas derivadas:**
+
+- La creatividad se expresa en composición, jerarquía, tipografía, spacing, color, grids, ritmo y assets aprobados; no se inventan datos visuales ni se confunde impacto con headings gigantes.
+- `native settings → clean structure → minimal scoped CSS when necessary`; no perseguir cero CSS, cero Divs o cien por cien native como métricas.
+- Grid y Flex se eligen por intención: Grid distribuye múltiples unidades bidimensionales y Flex resuelve flujos lineales sencillos, incluidos Blocks verticales.
+- Visual Fidelity Pass trabaja sobre diferencias concretas; Visual Parity QA compara proporciones, spacing, tipografía, composición y responsive; Human Visual QA no se sustituye por integridad técnica, árbol o render MCP.
+- `clamp(min-px, fluid-vw, max-px)` es preferencia para proyectos nuevos, no dogma; responsive QA incluye fidelidad visual además de ausencia de overflow.
+- Se detienen iteraciones cuando solo quedan microajustes de bajo retorno, sin abandonar diferencias estructurales o visuales importantes.
+
+**Impacto:**
+High.
+
+**Estado:**
+Validated.
+
+## BF-019 — MCP Capability Lifecycle
+
+**Contexto:**
+Una capability específica apareció después de activar una integración Pro y reconectar el MCP.
+
+**Problema observado:**
+El agente podía tratar Discovery como permanente, declarar una capability inexistente demasiado pronto o usar un workaround low-level aunque existiera una capability especializada tras actualizar el entorno.
+
+**Solución:**
+Formalizar un lifecycle dinámico: después de activar o actualizar plugins, módulos, licencias, integraciones, servidores o configuración MCP, aplicar `reconnect / refresh → rediscover → update capability understanding`. Antes de declarar una limitación se comprueban servidor, abilities, especializaciones, versión, módulos y Discovery posterior al refresh.
+
+**Reglas derivadas:**
+
+- Priorizar `specialized capability → safe generic capability → low-level workaround only when justified`.
+- Diferenciar `read` de `write`; una capability disponible no amplía el scope autorizado.
+- Documentar solo cuando aporte valor el mapa `capability → provider → read/write → scope → risk`.
+- Serializar escrituras sobre el mismo recurso con revisiones, digests o tokens de estado: `write → reread → verify state/digest → next write`.
+- Ante fallo remoto, timeout o respuesta incierta aplicar `reconnect → reread → determine what persisted → identify last valid state → continue`, sin blind retry.
+- Evaluar HTML/CSS import y capabilities de builder en entorno seguro; import successful no equivale a implementación builder-native limpia.
+
+**Impacto:**
+High.
+
+**Estado:**
+Validated.
+
+## BF-020 — SEO Plugin-Aware Optimization
+
+**Contexto:**
+Optimización de metadata en una página WordPress con plugin SEO activo.
+
+**Problema observado:**
+Guardar title, description, keyword, canonical, robots, social metadata o schema no garantiza que el plugin considere la página optimizada. Pueden permanecer checks fallidos sobre keyword, contenido, longitud, readability u otros factores.
+
+**Solución:**
+Formalizar el flujo `inspect current SEO → define target keyword → write metadata → run plugin analysis → inspect failed checks → improve authorized fields → re-run analysis → report remaining checks` cuando el plugin y sus capabilities estén disponibles. Buscar la puntuación práctica más alta sin degradar contenido ni UX.
+
+**Reglas derivadas:**
+
+- Usar checks, recomendaciones y análisis reales del plugin como parte del QA; el score es una señal, no una métrica absoluta.
+- No usar keyword stuffing, frases antinaturales, headings innecesarios, enlaces irrelevantes, contenido de relleno ni cambios que deterioren legibilidad.
+- Proteger el copy aprobado: metadata optimization no equivale a editorial rewrite. Proponer cambios de contenido en vez de aplicarlos automáticamente.
+- Tratar con cautela slug de página publicada, schema destructivo e indexación; verificar index/noindex, follow/nofollow y canonical.
+- Validar también OG/Twitter/X, schema y otros checks disponibles; reportar score inicial/final, metadata, checks corregidos y pendientes.
+- Si se activa un plugin, Pro, módulo o integración, reconectar MCP y repetir Discovery antes de concluir que falta una capability SEO.
+
+**Impacto:**
+High.
+
+**Estado:**
+Validated.
+
 ## BF-016 — Convenciones estructurales y calidad nativa de maquetación
 
 **Contexto:**

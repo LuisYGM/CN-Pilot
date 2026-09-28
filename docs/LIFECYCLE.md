@@ -34,6 +34,16 @@ Empieza por inspeccionar la implementación vigente y sus fuentes de verdad. Omi
 ## Proyecto completo
 `Discovery → Requirements → Architecture → Content → Design → Development → QA → Staging → Acceptance → Production → Maintenance`
 
+## Páginas visualmente importantes
+
+Para landings, páginas comerciales, páginas corporativas importantes y otras interfaces con alta fidelidad requerida, aplica proporcionalmente:
+
+`Final Content → Creative Direction → High-Fidelity Prototype → Human Visual Approval → Builder-native Implementation → Visual Fidelity Pass → Visual Parity QA → Human Visual QA → Publish`
+
+No es obligatorio para cambios pequeños, mantenimiento, cambios de texto, correcciones simples, pequeñas modificaciones CSS ni páginas sin prototipo solicitado. Sin referencia visual aprobada no se exige Visual Parity QA; sin representación visual fiable se informa que Technical QA está completo y Visual QA queda pendiente.
+
+Cuando exista un plugin SEO activo y sus capabilities estén disponibles, añade al flujo SEO: inspección actual → metadata autorizada → análisis real del plugin → corrección de checks relevantes → reanálisis → reporte de checks pendientes. No se modifica copy aprobado ni se fuerzan puntuaciones a costa de UX o naturalidad.
+
 ## Mantenimiento
 `Request → Classification → Specialist → Verification → Checkpoint`
 

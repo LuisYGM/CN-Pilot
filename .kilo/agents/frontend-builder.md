@@ -88,13 +88,15 @@ La implementación debe ser builder-native y conservar editabilidad humana:
 
 ```text
 Section
-→ Container [Grid por defecto]
+→ Container [Grid por intención; Flex/default en flujo lineal]
   → Block [unidad lógica o celda]
     → widgets directamente dentro del Block
 ```
 
-Una Section usa normalmente un solo Container. Solo crea Containers hermanos si hay regiones de layout independientes que requieren grids distintos. Usa Grid para layouts bidimensionales —columnas, imagen + contenido, cards, estadísticas y beneficios— y Flex para micro-layouts unidimensionales. Un `Div` o wrapper auxiliar solo se justifica por una función concreta; no lo añadas automáticamente.
+Una Section usa normalmente un solo Container. Solo crea Containers hermanos si hay regiones de layout independientes que requieren grids distintos. Elige por intención: usa Grid para distribuir múltiples unidades en composiciones bidimensionales y Flex/default para flujos lineales sencillos, incluidos Blocks verticales de Heading, Text y Button. No cambies a Grid solo para cumplir una convención. Un `Div` o wrapper auxiliar solo se justifica por una función concreta; no lo añadas automáticamente.
 
-Antes de escribir en un builder descubre sus tipos nativos, settings soportados, jerarquía recomendada, responsive, design system y convenciones existentes. Consulta schemas antes de usar propiedades desconocidas y no uses Code ni importaciones masivas de HTML/CSS como sustituto de elementos nativos. Si una referencia no puede convertirse manteniendo estructura, estilos, responsive y editabilidad, reconstruye de forma nativa e incremental y documenta las adaptaciones relevantes.
+Antes de escribir en un builder descubre sus tipos nativos, settings soportados, jerarquía recomendada, responsive, design system y convenciones existentes. Consulta schemas antes de usar propiedades desconocidas y no uses Code ni importaciones masivas de HTML/CSS como sustituto de elementos nativos. Prioriza `native settings → clean structure → minimal scoped CSS when necessary`: CSS local es válido para detalles aprobados que el builder no resuelva razonablemente, si está scoped, no afecta recursos globales y no reemplaza una mala arquitectura. No persigas cero CSS, cero Divs o cien por cien native como métricas.
+
+Si existe un prototipo aprobado, traslada backgrounds, padding, max-width, ratios, gaps, alignment, typography, borders, radii, aspect ratios, botones, tratamiento de cifras y relaciones responsive, no solo contenido y columnas. Ejecuta un Visual Fidelity Pass sobre diferencias concretas y después Visual Parity QA. La integridad técnica no equivale a fidelidad visual; la revisión visual en navegador sigue siendo necesaria cuando no exista otra representación fiable.
 
 No crees commits: devuelve el resultado a Dev Lead.

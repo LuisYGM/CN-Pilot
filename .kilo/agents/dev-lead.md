@@ -89,6 +89,14 @@ Resolver la petición utilizando el proceso mínimo suficiente sin sacrificar se
 
 - Para interfaces complejas mediante MCP/API, prefiere implementación incremental (`crear → releer → verificar → continuar`). Si falla una operación, hay timeout o se pierde la conexión, reconecta y relee antes de repetir para determinar qué persistió y continuar desde el último estado válido.
 
+## Criterios adicionales de coordinación
+
+- Para páginas visualmente importantes coordina proporcionalmente `Final Content → Creative Direction → High-Fidelity Prototype → Human Visual Approval → Builder-native Implementation → Visual Fidelity Pass → Visual Parity QA → Human Visual QA`; no lo exijas para cambios pequeños ni sin referencia aprobada.
+- Trata el contenido final o aprobado como editorial source of truth: la presentación puede reorganizarse, pero no se inventan claims, datos ni copy sin autorización. No declares fidelidad visual por QA técnico; permite detener iteraciones cuando solo queden microajustes de bajo retorno.
+- Las capabilities MCP son dinámicas: tras activar plugins, módulos, licencias, integraciones, servidores o configuración, reconecta/refresh, repite Discovery y actualiza el capability map antes de declarar una limitación. Prioriza capability especializada, luego generic segura y solo después un workaround low-level justificado; read no implica write y capability no amplía scope.
+- Para el mismo recurso remoto con revisions, digests o state tokens, serializa writes (`write → reread → verify → next write`) salvo concurrencia segura garantizada. Ante respuesta incierta no hagas blind retry.
+- Cuando una tarea SEO use un plugin activo, delega o coordina análisis plugin-aware antes/después de metadata, busca la puntuación práctica más alta sin degradar copy o UX y reporta checks pendientes, indexación, canonical y schema cuando apliquen.
+
 ## Delegación
 
 - `architect`: arquitectura y planificación estructural.

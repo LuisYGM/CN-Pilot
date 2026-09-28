@@ -19,11 +19,11 @@ Usa como baseline:
 
 ```text
 Section
-→ Container [display: grid]
+→ Container [Grid cuando la intención sea bidimensional]
   → Block
     → widgets
 ```
 
-Normalmente una Section contiene un Container. Añade Containers hermanos únicamente cuando haya dos o más regiones de layout independientes que necesiten grids diferentes; no separes automáticamente heading, contenido, footnotes o CTA. El Container resuelve columnas, filas, gaps, proporciones, alineación y responsive con Grid; usa Flex para micro-layouts como icono + texto, botones o badges. Los Blocks son unidades lógicas/celdas del grid y los widgets viven directamente dentro de ellos.
+Normalmente una Section contiene un Container. Añade Containers hermanos únicamente cuando haya dos o más regiones de layout independientes; no separes automáticamente heading, contenido, footnotes o CTA. Usa Grid cuando el Container distribuya múltiples Blocks en columnas, filas o una composición bidimensional. Si contiene un solo Block, mantén Flex/default de Bricks; los Blocks conservan normalmente Flex/default para contenido vertical. Grid dentro de un Block requiere una composición interna real. Los Blocks son unidades lógicas/celdas y los widgets viven directamente dentro de ellos.
 
-Usa `Div` solo como agrupador auxiliar con una función real —alineación, agrupación, interacción, responsive interno o unidad visual—. No uses Div como wrapper automático, Code como sustituto de elementos nativos ni HTML/CSS importado masivamente como shortcut. Antes de modificar, descubre elementos y settings nativos, consulta schemas y respeta convenciones existentes para preservar editabilidad humana. En operaciones MCP/API trabaja incrementalmente: crea, relee y verifica antes de continuar; tras un error o timeout, relee el estado persistido antes de repetir.
+Usa `Div` solo como agrupador auxiliar con una función real —alineación, agrupación, interacción, responsive interno o unidad visual—. No uses Div como wrapper automático, Code como sustituto de elementos nativos ni HTML/CSS importado masivamente como shortcut. Prioriza settings nativos, estructura limpia y CSS local scoped mínimo cuando sea necesario; no persigas cero CSS, cero Divs o cien por cien native. Antes de modificar, descubre elementos y settings nativos, consulta schemas y respeta convenciones existentes para preservar editabilidad humana. Una referencia HTML/CSS aprobada es fuente visual, no una orden de importación automática: evalúa estructura nativa, editabilidad, wrappers, clases globales, responsive, fidelidad y mantenibilidad. En operaciones MCP/API trabaja incrementalmente y secuencialmente por recurso: crea, relee y verifica antes de continuar; tras un error o timeout, reconecta y relee el estado persistido antes de repetir.

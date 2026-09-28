@@ -193,11 +193,11 @@ Section / región semántica
 ```
 
 - `Section` agrupa una región visual o conceptual.
-- `Container` es la capa principal de layout y usa CSS Grid por defecto para columnas, filas, gaps, proporciones, alineación y cambios responsive.
+- `Container` es la capa principal de layout. Usa CSS Grid cuando deba distribuir múltiples unidades en una composición bidimensional y Flex cuando el contenido siga un flujo lineal sencillo; la intención del layout prevalece sobre un sistema obligatorio.
 - `Block` representa una celda del grid, una unidad lógica o una agrupación con sentido propio. Los widgets y elementos finales viven normalmente directamente dentro del Block.
 - El contenido puede ser un widget, elemento HTML, media, texto, acción u otro elemento nativo del destino.
 
-Una Section utiliza un solo Container por defecto. Solo se añaden Containers hermanos cuando existen regiones de layout independientes que requieren grids o sistemas de layout diferentes; no se crea un Container por cada heading, párrafo, fuente o CTA si forman parte de la misma composición. Flex se reserva principalmente para micro-layouts unidimensionales —como icono + texto, botones, badges o alineación interna— y no sustituye automáticamente al Grid principal.
+Una Section utiliza un solo Container por defecto. Solo se añaden Containers hermanos cuando existen regiones de layout independientes que requieren grids o sistemas de layout diferentes; no se crea un Container por cada heading, párrafo, fuente o CTA si forman parte de la misma composición. Grid distribuye múltiples unidades de layout; Flex resuelve flujos lineales sencillos y no debe sustituirse por Grid solo para cumplir una convención.
 
 Los wrappers auxiliares, incluidos `Div`, son válidos únicamente cuando tienen una función justificable: agrupar widgets, alinear elementos, crear un micro-layout, resolver responsive interno, interacción o una unidad visual interna. No se persiguen métricas artificiales de cero wrappers ni se aceptan wrappers por defecto.
 
@@ -206,6 +206,36 @@ En HTML y custom themes se aplica el mismo principio aprovechando `section`, `ar
 En builders visuales, antes de implementar se descubren y respetan los elementos nativos, jerarquía recomendada, responsive, design system y convenciones existentes. La apariencia visual por sí sola no valida la implementación: cuando una referencia HTML/CSS no puede convertirse conservando estructura, estilos, responsive y editabilidad, se prefiere una reconstrucción nativa e incremental.
 
 El QA estructural valida también el árbol de elementos, semántica, responsabilidad de Containers, uso lógico de Blocks, wrappers justificados, sistema de layout, editabilidad, mantenibilidad y convenciones del proyecto. Cuando una integración expone schemas, se consultan antes de usar settings desconocidos (`schema-first`). Las interfaces complejas mediante MCP/API se construyen preferentemente como `crear → releer → verificar → continuar`; tras cualquier fallo, timeout o reconexión se relee primero el recurso para determinar qué persistió y continuar desde el último estado válido, sin repetir escrituras a ciegas.
+
+## Flujo visual de alta fidelidad
+
+Para landings, páginas comerciales o corporativas importantes y otras interfaces donde se requiera alta fidelidad, aplica proporcionalmente:
+
+```text
+Final Content → Creative Direction → High-Fidelity Prototype
+→ Human Visual Approval → Builder-native Implementation
+→ Visual Fidelity Pass → Visual Parity QA → Human Visual QA → Publish
+```
+
+No es obligatorio para cambios pequeños, mantenimiento, cambios de texto, correcciones simples, pequeñas modificaciones CSS ni páginas sin prototipo solicitado. El contenido final o aprobado es la fuente editorial: se puede reorganizar y presentar visualmente, pero no inventar claims, datos, headings comerciales, microcopy ni reescribir el mensaje sin autorización. La libertad creativa de presentación no equivale a libertad editorial.
+
+Un prototipo HTML/CSS de alta fidelidad representa composición, fondos, tamaños, max-width, spacing, tipografía, imágenes, botones, bordes, tratamientos editoriales y responsive esperado. Tras su aprobación es la fuente visual de verdad. La implementación debe trasladar esos detalles, no solo contenido, imágenes y columnas. `Structurally valid` no equivale a `visually faithful`.
+
+La prioridad de implementación es `native settings → clean structure → minimal scoped CSS when necessary`. CSS local es válido para detalles aprobados que el builder no resuelva razonablemente, siempre que esté scoped, no afecte recursos globales y no sustituya una arquitectura correcta. No se optimizan métricas artificiales como cero CSS, cero Divs, un Container obligatorio o cien por cien native.
+
+Visual Parity QA compara proporciones, widths, whitespace, prominencia de imágenes, escala tipográfica, botones, relaciones de columnas, posiciones, spacing, ritmo y composición con la referencia aprobada. Human Visual QA en navegador no se sustituye por render MCP, fragmentos de contenido, inspección del árbol o integridad técnica; si falta una representación visual fiable, se informa `Technical QA complete; Visual QA pending`. No se exigen estas fases sin referencia visual aprobada y no se mantienen iteraciones de microajustes de bajo retorno indefinidamente.
+
+Para proyectos nuevos, `clamp(min-px, fluid-vw, max-px)` es una preferencia útil para tipografía y spacing fluidos, no un dogma; en proyectos existentes prevalece la convención vigente. Responsive QA valida también jerarquía, orden, spacing, tipografía, proporciones de imagen, colapso del layout, botones, legibilidad y ritmo visual.
+
+## Lifecycle de capabilities y SEO
+
+Las capabilities MCP son dinámicas. Tras instalar o activar plugins, módulos, licencias, integraciones, servidores o configuraciones, se debe reconectar o refrescar, repetir Discovery y actualizar la comprensión de capabilities antes de declarar una limitación. Prioriza `specialized capability → safe generic capability → low-level workaround only when justified`; capacidad de lectura no implica capacidad de escritura, y capacidad técnica no amplía el scope autorizado. Cuando aporte valor, documenta de forma ligera `capability → provider → read/write → scope → risk`.
+
+No hardcodees un builder, plugin o proveedor como requisito del Core: una integración puede exponer elementos, updates, revisions, templates, components, global classes, variables, Theme Styles, design context, import/export o render. Descubre lo realmente disponible y elige la capability específica y segura. Una tool de importación HTML/CSS debe evaluarse en entorno seguro por estructura nativa, editabilidad, wrappers, clases globales, responsive, fidelidad y mantenibilidad; `import successful` no equivale a implementación builder-native limpia.
+
+Las escrituras sobre el mismo recurso remoto que use revisiones, digests, tokens de estado u optimistic concurrency son secuenciales por defecto: `write → reread → verify state/digest → next write`. Ante timeout, reset, conflicto o respuesta incierta: `reconnect → reread → determine what persisted → identify last valid state → continue`; nunca hagas blind retry.
+
+Cuando exista un plugin SEO activo y sus capabilities estén disponibles, el QA SEO debe inspeccionar el estado actual, escribir metadata autorizada, ejecutar el análisis real del plugin, corregir checks relevantes y volver a analizar. El objetivo es la puntuación práctica más alta sin keyword stuffing, contenido antinatural, deterioro de UX ni modificación no autorizada del copy aprobado. Un score es una señal, no una métrica absoluta. Slugs publicados, indexación, schema destructivo y contenido aprobado requieren cautela adicional.
 
 ## Git
 
