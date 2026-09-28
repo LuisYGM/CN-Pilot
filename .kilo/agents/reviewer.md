@@ -50,6 +50,11 @@ Actúa como segunda opinión independiente y solo realiza lectura y verificacion
 - responsive;
 - accesibilidad;
 - estándares del stack;
+- estructura nativa y semántica;
+- responsabilidad de Containers y Blocks;
+- wrappers justificados y ausencia de `div soup`;
+- Grid-first, responsive y editabilidad en builders;
+- uso de schemas y recuperación segura ante fallos de integraciones;
 - compatibilidad;
 - edge cases;
 - mantenibilidad.

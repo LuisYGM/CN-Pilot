@@ -347,3 +347,31 @@ Corrección propuesta.
 
 **Estado:**
 Open / Testing / Resolved / Validated.
+
+## BF-016 — Convenciones estructurales y calidad nativa de maquetación
+
+**Contexto:**
+Validación real de una implementación de interfaz mediante un builder visual.
+
+**Problema observado:**
+Una primera implementación superó verificaciones de integridad, headings, responsive y recursos globales, pero utilizó wrappers genéricos, conversión automática HTML/CSS, shortcuts de código, estilos mal trasladados y una estructura poco mantenible y editable. Una segunda implementación, construida nativamente e incrementalmente según las convenciones del stack destino, produjo una estructura limpia y mantenible.
+
+**Por qué el QA técnico inicial fue insuficiente:**
+Validó sintaxis, render, integridad, headings y responsive, pero no inspeccionó el árbol de elementos, la semántica, la responsabilidad de cada nivel, la necesidad de los wrappers, el sistema de layout, la editabilidad ni la mantenibilidad. La integridad técnica no equivale a calidad estructural.
+
+**Solución:**
+Formalizar como baseline agnóstico del proveedor la jerarquía conceptual `Section → Container → Block → Contenido`, sin convertirla en una obligación de añadir wrappers. La Section agrupa una región semántica; el Container es la capa principal de layout; el Block es una celda o unidad lógica; el contenido vive directamente dentro del Block cuando no requiere otra agrupación.
+
+Un Container por Section es el default. Se añaden Containers hermanos únicamente cuando existen regiones de layout independientes que requieren grids diferentes; no se crea un Container para cada heading, párrafo, footnote o CTA de una misma composición. El layout principal es Grid-first: resuelve columnas, filas, gaps, proporciones, alineación y responsive. Flex se reserva principalmente para micro-layouts unidimensionales.
+
+Los wrappers auxiliares no están prohibidos: incluidos `Div`, deben tener una función real y justificable, como agrupar widgets, alinear elementos, crear un micro-layout, resolver responsive interno, interacción o una unidad visual. En HTML y custom themes se aplica el mismo principio usando elementos semánticos apropiados y evitando `div soup`.
+
+En builders se prioriza la reconstrucción builder-native, respetando elementos nativos, jerarquía, responsive, design system, convenciones existentes y editabilidad humana. Una referencia HTML/CSS no se importa automáticamente si la conversión no preserva estructura, estilos, responsive y mantenibilidad. Cuando existan schemas de elementos/settings, se consultan antes de utilizar propiedades desconocidas (`schema-first`).
+
+Las integraciones MCP/API para interfaces complejas se ejecutan incrementalmente: `crear → releer → verificar → continuar`. Ante fallo, timeout o pérdida de conexión, se reconecta y relee el recurso para determinar qué persistió y continuar desde el último estado válido; no se repiten escrituras a ciegas ni se reconstruye trabajo ya correcto. QA debe validar también árbol, semántica, Containers, Blocks, wrappers, layout, editabilidad, mantenibilidad y convenciones del proyecto.
+
+**Impacto:**
+High.
+
+**Estado:**
+Validated.

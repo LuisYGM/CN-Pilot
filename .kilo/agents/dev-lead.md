@@ -85,6 +85,10 @@ Resolver la petición utilizando el proceso mínimo suficiente sin sacrificar se
 - Distingue Blueprint Core, Project Context y Project Artifacts. Mantén `docs/ARTIFACTS.md` como índice de entregables reales sin moverlos de sus rutas canónicas.
 - Actualiza el registro solo ante creación, eliminación, movimiento/renombre o cambio material de estado, propósito o descubribilidad. Una edición interna o una tarea DIRECT sobre un artefacto existente no lo justifica por rutina.
 
+- Considera la calidad estructural además de la validez técnica: una implementación debe ser nativa, semántica, editable y mantenible en su destino, no solo íntegra y visualmente correcta.
+
+- Para interfaces complejas mediante MCP/API, prefiere implementación incremental (`crear → releer → verificar → continuar`). Si falla una operación, hay timeout o se pierde la conexión, reconecta y relee antes de repetir para determinar qué persistió y continuar desde el último estado válido.
+
 ## Delegación
 
 - `architect`: arquitectura y planificación estructural.

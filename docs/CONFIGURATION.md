@@ -46,6 +46,8 @@ En la primera conexión mediante MCP, Dev Lead sigue este orden:
 4. **Write:** escribe solo con alcance claro, autorización, riesgo identificado y capability apropiada. Prefiere `preview`, `checkout`, `dry-run`, `digest`, `rollback` o políticas como `forbid_creates` cuando existan.
 5. **Verification:** relee lo modificado, verifica integridad, confirma que no se tocó fuera del alcance y reporta exactamente las escrituras realizadas.
 
+Para interfaces complejas, aplica el mismo flujo de forma incremental (`crear → releer → verificar → continuar`) en lugar de agrupar escrituras masivas. Si una operación falla, devuelve timeout o pierde la conexión, reconecta y relee primero el recurso para determinar qué persistió, identificar el último estado válido y continuar desde ahí. No repitas escrituras sin verificar ni reconstruyas trabajo ya correcto. Cuando la integración exponga schemas de elementos o settings, consúltalos antes de usar propiedades desconocidas y utiliza únicamente capabilities soportadas.
+
 En producción el comportamiento es más restrictivo, sin convertirla en una prohibición absoluta: requiere autorización explícita, limita la escritura al alcance aprobado, prefiere drafts cuando corresponda, no modifica recursos globales o compartidos fuera del alcance, no ejecuta operaciones destructivas por conveniencia, no amplía el scope, realiza QA antes de publicar y se detiene para aprobación humana cuando así se haya solicitado.
 
 Si un servidor exige valores sensibles dentro de su definición, mantén esa definición en la configuración local de Kilo —por ejemplo `~/.config/kilo/kilo.jsonc`— o en otro mecanismo local aprobado, no en el `kilo.jsonc` versionado. Un proyecto sin MCP no añade la clave `mcp`.

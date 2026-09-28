@@ -179,6 +179,34 @@ Antes de editar, presentará un resumen simple y centrado en el proyecto: trabaj
 
 Si los permisos impiden escribir una ruta canónica, se reporta el bloqueo y no se reubica el artefacto en otra carpeta.
 
+## Convenciones estructurales de maquetación
+
+La validez técnica no equivale a calidad de implementación. Las interfaces deben conservar una estructura nativa, semántica, editable y mantenible en el stack de destino, además de renderizar correctamente.
+
+La convención general es conceptual y no obliga a añadir wrappers innecesarios:
+
+```text
+Section / región semántica
+→ Container de layout
+  → Block / unidad lógica o celda
+    → Contenido
+```
+
+- `Section` agrupa una región visual o conceptual.
+- `Container` es la capa principal de layout y usa CSS Grid por defecto para columnas, filas, gaps, proporciones, alineación y cambios responsive.
+- `Block` representa una celda del grid, una unidad lógica o una agrupación con sentido propio. Los widgets y elementos finales viven normalmente directamente dentro del Block.
+- El contenido puede ser un widget, elemento HTML, media, texto, acción u otro elemento nativo del destino.
+
+Una Section utiliza un solo Container por defecto. Solo se añaden Containers hermanos cuando existen regiones de layout independientes que requieren grids o sistemas de layout diferentes; no se crea un Container por cada heading, párrafo, fuente o CTA si forman parte de la misma composición. Flex se reserva principalmente para micro-layouts unidimensionales —como icono + texto, botones, badges o alineación interna— y no sustituye automáticamente al Grid principal.
+
+Los wrappers auxiliares, incluidos `Div`, son válidos únicamente cuando tienen una función justificable: agrupar widgets, alinear elementos, crear un micro-layout, resolver responsive interno, interacción o una unidad visual interna. No se persiguen métricas artificiales de cero wrappers ni se aceptan wrappers por defecto.
+
+En HTML y custom themes se aplica el mismo principio aprovechando `section`, `article`, `header`, `nav`, `aside` y otros elementos semánticos apropiados. Se evitan `div soup`, selectores dependientes de profundidad accidental y conversiones masivas que sacrifiquen editabilidad o mantenibilidad.
+
+En builders visuales, antes de implementar se descubren y respetan los elementos nativos, jerarquía recomendada, responsive, design system y convenciones existentes. La apariencia visual por sí sola no valida la implementación: cuando una referencia HTML/CSS no puede convertirse conservando estructura, estilos, responsive y editabilidad, se prefiere una reconstrucción nativa e incremental.
+
+El QA estructural valida también el árbol de elementos, semántica, responsabilidad de Containers, uso lógico de Blocks, wrappers justificados, sistema de layout, editabilidad, mantenibilidad y convenciones del proyecto. Cuando una integración expone schemas, se consultan antes de usar settings desconocidos (`schema-first`). Las interfaces complejas mediante MCP/API se construyen preferentemente como `crear → releer → verificar → continuar`; tras cualquier fallo, timeout o reconexión se relee primero el recurso para determinar qué persistió y continuar desde el último estado válido, sin repetir escrituras a ciegas.
+
 ## Git
 
 - Git es una capacidad opcional: el Blueprint funciona en carpetas sin Git, repositorios locales y repositorios con GitHub u otros remotos.

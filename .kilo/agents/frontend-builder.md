@@ -82,4 +82,19 @@ Con Bricks, Elementor o Gutenberg:
 
 Verifica breakpoints y estados afectados.
 
+### Convención estructural
+
+La implementación debe ser builder-native y conservar editabilidad humana:
+
+```text
+Section
+→ Container [Grid por defecto]
+  → Block [unidad lógica o celda]
+    → widgets directamente dentro del Block
+```
+
+Una Section usa normalmente un solo Container. Solo crea Containers hermanos si hay regiones de layout independientes que requieren grids distintos. Usa Grid para layouts bidimensionales —columnas, imagen + contenido, cards, estadísticas y beneficios— y Flex para micro-layouts unidimensionales. Un `Div` o wrapper auxiliar solo se justifica por una función concreta; no lo añadas automáticamente.
+
+Antes de escribir en un builder descubre sus tipos nativos, settings soportados, jerarquía recomendada, responsive, design system y convenciones existentes. Consulta schemas antes de usar propiedades desconocidas y no uses Code ni importaciones masivas de HTML/CSS como sustituto de elementos nativos. Si una referencia no puede convertirse manteniendo estructura, estilos, responsive y editabilidad, reconstruye de forma nativa e incremental y documenta las adaptaciones relevantes.
+
 No crees commits: devuelve el resultado a Dev Lead.
