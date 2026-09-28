@@ -2,7 +2,7 @@
 
 Blueprint portable para iniciar, desarrollar, revisar y mantener proyectos web con Kilo Code. Organiza contexto, agentes especializados, workflows y artefactos sin imponer un proveedor de IA, un CMS, un método de entrega ni Git.
 
-**Versión:** `1.0.0-draft`
+**Versión:** `1.0.0`
 
 Sirve para proyectos nuevos o existentes: HTML/CSS/JS, WordPress, WooCommerce, plugins, themes, Bricks, Elementor, PHP, APIs, contenido y SEO. El repositorio puede terminar en contenido, diseño, código, handoff manual, integración mediante MCP o deployment, según el alcance real.
 

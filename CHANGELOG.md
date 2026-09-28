@@ -1,19 +1,17 @@
 # Changelog
 
-## [1.0.0-draft] - 2026-09-25
+## [1.0.0] - 2026-09-28
 
 ### Añadido
 
-- Arquitectura inicial.
-- Siete agentes Core.
-- Siete perfiles.
-- Skills iniciales.
-- Workflows principales.
-- Política Git con commits en español.
-- Permisos y seguridad.
-- Templates y documentación operativa.
-- `/new-project` usa onboarding conversacional, infiere datos del proyecto, acepta información pendiente y solicita confirmación antes de modificar archivos.
+- Onboarding conversacional mediante `/new-project`, con Dev Lead como interfaz principal y agentes especializados.
+- Flujos proporcionales `DIRECT`, `TASK` y `STRUCTURAL`, con Git opcional y enfoque local-first.
+- Entregas diferenciadas por artefacto para WordPress, WooCommerce, plugins, themes, proyectos custom, contenido/SEO y UI/UX.
+- Responsive con configuración versionada, handoff manual, MCP opcional y deployment opcional.
+- Registro de artefactos, documentación de onboarding y continuidad del equipo.
+- Estrategia de modelos provider-agnostic y orquestación consciente del coste.
+- Seguridad y revisión proporcional al riesgo, incluyendo permisos, worktrees y operaciones sensibles.
 
 ### Estado
 
-Versión candidata; requiere pruebas piloto antes de `1.0.0`.
+Primera versión estable del Blueprint, validada mediante pruebas piloto en escenarios de contenido, diseño, frontend, WordPress, WooCommerce, plugins, themes, proyectos custom, handoff, MCP y deployment.
