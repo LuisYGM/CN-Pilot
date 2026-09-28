@@ -15,7 +15,7 @@ Problemas operativos frecuentes del Blueprint. Para la primera puesta en marcha,
 **Síntoma:** el servidor no aparece, no conecta o la herramienta requerida no está autorizada.
 
 1. Confirma que MCP forma parte del alcance; no lo actives por rutina.
-2. Revisa la configuración efectiva y el template `templates/mcp/kilo.example.jsonc`.
+2. Revisa la configuración efectiva y el ejemplo MCP canónico [`.kilocode/mcp.example.json`](../.kilocode/mcp.example.json).
 3. Verifica URL, estado `enabled`, autenticación y permisos sin copiar secretos al repositorio.
 4. Valida la conexión antes de publicar o modificar el sistema objetivo.
 5. Si no puede utilizarse, detén el flujo en contenido, diseño, código o handoff manual según lo acordado.
