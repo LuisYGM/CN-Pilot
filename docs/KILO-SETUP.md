@@ -46,6 +46,10 @@ Primera acción recomendada: `/new-project`.
 
 El recorrido completo del primer día está en [Empieza aquí](START-HERE.md).
 
+## Configuración MCP por proyecto
+
+MCP es opcional. Si el proyecto utiliza Kilo con integración MCP, copia [`.kilocode/mcp.example.json`](../.kilocode/mcp.example.json) como `.kilocode/mcp.json` y configura allí los servidores activos. `.kilocode/mcp.json` es local e ignorado por Git; no lo sustituyas por `.kilo/kilo.jsonc` ni guardes credenciales en `kilo.jsonc`, documentación o examples. Un proyecto puede tener varios MCP. Antes de escribir sobre un sistema real, Dev Lead descubre las capabilities/tools expuestas y ejecuta el flujo read-only → plan → write autorizado → verification descrito en [Configuración del Blueprint](CONFIGURATION.md#mcp-opcional).
+
 ## Seguridad
 
 - No pegues API keys en archivos del repositorio ni en el template de ejemplo.

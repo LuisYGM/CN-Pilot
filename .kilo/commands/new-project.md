@@ -27,6 +27,7 @@ agent: dev-lead
    - diferencias de destino entre entregables, si existen.
    Marca como `Pending` lo que siga sin conocerse.
 6. Haz preguntas adicionales solo cuando sean realmente necesarias para inicializar el contexto. Deben ser simples y no exponer conceptos internos salvo que resulten útiles para una decisión del proyecto.
+   Si la persona indica que utilizará MCP, explica brevemente el setup, pide solo la configuración faltante, nunca secretos, y deja previsto el discovery/read-only antes de escribir sobre un entorno real. MCP no es una pregunta obligatoria y puede haber varios servidores.
 7. Nunca pidas a la persona decidir dónde, en qué archivo, estructura o categoría se guardará la información. No expongas nombres de archivos, estructuras, categorías ni reglas internas del Blueprint salvo que sean realmente útiles para una decisión del proyecto.
 8. Nunca solicites secretos, credenciales, tokens ni claves.
 9. Antes de modificar cualquier archivo, muestra un resumen breve, simple, natural y centrado en el proyecto que incluya únicamente:

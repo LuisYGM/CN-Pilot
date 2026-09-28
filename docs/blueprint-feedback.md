@@ -272,6 +272,60 @@ Formalizar la estrategia provider-agnostic de capacidad, hacer explícita la eva
 **Estado:**
 Resolved.
 
+## BF-014 — Configuración MCP por proyecto y manejo de secretos
+
+**Contexto:**
+Primer proyecto en producción con Blueprint 1.0.0 utilizando varios MCP.
+
+**Problema observado:**
+La documentación contemplaba MCP conceptualmente, pero no dejaba suficientemente claro dónde vive la configuración activa del proyecto, cómo conviven varios servidores, qué se versiona, qué permanece local ni cómo manejar secretos antes de escribir sobre un sistema real.
+
+**Causa:**
+La configuración general `kilo.jsonc`, los templates de referencia y la configuración activa local no estaban diferenciados con una ruta canónica de proyecto.
+
+**Solución:**
+Formalizar `.kilocode/mcp.json` como configuración activa local ignorada por Git y `.kilocode/mcp.example.json` como ejemplo versionado, genérico y sin secretos. Mantener `kilo.jsonc` para configuración general compartible y documentar OAuth, mecanismos seguros equivalentes, producción reforzada y revocación de credenciales expuestas.
+
+**Reglas derivadas:**
+
+- Nunca versionar credenciales MCP ni inventar endpoints, usuarios, tokens o parámetros.
+- Un proyecto puede utilizar varios MCP simultáneamente.
+- Nunca copiar secretos reales a documentación, examples, templates o logs.
+- Antes de escribir sobre un sistema real, realizar discovery y read-only.
+
+**Impacto:**
+High.
+
+**Estado:**
+Resolved.
+
+## BF-015 — Descubrimiento y enrutamiento de capacidades MCP
+
+**Contexto:**
+Primer proyecto en producción con dos MCP de orientación distinta, donde las capabilities disponibles no coincidieron necesariamente con el nombre o intención declarada de cada servidor.
+
+**Problema observado:**
+El agente podía asumir que un servidor exponía las capabilities sugeridas por su nombre y forzar una integración directa aunque otro MCP expusiera legítimamente la capability requerida.
+
+**Causa:**
+El enrutamiento estaba implícitamente basado en el proveedor o servidor, no en el descubrimiento de tools y capabilities realmente disponibles durante la sesión.
+
+**Solución:**
+Adoptar un enfoque capability-first: descubrir servidores, inspeccionar capabilities/tools, mapear `capability → responsabilidad`, elegir la ruta más específica y segura, usar fallback legítimo y reportar limitaciones. Formalizar el flujo `Discovery → Read-only → Plan → Write autorizado → Verification`, con cautela reforzada en producción.
+
+**Reglas derivadas:**
+
+- No asumir `servidor X → capacidades X` por el nombre del servidor.
+- No duplicar llamadas si un MCP ya proporciona la capability requerida.
+- Escribir solo con alcance claro, autorización, riesgo identificado y capability apropiada.
+- Después de escribir, releer, verificar integridad y reportar exactamente las operaciones realizadas.
+
+**Impacto:**
+High.
+
+**Estado:**
+Resolved.
+
 ## Plantilla reutilizable
 
 ### BF-XXX — [Título]

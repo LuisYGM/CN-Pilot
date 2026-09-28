@@ -1,0 +1,14 @@
+{
+  "mcp": {
+    "example-readonly": {
+      "type": "remote",
+      "url": "https://example.invalid/mcp-readonly",
+      "enabled": false
+    },
+    "example-builder": {
+      "type": "remote",
+      "url": "https://example.invalid/mcp-builder",
+      "enabled": false
+    }
+  }
+}

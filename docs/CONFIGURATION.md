@@ -5,7 +5,7 @@ Fuente de verdad para las capas de configuración compartible, responsive, MCP, 
 ## Capas de configuración
 
 - **Convenciones universales:** fuentes versionadas y portables que aplican por defecto, como `config/responsive.json`.
-- **Configuración del proyecto:** decisiones compartibles del proyecto, sin secretos, como un MCP confirmado en `kilo.jsonc` o un workflow de deployment aprobado.
+- **Configuración del proyecto:** decisiones compartibles del proyecto, sin secretos, como configuración general en `kilo.jsonc` o un workflow de deployment aprobado.
 - **Configuración local:** preferencias, autenticación y ajustes propios del desarrollador o máquina. Se mantienen fuera de Git.
 - **Secretos:** tokens, API keys, passwords, claves privadas y credenciales. Nunca se versionan.
 - **Templates opcionales:** ejemplos inactivos bajo `templates/`; solo se copian y adaptan cuando el alcance lo requiere.
@@ -23,10 +23,30 @@ En proyectos existentes, los breakpoints implementados son la fuente de verdad. 
 El Blueprint no activa MCPs por defecto ni depende de un proveedor concreto. Cuando un proyecto confirme un MCP:
 
 1. verifica que la integración forma parte del alcance y que está disponible;
-2. parte de `templates/mcp/kilo.example.jsonc` y adapta uno o varios servidores;
-3. integra en `kilo.jsonc` únicamente configuración compartible sin secretos;
+2. crea `.kilocode/mcp.json` a partir de [`.kilocode/mcp.example.json`](../.kilocode/mcp.example.json) y adapta uno o varios servidores;
+3. conserva en `kilo.jsonc` únicamente configuración general de Kilo/Blueprint a nivel de proyecto y sin secretos;
 4. configura autenticación mediante OAuth administrado por Kilo, variables/secretos del entorno o configuración local fuera del repositorio, según admita el servicio;
 5. valida la conexión antes de usarla para publicar o modificar el sistema objetivo.
+
+Las ubicaciones tienen responsabilidades distintas:
+
+- `kilo.jsonc`: configuración general y compartible de Kilo/Blueprint a nivel de proyecto.
+- `.kilocode/mcp.json`: configuración activa local de los servidores MCP de este proyecto. Está ignorada por Git y puede contener referencias sensibles.
+- `.kilocode/mcp.example.json`: ejemplo versionado, genérico y sin secretos para uno o varios servidores. Cada desarrollador crea su propio `.kilocode/mcp.json`.
+
+Un proyecto puede utilizar varios MCP simultáneamente, con responsabilidades diferentes. Dev Lead debe elegir herramientas por la capability real que exponen, no por el nombre o la intención declarada del servidor. El uso de MCP es capability-first, no provider-first: primero se descubren servidores y tools disponibles, después se mapea `capability → responsabilidad`, se elige la ruta funcional más específica y segura y se usa fallback solo si otro MCP expone legítimamente la capability necesaria. No se duplican llamadas cuando un MCP ya proporciona la capability requerida.
+
+### Flujo de conexión a un sistema real
+
+En la primera conexión mediante MCP, Dev Lead sigue este orden:
+
+1. **Discovery:** identifica MCP disponibles, inspecciona capabilities/tools reales, identifica entorno y recursos y distingue recursos locales, específicos, globales y compartidos.
+2. **Read-only:** inspecciona antes de escribir, verifica el estado actual, busca recursos reutilizables, conflictos y limitaciones.
+3. **Plan:** propone qué creará, modificará, reutilizará o dejará intacto, diferenciando recursos nuevos, preexistentes, globales y compartidos.
+4. **Write:** escribe solo con alcance claro, autorización, riesgo identificado y capability apropiada. Prefiere `preview`, `checkout`, `dry-run`, `digest`, `rollback` o políticas como `forbid_creates` cuando existan.
+5. **Verification:** relee lo modificado, verifica integridad, confirma que no se tocó fuera del alcance y reporta exactamente las escrituras realizadas.
+
+En producción el comportamiento es más restrictivo, sin convertirla en una prohibición absoluta: requiere autorización explícita, limita la escritura al alcance aprobado, prefiere drafts cuando corresponda, no modifica recursos globales o compartidos fuera del alcance, no ejecuta operaciones destructivas por conveniencia, no amplía el scope, realiza QA antes de publicar y se detiene para aprobación humana cuando así se haya solicitado.
 
 Si un servidor exige valores sensibles dentro de su definición, mantén esa definición en la configuración local de Kilo —por ejemplo `~/.config/kilo/kilo.jsonc`— o en otro mecanismo local aprobado, no en el `kilo.jsonc` versionado. Un proyecto sin MCP no añade la clave `mcp`.
 

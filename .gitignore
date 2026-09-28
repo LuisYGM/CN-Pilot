@@ -5,6 +5,7 @@
 secrets/
 kilo.local.json
 kilo.local.jsonc
+.kilocode/mcp.json
 
 # Dependencies / caches
 node_modules/

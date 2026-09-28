@@ -20,7 +20,7 @@ Cada proyecto define hasta dónde llega el repositorio y cómo se entrega cada a
 
 El repositorio separa convenciones universales, configuración específica compartible del proyecto, configuración local del desarrollador, secretos y templates opcionales. `config/responsive.json` es la fuente versionada para responsive de proyectos nuevos; los proyectos existentes conservan sus breakpoints salvo migración aprobada.
 
-Los MCPs y workflows de deployment no se activan por defecto. Sus ejemplos viven bajo `templates/` y solo se integran cuando el alcance los confirma. `kilo.jsonc` puede versionar configuración MCP no sensible; credenciales, tokens y ajustes locales permanecen fuera de Git. Consulta `docs/CONFIGURATION.md`.
+Los MCPs y workflows de deployment no se activan por defecto. El ejemplo de configuración MCP por proyecto vive en `.kilocode/mcp.example.json`; la configuración activa `.kilocode/mcp.json` permanece local e ignorada por Git. `kilo.jsonc` conserva configuración general compartible sin secretos. Consulta `docs/CONFIGURATION.md`.
 
 ## Capas de archivos y artefactos
 

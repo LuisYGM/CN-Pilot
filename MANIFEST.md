@@ -10,6 +10,6 @@ Inventario de la infraestructura heredada del Blueprint. No sustituye `docs/ARTI
 - documentación operativa
 - registro base de artefactos del proyecto
 - configuración responsive versionada
-- configuración Kilo
+- configuración Kilo y ejemplo MCP local seguro
 - configuración VS Code
 - política Git y seguridad
