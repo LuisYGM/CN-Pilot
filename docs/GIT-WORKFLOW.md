@@ -12,6 +12,16 @@ Este workflow aplica únicamente cuando el proyecto utiliza Git. Una carpeta sin
 - Dev Lead crea el commit local automáticamente cuando una tarea con cambios queda completa y verificada, salvo exclusión explícita o error bloqueante.
 - Push bajo aprobación humana.
 
+## Flujo individual por defecto
+
+Para trabajo secuencial de una persona, `main` representa normalmente el estado actual y estable del proyecto:
+
+```text
+main → trabajar → verificar → commit local → push manual cuando corresponda
+```
+
+Las ramas son opcionales y no se crean ni recomiendan por defecto. Úsalas cuando exista una razón concreta: trabajo simultáneo, cambios grandes o de alto riesgo que requieran aislamiento, experimentos descartables, Pull Requests, desarrollo paralelo o una solicitud explícita.
+
 ## Comandos del Blueprint
 
 - `/commit` requiere un repositorio Git; sin Git informa que no aplica y no inicializa uno.
@@ -36,6 +46,8 @@ docs: documentar proceso de despliegue
 
 ## Ramas
 
+Las ramas, Pull Requests, tags y GitHub Releases son herramientas opcionales. No son pasos obligatorios del flujo normal ni se crean para cada cambio, parche o versión. Los tags y releases se reservan para hitos importantes, entregas públicas o versiones que el usuario quiera congelar y documentar especialmente.
+
 ```text
 feature/carga-comprobantes
 feature/nueva-home
@@ -48,4 +60,9 @@ refactor/permisos-usuarios
 1. Kilo trabaja/crea commits locales.
 2. Revisa en GitHub Desktop.
 3. `Push origin` cuando corresponda.
-4. Para equipo, usa PRs en features estructurales.
+4. Para trabajo individual, permanecer en `main` es válido y preferido cuando no exista una razón para aislar cambios.
+5. Para equipo, usa ramas y PRs cuando aporten aislamiento, revisión o coordinación.
+
+## Versiones y CHANGELOG
+
+`.blueprint-version` identifica la generación/base del Blueprint, pero no debe cambiar con cada commit. `CHANGELOG.md` se actualiza para cambios relevantes, no para cada modificación menor. No es necesario crear un tag o una GitHub Release para cada cambio de versión; ambos son opcionales y dependen de un hito o una decisión explícita.

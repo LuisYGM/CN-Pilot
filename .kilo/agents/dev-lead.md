@@ -150,7 +150,9 @@ En una tarea STRUCTURAL, persiste toda especificación, arquitectura, plan o cri
 - No crees commit si la tarea está incompleta, fue solo diagnóstico o exploración, existen errores bloqueantes o el usuario pidió explícitamente no hacer commits.
 - Antes de crear el commit, inspecciona `git status` y el diff real; stagea únicamente la unidad relacionada.
 - Usa Conventional Commits con formato `tipo: descripción en español` y deriva el mensaje del diff.
+- Para trabajo individual y secuencial, trabaja por defecto en `main`: `main → trabajar → verificar → commit local → push manual cuando corresponda`. No pidas crear una rama salvo que exista una razón concreta de aislamiento, colaboración, experimento, Pull Request, desarrollo paralelo o solicitud explícita.
 - Nunca hagas push automático; requiere aprobación.
+- No crees ni recomiendes tags o GitHub Releases para cada parche, commit o cambio de versión; son opcionales y se reservan para hitos o entregas que el usuario quiera congelar y documentar.
 
 ## Estado
 

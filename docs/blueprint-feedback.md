@@ -348,6 +348,33 @@ Corrección propuesta.
 **Estado:**
 Open / Testing / Resolved / Validated.
 
+## BF-017 — Flujo Git simplificado para trabajo individual
+
+**Contexto:**
+Uso secuencial del Blueprint por un desarrollador individual en `main`.
+
+**Problema observado:**
+El flujo con ramas de mantenimiento, merges, tags y GitHub Releases añadía complejidad innecesaria cuando no existían necesidades de colaboración, aislamiento o publicación formal. Git debe aportar seguridad e historial sin imponer mecanismos adicionales.
+
+**Solución:**
+Formalizar como flujo normal para trabajo individual `main → trabajar → verificar → commit local → push manual cuando corresponda`. `main` representa normalmente el estado actual y estable del proyecto. Las ramas, Pull Requests, tags y GitHub Releases permanecen disponibles, pero son opcionales y se usan solo cuando existe una razón concreta.
+
+**Reglas derivadas:**
+
+- No crear ni recomendar ramas automáticamente para mantenimiento, documentación, mejoras pequeñas o trabajo secuencial individual.
+- Crear ramas únicamente por colaboración, aislamiento de cambios grandes o de riesgo, experimentos descartables, Pull Requests, desarrollo paralelo o solicitud explícita.
+- Mantener commits frecuentes, claros, recuperables y compatibles con Conventional Commits, con descripción en español.
+- Mantener el push bajo control humano; los agentes pueden crear commits locales, pero no hacer push automáticamente.
+- No crear ni recomendar tags o GitHub Releases para cada parche, commit o cambio de versión; reservarlos para hitos, entregas públicas o versiones congeladas por decisión explícita.
+- Conservar `.blueprint-version` sin exigir que cambie con cada commit y actualizar `CHANGELOG.md` para cambios relevantes.
+- Mantener Git opcional y conservar soporte para ramas, Pull Requests, tags y releases cuando aporten valor.
+
+**Impacto:**
+Medium.
+
+**Estado:**
+Validated.
+
 ## BF-016 — Convenciones estructurales y calidad nativa de maquetación
 
 **Contexto:**

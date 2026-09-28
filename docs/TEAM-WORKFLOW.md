@@ -8,10 +8,16 @@ Si el proyecto usa Git, haz Pull y comprueba la rama. En todos los casos, revisa
 
 ## Trabajo en funcionalidades
 
-Para features estructurales:
+Para trabajo individual y secuencial, usa normalmente:
 
-- Con Git: branch → implementación → checkpoint → push manual → Pull Request → review → merge.
+`main → implementación → verificación → commit local → push manual cuando corresponda`
+
+Las ramas son opcionales. Para features estructurales o trabajo compartido:
+
+- Con Git, cuando la colaboración o el riesgo lo justifique: branch → implementación → checkpoint → push manual → Pull Request → review → merge.
 - Sin Git: implementación → verificación de archivos → entrega local; no se inicializa Git automáticamente.
+
+Tags y GitHub Releases son opcionales y se reservan para hitos, entregas públicas o versiones que el usuario quiera congelar y documentar especialmente.
 
 ## Mejoras del Blueprint
 

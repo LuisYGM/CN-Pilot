@@ -184,6 +184,8 @@ Puede registrarse «Control de versiones: no inicializado» como contexto establ
 
 Cuando Git existe, Dev Lead crea automáticamente un commit local por defecto si una tarea que modificó archivos está totalmente terminada y verificada. No pregunta al usuario si quiere el commit.
 
+El flujo normal para trabajo individual y secuencial es `main → trabajar → verificar → commit local → push manual cuando corresponda`. `main` representa normalmente el estado actual y estable del proyecto. Las ramas son opcionales y solo se crean cuando existe una razón concreta de aislamiento, colaboración, experimento, Pull Request, desarrollo paralelo o solicitud explícita; no deben exigirse para mantenimiento, documentación, mejoras pequeñas o trabajo individual normal.
+
 No crea commit si la tarea está incompleta, fue solo diagnóstico o exploración, existen errores bloqueantes o el usuario pidió explícitamente no hacer commits.
 
 Antes de un commit, cuando Git existe:
@@ -195,6 +197,8 @@ Antes de un commit, cuando Git existe:
 5. genera el mensaje a partir del diff real.
 
 No hagas `push` automáticamente salvo autorización explícita.
+
+Los tags y GitHub Releases son opcionales. No se crean ni recomiendan para cada parche, commit o cambio de versión; se reservan para hitos, entregas públicas o versiones que el usuario quiera congelar y documentar especialmente. `.blueprint-version` puede conservarse sin cambiar en cada commit y `CHANGELOG.md` se actualiza cuando el cambio sea relevante.
 
 Bloqueados por defecto:
 

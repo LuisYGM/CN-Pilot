@@ -213,12 +213,15 @@ El QA estructural valida también el árbol de elementos, semántica, responsabi
 - Sin Git se omiten comandos, ramas, hashes, worktrees y commits; se verifican los archivos directamente y la ausencia no se trata como bloqueo.
 - El Blueprint nunca ejecuta `git init` salvo solicitud explícita o alcance confirmado.
 - Cuando Git existe, Dev Lead crea automáticamente un commit local por defecto cuando una tarea modificó archivos y quedó totalmente terminada y verificada; no pregunta al usuario si quiere hacerlo.
+- Para trabajo individual y secuencial, el flujo por defecto es `main → trabajar → verificar → commit local → push manual cuando corresponda`; `main` representa normalmente el estado actual y estable del proyecto.
+- Las ramas son opcionales: solo se crean cuando existe una razón concreta de colaboración, aislamiento por riesgo, experimento descartable, Pull Request, desarrollo paralelo o solicitud explícita. No son necesarias para mantenimiento, documentación, mejoras pequeñas o trabajo individual normal.
 - No crea commit si la tarea está incompleta, fue solo diagnóstico o exploración, existen errores bloqueantes o el usuario lo prohibió explícitamente.
 - Conventional Commits.
 - Descripciones siempre en español.
 - Mensajes basados en el diff real.
 - Stage limitado a la unidad lógica relacionada.
 - Nunca hace push automático.
+- Los tags y GitHub Releases son opcionales y no se crean ni recomiendan para cada parche, commit o cambio de versión. `.blueprint-version` identifica la generación/base del Blueprint y no tiene que cambiar con cada commit; `CHANGELOG.md` se actualiza para cambios relevantes.
 - Operaciones destructivas bloqueadas.
 
 ## Versionado
