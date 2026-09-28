@@ -15,7 +15,7 @@ En Kilo Code:
 
 1. Abre **Settings**.
 2. Entra en **Providers**.
-3. Selecciona OpenAI, Anthropic, Google u otro proveedor compatible.
+3. Selecciona cualquier proveedor compatible.
 4. Completa la autenticación mediante el mecanismo seguro ofrecido por Kilo y el proveedor.
 5. Verifica que los modelos elegidos estén disponibles.
 

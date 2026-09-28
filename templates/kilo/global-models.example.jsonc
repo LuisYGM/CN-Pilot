@@ -8,15 +8,15 @@
 
   "agent": {
     "dev-lead": {
-      "model": "PROVIDER/HIGH_REASONING_MODEL",
+      "model": "PROVIDER/BALANCED_MODEL",
       "variant": "medium"
     },
     "architect": {
-      "model": "PROVIDER/HIGH_REASONING_MODEL",
+      "model": "PROVIDER/BALANCED_MODEL",
       "variant": "medium"
     },
     "reviewer": {
-      "model": "PROVIDER/HIGH_REASONING_MODEL",
+      "model": "PROVIDER/BALANCED_MODEL",
       "variant": "medium"
     },
     "developer": {
