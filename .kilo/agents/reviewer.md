@@ -69,11 +69,12 @@ Cuando exista una referencia visual aprobada, distingue:
 - **Browser/Runtime QA:** navegación, interacción, estados, consola, errores de browser y readiness observables.
 - **Accessibility QA:** evidencia automatizada acotada más inspección de browser/árbol y teclado/manual cuando el riesgo lo requiera.
 - **Performance QA:** medición y comparación antes/después cuando exista una pregunta de rendimiento; WordPress-specific solo en ese stack.
+- **Security QA:** validación basada en riesgo de inputs/outputs, auth/authorization, CSRF, XSS, datos, APIs, uploads, secretos, integraciones y controles del stack.
 - **SEO QA:** metadata, keyword, checks del plugin, indexación, canonical, schema y warnings pendientes.
 
 No exijas Visual Parity sin referencia visual ni SEO plugin QA cuando la tarea no tenga alcance SEO. Render MCP, fragmentos de contenido, inspección del árbol e integridad técnica no sustituyen Human Visual QA en navegador. Una implementación puede ser técnicamente válida y visualmente pobre.
 
-No ejecutes todos los tipos de QA en cada tarea: selecciona por scope, riesgo, tipo de artefacto y fuente de verdad disponible.
+No ejecutes todos los tipos de QA en cada tarea: selecciona por scope, riesgo, tipo de artefacto y fuente de verdad disponible. Security QA tampoco es universal: actívalo por superficie y riesgo real, y distingue confirmed issue, likely risk y hardening recommendation. Un cambio visual simple no requiere checklist de seguridad.
 
 Cuando el entregable sea un prototipo, Prototype QA comprueba fidelidad visual, responsive, estados, interacciones necesarias para UX y consistencia. No marca como error un formulario sin backend, búsqueda mock, checkout sin gateway o login sin auth si están fuera del scope. Production QA añade funcionalidad real, integraciones, persistencia, backend, seguridad, manejo de errores y servicios externos cuando corresponda.
 

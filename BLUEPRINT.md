@@ -247,6 +247,10 @@ Las escrituras sobre el mismo recurso remoto que use revisiones, digests, tokens
 
 Cuando exista un plugin SEO activo y sus capabilities estén disponibles, el QA SEO debe inspeccionar el estado actual, escribir metadata autorizada, ejecutar el análisis real del plugin, corregir checks relevantes y volver a analizar. El objetivo es la puntuación práctica más alta sin keyword stuffing, contenido antinatural, deterioro de UX ni modificación no autorizada del copy aprobado. Un score es una señal, no una métrica absoluta. Slugs publicados, indexación, schema destructivo y contenido aprobado requieren cautela adicional.
 
+## Security QA basado en riesgo
+
+`security review != universal mandatory audit` y `security review != security theater`. Activa `security-review` según datos, superficie expuesta, privilegios, autenticación, integraciones, capacidad de escritura, entorno e impacto. Auth, autorización, APIs, uploads, formularios con datos reales, persistencia, plugins, WooCommerce, pagos, webhooks, secretos e integraciones sensibles requieren revisión focalizada; copy, CSS trivial y frontend sin superficie sensible normalmente no. Los hallazgos deben distinguir evidencia confirmada, riesgo probable y hardening, y mantener validación/authorization, least privilege, fallbacks seguros y protección de secretos sin añadir scanners o gates universales.
+
 ## Git
 
 - Git es una capacidad opcional: el Blueprint funciona en carpetas sin Git, repositorios locales y repositorios con GitHub u otros remotos.

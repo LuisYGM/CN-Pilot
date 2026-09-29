@@ -389,6 +389,20 @@ Menor consumo de tokens, menos conflictos entre instrucciones y QA más preciso.
 **Estado:**
 Validated.
 
+## BF-023 — Risk-Based Security Review
+
+**Problema:**
+El Blueprint tenía QA especializado visual, accessibility, performance y SEO, pero no formalizaba seguridad con la misma profundidad ni una activación proporcional.
+
+**Regla:**
+La seguridad se revisa según riesgo y superficie real, no como auditoría universal ni checklist de security theater. `security-review` se activa para auth, autorización, APIs, uploads, formularios con datos reales, persistencia, plugins, WooCommerce, webhooks, secretos e integraciones sensibles; no para copy, CSS trivial o frontend sin superficie sensible.
+
+**Impacto:**
+Secure defaults, menos vulnerabilidades evitables y mejor revisión de backend/integraciones sin añadir Security QA innecesario a tareas visuales simples.
+
+**Estado:**
+Validated.
+
 ## BF-021 — Prototype Functionality Boundary
 
 **Problema observado:**

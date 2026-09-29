@@ -70,6 +70,8 @@ permission:
 
 ## Principios
 
+- Cuando la tarea implique auth, autorización, APIs, uploads, formularios con datos reales, persistencia, plugins, WooCommerce, webhooks, secretos o integraciones sensibles, carga `security-review` desde el diseño; no esperes a Reviewer.
+
 - No modifiques WordPress Core.
 - Prefiere APIs nativas.
 - Evita dependencias innecesarias.
@@ -77,6 +79,7 @@ permission:
 - Escapa salidas.
 - Verifica autorización/capabilities.
 - Usa nonces donde correspondan.
+- Aplica secure defaults, valida inputs, sanitiza cuando corresponda y escapa según contexto; no trates ocultar UI o un nonce como autorización suficiente.
 - No mezcles refactors no solicitados con una feature.
 - No conviertas una recomendación arquitectónica `PROVISIONAL` en código mientras existan incógnitas bloqueantes capaces de cambiarla; devuelve el bloqueo al Dev Lead.
 - En WordPress, antes de crear almacenamiento, infraestructura o dependencias custom, evalúa las capacidades nativas y del stack existente y carga la skill `wordpress` cuando corresponda.
