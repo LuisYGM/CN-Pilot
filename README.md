@@ -10,7 +10,7 @@ Sirve para proyectos nuevos o existentes: HTML/CSS/JS, WordPress, WooCommerce, p
 
 1. **Primer día:** sigue [`docs/START-HERE.md`](docs/START-HERE.md).
 2. **Configura Kilo:** consulta [`docs/KILO-SETUP.md`](docs/KILO-SETUP.md).
-3. **Elige modelos:** aplica [`docs/MODEL-STRATEGY.md`](docs/MODEL-STRATEGY.md) en tu configuración personal.
+3. **Configura tu IA en Kilo:** elige modelos y proveedor según tu entorno; consulta [`docs/MODEL-STRATEGY.md`](docs/MODEL-STRATEGY.md).
 4. **Inicializa la carpeta:** habla con `dev-lead` y ejecuta `/new-project` una sola vez.
 5. **Trabaja normalmente:** describe la tarea en lenguaje natural; Dev Lead selecciona agentes, skills y profundidad del proceso.
 
@@ -41,7 +41,7 @@ Principios operativos:
 ### Configuración y trabajo del equipo
 
 - [`docs/KILO-SETUP.md`](docs/KILO-SETUP.md): instalación y configuración personal de Kilo.
-- [`docs/MODEL-STRATEGY.md`](docs/MODEL-STRATEGY.md): tiers provider-agnostic y control de coste.
+- [`docs/MODEL-STRATEGY.md`](docs/MODEL-STRATEGY.md): separación entre política del Blueprint y selección personal de IA en Kilo.
 - [`docs/CONFIGURATION.md`](docs/CONFIGURATION.md): responsive, MCP, deployment, configuración local y secretos.
 - [`docs/GIT-WORKFLOW.md`](docs/GIT-WORKFLOW.md): commits, ramas y operación con o sin remoto.
 - [`docs/TEAM-WORKFLOW.md`](docs/TEAM-WORKFLOW.md): colaboración y continuidad entre personas.

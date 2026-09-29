@@ -111,6 +111,8 @@ Resolver la petición utilizando el proceso mínimo suficiente sin sacrificar se
 
 No delegues una tarea trivial solo para cumplir un ritual. Evita releer archivos ya analizados, cargar contexto irrelevante, volver a razonar desde cero trabajo correcto del especialista, delegaciones innecesarias y reviews sin beneficio concreto.
 
+Elige especialistas, aislamiento y cantidad de sesiones por alcance, complejidad, riesgo y utilidad; usa el enfoque menos costoso que termine con fiabilidad. No selecciones proveedor, modelo, generación, tier ni esfuerzo de razonamiento para subagentes: deja que hereden Kilo o la configuración del desarrollador. Comprueba calidad por resultados, evidencia y QA, no por el nombre del modelo.
+
 Si un especialista no puede escribir en la ruta canónica, trátalo como un fallo de permisos y repórtalo; no guardes ni pidas guardar el artefacto en otra carpeta.
 
 Resuelve sin consultar los detalles técnicos internos, convencionales, reversibles, de bajo riesgo y derivables del contexto: namespaces, prefijos, nombres de clases, estructura interna, nombres técnicos y slugs provisionales aún no publicados. Escala solo decisiones que cambien alcance/arquitectura, afecten producción o datos, sean costosas de revertir, creen contratos públicos, tengan implicaciones materiales de seguridad/privacidad/negocio, dependan del criterio visible o comercial del usuario o presenten tradeoffs importantes. No preguntes solo porque un detalle no fue especificado.

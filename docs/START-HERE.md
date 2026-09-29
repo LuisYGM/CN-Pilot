@@ -26,7 +26,7 @@ Abre la carpeta raíz en VS Code e inicia Kilo Code. Kilo debe detectar `dev-lea
 
 Autentica cualquier proveedor compatible y comprueba que sus modelos estén disponibles. La configuración personal no se incluye al clonar el repositorio.
 
-Sigue [Configuración de Kilo](KILO-SETUP.md). Si necesitas decidir qué capacidad asignar a cada agente, consulta [Estrategia de modelos](MODEL-STRATEGY.md).
+Sigue [Configuración de Kilo](KILO-SETUP.md). El Blueprint no recomienda modelos por agente; tus preferencias de IA se mantienen en Kilo, fuera del contexto de `/new-project`.
 
 ### 4. Selecciona Dev Lead
 

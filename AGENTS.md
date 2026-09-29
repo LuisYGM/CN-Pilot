@@ -37,6 +37,7 @@ No cargues contexto irrelevante.
 ## Configuración reutilizable
 
 - Distingue convenciones universales versionadas, configuración compartible del proyecto, configuración local del desarrollador, secretos y templates opcionales.
+- La selección de IA pertenece al usuario/entorno de Kilo, no al Blueprint: proveedor, modelos, overrides y esfuerzo de razonamiento no se prescriben por agente ni se versionan como preferencias del proyecto. Agentes y skills deben funcionar con distintos proveedores y modelos; evalúa resultados y QA, no marcas o versiones. Solo registra una dependencia concreta cuando sea un requisito técnico real del producto.
 - Para responsive nuevo, usa `config/responsive.json` como fuente de verdad y aplica la skill `frontend-responsive`. En proyectos existentes prevalece la configuración vigente salvo migración explícita.
 - No actives MCPs ni workflows de deployment por defecto. Configúralos solo cuando formen parte del alcance y parte de los ejemplos seguros bajo `templates/`.
 - Versiona únicamente configuración compartible sin secretos. Mantén credenciales y configuración sensible en variables, OAuth, secrets del proveedor o configuración local ignorada.
@@ -94,8 +95,8 @@ Resuelve autónomamente detalles internos, convencionales, de bajo riesgo, rever
 
 - `task` es el mecanismo predeterminado para delegar trabajo que pertenece a la tarea actual y no necesita branch, worktree, filesystem aislado ni conversación top-level separada. No uses Agent Manager solo porque varias tareas puedan ejecutarse en paralelo.
 - Reserva Agent Manager para aislamiento real, branch/worktree independiente, alternativas concurrentes, trabajo realmente independiente o una sesión top-level separada. Antes de usarlo, evalúa si un subagente `task` es suficiente.
-- Aplica **economical/balanced by default, escalate on demand**: la configuración concreta de proveedor, modelo y variante es local. Usa un tier superior solo temporalmente ante una razón concreta de complejidad o riesgo y vuelve después al baseline económico/balanceado. No fijes permanentemente el modelo más potente a ningún agente.
-- No abras por defecto más de dos sesiones Agent Manager pagadas simultáneamente. Solicita confirmación antes de iniciar más de dos cuando el beneficio real lo justifique. Revisa la herencia de modelo de las sesiones Agent Manager desde el punto de vista de coste.
+- Mantén el coste proporcional: usa el enfoque menos costoso que complete la tarea con fiabilidad, reduciendo agentes, iteraciones y trabajo duplicado sin degradar calidad. Decide delegación por complejidad, riesgo, alcance y necesidad de aislamiento; no elijas un modelo concreto para subagentes: heredan Kilo o la configuración del desarrollador.
+- No abras por defecto más de dos sesiones Agent Manager pagadas simultáneamente. Solicita confirmación antes de iniciar más de dos cuando el beneficio real lo justifique. Su uso depende del aislamiento, paralelismo real y utilidad, no del modelo elegido.
 - Antes de lanzar Reviewer independiente, reserva margen suficiente para recibir el informe, aplicar correcciones, ejecutar pruebas finales e inspeccionar el diff.
 - Para una revisión dependiente del flujo actual, prefiere un subagente `task` en primer plano. Usa Agent Manager/worktree solo cuando se necesite aislamiento real o trabajo independiente de nivel superior.
 - No hagas polling. Solicita al Reviewer un resultado final conciso, priorizado y accionable; tras correcciones, limita la revisión a los cambios y regresiones relevantes salvo que el riesgo exija repetirla completa.

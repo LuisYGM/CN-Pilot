@@ -1,5 +1,11 @@
 # Changelog
 
+## Sin publicar
+
+### Mejorado
+
+- **BF-024 — Configuración de IA agnóstica:** eliminada la estrategia hardcoded de modelos, tiers y reasoning; la selección pasa al runtime/configuración personal de Kilo y agentes y skills permanecen provider/model-agnostic. Se conserva la orquestación cost-aware sin asignaciones por agente.
+
 ## [1.0.1] - 2026-09-28
 
 Parche backward-compatible con Blueprint 1.0.0.

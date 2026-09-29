@@ -9,7 +9,7 @@
 
 ## Configuración personal de proveedor y modelos
 
-El Blueprint no fija proveedor ni modelo dentro de `.kilo/agents/`. Después de clonar el template, cada desarrollador configura sus modelos globales una sola vez; los siguientes proyectos reutilizan esa configuración de la máquina.
+El Blueprint no fija proveedor, modelo ni nivel de razonamiento en `kilo.jsonc`, agentes o skills. Cada desarrollador elige su configuración desde Kilo; dos personas pueden usar distintos proveedores/modelos con el mismo workflow y responsabilidades.
 
 En Kilo Code:
 
@@ -19,9 +19,9 @@ En Kilo Code:
 4. Completa la autenticación mediante el mecanismo seguro ofrecido por Kilo y el proveedor.
 5. Verifica que los modelos elegidos estén disponibles.
 
-Después, integra en `~/.config/kilo/kilo.jsonc` las asignaciones que necesites. [`templates/kilo/global-models.example.jsonc`](../templates/kilo/global-models.example.jsonc) ofrece un ejemplo provider-agnostic con placeholders conceptuales; no es una configuración activa y no contiene credenciales. Sigue los tiers y criterios de coste de [Estrategia de modelos](MODEL-STRATEGY.md).
+Si lo necesitas, ajusta en Kilo Settings, configuración local o global el modelo principal, pequeño, de subagentes o de compactación, los overrides y el esfuerzo de razonamiento. Elige según disponibilidad, coste, calidad, preferencia, acceso y necesidades del proyecto; no hay valores recomendados por el Blueprint. Consulta [Configuración de IA en Kilo](MODEL-STRATEGY.md).
 
-No reemplaces a ciegas una configuración global existente: incorpora únicamente las claves necesarias. Sustituye los placeholders por IDs reales y adapta `variant` a los niveles admitidos por el proveedor.
+No reemplaces a ciegas una configuración global existente: cambia únicamente lo que necesites y no copies preferencias personales al repositorio.
 
 La configuración global/personal no se incluye al clonar el repositorio. Puede ser diferente en cada máquina y no debe versionarse. Cambiar de proveedor o asignar otro modelo a un agente no requiere editar el Blueprint.
 

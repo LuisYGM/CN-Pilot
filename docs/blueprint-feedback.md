@@ -254,6 +254,8 @@ Resolved.
 
 ## BF-013 — Paralelización con Agent Manager hereda un modelo costoso
 
+**Nota histórica:** la recomendación de tiers y overrides descrita abajo fue sustituida por BF-024. Siguen vigentes el uso proporcional de `task`/Agent Manager y el límite de sesiones; el Blueprint ya no decide modelos ni esfuerzo de razonamiento.
+
 **Contexto:**
 P10 con varias sesiones paralelas lanzadas mediante Agent Manager.
 
@@ -531,6 +533,20 @@ Las integraciones MCP/API para interfaces complejas se ejecutan incrementalmente
 
 **Impacto:**
 High.
+
+**Estado:**
+Validated.
+
+## BF-024 — Model-Agnostic Runtime Configuration
+
+**Problema:**
+Hardcodear modelos, proveedores, tiers o razonamiento en el Blueprint causa obsolescencia rápida, mantenimiento innecesario, menor portabilidad, diferencias entre desarrolladores y acoplamiento al pricing y disponibilidad externos.
+
+**Regla:**
+El Blueprint define workflow, roles, orquestación, calidad y criterios de decisión. La selección de `provider`, `model`, `reasoning` y `model overrides` pertenece al runtime/configuración de Kilo de cada desarrollador. Los agentes y skills heredan esa selección, son provider/model-agnostic y no prescriben modelos por rol ni subagente. Solo un requisito técnico real del producto justifica documentar un modelo o proveedor concreto como dependencia del proyecto.
+
+**Impacto:**
+Mayor portabilidad, menos mantenimiento, libertad de proveedor/modelo y un Blueprint más durable. El coste se controla mediante alcance, cantidad de agentes, iteraciones y QA proporcional, no mediante una asignación fija de modelos.
 
 **Estado:**
 Validated.

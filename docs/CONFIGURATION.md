@@ -1,12 +1,13 @@
 # Configuración del Blueprint
 
-Fuente de verdad para las capas de configuración compartible, responsive, MCP, deployment opcional y secretos locales. La selección personal de modelos se documenta en [Estrategia de modelos](MODEL-STRATEGY.md).
+Fuente de verdad para las capas de configuración compartible, responsive, MCP, deployment opcional y secretos locales. La separación de responsabilidades sobre IA se documenta en [Configuración de IA en Kilo](MODEL-STRATEGY.md).
 
 ## Capas de configuración
 
 - **Convenciones universales:** fuentes versionadas y portables que aplican por defecto, como `config/responsive.json`.
 - **Configuración del proyecto:** decisiones compartibles del proyecto, sin secretos, como configuración general en `kilo.jsonc` o un workflow de deployment aprobado.
 - **Configuración local:** preferencias, autenticación y ajustes propios del desarrollador o máquina. Se mantienen fuera de Git.
+- **Selección de IA:** proveedor, modelos principal/pequeño/de subagentes/de compactación, overrides y esfuerzo de razonamiento pertenecen al usuario y al runtime de Kilo. El proyecto no los fija por defecto ni los registra como decisiones compartidas.
 - **Secretos:** tokens, API keys, passwords, claves privadas y credenciales. Nunca se versionan.
 - **Templates opcionales:** ejemplos inactivos bajo `templates/`; solo se copian y adaptan cuando el alcance lo requiere.
 

@@ -31,15 +31,15 @@ Los agentes del repositorio no fijan modelos. La selección procede de la config
 3. Verifica que el ID del agente coincida con `dev-lead`, `architect`, `reviewer` u otro agente real.
 4. Recarga Kilo o inicia una sesión nueva después de cambiar la configuración.
 
-Las sesiones nuevas de Agent Manager heredan por defecto el modelo y la variante de la sesión que las crea, salvo que se indique un override. Consulta [Estrategia de modelos](MODEL-STRATEGY.md).
+Las sesiones nuevas de Agent Manager pueden heredar el modelo y la variante de la sesión que las crea, salvo configuración del desarrollador. Consulta [Configuración de IA en Kilo](MODEL-STRATEGY.md).
 
-Si la sesión creadora usa un tier superior, revisa ese override antes de iniciar sesiones paralelas: la herencia puede multiplicar el coste sin aportar valor proporcional. Mantén el baseline económico/balanceado salvo una necesidad puntual y documentable.
+Si la herencia multiplica el coste de sesiones paralelas, revisa tu configuración en Kilo antes de iniciarlas. Dev Lead no impone overrides de modelos.
 
 ## Agent Manager abre demasiadas sesiones o paraleliza sin necesidad
 
 `task` debe ser la opción predeterminada cuando el trabajo forma parte de la tarea actual y no necesita branch, worktree, filesystem aislado ni conversación top-level separada. Agent Manager se reserva para aislamiento real, alternativas concurrentes, trabajo independiente o una sesión top-level separada.
 
-No abras por defecto más de dos sesiones Agent Manager pagadas simultáneamente. Si más de dos fueran realmente necesarias, detén la apertura y solicita confirmación antes de continuar. Revisa también el modelo heredado de cada sesión y aplica un override local apropiado cuando sea posible.
+No abras por defecto más de dos sesiones Agent Manager pagadas simultáneamente. Si más de dos fueran realmente necesarias, detén la apertura y solicita confirmación antes de continuar. La cantidad depende de aislamiento, paralelismo real, complejidad, coste y utilidad, no del modelo.
 
 ## La configuración global y la del proyecto no coinciden
 
