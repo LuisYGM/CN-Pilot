@@ -375,6 +375,20 @@ Medium.
 **Estado:**
 Validated.
 
+## BF-022 — Specialized Skill Depth & Progressive QA
+
+**Problema:**
+Skills demasiado pequeñas dispersan procedimientos importantes entre agents y documentación, mientras que vendorizar sistemas externos completos introduce solapamiento, contradicciones, dependencias y demasiado contexto.
+
+**Regla:**
+Preferir skills especializadas con profundidad suficiente, triggers estrechos, progressive disclosure y QA proporcional, en lugar de cargar muchas skills frontend solapadas a la vez. Browser/runtime, visual parity, accessibility y performance son responsabilidades distintas y se seleccionan por scope, riesgo y evidencia disponible.
+
+**Impacto:**
+Menor consumo de tokens, menos conflictos entre instrucciones y QA más preciso.
+
+**Estado:**
+Validated.
+
 ## BF-021 — Prototype Functionality Boundary
 
 **Problema observado:**

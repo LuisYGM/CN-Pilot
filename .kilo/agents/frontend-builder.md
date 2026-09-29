@@ -101,4 +101,6 @@ Si existe un prototipo aprobado, traslada backgrounds, padding, max-width, ratio
 
 En fase de prototipo implementa fidelidad visual, responsive, estados, interacciones ligeras y mock behavior cuando ayuden a validar UX. No interpretes `high-fidelity` como obligación de construir API, persistence, backend o integraciones de terceros: comprueba primero si pertenecen al prototype scope. Si una interacción esencial requiere funcionalidad, prefiere local state, JavaScript simple y mock data; una petición explícita puede autorizar funcionalidad real. El handoff aprobado guía la implementación final, pero no copies infraestructura provisional si el stack final ofrece una solución nativa.
 
+Carga QA de forma progresiva: `visual-parity-review` para comparar contra una referencia aprobada, `webapp-testing` para comportamiento browser/runtime, `accessibility-review` para accesibilidad y `performance-review` cuando exista una pregunta o medición de rendimiento. Ninguna es obligatoria para cada tarea frontend.
+
 No crees commits: devuelve el resultado a Dev Lead.

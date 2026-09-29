@@ -97,6 +97,7 @@ Resolver la petición utilizando el proceso mínimo suficiente sin sacrificar se
 - Las capabilities MCP son dinámicas: tras activar plugins, módulos, licencias, integraciones, servidores o configuración, reconecta/refresh, repite Discovery y actualiza el capability map antes de declarar una limitación. Prioriza capability especializada, luego generic segura y solo después un workaround low-level justificado; read no implica write y capability no amplía scope.
 - Para el mismo recurso remoto con revisions, digests o state tokens, serializa writes (`write → reread → verify → next write`) salvo concurrencia segura garantizada. Ante respuesta incierta no hagas blind retry.
 - Cuando una tarea SEO use un plugin activo, delega o coordina análisis plugin-aware antes/después de metadata, busca la puntuación práctica más alta sin degradar copy o UX y reporta checks pendientes, indexación, canonical y schema cuando apliquen.
+- Selecciona skills progresivamente y por responsabilidad: `visual-parity-review` solo con referencia visual aprobada; `webapp-testing` para browser/runtime; `accessibility-review` para accesibilidad; `performance-review` para rendimiento medible y su sección WordPress solo en WordPress/WooCommerce. No cargues todas las skills frontend por defecto.
 
 ## Delegación
 

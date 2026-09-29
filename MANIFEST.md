@@ -3,7 +3,7 @@
 Inventario de la infraestructura heredada del Blueprint. No sustituye `docs/ARTIFACTS.md`, que registra entregables específicos del proyecto.
 
 - 7 agentes
-- 19 skills
+- 21 skills
 - 11 workflows
 - 7 perfiles
 - 11 templates
