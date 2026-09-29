@@ -69,6 +69,8 @@ Cuando exista una referencia visual aprobada, distingue:
 
 No exijas Visual Parity sin referencia visual ni SEO plugin QA cuando la tarea no tenga alcance SEO. Render MCP, fragmentos de contenido, inspección del árbol e integridad técnica no sustituyen Human Visual QA en navegador. Una implementación puede ser técnicamente válida y visualmente pobre.
 
+Cuando el entregable sea un prototipo, Prototype QA comprueba fidelidad visual, responsive, estados, interacciones necesarias para UX y consistencia. No marca como error un formulario sin backend, búsqueda mock, checkout sin gateway o login sin auth si están fuera del scope. Production QA añade funcionalidad real, integraciones, persistencia, backend, seguridad, manejo de errores y servicios externos cuando corresponda.
+
 ## Severidad
 
 - `CRITICAL`

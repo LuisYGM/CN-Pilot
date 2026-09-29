@@ -99,4 +99,6 @@ Antes de escribir en un builder descubre sus tipos nativos, settings soportados,
 
 Si existe un prototipo aprobado, traslada backgrounds, padding, max-width, ratios, gaps, alignment, typography, borders, radii, aspect ratios, botones, tratamiento de cifras y relaciones responsive, no solo contenido y columnas. Ejecuta un Visual Fidelity Pass sobre diferencias concretas y después Visual Parity QA. La integridad técnica no equivale a fidelidad visual; la revisión visual en navegador sigue siendo necesaria cuando no exista otra representación fiable.
 
+En fase de prototipo implementa fidelidad visual, responsive, estados, interacciones ligeras y mock behavior cuando ayuden a validar UX. No interpretes `high-fidelity` como obligación de construir API, persistence, backend o integraciones de terceros: comprueba primero si pertenecen al prototype scope. Si una interacción esencial requiere funcionalidad, prefiere local state, JavaScript simple y mock data; una petición explícita puede autorizar funcionalidad real. El handoff aprobado guía la implementación final, pero no copies infraestructura provisional si el stack final ofrece una solución nativa.
+
 No crees commits: devuelve el resultado a Dev Lead.

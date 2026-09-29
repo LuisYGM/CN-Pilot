@@ -227,6 +227,16 @@ Visual Parity QA compara proporciones, widths, whitespace, prominencia de imáge
 
 Para proyectos nuevos, `clamp(min-px, fluid-vw, max-px)` es una preferencia útil para tipografía y spacing fluidos, no un dogma; en proyectos existentes prevalece la convención vigente. Responsive QA valida también jerarquía, orden, spacing, tipografía, proporciones de imagen, colapso del layout, botones, legibilidad y ritmo visual.
 
+## Límite funcional del prototipo
+
+`High-fidelity prototype` no equivale a `production-complete implementation`. Un prototipo debe hacer que el diseño se vea real, responda correctamente y se comporte de forma suficiente para validar UX: presentación, responsive, estados e interacción ligera. Por defecto difiere integraciones productivas, persistencia, backend, servicios externos, autenticación, pagos, email, webhooks, APIs y lógica de producción hasta la implementación final.
+
+En formularios, búsqueda, filtros, login, checkout, newsletter, booking y patrones similares se permiten campos, labels, estados, validación visual, loading, success/error, resultados mock, selección, pasos, calendario o lógica local cuando ayuden a validar UX. No se implementan por defecto envío real, CRM, SMTP, gateways, reservas, sesiones, base de datos, backend, APIs ni servicios externos. `prototype interaction` no equivale a `production functionality`.
+
+Si una calculadora, configurador, simulador, selector dependiente, comparador o flujo condicional es esencial para evaluar UX, puede usar local state, JavaScript simple, lógica determinista y mock data. Antes de añadir API, persistence, backend o integración de terceros, se comprueba que pertenezca a la fase y al scope; una petición explícita de funcionalidad real permite implementarla dentro del alcance autorizado. No se crea infraestructura temporal para simularla si una simulación local basta.
+
+El prototipo aprobado es fuente de diseño, estados, interacción esperada, comportamiento visual, responsive y UX. La implementación final resuelve la funcionalidad una sola vez con el stack real —por ejemplo, un formulario visual puede pasar a una integración nativa de WordPress— y no copia automáticamente la infraestructura técnica provisional del prototipo.
+
 ## Lifecycle de capabilities y SEO
 
 Las capabilities MCP son dinámicas. Tras instalar o activar plugins, módulos, licencias, integraciones, servidores o configuraciones, se debe reconectar o refrescar, repetir Discovery y actualizar la comprensión de capabilities antes de declarar una limitación. Prioriza `specialized capability → safe generic capability → low-level workaround only when justified`; capacidad de lectura no implica capacidad de escritura, y capacidad técnica no amplía el scope autorizado. Cuando aporte valor, documenta de forma ligera `capability → provider → read/write → scope → risk`.

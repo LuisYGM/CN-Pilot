@@ -42,6 +42,12 @@ Para landings, páginas comerciales, páginas corporativas importantes y otras i
 
 No es obligatorio para cambios pequeños, mantenimiento, cambios de texto, correcciones simples, pequeñas modificaciones CSS ni páginas sin prototipo solicitado. Sin referencia visual aprobada no se exige Visual Parity QA; sin representación visual fiable se informa que Technical QA está completo y Visual QA queda pendiente.
 
+## Límite funcional del prototipo
+
+Un `High-Fidelity Prototype` valida principalmente visual, responsive, estados e interacción UX; no implica una implementación completa de producción. Por defecto, HTML/CSS/JS puede usar estados locales, mock data, validación simulada y comportamiento ligero, mientras integraciones, persistencia, backend, APIs, autenticación, pagos, servicios externos y notificaciones se difieren a la implementación final.
+
+Si una interacción es esencial para validar UX, puede incluir lógica local determinista. Una petición explícita de funcionalidad real autoriza implementarla dentro del scope. El handoff conserva diseño, estados, interacción, responsive y UX, pero la plataforma final decide la implementación productiva sin reutilizar infraestructura provisional por defecto.
+
 Cuando exista un plugin SEO activo y sus capabilities estén disponibles, añade al flujo SEO: inspección actual → metadata autorizada → análisis real del plugin → corrección de checks relevantes → reanálisis → reporte de checks pendientes. No se modifica copy aprobado ni se fuerzan puntuaciones a costa de UX o naturalidad.
 
 ## Mantenimiento

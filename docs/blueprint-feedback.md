@@ -375,6 +375,32 @@ Medium.
 **Estado:**
 Validated.
 
+## BF-021 — Prototype Functionality Boundary
+
+**Problema observado:**
+Un prototipo high-fidelity podía terminar implementando funcionalidad productiva que después debía reconstruirse en WordPress, un builder o un custom theme.
+
+**Causa:**
+Se interpretaba `high-fidelity` como producto técnicamente completo, en lugar de como validación visual, responsive, de estados e interacción UX.
+
+**Solución:**
+Los prototipos implementan por defecto presentación, responsive, estados e interacción ligera necesaria para validar UX. Formularios, búsqueda, filtros, login, checkout, newsletter y booking pueden usar estados simulados, mock data y lógica local. Integraciones, persistencia, backend, APIs, autenticación, pagos y servicios externos se difieren a la implementación final salvo petición explícita.
+
+**Reglas derivadas:**
+
+- `High-fidelity prototype` no equivale a `production-complete implementation`.
+- `prototype interaction` no equivale a `production functionality`.
+- La funcionalidad esencial para validar UX puede usar local state, JavaScript simple y mock data sin crear infraestructura temporal.
+- El handoff conserva diseño, estados, interacción, responsive y UX; el stack final implementa la funcionalidad real una sola vez.
+- Prototype QA valida visual, responsive, estados e interacción; Production QA añade integraciones, persistencia, backend, seguridad y servicios externos.
+- Una petición explícita puede autorizar funcionalidad real dentro del scope.
+
+**Impacto:**
+Medium.
+
+**Estado:**
+Validated.
+
 ## BF-018 — High-Fidelity UI/UX & Builder Workflow
 
 **Contexto:**
