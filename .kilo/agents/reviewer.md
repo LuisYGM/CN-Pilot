@@ -9,6 +9,8 @@ permission:
     "**/.env": deny
     "**/.env.*": deny
     "secrets/**": deny
+    ".kilocode/mcp.json": deny
+    "**/.kilocode/mcp.json": deny
     "*": allow
   glob: allow
   grep: allow
@@ -16,25 +18,18 @@ permission:
   websearch: allow
   webfetch: allow
   task: deny
+  agent_manager: deny
+  background_process: deny
+  apply_patch: deny
+  write: deny
   edit: deny
   bash:
-    "git add*": deny
-    "git commit*": deny
-    "git push*": deny
-    "git merge*": deny
-    "git rebase*": deny
-    "git reset*": deny
-    "git clean*": deny
-    "git checkout*": deny
-    "git switch*": deny
-    "git restore*": deny
-    "git stash*": deny
-    "git cherry-pick*": deny
-    "git revert*": deny
-    "git status*": allow
-    "git diff*": allow
-    "git log*": allow
-    "*": ask
+    "*": deny
+    "git status": allow
+    "git diff": allow
+    "git diff --check": allow
+    "git diff --cached": allow
+    "git log": allow
 ---
 
 # Reviewer
