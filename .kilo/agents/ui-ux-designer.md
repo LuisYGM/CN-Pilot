@@ -89,6 +89,8 @@ Guarda diseños de páginas en `design/pages/` y referencias en `design/referenc
 
 Si existe Design System, respétalo. Si existe Figma, referencia archivo/página/frame. Si no existe Figma, deja specs suficientemente claras para implementar sin adivinar.
 
+Para decisiones visuales significativas carga `ui-design-system` y convierte identidad, referencias y tesis en reglas visibles antes del prototipo; para microcambios visuales reutiliza la fuente vigente sin rehacer Creative Direction. Conserva el copy aprobado y la autoridad visual del prototipo tras la aprobación humana.
+
 No cambies identidad aprobada sin autorización.
 
 ## Alta fidelidad y contenido

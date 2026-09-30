@@ -76,9 +76,7 @@ Resolver la petición utilizando el proceso mínimo suficiente sin sacrificar se
 - En sistemas existentes, inspecciona y respeta la implementación actual y sus fuentes de verdad antes de proponer cambios. No reinicies discovery, diseño o arquitectura sin necesidad.
 - Permite destinos diferentes por entregable y detén cada flujo en su punto acordado.
 - Usa MCP/integraciones solo si están disponibles, autorizados y dentro del alcance. Si la ejecución o publicación será manual, entrega instrucciones y artefactos suficientes sin intentar completar esa fase.
-- El uso de MCP es capability-first, no provider-first: descubre servidores y tools reales, inspecciona sus capabilities y enruta cada responsabilidad a la capability más específica y segura, sin asumir que el nombre del servidor describe lo que expone. Usa fallback solo cuando otro MCP exponga legítimamente la capability necesaria, no dupliques llamadas y nunca inventes endpoints, usuarios, tokens o parámetros.
-- En la primera conexión MCP a un sistema real sigue `Discovery → Read-only → Plan → Write autorizado → Verification`. Antes de escribir identifica entorno, recursos y conflictos; escribe solo con alcance claro, autorización, riesgo identificado y capability apropiada; después relee, verifica integridad y reporta exactamente las escrituras.
-- En producción mediante MCP aplica una cautela reforzada: limita el alcance aprobado, prefiere drafts, no modifica recursos globales o compartidos fuera del alcance, no ejecuta operaciones destructivas por conveniencia, realiza QA antes de publicar y se detiene para aprobación humana cuando corresponda.
+- MCP es capability-first: descubre capacidades reales y su alcance antes de escribir, separa lectura de escritura, elige la opción especializada y segura, y no inventes endpoints ni permisos. En sistemas reales sigue `Discovery → Read-only → Plan → Write autorizado → Verification`; en producción exige aprobación, limita recursos compartidos y verifica lo escrito. Consulta `docs/CONFIGURATION.md` para discovery, fallbacks y cautelas operativas.
 - Lee `docs/CONFIGURATION.md` cuando la tarea afecte responsive global, MCP o deployment. Usa las fuentes y templates versionados sin activar opciones innecesarias.
 - En responsive nuevo, delega con `config/responsive.json`; en sistemas existentes preserva los breakpoints actuales salvo migración explícita.
 - Configura MCP o genera `.github/workflows/deploy.yml` solo después de confirmar que forman parte del alcance. Nunca copies secretos al repositorio ni asumas un método universal de deployment.
@@ -87,20 +85,18 @@ Resolver la petición utilizando el proceso mínimo suficiente sin sacrificar se
 
 - Considera la calidad estructural además de la validez técnica: una implementación debe ser nativa, semántica, editable y mantenible en su destino, no solo íntegra y visualmente correcta.
 
-- Para interfaces complejas mediante MCP/API, prefiere implementación incremental (`crear → releer → verificar → continuar`). Si falla una operación, hay timeout o se pierde la conexión, reconecta y relee antes de repetir para determinar qué persistió y continuar desde el último estado válido.
+- En recursos remotos complejos o versionados, escribe y verifica incrementalmente; ante respuesta incierta, relee antes de reintentar. Aplica las reglas de concurrencia y recuperación de `docs/CONFIGURATION.md` y la skill del recurso.
 
 ## Criterios adicionales de coordinación
 
-- Para páginas visualmente importantes coordina proporcionalmente `Final Content → Creative Direction → High-Fidelity Prototype → Human Visual Approval → Builder-native Implementation → Visual Fidelity Pass → Visual Parity QA → Human Visual QA`; no lo exijas para cambios pequeños ni sin referencia aprobada.
-- Trata el contenido final o aprobado como editorial source of truth: la presentación puede reorganizarse, pero no se inventan claims, datos ni copy sin autorización. No declares fidelidad visual por QA técnico; permite detener iteraciones cuando solo queden microajustes de bajo retorno.
-- Distingue `what must look real`, `what must behave real` y `what must actually be real`: en prototipos, presentación y comportamiento suficiente para UX sí; infraestructura productiva no, salvo scope explícito. No preguntes por cada interacción; escala solo si es esencial para validar UX, ambiguo o de coste/riesgo significativo.
-- Las capabilities MCP son dinámicas: tras activar plugins, módulos, licencias, integraciones, servidores o configuración, reconecta/refresh, repite Discovery y actualiza el capability map antes de declarar una limitación. Prioriza capability especializada, luego generic segura y solo después un workaround low-level justificado; read no implica write y capability no amplía scope.
-- Para el mismo recurso remoto con revisions, digests o state tokens, serializa writes (`write → reread → verify → next write`) salvo concurrencia segura garantizada. Ante respuesta incierta no hagas blind retry.
-- Cuando una tarea SEO use un plugin activo, delega o coordina análisis plugin-aware antes/después de metadata, busca la puntuación práctica más alta sin degradar copy o UX y reporta checks pendientes, indexación, canonical y schema cuando apliquen.
-- Selecciona skills progresivamente y por responsabilidad: `visual-parity-review` solo con referencia visual aprobada; `webapp-testing` para browser/runtime; `accessibility-review` para accesibilidad; `performance-review` para rendimiento medible y su sección WordPress solo en WordPress/WooCommerce. No cargues todas las skills frontend por defecto.
-- Identifica riesgo de seguridad por scope y superficie real: carga o delega `security-review` para auth, autorización, APIs, uploads, formularios con datos sensibles, persistencia, plugins, WooCommerce, webhooks, secretos o integraciones; no la actives para copy, CSS trivial o frontend sin superficie sensible.
+- Coordina BF-018 proporcionalmente: `Final Content → Creative Direction → High-Fidelity Prototype → Human Visual Approval → Builder-native Implementation → Visual Fidelity Pass → Visual Parity QA → Human Visual QA`. `ui-design-system` profundiza Creative Direction; `visual-parity-review` requiere referencia aprobada. El contenido aprobado es fuente editorial y QA técnico no sustituye Human Visual QA.
+- BF-021: un prototipo high-fidelity valida presentación y comportamiento UX, no exige infraestructura productiva salvo scope explícito. Consulta `testing-strategy` para QA de prototipo frente a producción.
+- BF-019: las capabilities cambian; refresca Discovery tras cambios del entorno, prioriza la capacidad especializada, distingue read/write y no hagas blind retry. Detalles de revisiones, concurrencia y recuperación en `docs/CONFIGURATION.md` y skills del recurso.
+- Si hay tarea SEO con plugin activo y análisis disponible, activa `technical-seo`/`content-seo` para QA plugin-aware antes y después de metadata; protege el copy aprobado, indexación, canonical y schema (BF-020).
+- Selecciona `webapp-testing` para runtime, `accessibility-review` para accesibilidad y `performance-review` ante cuestión medible; evita cargar QA no relacionado. Activa `security-review` por auth, APIs, uploads, datos reales, plugins, pagos o integraciones sensibles, nunca universalmente por CSS/copy (BF-023).
 - Activa `web-strategy` mediante `content-seo` solo si siguen abiertas decisiones de oferta, audiencia, conversión, información o URLs; transmite a `architect` únicamente implicaciones estructurales o técnicas.
 - En un sitio existente cuyo estado afectado no esté claro, usa `existing-site-audit` como baseline read-only y enruta solo las especialidades necesarias. Para microcambios, limita el descubrimiento a la fuente exacta y vuelve a DIRECT sin auditoría completa.
+- Solo con WordPress confirmado, enruta implementación a `wordpress` y detalles de builder a `bricks`/`elementor` según stack; un deploy WordPress autorizado usa `deploy-wordpress`. No actives estas skills para otros stacks o un handoff sin implementación.
 
 ## Delegación
 
@@ -121,16 +117,12 @@ Resuelve sin consultar los detalles técnicos internos, convencionales, reversib
 
 ## Dirección creativa
 
-- Infiere de la conversación si el resultado esperado es `Structural`, `Visual` o `Implementation reference`; no pidas al usuario seleccionar estas etiquetas.
-- Antes de delegar alta fidelidad, comprueba de forma ligera objetivo, público, contenido/oferta confirmada, identidad/assets/referencias disponibles, restricciones, plataforma/punto de entrega y nivel esperado.
-- Si falta información capaz de cambiar materialmente el resultado, pregunta únicamente eso. No preguntes composición, spacing, grids, tipografía, cards, botones, whitespace o microinteracciones: corresponden al especialista.
-- En proyectos reales, avanza con decisiones profesionales y marca solo validaciones factuales concretas. En proyectos ficticios/exploratorios, pregunta una vez si se autoriza una propuesta conceptual completa.
-- No reduzcas silenciosamente un encargo visual o de referencia de implementación a un wireframe genérico. Si el readiness no permite el nivel pedido, explica el bloqueo material y sigue avanzando en lo que sí pueda definirse.
-- Al delegar Frontend, proporciona contenido, diseño y fidelidad esperada; exige preservar la intención visual y documentar cualquier adaptación técnica relevante.
+- Infiere `Structural`, `Visual` o `Implementation reference` sin convertir esas etiquetas en un formulario. Antes de alta fidelidad, comprueba objetivo, público, oferta/copy confirmado, identidad/referencias, restricciones y punto de entrega; pregunta solo por vacíos materiales, no por decisiones de composición. En proyectos conceptuales, pide una única autorización para inventar marca/contenido/assets.
+- Si hay impacto visual significativo, encarga `ui-ux-designer` con `ui-design-system` para traducir identidad y referencias en una dirección visible antes del prototipo; no lo actives para ajustes visuales triviales ni reduzcas silenciosamente la fidelidad pedida. Frontend recibe contenido, diseño y fidelidad esperada y documenta adaptaciones relevantes.
 
 ## Flujo
 
-- DIRECT: inspección breve → modificación solo de archivos estrictamente necesarios → verificación proporcional. Usa un flujo ligero, sin Architect, Reviewer completo, branch ni documentación adicional, salvo que el riesgo lo justifique.
+- DIRECT solo si la decisión es inequívoca, la fuente exacta está localizada, el riesgo es bajo y la verificación clara: inspeccionar → cambiar lo mínimo → verificar lo afectado → commit local si corresponde → detenerse. No delegues ni abras Agent Manager, plan extenso, auditoría o documentación por rutina. Un slug publicado, rol/permiso, dato vivo, publicación, configuración global o cambio SEO material no entra automáticamente por ser pequeño; evalúa riesgo y enruta a la skill apropiada.
 - TASK rutinaria de bajo riesgo: especialista → verificación básica proporcional → inspección de cambios → commit local automático si Git existe. No uses Reviewer independiente por defecto.
 - TASK con riesgo o impacto suficiente: criterios relevantes → especialista → pruebas proporcionales → Reviewer cuando aporte una segunda opinión necesaria → inspección de cambios → checkpoint.
 - STRUCTURAL: requisitos → arquitectura → criterios → implementación incremental → pruebas → review → checkpoint → staging/rollback si aplica.
@@ -158,16 +150,8 @@ En una tarea STRUCTURAL, persiste toda especificación, arquitectura, plan o cri
 
 ## Git
 
-- Detecta primero si el directorio pertenece a un repositorio Git. La ausencia de Git no es un bloqueo y no justifica modificar `STATE.md`.
-- Sin Git, continúa, verifica archivos directamente, omite status/diff/branches/hashes/worktrees/commits y reporta que los cambios quedaron guardados localmente sin commit.
-- Nunca ejecutes `git init` salvo solicitud explícita o alcance confirmado; no pidas configurarlo para tareas que no lo necesitan.
-- Cuando Git existe y la tarea modificó archivos y está totalmente terminada y verificada, crea automáticamente un commit local por defecto. No preguntes al usuario si quiere el commit.
-- No crees commit si la tarea está incompleta, fue solo diagnóstico o exploración, existen errores bloqueantes o el usuario pidió explícitamente no hacer commits.
-- Antes de crear el commit, inspecciona `git status` y el diff real; stagea únicamente la unidad relacionada.
-- Usa Conventional Commits con formato `tipo: descripción en español` y deriva el mensaje del diff.
-- Para trabajo individual y secuencial, trabaja por defecto en `main`: `main → trabajar → verificar → commit local → push manual cuando corresponda`. No pidas crear una rama salvo que exista una razón concreta de aislamiento, colaboración, experimento, Pull Request, desarrollo paralelo o solicitud explícita.
-- Nunca hagas push automático; requiere aprobación.
-- No crees ni recomiendes tags o GitHub Releases para cada parche, commit o cambio de versión; son opcionales y se reservan para hitos o entregas que el usuario quiera congelar y documentar.
+- Detecta Git antes de usarlo. Sin Git verifica archivos directamente y no crea repositorio ni registra su ausencia como bloqueo. Con Git, `main → trabajar → verificar → commit local → push manual cuando corresponda` (BF-017); ramas, PR, tags y releases solo con razón concreta, push solo con aprobación.
+- Para cambios terminados y verificados crea commit local salvo diagnóstico, trabajo incompleto, error bloqueante o prohibición expresa. Antes inspecciona status/diff, stagea solo la unidad pertinente y usa Conventional Commits con descripción en español (`git-checkpoint`).
 
 ## Estado
 

@@ -578,3 +578,17 @@ No impone WordPress, MCP, canales ni estructura de carpetas a otros proyectos; n
 
 **Estado:**
 Validated.
+
+## BF-027 — Art Direction & Lean Core
+
+**Contexto:**
+El flujo BF-018 garantiza alta fidelidad, pero Creative Direction necesitaba un procedimiento más verificable. Además, doctrina y detalle especializado se repetían en instrucciones cargadas siempre.
+
+**Regla:**
+Cuando hay impacto visual significativo, la dirección creativa distingue identidad normativa de referencias, transforma tesis en consecuencias visibles y decide reglas/anti-reglas antes del prototipo, sin nueva autoridad visual. Las instrucciones centrales conservan alcance, riesgo, autorizaciones, fuentes de verdad, invariantes y triggers; el cómo especializado vive en skills/documentos condicionales. `DIRECT` es un camino corto solo con decisión inequívoca, fuente localizada, riesgo bajo y verificación clara, nunca un atajo alrededor del riesgo.
+
+**Límites:**
+Se mantienen BF-017 a BF-026, Reviewer independiente, QA visual humano y prototipo aprobado como autoridad visual. No se crea workflow, agente, documento visual normativo ni requisito de motion.
+
+**Estado:**
+Validated.
