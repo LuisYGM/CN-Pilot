@@ -4,52 +4,61 @@ mode: primary
 steps: 60
 permission:
   read:
+    "*": allow
     ".env": deny
     ".env.*": deny
     "**/.env": deny
     "**/.env.*": deny
+    ".env.example": allow
+    "**/.env.example": allow
     "secrets/**": deny
-    "*": allow
+    ".kilocode/mcp.json": deny
+    "**/.kilocode/mcp.json": deny
   glob: allow
   grep: allow
   skill: allow
   websearch: allow
   webfetch: allow
+  background_process: ask
   task:
+    "*": deny
     "architect": allow
     "content-seo": allow
     "ui-ux-designer": allow
     "developer": allow
     "frontend-builder": allow
     "reviewer": allow
-    "*": deny
   edit:
+    "*": ask
     ".env": deny
     ".env.*": deny
     "**/.env": deny
     "**/.env.*": deny
     "secrets/**": deny
+    ".kilocode/mcp.json": deny
+    "**/.kilocode/mcp.json": deny
     "PROJECT.md": allow
     "STATE.md": allow
     "DECISIONS.md": allow
     "REQUIREMENTS.md": allow
     "docs/**": allow
-    "*": ask
   bash:
+    "*": ask
+    "git push*": ask
+    "git merge*": ask
+    "git rebase*": ask
     "git push --force*": deny
     "git push -f*": deny
     "git reset --hard*": deny
     "git clean*": deny
-    "git status*": allow
-    "git diff*": allow
-    "git log*": allow
-    "git branch*": allow
+    "git status": allow
+    "git diff": allow
+    "git diff --check": allow
+    "git diff --cached": allow
+    "git log": allow
+    "git branch": allow
     "git add*": allow
     "git commit*": allow
-    "git push*": ask
-    "git merge*": ask
-    "git rebase*": ask
-    "*": ask
 ---
 
 # Dev Lead

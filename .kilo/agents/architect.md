@@ -4,24 +4,35 @@ mode: subagent
 steps: 30
 permission:
   read:
+    "*": allow
     ".env": deny
     ".env.*": deny
     "**/.env": deny
     "**/.env.*": deny
+    ".env.example": allow
+    "**/.env.example": allow
     "secrets/**": deny
-    "*": allow
+    ".kilocode/mcp.json": deny
+    "**/.kilocode/mcp.json": deny
   glob: allow
   grep: allow
   skill: allow
   websearch: allow
   webfetch: allow
   task: deny
+  agent_manager: deny
+  background_process: deny
+  write: ask
+  apply_patch: ask
   edit:
+    "*": ask
     ".env": deny
     ".env.*": deny
     "**/.env": deny
     "**/.env.*": deny
     "secrets/**": deny
+    ".kilocode/mcp.json": deny
+    "**/.kilocode/mcp.json": deny
     ".kilo/**": deny
     "AGENTS.md": deny
     "BLUEPRINT.md": deny
@@ -33,8 +44,13 @@ permission:
     "docs/architecture/**": allow
     "docs/features/**": allow
     "docs/decisions/**": allow
-    "*": ask
   bash:
+    "*": ask
+    "git status": allow
+    "git diff": allow
+    "git diff --check": allow
+    "git diff --cached": allow
+    "git log": allow
     "git add*": deny
     "git commit*": deny
     "git push*": deny
@@ -48,10 +64,6 @@ permission:
     "git stash*": deny
     "git cherry-pick*": deny
     "git revert*": deny
-    "git status*": allow
-    "git diff*": allow
-    "git log*": allow
-    "*": ask
 ---
 
 # Architect

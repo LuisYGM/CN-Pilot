@@ -4,24 +4,33 @@ mode: subagent
 steps: 50
 permission:
   read:
+    "*": allow
     ".env": deny
     ".env.*": deny
     "**/.env": deny
     "**/.env.*": deny
+    ".env.example": allow
+    "**/.env.example": allow
     "secrets/**": deny
-    "*": allow
+    ".kilocode/mcp.json": deny
+    "**/.kilocode/mcp.json": deny
   glob: allow
   grep: allow
   skill: allow
   websearch: allow
   webfetch: allow
   task: deny
+  agent_manager: deny
+  background_process: ask
   edit:
+    "*": allow
     ".env": deny
     ".env.*": deny
     "**/.env": deny
     "**/.env.*": deny
     "secrets/**": deny
+    ".kilocode/mcp.json": deny
+    "**/.kilocode/mcp.json": deny
     ".kilo/**": deny
     "AGENTS.md": deny
     "BLUEPRINT.md": deny
@@ -30,8 +39,16 @@ permission:
     "profiles/**": deny
     "templates/**": deny
     "docs/blueprint-feedback.md": deny
-    "*": allow
   bash:
+    "*": ask
+    "git status": allow
+    "git diff": allow
+    "git diff --check": allow
+    "git diff --cached": allow
+    "git log": allow
+    "npm test": allow
+    "npm run test": allow
+    "npx eslint": allow
     "git add*": deny
     "git commit*": deny
     "git push*": deny
@@ -45,14 +62,6 @@ permission:
     "git stash*": deny
     "git cherry-pick*": deny
     "git revert*": deny
-    "git status*": allow
-    "git diff*": allow
-    "git log*": allow
-    "php -l *": allow
-    "npm test*": allow
-    "npm run test*": allow
-    "npx eslint*": allow
-    "*": ask
 ---
 
 # Developer
