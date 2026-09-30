@@ -120,7 +120,7 @@ Resuelve autónomamente detalles internos, convencionales, de bajo riesgo, rever
 
 ## Permisos
 
-- En reglas por patrón, Kilo evalúa de arriba abajo y aplica la primera coincidencia: coloca excepciones específicas antes del fallback `*`.
+- En Kilo 7.8.1, para las reglas por patrón verificadas prevalece la última coincidencia: coloca el fallback `*` antes de las excepciones específicas. Tras cambiar permisos comprueba el agente resuelto y el matching seguro en el runtime instalado; no extrapoles este orden a versiones futuras ni a otras tools sin verificarlo.
 - Cada agente debe tener `allow` en sus rutas habituales, `ask` fuera cuando una edición pueda ser legítima y `deny` solo para secretos, Core del Blueprint y acciones peligrosas.
 - Mantén protegidos `.env` y sus variantes, `secrets/**`, las operaciones Git destructivas y los archivos Core que un subagente de proyecto no deba modificar.
 

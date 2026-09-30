@@ -75,7 +75,7 @@ El perfil define contexto y capacidades disponibles; no obliga a ejecutar todo e
 
 ## Permisos
 
-Las reglas por patrón se ordenan de lo específico a lo general porque Kilo aplica la primera coincidencia. Cada agente tiene `allow` en su área habitual, `ask` fuera cuando una edición puede ser legítima y `deny` para secretos, Core del Blueprint que no le corresponde y operaciones peligrosas. Reviewer permanece en lectura y verificación.
+En Kilo 7.8.1, las reglas por patrón verificadas aplican la última coincidencia: el fallback va antes de las excepciones. Tras editar permisos se comprueba su resolución en el runtime instalado, sin asumir que otras versiones o tools usan idéntica semántica. Cada agente tiene `allow` en su área habitual, `ask` fuera cuando una edición puede ser legítima y `deny` para secretos, Core del Blueprint que no le corresponde y operaciones peligrosas. Reviewer permanece en lectura y verificación.
 
 ## Niveles de trabajo
 

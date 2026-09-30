@@ -4,14 +4,16 @@ mode: subagent
 steps: 30
 permission:
   read:
+    "*": allow
     ".env": deny
     ".env.*": deny
     "**/.env": deny
     "**/.env.*": deny
+    ".env.example": allow
+    "**/.env.example": allow
     "secrets/**": deny
     ".kilocode/mcp.json": deny
     "**/.kilocode/mcp.json": deny
-    "*": allow
   glob: allow
   grep: allow
   skill: allow

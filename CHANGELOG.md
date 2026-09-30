@@ -8,6 +8,7 @@
 
 ### Mejorado
 
+- **Precedencia de permisos:** documentación alineada con el matching verificado de Kilo 7.8.1 y reordenada la lectura de Reviewer para denegar secretos sin bloquear `.env.example`.
 - **Límites de agentes:** Agent Manager denegado a subagentes de proyecto, procesos persistentes innecesarios desactivados, comandos Git de lectura acotados y rutas locales MCP protegidas; documentada la frontera humana de shell/escritura donde Kilo no garantiza aislamiento por path.
 - **Permisos de Reviewer:** comandos Git de inspección permitidos de forma exacta y `bash` denegado por defecto, sin depender de prompts `ask` para impedir shell mutante.
 - **BF-027 — Dirección visual y core ligero:** Creative Direction traduce identidad, referencias y tesis en reglas visibles antes del prototipo; `DIRECT` exige decisión clara, fuente localizada y riesgo bajo; doctrina central conserva garantías y routing mientras los procedimientos especializados permanecen en skills.
