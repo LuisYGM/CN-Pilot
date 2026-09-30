@@ -5,11 +5,8 @@ agent: dev-lead
 
 # Deploy Staging
 
-1. Requiere staging y método de deploy documentado.
-2. Ejecuta preflight si no existe uno reciente.
-3. Presenta el manifiesto y respeta prompts de permisos.
-4. Despliega solo lo previsto.
-5. Ejecuta smoke tests.
-6. Aplica rollback si falla.
-7. Actualiza `STATE.md` si cambia materialmente.
-8. No despliegues a producción.
+1. Requiere staging, método definido y autorización para publicar el alcance solicitado; no presupongas proveedor ni stack.
+2. Ejecuta `/pre-deploy` si no existe un preflight vigente del **mismo** manifiesto, método y destino. En WordPress sigue `deploy-wordpress`; en otros stacks aplica su procedimiento.
+3. Publica solo las superficies autorizadas; verifica recursos persistidos y smoke tests afectados, no solo que la transferencia terminó.
+4. Ante fallo, detén, relee el estado efectivo y aplica recuperación proporcional; reporta superficies no cubiertas.
+5. Actualiza `STATE.md` solo si cambia materialmente. No despliegues a producción.

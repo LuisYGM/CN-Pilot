@@ -5,14 +5,8 @@ agent: dev-lead
 
 # Pre Deploy
 
-1. Identifica entorno destino.
-2. Confirma que deployment forma parte del alcance y que existe un método aprobado. La mera presencia de producción no autoriza crear ni activar un workflow.
-3. Si es producción, exige aprobación antes del despliegue.
-4. Si existe Git, comprueba rama, status y checkpoint; si no, verifica directamente la fuente y los artefactos aprobados para deployment.
-5. Ejecuta pruebas proporcionales.
-6. Revisa secretos/archivos excluidos.
-7. Prepara manifiesto con `templates/deploy-manifest.md`.
-8. Define backup/checkpoint.
-9. Define smoke tests.
-10. Define rollback.
-11. No despliegues todavía.
+1. Confirma destino, alcance y método real; no configures deployment porque exista producción.
+2. Para WordPress usa el preflight de `deploy-wordpress`; para otro stack conserva su procedimiento correspondiente. Reutiliza un baseline vigente de `existing-site-audit` si aplica.
+3. Verifica que manifiesto, origen/destino, superficies, exclusiones y borrados coinciden con lo que publicaría el método. `templates/deploy-manifest.md` es opcional; un plan explícito acotado puede bastar.
+4. Comprueba Git si existe, secretos, compatibilidad, pruebas previas, backup/rollback por superficie y verificación posterior proporcional.
+5. Indica bloqueos y autorización pendiente, especialmente en producción. No despliegues todavía.

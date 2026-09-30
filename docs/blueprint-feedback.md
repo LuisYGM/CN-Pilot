@@ -564,3 +564,17 @@ La estrategia precede a decisiones estructurales únicamente cuando siguen abier
 
 **Estado:**
 Validated.
+
+## BF-026 — WordPress Operational Depth & Deploy Integrity
+
+**Contexto:**
+Las skills WordPress y deployment describían controles correctos pero no desarrollaban suficientemente la secuencia entre estado real, escritura acotada, persistencia y verificación, ni distinguían todas las superficies afectadas por una publicación.
+
+**Regla:**
+Solo en un stack WordPress confirmado, inspeccionar fuente y estado actuales, reutilizar recursos, elegir el canal seguro específico, modificar únicamente lo propio, releer lo persistido y comprobar runtime cuando corresponda. Un deploy exige superficies explícitas, coincidencia entre preflight y ejecución, evidencia post-deploy y descripción honesta de qué revierte cada mecanismo.
+
+**Límites:**
+No impone WordPress, MCP, canales ni estructura de carpetas a otros proyectos; no añade una skill orquestadora, convierte sincronización en deploy ni cambia BF-017. Conserva BF-019, BF-020, BF-021, BF-023 y el baseline selectivo de BF-025.
+
+**Estado:**
+Validated.
