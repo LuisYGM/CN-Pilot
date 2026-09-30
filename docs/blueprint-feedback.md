@@ -350,6 +350,23 @@ Corrección propuesta.
 **Estado:**
 Open / Testing / Resolved / Validated.
 
+## BF-028 — Arquitectura estratégica SEO
+
+**Contexto:**
+Sitios greenfield de varias páginas y migraciones con decisiones abiertas de negocio, audiencia, intención, arquitectura, URLs y contenido.
+
+**Regla:**
+`web-strategy` puede materializar un pack reutilizable y proporcional (brief, sitemap, URL/keyword maps, content plan y, en migración, inventario/mapping de URLs). Se activa según alcance; no es obligatorio para landings o tareas DIRECT. La evidencia de búsqueda informa, pero no dicta URLs ni entidades técnicas.
+
+**Límites:**
+No inventar métricas/research; no crear una URL por keyword ni CPT por entidad; preservar URLs publicadas salvo transición justificada y aprobada; los redirect maps son planificación y no ejecutan cambios. `PROJECT.md` conserva hechos, `content/strategy/` estrategia editorial/search, `content/pages/` y `content/blog/` copy, `docs/architecture/` arquitectura técnica.
+
+**Impacto:**
+Planificación editorial/search reutilizable sin hacer Strategy obligatoria ni acoplarla a una plataforma.
+
+**Estado:**
+Validated.
+
 ## BF-017 — Flujo Git simplificado para trabajo individual
 
 **Contexto:**

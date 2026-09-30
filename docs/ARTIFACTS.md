@@ -7,7 +7,7 @@ Forma parte del contexto operativo y no se registra a sí mismo como artefacto. 
 
 ## Formato
 
-Organiza los artefactos por categorías que existan realmente en el proyecto, como Contenido, Diseño, Implementación frontend, Plugins, Arquitectura o Handoff.
+Organiza los artefactos por categorías que existan realmente en el proyecto, como Contenido (incluida `content/strategy/` cuando se cree estrategia editorial/search), Diseño, Implementación frontend, Plugins, Arquitectura o Handoff. La carpeta de estrategia es un destino válido, no obligatorio.
 
 Formato recomendado por categoría:
 
