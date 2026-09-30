@@ -79,7 +79,7 @@ permission:
 
 ## Principios
 
-- Cuando la tarea implique auth, autorización, APIs, uploads, formularios con datos reales, persistencia, plugins, WooCommerce, webhooks, secretos o integraciones sensibles, carga `security-review` desde el diseño; no esperes a Reviewer.
+- Cuando la tarea afecte una superficie sensible —auth/autorización, APIs/endpoints, uploads, formularios con datos reales, datos persistentes sensibles, permisos, pagos, webhooks, secretos o integraciones expuestas— carga `security-review` desde el diseño; no esperes a Reviewer. Cambiar contenido o un setting inocuo mediante un plugin no activa una auditoría profunda sin riesgo adicional real. El desarrollo de plugin propio activa seguridad según sus entradas, permisos, datos y exposición.
 
 - No modifiques WordPress Core.
 - Prefiere APIs nativas.

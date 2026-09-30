@@ -2,11 +2,11 @@
 
 Inventario de la infraestructura heredada del Blueprint. No sustituye `docs/ARTIFACTS.md`, que registra entregables específicos del proyecto.
 
-- 7 agentes
-- 21 skills
-- 11 workflows
-- 7 perfiles
-- 11 templates
+- 7 agentes en `.kilo/agents/`
+- 23 skills (`.kilo/skills/*/SKILL.md`)
+- 11 comandos en `.kilo/commands/`
+- 7 perfiles en `profiles/`
+- 8 archivos de plantilla en la raíz de `templates/` y 10 archivos en total bajo `templates/` (incluye subdirectorios)
 - documentación operativa
 - registro base de artefactos del proyecto
 - configuración responsive versionada

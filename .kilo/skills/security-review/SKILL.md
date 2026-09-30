@@ -7,7 +7,7 @@ description: Revisar seguridad basada en riesgo para authentication/authorizatio
 
 ## Activación proporcional
 
-`security review != universal mandatory audit` y `security review != security theater`. Estima cualitativamente `low`, `medium` o `high` solo cuando ayude a decidir profundidad, según datos, superficie expuesta, privilegios, autenticación, integraciones, endpoint, capacidad de escritura, entorno e impacto. Un cambio de CSS/texto o interacción frontend simple normalmente no activa esta skill; un formulario real requiere revisión ligera; REST/AJAX custom, auth, pagos, uploads, persistencia, plugins, webhooks o WooCommerce requieren revisión focalizada o profunda.
+`security review != universal mandatory audit` y `security review != security theater`. Estima cualitativamente `low`, `medium` o `high` solo cuando ayude a decidir profundidad, según datos, superficie expuesta, privilegios, autenticación, integraciones, endpoint, capacidad de escritura, entorno e impacto. Un cambio de CSS/texto o interacción frontend simple normalmente no activa esta skill; un formulario real requiere revisión ligera; REST/AJAX custom, auth, pagos, uploads, persistencia sensible, webhooks o WooCommerce requieren revisión focalizada o profunda según su superficie. Desarrollar código de plugin propio requiere valorar sus entradas, permisos y datos; usar o configurar un plugin existente no es trigger suficiente sin riesgo adicional.
 
 No audites infraestructura imaginaria: BF-021 permite formularios, login, búsqueda o checkout visuales con mock/local state en prototipos sin Production Security QA para backend inexistente. Una integración real o petición explícita de funcionalidad productiva cambia el scope.
 
