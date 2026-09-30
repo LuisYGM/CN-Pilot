@@ -550,3 +550,17 @@ Mayor portabilidad, menos mantenimiento, libertad de proveedor/modelo y un Bluep
 
 **Estado:**
 Validated.
+
+## BF-025 — Strategy & Existing-Site Discovery
+
+**Contexto:**
+La estrategia de contenidos y las skills técnicas ya existían, pero faltaba un procedimiento explícito para decisiones de negocio e información antes de estructurar un sitio, y un baseline proporcional para intervenir en sistemas heredados sin presumir stack.
+
+**Regla:**
+La estrategia precede a decisiones estructurales únicamente cuando siguen abiertas decisiones de oferta, audiencia, conversión o URLs. En sitios existentes con estado relevante desconocido, primero se identifica en solo lectura la fuente vigente, cobertura, incertidumbre y riesgo; después se activan solo los procedimientos especialistas necesarios. Ni estrategia ni auditoría inicial son obligatorias para trabajo trivial o ya decidido. `DIRECT` conserva el camino mínimo.
+
+**Aplicación:**
+`web-strategy` coordina conclusiones editoriales con `content-seo` y entrega a `architect` solo consecuencias técnicas. `existing-site-audit` es multistack, no ejecuta auditorías profundas ni prueba permisos mediante escrituras, y solo persiste el baseline cuando el resultado lo requiere. Se mantienen BF-017 a BF-024, incluidos el control humano de cambios publicados, BF-019 y BF-023.
+
+**Estado:**
+Validated.

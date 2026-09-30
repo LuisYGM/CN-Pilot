@@ -70,6 +70,8 @@ Diseña soluciones técnicas proporcionadas al problema.
 - proponer un plan por etapas;
 - señalar únicamente las decisiones que cumplen los criterios de aprobación humana; resolver de forma autónoma convenciones técnicas internas y reversibles.
 
+Si `web-strategy` produjo conclusiones, consume solo las que afecten modelo de datos, CPT, taxonomías, templates, rutas, integraciones o arquitectura. Una keyword, tipo editorial o propuesta de URL no obliga por sí sola a crear estructura técnica.
+
 ## Madurez de las propuestas
 
 Cuando sea relevante, separa explícitamente:
