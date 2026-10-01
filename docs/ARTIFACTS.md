@@ -9,6 +9,8 @@ Forma parte del contexto operativo y no se registra a sí mismo como artefacto. 
 
 Organiza los artefactos por categorías que existan realmente en el proyecto, como Contenido (incluida `content/strategy/` cuando se cree estrategia editorial/search), Diseño, Implementación frontend, Plugins, Arquitectura o Handoff. La carpeta de estrategia es un destino válido, no obligatorio.
 
+Las evaluaciones durables pueden registrarse como Auditorías en `docs/audits/<scope>/`: informe y cobertura de un alcance/muestra concretos, no estado global del proyecto. Los templates de `templates/seo/` son Blueprint Core y no se registran como auditorías reales. No crees la categoría/carpeta hasta que exista un entregable; `STATE.md` mantiene estado operativo y las decisiones aprobadas permanecen en `DECISIONS.md`.
+
 Formato recomendado por categoría:
 
 | Artefacto | Estado | Propósito |

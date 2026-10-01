@@ -611,3 +611,17 @@ Se mantienen BF-017 a BF-026, Reviewer independiente, QA visual humano y prototi
 
 **Estado:**
 Validated.
+
+## BF-029 — Operaciones SEO basadas en evidencia
+
+**Contexto:**
+Diagnósticos y auditorías SEO requieren profundidad especializada sin duplicar agentes, memoria o el lifecycle del Blueprint.
+
+**Regla:**
+Las conclusiones SEO se sustentan en observaciones proporcionales al alcance. Aplicabilidad y resultado son dimensiones distintas; muestras, hipótesis y datos ausentes se declaran. Aceptar riesgo no convierte un fallo observado en éxito y una corrección implementada aún necesita verificación.
+
+**Límites:**
+La profundidad se consulta mediante referencias según tarea. Strategy conserva intención/arquitectura y SEO técnico verifica comportamiento servido. Checks de migración se integran al deploy vigente; Content/SEO, UI/UX, rendimiento, implementación del stack y Reviewer independiente conservan sus responsabilidades. No requiere catálogo universal, validator ni otro estado SEO.
+
+**Estado:**
+Validated.

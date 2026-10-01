@@ -43,6 +43,12 @@ El flujo es iterativo, no una puerta de fases rígida: `DISCOVER → SYNTHESIZE 
 
 ### Investigación y casos condicionados
 
+Similitud semántica no demuestra intención compartida. Con research autorizado, la composición/formato de SERP puede informar clustering junto a necesidad y oferta; no es una regla matemática universal. Sin investigación conserva `inferred`/`unverified`, no aparentes demanda medida.
+
+Dos páginas que mencionan la misma keyword no prueban canibalización. Contrasta intención/propósito duplicado, ownership competidor, señales internas contradictorias y, si hay datos, URLs de ranking inestables o comportamiento SERP. Según evidencia propone `KEEP`, `REPOSITION`, `MERGE`, `CONSOLIDATE` o `REVIEW`; no fusiona contenido ni reabre arquitectura aprobada automáticamente.
+
+Strategy define relaciones, prioridad y topic ownership; Content incorpora enlaces relevantes y SEO técnico comprueba enlaces rastreables, estados huérfanos y destinos rotos. Facetas/estados con intención propia se deciden aquí, no por una receta técnica de noindex. No crea otro mapa obligatorio de enlaces.
+
 Research autorizado (SERP, competidores, tendencias, Search Console, analytics o herramientas de keywords) es opcional, no supuesto. Registra fuente, cobertura, fecha/contexto cuando importe y confianza. Sin datos, puede proponerse arquitectura provisional por oferta, audiencia e intención con evidencia de búsqueda no verificada. Competidores informan expectativas/ patrones; no se copian su copy, diseño ni IA.
 
 En multilingual distingue arquitectura de contenido y mecanismo de localización de URLs; no asumas prefijos `/es/` `/en/` ni traduzcas mecánicamente el keyword map. La intención puede variar por mercado/idioma. En local SEO evita páginas doorway `servicio × ciudad` sin utilidad y diferenciación reales. En ecommerce cubre categorías, producto, información y páginas comerciales de forma proporcional; no conviertas cada keyword en categoría ni sustituyas `woocommerce`. Decide blog/recursos solo si hay propósito y capacidad editorial, no por default.

@@ -7,6 +7,35 @@ description: Revisar SEO técnico de un sitio: indexación, canonical, robots, s
 
 Revisa según alcance: status codes, index/noindex, canonical, robots, sitemap, redirects, headings, metadata, schema, enlaces, facetas/paginación y rendimiento relevante.
 
+## Selección de modo y alcance
+
+- **FOCUSED:** URL, plantilla, síntoma o cambio delimitado. Comprueba únicamente las superficies pertinentes, diagnostica con evidencia y verifica lo afectado. Metadata puntual no activa auditoría formal; preserva DIRECT/TASK proporcional.
+- **FORMAL:** auditoría técnica amplia, due diligence o evaluación pre/post-migración solicitada. Acuerda objetivo, superficies, muestra, datos disponibles, límites de acceso y periodo si importa. «Completa» siempre se refiere al alcance y muestra declarados, nunca a cobertura universal implícita.
+
+## Trabajo y límites
+
+1. Reutiliza baseline y arquitectura aprobados; no repitas discovery de `existing-site-audit` ni abras Strategy porque haya un hallazgo técnico.
+2. Selecciona controles y referencias por tarea; recoge hechos observados separados de hipótesis y decisiones autorizadas. En FORMAL separa aplicabilidad de resultado y documenta cobertura, muestra y limitaciones.
+3. Propón causa, cambio mínimo, dueño y criterio de verificación. Implementa solo dentro del alcance autorizado: Developer y skills del stack conservan implementación; WordPress no es requisito general.
+4. Revalida controles afectados y regresiones relevantes; distingue cambio implementado de cambio verificado. Una auditoría propia no equivale a aprobación del Reviewer independiente.
+
+Strategy conserva intención, ownership y arquitectura editorial/URLs. Esta skill comprueba comportamiento servido; no cambia ownership aprobado, copy ni slugs publicados por iniciativa propia. `performance-review` mantiene diagnóstico de rendimiento. Si datos SEO sugieren fricción en consulta → página → conversión, entrega a UI/UX evidencia, hipótesis y necesidad funcional; no prescribe composición ni rediseña.
+
+## Referencias bajo demanda
+
+Consulta solo las necesarias, no todo el directorio:
+
+| Necesidad | Referencia |
+| --- | --- |
+| Auditoría FORMAL, cobertura, estados y hallazgos | [Método de auditoría](references/audit-method.md) |
+| HTTP, descubrimiento, rastreo, HTML/DOM e indexación | [Indexabilidad y rendering](references/indexability-rendering.md) |
+| Search Console, analítica, caídas y comparaciones | [Datos de búsqueda](references/search-data.md) |
+| Schema, entidades, elegibilidad y generadores | [Datos estructurados](references/structured-data.md) |
+| Idiomas/mercados, canonical y hreflang | [SEO internacional](references/international-seo.md) |
+| Verificación de transición integrada al deploy | [Migraciones](references/migrations.md) |
+
+Las herramientas, datos externos y validadores son opcionales; no inventes observaciones si faltan. Comprueba documentación oficial vigente durante la ejecución cuando elegibilidad, propiedades o comportamiento del buscador puedan cambiar. Los informes durables pueden guardarse en `docs/audits/<scope>/`; no crean memoria SEO ni otro lifecycle. Los templates en `templates/seo/` son opcionales y no una checklist universal.
+
 Si existe un plugin SEO activo y expone capabilities de análisis, usa sus checks y recomendaciones como QA operativo: inspect current SEO → define target keyword → write authorized metadata → run plugin analysis → inspect failed checks → improve allowed fields → re-run analysis → report remaining checks. Prioriza la puntuación práctica más alta sin keyword stuffing ni deterioro de contenido o UX. Un score no es una métrica absoluta.
 
 Protege el copy aprobado: metadata optimization no equivale a editorial rewrite. Trata con cautela slug de página publicada, schema destructivo e indexación; confirma index/noindex, follow/nofollow y canonical según scope. Si se activa un plugin, módulo o integración durante la sesión, reconecta MCP y repite Discovery antes de declarar que una capability SEO no existe.

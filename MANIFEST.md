@@ -4,9 +4,10 @@ Inventario de la infraestructura heredada del Blueprint. No sustituye `docs/ARTI
 
 - 7 agentes en `.kilo/agents/`
 - 23 skills (`.kilo/skills/*/SKILL.md`)
+- 6 documentos de referencia bajo `.kilo/skills/technical-seo/references/` (no son skills adicionales)
 - 11 comandos en `.kilo/commands/`
 - 7 perfiles en `profiles/`
-- 8 archivos de plantilla en la raíz de `templates/` y 17 archivos en total bajo `templates/` (incluye subdirectorios)
+- 8 archivos de plantilla en la raíz de `templates/` y 19 archivos en total bajo `templates/` (incluye subdirectorios)
 - documentación operativa
 - registro base de artefactos del proyecto
 - configuración responsive versionada

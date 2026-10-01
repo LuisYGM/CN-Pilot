@@ -15,3 +15,11 @@ description: Investigar, estructurar, redactar y optimizar artículos de blog co
 8. Mantén voz de marca y aporta una perspectiva útil, no contenido de relleno.
 9. En proyectos ficticios/exploratorios, desarrolla contenido conceptual completo solo con autorización.
 10. Guarda la fuente editable en `content/blog/`; si los permisos lo impiden, reporta el bloqueo y no la reubiques.
+
+## Checks antes del cierre
+
+Usa intención y topic ownership aprobados cuando existan; consulta CONTENT-PLAN/URL/keyword map pertinentes sin generar una segunda estrategia. Con SERP research disponible, registra fuente/contexto y usa formatos/preguntas observados para aportar diferenciación, no para copiar. Sin research, marca inferencias y no promete demanda.
+
+Comprueba calidad y vigencia de fuentes, valor editorial, claims, enlaces internos pertinentes y posible solapamiento con páginas propietarias del tema. Compartir términos no demuestra canibalización: reporta intención/propósito competidor o evidencia de señales/ranking antes de proponer reposicionar o consolidar. No reabre Strategy ni fusiona copy aprobado automáticamente.
+
+Considera actualización y responsable editorial cuando el tema lo requiera, sin cadencia fija. No impone recuento de palabras ni densidad de keyword para completar un checklist.

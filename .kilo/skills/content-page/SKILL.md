@@ -14,3 +14,9 @@ description: Crear contenido estructurado para páginas web antes o durante el d
 7. En proyectos ficticios/exploratorios, crea una propuesta conceptual completa solo cuando esté autorizada.
 
 Guarda la fuente editable en `content/pages/`. Si los permisos lo impiden, reporta el bloqueo y no la reubiques.
+
+## Comprobación editorial/search proporcional
+
+Si existe Strategy aprobada, usa su intención, ownership y plan de contenido sin reabrirlos silenciosamente. Comprueba alineación consulta/necesidad → mensaje → siguiente acción, valor diferencial real (no solo repetir resultados), claims sustentados, utilidad de medios y enlaces internos pertinentes hacia destinos conocidos. Research SERP solo cuando esté disponible y aporte valor; no inventes evidencia ni escribas para bots, densidad de keywords o longitudes universales.
+
+Define revisión/mantenimiento cuando información, oferta o fuentes puedan caducar. Si aparece un conflicto de intención/ownership, entrega evidencia y propuesta a Strategy, no cambia URLs ni copy aprobado fuera de alcance. Las observaciones del journey pueden alimentar un handoff funcional a UI/UX; contenido no impone composición visual.
