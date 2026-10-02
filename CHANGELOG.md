@@ -10,6 +10,7 @@
 
 ### Mejorado
 
+- **README de proyectos inicializados:** `/new-project` transforma el README genérico heredado en una presentación del proyecto con datos confirmados y conserva README propios relevantes, sin cambiar el README del Blueprint base.
 - **Correcciones de routing e integridad:** acotado el trigger de seguridad por superficie/riesgo; `/content` respeta DIRECT; manifiesto de deploy y migraciones contemplan recuperación/verificación proporcional; aclaradas vigencia de BF-016 e inventario versionado.
 - **Precedencia de permisos:** documentación alineada con el matching verificado de Kilo 7.8.1 y reordenada la lectura de Reviewer para denegar secretos sin bloquear `.env.example`.
 - **Límites de agentes:** Agent Manager denegado a subagentes de proyecto, procesos persistentes innecesarios desactivados, comandos Git de lectura acotados y rutas locales MCP protegidas; documentada la frontera humana de shell/escritura donde Kilo no garantiza aislamiento por path.

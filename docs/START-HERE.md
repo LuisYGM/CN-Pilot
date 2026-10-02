@@ -44,6 +44,8 @@ Dev Lead preguntará solo por información material que no pueda inferir, por ej
 
 Tras la confirmación actualizará el contexto. No desarrollará todavía páginas o funcionalidades. Si Git existe, creará el commit local de inicialización; sin Git guardará los archivos y continuará sin tratarlo como bloqueo.
 
+El README del template presenta el Blueprint y su onboarding. Al inicializar un proyecto real, `/new-project` convierte ese README genérico en una presentación breve del proyecto, basada en contexto confirmado; un README propio existente se conserva por defecto. `BLUEPRINT.md` mantiene la documentación del sistema y los archivos canónicos de contexto prevalecen sobre el resumen del README.
+
 No vuelvas a ejecutar `/new-project` si `PROJECT.md` ya describe el proyecto real y `STATE.md` dejó atrás la inicialización. Los datos todavía desconocidos pueden permanecer como `Pending`.
 
 ### 6. Confirma el contexto y empieza a trabajar
