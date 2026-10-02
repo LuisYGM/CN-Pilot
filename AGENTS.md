@@ -180,6 +180,10 @@ Cambios relevantes en producción requieren aprobación. Antes de una operación
 
 No declares una tarea terminada solo porque escribiste código. La evidencia debe ser proporcional: inspección, tests, lint, syntax check, criterios de aceptación, review, smoke test o verificación visual.
 
+Antes de cerrar una tarea que modifica archivos, considera: «¿Este cambio vuelve incorrecta, incompleta o desactualizada alguna información estable del README del proyecto?». No audites todo el README ni lo edites por rutina. Si afecta su propósito, stack principal, dominio documentado, ubicación del código, estructura, integración central o requisitos/comandos permanentes de instalación, ejecución o build, consulta solo la parte pertinente y sincroniza lo necesario con el cambio autorizado. Añade información omitida solo si es imprescindible para entender, localizar, instalar, ejecutar o desarrollar el proyecto; no copies cada dato nuevo de `PROJECT.md`.
+
+Prefiere editar la sección afectada o añadir el mínimo indispensable, sin reconstruir el README ni borrar contenido manual válido. Usa hechos confirmados y fuentes canónicas: `PROJECT.md`, `REQUIREMENTS.md`, `STATE.md` y `DECISIONS.md` prevalecen sobre este resumen humano. README no es worklog, changelog ni estado de tareas: completar páginas, ajustar copy/metadata/CSS, corregir bugs internos o actualizar progreso en `STATE.md` no lo modifica por sí solo. Si no cambia información estable útil, déjalo intacto y no expandas la tarea.
+
 ## Estado
 
 - `PROJECT.md`: contexto estable.
