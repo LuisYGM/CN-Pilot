@@ -16,6 +16,8 @@ description: Investigar, estructurar, redactar y optimizar artículos de blog co
 9. En proyectos ficticios/exploratorios, desarrolla contenido conceptual completo solo con autorización.
 10. Guarda la fuente editable en `content/blog/`; si los permisos lo impiden, reporta el bloqueo y no la reubiques.
 
+En artículos, asigna Featured Image, excerpt, categoría y metadata SEO a sus campos disponibles, no al body como parche de presentación. Una imagen inline debe aportar valor editorial independiente. Aplica el ownership check de `AGENTS.md` si el template no muestra un dato persistido; no compenses ese fallo reescribiendo el artículo.
+
 ## Checks antes del cierre
 
 Usa intención y topic ownership aprobados cuando existan; consulta CONTENT-PLAN/URL/keyword map pertinentes sin generar una segunda estrategia. Con SERP research disponible, registra fuente/contexto y usa formatos/preguntas observados para aportar diferenciación, no para copiar. Sin research, marca inferencias y no promete demanda.

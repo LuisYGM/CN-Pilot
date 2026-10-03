@@ -15,6 +15,8 @@ description: Crear contenido estructurado para páginas web antes o durante el d
 
 Guarda la fuente editable en `content/pages/`. Si los permisos lo impiden, reporta el bloqueo y no la reubiques.
 
+Los campos editoriales estructurados (Featured Image, excerpt, categoría, campos y metadata SEO) usan sus canales cuando existan; no se duplican en el body para compensar un template que no los renderiza. Las imágenes inline se eligen por necesidad editorial propia. Si el dato está persistido y falla presentación, deriva el issue a su owner dentro del alcance, no reescribas contenido como workaround.
+
 ## Comprobación editorial/search proporcional
 
 Si existe Strategy aprobada, usa su intención, ownership y plan de contenido sin reabrirlos silenciosamente. Comprueba alineación consulta/necesidad → mensaje → siguiente acción, valor diferencial real (no solo repetir resultados), claims sustentados, utilidad de medios y enlaces internos pertinentes hacia destinos conocidos. Research SERP solo cuando esté disponible y aporte valor; no inventes evidencia ni escribas para bots, densidad de keywords o longitudes universales.

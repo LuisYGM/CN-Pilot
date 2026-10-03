@@ -625,3 +625,17 @@ La profundidad se consulta mediante referencias según tarea. Strategy conserva 
 
 **Estado:**
 Validated.
+
+## BF-030 — Integridad de estado y ownership de capas
+
+**Contexto:**
+En una ejecución WordPress se compensó una Featured Image no renderizada duplicándola en el body, se resubieron assets por uniformar formato y se cerró inicialmente un lote Draft cuando se había pedido Published + Noindex.
+
+**Regla:**
+Un dato estructurado persistido no se duplica para suplir presentación: diagnostica ownership y corrige solo la capa autorizada. Reutiliza recursos adecuados antes de ingerir copias; formato aislado no justifica duplicación. Los criterios críticos originales requieren contraste con estado final observable; éxito de escritura no equivale a persistencia o aceptación verificadas.
+
+**Límites:**
+Imágenes inline con función editorial siguen siendo válidas y assets nuevos mantienen optimización. Media es especialización WordPress; ownership y aceptación son multistack y proporcionales. No añade estado, workflow ni auditorías para DIRECT; una corrección temporal en otra capa exige autorización, documentación y reversibilidad.
+
+**Estado:**
+Validated mediante revisión documental; no constituye retest de un sitio real.
