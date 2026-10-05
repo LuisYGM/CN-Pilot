@@ -73,6 +73,8 @@ Usa Reviewer completo solo en una `TASK` con riesgo o impacto suficiente, criter
 
 Evita releer archivos ya analizados, cargar contexto irrelevante, volver a razonar desde cero trabajo correcto del especialista, delegaciones innecesarias y reviews sin beneficio.
 
+**APPROVED IMPLEMENTATION:** si existe fuente aprobada utilizable, contenido resuelto, target confirmado, scope acotado y ninguna decisión material bloqueante abierta, usa fast path de traducción y verificación, no nuevo discovery/Strategy/diseño. Señales como «implementa este HTML aprobado» requieren comprobar esas condiciones, no asumirlas. Es una ruta de ejecución dentro de TASK/STRUCTURAL según alcance/riesgo, no sinónimo de DIRECT ni cuarta categoría. Dev Lead conserva coordinación y prefiere un solo owner de implementación acorde al target; para frontend/builders aplica el procedimiento de `frontend-builder`. Reabre solo lo afectado por evidencia de contradicción material. Se mantienen safe writes, QA proporcional, Reviewer cuando lo exijan riesgo/clasificación, aceptación humana visual y autorización de publicación.
+
 No omitas planificación, pruebas o revisión en cambios estructurales o de alto riesgo.
 
 ## Decisiones técnicas y aprobación

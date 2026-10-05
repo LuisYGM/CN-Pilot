@@ -10,6 +10,7 @@
 
 ### Mejorado
 
+- **BF-031 — Fast path de implementación aprobada:** preflight focalizado, spike funcional temprano cuando haga falta, un owner y mapping, construcción agrupada y correcciones QA cohesionadas; reduce rediscovery/handoffs sin retirar safe writes, fidelidad ni aceptación.
 - **BF-030 — Integridad de estado y ownership:** separación contenido/presentación, reutilización de Media adecuado antes de subir duplicados y contraste de criterios críticos con estado final observable antes del cierre.
 - **Mantenimiento proporcional del README:** el resumen del proyecto se sincroniza cuando cambian aspectos estables del repositorio, con ediciones mínimas y sin registrar progreso rutinario.
 - **README de proyectos inicializados:** `/new-project` transforma el README genérico heredado en una presentación del proyecto con datos confirmados y conserva README propios relevantes, sin cambiar el README del Blueprint base.

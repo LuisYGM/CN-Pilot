@@ -639,3 +639,17 @@ Imágenes inline con función editorial siguen siendo válidas y assets nuevos m
 
 **Estado:**
 Validated mediante revisión documental; no constituye retest de un sitio real.
+
+## BF-031 — Fast path de implementación aprobada
+
+**Contexto:**
+Una implementación real con fuente visual/HTML y contenido aprobados, target WordPress/Bricks confirmado y scope claro consumió tiempo excesivo y quedó incompleta. El coste principal estuvo en discovery técnico reiterado, validación tardía de una interacción crítica, handoffs y correcciones dispersas; no en repetir Strategy/dirección visual o hacer QA por elemento.
+
+**Regla:**
+Con inputs resueltos, prioriza traducción y verificación. Limita preflight a información que cambie implementación/riesgo/QA, valida interacciones críticas antes de maquetar completo y reutiliza un mapping con continuidad de owner. Mantén QA fuerte y cohesionado, corrige findings agrupados y revalida lo afectado.
+
+**Límites:**
+Ruta condicional dentro de la clasificación vigente, no DIRECT automático ni fase universal. Preserva implementación nativa, safe writes, persistencia, ownership, Reviewer cuando corresponda, Human Visual QA y autorización de publicación. Un problema material se clasifica/resuelve/escala antes de continuar; no impone tiempos, contadores o dependencia del proyecto de origen.
+
+**Estado:**
+Validated mediante revisión documental; pendiente de evidencia operativa para cuantificar mejora, sin prometer duración.

@@ -11,6 +11,8 @@ Activa esta skill solo si existe una referencia visual aprobada: HTML/CSS aproba
 
 No evalúa principalmente si una aplicación funciona en runtime; para eso usa `webapp-testing` cuando aporte valor. No sustituye Structural QA, Accessibility QA ni la revisión visual humana.
 
+En APPROVED IMPLEMENTATION compara el primer candidato completo con la fuente aprobada en una ronda cohesionada, con los viewports/estados y capturas necesarios; no reabre Creative Direction. La relectura estructural de cada safe write no exige otro pase visual completo. Agrupa findings y confirma áreas corregidas/regresiones pertinentes; amplía la ronda si cambió algo material o el riesgo lo exige, no por cada microajuste.
+
 ## Procedimiento
 
 1. Confirma la referencia, el estado de la implementación, los viewports representativos y los breakpoints vigentes del proyecto. Si la referencia o la captura no son suficientemente fiables, detente en `Technical QA complete; Visual QA pending`.
