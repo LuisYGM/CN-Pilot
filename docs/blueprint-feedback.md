@@ -682,6 +682,9 @@ Reviewer permanece utilizable en TASK de riesgo/impacto suficiente y STRUCTURAL;
 **Estado:**
 Testing; pendiente retest de revisiones lean y comprobación de resolución de permisos en runtime.
 
+**Resultado del retest (2026-10-08):**
+La lectura histórica con `git show` fue correctamente denegada por Bash; no se debe ampliar el permiso. El Reviewer devolvió inicialmente `CHANGES REQUIRED` sin hallar defecto porque faltaba el diff. Se formaliza `BLOCKED` para evidencia/capacidad imprescindible ausente y Dev Lead debe adjuntar diff, archivos afectados y criterios en revisiones históricas. BF-033 continúa en Testing hasta retestar este handoff y el estado BLOCKED.
+
 ## BF-034 — HTML-Only Web Design Prototypes
 
 **Problema:**

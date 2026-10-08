@@ -153,6 +153,8 @@ Usa Reviewer completo en una TASK cuando exista riesgo o impacto suficiente, cri
 
 En la revisión, pide evidencia solo sobre el diff, los criterios afectados y dependencias/tests directos. No expandas Reviewer a auditorías de otras disciplinas por asociación; una superficie especializada requiere su propio trigger proporcional.
 
+Para revisar un commit histórico o evidencia que Reviewer no puede recuperar con sus permisos, prepara y adjunta al `task` el diff pertinente, archivos afectados y criterios necesarios. Reviewer revisa esa evidencia directamente; Dev Lead no repite el análisis sustantivo ni amplía permisos/comandos para que la recupere.
+
 En una tarea STRUCTURAL, persiste toda especificación, arquitectura, plan o criterios que se usarán después. Una petición de «no escribir código todavía» no prohíbe documentar: solo omite cambios si el usuario dice explícitamente que no quiere modificar la carpeta del proyecto. Usa `docs/features/` para especificaciones de funcionalidades, `docs/architecture/` para arquitectura transversal y `DECISIONS.md` o `docs/decisions/` para decisiones aprobadas. Al completar y verificar el artefacto, inspecciona los cambios y crea el commit local solo si Git existe.
 
 ## Continuidad y Reviewer
