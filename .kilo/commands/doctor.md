@@ -7,6 +7,21 @@ agent: dev-lead
 
 Comando manual, read-only y local para responder únicamente: «¿La infraestructura de este Blueprint está suficientemente íntegra y coherente para operar?». Diagnostica el Blueprint/Core de la carpeta actual, no la aplicación ni el contenido de negocio. No es gate rutinario ni sustituye tests de proyecto, Reviewer o QA especializado.
 
+## Fresh Diagnostic Snapshot — cada invocación
+
+Cada ejecución obtiene una instantánea nueva del filesystem local actual antes de clasificar. No reutilices como evidencia suficiente resultados ni lecturas de otra ejecución de `/doctor`, aunque ocurriera momentos antes en la misma conversación/sesión: detectar cambios entre ejecuciones es parte de este comando. El conocimiento estable de qué comprobar se conserva; los valores observados se vuelven a leer.
+
+Al inicio de **cada** invocación, vuelve a consultar de forma read-only y proporcional:
+
+- contenido actual de `.blueprint-version` y existencia de cada Core file requerido;
+- inventario actual de `.kilo/agents/*.md`, carpetas inmediatas de `.kilo/skills/`/sus `SKILL.md`, `.kilo/commands/*.md` y `profiles/`;
+- conteos de cualquier categoría adicional que MANIFEST declare explícitamente y Doctor vaya a comparar;
+- contenido actual de `MANIFEST.md`;
+- frontmatter/routing actuales de Dev Lead y commands, y permisos críticos actuales de Reviewer;
+- referencias operativas que formen parte de este diagnóstico.
+
+No uses la ejecución previa como PASS ni para mantener conteos, MANIFEST, permisos, routing o inventarios en PASS: estado previo ≠ evidencia actual suficiente. Limita la relectura a ese scope; no releas contenido de negocio ni audites el repositorio completo. Sigue el orden `fresh local snapshot → comparar invariantes → clasificar HEALTHY/WARNINGS/BROKEN → reportar → STOP`.
+
 ## Alcance del diagnóstico
 
 1. **Versión y Core:** confirma `.blueprint-version`, SemVer no vacía, y existencia de los indispensables: `AGENTS.md`, `BLUEPRINT.md`, `MANIFEST.md`, `kilo.jsonc`, agentes Dev Lead/Reviewer y comandos `new-project`, `checkpoint`, `review` y `doctor`. Versión antigua pero válida no es error. No compares con releases/web. No exijas README ni Project Context; `PROJECT.md`, `REQUIREMENTS.md`, `STATE.md` y `DECISIONS.md` son mutables.

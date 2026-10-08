@@ -779,3 +779,6 @@ Manual o recomendado ante señal concreta; no automático, web, Reviewer, Agent 
 
 **Estado:**
 Testing; pendiente probar escenarios HEALTHY, WARNINGS y BROKEN en instalaciones de prueba.
+
+**Observación del retest (2026-10-08):**
+La ejecución inicial devolvió HEALTHY correctamente; también detectó BROKEN ante Reviewer con `bash: allow` y WARNINGS por MANIFEST desactualizado cuando volvió a leerlo. Se observó una ejecución con evidencia stale que no detectó el cambio de conteo 12→11; una invocación posterior sí informó WARNINGS al releer. Añadido fresh snapshot por invocación. Pendiente retest después de exigir lecturas actuales en cada ejecución.
