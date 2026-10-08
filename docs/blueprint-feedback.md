@@ -778,7 +778,10 @@ El Blueprint acumula agentes, skills, comandos, permisos y routing condicional. 
 Manual o recomendado ante señal concreta; no automático, web, Reviewer, Agent Manager, auto-repair, scripts, estado ni commit. No evalúa aplicación/contenido ni sustituye QA de proyecto.
 
 **Estado:**
-Testing; pendiente probar escenarios HEALTHY, WARNINGS y BROKEN en instalaciones de prueba.
+Validated.
 
-**Observación del retest (2026-10-08):**
-La ejecución inicial devolvió HEALTHY correctamente; también detectó BROKEN ante Reviewer con `bash: allow` y WARNINGS por MANIFEST desactualizado cuando volvió a leerlo. Se observó una ejecución con evidencia stale que no detectó el cambio de conteo 12→11; una invocación posterior sí informó WARNINGS al releer. Añadido fresh snapshot por invocación. Pendiente retest después de exigir lecturas actuales en cada ejecución.
+**Resultado del primer retest (2026-10-08):**
+La ejecución inicial devolvió HEALTHY. Reviewer con `bash: allow` produjo BROKEN; en esa misma ejecución Doctor también reportó el warning de MANIFEST. Restaurar `bash: deny` eliminó el fallo crítico. Se detectó además una ejecución con evidencia stale que no observó el cambio de conteo 12→11; se añadió Fresh Diagnostic Snapshot por invocación. Doctor permaneció read-only y no realizó auto-repair.
+
+**Resultado del retest final tras Fresh Diagnostic Snapshot (2026-10-08):**
+Sobre un Blueprint íntegro, `/doctor` devolvió `HEALTHY`. Sin cambiar de sesión, se modificó temporalmente `MANIFEST.md` de 12 a 11 comandos; una nueva ejecución releyó el estado y devolvió `WARNINGS` por discrepancia, sin corregir el archivo. Se restauró MANIFEST a 12; otra ejecución en la misma sesión volvió a leer el filesystem y devolvió `HEALTHY`. Quedó demostrado que no reutiliza como evidencia del estado actual el resultado de una ejecución anterior.
