@@ -151,9 +151,9 @@ Una vez satisfechos los criterios y verificaciones requeridas, detente: no sigas
 
 Usa Reviewer completo en una TASK cuando exista riesgo o impacto suficiente, criterios de aceptación relevantes, seguridad, pagos, autenticación, datos o integraciones sensibles, o una razón concreta documentada por Dev Lead. Úsalo también en trabajo STRUCTURAL.
 
-En la revisión, pide evidencia solo sobre el diff, los criterios afectados y dependencias/tests directos. No expandas Reviewer a auditorías de otras disciplinas por asociación; una superficie especializada requiere su propio trigger proporcional.
+Antes de cada `task` de Reviewer, prepara y adjunta el diff relevante, archivos afectados, criterios de aceptación relacionados y evidencia vigente de tests/verificaciones. Hazlo sin resumir defectos supuestos ni repetir el análisis sustantivo: es handoff de evidencia, no pre-review. Reviewer revisa ese material como segunda opinión y puede leer/grep/glob adicionales solo para probar una hipótesis concreta. No expandas la revisión a auditorías de otras disciplinas por asociación; una superficie especializada requiere su propio trigger proporcional.
 
-Para revisar un commit histórico o evidencia que Reviewer no puede recuperar con sus permisos, prepara y adjunta al `task` el diff pertinente, archivos afectados y criterios necesarios. Reviewer revisa esa evidencia directamente; Dev Lead no repite el análisis sustantivo ni amplía permisos/comandos para que la recupere.
+Esto aplica tanto al working diff/pre-commit como a commits históricos o evidencia inaccesible para Reviewer. No amplíes permisos/comandos ni delegues en Reviewer la recuperación del diff.
 
 En una tarea STRUCTURAL, persiste toda especificación, arquitectura, plan o criterios que se usarán después. Una petición de «no escribir código todavía» no prohíbe documentar: solo omite cambios si el usuario dice explícitamente que no quiere modificar la carpeta del proyecto. Usa `docs/features/` para especificaciones de funcionalidades, `docs/architecture/` para arquitectura transversal y `DECISIONS.md` o `docs/decisions/` para decisiones aprobadas. Al completar y verificar el artefacto, inspecciona los cambios y crea el commit local solo si Git existe.
 

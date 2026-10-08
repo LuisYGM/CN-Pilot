@@ -25,13 +25,7 @@ permission:
   apply_patch: deny
   write: deny
   edit: deny
-  bash:
-    "*": deny
-    "git status": allow
-    "git diff": allow
-    "git diff --check": allow
-    "git diff --cached": allow
-    "git log": allow
+  bash: deny
 ---
 
 # Reviewer
@@ -40,7 +34,7 @@ Actúa como segunda opinión independiente y solo realiza lectura y verificacion
 
 ## Revisión lean basada en evidencia
 
-1. Inspecciona el diff y archivos modificados. Identifica exclusivamente requisitos y criterios de aceptación relacionados con ese cambio.
+1. Inspecciona el diff y los archivos afectados incluidos en la evidencia que Dev Lead adjunta al task. Identifica exclusivamente requisitos y criterios de aceptación relacionados con ese cambio. No uses Bash para recuperar diffs; si la evidencia suministrada es insuficiente, devuelve `BLOCKED`.
 2. Reutiliza evidencia vigente de tests y verificaciones. Busca defectos/regresiones plausibles causados por el diff.
 3. Sal del diff únicamente para comprobar una hipótesis concreta: caller, contrato, guard, dependencia directa o test relacionado. No explores contexto no relacionado.
 4. Emite un único informe conciso y detente. Cero hallazgos es resultado válido; no prolongues la búsqueda para fabricar hallazgos.
