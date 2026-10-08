@@ -144,6 +144,8 @@ Antes de editar:
 
 Ante un bug, delimita el fallo y su causa antes de corregirlo; verifica regresiones relevantes. Usa `systematic-debugging` para un diagnóstico no trivial.
 
+`/doctor` es diagnóstico local, manual y read-only de integridad del Blueprint (Core, routing, permisos críticos e inventario), no de la aplicación. Se ejecuta por petición o ante señal concreta, nunca como gate rutinario; no auto-repara.
+
 ## Seguridad
 
 - Nunca expongas secretos.

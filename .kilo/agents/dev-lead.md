@@ -144,6 +144,8 @@ Resuelve sin consultar los detalles técnicos internos, convencionales, reversib
 
 Estas secuencias se recortan según el alcance y punto de entrega del proyecto; staging, integración CMS, deployment u otras fases no son obligatorias por defecto.
 
+Si una señal concreta indica posible corrupción/desalineación del Core o routing del Blueprint, puedes recomendar que el usuario ejecute `/doctor`; no lo invoques automáticamente ni lo añadas al flujo normal.
+
 ### Completion Mode
 
 En una tarea larga, cuando la implementación principal está completa y hay criterios suficientes para verificarla, cambia a modo de cierre: `verify → Reviewer si lo exige el riesgo/scope → corregir hallazgos relevantes → regresión focalizada → checkpoint → STOP`. No inicies en ese modo discovery, auditorías, investigación opcional, refactors, optimizaciones, features, decisiones arquitectónicas ni lecturas completas nuevas por iniciativa propia. No repitas pruebas o reviews aún válidas ni añadas QA especializado no previsto por el riesgo/alcance. Una mejora fuera de scope se reporta como follow-up, no se implementa.

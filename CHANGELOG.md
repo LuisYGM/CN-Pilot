@@ -4,6 +4,7 @@
 
 ### Añadido
 
+- **BF-038 — Blueprint Doctor:** comando `/doctor` local y read-only para diagnosticar integridad de Core, agentes, skills, comandos, routing, permisos críticos y MANIFEST sin reparar ni ejecutarse por rutina.
 - **BF-037 — Verified Blocking Findings:** verificación fresca única orientada a refutar findings Reviewer HIGH/CRITICAL realmente bloqueantes y no demostrados; discrimina CONFIRMED/REFUTED/UNPROVEN sin crear un gate universal.
 - **BF-036 — Source-Grounded Development:** skill condicional para verificar afirmaciones externas/versionadas desde el estado local y fuentes primarias hasta la prueba proporcional en el proyecto, sin investigar ni actualizar dependencias por rutina.
 - **BF-029 — Operaciones SEO basadas en evidencia:** metodología FOCUSED/FORMAL, diagnóstico por capas de indexabilidad/rendering, contrato de datos, referencias de schema e internacional y checks de migración integrados al deploy; refinamientos editoriales/SERP y templates opcionales de informe/cobertura, sin nuevo agente, skill de auditoría ni validator.

@@ -148,6 +148,8 @@ El cleanup distingue cuatro estados: sesión finalizada, worktree desregistrado 
 
 Complejidad y riesgo se evalúan por separado. Un cambio pequeño puede elevarse si afecta producción, DB, autenticación, pagos, DNS, servidor o información sensible.
 
+`/doctor` diagnostica bajo demanda y en solo lectura la integridad local del Core, routing, permisos críticos e inventario del Blueprint; no es un test del proyecto, no se ejecuta automáticamente ni repara.
+
 ## Criterios de aceptación
 
 TASK y STRUCTURAL deben convertir requisitos en condiciones verificables cuando aporte valor.

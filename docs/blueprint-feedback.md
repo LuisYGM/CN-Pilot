@@ -765,3 +765,17 @@ Validated.
 - **Finding B — HIGH, material y discutible:** se abrió un segundo task fresco e independiente. Resultado `CONFIRMED`: `replaceSnapshot()` reemplazaba el registro completo y provocaba pérdida de campos. Sin capabilities prohibidas ni reutilización indebida de la conclusión/contexto de A.
 - **Finding C — LOW:** BF-037 se omitió correctamente; no se abrió verifier.
 - Hubo exactamente dos Finding Verification tasks; no se utilizó Agent Manager ni hubo ciclos adicionales de Reviewer. `REFUTED` y `CONFIRMED` llevaron a decisiones distintas. El retest no inició desarrollo ni regresión; se eliminaron el fixture temporal y demás archivos temporales. El entorno de prueba no tenía Git, así que no hubo working-tree check, sin afectar la validación del procedimiento.
+
+## BF-038 — Blueprint Doctor
+
+**Contexto:**
+El Blueprint acumula agentes, skills, comandos, permisos y routing condicional. Cambios parciales pueden dejar referencias rotas, inventario desactualizado o invariantes críticas degradadas.
+
+**Regla:**
+`/doctor` inspecciona localmente y en solo lectura versión, Core, agents, skills, commands, routing, permisos críticos y MANIFEST; devuelve `HEALTHY`, `WARNINGS` o `BROKEN` con evidencia proporcional.
+
+**Límites:**
+Manual o recomendado ante señal concreta; no automático, web, Reviewer, Agent Manager, auto-repair, scripts, estado ni commit. No evalúa aplicación/contenido ni sustituye QA de proyecto.
+
+**Estado:**
+Testing; pendiente probar escenarios HEALTHY, WARNINGS y BROKEN en instalaciones de prueba.
