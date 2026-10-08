@@ -9,7 +9,7 @@ Referencia estructural / Propuesta visual / Referencia final de implementación
 ## Elementos provisionales y validaciones pendientes
 ## Adaptaciones entre diseño e implementación
 ## Mapa de artefactos
-Referencia: `docs/ARTIFACTS.md`
+Referencia: `ARTIFACTS.md`
 
 ## Alcance cubierto por el repositorio
 ## Punto de entrega

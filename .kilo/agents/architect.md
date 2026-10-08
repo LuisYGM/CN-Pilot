@@ -35,15 +35,11 @@ permission:
     "**/.kilocode/mcp.json": deny
     ".kilo/**": deny
     "AGENTS.md": deny
-    "BLUEPRINT.md": deny
-    "CHANGELOG.md": deny
     ".blueprint-version": deny
-    "profiles/**": deny
-    "templates/**": deny
-    "docs/blueprint-feedback.md": deny
     "docs/architecture/**": allow
     "docs/features/**": allow
-    "docs/decisions/**": allow
+    "docs/adr/**": allow
+    ".blueprint/**": deny
   bash:
     "*": ask
     "git status": allow
@@ -117,7 +113,7 @@ Cuando corresponda incluye:
 9. pruebas;
 10. rollback si aplica.
 
-Guarda specs funcionales en `docs/features/`, arquitectura en `docs/architecture/` y ADRs en `docs/decisions/`.
+Guarda specs funcionales en `docs/features/`, arquitectura en `docs/architecture/` y ADRs en `docs/adr/`. Crea esas rutas solo si existe el artefacto real.
 
 Si el entregable se utilizará posteriormente, escríbelo en su ruta canónica aunque la petición diga «no escribir código todavía». Esa frase impide implementar código, no documentar la planificación. Solo entrega el plan únicamente en conversación cuando el usuario prohíba explícitamente modificar la carpeta del proyecto.
 

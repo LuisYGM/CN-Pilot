@@ -829,3 +829,17 @@ Validated.
 - **Caso A — Scaffold heredado:** `.github/workflows/deploy.yml` existe y solo usa `workflow_dispatch`; no contiene `push`, `schedule`, secrets, host/usuario/puerto/ruta remota ni FTP/SFTP/SSH/rsync/acciones externas de deployment. Usa `permissions: contents: read`, no ejecuta deployment y, sin configurar, informa que no está configurado y termina con `exit 1`: manual y fail-closed.
 - **Caso B — Onboarding sin deployment:** el usuario indicó trabajo local y GitHub, pero no deployment. `/new-project` no preguntó por GitHub Actions, servidor, protocolo ni secrets; no configuró el workflow, no habilitó `push` ni convirtió onboarding en setup de infraestructura.
 - **Caso C — Onboarding con intención:** se registró intención local → GitHub → servidor y deployment automático desde `main` como intención futura cuando esté configurado; GitHub Actions quedó como mecanismo previsto tentativo y deployment como Pending. Quedaron pendientes framework/versión PHP, host/destino, URL, método/protocolo, usuario, puerto, ruta remota, autenticación y entornos staging/production. No pidió valores secretos, inventó datos de servidor, modificó el workflow, habilitó `push` ni intentó publicar.
+
+## BF-041 — Repository Structure & Blueprint Boundary
+
+**Contexto:**
+El template mezclaba Core del Blueprint, contexto del proyecto, inputs y scaffolds de artefactos, además de crear directorios de salida mediante README-placeholder.
+
+**Regla:**
+El Core portable vive bajo `.blueprint/`; los archivos de contexto y `ARTIFACTS.md` permanecen en la raíz; `project-resources/` es input proporcionado, separado del producto. El Repository Layout Contract registra ubicaciones observadas/decididas sin imponer carpetas. Los artefactos del proyecto se crean on-demand y las carpetas de tests pertenecen al stack/harness.
+
+**Límites:**
+No cambiar el layout nativo de proyectos existentes, crear código ni migrar proyectos externos 1.0.1. `.env.example` no forma parte del template base. `.github/workflows/deploy.yml` permanece manual y fail-closed. Los materiales añadidos a `project-resources/` no se versionan ni despliegan automáticamente.
+
+**Estado:**
+Testing.

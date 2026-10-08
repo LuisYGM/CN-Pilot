@@ -1,6 +1,6 @@
-# Web Project Blueprint — Especificación V1
+# Web Project Blueprint — Especificación V1.1
 
-**Versión:** `1.0.1`
+**Versión:** `1.1.0`
 
 Documento de referencia para maintainers del Blueprint. Un usuario nuevo debe empezar por [`docs/START-HERE.md`](docs/START-HERE.md); no necesita leer esta especificación para trabajar.
 
@@ -18,17 +18,17 @@ Cada proyecto define hasta dónde llega el repositorio y cómo se entrega cada a
 
 ## Capas de configuración
 
-El repositorio separa convenciones universales, configuración específica compartible del proyecto, configuración local del desarrollador, secretos y templates opcionales. `config/responsive.json` es la fuente versionada para responsive de proyectos nuevos; los proyectos existentes conservan sus breakpoints salvo migración aprobada.
+El repositorio separa Core portable en `.blueprint/`, rutas técnicas requeridas por herramientas, contexto mutable, inputs del proyecto y código/artefactos. `.blueprint/config/responsive.json` es la fuente versionada para responsive de proyectos nuevos; los proyectos existentes conservan sus breakpoints salvo migración aprobada.
 
-Los MCPs y workflows de deployment no se activan por defecto. El ejemplo de configuración MCP por proyecto vive en `.kilocode/mcp.example.json`; la configuración activa `.kilocode/mcp.json` permanece local e ignorada por Git. `kilo.jsonc` conserva configuración general compartible sin secretos. Consulta `docs/CONFIGURATION.md`.
+Los MCPs y workflows de deployment no se activan por defecto. El ejemplo de configuración MCP por proyecto vive en `.kilocode/mcp.example.json`; la configuración activa `.kilocode/mcp.json` permanece local e ignorada por Git. `kilo.jsonc` conserva configuración general compartible sin secretos. Consulta `.blueprint/docs/CONFIGURATION.md`.
 
 ## Capas de archivos y artefactos
 
-- **Blueprint Core:** infraestructura heredada y reusable. `MANIFEST.md` describe esta capa y no los entregables del proyecto.
-- **Project Context:** memoria operativa (`PROJECT.md`, `REQUIREMENTS.md`, `STATE.md`, `DECISIONS.md`) y su índice de artefactos.
+- **Blueprint Core:** infraestructura interna reusable en `.blueprint/`, junto a ubicaciones técnicas como `.kilo/`, `.github/`, `AGENTS.md` y `kilo.jsonc`. `.blueprint/MANIFEST.md` describe esta capa.
+- **Project Context:** `README.md`, memoria operativa (`PROJECT.md`, `REQUIREMENTS.md`, `STATE.md`, `DECISIONS.md`) y el índice raíz `ARTIFACTS.md`.
 - **Project Artifacts:** entregables reales creados para el proyecto, conservados en sus rutas canónicas sin carpetas artificiales ni etiquetas permanentes de origen IA.
 
-`docs/ARTIFACTS.md` existe como registro base vacío y se convierte en el mapa legible de Project Artifacts. Se organiza solo con categorías presentes y estados simples cuando aportan valor. Se actualiza ante altas, bajas, movimientos o cambios materiales de estado/propósito, no por cada edición interna. Funciona mediante inspección de archivos con o sin Git.
+`ARTIFACTS.md` existe como registro base vacío y se convierte en el mapa legible de Project Artifacts. Se organiza solo con categorías presentes y estados simples cuando aportan valor. Se actualiza ante altas, bajas, movimientos o cambios materiales de estado/propósito, no por cada edición interna. Funciona mediante inspección de archivos con o sin Git. No registra `.blueprint/` ni inputs recibidos en `project-resources/`.
 
 ## Convención de idioma
 
@@ -96,7 +96,7 @@ Cambio importante, de arquitectura o riesgo alto.
 
 `requirements → architecture → plan → branch si aplica → implementación incremental → tests → review → checkpoint → staging → acceptance → production`
 
-La fase de planificación produce un artefacto persistido cuando la especificación, arquitectura, plan o criterios vayan a utilizarse posteriormente. «No escribir código todavía» no impide persistir documentación; solo una instrucción explícita de no modificar la carpeta del proyecto evita escribirla. Las especificaciones de funcionalidades van en `docs/features/`, la arquitectura transversal en `docs/architecture/` y las decisiones aprobadas en `DECISIONS.md` o `docs/decisions/`. Una planificación completa y verificada crea su commit local si Git existe; sin Git queda guardada localmente.
+La fase de planificación produce un artefacto persistido cuando la especificación, arquitectura, plan o criterios vayan a utilizarse posteriormente. «No escribir código todavía» no impide persistir documentación; solo una instrucción explícita de no modificar la carpeta del proyecto evita escribirla. Las especificaciones de funcionalidades van en `docs/features/`, la arquitectura transversal en `docs/architecture/`, los ADRs formales en `docs/adr/` y las decisiones aprobadas ligeras en `DECISIONS.md`. Crea esas carpetas solo cuando exista el artefacto. Una planificación completa y verificada crea su commit local si Git existe; sin Git queda guardada localmente.
 
 El flujo reutiliza análisis, tests y reviews todavía válidos, evita verificaciones duplicadas y reserva margen antes de Reviewer para recibir hallazgos, corregir, probar y cerrar. Si una sesión debe continuar, recupera el estado vigente y ejecuta únicamente el trabajo pendiente.
 
@@ -170,8 +170,8 @@ En WordPress se evalúan primero las capacidades disponibles en Core y el stack 
 - `REQUIREMENTS.md`: requisitos.
 - `docs/features/`: specs funcionales.
 - `docs/architecture/`: documentación de arquitectura.
-- `docs/decisions/`: ADRs.
-- `docs/ARTIFACTS.md`: índice de entregables reales del proyecto.
+- `docs/adr/`: ADRs formales.
+- `ARTIFACTS.md`: índice de entregables reales del proyecto.
 
 ## Onboarding de proyectos
 

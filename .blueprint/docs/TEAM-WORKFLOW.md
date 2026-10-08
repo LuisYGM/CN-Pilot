@@ -4,7 +4,7 @@ El onboarding individual está en [Empieza aquí](START-HERE.md). Este documento
 
 ## Proyecto compartido
 
-Si el proyecto usa Git, haz Pull y comprueba la rama. En todos los casos, revisa `PROJECT.md`, `STATE.md`, `DECISIONS.md`, `REQUIREMENTS.md` y `docs/ARTIFACTS.md` según la tarea antes de modificar archivos.
+Si el proyecto usa Git, haz Pull y comprueba la rama. En todos los casos, revisa `PROJECT.md`, `STATE.md`, `DECISIONS.md`, `REQUIREMENTS.md` y `ARTIFACTS.md` según la tarea antes de modificar archivos.
 
 ## Trabajo en funcionalidades
 

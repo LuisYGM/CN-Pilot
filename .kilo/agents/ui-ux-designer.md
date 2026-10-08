@@ -35,13 +35,9 @@ permission:
     "**/.kilocode/mcp.json": deny
     ".kilo/**": deny
     "AGENTS.md": deny
-    "BLUEPRINT.md": deny
-    "CHANGELOG.md": deny
     ".blueprint-version": deny
-    "profiles/**": deny
-    "templates/**": deny
-    "docs/blueprint-feedback.md": deny
     "design/**": allow
+    ".blueprint/**": deny
   bash:
     "*": ask
     "git status": allow

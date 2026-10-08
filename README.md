@@ -2,15 +2,15 @@
 
 Blueprint portable para iniciar, desarrollar, revisar y mantener proyectos web con Kilo Code. Organiza contexto, agentes especializados, workflows y artefactos sin imponer un proveedor de IA, un CMS, un método de entrega ni Git.
 
-**Versión:** `1.0.1`
+**Versión:** `1.1.0`
 
 Sirve para proyectos nuevos o existentes: HTML/CSS/JS, WordPress, WooCommerce, plugins, themes, Bricks, Elementor, PHP, APIs, contenido y SEO. El repositorio puede terminar en contenido, diseño, código, handoff manual, integración mediante MCP o deployment, según el alcance real.
 
 ## Empieza aquí
 
-1. **Primer día:** sigue [`docs/START-HERE.md`](docs/START-HERE.md).
-2. **Configura Kilo:** consulta [`docs/KILO-SETUP.md`](docs/KILO-SETUP.md).
-3. **Configura tu IA en Kilo:** elige modelos y proveedor según tu entorno; consulta [`docs/MODEL-STRATEGY.md`](docs/MODEL-STRATEGY.md).
+1. **Primer día:** sigue [`.blueprint/docs/START-HERE.md`](.blueprint/docs/START-HERE.md).
+2. **Configura Kilo:** consulta [`.blueprint/docs/KILO-SETUP.md`](.blueprint/docs/KILO-SETUP.md).
+3. **Configura tu IA en Kilo:** elige modelos y proveedor según tu entorno; consulta [`.blueprint/docs/MODEL-STRATEGY.md`](.blueprint/docs/MODEL-STRATEGY.md).
 4. **Inicializa la carpeta:** habla con `dev-lead` y ejecuta `/new-project` una sola vez.
 5. **Trabaja normalmente:** describe la tarea en lenguaje natural; Dev Lead selecciona agentes, skills y profundidad del proceso.
 
@@ -33,26 +33,26 @@ Principios operativos:
 
 ### Usuario del Blueprint
 
-- [`docs/START-HERE.md`](docs/START-HERE.md): recorrido práctico, filosofía, escenarios y ubicación de entregables.
-- [`docs/TROUBLESHOOTING.md`](docs/TROUBLESHOOTING.md): problemas habituales y recuperación segura.
-- [`docs/ARTIFACTS.md`](docs/ARTIFACTS.md): índice de entregables reales del proyecto.
-- [`docs/LIFECYCLE.md`](docs/LIFECYCLE.md): fases posibles y puntos de entrega.
+- [`.blueprint/docs/START-HERE.md`](.blueprint/docs/START-HERE.md): recorrido práctico, filosofía, escenarios y ubicación de entregables.
+- [`.blueprint/docs/TROUBLESHOOTING.md`](.blueprint/docs/TROUBLESHOOTING.md): problemas habituales y recuperación segura.
+- [`ARTIFACTS.md`](ARTIFACTS.md): índice de entregables reales del proyecto.
+- [`.blueprint/docs/LIFECYCLE.md`](.blueprint/docs/LIFECYCLE.md): fases posibles y puntos de entrega.
 
 ### Configuración y trabajo del equipo
 
-- [`docs/KILO-SETUP.md`](docs/KILO-SETUP.md): instalación y configuración personal de Kilo.
-- [`docs/MODEL-STRATEGY.md`](docs/MODEL-STRATEGY.md): separación entre política del Blueprint y selección personal de IA en Kilo.
-- [`docs/CONFIGURATION.md`](docs/CONFIGURATION.md): responsive, MCP, deployment, configuración local y secretos.
-- [`docs/GIT-WORKFLOW.md`](docs/GIT-WORKFLOW.md): commits, ramas y operación con o sin remoto.
-- [`docs/TEAM-WORKFLOW.md`](docs/TEAM-WORKFLOW.md): colaboración y continuidad entre personas.
-- [`docs/SECURITY.md`](docs/SECURITY.md): línea base de seguridad.
+- [`.blueprint/docs/KILO-SETUP.md`](.blueprint/docs/KILO-SETUP.md): instalación y configuración personal de Kilo.
+- [`.blueprint/docs/MODEL-STRATEGY.md`](.blueprint/docs/MODEL-STRATEGY.md): separación entre política del Blueprint y selección personal de IA en Kilo.
+- [`.blueprint/docs/CONFIGURATION.md`](.blueprint/docs/CONFIGURATION.md): responsive, MCP, deployment, configuración local y secretos.
+- [`.blueprint/docs/GIT-WORKFLOW.md`](.blueprint/docs/GIT-WORKFLOW.md): commits, ramas y operación con o sin remoto.
+- [`.blueprint/docs/TEAM-WORKFLOW.md`](.blueprint/docs/TEAM-WORKFLOW.md): colaboración y continuidad entre personas.
+- [`.blueprint/docs/SECURITY.md`](.blueprint/docs/SECURITY.md): línea base de seguridad.
 
 ### Maintainers del Blueprint
 
-- [`BLUEPRINT.md`](BLUEPRINT.md): especificación completa del sistema.
+- [`.blueprint/BLUEPRINT.md`](.blueprint/BLUEPRINT.md): especificación completa del sistema.
 - [`AGENTS.md`](AGENTS.md): reglas universales para agentes.
-- [`MANIFEST.md`](MANIFEST.md): inventario de Blueprint Core.
-- [`docs/blueprint-feedback.md`](docs/blueprint-feedback.md): pruebas y limitaciones observadas.
-- [`CHANGELOG.md`](CHANGELOG.md): historial de versiones.
+- [`.blueprint/MANIFEST.md`](.blueprint/MANIFEST.md): inventario de Blueprint Core.
+- [`.blueprint/docs/blueprint-feedback.md`](.blueprint/docs/blueprint-feedback.md): pruebas y limitaciones observadas.
+- [`.blueprint/CHANGELOG.md`](.blueprint/CHANGELOG.md): historial de versiones.
 
-El contexto de cada proyecto vive en `PROJECT.md`, `REQUIREMENTS.md`, `STATE.md` y `DECISIONS.md`. Los entregables se conservan en sus rutas canónicas, como `content/`, `design/`, `docs/features/`, `docs/architecture/` o las carpetas de código del stack.
+El contexto de cada proyecto vive en `README.md`, `PROJECT.md`, `REQUIREMENTS.md`, `STATE.md`, `DECISIONS.md` y `ARTIFACTS.md`. Los entregables se conservan en sus rutas canónicas, creadas solo cuando se necesitan (por ejemplo `content/`, `design/` o `docs/`); el código sigue el layout nativo del stack.

@@ -4,27 +4,27 @@ Fuente de verdad para las capas de configuración compartible, responsive, MCP, 
 
 ## Capas de configuración
 
-- **Convenciones universales:** fuentes versionadas y portables que aplican por defecto, como `config/responsive.json`.
+- **Convenciones universales:** fuentes versionadas y portables que aplican por defecto, como `.blueprint/config/responsive.json`.
 - **Configuración del proyecto:** decisiones compartibles del proyecto, sin secretos, como configuración general en `kilo.jsonc` o un workflow de deployment aprobado.
 - **Configuración local:** preferencias, autenticación y ajustes propios del desarrollador o máquina. Se mantienen fuera de Git.
 - **Selección de IA:** proveedor, modelos principal/pequeño/de subagentes/de compactación, overrides y esfuerzo de razonamiento pertenecen al usuario y al runtime de Kilo. El proyecto no los fija por defecto ni los registra como decisiones compartidas.
 - **Secretos:** tokens, API keys, passwords, claves privadas y credenciales. Nunca se versionan.
-- **Templates opcionales:** ejemplos inactivos bajo `templates/`; solo se copian y adaptan cuando el alcance lo requiere.
+- **Templates opcionales:** ejemplos inactivos bajo `.blueprint/templates/`; se consultan/adaptan solo cuando el alcance lo requiere.
 
 ## Responsive
 
-`config/responsive.json` es la fuente de verdad para proyectos nuevos. Define una estrategia `fluid-first`, Base sin media query y los breakpoints descendentes disponibles. Base concentra la mayor parte del diseño mediante `clamp()`, unidades relativas, Grid, Flexbox, `min()`, `max()`, `minmax()` y layouts intrínsecos.
+`.blueprint/config/responsive.json` es la fuente de verdad para proyectos nuevos. Define una estrategia `fluid-first`, Base sin media query y los breakpoints descendentes disponibles. Base concentra la mayor parte del diseño mediante `clamp()`, unidades relativas, Grid, Flexbox, `min()`, `max()`, `minmax()` y layouts intrínsecos.
 
 Los breakpoints son correcciones condicionales, no fases obligatorias. No se crea un override si el diseño ya funciona. Cuando la implementación directa usa un builder con breakpoints configurables, se mapea la fuente de verdad al builder solo si esa implementación forma parte del alcance. En un handoff manual se documenta la convención para quien continúe.
 
-En proyectos existentes, los breakpoints implementados son la fuente de verdad. `config/responsive.json` no los reemplaza salvo solicitud o decisión explícita de migración.
+En proyectos existentes, los breakpoints implementados son la fuente de verdad. `.blueprint/config/responsive.json` no los reemplaza salvo solicitud o decisión explícita de migración.
 
 ## MCP opcional
 
 El Blueprint no activa MCPs por defecto ni depende de un proveedor concreto. Cuando un proyecto confirme un MCP:
 
 1. verifica que la integración forma parte del alcance y que está disponible;
-2. crea `.kilocode/mcp.json` a partir de [`.kilocode/mcp.example.json`](../.kilocode/mcp.example.json) y adapta uno o varios servidores;
+2. crea `.kilocode/mcp.json` a partir de [`.kilocode/mcp.example.json`](../../.kilocode/mcp.example.json) y adapta uno o varios servidores;
 3. conserva en `kilo.jsonc` únicamente configuración general de Kilo/Blueprint a nivel de proyecto y sin secretos;
 4. configura autenticación mediante OAuth administrado por Kilo, variables/secretos del entorno o configuración local fuera del repositorio, según admita el servicio;
 5. valida la conexión antes de usarla para publicar o modificar el sistema objetivo.
@@ -59,17 +59,17 @@ Si un servidor exige valores sensibles dentro de su definición, mantén esa def
 
 ## Deployment mediante GitHub Actions
 
-`templates/deploy/github-actions.yml` es un template inactivo y seguro por defecto. No se ejecuta desde `templates/` y contiene un bloqueo explícito hasta que se configure.
+`.github/workflows/deploy.yml` se hereda como scaffold manual y fail-closed. La presencia del archivo no significa deployment configurado; sin especializarlo, una invocación manual termina explícitamente con error y no despliega.
 
 Solo cuando el proyecto confirme GitHub Actions como modo de deployment, Dev Lead puede:
 
-1. copiarlo a `.github/workflows/deploy.yml`;
+1. especializar el scaffold existente `.github/workflows/deploy.yml` (no copiar un segundo workflow base);
 2. definir el método real —SSH, SFTP, rsync, build + artifact, hosting, WordPress, custom u otro—;
 3. referenciar credenciales mediante GitHub Actions Secrets o secrets de environments y configurar las aprobaciones/protecciones requeridas;
-4. retirar el bloqueo únicamente después de revisar permisos, triggers, backup, smoke tests y rollback;
+4. retirar el bloqueo únicamente después de revisar permisos, triggers, backup, smoke tests y rollback; habilitar triggers automáticos solo con intención explícita;
 5. validar el workflow sin ejecutar producción sin aprobación.
 
-Tener un entorno de producción no activa deployment ni justifica crear el workflow. No existe un método universal.
+Tener un entorno de producción no activa deployment ni justifica crear/configurar el workflow. No existe un método universal. La configuración debe publicar solo superficies de producto seleccionadas según el stack; `.blueprint/` y `project-resources/` quedan excluidos por defecto. Los recursos recibidos se integran/copian a ubicaciones de producción autorizadas si se necesitan.
 
 ## Archivos locales y secretos
 

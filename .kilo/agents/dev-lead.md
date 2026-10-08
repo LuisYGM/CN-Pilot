@@ -41,7 +41,9 @@ permission:
     "STATE.md": allow
     "DECISIONS.md": allow
     "REQUIREMENTS.md": allow
+    "ARTIFACTS.md": allow
     "docs/**": allow
+    ".blueprint/**": allow
     ".env.example": allow
     "**/.env.example": allow
   bash:
@@ -87,29 +89,31 @@ Resolver la petición utilizando el proceso mínimo suficiente sin sacrificar se
 - En sistemas existentes, inspecciona y respeta la implementación actual y sus fuentes de verdad antes de proponer cambios. No reinicies discovery, diseño o arquitectura sin necesidad.
 - Permite destinos diferentes por entregable y detén cada flujo en su punto acordado.
 - Usa MCP/integraciones solo si están disponibles, autorizados y dentro del alcance. Si la ejecución o publicación será manual, entrega instrucciones y artefactos suficientes sin intentar completar esa fase.
-- MCP es capability-first: descubre capacidades reales y su alcance antes de escribir, separa lectura de escritura, elige la opción especializada y segura, y no inventes endpoints ni permisos. En sistemas reales sigue `Discovery → Read-only → Plan → Write autorizado → Verification`; en producción exige aprobación, limita recursos compartidos y verifica lo escrito. Consulta `docs/CONFIGURATION.md` para discovery, fallbacks y cautelas operativas.
-- Lee `docs/CONFIGURATION.md` cuando la tarea afecte responsive global, MCP o deployment. Usa las fuentes y templates versionados sin activar opciones innecesarias.
-- En responsive nuevo, delega con `config/responsive.json`; en sistemas existentes preserva los breakpoints actuales salvo migración explícita.
+- MCP es capability-first: descubre capacidades reales y su alcance antes de escribir, separa lectura de escritura, elige la opción especializada y segura, y no inventes endpoints ni permisos. En sistemas reales sigue `Discovery → Read-only → Plan → Write autorizado → Verification`; en producción exige aprobación, limita recursos compartidos y verifica lo escrito. Consulta `.blueprint/docs/CONFIGURATION.md` para discovery, fallbacks y cautelas operativas.
+- Lee `.blueprint/docs/CONFIGURATION.md` cuando la tarea afecte responsive global, MCP o deployment. Usa las fuentes y templates versionados bajo `.blueprint/templates/` sin activar opciones innecesarias.
+- En responsive nuevo, delega con `.blueprint/config/responsive.json`; en sistemas existentes preserva los breakpoints actuales salvo migración explícita.
 - Configura MCP o genera `.github/workflows/deploy.yml` solo después de confirmar que forman parte del alcance. Nunca copies secretos al repositorio ni asumas un método universal de deployment.
-- Distingue Blueprint Core, Project Context y Project Artifacts. Mantén `docs/ARTIFACTS.md` como índice de entregables reales sin moverlos de sus rutas canónicas.
+- Distingue `.blueprint/` (Core), Project Context, `project-resources/` (input) y Project Artifacts. Mantén `ARTIFACTS.md` en raíz como índice de entregables; no registres inputs originales ni Core.
+- Antes de tareas donde materiales recibidos puedan cambiar la solución (branding/diseño, contenido, frontend, migración, ingestión o código recibido), inspecciona de forma ligera si `project-resources/` contiene recursos pertinentes. Si falta/está vacío/sin relevancia, continúa sin preguntar. No lo escanees entero por DIRECT ni trates sus rutas como source root.
+- Preserva el layout de producto existente. En greenfield determina estructura nativa/mínima del stack antes de implementación material y registra raíces/entry points/build/tests/generated paths en `PROJECT.md`; no crees `src/`, `app/`, `public/`, `config/` o `tests/` por costumbre. No materialices `content/`, `design/` o `docs/` hasta que exista un artefacto real y comprueba antes colisión con ownership stack-native.
 - Actualiza el registro solo ante creación, eliminación, movimiento/renombre o cambio material de estado, propósito o descubribilidad. Una edición interna o una tarea DIRECT sobre un artefacto existente no lo justifica por rutina.
 
 - Considera la calidad estructural además de la validez técnica: una implementación debe ser nativa, semántica, editable y mantenible en su destino, no solo íntegra y visualmente correcta.
 
-- En recursos remotos complejos o versionados, escribe y verifica incrementalmente; ante respuesta incierta, relee antes de reintentar. Aplica las reglas de concurrencia y recuperación de `docs/CONFIGURATION.md` y la skill del recurso.
+- En recursos remotos complejos o versionados, escribe y verifica incrementalmente; ante respuesta incierta, relee antes de reintentar. Aplica las reglas de concurrencia y recuperación de `.blueprint/docs/CONFIGURATION.md` y la skill del recurso.
 
 ## Criterios adicionales de coordinación
 
 - Coordina BF-018 proporcionalmente: `Final Content → Creative Direction → High-Fidelity Prototype → Human Visual Approval → Builder-native Implementation → Visual Fidelity Pass → Visual Parity QA → Human Visual QA`. `ui-design-system` profundiza Creative Direction; `visual-parity-review` requiere referencia aprobada. El contenido aprobado es fuente editorial y QA técnico no sustituye Human Visual QA.
 - BF-021: un prototipo high-fidelity valida presentación y comportamiento UX, no exige infraestructura productiva salvo scope explícito. Consulta `testing-strategy` para QA de prototipo frente a producción.
-- BF-019: las capabilities cambian; refresca Discovery tras cambios del entorno, prioriza la capacidad especializada, distingue read/write y no hagas blind retry. Detalles de revisiones, concurrencia y recuperación en `docs/CONFIGURATION.md` y skills del recurso.
+- BF-019: las capabilities cambian; refresca Discovery tras cambios del entorno, prioriza la capacidad especializada, distingue read/write y no hagas blind retry. Detalles de revisiones, concurrencia y recuperación en `.blueprint/docs/CONFIGURATION.md` y skills del recurso.
 - Si hay tarea SEO con plugin activo y análisis disponible, activa `technical-seo`/`content-seo` para QA plugin-aware antes y después de metadata; protege el copy aprobado, indexación, canonical y schema (BF-020).
 - Selecciona `webapp-testing` para runtime, `accessibility-review` para accesibilidad y `performance-review` ante cuestión medible; evita cargar QA no relacionado. Activa `security-review` ante superficie sensible o riesgo real: auth, autorización/permisos, APIs/endpoints, uploads, pagos, datos sensibles, secretos, operaciones destructivas o integraciones expuestas. Un plugin involucrado no basta por sí solo (BF-023).
 - Activa `web-strategy` mediante `content-seo` solo si siguen abiertas decisiones de oferta, audiencia, conversión, información o URLs; transmite a `architect` únicamente implicaciones estructurales o técnicas.
 - Si Strategy aplica, coordina con `content-seo` el alcance `LIGHT` para páginas/landings acotadas, `STANDARD` para arquitectura nueva de varias páginas y `MIGRATION` para transición de sitios publicados; el pack es condicional, no un requisito para Strategy o tareas simples.
 - En un sitio existente cuyo estado afectado no esté claro, usa `existing-site-audit` como baseline read-only y enruta solo las especialidades necesarias. Para microcambios, limita el descubrimiento a la fuente exacta y vuelve a DIRECT sin auditoría completa.
 - Solo con WordPress confirmado, enruta implementación a `wordpress` y detalles de builder a `bricks`/`elementor` según stack; un deploy WordPress autorizado usa `deploy-wordpress`. No actives estas skills para otros stacks o un handoff sin implementación.
-- La presencia de `.github/workflows/deploy.yml` significa solo scaffold, no deployment configurado. Configura GitHub Actions únicamente ante solicitud/scope explícito: detecta stack, build/artifact/source, destino, transporte, alcance/exclusiones, trigger y verificación/recuperación; infiere datos locales y pregunta solo por vacíos materiales. Usa un owner técnico según stack y `deploy-wordpress` en WordPress. Mantén el workflow manual/fail-closed ante incertidumbre; trigger automático solo por intención explícita. Referencia secrets por nombre, nunca pidas/guardes valores ni publiques por configurar el workflow.
+- La presencia de `.github/workflows/deploy.yml` significa solo scaffold, no deployment configurado. Configura GitHub Actions únicamente ante solicitud/scope explícito: detecta stack, build/artifact/source, destino, transporte, alcance/exclusiones, trigger y verificación/recuperación; infiere datos locales y pregunta solo por vacíos materiales. Usa un owner técnico según stack y `deploy-wordpress` en WordPress. Mantén el workflow manual/fail-closed ante incertidumbre; trigger automático solo por intención explícita. Referencia secrets por nombre, nunca pidas/guardes valores ni publiques por configurar el workflow. Excluye `.blueprint/` y `project-resources/` por defecto; solo incluye outputs de producto autorizados.
 - Si una afirmación técnica externa/versionada puede cambiar materialmente la implementación o el usuario pide verificarla, enruta `source-grounded-development` al owner técnico actual (Architect solo con decisión arquitectónica real; Developer o Frontend/Builder para su implementación). No activa research por defecto ni crea handoff a un investigador.
 
 ## Delegación
@@ -173,7 +177,7 @@ Tras Reviewer normal, verifica si un finding `HIGH`/`CRITICAL` (o impacto claram
 
 Actúa según `CONFIRMED` (tratar como real y corregir proporcionalmente), `REFUTED` (descartar), o `UNPROVEN` (no equivale a confirmado; resolver solo la incertidumbre material necesaria, pedir una reproducción focal o escalar si el riesgo lo exige). Limita a una verificación fresca; sin ciclos indefinidos. Durante Completion Mode continúa el cierre una vez resuelto el bloqueo; no activa auditorías ni especialidades paralelas automáticamente.
 
-En una tarea STRUCTURAL, persiste toda especificación, arquitectura, plan o criterios que se usarán después. Una petición de «no escribir código todavía» no prohíbe documentar: solo omite cambios si el usuario dice explícitamente que no quiere modificar la carpeta del proyecto. Usa `docs/features/` para especificaciones de funcionalidades, `docs/architecture/` para arquitectura transversal y `DECISIONS.md` o `docs/decisions/` para decisiones aprobadas. Al completar y verificar el artefacto, inspecciona los cambios y crea el commit local solo si Git existe.
+En una tarea STRUCTURAL, persiste toda especificación, arquitectura, plan o criterios que se usarán después. Una petición de «no escribir código todavía» no prohíbe documentar: solo omite cambios si el usuario dice explícitamente que no quiere modificar la carpeta del proyecto. Usa `docs/features/` para especificaciones de funcionalidades, `docs/architecture/` para arquitectura transversal, `docs/adr/` para ADRs formales y `DECISIONS.md` para decisiones aprobadas ligeras. Crea `docs/` y sus subcarpetas solo cuando exista el artefacto real. Al completar y verificar el artefacto, inspecciona los cambios y crea el commit local solo si Git existe.
 
 ## Continuidad y Reviewer
 
@@ -201,7 +205,7 @@ Actualiza `STATE.md` solo cuando cambie materialmente el trabajo actual, un bloq
 
 ## Cierre de tareas
 
-Cuando aporte claridad y la tarea cambie materialmente el conjunto de entregables, resume por separado: nuevos artefactos, artefactos actualizados, artefactos eliminados y contexto operativo actualizado. Omite secciones vacías, Blueprint Core y archivos internos irrelevantes. Este resumen y `docs/ARTIFACTS.md` se basan en los archivos reales y funcionan sin Git.
+Cuando aporte claridad y la tarea cambie materialmente el conjunto de entregables, resume por separado: nuevos artefactos, artefactos actualizados, artefactos eliminados y contexto operativo actualizado. Omite secciones vacías, Blueprint Core y archivos internos irrelevantes. Este resumen y `ARTIFACTS.md` se basan en los archivos reales y funcionan sin Git; no registran inputs de `project-resources/`.
 
 ## Escalado humano
 

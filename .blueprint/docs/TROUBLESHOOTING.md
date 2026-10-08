@@ -15,7 +15,7 @@ Problemas operativos frecuentes del Blueprint. Para la primera puesta en marcha,
 **Síntoma:** el servidor no aparece, no conecta o la herramienta requerida no está autorizada.
 
 1. Confirma que MCP forma parte del alcance; no lo actives por rutina.
-2. Revisa la configuración efectiva y el ejemplo MCP canónico [`.kilocode/mcp.example.json`](../.kilocode/mcp.example.json).
+2. Revisa la configuración efectiva y el ejemplo MCP canónico [`.kilocode/mcp.example.json`](../../.kilocode/mcp.example.json).
 3. Verifica URL, estado `enabled`, autenticación y permisos sin copiar secretos al repositorio.
 4. Valida la conexión antes de publicar o modificar el sistema objetivo.
 5. Si no puede utilizarse, detén el flujo en contenido, diseño, código o handoff manual según lo acordado.
@@ -89,7 +89,7 @@ Detén el commit. No pegues credenciales en prompts, documentación, manifests o
 
 - `.env`, sus variantes sensibles y `secrets/**` deben quedar fuera de Git.
 - `kilo.local.json` y `kilo.local.jsonc` están destinados a configuración local ignorada.
-- Los ejemplos bajo `templates/` deben conservar placeholders y permanecer inactivos.
+- Los ejemplos bajo `.blueprint/templates/` deben conservar placeholders y permanecer inactivos.
 - Si un secreto llegó al historial o a un remoto, revócalo y sigue el procedimiento de seguridad del proveedor; borrarlo del archivo actual no basta.
 
 Consulta [Configuración](CONFIGURATION.md#archivos-locales-y-secretos) y [Seguridad](SECURITY.md).
@@ -102,6 +102,6 @@ Solo `/commit` depende estrictamente de Git. `/checkpoint` crea commit únicamen
 
 ## El deployment no puede ejecutarse
 
-Comprueba que deployment forma parte del alcance, existe un método aprobado y están definidos backup, smoke test y rollback. El archivo `templates/deploy/github-actions.yml` está bloqueado deliberadamente y no despliega hasta que se copie, adapte y verifique.
+Comprueba que deployment forma parte del alcance, existe un método aprobado y están definidos backup, smoke test y rollback. `.github/workflows/deploy.yml` es la única superficie canónica heredada; se especializa en su sitio y permanece manual/fail-closed hasta que el método y la autorización estén completos.
 
 Si falta método, autorización o acceso, prepara un handoff y detente. Nunca improvises credenciales ni despliegues a producción sin aprobación.

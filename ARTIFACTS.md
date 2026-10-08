@@ -1,7 +1,7 @@
 # Artefactos del proyecto
 
 > Este archivo registra los artefactos creados específicamente para este proyecto.
-> La infraestructura heredada del Blueprint se documenta en [`MANIFEST.md`](../MANIFEST.md).
+> La infraestructura heredada del Blueprint se documenta en [`.blueprint/MANIFEST.md`](.blueprint/MANIFEST.md).
 
 Forma parte del contexto operativo y no se registra a sí mismo como artefacto. Tampoco incluye normalmente `PROJECT.md`, `REQUIREMENTS.md`, `STATE.md`, `DECISIONS.md` ni archivos internos irrelevantes.
 
@@ -9,7 +9,7 @@ Forma parte del contexto operativo y no se registra a sí mismo como artefacto. 
 
 Organiza los artefactos por categorías que existan realmente en el proyecto, como Contenido (incluida `content/strategy/` cuando se cree estrategia editorial/search), Diseño, Implementación frontend, Plugins, Arquitectura o Handoff. La carpeta de estrategia es un destino válido, no obligatorio.
 
-Las evaluaciones durables pueden registrarse como Auditorías en `docs/audits/<scope>/`: informe y cobertura de un alcance/muestra concretos, no estado global del proyecto. Los templates de `templates/seo/` son Blueprint Core y no se registran como auditorías reales. No crees la categoría/carpeta hasta que exista un entregable; `STATE.md` mantiene estado operativo y las decisiones aprobadas permanecen en `DECISIONS.md`.
+Las evaluaciones durables pueden registrarse como Auditorías en `docs/audits/<scope>/`: informe y cobertura de un alcance/muestra concretos, no estado global del proyecto. Los templates de `.blueprint/templates/seo/` son Blueprint Core y no se registran como auditorías reales. No crees la categoría/carpeta hasta que exista un entregable; `STATE.md` mantiene estado operativo y las decisiones aprobadas permanecen en `DECISIONS.md`. Los inputs de `project-resources/` no se registran como artefactos.
 
 Formato recomendado por categoría:
 
@@ -35,7 +35,7 @@ No todos los artefactos necesitan estado ni deben recorrer la secuencia completa
 - No crear categorías vacías ni conservar filas de ejemplo.
 - No añadir fechas, hashes, tamaños ni historial de cambios.
 - No convertir este archivo en un changelog o sistema de project management.
-- No duplicar `MANIFEST.md` ni el contenido de los entregables.
+- No duplicar `.blueprint/MANIFEST.md` ni el contenido de los entregables.
 - No registrar archivos internos irrelevantes ni marcar archivos como generados por IA.
 - Mantener el mapa legible en pocos segundos.
 

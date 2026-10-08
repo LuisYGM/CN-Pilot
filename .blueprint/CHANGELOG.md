@@ -1,9 +1,10 @@
 # Changelog
 
-## Sin publicar
+## [1.1.0] - 2026-10-08
 
 ### Añadido
 
+- **BF-041 — Repository Structure & Blueprint Boundary:** Core portable bajo `.blueprint/`, `project-resources/` como input separado, contexto y `ARTIFACTS.md` visibles en raíz, contrato de layout nativo y artefactos del proyecto on-demand; retirados placeholders y scaffolds duplicados.
 - **BF-040 — Deployment Workflow Scaffold:** workflow GitHub Actions heredable, manual y fail-closed por defecto; no publica hasta configuración específica autorizada y trigger automático explícito.
 - **BF-039 — Gate Self-Test:** validación proporcional de gates custom decisivos mediante controles KNOWN-GOOD/PASS y KNOWN-BAD/FAIL aislados, sin self-test rutinario de tooling estándar ni pruebas inseguras en producción.
 - **BF-038 — Blueprint Doctor:** comando `/doctor` local y read-only para diagnosticar integridad de Core, agentes, skills, comandos, routing, permisos críticos y MANIFEST sin reparar ni ejecutarse por rutina.

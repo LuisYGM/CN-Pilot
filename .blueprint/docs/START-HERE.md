@@ -44,7 +44,7 @@ Dev Lead preguntará solo por información material que no pueda inferir, por ej
 
 Tras la confirmación actualizará el contexto. No desarrollará todavía páginas o funcionalidades. Si Git existe, creará el commit local de inicialización; sin Git guardará los archivos y continuará sin tratarlo como bloqueo.
 
-El README del template presenta el Blueprint y su onboarding. Al inicializar un proyecto real, `/new-project` convierte ese README genérico en una presentación breve del proyecto, basada en contexto confirmado; un README propio existente se conserva por defecto. `BLUEPRINT.md` mantiene la documentación del sistema y los archivos canónicos de contexto prevalecen sobre el resumen del README.
+El README del template presenta el Blueprint y su onboarding. Al inicializar un proyecto real, `/new-project` convierte ese README genérico en una presentación breve del proyecto, basada en contexto confirmado; un README propio existente se conserva por defecto. `.blueprint/BLUEPRINT.md` mantiene la documentación del sistema y los archivos canónicos de contexto prevalecen sobre el resumen del README.
 
 No vuelvas a ejecutar `/new-project` si `PROJECT.md` ya describe el proyecto real y `STATE.md` dejó atrás la inicialización. Los datos todavía desconocidos pueden permanecer como `Pending`.
 
@@ -92,30 +92,31 @@ Estos escenarios no activan automáticamente todas las fases ni capacidades. El 
 
 El sistema separa tres capas:
 
-- **Blueprint Core:** infraestructura reusable heredada, como `.kilo/`, `config/`, `profiles/`, `templates/`, `AGENTS.md` y `BLUEPRINT.md`. Su inventario está en [`MANIFEST.md`](../MANIFEST.md).
-- **Project Context:** memoria breve que permite continuar el trabajo: `PROJECT.md`, `REQUIREMENTS.md`, `STATE.md`, `DECISIONS.md` y `docs/ARTIFACTS.md`.
+- **Blueprint Core:** infraestructura portable heredada bajo `.blueprint/`, además de rutas técnicas como `.kilo/`, `.github/`, `.kilocode/`, `AGENTS.md` y `kilo.jsonc`. Su inventario está en [`MANIFEST.md`](../MANIFEST.md).
+- **Project Context:** resumen y memoria breve que permiten continuar el trabajo: `README.md`, `PROJECT.md`, `REQUIREMENTS.md`, `STATE.md`, `DECISIONS.md` y `ARTIFACTS.md`.
+- **Project input:** materiales proporcionados en `project-resources/`; no equivalen a código/assets de producción ni se registran en `ARTIFACTS.md` por defecto.
 - **Project Artifacts:** entregables reales del proyecto, conservados en su ruta canónica.
 
 Rutas habituales de Project Artifacts:
 
 | Tipo | Ruta habitual |
 |---|---|
-| Contenido de páginas | [`content/pages/`](../content/README.md) |
-| Artículos | [`content/blog/`](../content/README.md) |
-| Diseño de páginas | [`design/pages/`](../design/README.md) |
-| Referencias visuales | [`design/references/`](../design/README.md) |
-| Especificaciones funcionales | [`docs/features/`](features/README.md) |
-| Arquitectura transversal | [`docs/architecture/`](architecture/README.md) |
-| ADRs | [`docs/decisions/`](decisions/README.md) |
-| Código | Carpetas definidas por el stack real del proyecto |
-| Pruebas | Estrategia del stack; consulta [`tests/README.md`](../tests/README.md) |
-| Handoff | Ruta acordada usando [`templates/handoff.md`](../templates/handoff.md) como base |
+| Contenido de páginas | `content/pages/` cuando se cree contenido y el stack no posea esa ruta |
+| Artículos | `content/blog/` cuando se creen artículos y el stack no posea esa ruta |
+| Diseño de páginas | `design/pages/` cuando exista un prototipo real |
+| Referencias visuales | `design/references/` cuando existan referencias versionadas |
+| Especificaciones funcionales | `docs/features/` cuando se persista una especificación |
+| Arquitectura transversal | `docs/architecture/` cuando exista documentación real |
+| ADRs | `docs/adr/` cuando exista un ADR formal |
+| Auditorías | `docs/audits/` cuando se solicite un informe durable |
+| Código y pruebas | Layout y harness nativos del stack real del proyecto |
+| Handoff | Ruta acordada usando `.blueprint/templates/handoff.md` como base |
 
-[`docs/ARTIFACTS.md`](ARTIFACTS.md) es el mapa de los entregables significativos que existen, no una copia de su contenido, un changelog ni un inventario del Blueprint. Se actualiza cuando un artefacto aparece, desaparece, cambia de ubicación, propósito o estado material.
+[`ARTIFACTS.md`](../../ARTIFACTS.md) es el mapa de los entregables significativos que existen, no una copia de su contenido, un changelog ni un inventario del Blueprint. Se actualiza cuando un artefacto aparece, desaparece, cambia de ubicación, propósito o estado material.
 
 ## Responsive y breakpoints
 
-En proyectos nuevos, `config/responsive.json` define la convención `fluid-first`: Base no usa media query y los breakpoints descendentes son correcciones condicionales, no pasos que deban aplicarse siempre.
+En proyectos nuevos, `.blueprint/config/responsive.json` define la convención `fluid-first`: Base no usa media query y los breakpoints descendentes son correcciones condicionales, no pasos que deban aplicarse siempre.
 
 En proyectos existentes prevalecen los breakpoints ya implementados. No se sustituyen por la configuración del Blueprint salvo que se apruebe una migración. Consulta [Configuración del Blueprint](CONFIGURATION.md#responsive).
 
