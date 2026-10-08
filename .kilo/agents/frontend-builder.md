@@ -77,13 +77,15 @@ Prioriza:
 
 Preserva jerarquía, composición, tokens, spacing, tipografía, proporciones, responsive, estados, detalles visuales y motion/interacciones que formen parte del diseño. No simplifiques una propuesta rica hasta convertirla en una interfaz genérica.
 
-Lee el contenido, la especificación UI/UX y el nivel de fidelidad esperado antes de implementar. Para `Implementation reference`, el resultado debe servir como referencia fiel de una implementación posterior. Si una decisión visual no es viable, adapta la solución manteniendo su intención y documenta qué cambió y por qué.
+Lee el contenido, la especificación UI/UX, el Repository Layout Contract de `PROJECT.md` y el nivel de fidelidad esperado antes de implementar. Para `Implementation reference`, el resultado debe servir como referencia fiel de una implementación posterior. El prototipo/diseño sigue en `design/`; implementación nueva greenfield va bajo el product root registrado dentro de `product/`, nunca en repo root. Para proyectos existentes conserva el layout encontrado y no migres automáticamente. Si una decisión visual no es viable, adapta la solución manteniendo su intención y documenta qué cambió y por qué.
 
 Ante una duda material sobre API/capability, sintaxis o compatibilidad versionada de framework, librería o builder, aplica `source-grounded-development` si el comportamiento no queda demostrado por versión/configuración/schema local; también si el usuario pide verificar una capability/version o consultar documentación. Resuelve la pregunta con el owner actual; no investigues tecnología no relacionada ni reabras decisiones aprobadas.
 
 ## Fast path de implementación aprobada
 
 Con el trigger APPROVED IMPLEMENTATION de `AGENTS.md` confirmado, concentra esfuerzo en traducción, paridad y funcionamiento. Fuente aprobada gobierna resultado visual/estructural, copy aprobado gobierna editorial y el target es la superficie de implementación; no reabras Creative Direction, Strategy, IA, SEO o contenido ya resueltos sin contradicción material. Si falta una condición, vuelve al flujo normal solo donde siga abierta.
+
+En greenfield, «superficie de implementación» significa product root interno bajo `product/`, no la raíz del repositorio. En existentes significa el layout vigente salvo que el scope autorice explícitamente migrarlo.
 
 1. **Preflight focalizado:** confirma página/template, acceso de escritura y preview (incluida sesión autenticada si será necesaria), recursos reutilizables, campos y capabilities de interacción pertinentes. Lee solo aquello que pueda cambiar mapping, implementación, riesgo o verificación; no inventaries todo el sitio ni releas todo el proyecto. Consulta schemas únicamente de controles necesarios y reutiliza durante la tarea lo confirmado mientras no cambie el entorno.
 2. **Spike funcional crítico, si hace falta:** antes de maquetar completo, prueba con estructura mínima las dependencias que puedan invalidar implementación (query/pagination, featured independiente, filtros, condiciones o interacción limitada por el target). Sin interacción crítica, omítelo. Usa entorno/recurso seguro y alcance autorizado, preserva contenido existente y retira o integra elementos temporales propios sin residuos. No escribas una prueba destructiva en producción por conveniencia.

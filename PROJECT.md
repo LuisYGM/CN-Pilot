@@ -35,7 +35,8 @@ Pending.
 > Registra ubicaciones observadas o decididas; estos campos no crean ni exigen carpetas.
 
 - **Baseline/layout policy:** Greenfield / Existing / Pending
-- **Raíz(es) del código/producto:** Pending
+- **Product container:** `product/` para implementación nueva greenfield bajo Blueprint 1.1.x; no se crea durante onboarding sin implementación.
+- **Product root(s) internos:** Pending / N/A
 - **Entry point(s):** Pending / N/A
 - **Raíces públicas o de assets estáticos (si el stack las define):** Pending / N/A
 - **Comandos de instalación/build/ejecución:** Pending / N/A
@@ -45,7 +46,9 @@ Pending.
 - **Project input:** `project-resources/`
 - **Project artifacts:** on-demand; índice `ARTIFACTS.md`
 
-En proyectos existentes se conserva el layout detectado. Para greenfield, registra la estructura nativa del stack antes de implementación material. Las carpetas de artefactos se crean solo cuando existan entregables reales.
+La raíz del repositorio no es el product root. En greenfield, cuando comienza la primera implementación real, crea `product/` y conserva dentro el layout nativo del stack; no impongas subcarpetas universales. No coloques archivos/código de producto en la raíz. En proyectos existentes registra el layout real, marca cualquier incumplimiento material del boundary y no muevas archivos durante onboarding. Una excepción de root requiere que una herramienta o hosting necesite materialmente esa ruta y debe documentarse aquí. Las carpetas de artefactos se crean solo cuando existan entregables reales.
+
+Ejemplos orientativos: sitio estático → container/root `product/`, entry `product/index.html`; Laravel → container/root `product/`, public root `product/public/`; plugin WordPress → container `product/`, root interno `product/<plugin-slug>/`. No son carpetas a crear durante onboarding.
 
 ## Modelo de entrega
 

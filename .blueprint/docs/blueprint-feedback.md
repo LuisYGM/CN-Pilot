@@ -816,7 +816,7 @@ Se creó `scripts/release-gate.mjs`, gate custom cuyo PASS/FAIL controla si se p
 Los proyectos creados desde el Blueprint necesitaban una superficie base para configurar deployment sin inventar desde cero el workflow ni habilitar una publicación antes de confirmar stack, destino y método.
 
 **Regla:**
-Cada proyecto hereda `.github/workflows/deploy.yml` manual y fail-closed. Su presencia no significa deployment configurado. Al confirmarse GitHub Actions como canal, especializa por proyecto el artifact/source, entorno, transporte, secretos referenciados, trigger y verificación/recuperación. Deployment automático requiere intención explícita.
+Cada proyecto hereda `.github/workflows/deploy.yml` manual y fail-closed. Su presencia no significa deployment configurado. `product/` es la superficie primaria candidata, no un target universal: el stack determina artifact/source (incluido build output/public root), entorno, transporte, exclusiones, secretos referenciados, trigger y verificación/recuperación. Deployment automático requiere intención explícita.
 
 **Límites:**
 El scaffold no publica ni contiene secretos/destinos. `/new-project` identifica intención pero no configura infraestructura. Sin método completo permanece manual y fail-closed. Stack-aware; BF-036 aplica a comportamiento/versiones externas y BF-039 a gates custom. En WordPress, `deploy-wordpress` mantiene el ownership de publicación y superficies persistentes.
@@ -836,10 +836,17 @@ Validated.
 El template mezclaba Core del Blueprint, contexto del proyecto, inputs y scaffolds de artefactos, además de crear directorios de salida mediante README-placeholder.
 
 **Regla:**
-El Core portable vive bajo `.blueprint/`; los archivos de contexto y `ARTIFACTS.md` permanecen en la raíz; `project-resources/` es input proporcionado, separado del producto. El Repository Layout Contract registra ubicaciones observadas/decididas sin imponer carpetas. Los artefactos del proyecto se crean on-demand y las carpetas de tests pertenecen al stack/harness.
+El Core portable vive bajo `.blueprint/`; los archivos de contexto y `ARTIFACTS.md` permanecen en la raíz; `project-resources/` es input proporcionado, separado del producto. El Repository Layout Contract registra `product/` como container greenfield canónico sin crearlo durante onboarding; el stack decide su layout interno y los campos de ubicación reflejan solo estado observado/decidido. Los artefactos del proyecto se crean on-demand y las carpetas de tests pertenecen al stack/harness.
 
 **Límites:**
 No cambiar el layout nativo de proyectos existentes, crear código ni migrar proyectos externos 1.0.1. `.env.example` no forma parte del template base. `.github/workflows/deploy.yml` permanece manual y fail-closed. Los materiales añadidos a `project-resources/` no se versionan ni despliegan automáticamente.
 
 **Estado:**
 Testing.
+
+**Resultado del primer retest (2026-10-08) — fallo de aceptación:**
+
+- Greenfield HTML/CSS/JavaScript: `project-resources/` funcionó correctamente y no se crearon carpetas ceremoniales.
+- Sin embargo, `index.html`, `styles.css` y `script.js` se implementaron directamente en la raíz del repositorio. Aunque técnicamente válido según el contrato anterior, contradice la organización deseada.
+- Se determinó que repo root no es product root y se establece `product/` como boundary canónico para implementación nueva greenfield. Se conserva el layout nativo del stack dentro de ese contenedor.
+- Pendiente repetir el retest para demostrar que el código nuevo queda bajo `product/` y que onboarding no crea el contenedor antes de empezar implementación.

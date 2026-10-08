@@ -55,4 +55,4 @@ Principios operativos:
 - [`.blueprint/docs/blueprint-feedback.md`](.blueprint/docs/blueprint-feedback.md): pruebas y limitaciones observadas.
 - [`.blueprint/CHANGELOG.md`](.blueprint/CHANGELOG.md): historial de versiones.
 
-El contexto de cada proyecto vive en `README.md`, `PROJECT.md`, `REQUIREMENTS.md`, `STATE.md`, `DECISIONS.md` y `ARTIFACTS.md`. Los entregables se conservan en sus rutas canónicas, creadas solo cuando se necesitan (por ejemplo `content/`, `design/` o `docs/`); el código sigue el layout nativo del stack.
+El contexto de cada proyecto vive en `README.md`, `PROJECT.md`, `REQUIREMENTS.md`, `STATE.md`, `DECISIONS.md` y `ARTIFACTS.md`. En greenfield, la implementación se aloja en `product/` cuando comienza el desarrollo y conserva dentro el layout nativo del stack; no se crea durante onboarding ni se colocan archivos de producto directamente en root. Los proyectos existentes preservan su layout observado. `content/`, `design/` y `docs/` son artefactos separados y on-demand; esta descripción no presupone que `product/` ya exista.

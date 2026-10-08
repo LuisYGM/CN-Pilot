@@ -69,7 +69,7 @@ Solo cuando el proyecto confirme GitHub Actions como modo de deployment, Dev Lea
 4. retirar el bloqueo únicamente después de revisar permisos, triggers, backup, smoke tests y rollback; habilitar triggers automáticos solo con intención explícita;
 5. validar el workflow sin ejecutar producción sin aprobación.
 
-Tener un entorno de producción no activa deployment ni justifica crear/configurar el workflow. No existe un método universal. La configuración debe publicar solo superficies de producto seleccionadas según el stack; `.blueprint/` y `project-resources/` quedan excluidos por defecto. Los recursos recibidos se integran/copian a ubicaciones de producción autorizadas si se necesitan.
+Tener un entorno de producción no activa deployment ni justifica crear/configurar el workflow. No existe un método universal. `product/` es la superficie primaria candidata de deployment, no un target universal: el stack determina artifact, public root, build output y exclusiones (por ejemplo, un build `dist/`, una app Laravel o un plugin pueden requerir destinos distintos). `.blueprint/`, `project-resources/` y artefactos internos `content/`, `design/`, `docs/` quedan fuera por defecto. Los recursos recibidos se integran/copian a ubicaciones internas del producto autorizadas si se necesitan; nunca se publica `project-resources/` por inferencia.
 
 ## Archivos locales y secretos
 

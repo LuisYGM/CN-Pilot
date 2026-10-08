@@ -95,6 +95,7 @@ El sistema separa tres capas:
 - **Blueprint Core:** infraestructura portable heredada bajo `.blueprint/`, además de rutas técnicas como `.kilo/`, `.github/`, `.kilocode/`, `AGENTS.md` y `kilo.jsonc`. Su inventario está en [`MANIFEST.md`](../MANIFEST.md).
 - **Project Context:** resumen y memoria breve que permiten continuar el trabajo: `README.md`, `PROJECT.md`, `REQUIREMENTS.md`, `STATE.md`, `DECISIONS.md` y `ARTIFACTS.md`.
 - **Project input:** materiales proporcionados en `project-resources/`; no equivalen a código/assets de producción ni se registran en `ARTIFACTS.md` por defecto.
+- **Product container:** `product/` es el contenedor canónico de implementación nueva greenfield bajo Blueprint 1.1.x; se crea al iniciar implementación, no durante onboarding. El stack define su estructura interna. En existentes se registra y preserva el layout observado.
 - **Project Artifacts:** entregables reales del proyecto, conservados en su ruta canónica.
 
 Rutas habituales de Project Artifacts:
@@ -109,7 +110,7 @@ Rutas habituales de Project Artifacts:
 | Arquitectura transversal | `docs/architecture/` cuando exista documentación real |
 | ADRs | `docs/adr/` cuando exista un ADR formal |
 | Auditorías | `docs/audits/` cuando se solicite un informe durable |
-| Código y pruebas | Layout y harness nativos del stack real del proyecto |
+| Código y pruebas | Código greenfield dentro de `product/`, con estructura/harness nativos del stack; en existentes, layout observado y preservado |
 | Handoff | Ruta acordada usando `.blueprint/templates/handoff.md` como base |
 
 [`ARTIFACTS.md`](../../ARTIFACTS.md) es el mapa de los entregables significativos que existen, no una copia de su contenido, un changelog ni un inventario del Blueprint. Se actualiza cuando un artefacto aparece, desaparece, cambia de ubicación, propósito o estado material.

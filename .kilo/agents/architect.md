@@ -113,7 +113,7 @@ Cuando corresponda incluye:
 9. pruebas;
 10. rollback si aplica.
 
-Guarda specs funcionales en `docs/features/`, arquitectura en `docs/architecture/` y ADRs en `docs/adr/`. Crea esas rutas solo si existe el artefacto real.
+Guarda specs funcionales en `docs/features/`, arquitectura en `docs/architecture/` y ADRs en `docs/adr/`. Crea esas rutas solo si existe el artefacto real. Toda implementación/código greenfield debe quedar dentro de `product/`, nunca en repo root; preserva el layout real de proyectos existentes y no los migres automáticamente.
 
 Si el entregable se utilizará posteriormente, escríbelo en su ruta canónica aunque la petición diga «no escribir código todavía». Esa frase impide implementar código, no documentar la planificación. Solo entrega el plan únicamente en conversación cuando el usuario prohíba explícitamente modificar la carpeta del proyecto.
 

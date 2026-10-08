@@ -30,6 +30,16 @@ Los MCPs y workflows de deployment no se activan por defecto. El ejemplo de conf
 
 `ARTIFACTS.md` existe como registro base vacío y se convierte en el mapa legible de Project Artifacts. Se organiza solo con categorías presentes y estados simples cuando aportan valor. Se actualiza ante altas, bajas, movimientos o cambios materiales de estado/propósito, no por cada edición interna. Funciona mediante inspección de archivos con o sin Git. No registra `.blueprint/` ni inputs recibidos en `project-resources/`.
 
+## Repository root y product boundary
+
+La raíz del repositorio Blueprint no es el product root. En proyectos gestionados bajo 1.1.x, toda implementación nueva greenfield vive bajo el contenedor `product/`; el stack decide su estructura nativa dentro, sin subcarpetas universales. `product/` puede no existir antes de la primera implementación real: `/new-project` registra el container pero nunca lo crea por sí solo. Al iniciar implementación se determina el stack/layout y entonces se crea. No se colocan `index.html`, código, hojas de estilo, scripts, manifiestos de paquetes, configuraciones de build ni directorios de producto directamente en repo root por conveniencia.
+
+La raíz queda reservada a infraestructura técnica requerida (`.blueprint/`, `.github/`, `.kilo/`, `.kilocode/`, `.vscode/`, archivos de configuración y control del Blueprint), Project Context (`README.md`, `PROJECT.md`, `REQUIREMENTS.md`, `STATE.md`, `DECISIONS.md`, `ARTIFACTS.md`) y carpetas semánticas del proyecto: `project-resources/`, `product/`, `content/`, `design/` y `docs/` cuando correspondan. `content/`, `design/` y `docs/` son outputs on-demand separados de `product/`; nombres iguales dentro de `product/` pertenecen al stack y no colisionan con ellos.
+
+Dentro de `product/`, la estructura depende del stack: puede alojar directamente un sitio estático o un proyecto framework, o contener una raíz interna como un plugin/theme WordPress. El Repository Layout Contract de `PROJECT.md` registra por separado Product container, Product root(s) internos, entry points, public/static roots, comandos, artifact/build output, tests/harness y rutas generated/cache. Registra solo ubicaciones observadas/decididas; no exige crear carpetas. Solo una necesidad material demostrada de tooling/hosting puede justificar archivos productivos en repo root; documenta la ruta y razón en `PROJECT.md`, no inventes excepciones por costumbre.
+
+Los proyectos existentes se preservan. `/new-project` registra el layout real con baseline `Existing`, anota incumplimiento material del boundary si aplica y no mueve archivos. Migrar un proyecto existente a `product/` requiere una tarea explícita y evaluación de paths, deployment, document root, tooling, imports, CI y hosting. `product/` nunca aloja Core del Blueprint ni inputs originales de cliente; recursos incorporados conscientemente se copian/adaptan a las rutas nativas del producto y este no depende directamente de `project-resources/`.
+
 ## Convención de idioma
 
 La estructura técnica permanece en inglés: archivos, carpetas, agentes, skills, workflows, profiles, capabilities, claves internas, tecnologías y valores consumidos por el sistema. La documentación y el contenido destinados a personas se generan en español por defecto. Si un proyecto define explícitamente otro idioma de trabajo, se adapta el contenido humano sin traducir identificadores técnicos.
@@ -323,7 +333,7 @@ Considerar según aplique: sanitización, escaping, auth, capabilities, nonce/CS
 
 `Content → Design → Frontend/Prototype → Handoff → CMS Integration → Deployment`
 
-Las fases son puntos posibles de entrega, no una secuencia obligatoria. Un flujo puede empezar o terminar en cualquiera de ellas y omitir las demás. En sistemas existentes se inspecciona primero la implementación actual y solo se activan las fases necesarias. El destino puede variar por entregable dentro del mismo proyecto.
+Las fases son puntos posibles de entrega, no una secuencia obligatoria. Un flujo puede empezar o terminar en cualquiera de ellas y omitir las demás. En sistemas existentes se inspecciona primero la implementación actual y solo se activan las fases necesarias. El destino puede variar por entregable dentro del mismo proyecto. En greenfield, diseño/prototipos permanecen en `design/` y la implementación va bajo `product/`; la raíz del repositorio no se usa como product root.
 
 ## Principio de contexto
 

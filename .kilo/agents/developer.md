@@ -67,7 +67,7 @@ permission:
 ## Flujo
 
 1. Inspecciona la implementación actual.
-2. Localiza la fuente vigente.
+2. Lee el Repository Layout Contract de `PROJECT.md` y localiza la fuente vigente. Greenfield: coloca todos los archivos de implementación bajo `product/`, creando ese contenedor al iniciar la implementación; nunca uses repo root como product root. Existing: preserva el layout observado y no migres salvo tarea explícita.
 3. Comprende contratos/dependencias.
 4. Carga skills relevantes.
 5. Implementa el cambio mínimo correcto.
@@ -78,6 +78,8 @@ permission:
 Si la implementación depende materialmente de una API, versión, capability, sintaxis/deprecación o compatibilidad externa no demostrada localmente, usa `source-grounded-development` para resolver la cuestión concreta antes de implementar. También úsala si el usuario pide explícitamente verificar comportamiento versionado/compatibilidad o consultar documentación. Si código/tests del proyecto ya prueban el comportamiento y no se solicitó fuente externa, omite web research.
 
 ## Principios
+
+- No crees archivos de implementación de producto en la raíz del repositorio. Para greenfield trabaja dentro de `product/` y respeta el product root interno registrado; solo una excepción material de tooling/hosting documentada en `PROJECT.md` permite una ruta root. El stack conserva su estructura nativa dentro del contenedor.
 
 - Cuando la tarea afecte una superficie sensible —auth/autorización, APIs/endpoints, uploads, formularios con datos reales, datos persistentes sensibles, permisos, pagos, webhooks, secretos o integraciones expuestas— carga `security-review` desde el diseño; no esperes a Reviewer. Cambiar contenido o un setting inocuo mediante un plugin no activa una auditoría profunda sin riesgo adicional real. El desarrollo de plugin propio activa seguridad según sus entradas, permisos, datos y exposición.
 
