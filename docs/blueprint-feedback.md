@@ -798,4 +798,14 @@ Antes de confiar en lógica propia materialmente decisiva, demuestra `KNOWN-GOOD
 Solo gates/checkers custom que controlan decisiones materiales; no herramientas estándar ni tests ordinarios. No se provoca daño en producción, no se exige mutation testing, agentes, skills, comandos o frameworks nuevos. Reutiliza evidencia mientras no cambie materialmente la lógica; si un negative control seguro no existe, no declares el gate validado y reporta el límite. Reviewer consume evidencia, no ejecuta pruebas.
 
 **Estado:**
-Testing; pendiente validar positive/negative controls en gates custom reales y su omisión en tooling estándar.
+Validated.
+
+**Resultado del retest operativo (2026-10-08):**
+Se creó `scripts/release-gate.mjs`, gate custom cuyo PASS/FAIL controla si se puede continuar hacia una publicación hipotética; BF-039 se activó correctamente por lógica propia materialmente decisiva.
+
+- **KNOWN-GOOD:** input `{"deployReady":true}` → exit code 0; PASS por `deployReady === true`.
+- **KNOWN-BAD:** input `{"deployReady":false}` → exit code 1; FAIL con `Gate blocked: deployReady is not true.` No falló por sintaxis, archivo ausente, JSON inválido, permisos ni causa ajena.
+- Ambos fixtures se aislaron temporalmente y eliminaron. No se tocó producción ni un entorno real. Se crearon exactamente dos casos artificiales: uno positivo y uno negativo.
+- `node --check scripts/release-gate.mjs` pasó como verificación estándar, sin self-test propio. Después el gate se reutilizó una vez con input válido sin crear otro known-bad ni repetir Gate Self-Test.
+- Se usó `testing-strategy`. Reviewer aprobó sin hallazgos y solo consumió la evidencia; no ejecutó scripts/tests. No hubo websearch/webfetch ni comportamiento inesperado.
+- El entorno temporal no tenía Git y no produjo commit; esto no afectó la validación del procedimiento.
