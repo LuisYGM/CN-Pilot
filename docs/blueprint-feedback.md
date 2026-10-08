@@ -757,4 +757,11 @@ Solo findings `HIGH`/`CRITICAL` realmente materiales, discutibles y no demostrad
 No es gate universal: no verifica findings ya demostrados, `MEDIUM`/`LOW`, notas ni mejoras. Dev Lead provee diff, criterios y evidencia neutral; verifier no hace review completa, no busca findings adicionales ni implementa. `UNPROVEN` no equivale a confirmado y no abre ciclos; Reviewer mantiene permisos actuales y la QA especializada conserva su owner.
 
 **Estado:**
-Testing; pendiente observar un caso operativo que cumpla el trigger y uno que deba omitirse.
+Validated.
+
+**Resultado del retest operativo (2026-10-08):**
+
+- **Finding A — HIGH, material y discutible:** Dev Lead activó BF-037 y abrió un task fresco de Reviewer. Resultado `REFUTED`: `writeDraft()` preservaba correctamente campos existentes mediante merge. Sin capabilities prohibidas ni búsqueda de findings adicionales.
+- **Finding B — HIGH, material y discutible:** se abrió un segundo task fresco e independiente. Resultado `CONFIRMED`: `replaceSnapshot()` reemplazaba el registro completo y provocaba pérdida de campos. Sin capabilities prohibidas ni reutilización indebida de la conclusión/contexto de A.
+- **Finding C — LOW:** BF-037 se omitió correctamente; no se abrió verifier.
+- Hubo exactamente dos Finding Verification tasks; no se utilizó Agent Manager ni hubo ciclos adicionales de Reviewer. `REFUTED` y `CONFIRMED` llevaron a decisiones distintas. El retest no inició desarrollo ni regresión; se eliminaron el fixture temporal y demás archivos temporales. El entorno de prueba no tenía Git, así que no hubo working-tree check, sin afectar la validación del procedimiento.
