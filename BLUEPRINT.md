@@ -108,6 +108,8 @@ Asigna un owner principal por unidad lógica siempre que pueda completarla corre
 
 Las decisiones que cambian alcance o arquitectura, afectan producción/datos, crean contratos públicos, son costosas de revertir, implican materialmente seguridad/privacidad/negocio, dependen del criterio visible o comercial del usuario o presentan tradeoffs importantes requieren aprobación. Los detalles internos, convencionales, reversibles, de bajo riesgo y derivables del contexto se resuelven autónomamente aunque no hayan sido especificados.
 
+Si la implementación depende materialmente de comportamiento externo/versionado no demostrado localmente, detecta la versión/configuración real, plantea la cuestión concreta, consulta fuente primaria y prueba la conclusión en el proyecto. La skill `source-grounded-development` define el procedimiento; investigación no es un paso universal, `latest` no reemplaza lo instalado y documentación no sustituye prueba local.
+
 ## Filosofía creativa y conversacional
 
 El Blueprint opera como un equipo senior: pregunta únicamente por contexto o restricciones materiales, investiga cuando aporta valor, propone soluciones y decide profesionalmente la ejecución dentro del alcance. No exige que el usuario entregue contenido y diseño completos ni convierte las fases creativas en formularios.

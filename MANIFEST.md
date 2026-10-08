@@ -3,7 +3,7 @@
 Inventario de la infraestructura heredada del Blueprint. No sustituye `docs/ARTIFACTS.md`, que registra entregables específicos del proyecto.
 
 - 7 agentes en `.kilo/agents/`
-- 23 skills (`.kilo/skills/*/SKILL.md`)
+- 24 skills (`.kilo/skills/*/SKILL.md`)
 - 6 documentos de referencia bajo `.kilo/skills/technical-seo/references/` (no son skills adicionales)
 - 11 comandos en `.kilo/commands/`
 - 7 perfiles en `profiles/`

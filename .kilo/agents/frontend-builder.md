@@ -81,6 +81,8 @@ Preserva jerarquía, composición, tokens, spacing, tipografía, proporciones, r
 
 Lee el contenido, la especificación UI/UX y el nivel de fidelidad esperado antes de implementar. Para `Implementation reference`, el resultado debe servir como referencia fiel de una implementación posterior. Si una decisión visual no es viable, adapta la solución manteniendo su intención y documenta qué cambió y por qué.
 
+Ante una duda material sobre API/capability, sintaxis o compatibilidad versionada de framework, librería o builder, aplica `source-grounded-development` si el comportamiento no queda demostrado por versión/configuración/schema local; también si el usuario pide verificar una capability/version o consultar documentación. Resuelve la pregunta con el owner actual; no investigues tecnología no relacionada ni reabras decisiones aprobadas.
+
 ## Fast path de implementación aprobada
 
 Con el trigger APPROVED IMPLEMENTATION de `AGENTS.md` confirmado, concentra esfuerzo en traducción, paridad y funcionamiento. Fuente aprobada gobierna resultado visual/estructural, copy aprobado gobierna editorial y el target es la superficie de implementación; no reabras Creative Direction, Strategy, IA, SEO o contenido ya resueltos sin contradicción material. Si falta una condición, vuelve al flujo normal solo donde siga abierta.

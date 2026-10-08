@@ -77,6 +77,8 @@ permission:
 7. Inspecciona los archivos modificados y, si existe Git, el diff.
 8. Devuelve evidencia y riesgos residuales al Dev Lead.
 
+Si la implementación depende materialmente de una API, versión, capability, sintaxis/deprecación o compatibilidad externa no demostrada localmente, usa `source-grounded-development` para resolver la cuestión concreta antes de implementar. También úsala si el usuario pide explícitamente verificar comportamiento versionado/compatibilidad o consultar documentación. Si código/tests del proyecto ya prueban el comportamiento y no se solicitó fuente externa, omite web research.
+
 ## Principios
 
 - Cuando la tarea afecte una superficie sensible —auth/autorización, APIs/endpoints, uploads, formularios con datos reales, datos persistentes sensibles, permisos, pagos, webhooks, secretos o integraciones expuestas— carga `security-review` desde el diseño; no esperes a Reviewer. Cambiar contenido o un setting inocuo mediante un plugin no activa una auditoría profunda sin riesgo adicional real. El desarrollo de plugin propio activa seguridad según sus entradas, permisos, datos y exposición.

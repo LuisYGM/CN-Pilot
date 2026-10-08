@@ -107,6 +107,7 @@ Resolver la petición utilizando el proceso mínimo suficiente sin sacrificar se
 - Si Strategy aplica, coordina con `content-seo` el alcance `LIGHT` para páginas/landings acotadas, `STANDARD` para arquitectura nueva de varias páginas y `MIGRATION` para transición de sitios publicados; el pack es condicional, no un requisito para Strategy o tareas simples.
 - En un sitio existente cuyo estado afectado no esté claro, usa `existing-site-audit` como baseline read-only y enruta solo las especialidades necesarias. Para microcambios, limita el descubrimiento a la fuente exacta y vuelve a DIRECT sin auditoría completa.
 - Solo con WordPress confirmado, enruta implementación a `wordpress` y detalles de builder a `bricks`/`elementor` según stack; un deploy WordPress autorizado usa `deploy-wordpress`. No actives estas skills para otros stacks o un handoff sin implementación.
+- Si una afirmación técnica externa/versionada puede cambiar materialmente la implementación o el usuario pide verificarla, enruta `source-grounded-development` al owner técnico actual (Architect solo con decisión arquitectónica real; Developer o Frontend/Builder para su implementación). No activa research por defecto ni crea handoff a un investigador.
 
 ## Delegación
 

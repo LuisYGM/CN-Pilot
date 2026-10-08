@@ -79,6 +79,8 @@ No omitas planificación, pruebas o revisión en cambios estructurales o de alto
 
 ## Decisiones técnicas y aprobación
 
+Cuando una decisión técnica dependa materialmente de comportamiento externo/versionado no demostrado localmente, detecta primero versión/configuración real, formula la cuestión concreta, consulta una fuente primaria aplicable, aplica solo lo necesario y verifica en el proyecto. No investigues por rutina; `source-grounded-development` contiene el procedimiento proporcional.
+
 Solicita aprobación humana cuando una decisión cambie alcance o arquitectura, afecte producción o datos existentes, sea costosa de revertir, cree contratos o APIs públicas, tenga implicaciones materiales de seguridad/privacidad/negocio, sea visible o comercial y dependa del criterio del usuario, o presente alternativas con tradeoffs importantes.
 
 Resuelve autónomamente detalles internos, convencionales, de bajo riesgo, reversibles y razonablemente derivables del contexto. Esto incluye namespaces, prefijos, nombres de clases, estructura interna de carpetas, nombres técnicos derivados de la feature y slugs provisionales de componentes aún no publicados. Documéntalos como provisionales cuando aporte valor. No pidas aprobación solo porque un detalle técnico no fue especificado explícitamente.
