@@ -15,8 +15,8 @@ Aplica a sitios nuevos de varias páginas, cambios importantes de oferta o conve
 
 Elige explícitamente el alcance de trabajo según las decisiones y el riesgo, no por la plataforma:
 
-- **LIGHT:** landing, microsite pequeño, página individual u oferta/arquitectura ya decididas. Resume `audience`, `objective`, `conversion`, `search intent`, `page structure` y dirección de tema/keyword directamente en el artefacto de contenido. No crees `content/strategy/` por rutina.
-- **STANDARD:** greenfield de varias páginas, web corporativa nueva, varias URLs SEO, arquitectura/navegación abierta o nueva estructura editorial. Cuando facilite aprobación y handoff, crea un pack selectivo bajo `content/strategy/`.
+- **LIGHT:** landing, microsite pequeño, página individual u oferta/arquitectura ya decididas. Resume `audience`, `objective`, `conversion`, `search intent`, `page structure` y dirección de tema/keyword directamente en el artefacto de contenido. No crees `project-artifacts/content/strategy/` por rutina.
+- **STANDARD:** greenfield de varias páginas, web corporativa nueva, varias URLs SEO, arquitectura/navegación abierta o nueva estructura editorial. Cuando facilite aprobación y handoff, crea un pack selectivo bajo `project-artifacts/content/strategy/`.
 - **MIGRATION:** rediseño de sitio publicado, migración, consolidación o cambio significativo de arquitectura/URLs. Empieza por el estado actual y su evidencia antes de proponer destino. Usa `existing-site-audit` como baseline de solo lectura si el estado afectado no está claro; no dupliques su discovery.
 
 `STANDARD` y `MIGRATION` pueden resolverse en la sesión si no se necesita un entregable reutilizable. El pack no es requisito para toda Strategy ni para landings. No bloquees por falta de datos SEO: avanza con hipótesis marcadas y `SEARCH EVIDENCE: UNVERIFIED` cuando corresponda.
@@ -58,7 +58,7 @@ El análisis del plugin SEO de BF-020 valida metadata y checks operativos, **no*
 ## Salida y fuentes de verdad
 
 - **LIGHT:** integra audiencia, objetivo, conversión, intención/tema y estructura en el brief de contenido; no crea un pack.
-- **STANDARD:** un pack reutilizable es opcional y selectivo en `content/strategy/`. Los artefactos responden preguntas distintas y no son un esquema obligatorio:
+- **STANDARD:** un pack reutilizable es opcional y selectivo en `project-artifacts/content/strategy/`. Los artefactos responden preguntas distintas y no son un esquema obligatorio:
   - `STRATEGY-BRIEF.md`: decisiones estratégicas que gobiernan arquitectura (objetivo, oferta, audiencias/necesidades, diferenciadores y pruebas disponibles, conversiones, oportunidad/prioridades, restricciones, supuestos y pendientes). No es auditoría empresarial ni duplica `PROJECT.md`.
   - `SITEMAP.md`: jerarquía de información propuesta, razón de cada página y relaciones; no es un inventario de URLs ni una lista de keywords.
   - `URL-MAP.csv`: matriz operacional de páginas/URLs, parent, propósito, audiencia, intención, business goal/conversión, tema, prioridad y estado. Incluye solo columnas útiles.
@@ -68,9 +68,9 @@ El análisis del plugin SEO de BF-020 valida metadata y checks operativos, **no*
 
 Los templates en `.blueprint/templates/strategy/` son estructuras iniciales opcionales: elimina secciones/columnas sin valor. Estados `DRAFT`, `APPROVED` y `SUPERSEDED` se usan solo cuando hagan falta. No cambies silenciosamente sitemap, URL map o keyword ownership aprobados: presenta evidencia y cambio material, solicita aprobación y luego actualiza.
 
-Tras aprobar Strategy, `content-page` y `content-blog-seo` pueden usar el pack para producir copy en `content/pages/` y `content/blog/`; no muevas copy final a `content/strategy/`. Mantén BF-018: `Final Content → Creative Direction → Prototype`. `technical-seo` recibe solo implicaciones aprobadas de URL, canonical, redirects, indexación, sitemap, schema ownership, paginación e idiomas. Strategy no implementa SEO técnico.
+Tras aprobar Strategy, `content-page` y `content-blog-seo` pueden usar el pack para producir copy en `project-artifacts/content/pages/` y `project-artifacts/content/blog/`; no muevas copy final a `project-artifacts/content/strategy/`. Mantén BF-018: `Final Content → Creative Direction → Prototype`. `technical-seo` recibe solo implicaciones aprobadas de URL, canonical, redirects, indexación, sitemap, schema ownership, paginación e idiomas. Strategy no implementa SEO técnico. En proyectos existentes preserva el layout editorial/documental vigente.
 
-Distribuye fuentes: `PROJECT.md` → facts about the project; `REQUIREMENTS.md` → scope and acceptance; `content/strategy/` → approved editorial/search architecture when created; `content/pages/` y `content/blog/` → copy; `docs/architecture/` → technical architecture. No crees un documento obligatorio adicional ni registres keywords individualmente en `DECISIONS.md`. Si aparece un entregable significativo, `dev-lead` mantiene `ARTIFACTS.md` conforme a sus reglas; una respuesta acotada puede quedarse en la sesión.
+Distribuye fuentes: `PROJECT.md` → facts about the project; `REQUIREMENTS.md` → scope and acceptance; `project-artifacts/content/strategy/` → approved editorial/search architecture when created; `project-artifacts/content/pages/` y `project-artifacts/content/blog/` → copy; `project-artifacts/docs/architecture/` → technical architecture. No crees un documento obligatorio adicional ni registres keywords individualmente en `DECISIONS.md`. Si aparece un entregable significativo, `dev-lead` mantiene `ARTIFACTS.md` conforme a sus reglas; una respuesta acotada puede quedarse en la sesión.
 
 ## Comprobación de cierre
 

@@ -14,7 +14,7 @@ description: Investigar, estructurar, redactar y optimizar artículos de blog co
 7. Usa headings descriptivos, metadata, slug, CTA y enlaces internos reales.
 8. Mantén voz de marca y aporta una perspectiva útil, no contenido de relleno.
 9. En proyectos ficticios/exploratorios, desarrolla contenido conceptual completo solo con autorización.
-10. Guarda la fuente editable en `content/blog/`; si los permisos lo impiden, reporta el bloqueo y no la reubiques.
+10. En greenfield guarda la fuente editable en `project-artifacts/content/blog/` y crea la ruta solo con el primer artefacto. En proyectos existentes conserva el destino vigente; si los permisos lo impiden, reporta el bloqueo y no la reubiques.
 
 En artículos, asigna Featured Image, excerpt, categoría y metadata SEO a sus campos disponibles, no al body como parche de presentación. Una imagen inline debe aportar valor editorial independiente. Aplica el ownership check de `AGENTS.md` si el template no muestra un dato persistido; no compenses ese fallo reescribiendo el artículo.
 

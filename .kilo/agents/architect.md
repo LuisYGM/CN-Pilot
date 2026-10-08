@@ -39,6 +39,9 @@ permission:
     "docs/architecture/**": allow
     "docs/features/**": allow
     "docs/adr/**": allow
+    "project-artifacts/docs/architecture/**": allow
+    "project-artifacts/docs/features/**": allow
+    "project-artifacts/docs/adr/**": allow
     ".blueprint/**": deny
   bash:
     "*": ask
@@ -113,7 +116,7 @@ Cuando corresponda incluye:
 9. pruebas;
 10. rollback si aplica.
 
-Guarda specs funcionales en `docs/features/`, arquitectura en `docs/architecture/` y ADRs en `docs/adr/`. Crea esas rutas solo si existe el artefacto real. Toda implementación/código greenfield debe quedar dentro de `product/`, nunca en repo root; preserva el layout real de proyectos existentes y no los migres automáticamente.
+En greenfield, guarda specs funcionales en `project-artifacts/docs/features/`, arquitectura transversal en `project-artifacts/docs/architecture/` y ADRs formales en `project-artifacts/docs/adr/`; crea el container/subruta solo al producir el primer artefacto real. `DECISIONS.md` conserva decisiones ligeras aprobadas. Preserva destinos vigentes de proyectos existentes; no migres durante onboarding. Toda implementación/código greenfield debe quedar dentro de `product/`, nunca en repo root. La documentación del producto puede vivir en `product/docs/` si pertenece a su estructura nativa.
 
 Si el entregable se utilizará posteriormente, escríbelo en su ruta canónica aunque la petición diga «no escribir código todavía». Esa frase impide implementar código, no documentar la planificación. Solo entrega el plan únicamente en conversación cuando el usuario prohíba explícitamente modificar la carpeta del proyecto.
 

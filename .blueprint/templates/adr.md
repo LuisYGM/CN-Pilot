@@ -3,7 +3,7 @@
 - **Estado:** Accepted
 - **Fecha:** YYYY-MM-DD
 
-> Crear un ADR solo cuando la decisión esté aprobada o suficientemente establecida. Mantener las recomendaciones `PROVISIONAL` en `docs/architecture/`.
+> Crear un ADR solo cuando la decisión esté aprobada o suficientemente establecida. En greenfield, mantener recomendaciones `PROVISIONAL` en `project-artifacts/docs/architecture/`; en existentes preservar el destino vigente. `product/docs/` es documentación interna del producto, no ADR de proyecto.
 
 ## Contexto
 

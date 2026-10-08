@@ -34,7 +34,7 @@ Consulta solo las necesarias, no todo el directorio:
 | Idiomas/mercados, canonical y hreflang | [SEO internacional](references/international-seo.md) |
 | Verificación de transición integrada al deploy | [Migraciones](references/migrations.md) |
 
-Las herramientas, datos externos y validadores son opcionales; no inventes observaciones si faltan. Comprueba documentación oficial vigente durante la ejecución cuando elegibilidad, propiedades o comportamiento del buscador puedan cambiar. Los informes durables pueden guardarse en `docs/audits/<scope>/`; no crean memoria SEO ni otro lifecycle. Los templates en `.blueprint/templates/seo/` son opcionales y no una checklist universal.
+Las herramientas, datos externos y validadores son opcionales; no inventes observaciones si faltan. Comprueba documentación oficial vigente durante la ejecución cuando elegibilidad, propiedades o comportamiento del buscador puedan cambiar. En greenfield, los informes durables pueden guardarse en `project-artifacts/docs/audits/<scope>/`; preserva el destino documental en existentes. No crean memoria SEO ni otro lifecycle. Crea la ruta solo al materializar el informe real. Los templates en `.blueprint/templates/seo/` son opcionales y no una checklist universal.
 
 Si existe un plugin SEO activo y expone capabilities de análisis, usa sus checks y recomendaciones como QA operativo: inspect current SEO → define target keyword → write authorized metadata → run plugin analysis → inspect failed checks → improve allowed fields → re-run analysis → report remaining checks. Prioriza la puntuación práctica más alta sin keyword stuffing ni deterioro de contenido o UX. Un score no es una métrica absoluta.
 

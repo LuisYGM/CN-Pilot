@@ -79,7 +79,7 @@ Si la implementación depende materialmente de una API, versión, capability, si
 
 ## Principios
 
-- No crees archivos de implementación de producto en la raíz del repositorio. Para greenfield trabaja dentro de `product/` y respeta el product root interno registrado; solo una excepción material de tooling/hosting documentada en `PROJECT.md` permite una ruta root. El stack conserva su estructura nativa dentro del contenedor.
+- No crees archivos de implementación de producto en la raíz del repositorio. Para greenfield trabaja dentro de `product/` y respeta el product root interno registrado; solo una excepción material de tooling/hosting documentada en `PROJECT.md` permite una ruta root. El stack conserva su estructura nativa dentro del contenedor. Puedes leer `project-artifacts/content/`, `project-artifacts/design/` y `project-artifacts/docs/` (o sus equivalentes registrados en proyectos existentes) como fuentes; no modifiques outputs de otro owner por rutina ni uses `project-artifacts/` como source root/runtime. En existentes preserva el layout registrado.
 
 - Cuando la tarea afecte una superficie sensible —auth/autorización, APIs/endpoints, uploads, formularios con datos reales, datos persistentes sensibles, permisos, pagos, webhooks, secretos o integraciones expuestas— carga `security-review` desde el diseño; no esperes a Reviewer. Cambiar contenido o un setting inocuo mediante un plugin no activa una auditoría profunda sin riesgo adicional real. El desarrollo de plugin propio activa seguridad según sus entradas, permisos, datos y exposición.
 

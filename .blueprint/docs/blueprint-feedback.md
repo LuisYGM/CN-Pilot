@@ -836,7 +836,7 @@ Validated.
 El template mezclaba Core del Blueprint, contexto del proyecto, inputs y scaffolds de artefactos, además de crear directorios de salida mediante README-placeholder.
 
 **Regla:**
-El Core portable vive bajo `.blueprint/`; los archivos de contexto y `ARTIFACTS.md` permanecen en la raíz; `project-resources/` es input proporcionado, separado del producto. El Repository Layout Contract registra `product/` como container greenfield canónico sin crearlo durante onboarding; el stack decide su layout interno y los campos de ubicación reflejan solo estado observado/decidido. Los artefactos del proyecto se crean on-demand y las carpetas de tests pertenecen al stack/harness.
+Fronteras greenfield 1.1.0: `.blueprint/` → sistema; `project-resources/` → inputs; `project-artifacts/` → outputs auxiliares; `product/` → implementación; archivos canónicos de raíz → Project Context/control. `project-artifacts/` y `product/` son on-demand y se materializan al aparecer su primer output/implementación, no durante onboarding. El stack define el layout interno de `product/`; los artifacts auxiliares se organizan en `project-artifacts/content/`, `project-artifacts/design/`, `project-artifacts/docs/`. `ARTIFACTS.md` indexa entregables significativos de todo el proyecto, no solo los ubicados en el container de artifacts. Las carpetas de tests pertenecen al stack/harness.
 
 **Límites:**
 No cambiar el layout nativo de proyectos existentes, crear código ni migrar proyectos externos 1.0.1. `.env.example` no forma parte del template base. `.github/workflows/deploy.yml` permanece manual y fail-closed. Los materiales añadidos a `project-resources/` no se versionan ni despliegan automáticamente.
@@ -849,4 +849,6 @@ Testing.
 - Greenfield HTML/CSS/JavaScript: `project-resources/` funcionó correctamente y no se crearon carpetas ceremoniales.
 - Sin embargo, `index.html`, `styles.css` y `script.js` se implementaron directamente en la raíz del repositorio. Aunque técnicamente válido según el contrato anterior, contradice la organización deseada.
 - Se determinó que repo root no es product root y se establece `product/` como boundary canónico para implementación nueva greenfield. Se conserva el layout nativo del stack dentro de ese contenedor.
+- También se detectó que outputs auxiliares no deben dispersarse como `content/`, `design/` o `docs/` top-level: pertenecen a `project-artifacts/` para greenfield.
 - Pendiente repetir el retest para demostrar que el código nuevo queda bajo `product/` y que onboarding no crea el contenedor antes de empezar implementación.
+- Pendiente nuevo retest greenfield con los boundaries definitivos: inputs → `project-resources/`, supporting outputs → `project-artifacts/`, implementación → `product/` y Project Context/control → root.

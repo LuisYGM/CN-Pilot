@@ -90,30 +90,33 @@ Estos escenarios no activan automáticamente todas las fases ni capacidades. El 
 
 ## Dónde vive cada cosa
 
-El sistema separa tres capas:
+El sistema separa las capas de infraestructura, contexto, inputs, outputs auxiliares y producto:
 
 - **Blueprint Core:** infraestructura portable heredada bajo `.blueprint/`, además de rutas técnicas como `.kilo/`, `.github/`, `.kilocode/`, `AGENTS.md` y `kilo.jsonc`. Su inventario está en [`MANIFEST.md`](../MANIFEST.md).
 - **Project Context:** resumen y memoria breve que permiten continuar el trabajo: `README.md`, `PROJECT.md`, `REQUIREMENTS.md`, `STATE.md`, `DECISIONS.md` y `ARTIFACTS.md`.
 - **Project input:** materiales proporcionados en `project-resources/`; no equivalen a código/assets de producción ni se registran en `ARTIFACTS.md` por defecto.
 - **Product container:** `product/` es el contenedor canónico de implementación nueva greenfield bajo Blueprint 1.1.x; se crea al iniciar implementación, no durante onboarding. El stack define su estructura interna. En existentes se registra y preserva el layout observado.
-- **Project Artifacts:** entregables reales del proyecto, conservados en su ruta canónica.
+- **Project Artifacts:** outputs auxiliares reales bajo `project-artifacts/` en greenfield. El container puede no existir; se crea con el primer artefacto, no durante onboarding. Documentación de producto dentro de `product/docs/` sigue perteneciendo al producto.
 
 Rutas habituales de Project Artifacts:
 
 | Tipo | Ruta habitual |
 |---|---|
-| Contenido de páginas | `content/pages/` cuando se cree contenido y el stack no posea esa ruta |
-| Artículos | `content/blog/` cuando se creen artículos y el stack no posea esa ruta |
-| Diseño de páginas | `design/pages/` cuando exista un prototipo real |
-| Referencias visuales | `design/references/` cuando existan referencias versionadas |
-| Especificaciones funcionales | `docs/features/` cuando se persista una especificación |
-| Arquitectura transversal | `docs/architecture/` cuando exista documentación real |
-| ADRs | `docs/adr/` cuando exista un ADR formal |
-| Auditorías | `docs/audits/` cuando se solicite un informe durable |
+| Contenido de páginas | `project-artifacts/content/pages/` cuando se cree contenido en greenfield |
+| Artículos | `project-artifacts/content/blog/` cuando se creen artículos en greenfield |
+| Estrategia editorial/search | `project-artifacts/content/strategy/` cuando exista un pack reutilizable |
+| Diseño de páginas | `project-artifacts/design/pages/` cuando exista un prototipo real |
+| Referencias visuales | `project-artifacts/design/references/` cuando existan referencias versionadas |
+| Especificaciones funcionales | `project-artifacts/docs/features/` cuando se persista una especificación |
+| Arquitectura transversal | `project-artifacts/docs/architecture/` cuando exista documentación real |
+| ADRs | `project-artifacts/docs/adr/` cuando exista un ADR formal |
+| Auditorías | `project-artifacts/docs/audits/` cuando se solicite un informe durable |
 | Código y pruebas | Código greenfield dentro de `product/`, con estructura/harness nativos del stack; en existentes, layout observado y preservado |
-| Handoff | Ruta acordada usando `.blueprint/templates/handoff.md` como base |
+| Handoff | Entregable auxiliar en `project-artifacts/` cuando corresponda, con `.blueprint/templates/handoff.md` como base; respeta destinos acordados |
 
-[`ARTIFACTS.md`](../../ARTIFACTS.md) es el mapa de los entregables significativos que existen, no una copia de su contenido, un changelog ni un inventario del Blueprint. Se actualiza cuando un artefacto aparece, desaparece, cambia de ubicación, propósito o estado material.
+[`ARTIFACTS.md`](../../ARTIFACTS.md) es el mapa de entregables significativos de todo el proyecto, no solo de `project-artifacts/`: puede incluir implementación bajo `product/` cuando aporte valor y entregables excepcionales. No incluye Core, Project Context, inputs originales, caches, dependencias ni placeholders. No es una copia del contenido, changelog ni inventario del Blueprint; se actualiza ante altas/bajas, movimientos o cambios materiales de propósito/estado.
+
+En proyectos existentes, las rutas de contenido/diseño/documentación ya vigentes se preservan durante onboarding; no se reorganizan bajo `project-artifacts/` sin una tarea explícita.
 
 ## Responsive y breakpoints
 

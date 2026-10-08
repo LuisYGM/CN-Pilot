@@ -44,9 +44,10 @@ Pending.
 - **Ubicación y harness de tests:** Pending / N/A
 - **Rutas generadas/cache e ignore:** Pending
 - **Project input:** `project-resources/`
+- **Project artifacts container:** `project-artifacts/` (on-demand; may not exist yet)
 - **Project artifacts:** on-demand; índice `ARTIFACTS.md`
 
-La raíz del repositorio no es el product root. En greenfield, cuando comienza la primera implementación real, crea `product/` y conserva dentro el layout nativo del stack; no impongas subcarpetas universales. No coloques archivos/código de producto en la raíz. En proyectos existentes registra el layout real, marca cualquier incumplimiento material del boundary y no muevas archivos durante onboarding. Una excepción de root requiere que una herramienta o hosting necesite materialmente esa ruta y debe documentarse aquí. Las carpetas de artefactos se crean solo cuando existan entregables reales.
+La raíz del repositorio no es el product root ni el destino habitual de outputs generados. Para greenfield, los inputs van en `project-resources/`, outputs auxiliares bajo `project-artifacts/` y la implementación dentro de `product/`. Estos dos últimos containers pueden no existir: registrarlos no los crea. Crea `project-artifacts/` y sus subcarpetas únicamente al producir el primer artefacto real; no impongas una jerarquía interna vacía. En proyectos existentes registra el layout real y no muevas trabajo durante onboarding; la migración de `content/`, `design/` o `docs/` top-level requiere tarea explícita cuando pueda afectar trabajo existente. Una excepción de root requiere que una herramienta o hosting necesite materialmente esa ruta y debe documentarse aquí.
 
 Ejemplos orientativos: sitio estático → container/root `product/`, entry `product/index.html`; Laravel → container/root `product/`, public root `product/public/`; plugin WordPress → container `product/`, root interno `product/<plugin-slug>/`. No son carpetas a crear durante onboarding.
 

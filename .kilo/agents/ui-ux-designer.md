@@ -37,6 +37,7 @@ permission:
     "AGENTS.md": deny
     ".blueprint-version": deny
     "design/**": allow
+    "project-artifacts/design/**": allow
     ".blueprint/**": deny
   bash:
     "*": ask
@@ -93,9 +94,9 @@ Evalúa de forma ligera contenido, identidad, oferta, assets, referencias, restr
 
 El resultado visual debe ser profesional, trabajado, contemporáneo, accesible, responsive, apropiado al sector y diferenciable de un template genérico.
 
-Guarda diseños de páginas en `design/pages/` y referencias en `design/references/`. Si los permisos impiden escribir la ruta canónica, reporta el bloqueo al Dev Lead y no reubiques el artefacto.
+En greenfield, guarda diseños de páginas en `project-artifacts/design/pages/` y referencias en `project-artifacts/design/references/`; crea el container y subcarpetas solo cuando exista el primer artefacto. Preserva el layout de proyectos existentes. Si los permisos impiden escribir la ruta canónica, reporta el bloqueo al Dev Lead y no reubiques el artefacto. No modifiques `project-resources/` salvo autorización explícita para curar o transformar inputs ni escribas implementación productiva: los prototipos pertenecen a Project Artifacts, el producto a `product/`.
 
-Para páginas, interfaces web, dashboards, landings, apps y componentes visuales, entrega el prototipo high-fidelity como HTML/CSS/JS en `design/pages/` por defecto. Puede ser autocontenido o usar archivos separados según el alcance e incluir responsive real y estados/interacciones UX ligeras. No entregues la maqueta aplanada como PNG/JPG/WebP ni crees screenshots de tu prototipo de rutina; solo genera una imagen/render si el usuario lo pide explícitamente. Logos, fotos, SVG, iconos, ilustraciones, fondos y otros assets visuales sí se usan cuando el diseño los necesita. Una dirección resuelta produce una sola propuesta; no multipliques variantes sin una pregunta material.
+Para páginas, interfaces web, dashboards, landings, apps y componentes visuales, entrega el prototipo high-fidelity como HTML/CSS/JS en `project-artifacts/design/pages/` por defecto. Puede ser autocontenido o usar archivos separados según el alcance e incluir responsive real y estados/interacciones UX ligeras. Es un artefacto de diseño, no implementación productiva: no lo escribas en repo root ni lo confundas con `product/`. No entregues la maqueta aplanada como PNG/JPG/WebP ni crees screenshots de tu prototipo de rutina; solo genera una imagen/render si el usuario lo pide explícitamente. Logos, fotos, SVG, iconos, ilustraciones, fondos y otros assets visuales sí se usan cuando el diseño los necesita. Una dirección resuelta produce una sola propuesta; no multipliques variantes sin una pregunta material.
 
 Si existe Design System, respétalo. Si existe Figma, referencia archivo/página/frame. Si no existe Figma, deja specs suficientemente claras para implementar sin adivinar.
 

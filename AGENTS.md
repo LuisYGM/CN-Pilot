@@ -63,7 +63,7 @@ Toda petición debe tratarse como:
 
 Evalúa el riesgo por separado. Producción, DNS, autenticación, pagos o DB pueden elevar el nivel.
 
-La raíz del repositorio no es el product root. Para implementación nueva greenfield bajo Blueprint 1.1.x, todo código/producto vive dentro del contenedor `product/`; el stack determina su estructura nativa interna, sin subcarpetas universales impuestas. `product/` se crea al comenzar la primera implementación real, no durante `/new-project`; no coloques archivos de producto en repo root. La raíz queda reservada a infraestructura técnica requerida (`.blueprint/`, `.github/`, `.kilo/`, `.kilocode/`, `.vscode/`, `.blueprint-version`, `.editorconfig`, `.gitattributes`, `.gitignore`, `.kilocodeignore`, `AGENTS.md`, `kilo.jsonc`), Project Context (`README.md`, `PROJECT.md`, `REQUIREMENTS.md`, `STATE.md`, `DECISIONS.md`, `ARTIFACTS.md`) y carpetas semánticas `project-resources/`, `product/`, `content/`, `design/`, `docs/` cuando correspondan. No crees en root `index.html`, código `*.css`/`*.js`, `package.json`, `composer.json`, `vite.config.*`, `webpack.config.*`, `plugin.php`, `style.css`/`functions.php` de themes, `artisan` ni directorios `src/`, `app/`, `public/`, `config/`, `tests/` como partes del producto; van dentro de `product/` si son del stack. Registra product root(s), entry points, public/static roots, comandos, outputs, tests y rutas generadas en `PROJECT.md`. Solo una necesidad material demostrada de tooling/hosting justifica una excepción root, que debe documentarse allí. En proyectos existentes preserva y registra el layout observado; no lo migres durante onboarding. `content/`, `design/` y `docs/` son artefactos on-demand separados de `product/` cuando pertenecen al proyecto; nombres internos dentro de product no colisionan con ellos.
+La raíz del repositorio no es el product root ni el destino habitual de outputs generados. Para implementación greenfield bajo Blueprint 1.1.0, outputs auxiliares viven en `project-artifacts/` y producto/implementación en `product/`; ambos containers se crean solo al aparecer su primer entregable/implementación real, no durante `/new-project`. Los inputs proporcionados van en `project-resources/`. La raíz queda principalmente reservada a infraestructura técnica requerida (`.blueprint/`, `.github/`, `.kilo/`, `.kilocode/`, `.vscode/`, `.blueprint-version`, `.editorconfig`, `.gitattributes`, `.gitignore`, `.kilocodeignore`, `AGENTS.md`, `kilo.jsonc`), Project Context (`README.md`, `PROJECT.md`, `REQUIREMENTS.md`, `STATE.md`, `DECISIONS.md`, `ARTIFACTS.md`) y, cuando existan, `project-resources/`, `project-artifacts/` y `product/`. No coloques por rutina prototipos, arquitectura, specs, auditorías, copy, design systems, reportes, HTML/CSS/JS productivos ni código de producto en root. `content/`, `design/` y `docs/` para outputs auxiliares se crean bajo `project-artifacts/` on-demand; nombres internos como `product/content/` o `product/docs/` pertenecen al stack/producto y no colisionan. Existing: registra y preserva el layout observado, sin migrarlo en onboarding. Una excepción de root requiere necesidad material de tooling/stack, no preferencia, y se documenta en `PROJECT.md`. En greenfield, input → `project-resources/`; supporting project output → `project-artifacts/`; runtime/implementation → `product/`. Antes de escribir determina el ownership y no crees carpetas arbitrariamente.
 
 Cuando materiales recibidos puedan cambiar materialmente una tarea (branding/diseño, contenido, frontend, migración, ingestión o código recibido), Dev Lead inspecciona ligera y selectivamente `project-resources/`. Si falta o está vacío/relevancia nula, sigue sin preguntar; nunca escanea todo por DIRECT ni asume que todo input se usa. Los inputs no se editan ni despliegan por defecto y no se auto-stagian/commitean sin revisar autorización, privacidad, licencia y tamaño.
 
@@ -116,7 +116,7 @@ Resuelve autónomamente detalles internos, convencionales, de bajo riesgo, rever
 
 - Si una tarea `STRUCTURAL` produce una especificación, arquitectura, plan de implementación o criterios de aceptación que se usarán después, persiste el artefacto en la carpeta del proyecto.
 - «No escribir código todavía» impide implementar, no documentar el plan. Solo evita modificar archivos cuando el usuario indique explícitamente que no quiere cambios en la carpeta del proyecto.
-- Guarda especificaciones de funcionalidades en `docs/features/`, arquitectura transversal en `docs/architecture/`, ADRs formales en `docs/adr/` y decisiones aprobadas ligeras en `DECISIONS.md`.
+- Guarda especificaciones de funcionalidades en `project-artifacts/docs/features/`, arquitectura transversal en `project-artifacts/docs/architecture/`, ADRs formales en `project-artifacts/docs/adr/`, auditorías durables en `project-artifacts/docs/audits/` y decisiones aprobadas ligeras en `DECISIONS.md`. Crea `project-artifacts/` y las subcarpetas solo al producir el primer artefacto real; `product/docs/` es ownership interno del producto.
 - Cuando la planificación persistida esté completa y verificada, aplica la política Git si está disponible; sin Git, conserva los archivos localmente y reporta el cierre sin commit.
 
 ## Decisiones arquitectónicas
@@ -186,7 +186,7 @@ Bloqueados por defecto:
 
 ## Producción
 
-Cambios relevantes en producción requieren aprobación. Antes de una operación riesgosa define cómo revertirla. `.github/workflows/deploy.yml` es un scaffold manual/fail-closed: su presencia no significa deployment configurado. Automatic deployment requiere intención explícita; configuración incompleta no publica. `product/` es la superficie primaria candidata de deployment, no un target universal: selecciona artifact/public root/build output y exclusiones según el stack. Excluye `.blueprint/`, `project-resources/` y artefactos internos `content/`, `design/`, `docs/` por defecto; solo incluye outputs de producto autorizados.
+Cambios relevantes en producción requieren aprobación. Antes de una operación riesgosa define cómo revertirla. `.github/workflows/deploy.yml` es un scaffold manual/fail-closed: su presencia no significa deployment configurado. Automatic deployment requiere intención explícita; configuración incompleta no publica. `product/` es la superficie primaria candidata de deployment, no un target universal: selecciona artifact/public root/build output y exclusiones según el stack. Excluye `.blueprint/`, `project-resources/` y `project-artifacts/` del deployment productivo por defecto; un entregable auxiliar puede ser una entrega final/handoff pero no se convierte por ello en runtime. Solo incluye outputs productivos autorizados.
 
 ## Definición de terminado
 
@@ -212,13 +212,16 @@ Prefiere editar la sección afectada o añadir el mínimo indispensable, sin rec
 - `STATE.md`: estado operativo actual y breve. Solo se actualiza si cambia materialmente el trabajo actual, un bloqueo, el siguiente paso, la rama activa si aplica o un checkpoint relevante. Metadata, idioma, stack, requisitos, contenido, configuración o ausencia de Git que no cambien el estado operativo no justifican tocarlo por rutina.
 - `DECISIONS.md`: decisiones importantes.
 - `REQUIREMENTS.md`: requisitos y criterios.
-- `content/pages/`: contenido de páginas.
-- `content/blog/`: artículos.
-- `design/pages/`: diseño de páginas.
-- `design/references/`: referencias visuales.
-- `docs/features/`: specs funcionales.
-- `docs/architecture/`: documentación de arquitectura.
-- `docs/adr/`: ADRs cuando se justifique.
+- `project-artifacts/content/pages/`: contenido de páginas.
+- `project-artifacts/content/blog/`: artículos.
+- `project-artifacts/content/strategy/`: estrategia editorial/search opcional.
+- `project-artifacts/design/pages/`: diseño de páginas.
+- `project-artifacts/design/references/`: referencias visuales.
+- `project-artifacts/docs/features/`: specs funcionales.
+- `project-artifacts/docs/architecture/`: documentación de arquitectura.
+- `project-artifacts/docs/adr/`: ADRs cuando se justifique.
+- `project-artifacts/docs/audits/`: auditorías durables.
+- `product/`: implementación greenfield según el layout nativo del stack.
 - `ARTIFACTS.md`: mapa descubrible de entregables reales; no sustituye sus rutas canónicas.
 
 Si los permisos impiden escribir una ruta canónica, reporta el bloqueo; no reubiques el artefacto en otra carpeta.

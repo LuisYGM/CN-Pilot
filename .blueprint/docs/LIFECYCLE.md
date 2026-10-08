@@ -19,6 +19,15 @@ Fases disponibles:
 
 No todos los proyectos pasan por todas. Cada flujo empieza y termina donde lo determine el alcance del repositorio.
 
+## Destinos en proyectos greenfield
+
+- Inputs proporcionados → `project-resources/` (no modificar ni publicar por defecto).
+- Outputs auxiliares del proceso —contenido, diseño, arquitectura, specs, ADRs y auditorías— → `project-artifacts/`, on-demand, separado del runtime.
+- Implementación/runtime → `product/`, con la estructura nativa del stack.
+- Project Context y controles → archivos canónicos en raíz.
+
+Registrar estos destinos no crea carpetas. `project-artifacts/` y `product/` se materializan solo cuando comienza el trabajo correspondiente. En existentes se preserva el layout observado; mover carpetas requiere tarea explícita si puede afectar consumidores o ejecución.
+
 ## Flujo parcial y puntos de entrega
 
 `Content → Design → Frontend/Prototype → Handoff → CMS Integration → Deployment`

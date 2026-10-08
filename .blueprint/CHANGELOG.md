@@ -4,7 +4,7 @@
 
 ### Añadido
 
-- **BF-041 — Repository Structure & Blueprint Boundary:** Core portable bajo `.blueprint/`, `project-resources/` como input separado, `product/` como contenedor de implementación greenfield (creado solo al iniciar implementación), contrato de layout con root hygiene y artefactos on-demand; retirados placeholders y scaffolds duplicados.
+- **BF-041 — Repository Structure & Blueprint Boundary:** Core portable bajo `.blueprint/`; `project-resources/` para inputs; `project-artifacts/` on-demand para contenido, diseño y documentación de apoyo; `product/` para implementación greenfield, creado solo al iniciar trabajo. Project Context permanece en raíz, y `ARTIFACTS.md` indexa entregables significativos de todo el proyecto. Retirados placeholders y scaffolds duplicados.
 - **BF-040 — Deployment Workflow Scaffold:** workflow GitHub Actions heredable, manual y fail-closed por defecto; no publica hasta configuración específica autorizada y trigger automático explícito.
 - **BF-039 — Gate Self-Test:** validación proporcional de gates custom decisivos mediante controles KNOWN-GOOD/PASS y KNOWN-BAD/FAIL aislados, sin self-test rutinario de tooling estándar ni pruebas inseguras en producción.
 - **BF-038 — Blueprint Doctor:** comando `/doctor` local y read-only para diagnosticar integridad de Core, agentes, skills, comandos, routing, permisos críticos y MANIFEST sin reparar ni ejecutarse por rutina.
