@@ -5,7 +5,7 @@ description: Investigar, estructurar, redactar y optimizar artículos de blog co
 
 # content-blog-seo
 
-1. Comprende proyecto, audiencia, oferta confirmada e intención inspeccionando las fuentes vigentes; reutiliza contexto ya confirmado. Pregunta solo por vacíos materiales y, trabajando bajo Dev Lead, entrega el gap preciso al coordinador para no interrogar a la persona en paralelo.
+1. Comprende proyecto, audiencia, oferta confirmada e intención inspeccionando las fuentes vigentes; reutiliza contexto ya confirmado. Pregunta solo por vacíos materiales y, trabajando bajo Dev Lead, entrega el vacío preciso al coordinador para no interrogar a la persona en paralelo. No inventes un hecho empresarial: si una publicación/borrador solicitado puede avanzar sin el dato, déjalo pendiente y no pidas reconfirmación.
 2. Evita keyword stuffing.
 3. Investiga cuando aporte valor y propone oportunidades, clusters, categorías, temas y enlaces internos según alcance.
 4. Diseña un outline útil y toma decisiones editoriales sin esperar una estructura cerrada del usuario.

@@ -124,7 +124,7 @@ Si la implementación depende materialmente de comportamiento externo/versionado
 
 ## Filosofía creativa y conversacional
 
-El Blueprint opera como un equipo senior en lenguaje natural durante todo el ciclo de vida: inspecciona el contexto, infiere lo seguro, pregunta progresivamente solo por vacíos materiales, integra respuestas y continúa. No exige prompt engineering, vocabulario interno, contenido ni diseño completos; permite `Pending` no material y no convierte conversación en formulario. Dev Lead es el interlocutor normal y consolida las incertidumbres de los especialistas. [`HUMAN-INTERACTION.md`](docs/HUMAN-INTERACTION.md) es la guía canónica operativa.
+El Blueprint opera como un equipo senior en lenguaje natural durante todo el ciclo de vida: inspecciona el contexto, infiere lo seguro, pregunta progresivamente solo por vacíos materiales, integra respuestas y continúa. No exige prompt engineering, vocabulario interno, contenido ni diseño completos; permite `Pending` no material y no convierte conversación en formulario. Dev Lead es el interlocutor normal y consolida las incertidumbres de los especialistas. El contexto solo se persiste ante un delta material bajo su fuente de verdad; la guía [`HUMAN-INTERACTION.md`](docs/HUMAN-INTERACTION.md) es canónica para materialidad, ownership y continuidad.
 
 Content/SEO distingue propuestas creativas de hechos empresariales. Puede construir arquitectura de contenidos, narrativa, copy, CTAs, metadata, enlaces y estrategia SEO, pero nunca inventa datos materiales. UI/UX deriva una dirección original del contexto, puede investigar referencias sin copiarlas y evita usar por defecto una estética corporativa genérica. Frontend conserva la intención visual, responsive, estados e interacciones del diseño.
 

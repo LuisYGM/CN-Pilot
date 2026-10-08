@@ -898,17 +898,19 @@ El lenguaje natural es la interfaz normal desde `/new-project` hasta mantenimien
 8. Respuestas materiales se persisten bajo ownership correcto y se reutilizan sin duplicar documentos ni registrar cada conversación.
 9. Los especialistas reciben contexto confirmado suficiente y entregan los vacíos materiales a Dev Lead sin interrogar en paralelo.
 10. El mismo contrato aplica después de onboarding; `DIRECT` sigue ligero y las tareas no se vuelven formularios.
+11. Si una tarea ya solicitada puede avanzar de forma segura y reversible dejando un dato no material como `Pending`, continúa sin pedir reconfirmación.
+12. Antes de persistir Project Context se identifica un delta material y una única fuente de verdad; no se sincronizan archivos por rutina.
 
 **Estado:**
-Testing.
+Validated.
 
-**Plan de retest (pendiente; no simular resultados):**
+**Resultados de retests reales:**
 
-- **A. Greenfield no técnico:** «Quiero hacer una web para una veterinaria». Verificar inspección, preguntas breves solo sobre datos materiales, ausencia de preguntas sobre agents/rutas y `Pending` razonable.
-- **B. Tarea posterior a onboarding:** «Quiero hacer ahora la página de servicios». Confirmar reutilización de audiencia/branding/copy ya establecidos y preguntar solo por un vacío específico material.
-- **C. Mantenimiento Existing:** «El formulario no funciona». Confirmar inspección y diagnóstico iniciales; no volver a preguntar stack/plugin/configuración descubribles.
-- **D. Ambigüedad material:** «Quiero que los usuarios puedan guardar favoritos», con persistencia no definida. Preguntar si se guarda en ese navegador o entre dispositivos/cuenta, no por `localStorage`/DB.
-- **E. Dato empresarial ausente:** «Escribe nuestra página Sobre nosotros», sin historia/experiencia confirmada. No inventar; preguntar un hecho imprescindible o dejarlo pendiente si la pieza puede avanzar.
-- **F. `DIRECT` trivial:** «Cambia el texto del botón de Enviar a Solicitar información». Ejecutar, verificar y cerrar sin discovery adicional.
+- **A. Greenfield no técnico — PASS.** Con «Quiero hacer una web para una veterinaria», inspeccionó primero e hizo una única pregunta humana/material sobre objetivo y contacto/citas. Aceptó una respuesta breve, dejó stack/datos comerciales/contacto/canal de citas pendientes e inicializó contexto sin código, `product/` ni artifacts innecesarios.
+- **B. Reutilización tras onboarding — PASS; finding menor de fricción corregido.** Ante «Quiero hacer ahora la página de servicios», reutilizó veterinaria, objetivo, público y contexto; preguntó únicamente qué servicios ofrece realmente. Al oír «Todavía no están definidos», no inventó servicios y preparó una estructura provisional marcándolos pendientes. Finding: pidió «¿Quieres que prepare esa versión provisional?» aunque la página ya estaba solicitada y continuar era seguro/reversible. La regla de continuación ahora indica crearla alrededor del dato pendiente sin reconfirmar; solo se pregunta si el dato cambia materialmente alcance, arquitectura, riesgo o exige aprobación.
+- **C. Mantenimiento Existing — PASS.** Ante «El formulario no funciona», inspeccionó el HTML/JS y encontró `id="contact-form"` frente a `querySelector("#contactForm")`. Cambió solo el selector en `product/script.js`, verificó coincidencia con el HTML y ejecutó `node --check`; no preguntó stack, framework, archivo ni causa descubribles.
+- **D. Ambigüedad material — PASS.** Ante «Quiero que los usuarios puedan guardar servicios como favoritos», detectó persistencia no definida y preguntó por el comportamiento: «¿basta con conservarlos en el mismo navegador, o quieres que se sincronicen entre dispositivos al iniciar sesión?». No preguntó `localStorage` o base de datos.
+- **E. Hecho empresarial ausente — PASS; material-delta rule incorporada.** Para «Escribe la página Sobre nosotros», sin historia/experiencia/equipo/credenciales/ubicación/contacto confirmados, no inventó datos; produjo contenido provisional editable y marcó hechos sin validar. La ejecución actualizó `PROJECT.md`, `REQUIREMENTS.md`, `STATE.md`, `README.md` y `ARTIFACTS.md`. El índice puede ser legítimo para un nuevo entregable significativo, pero el retest mostró que una página no justifica sincronizar automáticamente todos los context files. Se establece gate de delta/ownership: PROJECT solo si cambia un hecho estable; REQUIREMENTS si cambia requisito/aceptación; STATE si cambia estado/blocker/next step; README si su presentación queda obsoleta; ARTIFACTS si el entregable es significativo. Si no hay delta para un archivo, no se toca.
+- **F. `DIRECT` trivial — PASS.** Cambió «Atención veterinaria» por «Atención veterinaria las 24hrs» en una única línea, verificó el resultado y cerró sin preguntas, discovery, plan, Reviewer ni actualización innecesaria de contexto.
 
-Los escenarios se pueden probar en sesiones/clones separados y representativos; esta documentación no afirma que alguno ya haya sido ejecutado o aprobado. BF-041 conserva su estado `Validated`; BF-042 permanece `Testing` hasta validar este plan.
+Los resultados A–F se registran como retests ejecutados. Los findings menores B/E motivaron los refinamientos de continuación y material-delta descritos arriba; no cambian el resultado principal aprobado de esos escenarios. BF-041 y BF-042 quedan `Validated` tras la revisión estructural.
