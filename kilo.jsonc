@@ -5,31 +5,39 @@
 
   "permission": {
     "read": {
+      "*": "allow",
       ".env": "ask",
       ".env.*": "ask",
       "**/.env": "ask",
       "**/.env.*": "ask",
+      ".env.example": "allow",
+      "**/.env.example": "allow",
       "secrets/**": "deny",
-      "*": "allow"
+      ".kilocode/mcp.json": "deny",
+      "**/.kilocode/mcp.json": "deny"
     },
     "edit": {
+      "*": "allow",
       ".env": "deny",
       ".env.*": "deny",
       "**/.env": "deny",
       "**/.env.*": "deny",
+      ".env.example": "allow",
+      "**/.env.example": "allow",
       "secrets/**": "deny",
-      "*": "allow"
+      ".kilocode/mcp.json": "deny",
+      "**/.kilocode/mcp.json": "deny"
     },
     "bash": {
-      "git push --force*": "deny",
-      "git push -f*": "deny",
-      "git reset --hard*": "deny",
-      "git clean*": "deny",
+      "*": "ask",
       "git status*": "allow",
       "git diff*": "allow",
       "git log*": "allow",
       "git branch*": "allow",
-      "*": "ask"
+      "git push --force*": "deny",
+      "git push -f*": "deny",
+      "git reset --hard*": "deny",
+      "git clean*": "deny",
     }
   },
 

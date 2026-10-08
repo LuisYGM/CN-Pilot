@@ -39,6 +39,8 @@ permission:
     "profiles/**": deny
     "templates/**": deny
     "docs/blueprint-feedback.md": deny
+    ".env.example": allow
+    "**/.env.example": allow
   bash:
     "*": ask
     "git status": allow

@@ -42,6 +42,8 @@ permission:
     "DECISIONS.md": allow
     "REQUIREMENTS.md": allow
     "docs/**": allow
+    ".env.example": allow
+    "**/.env.example": allow
   bash:
     "*": ask
     "git push*": ask
