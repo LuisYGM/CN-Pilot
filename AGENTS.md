@@ -182,7 +182,7 @@ Bloqueados por defecto:
 
 ## Producción
 
-Cambios relevantes en producción requieren aprobación. Antes de una operación riesgosa define cómo revertirla.
+Cambios relevantes en producción requieren aprobación. Antes de una operación riesgosa define cómo revertirla. `.github/workflows/deploy.yml` es un scaffold manual/fail-closed: su presencia no significa deployment configurado. Automatic deployment requiere intención explícita; configuración incompleta no publica.
 
 ## Definición de terminado
 

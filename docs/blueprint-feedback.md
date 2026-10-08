@@ -809,3 +809,17 @@ Se creó `scripts/release-gate.mjs`, gate custom cuyo PASS/FAIL controla si se p
 - `node --check scripts/release-gate.mjs` pasó como verificación estándar, sin self-test propio. Después el gate se reutilizó una vez con input válido sin crear otro known-bad ni repetir Gate Self-Test.
 - Se usó `testing-strategy`. Reviewer aprobó sin hallazgos y solo consumió la evidencia; no ejecutó scripts/tests. No hubo websearch/webfetch ni comportamiento inesperado.
 - El entorno temporal no tenía Git y no produjo commit; esto no afectó la validación del procedimiento.
+
+## BF-040 — Deployment Workflow Scaffold
+
+**Contexto:**
+Los proyectos creados desde el Blueprint necesitaban una superficie base para configurar deployment sin inventar desde cero el workflow ni habilitar una publicación antes de confirmar stack, destino y método.
+
+**Regla:**
+Cada proyecto hereda `.github/workflows/deploy.yml` manual y fail-closed. Su presencia no significa deployment configurado. Al confirmarse GitHub Actions como canal, especializa por proyecto el artifact/source, entorno, transporte, secretos referenciados, trigger y verificación/recuperación. Deployment automático requiere intención explícita.
+
+**Límites:**
+El scaffold no publica ni contiene secretos/destinos. `/new-project` identifica intención pero no configura infraestructura. Sin método completo permanece manual y fail-closed. Stack-aware; BF-036 aplica a comportamiento/versiones externas y BF-039 a gates custom. En WordPress, `deploy-wordpress` mantiene el ownership de publicación y superficies persistentes.
+
+**Estado:**
+Testing; pendiente probar herencia del scaffold y configuración por proyecto sin riesgo de publicación.

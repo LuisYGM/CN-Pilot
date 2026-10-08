@@ -280,6 +280,7 @@ Cuando exista un plugin SEO activo y sus capabilities estén disponibles, el QA 
 - Stage limitado a la unidad lógica relacionada.
 - Nunca hace push automático.
 - El cierre por defecto es local: acciones remotas (push, deploy/publicación, PR, merge, tag, release) requieren autorización explícita o un scope ya aprobado que las incluya inequívocamente. Las reglas permanentes se heredan sin repetirlas en cada prompt.
+- `.github/workflows/deploy.yml` se hereda como scaffold manual/fail-closed; su existencia no implica deployment configurado. GitHub Actions se especializa solo si el proyecto lo requiere y un trigger automático exige intención explícita.
 - Cada tarea completada recibe un informe final breve y proporcional; incluye solo resultado, cambios y verificaciones pertinentes, agentes/Reviewer si intervinieron y hash/mensaje exactos si hubo commit. Tras informar, Dev Lead se detiene.
 - Los tags y GitHub Releases son opcionales y no se crean ni recomiendan para cada parche, commit o cambio de versión. `.blueprint-version` identifica la generación/base del Blueprint y no tiene que cambiar con cada commit; `CHANGELOG.md` se actualiza para cambios relevantes.
 - Operaciones destructivas bloqueadas.

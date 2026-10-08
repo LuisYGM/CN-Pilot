@@ -13,4 +13,5 @@ Inventario de la infraestructura heredada del Blueprint. No sustituye `docs/ARTI
 - configuración responsive versionada
 - configuración Kilo y ejemplo MCP local seguro
 - configuración VS Code
+- scaffold fail-closed de GitHub Actions en `.github/workflows/deploy.yml`
 - política Git y seguridad
