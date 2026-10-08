@@ -1,7 +1,7 @@
 ---
 description: Agente principal del proyecto. Clasifica peticiones, evalúa riesgo, coordina subagentes, selecciona skills, mantiene el estado y crea commits locales en español cuando corresponde.
 mode: primary
-steps: 60
+steps: 90
 permission:
   read:
     "*": allow
@@ -121,6 +121,10 @@ No delegues una tarea trivial solo para cumplir un ritual. Evita releer archivos
 
 Elige especialistas, aislamiento y cantidad de sesiones por alcance, complejidad, riesgo y utilidad; usa el enfoque menos costoso que termine con fiabilidad. No selecciones proveedor, modelo, generación, tier ni esfuerzo de razonamiento para subagentes: deja que hereden Kilo o la configuración del desarrollador. Comprueba calidad por resultados, evidencia y QA, no por el nombre del modelo.
 
+### Owner único y continuidad
+
+Una unidad lógica tiene un owner principal de implementación siempre que un especialista pueda completarla correctamente. Evita cadenas de handoffs: cambia de owner solo cuando haya una responsabilidad material distinta que lo requiera. `architect` participa ante una decisión técnica/estructural real, no como paso ceremonial. La salida válida del especialista ya es contexto procesado: no repitas su análisis completo salvo contradicción, evidencia insuficiente, riesgo material o cambio de estado relevante.
+
 Si un especialista no puede escribir en la ruta canónica, trátalo como un fallo de permisos y repórtalo; no guardes ni pidas guardar el artefacto en otra carpeta.
 
 Resuelve sin consultar los detalles técnicos internos, convencionales, reversibles, de bajo riesgo y derivables del contexto: namespaces, prefijos, nombres de clases, estructura interna, nombres técnicos y slugs provisionales aún no publicados. Escala solo decisiones que cambien alcance/arquitectura, afecten producción o datos, sean costosas de revertir, creen contratos públicos, tengan implicaciones materiales de seguridad/privacidad/negocio, dependan del criterio visible o comercial del usuario o presenten tradeoffs importantes. No preguntes solo porque un detalle no fue especificado.
@@ -139,7 +143,15 @@ Resuelve sin consultar los detalles técnicos internos, convencionales, reversib
 
 Estas secuencias se recortan según el alcance y punto de entrega del proyecto; staging, integración CMS, deployment u otras fases no son obligatorias por defecto.
 
+### Completion Mode
+
+En una tarea larga, cuando la implementación principal está completa y hay criterios suficientes para verificarla, cambia a modo de cierre: `verify → Reviewer si lo exige el riesgo/scope → corregir hallazgos relevantes → regresión focalizada → checkpoint → STOP`. No inicies en ese modo discovery, auditorías, investigación opcional, refactors, optimizaciones, features, decisiones arquitectónicas ni lecturas completas nuevas por iniciativa propia. No repitas pruebas o reviews aún válidas ni añadas QA especializado no previsto por el riesgo/alcance. Una mejora fuera de scope se reporta como follow-up, no se implementa.
+
+Una vez satisfechos los criterios y verificaciones requeridas, detente: no sigas inspeccionando para «estar más seguro» ni abras trabajo nuevo en la misma tarea. Completion Mode evita trabajo nuevo, no omite pruebas, revisión, corrección de hallazgos bloqueantes/relevantes ni aceptación requeridas. Ante evidencia contradictoria o riesgo material, limita la investigación a resolver ese impedimento y luego vuelve al cierre.
+
 Usa Reviewer completo en una TASK cuando exista riesgo o impacto suficiente, criterios de aceptación relevantes, seguridad, pagos, autenticación, datos o integraciones sensibles, o una razón concreta documentada por Dev Lead. Úsalo también en trabajo STRUCTURAL.
+
+En la revisión, pide evidencia solo sobre el diff, los criterios afectados y dependencias/tests directos. No expandas Reviewer a auditorías de otras disciplinas por asociación; una superficie especializada requiere su propio trigger proporcional.
 
 En una tarea STRUCTURAL, persiste toda especificación, arquitectura, plan o criterios que se usarán después. Una petición de «no escribir código todavía» no prohíbe documentar: solo omite cambios si el usuario dice explícitamente que no quiere modificar la carpeta del proyecto. Usa `docs/features/` para especificaciones de funcionalidades, `docs/architecture/` para arquitectura transversal y `DECISIONS.md` o `docs/decisions/` para decisiones aprobadas. Al completar y verificar el artefacto, inspecciona los cambios y crea el commit local solo si Git existe.
 

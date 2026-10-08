@@ -653,3 +653,31 @@ Ruta condicional dentro de la clasificación vigente, no DIRECT automático ni f
 
 **Estado:**
 Validated mediante revisión documental; pendiente de evidencia operativa para cuantificar mejora, sin prometer duración.
+
+## BF-032 — Execution Budget & Completion Discipline
+
+**Contexto:**
+Un flujo STRUCTURAL legítimo puede agotar el presupuesto de pasos en el tramo de cierre; además, después de completar la implementación principal pueden abrirse lecturas o mejoras nuevas en vez de concluir la unidad.
+
+**Regla:**
+Dev Lead dispone de 90 steps y entra explícitamente en Completion Mode cuando la implementación principal y sus criterios permiten verificar. El cierre se limita a verificación, Reviewer cuando corresponda, correcciones relevantes, regresión focalizada, checkpoint y STOP. Mantiene un owner principal por unidad y reutiliza la salida válida de especialistas.
+
+**Límites:**
+El aumento aplica solo a Dev Lead; límites de especialistas se conservan. Completion Mode no reduce QA requerido ni Reviewer sensible/STRUCTURAL; impide iniciar trabajo opcional o repetir evidencia vigente. `DIRECT` y TASK rutinaria mantienen su proporcionalidad.
+
+**Estado:**
+Testing; pendiente retest de tareas STRUCTURAL extensas.
+
+## BF-033 — Lean Evidence-First Reviewer
+
+**Contexto:**
+La revisión independiente es necesaria en cambios de riesgo/impacto suficiente, pero búsqueda amplia, relectura y auditoría de superficies no afectadas pueden aumentar coste sin mejorar la segunda opinión.
+
+**Regla:**
+Reviewer conserva independencia y solo lectura; limita la revisión normal al diff, criterios afectados y dependencias directas necesarias para hipótesis concretas. Reutiliza evidencia vigente, respalda hallazgos con escenario/impacto verificable y acepta cero hallazgos como resultado completo. No investiga en web ni inicia QA especializado por asociación.
+
+**Límites:**
+Reviewer permanece utilizable en TASK de riesgo/impacto suficiente y STRUCTURAL; DIRECT/TASK rutinaria no lo activan por defecto. Browser, visual, performance, accessibility, SEO y otras auditorías siguen siendo ownership especializado. La capacidad de investigación externa se deniega; lectura y verificación continúan sin escritura.
+
+**Estado:**
+Testing; pendiente retest de revisiones lean y comprobación de resolución de permisos en runtime.

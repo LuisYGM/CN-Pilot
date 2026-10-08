@@ -20,3 +20,5 @@ agent: dev-lead
 13. Si hubo worktree temporal, informa por separado el estado de la sesión, el registro Git y la carpeta física; no declares cleanup completado sin verificar `git worktree list` después de la limpieza.
 14. La ausencia de Git no bloquea la tarea, no se registra como bloqueo y no autoriza ejecutar `git init`.
 15. Nunca hagas push automático.
+
+Al entrar en cierre tras implementación principal y con criterios suficientes, limita el trabajo a verify → Reviewer si aplica → corregir hallazgos relevantes → regresión focalizada → checkpoint → STOP. No abras discovery, QA opcional ni trabajo nuevo durante el cierre; no omitas pruebas o Reviewer requeridos. Al satisfacer aceptación, detén inspecciones y mejoras adicionales.

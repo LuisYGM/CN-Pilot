@@ -10,6 +10,7 @@
 
 ### Mejorado
 
+- **BF-032/033 — Cierre disciplinado y Reviewer lean:** Dev Lead amplía su margen de cierre con Completion Mode y owner único; Reviewer reduce scope al diff/evidencia pertinente, conserva independencia y read-only, acepta cero hallazgos y no dispone de investigación web.
 - **BF-031 — Fast path de implementación aprobada:** preflight focalizado, spike funcional temprano cuando haga falta, un owner y mapping, construcción agrupada y correcciones QA cohesionadas; reduce rediscovery/handoffs sin retirar safe writes, fidelidad ni aceptación.
 - **BF-030 — Integridad de estado y ownership:** separación contenido/presentación, reutilización de Media adecuado antes de subir duplicados y contraste de criterios críticos con estado final observable antes del cierre.
 - **Mantenimiento proporcional del README:** el resumen del proyecto se sincroniza cuando cambian aspectos estables del repositorio, con ediciones mínimas y sin registrar progreso rutinario.

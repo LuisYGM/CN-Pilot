@@ -100,6 +100,10 @@ La fase de planificación produce un artefacto persistido cuando la especificaci
 
 El flujo reutiliza análisis, tests y reviews todavía válidos, evita verificaciones duplicadas y reserva margen antes de Reviewer para recibir hallazgos, corregir, probar y cerrar. Si una sesión debe continuar, recupera el estado vigente y ejecuta únicamente el trabajo pendiente.
 
+Cuando la implementación principal de una tarea larga esté completa y existan criterios suficientes, Dev Lead entra en `Completion Mode`: verificación → Reviewer si el riesgo/scope lo requiere → correcciones relevantes → regresión focalizada → checkpoint → STOP. No inicia discovery, investigación opcional, refactors, features o QA no previsto por iniciativa propia; mejoras fuera de scope se reportan. Completion Mode no elimina pruebas o revisión requeridas. Una vez satisfechos aceptación y verificaciones, no continúa inspeccionando por seguridad subjetiva ni abre trabajo nuevo.
+
+Asigna un owner principal por unidad lógica siempre que pueda completarla correctamente; cambia de owner solo por responsabilidad material distinta. La salida válida del especialista se considera contexto procesado: reanalizarla completa exige contradicción, evidencia insuficiente, riesgo material o cambio de estado relevante. Architect no es una estación automática de handoff.
+
 ## Autonomía técnica
 
 Las decisiones que cambian alcance o arquitectura, afectan producción/datos, crean contratos públicos, son costosas de revertir, implican materialmente seguridad/privacidad/negocio, dependen del criterio visible o comercial del usuario o presentan tradeoffs importantes requieren aprobación. Los detalles internos, convencionales, reversibles, de bajo riesgo y derivables del contexto se resuelven autónomamente aunque no hayan sido especificados.
@@ -120,7 +124,9 @@ Estas etiquetas no forman un formulario para el usuario. Antes de alta fidelidad
 
 ## Reviewer y Agent Manager
 
-Reviewer permanece independiente, de solo lectura y verificación. Para una revisión que bloquea el siguiente paso se usa preferentemente un subagente `task` en primer plano; Agent Manager/worktrees se reservan para aislamiento real o trabajo independiente. La solicitud exige un informe conciso, priorizado y accionable, sin polling ni repetición completa tras cada corrección si basta una revisión incremental.
+Reviewer permanece independiente, de solo lectura y verificación. Su revisión normal se limita al diff, criterios afectados, evidencia válida ya disponible y dependencias directas para probar hipótesis concretas. Emite hallazgos con evidencia/escenario/impacto y se detiene; cero hallazgos es un resultado completo. No ejecuta browser/screenshot, paridad visual, performance measurement, investigación web, auditorías generales ni suites aún válidas; una cuestión de especialidad se enruta aparte solo si Dev Lead determina que aplica. No busca refactors ni mejoras estilísticas no relacionadas.
+
+Para una revisión que bloquea el siguiente paso se usa preferentemente un subagente `task` en primer plano; Agent Manager/worktrees se reservan para aislamiento real o trabajo independiente. La solicitud exige un informe conciso, priorizado y accionable, sin polling ni repetición completa tras cada corrección si basta una revisión incremental.
 
 `task` es también el mecanismo predeterminado para delegar trabajo que forma parte de la tarea actual y no requiere branch, worktree, filesystem aislado ni una conversación top-level separada. Agent Manager no se usa automáticamente para paralelizar; Dev Lead lo reserva para aislamiento real, alternativas concurrentes, trabajo realmente independiente o una sesión top-level separada. Antes de abrirlo evalúa si un subagente `task` es suficiente.
 
