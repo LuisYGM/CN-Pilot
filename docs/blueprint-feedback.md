@@ -683,13 +683,16 @@ Reviewer conserva independencia y solo lectura; limita la revisión normal al di
 Reviewer permanece utilizable en TASK de riesgo/impacto suficiente y STRUCTURAL; DIRECT/TASK rutinaria no lo activan por defecto. Browser, visual, performance, accessibility, SEO y otras auditorías siguen siendo ownership especializado. La capacidad de investigación externa se deniega; lectura y verificación continúan sin escritura.
 
 **Estado:**
-Testing.
+Validated.
 
 **Resultado del retest (2026-10-08):**
 En el retest inicial, Bash denegó correctamente `git show`; no se amplió el permiso y la evidencia inaccesible produjo `CHANGES REQUIRED` sin defecto encontrado. El hardening introdujo `BLOCKED` y el handoff de evidencia histórica. En el retest final, Dev Lead adjuntó correctamente el diff al task; Reviewer devolvió `APPROVED`, cero hallazgos, sin consultar archivos adicionales ni intentar capabilities prohibidas, usar websearch/webfetch, cargar skills o hacer screenshots. No hubo comportamiento inesperado.
 
 **Resultado del retest STRUCTURAL (2026-10-08):**
 En flujo pre-commit Reviewer todavía intentó recuperar `git diff` mediante Bash. Se elimina Bash por completo del Reviewer y Dev Lead prepara y adjunta siempre diff, archivos afectados, criterios y evidencia de tests/verificaciones al task, tanto para working diffs como commits históricos. Pendiente un retest de Reviewer con working tree real.
+
+**Resultado del retest final con working tree real (2026-10-08):**
+Dev Lead preparó el working diff y lo adjuntó al task. Reviewer devolvió `APPROVED`, cero hallazgos; no intentó Bash ni comandos Git, no necesitó `read`/`glob`/`grep` adicionales, no intentó capabilities prohibidas, no usó web, no cargó skills, no hizo screenshots y no devolvió `BLOCKED`. No hubo comportamiento inesperado. Se eliminó el archivo temporal del retest, el working tree quedó limpio y el retest no creó commit ni hizo push.
 
 **Observación no bloqueante:**
 En el primer intento de implementación, el especialista no reconoció el copy ya presente en la tarea y fue necesario reiterarlo. No volvió a reproducirse en BF-032; observar retests futuros antes de abrir otra BF.
