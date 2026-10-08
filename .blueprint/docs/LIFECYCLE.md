@@ -28,6 +28,8 @@ No todos los proyectos pasan por todas. Cada flujo empieza y termina donde lo de
 
 Registrar estos destinos no crea carpetas. `project-artifacts/` y `product/` se materializan solo cuando comienza el trabajo correspondiente. Existing importado conserva su layout interno bajo `product/`; si la fuente está en `project-resources/source/`, es solo original/input y una tarea explícita prepara una copia activa. Existing repository adoptado con contratos operativos puede documentar el root real como `Existing compatibility exception`, preservándolo sin migración automática. Código top-level de workspace Blueprint sin esos contratos queda `Pending normalization/migration`, no se convierte por defecto en product root.
 
+Una adopción/migración autorizada a `product/` no termina hasta comprobar que la working implementation esté en el root activo correcto; se preservó su estructura; entry points, imports, assets y referencias relevantes funcionan; `PROJECT.md` refleja la ubicación (y `ARTIFACTS.md` incluye el producto si es significativo); la source location anterior ya no se necesita para runtime/edición; y no quedan referencias obsoletas. Si la migración dejó un directorio anterior vacío, elimínalo solo dentro de la misma operación, tras verificar cero archivos y que no tenga otra función. Nunca elimines directorios no vacíos/desconocidos ni originales de `project-resources/`; resuelve explícitamente cualquier residuo necesario o no clasificado antes de declarar completa la adopción.
+
 ## Flujo parcial y puntos de entrega
 
 `Content → Design → Frontend/Prototype → Handoff → CMS Integration → Deployment`

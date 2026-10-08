@@ -842,7 +842,7 @@ Fronteras de workspace 1.1.0: `.blueprint/` → sistema; `project-resources/` �
 No cambiar el layout nativo de proyectos existentes, crear código ni migrar proyectos externos 1.0.1. `.env.example` no forma parte del template base. `.github/workflows/deploy.yml` permanece manual y fail-closed. Los materiales añadidos a `project-resources/` no se versionan ni despliegan automáticamente.
 
 **Estado:**
-Testing.
+Validated.
 
 **Resultado del primer retest (2026-10-08) — fallo de aceptación:**
 
@@ -850,8 +850,7 @@ Testing.
 - Sin embargo, `index.html`, `styles.css` y `script.js` se implementaron directamente en la raíz del repositorio. Aunque técnicamente válido según el contrato anterior, contradice la organización deseada.
 - Se determinó que repo root no es product root y se establece `product/` como boundary canónico para implementación nueva greenfield. Se conserva el layout nativo del stack dentro de ese contenedor.
 - También se detectó que outputs auxiliares no deben dispersarse como `content/`, `design/` o `docs/` top-level: pertenecen a `project-artifacts/` para greenfield.
-- Pendiente repetir el retest para demostrar que el código nuevo queda bajo `product/` y que onboarding no crea el contenedor antes de empezar implementación.
-- Pendiente nuevo retest greenfield con los boundaries definitivos: inputs → `project-resources/`, supporting outputs → `project-artifacts/`, implementación → `product/` y Project Context/control → root.
+- Ese primer resultado fallido se conserva como evidencia histórica; la aceptación final se registra en el retest Greenfield siguiente.
 
 **Retest Existing previo (2026-10-08) — evidencia histórica, no aceptación final:**
 
@@ -860,4 +859,22 @@ Testing.
 - Demuestra que el Blueprint respeta un layout existente, pero no valida la convención de producto activa acordada después: cuando el Blueprint es el workspace, también un Existing importado debe trabajar desde `product/`.
 - Distinción final: Existing importado al workspace → producto activo bajo `product/`; Existing repository ya operativo adoptado → `Existing compatibility exception` documentada, preserva root real.
 - Decisión posterior de boundary: Existing importado al workspace Blueprint debe tener el producto activo en `product/`; Existing adopted conserva root real solo como excepción con contratos operativos documentados. Un `legacy-site/` source top-level sin esos contratos queda Pending normalization/migration, no excepción automática.
-- Pendiente retest final Existing bajo este boundary definitivo.
+- La aceptación final seguía pendiente tras este retest previo; se registra en el retest final posterior.
+
+**Retest final Greenfield (2026-10-08) — PASS (resultado reportado):**
+
+- `/new-project` no creó `product/` durante onboarding; el usuario pidió trabajo HTML/CSS/JavaScript y la implementación se creó después directamente bajo `product/`, sin archivos de producto en repo root.
+- `project-resources/` se usó como input sin runtime dependency. No se creó `project-artifacts/` porque no era necesario.
+- Core y deployment permanecieron intactos.
+
+**Retest final Existing — normalization/adoption (2026-10-08) — PASS (resultado reportado):**
+
+- En el workspace Blueprint nuevo, se detectó la web existente en `mi-web/` top-level y se clasificó baseline `Existing`. Sin contratos operativos, se registró `Pending normalization/migration`; onboarding no movió código ni creó `product/`.
+- El usuario pidió naturalmente: «Quiero empezar a trabajar sobre la web existente. No cambies todavía el diseño ni las funcionalidades de la web.» No mencionó carpetas, product root ni términos internos. Dev Lead explicó brevemente el traslado necesario y pidió autorización; «Sí» fue suficiente.
+- Tras autorizar, el producto activo pasó directamente a `product/` (`index.html` y `assets/`), sin wrapper `product/mi-web/`; se preservaron estructura, contenido, diseño y funcionalidad. Se actualizó Project Context y se verificaron entry point y referencias.
+- La primera pasada dejó `mi-web/` vacío; la adopción no se dio por cerrada hasta atender la indicación posterior de limpiar la ubicación anterior. En ese cierre, se verificaron cero archivos y ausencia de función independiente y se eliminó el container. No se borró ningún original de `project-resources/`.
+- Core y deployment permanecieron intactos.
+
+**Contrato de finalización de adopción:**
+
+Una adopción existente no está completa hasta que la working implementation esté bajo el product root activo correcto; se preserve el layout interno; entry points, imports, assets y referencias relevantes estén verificados; `PROJECT.md` refleje el nuevo root activo (y `ARTIFACTS.md` el producto cuando sea significativo); el source anterior ya no sea necesario para runtime/edición; no queden referencias obsoletas; y cualquier container source anterior vacío que la migración dejó sin función se elimine. La limpieza solo puede retirar ese directorio si es parte de la misma migración verificada y tiene cero archivos. No se borran directorios no vacíos/contenido desconocido ni originales de `project-resources/`; residuos necesarios o no clasificados detienen el cleanup y deben resolverse explícitamente.
