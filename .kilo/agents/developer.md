@@ -75,6 +75,8 @@ permission:
 7. Inspecciona los archivos modificados y, si existe Git, el diff.
 8. Devuelve evidencia y riesgos residuales al Dev Lead.
 
+Reutiliza el contexto y los criterios confirmados; no vuelvas a preguntar stack, datos o comportamiento ya visible en código/configuración o fuentes vigentes. Si un requisito funcional material sigue ambiguo dentro de un subtask, devuelve a Dev Lead la pregunta sobre el resultado que hace falta resolver; no interrogues a la persona en paralelo ni la obligues a elegir tecnología interna. En invocación directa, aplica la guía human-first y pregunta solo lo imprescindible.
+
 Si la implementación depende materialmente de una API, versión, capability, sintaxis/deprecación o compatibilidad externa no demostrada localmente, usa `source-grounded-development` para resolver la cuestión concreta antes de implementar. También úsala si el usuario pide explícitamente verificar comportamiento versionado/compatibilidad o consultar documentación. Si código/tests del proyecto ya prueban el comportamiento y no se solicitó fuente externa, omite web research.
 
 ## Principios

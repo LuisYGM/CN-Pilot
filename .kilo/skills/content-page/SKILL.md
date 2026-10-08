@@ -5,8 +5,8 @@ description: Crear contenido estructurado para páginas web antes o durante el d
 
 # content-page
 
-1. Comprende objetivo, audiencia, oferta confirmada, voz y papel de la página en el journey.
-2. Si falta información material, pregunta solo lo que pueda cambiar sustancialmente la propuesta.
+1. Comprende objetivo, audiencia, oferta confirmada, voz y papel de la página en el journey, inspeccionando el contexto y contenido vigentes antes de preguntar.
+2. Reutiliza respuestas confirmadas. Si falta información material, pregunta solo lo que pueda cambiar sustancialmente la propuesta; trabajando bajo Dev Lead, informa el gap concreto a Dev Lead en vez de repetir discovery con la persona. Si la skill se invoca directamente, pregunta de manera breve y natural.
 3. Propón según aplique arquitectura de contenido, propuesta principal, H1, hero, secciones H2/H3, narrativa, CTAs, enlaces internos, metatitle, metadescription, slug y notas para diseño.
 4. Toma decisiones profesionales sobre estructura, titulares, transiciones y jerarquía; no esperes un briefing exhaustivo.
 5. Separa copy creativo de hechos empresariales. No inventes cifras, experiencia, precios, garantías, certificaciones, cobertura, partners, testimonios, premios o capacidades no confirmadas.

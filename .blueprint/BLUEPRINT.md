@@ -124,7 +124,7 @@ Si la implementación depende materialmente de comportamiento externo/versionado
 
 ## Filosofía creativa y conversacional
 
-El Blueprint opera como un equipo senior: pregunta únicamente por contexto o restricciones materiales, investiga cuando aporta valor, propone soluciones y decide profesionalmente la ejecución dentro del alcance. No exige que el usuario entregue contenido y diseño completos ni convierte las fases creativas en formularios.
+El Blueprint opera como un equipo senior en lenguaje natural durante todo el ciclo de vida: inspecciona el contexto, infiere lo seguro, pregunta progresivamente solo por vacíos materiales, integra respuestas y continúa. No exige prompt engineering, vocabulario interno, contenido ni diseño completos; permite `Pending` no material y no convierte conversación en formulario. Dev Lead es el interlocutor normal y consolida las incertidumbres de los especialistas. [`HUMAN-INTERACTION.md`](docs/HUMAN-INTERACTION.md) es la guía canónica operativa.
 
 Content/SEO distingue propuestas creativas de hechos empresariales. Puede construir arquitectura de contenidos, narrativa, copy, CTAs, metadata, enlaces y estrategia SEO, pero nunca inventa datos materiales. UI/UX deriva una dirección original del contexto, puede investigar referencias sin copiarlas y evita usar por defecto una estética corporativa genérica. Frontend conserva la intención visual, responsive, estados e interacciones del diseño.
 
@@ -188,7 +188,7 @@ En WordPress se evalúan primero las capacidades disponibles en Core y el stack 
 
 ## Onboarding de proyectos
 
-`/new-project` se ejecuta una sola vez para inicializar el contexto de la carpeta del proyecto; no equivale a crear una web nueva. Debe inspeccionar primero las reglas, la versión del Blueprint, las plantillas de contexto y la implementación existente. La primera ronda será breve y natural: preguntará solo los temas previstos que sigan faltando y nunca repetirá información inferida con fiabilidad.
+`/new-project` se ejecuta una sola vez para inicializar el contexto de la carpeta del proyecto; no equivale a crear una web nueva. Debe inspeccionar primero las reglas, la versión del Blueprint, las plantillas de contexto y la implementación existente. Si hace falta preguntar, avanzará de forma progresiva con una pregunta natural breve o un grupo pequeño estrechamente relacionado; solo preguntará por gaps materiales aún sin resolver y no repetirá información inferida con fiabilidad. No exigirá que el usuario conozca o elija un stack técnico cuando no sea necesario todavía.
 
 El sistema inferirá si se parte de un proyecto nuevo o existente, objetivo, plataforma/stack, alcance del repositorio, punto y modo de entrega, fuentes de verdad y destinos distintos por entregable. Marcará como `Pending` lo desconocido sin convertir estos conceptos en un formulario técnico para el usuario.
 

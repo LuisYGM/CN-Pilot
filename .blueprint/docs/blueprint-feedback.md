@@ -878,3 +878,37 @@ Validated.
 **Contrato de finalización de adopción:**
 
 Una adopción existente no está completa hasta que la working implementation esté bajo el product root activo correcto; se preserve el layout interno; entry points, imports, assets y referencias relevantes estén verificados; `PROJECT.md` refleje el nuevo root activo (y `ARTIFACTS.md` el producto cuando sea significativo); el source anterior ya no sea necesario para runtime/edición; no queden referencias obsoletas; y cualquier container source anterior vacío que la migración dejó sin función se elimine. La limpieza solo puede retirar ese directorio si es parte de la misma migración verificada y tiene cero archivos. No se borran directorios no vacíos/contenido desconocido ni originales de `project-resources/`; residuos necesarios o no clasificados detienen el cleanup y deben resolverse explícitamente.
+
+## BF-042 — Human-First Interaction & Progressive Context
+
+**Contexto:**
+El Blueprint ya ofrecía conversación natural y onboarding parcial, pero no tenía una regla transversal explícita para inspeccionar contexto, preguntar progresivamente y reutilizar respuestas durante tareas posteriores.
+
+**Objetivo y regla:**
+El lenguaje natural es la interfaz normal desde `/new-project` hasta mantenimiento. La persona describe resultados; el Blueprint los traduce a requisitos, decisiones, arquitectura, routing, artefactos y verificación. Inspecciona contexto antes de preguntar, infiere con seguridad, consulta únicamente vacíos materiales en lenguaje humano, integra respuestas según ownership y continúa con el contexto vigente. Dev Lead es el interlocutor normal y consolida preguntas de especialistas. `Pending` sigue permitido. Los usuarios no necesitan prompt engineering ni conocer `DIRECT`/`TASK`/`STRUCTURAL`, agents, skills, rutas, profiles, workflows o términos técnicos internos.
+
+**Criterios de aceptación:**
+1. Una persona puede iniciar con una frase o petición breve sin especificación elaborada.
+2. Se inspeccionan contexto, respuestas, fuentes de verdad e implementación pertinente antes de preguntar.
+3. No se repiten preguntas sobre hechos/respuestas que sigan vigentes.
+4. Solo se pregunta por vacíos capaces de cambiar materialmente el resultado, con preguntas breves y progresivas.
+5. La incertidumbre trivial/reversible se resuelve profesionalmente; la material se aclara antes de decidir y lo no necesario queda `Pending`.
+6. Decisiones internas del Blueprint no se trasladan al usuario; se distingue clarificación de aprobación.
+7. No se inventan hechos empresariales, métricas ni afirmaciones.
+8. Respuestas materiales se persisten bajo ownership correcto y se reutilizan sin duplicar documentos ni registrar cada conversación.
+9. Los especialistas reciben contexto confirmado suficiente y entregan los vacíos materiales a Dev Lead sin interrogar en paralelo.
+10. El mismo contrato aplica después de onboarding; `DIRECT` sigue ligero y las tareas no se vuelven formularios.
+
+**Estado:**
+Testing.
+
+**Plan de retest (pendiente; no simular resultados):**
+
+- **A. Greenfield no técnico:** «Quiero hacer una web para una veterinaria». Verificar inspección, preguntas breves solo sobre datos materiales, ausencia de preguntas sobre agents/rutas y `Pending` razonable.
+- **B. Tarea posterior a onboarding:** «Quiero hacer ahora la página de servicios». Confirmar reutilización de audiencia/branding/copy ya establecidos y preguntar solo por un vacío específico material.
+- **C. Mantenimiento Existing:** «El formulario no funciona». Confirmar inspección y diagnóstico iniciales; no volver a preguntar stack/plugin/configuración descubribles.
+- **D. Ambigüedad material:** «Quiero que los usuarios puedan guardar favoritos», con persistencia no definida. Preguntar si se guarda en ese navegador o entre dispositivos/cuenta, no por `localStorage`/DB.
+- **E. Dato empresarial ausente:** «Escribe nuestra página Sobre nosotros», sin historia/experiencia confirmada. No inventar; preguntar un hecho imprescindible o dejarlo pendiente si la pieza puede avanzar.
+- **F. `DIRECT` trivial:** «Cambia el texto del botón de Enviar a Solicitar información». Ejecutar, verificar y cerrar sin discovery adicional.
+
+Los escenarios se pueden probar en sesiones/clones separados y representativos; esta documentación no afirma que alguno ya haya sido ejecutado o aprobado. BF-041 conserva su estado `Validated`; BF-042 permanece `Testing` hasta validar este plan.

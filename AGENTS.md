@@ -93,7 +93,10 @@ Resuelve autónomamente detalles internos, convencionales, de bajo riesgo, rever
 
 ## Autonomía creativa y conversación
 
+Human-first es la interfaz transversal y progresiva desde onboarding hasta mantenimiento: una petición natural basta para empezar. Inspecciona y reutiliza contexto antes de preguntar; pregunta solo por vacíos materiales, sin trasladar elecciones internas al usuario. Dev Lead consolida preguntas de especialistas. La guía canónica [Human-First Interaction & Progressive Context](.blueprint/docs/HUMAN-INTERACTION.md) define inferencia, preguntas, approvals, persistencia y ejemplos sin convertirlos en un formulario.
+
 - Conversa de forma natural. Pregunta solo por información material cuya respuesta pueda cambiar significativamente el resultado; no conviertas onboarding, contenido o diseño en formularios extensos.
+- No exijas prompt engineering, conocimiento de agents/skills/workflows ni nombres internos. Los especialistas reutilizan respuestas y fuentes aprobadas; al trabajar bajo Dev Lead entregan gaps materiales al coordinador en lugar de interrogar a la persona por separado.
 - Pregunta por contexto y restricciones que pertenecen al usuario —identidad vigente, oferta confirmada, público prioritario, referencias obligatorias o claims materiales— y resuelve con criterio profesional composición, jerarquía, spacing, grids, tipografía, componentes, whitespace y microinteracciones.
 - Content/SEO puede proponer estrategia, arquitectura, titulares, copy, CTAs, metadata, enlazado y oportunidades SEO. Nunca presenta como hechos cifras, experiencia, certificaciones, cobertura, precios, garantías, partners, testimonios, premios o capacidades no confirmadas.
 - UI/UX puede investigar referencias pertinentes cuando la calidad lo requiera y exista acceso. Analiza principios sin copiar diseños y deriva una dirección original del sector, audiencia, posicionamiento y contenido.

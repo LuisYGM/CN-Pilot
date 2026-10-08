@@ -30,7 +30,7 @@ Sigue [Configuración de Kilo](KILO-SETUP.md). El Blueprint no recomienda modelo
 
 ### 4. Selecciona Dev Lead
 
-`dev-lead` es el interlocutor normal. Describe el trabajo en lenguaje natural; él clasifica la petición, evalúa el riesgo y coordina únicamente a los especialistas necesarios.
+`dev-lead` es el interlocutor normal. Basta explicar en lenguaje natural qué quieres conseguir, incluso en una frase sencilla: no necesitas escribir un prompt elaborado ni conocer nombres internos. Dev Lead inspecciona el contexto, pregunta solo si falta algo material y coordina a los especialistas necesarios.
 
 No selecciones manualmente `architect`, `developer`, `reviewer` u otros subagentes salvo que estés diagnosticando o manteniendo el propio Blueprint.
 
@@ -38,7 +38,7 @@ No selecciones manualmente `architect`, `developer`, `reviewer` u otros subagent
 
 Ejecuta `/new-project` una sola vez por carpeta creada desde el template. El comando **no crea una web nueva**: inspecciona la carpeta e inicializa su contexto, también cuando se trata de una web existente o de mantenimiento.
 
-Dev Lead preguntará solo por información material que no pueda inferir, por ejemplo qué se va a hacer, propósito, público y stack conocido. Después mostrará un resumen sencillo y pedirá confirmar:
+Si no basta el contexto disponible, Dev Lead preguntará progresivamente y en lenguaje natural por una ausencia material; no convertirá propósito, público y stack en campos obligatorios ni exigirá elegir tecnología. Después mostrará un resumen sencillo y pedirá confirmar:
 
 > ¿Inicializo el proyecto con esta información?
 
@@ -46,7 +46,7 @@ Tras la confirmación actualizará el contexto. No desarrollará todavía págin
 
 El README del template presenta el Blueprint y su onboarding. Al inicializar un proyecto real, `/new-project` convierte ese README genérico en una presentación breve del proyecto, basada en contexto confirmado; un README propio existente se conserva por defecto. `.blueprint/BLUEPRINT.md` mantiene la documentación del sistema y los archivos canónicos de contexto prevalecen sobre el resumen del README.
 
-No vuelvas a ejecutar `/new-project` si `PROJECT.md` ya describe el proyecto real y `STATE.md` dejó atrás la inicialización. Los datos todavía desconocidos pueden permanecer como `Pending`.
+No vuelvas a ejecutar `/new-project` si `PROJECT.md` ya describe el proyecto real y `STATE.md` dejó atrás la inicialización. Los datos que no hacen falta todavía pueden dejarse para una tarea posterior.
 
 ### 6. Confirma el contexto y empieza a trabajar
 
@@ -69,6 +69,7 @@ Los slash commands como `/plan`, `/content`, `/design`, `/debug`, `/review` o `/
 - **Deployment opcional:** disponer de producción no activa un método de despliegue ni autoriza usarlo.
 - **Source of truth:** en sistemas existentes prevalece la implementación vigente; en trabajo nuevo se usan las fuentes versionadas acordadas.
 - **Conversación natural:** Dev Lead pregunta por decisiones del proyecto, no por campos internos ni estructuras de archivos.
+- **Contexto progresivo:** puedes completar el contexto a medida que surjan tareas; la información no necesaria ahora puede quedar pendiente.
 - **Equipo coordinado:** los especialistas se activan por necesidad y Dev Lead integra y verifica sus resultados.
 
 ## Proyectos soportados
@@ -132,6 +133,7 @@ Requieren aprobación humana las decisiones que cambian alcance o arquitectura, 
 
 ## Siguientes referencias
 
+- [Interacción human-first y contexto progresivo](HUMAN-INTERACTION.md)
 - [Configuración, MCP y deployment](CONFIGURATION.md)
 - [Trabajo con Git](GIT-WORKFLOW.md)
 - [Ciclo de vida y puntos de entrega](LIFECYCLE.md)

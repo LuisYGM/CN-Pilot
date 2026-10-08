@@ -19,6 +19,8 @@ Fases disponibles:
 
 No todos los proyectos pasan por todas. Cada flujo empieza y termina donde lo determine el alcance del repositorio.
 
+En cualquier fase se conserva la misma interfaz human-first: lenguaje natural, inspección antes de preguntar y preguntas progresivas solo ante vacíos materiales. Onboarding no intenta decidir todo el trabajo futuro. Consulta [Human-First Interaction & Progressive Context](HUMAN-INTERACTION.md) como guía transversal.
+
 ## Destinos en proyectos greenfield
 
 - Inputs proporcionados → `project-resources/` (no modificar ni publicar por defecto).
