@@ -914,3 +914,42 @@ Validated.
 - **F. `DIRECT` trivial — PASS.** Cambió «Atención veterinaria» por «Atención veterinaria las 24hrs» en una única línea, verificó el resultado y cerró sin preguntas, discovery, plan, Reviewer ni actualización innecesaria de contexto.
 
 Los resultados A–F se registran como retests ejecutados. Los findings menores B/E motivaron los refinamientos de continuación y material-delta descritos arriba; no cambian el resultado principal aprobado de esos escenarios. BF-041 y BF-042 quedan `Validated` tras la revisión estructural.
+
+## BF-043 — Visual Diversity & High-Fidelity Output Contract
+
+**Contexto y benchmark visual previo (D01–D05):**
+
+- **D01 — Aurea Estates / Real Estate Premium — PASS:** prototipo HTML high-fidelity directo; fotografía arquitectónica, composición editorial, serif + sans, crema + oliva, whitespace, propiedades/destinos y servicio boutique. Alta calidad e identidad sectorial convincente.
+- **D03 — Savia Pilates / Wellness — PASS WITH FINDING:** prototipo HTML directo y composición distinta a D01, con formas de movimiento y tono wellness, pero compartía demasiado ADN base: warm neutral, verde, serif editorial, eyebrow uppercase, gran heading, whitespace y CTA sobrio. El hallazgo es convergencia cromática/estética, no baja calidad ni regla contra el verde.
+- **D05 — RelayDesk / SaaS B2B — PASS WITH FINDINGS:** primera respuesta fue `home.md`, sin prototipo high-fidelity; después el HTML/CSS/JS solicitado para visualizar terminó prematuramente en `product/`. La dirección visual sí cambió a sans, dashboard, UI de producto y mayor densidad; la paleta volvió a off-white + forest green. Hallazgos de proceso: Markdown sustituyó HTML y una preview saltó de Design a Product antes de aprobación.
+- **D02 — Iron District / Gym & Fitness — PASS FUERTE:** `project-artifacts/design/pages/home-iron-district.html` desde la primera petición. Negro + acid green, display pesada, ticker y composición industrial; Design Artifact con lenguaje muy distinto que demuestra capacidad de rango.
+- **D04 — Nexo Construcción & Ingeniería — PASS WITH FINDINGS:** identidad técnica, condensed typography, grids rígidos, numeración, ilustración conceptual y stone/off-white + verde grisáceo/naranja señalética. La primera respuesta fue solo `home.md` y la página de previsualización terminó en `product/` antes de Human Visual Approval; reaparece una variante de verde.
+
+El benchmark demuestra rango real de composición, densidad, tipografía, geometría, tratamiento de producto/imagen y carácter sectorial; no avala la hipótesis de que siempre se genere la misma página. También muestra recurrencia no especificada de alguna familia verde en 5/5 propuestas (oliva, verde, forest, acid green y verde grisáceo), output HTML inconsistente en D05/D04 y confusión Design → Product en ambos. Estos son hallazgos de comportamiento observado, no atribución causal a una skill/heurística concreta ni resultados de retests BF-043.
+
+**Regla:**
+
+- Visual Diversity aplica a identidad Greenfield/conceptual abierta: dirección y fingerprint deben derivarse del proyecto, y color necesita fundamento contextual. Considera más de una familia solo si existe libertad real; elige una sin presentar variantes obligatorias. Ningún color, serif, minimalismo ni tratamiento está prohibido. Clusters recurrentes activan reflexión sobre grounding, no blacklist ni score.
+- En Existing con identidad, Design System, páginas ya resueltas o referencia aprobada, `continuity > novelty`: adapta una página nueva al lenguaje visual existente; no rediseñes por buscar diversidad.
+- Para scope visual de una página/interfaz web, la entrega high-fidelity es un prototipo HTML/CSS/JS responsive en `project-artifacts/design/pages/`. Markdown puede explicar la dirección, pero no ser el único output high-fidelity. Previsualizar en el navegador mantiene ownership de Design.
+- Un prototipo pendiente de aprobación no se escribe en `product/`; Product empieza tras Human Visual Approval y un trigger suficiente de implementación. Assets conceptuales siguen siendo distinguibles de hechos empresariales; no se inventan clientes, instalaciones, testimonios, datos de contacto o claims.
+- Se conservan BF-018, BF-021, BF-034, BF-035, BF-041 y BF-042: fases proporcionales, prototipo funcional/HTML, QA adecuado, separación de ownership y human-first. Se mantienen heurísticas de dirección visual, atribución de `ui-design-system` y referencias opcionales; no se revierte ese trabajo ni se obliga a websearch.
+
+**Criterios de aceptación:**
+1. No se usa una estética cromática/compositiva como default sin grounding en el proyecto.
+2. El rango visual depende de varios ejes coherentes; no se exigen colores diferentes, variantes visibles ni originalidad artificial.
+3. Existing conserva continuidad visual cuando ya existe identidad vigente.
+4. Una página/interfaz web cuyo scope es diseño visual/high-fidelity produce prototipo HTML/CSS/JS responsive; Markdown no lo sustituye.
+5. «Quiero verlo como una página real/responsive» materializa el Design Artifact bajo Project Artifacts, no Product.
+6. Solo aprobación visual humana + trigger de implementación trasladan el trabajo a Product.
+7. Ninguna política hace obligatorio investigar referencias, cambia screenshot defaults, degrada UX/accesibilidad ni crea burocracia en DIRECT.
+
+**Plan de retest (pendiente; no simular resultados):**
+
+- **R1 — High-Fidelity Output Contract:** con briefing Greenfield suficiente y «Quiero hacer el diseño de la página de inicio», generar Creative Direction más prototipo HTML/CSS/JS responsive en `project-artifacts/design/pages/`; no Markdown-only ni `product/`; Human Visual Approval pendiente.
+- **R2 — Natural Preview Request:** mientras el prototipo espera aprobación, «Quiero verlo como una página web real y responsive para revisarlo» debe mejorar/materializar la preview dentro de Design, sin cambiarla a Product ni pedir rutas.
+- **R3 — Visual Diversity Benchmark:** tres o más proyectos Greenfield de sectores/personalidades diferentes con identidad abierta. Evaluar grounding de color, tipografía, composición, densidad, geometría, componentes e imagen. No exigir paletas distintas ni scores; coincidencias cromáticas pueden ser correctas si están justificadas.
+- **R4 — Existing Design Continuity:** con Home u otra página visualmente resuelta, «Necesito ahora la página Nosotros» debe inspeccionar y reutilizar tokens, tipos, composición, componentes y comportamiento; no debe iniciar otra dirección, branding o novedad.
+- **R5 — Approved Design → Product:** tras Human Visual Approval y «Implementa este diseño», conservar el prototipo como source visual, implementar en `product/`, no reabrir dirección y ejecutar QA proporcional posterior.
+
+No se declaran R1–R5 ejecutados. BF-043 permanece `Testing` hasta validar esos retests; esta evidencia previa D01–D05 no los sustituye.

@@ -106,7 +106,7 @@ Rutas habituales de Project Artifacts:
 | Contenido de páginas | `project-artifacts/content/pages/` cuando se cree contenido en greenfield |
 | Artículos | `project-artifacts/content/blog/` cuando se creen artículos en greenfield |
 | Estrategia editorial/search | `project-artifacts/content/strategy/` cuando exista un pack reutilizable |
-| Diseño de páginas | `project-artifacts/design/pages/` cuando exista un prototipo real |
+| Diseño de páginas | Prototipo HTML/CSS/JS responsive en `project-artifacts/design/pages/` cuando aplique alta fidelidad; `.md` puede acompañar, no sustituirlo |
 | Referencias visuales | `project-artifacts/design/references/` cuando existan referencias versionadas |
 | Especificaciones funcionales | `project-artifacts/docs/features/` cuando se persista una especificación |
 | Arquitectura transversal | `project-artifacts/docs/architecture/` cuando exista documentación real |
@@ -114,6 +114,8 @@ Rutas habituales de Project Artifacts:
 | Auditorías | `project-artifacts/docs/audits/` cuando se solicite un informe durable |
 | Código y pruebas | Producto activo en `product/` para Greenfield/Existing importado, con estructura/harness nativos; en adopted exception, product root real registrado |
 | Handoff | Entregable auxiliar en `project-artifacts/` cuando corresponda, con `.blueprint/templates/handoff.md` como base; respeta destinos acordados |
+
+Al pedir el diseño visual de una página web, el resultado de alta fidelidad es un prototipo HTML/CSS/JS responsive que puedes revisar como página. Una spec Markdown puede acompañarlo, pero no sustituirlo; visualizar el prototipo no significa implementar o publicar el producto.
 
 [`ARTIFACTS.md`](../../ARTIFACTS.md) es el mapa de entregables significativos de todo el proyecto, no solo de `project-artifacts/`: puede incluir implementación bajo `product/` cuando aporte valor y entregables excepcionales. No incluye Core, Project Context, inputs originales, caches, dependencias ni placeholders. No es una copia del contenido, changelog ni inventario del Blueprint; se actualiza ante altas/bajas, movimientos o cambios materiales de propósito/estado.
 

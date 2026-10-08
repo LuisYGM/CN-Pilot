@@ -53,6 +53,8 @@ Para landings, páginas comerciales, páginas corporativas importantes y otras i
 
 `Final Content → Creative Direction → High-Fidelity Prototype → Human Visual Approval → Builder-native Implementation → Visual Fidelity Pass → Visual Parity QA → Human Visual QA → Publish`
 
+Para diseño visual high-fidelity de páginas/interfaces web, el prototype evaluable es HTML/CSS/JS responsive bajo `project-artifacts/design/pages/`; Markdown puede explicar Creative Direction, nunca sustituirlo. Una preview pedida en navegador sigue siendo Design Artifact. En Existing conserva el sistema aprobado; no estrenes una dirección visual por buscar novedad. `product/` solo recibe implementación después de Human Visual Approval y un trigger suficiente de desarrollo.
+
 No es obligatorio para cambios pequeños, mantenimiento, cambios de texto, correcciones simples, pequeñas modificaciones CSS ni páginas sin prototipo solicitado. Sin referencia visual aprobada no se exige Visual Parity QA; sin representación visual fiable se informa que Technical QA está completo y Visual QA queda pendiente.
 
 ## Límite funcional del prototipo

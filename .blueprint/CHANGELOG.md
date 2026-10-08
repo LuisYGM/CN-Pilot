@@ -4,6 +4,7 @@
 
 ### Añadido
 
+- **BF-043 — Visual Diversity & High-Fidelity Output Contract (Testing):** dirección visual fundamentada en el proyecto, continuidad para Existing, prototipo HTML high-fidelity como salida de diseño y frontera explícita previa a implementación en Product.
 - **BF-042 — Human-First Interaction & Progressive Context:** guía canónica para lenguaje natural, inspección antes de preguntar, preguntas materiales/progresivas, reutilización y persistencia proporcional del contexto durante onboarding y tareas posteriores.
 - **BF-041 — Repository Structure & Blueprint Boundary:** Core portable bajo `.blueprint/`; `project-resources/` para inputs; `project-artifacts/` on-demand para outputs auxiliares; `product/` para producto activo Greenfield/Existing importado. Repositorios Existing ya operativos adoptados pueden preservar su root real mediante excepción de compatibilidad documentada. Project Context permanece en raíz y `ARTIFACTS.md` indexa entregables significativos de todo el proyecto. Retirados placeholders y scaffolds duplicados.
 - **BF-040 — Deployment Workflow Scaffold:** workflow GitHub Actions heredable, manual y fail-closed por defecto; no publica hasta configuración específica autorizada y trigger automático explícito.

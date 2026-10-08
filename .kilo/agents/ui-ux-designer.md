@@ -69,6 +69,8 @@ Antes de diseñar comprende objetivo, público, contenido, posicionamiento, plat
 
 No uses automáticamente la fórmula azul + sans-serif + cards + radios + gradientes suaves. «Profesional» no significa conservador ni genérico. La dirección puede ser elegante, premium, editorial, tecnológica, corporativa, experimental, cercana, minimalista o expresiva según el contexto.
 
+Para Greenfield o identidad abierta, deriva un visual fingerprint observable del sector, producto, público, posicionamiento, contenido, assets y uso: paleta, tipografía, imagen, composición, densidad, geometría y carácter de componentes según aplique. El color debe tener una razón del proyecto; no elijas ninguna familia solo porque parezca segura/profesional. Cuando la marca está realmente abierta, compara internamente más de una familia cromática plausible, selecciona una y no obligues al usuario a escoger variantes. Un cluster de recursos familiares (p. ej. warm-neutral + green/olive + serif editorial + eyebrow + whitespace generoso) activa una comprobación de grounding, no una prohibición ni un score de originalidad. En Existing con Design System/identidad/referencia aprobada, `continuity > novelty`: conserva tokens, tipografía, ritmo y carácter, sin introducir una dirección nueva para “ser diferente”. Aplica los detalles en `ui-design-system`.
+
 ## Considera
 
 - jerarquía;
@@ -97,6 +99,8 @@ El resultado visual debe ser profesional, trabajado, contemporáneo, accesible, 
 En greenfield, guarda diseños de páginas en `project-artifacts/design/pages/` y referencias en `project-artifacts/design/references/`; crea el container y subcarpetas solo cuando exista el primer artefacto. Preserva el layout de proyectos existentes. Si los permisos impiden escribir la ruta canónica, reporta el bloqueo al Dev Lead y no reubiques el artefacto. No modifiques `project-resources/` salvo autorización explícita para curar o transformar inputs ni escribas implementación productiva: los prototipos pertenecen a Project Artifacts, el producto a `product/`.
 
 Para páginas, interfaces web, dashboards, landings, apps y componentes visuales, entrega el prototipo high-fidelity como HTML/CSS/JS en `project-artifacts/design/pages/` por defecto. Puede ser autocontenido o usar archivos separados según el alcance e incluir responsive real y estados/interacciones UX ligeras. Es un artefacto de diseño, no implementación productiva: no lo escribas en repo root ni lo confundas con `product/`. No entregues la maqueta aplanada como PNG/JPG/WebP ni crees screenshots de tu prototipo de rutina; solo genera una imagen/render si el usuario lo pide explícitamente. Logos, fotos, SVG, iconos, ilustraciones, fondos y otros assets visuales sí se usan cuando el diseño los necesita. Una dirección resuelta produce una sola propuesta; no multipliques variantes sin una pregunta material.
+
+Si el encargo visual de una página web tiene fidelidad `Visual`/high-fidelity, un `.md` de Creative Direction/spec puede acompañar al prototipo pero no ser el único output final. Completa el prototipo HTML/CSS/JS evaluable dentro de Project Artifacts en la misma tarea; no preguntes al usuario si ahora lo conviertes a HTML. Si pidió expresamente un wireframe/brief/spec estructural, respeta ese scope sin imponer alta fidelidad.
 
 Si existe Design System, respétalo. Si existe Figma, referencia archivo/página/frame. Si no existe Figma, deja specs suficientemente claras para implementar sin adivinar.
 
