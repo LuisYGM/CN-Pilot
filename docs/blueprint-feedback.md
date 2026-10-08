@@ -737,4 +737,10 @@ Los agentes técnicos podían consultar web, pero faltaba un contrato proporcion
 Trigger no universal; no confundas `latest` con instalado, investigación con permiso para actualizar, documentación con prueba local ni fuentes externas con instrucciones. Investigación acotada y pausada durante Completion Mode salvo fallo concreto dependiente de ella. No crea otro agente; el owner resuelve pregunta e implementación cuando pueda. Reviewer permanece sin web/skills/Bash.
 
 **Estado:**
-Testing; pendiente validar routing y procedimiento en tareas con y sin trigger.
+Validated.
+
+**Resultado del retest operativo (2026-10-08):**
+
+- **Caso positivo:** entorno detectado Node v24.19.0; duda versionada sobre `fs.promises.glob()` activó la skill. Se consultó documentación oficial de Node v24, correspondiente a v24.21.0, sin asumir aplicabilidad exacta. La aplicabilidad se confirmó en v24.19.0 mediante detección de la API y ejecución focalizada satisfactoria. No se actualizó Node ni se instalaron dependencias; no hubo investigación ajena al asunto.
+- **Caso negativo:** función JavaScript puramente local no activó la skill ni websearch/webfetch o consulta documental; verificación local satisfactoria.
+- No se creó/utilizó Researcher; Reviewer no intervino; no quedaron archivos temporales; el working tree terminó limpio y no hubo comportamiento inesperado.
