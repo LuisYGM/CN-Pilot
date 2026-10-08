@@ -680,10 +680,13 @@ Reviewer conserva independencia y solo lectura; limita la revisión normal al di
 Reviewer permanece utilizable en TASK de riesgo/impacto suficiente y STRUCTURAL; DIRECT/TASK rutinaria no lo activan por defecto. Browser, visual, performance, accessibility, SEO y otras auditorías siguen siendo ownership especializado. La capacidad de investigación externa se deniega; lectura y verificación continúan sin escritura.
 
 **Estado:**
-Testing; pendiente retest de revisiones lean y comprobación de resolución de permisos en runtime.
+Validated.
 
 **Resultado del retest (2026-10-08):**
-La lectura histórica con `git show` fue correctamente denegada por Bash; no se debe ampliar el permiso. El Reviewer devolvió inicialmente `CHANGES REQUIRED` sin hallar defecto porque faltaba el diff. Se formaliza `BLOCKED` para evidencia/capacidad imprescindible ausente y Dev Lead debe adjuntar diff, archivos afectados y criterios en revisiones históricas. BF-033 continúa en Testing hasta retestar este handoff y el estado BLOCKED.
+En el retest inicial, Bash denegó correctamente `git show`; no se amplió el permiso y la evidencia inaccesible produjo `CHANGES REQUIRED` sin defecto encontrado. El hardening introdujo `BLOCKED` y el handoff de evidencia histórica. En el retest final, Dev Lead adjuntó correctamente el diff al task; Reviewer devolvió `APPROVED`, cero hallazgos, sin consultar archivos adicionales ni intentar capabilities prohibidas, usar websearch/webfetch, cargar skills o hacer screenshots. No hubo comportamiento inesperado.
+
+**Observación no bloqueante:**
+En el primer intento de implementación, el especialista no reconoció el copy ya presente en la tarea y fue necesario reiterarlo. Observar si se repite en retests futuros antes de abrir otra BF.
 
 ## BF-034 — HTML-Only Web Design Prototypes
 
@@ -694,7 +697,10 @@ Prototipos web expresados como imagen aplanan estructura, estados e interaccione
 Los prototipos high-fidelity web del Blueprint se entregan como HTML/CSS/JS en `design/pages/` por defecto. Responsive vive en el prototipo; la interfaz no se reemplaza por PNG/JPG/WebP ni screenshots. Assets reales del diseño sí se permiten. Imagen/render solo por petición explícita; Figma sigue siendo opcional.
 
 **Estado:**
-Testing; pendiente retest de generación de prototipos.
+Validated.
+
+**Resultado del retest (2026-10-08):**
+Se generó `design/pages/taskflow-landing.html` como HTML autónomo con CSS/JS inline y responsive real. No se generaron PNG/JPG/WebP ni screenshots; no se necesitaron assets raster.
 
 ## BF-035 — No-Screenshot-by-Default QA
 
@@ -705,4 +711,7 @@ Screenshots rutinarios duplican evidencia DOM/estado/browser y generan tool call
 Para runtime prioriza DOM/árbol, estado, URL, consola, network y atributos/computed styles relevantes. Captura solo por petición explícita o cuando una condición material visual no pueda comprobarse suficientemente por evidencia más directa. `visual-parity-review` conserva su función; con fuente HTML prioriza comparación estructural y captura ante necesidad. Rondas visuales agrupadas, correcciones agrupadas y confirmación focalizada; Reviewer no hace screenshot ni inicia QA browser/visual.
 
 **Estado:**
-Testing; pendiente retest de QA browser y comparación visual.
+Validated.
+
+**Resultado del retest (2026-10-08):**
+QA mediante inspección directa de HTML/CSS/estructura/breakpoints/estados; sin browser tooling ni screenshots. `visual-parity-review` no se activó al no existir referencia aprobada; Reviewer no se activó. No hubo QA especializado innecesario.
