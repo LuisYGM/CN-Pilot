@@ -822,4 +822,10 @@ Cada proyecto hereda `.github/workflows/deploy.yml` manual y fail-closed. Su pre
 El scaffold no publica ni contiene secretos/destinos. `/new-project` identifica intención pero no configura infraestructura. Sin método completo permanece manual y fail-closed. Stack-aware; BF-036 aplica a comportamiento/versiones externas y BF-039 a gates custom. En WordPress, `deploy-wordpress` mantiene el ownership de publicación y superficies persistentes.
 
 **Estado:**
-Testing; pendiente probar herencia del scaffold y configuración por proyecto sin riesgo de publicación.
+Validated.
+
+**Resultado del retest operativo (2026-10-08):**
+
+- **Caso A — Scaffold heredado:** `.github/workflows/deploy.yml` existe y solo usa `workflow_dispatch`; no contiene `push`, `schedule`, secrets, host/usuario/puerto/ruta remota ni FTP/SFTP/SSH/rsync/acciones externas de deployment. Usa `permissions: contents: read`, no ejecuta deployment y, sin configurar, informa que no está configurado y termina con `exit 1`: manual y fail-closed.
+- **Caso B — Onboarding sin deployment:** el usuario indicó trabajo local y GitHub, pero no deployment. `/new-project` no preguntó por GitHub Actions, servidor, protocolo ni secrets; no configuró el workflow, no habilitó `push` ni convirtió onboarding en setup de infraestructura.
+- **Caso C — Onboarding con intención:** se registró intención local → GitHub → servidor y deployment automático desde `main` como intención futura cuando esté configurado; GitHub Actions quedó como mecanismo previsto tentativo y deployment como Pending. Quedaron pendientes framework/versión PHP, host/destino, URL, método/protocolo, usuario, puerto, ruta remota, autenticación y entornos staging/production. No pidió valores secretos, inventó datos de servidor, modificó el workflow, habilitó `push` ni intentó publicar.
