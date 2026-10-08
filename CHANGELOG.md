@@ -4,6 +4,7 @@
 
 ### Añadido
 
+- **BF-039 — Gate Self-Test:** validación proporcional de gates custom decisivos mediante controles KNOWN-GOOD/PASS y KNOWN-BAD/FAIL aislados, sin self-test rutinario de tooling estándar ni pruebas inseguras en producción.
 - **BF-038 — Blueprint Doctor:** comando `/doctor` local y read-only para diagnosticar integridad de Core, agentes, skills, comandos, routing, permisos críticos y MANIFEST sin reparar ni ejecutarse por rutina.
 - **BF-037 — Verified Blocking Findings:** verificación fresca única orientada a refutar findings Reviewer HIGH/CRITICAL realmente bloqueantes y no demostrados; discrimina CONFIRMED/REFUTED/UNPROVEN sin crear un gate universal.
 - **BF-036 — Source-Grounded Development:** skill condicional para verificar afirmaciones externas/versionadas desde el estado local y fuentes primarias hasta la prueba proporcional en el proyecto, sin investigar ni actualizar dependencias por rutina.

@@ -785,3 +785,17 @@ La ejecución inicial devolvió HEALTHY. Reviewer con `bash: allow` produjo BROK
 
 **Resultado del retest final tras Fresh Diagnostic Snapshot (2026-10-08):**
 Sobre un Blueprint íntegro, `/doctor` devolvió `HEALTHY`. Sin cambiar de sesión, se modificó temporalmente `MANIFEST.md` de 12 a 11 comandos; una nueva ejecución releyó el estado y devolvió `WARNINGS` por discrepancia, sin corregir el archivo. Se restauró MANIFEST a 12; otra ejecución en la misma sesión volvió a leer el filesystem y devolvió `HEALTHY`. Quedó demostrado que no reutiliza como evidencia del estado actual el resultado de una ejecución anterior.
+
+## BF-039 — Gate Self-Test
+
+**Contexto:**
+Un checker custom puede devolver PASS con lógica invertida/incorrecta, path o regex erróneos, errores absorbidos o condiciones imposibles, generando falsa confianza cuando controla una decisión.
+
+**Regla:**
+Antes de confiar en lógica propia materialmente decisiva, demuestra `KNOWN-GOOD → PASS` y `KNOWN-BAD → FAIL` por la causa esperada. Fixtures, mocks o entornos aislados permiten probar el detector sin activar el side-effect protegido.
+
+**Límites:**
+Solo gates/checkers custom que controlan decisiones materiales; no herramientas estándar ni tests ordinarios. No se provoca daño en producción, no se exige mutation testing, agentes, skills, comandos o frameworks nuevos. Reutiliza evidencia mientras no cambie materialmente la lógica; si un negative control seguro no existe, no declares el gate validado y reporta el límite. Reviewer consume evidencia, no ejecuta pruebas.
+
+**Estado:**
+Testing; pendiente validar positive/negative controls en gates custom reales y su omisión en tooling estándar.
