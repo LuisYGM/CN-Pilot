@@ -816,7 +816,7 @@ Se creó `scripts/release-gate.mjs`, gate custom cuyo PASS/FAIL controla si se p
 Los proyectos creados desde el Blueprint necesitaban una superficie base para configurar deployment sin inventar desde cero el workflow ni habilitar una publicación antes de confirmar stack, destino y método.
 
 **Regla:**
-Cada proyecto hereda `.github/workflows/deploy.yml` manual y fail-closed. Su presencia no significa deployment configurado. `product/` es la superficie primaria candidata, no un target universal: el stack determina artifact/source (incluido build output/public root), entorno, transporte, exclusiones, secretos referenciados, trigger y verificación/recuperación. Deployment automático requiere intención explícita.
+Cada proyecto hereda `.github/workflows/deploy.yml` manual y fail-closed. Su presencia no significa deployment configurado. En workspace canónico `product/` es superficie primaria candidata, no un target universal; en Existing compatibility exception se usa el artifact/source real registrado. El stack determina artifact/source (incluido build output/public root), entorno, transporte, exclusiones, secretos referenciados, trigger y verificación/recuperación. No reorganices ni cambies deployment para satisfacer el container. Deployment automático requiere intención explícita.
 
 **Límites:**
 El scaffold no publica ni contiene secretos/destinos. `/new-project` identifica intención pero no configura infraestructura. Sin método completo permanece manual y fail-closed. Stack-aware; BF-036 aplica a comportamiento/versiones externas y BF-039 a gates custom. En WordPress, `deploy-wordpress` mantiene el ownership de publicación y superficies persistentes.
@@ -836,7 +836,7 @@ Validated.
 El template mezclaba Core del Blueprint, contexto del proyecto, inputs y scaffolds de artefactos, además de crear directorios de salida mediante README-placeholder.
 
 **Regla:**
-Fronteras greenfield 1.1.0: `.blueprint/` → sistema; `project-resources/` → inputs; `project-artifacts/` → outputs auxiliares; `product/` → implementación; archivos canónicos de raíz → Project Context/control. `project-artifacts/` y `product/` son on-demand y se materializan al aparecer su primer output/implementación, no durante onboarding. El stack define el layout interno de `product/`; los artifacts auxiliares se organizan en `project-artifacts/content/`, `project-artifacts/design/`, `project-artifacts/docs/`. `ARTIFACTS.md` indexa entregables significativos de todo el proyecto, no solo los ubicados en el container de artifacts. Las carpetas de tests pertenecen al stack/harness.
+Fronteras de workspace 1.1.0: `.blueprint/` → sistema; `project-resources/` → inputs; `project-artifacts/` → outputs auxiliares; `product/` → producto activo Greenfield/Existing importado; archivos canónicos de raíz → Project Context/control. Un Existing repository ya operativo adoptado puede declarar `Existing compatibility exception` y conservar su root real con evidencia. `project-artifacts/` y `product/` son on-demand y se materializan al aparecer su primer output/implementación, no durante onboarding. El stack define el layout interno del producto activo; artifacts auxiliares se organizan en `project-artifacts/content/`, `project-artifacts/design/`, `project-artifacts/docs/`. `ARTIFACTS.md` indexa entregables significativos de todo el proyecto, no solo los ubicados en el container de artifacts. Las carpetas de tests pertenecen al stack/harness.
 
 **Límites:**
 No cambiar el layout nativo de proyectos existentes, crear código ni migrar proyectos externos 1.0.1. `.env.example` no forma parte del template base. `.github/workflows/deploy.yml` permanece manual y fail-closed. Los materiales añadidos a `project-resources/` no se versionan ni despliegan automáticamente.
@@ -852,3 +852,12 @@ Testing.
 - También se detectó que outputs auxiliares no deben dispersarse como `content/`, `design/` o `docs/` top-level: pertenecen a `project-artifacts/` para greenfield.
 - Pendiente repetir el retest para demostrar que el código nuevo queda bajo `product/` y que onboarding no crea el contenedor antes de empezar implementación.
 - Pendiente nuevo retest greenfield con los boundaries definitivos: inputs → `project-resources/`, supporting outputs → `project-artifacts/`, implementación → `product/` y Project Context/control → root.
+
+**Retest Existing previo (2026-10-08) — evidencia histórica, no aceptación final:**
+
+- Escenario: sitio estático existente en `legacy-site/` top-level (`index.html`, `assets/`) dentro de un workspace Blueprint.
+- Pasó el contrato vigente entonces: Existing fue preservado, no se creó `product/`, no hubo reorganización automática; Core y deployment permanecieron intactos.
+- Demuestra que el Blueprint respeta un layout existente, pero no valida la convención de producto activa acordada después: cuando el Blueprint es el workspace, también un Existing importado debe trabajar desde `product/`.
+- Distinción final: Existing importado al workspace → producto activo bajo `product/`; Existing repository ya operativo adoptado → `Existing compatibility exception` documentada, preserva root real.
+- Decisión posterior de boundary: Existing importado al workspace Blueprint debe tener el producto activo en `product/`; Existing adopted conserva root real solo como excepción con contratos operativos documentados. Un `legacy-site/` source top-level sin esos contratos queda Pending normalization/migration, no excepción automática.
+- Pendiente retest final Existing bajo este boundary definitivo.

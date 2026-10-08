@@ -95,7 +95,7 @@ El sistema separa las capas de infraestructura, contexto, inputs, outputs auxili
 - **Blueprint Core:** infraestructura portable heredada bajo `.blueprint/`, además de rutas técnicas como `.kilo/`, `.github/`, `.kilocode/`, `AGENTS.md` y `kilo.jsonc`. Su inventario está en [`MANIFEST.md`](../MANIFEST.md).
 - **Project Context:** resumen y memoria breve que permiten continuar el trabajo: `README.md`, `PROJECT.md`, `REQUIREMENTS.md`, `STATE.md`, `DECISIONS.md` y `ARTIFACTS.md`.
 - **Project input:** materiales proporcionados en `project-resources/`; no equivalen a código/assets de producción ni se registran en `ARTIFACTS.md` por defecto.
-- **Product container:** `product/` es el contenedor canónico de implementación nueva greenfield bajo Blueprint 1.1.x; se crea al iniciar implementación, no durante onboarding. El stack define su estructura interna. En existentes se registra y preserva el layout observado.
+- **Producto activo del workspace:** `product/` es el container canónico en Greenfield y Existing importado; se crea al iniciar implementación/adopción, no durante onboarding, y se preserva el layout interno observado. Existing repository previamente operativo puede conservar su product root real solo con `Existing compatibility exception` documentada en `PROJECT.md`.
 - **Project Artifacts:** outputs auxiliares reales bajo `project-artifacts/` en greenfield. El container puede no existir; se crea con el primer artefacto, no durante onboarding. Documentación de producto dentro de `product/docs/` sigue perteneciendo al producto.
 
 Rutas habituales de Project Artifacts:
@@ -111,12 +111,12 @@ Rutas habituales de Project Artifacts:
 | Arquitectura transversal | `project-artifacts/docs/architecture/` cuando exista documentación real |
 | ADRs | `project-artifacts/docs/adr/` cuando exista un ADR formal |
 | Auditorías | `project-artifacts/docs/audits/` cuando se solicite un informe durable |
-| Código y pruebas | Código greenfield dentro de `product/`, con estructura/harness nativos del stack; en existentes, layout observado y preservado |
+| Código y pruebas | Producto activo en `product/` para Greenfield/Existing importado, con estructura/harness nativos; en adopted exception, product root real registrado |
 | Handoff | Entregable auxiliar en `project-artifacts/` cuando corresponda, con `.blueprint/templates/handoff.md` como base; respeta destinos acordados |
 
 [`ARTIFACTS.md`](../../ARTIFACTS.md) es el mapa de entregables significativos de todo el proyecto, no solo de `project-artifacts/`: puede incluir implementación bajo `product/` cuando aporte valor y entregables excepcionales. No incluye Core, Project Context, inputs originales, caches, dependencias ni placeholders. No es una copia del contenido, changelog ni inventario del Blueprint; se actualiza ante altas/bajas, movimientos o cambios materiales de propósito/estado.
 
-En proyectos existentes, las rutas de contenido/diseño/documentación ya vigentes se preservan durante onboarding; no se reorganizan bajo `project-artifacts/` sin una tarea explícita.
+En proyectos existentes, el modo de producto se infiere con evidencia: Existing importado al workspace activo usa `product/`; source en `project-resources/` es solo input; repositorio operativo adoptado puede registrar excepción y preservar root real. El código top-level sin contratos operativos no se vuelve excepción por inferencia. Las rutas de contenido/diseño/documentación ya vigentes se preservan durante onboarding; no se reorganizan bajo `project-artifacts/` sin tarea explícita.
 
 ## Responsive y breakpoints
 

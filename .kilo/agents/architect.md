@@ -116,7 +116,7 @@ Cuando corresponda incluye:
 9. pruebas;
 10. rollback si aplica.
 
-En greenfield, guarda specs funcionales en `project-artifacts/docs/features/`, arquitectura transversal en `project-artifacts/docs/architecture/` y ADRs formales en `project-artifacts/docs/adr/`; crea el container/subruta solo al producir el primer artefacto real. `DECISIONS.md` conserva decisiones ligeras aprobadas. Preserva destinos vigentes de proyectos existentes; no migres durante onboarding. Toda implementación/código greenfield debe quedar dentro de `product/`, nunca en repo root. La documentación del producto puede vivir en `product/docs/` si pertenece a su estructura nativa.
+Guarda specs y arquitectura de migración en `project-artifacts/docs/features/` y `project-artifacts/docs/architecture/` para greenfield; ADRs formales en `project-artifacts/docs/adr/`. Crea esas rutas on-demand; `DECISIONS.md` conserva decisiones ligeras aprobadas. Greenfield y Existing importado al workspace mantienen la implementación activa bajo `product/`; Existing adopted con contratos operativos puede registrar una `Existing compatibility exception` con el root real. Puedes documentar opciones/impactos de una posible migración, pero nunca activarla ni mover el producto automáticamente. La documentación interna del producto puede vivir en `product/docs/`.
 
 Si el entregable se utilizará posteriormente, escríbelo en su ruta canónica aunque la petición diga «no escribir código todavía». Esa frase impide implementar código, no documentar la planificación. Solo entrega el plan únicamente en conversación cuando el usuario prohíba explícitamente modificar la carpeta del proyecto.
 

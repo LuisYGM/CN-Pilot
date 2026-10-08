@@ -67,7 +67,7 @@ permission:
 ## Flujo
 
 1. Inspecciona la implementación actual.
-2. Lee el Repository Layout Contract de `PROJECT.md` y localiza la fuente vigente. Greenfield: coloca todos los archivos de implementación bajo `product/`, creando ese contenedor al iniciar la implementación; nunca uses repo root como product root. Existing: preserva el layout observado y no migres salvo tarea explícita.
+2. Lee el Repository Layout Contract de `PROJECT.md`, baseline y workspace/product mode. Greenfield y Existing importado al workspace: trabaja sobre el producto activo bajo `product/`; si ya está allí preserva su layout interno y no agregues `product/<slug>/` sin significado técnico. Existing adopted: trabaja en el product root real registrado como `Existing compatibility exception`, sin migrarlo. No elijas root por costumbre.
 3. Comprende contratos/dependencias.
 4. Carga skills relevantes.
 5. Implementa el cambio mínimo correcto.
@@ -79,7 +79,7 @@ Si la implementación depende materialmente de una API, versión, capability, si
 
 ## Principios
 
-- No crees archivos de implementación de producto en la raíz del repositorio. Para greenfield trabaja dentro de `product/` y respeta el product root interno registrado; solo una excepción material de tooling/hosting documentada en `PROJECT.md` permite una ruta root. El stack conserva su estructura nativa dentro del contenedor. Puedes leer `project-artifacts/content/`, `project-artifacts/design/` y `project-artifacts/docs/` (o sus equivalentes registrados en proyectos existentes) como fuentes; no modifiques outputs de otro owner por rutina ni uses `project-artifacts/` como source root/runtime. En existentes preserva el layout registrado.
+- En Greenfield y Existing importado, implementa en el product root activo bajo `product/` y conserva el layout nativo, sin wrapper universal. Para un único sitio, ubica su root nativa directamente en `product/`; no replique un nombre que solo era carpeta de transporte del archivo/fuente. Mantén una raíz interna solo si tiene significado técnico real (p. ej. plugin slug o componente multi-product). Solo trabaja fuera de ese container si PROJECT documenta `Existing compatibility exception` respaldada por contratos operativos materiales; no migres ni alteres deployment solo para adoptar `product/`. Código o carpetas source top-level en un workspace Blueprint sin esa evidencia son `Pending normalization/migration`: no empieces a editar allí hasta una resolución explícita y segura. `project-resources/source/` es original/reference; nunca modifiques directamente esa copia como producto activo. Si una tarea explícita adopta código recibido para modificarlo, prepara una working copy bajo `product/`, conserva el original y no copies grandes árboles por rutina. Puedes leer `project-artifacts/content/`, `project-artifacts/design/` y `project-artifacts/docs/` (o equivalentes existentes) como fuentes; no modifiques outputs de otro owner por rutina ni uses `project-artifacts/` como source root/runtime.
 
 - Cuando la tarea afecte una superficie sensible —auth/autorización, APIs/endpoints, uploads, formularios con datos reales, datos persistentes sensibles, permisos, pagos, webhooks, secretos o integraciones expuestas— carga `security-review` desde el diseño; no esperes a Reviewer. Cambiar contenido o un setting inocuo mediante un plugin no activa una auditoría profunda sin riesgo adicional real. El desarrollo de plugin propio activa seguridad según sus entradas, permisos, datos y exposición.
 

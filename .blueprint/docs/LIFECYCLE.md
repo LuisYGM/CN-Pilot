@@ -23,10 +23,10 @@ No todos los proyectos pasan por todas. Cada flujo empieza y termina donde lo de
 
 - Inputs proporcionados → `project-resources/` (no modificar ni publicar por defecto).
 - Outputs auxiliares del proceso —contenido, diseño, arquitectura, specs, ADRs y auditorías— → `project-artifacts/`, on-demand, separado del runtime.
-- Implementación/runtime → `product/`, con la estructura nativa del stack.
+- Implementación/runtime → `product/`, con la estructura nativa del stack, para Greenfield y Existing importado al workspace.
 - Project Context y controles → archivos canónicos en raíz.
 
-Registrar estos destinos no crea carpetas. `project-artifacts/` y `product/` se materializan solo cuando comienza el trabajo correspondiente. En existentes se preserva el layout observado; mover carpetas requiere tarea explícita si puede afectar consumidores o ejecución.
+Registrar estos destinos no crea carpetas. `project-artifacts/` y `product/` se materializan solo cuando comienza el trabajo correspondiente. Existing importado conserva su layout interno bajo `product/`; si la fuente está en `project-resources/source/`, es solo original/input y una tarea explícita prepara una copia activa. Existing repository adoptado con contratos operativos puede documentar el root real como `Existing compatibility exception`, preservándolo sin migración automática. Código top-level de workspace Blueprint sin esos contratos queda `Pending normalization/migration`, no se convierte por defecto en product root.
 
 ## Flujo parcial y puntos de entrega
 
