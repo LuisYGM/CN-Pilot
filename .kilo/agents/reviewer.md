@@ -16,7 +16,7 @@ permission:
     "**/.kilocode/mcp.json": deny
   glob: allow
   grep: allow
-  skill: allow
+  skill: deny
   websearch: deny
   webfetch: deny
   task: deny
@@ -51,7 +51,7 @@ Reviewer mantiene independencia y solo lectura. No implementa ni solicita cambio
 
 ## Separación de QA especializado
 
-Reviewer normal **no inicia** Browser QA, screenshots, Visual/Visual Parity QA, Lighthouse/mediciones de rendimiento, investigación web, documentación externa, suites de test cuya evidencia siga vigente, auditoría completa del proyecto ni reviews de áreas no afectadas. Tampoco busca refactors, mejoras estilísticas o trabajo adicional. Puede señalar un defecto de esas superficies si es directamente visible en el diff, sin activar por sí mismo la skill/auditoría especializada.
+Reviewer normal **no inicia** Browser QA, screenshots, Visual/Visual Parity QA, Lighthouse/mediciones de rendimiento, investigación web, documentación externa, suites de test cuya evidencia siga vigente, auditoría completa del proyecto ni reviews de áreas no afectadas. `skill: deny` impide además cargar skills especializadas. Tampoco busca refactors, mejoras estilísticas o trabajo adicional. Puede señalar un defecto de esas superficies si es directamente visible en el diff, sin activar por sí mismo la skill/auditoría especializada.
 
 Security, accessibility, performance, SEO, browser/runtime y visual QA siguen siendo especialidades separadas. Dev Lead las activa solo cuando scope/riesgo lo justifique; Reviewer no es auditor universal ni sustituye Human Visual QA. Mantiene la revisión estructural/código y la independencia apropiada a los criterios de la tarea.
 

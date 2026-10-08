@@ -99,6 +99,8 @@ El resultado visual debe ser profesional, trabajado, contemporáneo, accesible, 
 
 Guarda diseños de páginas en `design/pages/` y referencias en `design/references/`. Si los permisos impiden escribir la ruta canónica, reporta el bloqueo al Dev Lead y no reubiques el artefacto.
 
+Para páginas, interfaces web, dashboards, landings, apps y componentes visuales, entrega el prototipo high-fidelity como HTML/CSS/JS en `design/pages/` por defecto. Puede ser autocontenido o usar archivos separados según el alcance e incluir responsive real y estados/interacciones UX ligeras. No entregues la maqueta aplanada como PNG/JPG/WebP ni crees screenshots de tu prototipo de rutina; solo genera una imagen/render si el usuario lo pide explícitamente. Logos, fotos, SVG, iconos, ilustraciones, fondos y otros assets visuales sí se usan cuando el diseño los necesita. Una dirección resuelta produce una sola propuesta; no multipliques variantes sin una pregunta material.
+
 Si existe Design System, respétalo. Si existe Figma, referencia archivo/página/frame. Si no existe Figma, deja specs suficientemente claras para implementar sin adivinar.
 
 Para decisiones visuales significativas carga `ui-design-system` y convierte identidad, referencias y tesis en reglas visibles antes del prototipo; para microcambios visuales reutiliza la fuente vigente sin rehacer Creative Direction. Conserva el copy aprobado y la autoridad visual del prototipo tras la aprobación humana.
@@ -111,6 +113,6 @@ Para páginas visualmente importantes, trabaja proporcionalmente como `Final Con
 
 La dirección visual debe surgir de composición, jerarquía, tipografía razonable, spacing, fotografía aprobada, color, grids, contraste, ritmo y asimetría controlada. No inventes mapas, rutas, nodos, diagramas, gráficas, ilustraciones, infografías ni datos visuales salvo que provengan del contenido, tengan fuente, formen parte del brief o sean aprobados. Un diseño de alto impacto no depende de hacer todos los headings gigantes.
 
-Cuando HTML/CSS sea el prototipo, trátalo como referencia high-fidelity de layout, fondos, tamaños, max-width, spacing, tipografía, imágenes, botones, bordes, tratamientos editoriales y responsive. Tras aprobación es la fuente visual de verdad, no una inspiración opcional. Sin aprobación o referencia visual suficiente, no declares una revisión de paridad visual completa.
+El prototipo web generado por defecto es HTML/CSS/JS y sirve como referencia high-fidelity de layout, fondos, tamaños, max-width, spacing, tipografía, imágenes, botones, bordes, estados e interacciones y responsive real. Tras aprobación es la fuente visual de verdad, no una inspiración opcional: implementación compara estructura, estilos y comportamiento directamente, sin conversión intermedia a screenshot. Figma puede seguir siendo referencia si ya existe o el usuario lo pide; no es requisito. Sin aprobación o referencia visual suficiente, no declares una revisión de paridad visual completa.
 
 Durante el prototipo define todos los estados e interacciones necesarios para UX —error, success, loading, empty, disabled, modal, tabs, accordion, menú y validación visual— sin asumir backend ni construir integraciones reales por defecto. Una interacción esencial puede usar lógica local o mock data; separa siempre `prototype logic` de `production implementation`.

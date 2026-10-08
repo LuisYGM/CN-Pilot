@@ -1,6 +1,6 @@
 ---
 name: webapp-testing
-description: Verificar comportamiento browser/runtime de una aplicación web mediante navegación, interacción, estados, consola y capturas representativas. Úsala para bugs o QA de runtime; no para comparar una implementación con una referencia visual aprobada ni para cualquier tarea frontend.
+description: Verificar comportamiento browser/runtime de una aplicación web mediante navegación, interacción, DOM/estados, URL, consola y network pertinente. Úsala para bugs o QA de runtime; no para comparar una implementación con una referencia visual aprobada ni para cualquier tarea frontend.
 license: Apache-2.0 (adaptación de webapp-testing, Anthropic; upstream snapshot, commit unknown)
 ---
 
@@ -18,7 +18,7 @@ Playwright y browser tooling son opcionales. Si están disponibles, úsalos cuan
 2. Si la aplicación es estática, inspecciona el HTML o abre el recurso local. Si es dinámica, detecta si existe un servidor disponible y cómo indica readiness. No asumas `networkidle` como señal universal: espera la señal de la aplicación, un selector/estado observable o una condición de red adecuada.
 3. Haz reconnaissance-then-action: navega, inspecciona DOM/estado renderizado y selectores, después interactúa. Usa selectores descriptivos y espera estados reales, no pausas arbitrarias salvo que sean la única evidencia disponible.
 4. Comprueba la interacción afectada: navegación, formularios y validación visual, dropdowns, tabs, modales, menús, loading, error, success, empty, disabled y recuperación cuando correspondan.
-5. Captura screenshots solo como evidencia de estado/runtime o apoyo a otra revisión. Para comparación contra una referencia aprobada activa `visual-parity-review`.
+5. No generes screenshots por defecto. Prefiere DOM/árbol, estado, URL/routing, consola, network/respuestas y atributos/estilos/computed state pertinentes. Captura solo si una condición materialmente visual no puede comprobarse suficientemente por evidencia más directa o si el usuario la solicita; no captures cada paso ni uses screenshots como logging rutinario. Para comparación contra una referencia aprobada activa `visual-parity-review`.
 6. Registra errores de consola, errores de browser, fallos de red y resultado por estado. Cierra cualquier navegador/servidor iniciado por la prueba.
 
 ## Señales y límites

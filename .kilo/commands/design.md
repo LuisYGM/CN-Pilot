@@ -14,3 +14,4 @@ agent: dev-lead
 7. Si el especialista no puede escribir la ruta canónica, reporta el fallo de permisos y no reubiques el artefacto.
 8. Documenta dirección visual, layout, componentes, responsive, estados, interacciones y assets sin cambiar identidad aprobada sin autorización.
 9. No presentes un wireframe estructural como diseño final ni rebajes silenciosamente la fidelidad solicitada.
+10. Para interfaces web, especifica prototipo high-fidelity en HTML/CSS/JS en `design/pages/` por defecto; imagen/render solo si el usuario lo solicita. Permite assets visuales reales y una dirección única resuelta salvo que exista una decisión material abierta.

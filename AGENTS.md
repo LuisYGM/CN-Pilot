@@ -93,6 +93,7 @@ Resuelve autónomamente detalles internos, convencionales, de bajo riesgo, rever
 - Dev Lead infiere internamente la fidelidad esperada: `Structural`, `Visual` o `Implementation reference`. No obliga al usuario a conocer estas etiquetas ni degrada silenciosamente una solicitud de alta fidelidad a un wireframe genérico.
 - Frontend preserva la intención visual aprobada. Si la viabilidad exige adaptar el diseño, conserva su jerarquía y carácter y documenta la adaptación.
 - Para alta fidelidad, el contenido aprobado es fuente editorial y el prototipo aprobado fuente visual; QA técnico no sustituye Human Visual QA. Un prototipo valida presentación e interacción UX, no exige backend productivo salvo scope explícito (BF-018/BF-021). Activa `ui-design-system` para decisiones visuales significativas y `visual-parity-review` solo con referencia visual aprobada.
+- Los prototipos high-fidelity web se entregan como HTML/CSS/JS responsive real por defecto, no como imagen plana; screenshots no son evidencia QA rutinaria. Procedimientos de diseño y prueba concretan excepciones, assets válidos y evidencia visual proporcional (BF-034/BF-035).
 
 ## Continuidad y revisión estructural
 

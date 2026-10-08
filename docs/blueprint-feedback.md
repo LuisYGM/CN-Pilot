@@ -681,3 +681,25 @@ Reviewer permanece utilizable en TASK de riesgo/impacto suficiente y STRUCTURAL;
 
 **Estado:**
 Testing; pendiente retest de revisiones lean y comprobación de resolución de permisos en runtime.
+
+## BF-034 — HTML-Only Web Design Prototypes
+
+**Problema:**
+Prototipos web expresados como imagen aplanan estructura, estados e interacciones y no constituyen un artefacto implementable/responsive.
+
+**Regla:**
+Los prototipos high-fidelity web del Blueprint se entregan como HTML/CSS/JS en `design/pages/` por defecto. Responsive vive en el prototipo; la interfaz no se reemplaza por PNG/JPG/WebP ni screenshots. Assets reales del diseño sí se permiten. Imagen/render solo por petición explícita; Figma sigue siendo opcional.
+
+**Estado:**
+Testing; pendiente retest de generación de prototipos.
+
+## BF-035 — No-Screenshot-by-Default QA
+
+**Problema:**
+Screenshots rutinarios duplican evidencia DOM/estado/browser y generan tool calls/ciclos visuales innecesarios.
+
+**Regla:**
+Para runtime prioriza DOM/árbol, estado, URL, consola, network y atributos/computed styles relevantes. Captura solo por petición explícita o cuando una condición material visual no pueda comprobarse suficientemente por evidencia más directa. `visual-parity-review` conserva su función; con fuente HTML prioriza comparación estructural y captura ante necesidad. Rondas visuales agrupadas, correcciones agrupadas y confirmación focalizada; Reviewer no hace screenshot ni inicia QA browser/visual.
+
+**Estado:**
+Testing; pendiente retest de QA browser y comparación visual.
