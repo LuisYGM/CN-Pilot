@@ -744,3 +744,17 @@ Validated.
 - **Caso positivo:** entorno detectado Node v24.19.0; duda versionada sobre `fs.promises.glob()` activó la skill. Se consultó documentación oficial de Node v24, correspondiente a v24.21.0, sin asumir aplicabilidad exacta. La aplicabilidad se confirmó en v24.19.0 mediante detección de la API y ejecución focalizada satisfactoria. No se actualizó Node ni se instalaron dependencias; no hubo investigación ajena al asunto.
 - **Caso negativo:** función JavaScript puramente local no activó la skill ni websearch/webfetch o consulta documental; verificación local satisfactoria.
 - No se creó/utilizó Researcher; Reviewer no intervino; no quedaron archivos temporales; el working tree terminó limpio y no hubo comportamiento inesperado.
+
+## BF-037 — Verified Blocking Findings
+
+**Contexto:**
+Un falso positivo del Reviewer clasificado como bloqueante puede causar rework, cambios innecesarios y riesgo de defectos nuevos.
+
+**Regla:**
+Solo findings `HIGH`/`CRITICAL` realmente materiales, discutibles y no demostrados reciben una única verificación independiente en un task/contexto fresco, con hipótesis falsadora y evidencia focal. Resultado: `CONFIRMED`, `REFUTED` o `UNPROVEN`.
+
+**Límites:**
+No es gate universal: no verifica findings ya demostrados, `MEDIUM`/`LOW`, notas ni mejoras. Dev Lead provee diff, criterios y evidencia neutral; verifier no hace review completa, no busca findings adicionales ni implementa. `UNPROVEN` no equivale a confirmado y no abre ciclos; Reviewer mantiene permisos actuales y la QA especializada conserva su owner.
+
+**Estado:**
+Testing; pendiente observar un caso operativo que cumpla el trigger y uno que deba omitirse.

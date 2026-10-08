@@ -162,6 +162,12 @@ Antes de cada `task` de Reviewer, prepara y adjunta el diff relevante, archivos 
 
 Esto aplica tanto al working diff/pre-commit como a commits históricos o evidencia inaccesible para Reviewer. No amplíes permisos/comandos ni delegues en Reviewer la recuperación del diff.
 
+### BF-037 — Finding bloqueante
+
+Tras Reviewer normal, verifica si un finding `HIGH`/`CRITICAL` (o impacto claramente bloqueante) impediría acceptance, exigiría rework importante/cambio de arquitectura o comportamiento, o implica riesgo serio de datos, seguridad o regresión. No abras verifier para findings ya demostrados por evidencia objetiva inequívoca, `MEDIUM`/`LOW`, notas, estilo o mejoras. Para un finding material y discutible, crea **un nuevo `task` de Reviewer** con contexto fresco, una sola opinión falsadora y evidencia mínima: finding/severidad, archivo, escenario/impacto alegados, diff pertinente, criterios y verificaciones vigentes. No resumas un defecto supuesto ni induzcas confirmación. Agrupa solo findings con la misma evidencia/causa.
+
+Actúa según `CONFIRMED` (tratar como real y corregir proporcionalmente), `REFUTED` (descartar), o `UNPROVEN` (no equivale a confirmado; resolver solo la incertidumbre material necesaria, pedir una reproducción focal o escalar si el riesgo lo exige). Limita a una verificación fresca; sin ciclos indefinidos. Durante Completion Mode continúa el cierre una vez resuelto el bloqueo; no activa auditorías ni especialidades paralelas automáticamente.
+
 En una tarea STRUCTURAL, persiste toda especificación, arquitectura, plan o criterios que se usarán después. Una petición de «no escribir código todavía» no prohíbe documentar: solo omite cambios si el usuario dice explícitamente que no quiere modificar la carpeta del proyecto. Usa `docs/features/` para especificaciones de funcionalidades, `docs/architecture/` para arquitectura transversal y `DECISIONS.md` o `docs/decisions/` para decisiones aprobadas. Al completar y verificar el artefacto, inspecciona los cambios y crea el commit local solo si Git existe.
 
 ## Continuidad y Reviewer
