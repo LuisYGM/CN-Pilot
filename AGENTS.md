@@ -167,7 +167,7 @@ Git es opcional. Sin repositorio, continúa y verifica archivos directamente; om
 
 Cuando Git existe, Dev Lead crea automáticamente un commit local de cambios terminados y verificados, sin preguntar; no lo crea para diagnóstico, trabajo incompleto, errores bloqueantes o prohibición expresa. Antes inspecciona status/diff, excluye secretos y cambios ajenos y stagea solo la unidad lógica (`git-checkpoint`).
 
-BF-017: para trabajo individual y secuencial `main → trabajar → verificar → commit local → push manual cuando corresponda`. Ramas, PR, tags y releases son opcionales y requieren razón concreta, no se exigen en mantenimiento. `.blueprint-version` puede permanecer intacto y `CHANGELOG.md` se actualiza cuando el cambio sea relevante. Nunca hagas push automático; requiere aprobación.
+BF-017: para trabajo individual y secuencial `main → trabajar → verificar → commit local`. Ramas opcionales requieren razón concreta. Push, deploy/publicación, PR, merge, tag, release y acciones remotas equivalentes solo se ejecutan con autorización explícita o alcance previamente aprobado que los incluya inequívocamente; no preguntes por push de rutina, termina localmente e informa. `.blueprint-version` puede permanecer intacto y `CHANGELOG.md` se actualiza cuando el cambio sea relevante.
 
 Bloqueados por defecto:
 
@@ -185,6 +185,12 @@ No declares una tarea terminada solo porque escribiste código. La evidencia deb
 
 - **Ownership check:** identifica capa responsable → alcance autorizado → corrección mínima. No compenses silenciosamente un fallo de template/presentación, datos, plugin, lógica, infraestructura o servicio externo modificando otra capa más accesible. Un dato estructurado persistido no debe duplicarse en contenido para simular su presentación. Si la capa está fuera de scope, reporta el issue; una solución temporal excepcional debe ser explícita, autorizada, documentada y reversible.
 - **Acceptance check:** identifica en el contexto los criterios críticos originales y contrástalos antes de declarar DONE con estado final observable, releyendo recursos cuando la condición sea crítica. Éxito de escritura no acredita persistencia, publicación ni funcionamiento. Por ejemplo, «8 posts Published + Noindex» exige cantidad exacta, estado publicado y noindex verificado; Draft no cumple. Si falla un criterio, corrige dentro de autorización o reporta bloqueo/resultado parcial, no tarea completada. Para DIRECT, verificar el texto afectado puede bastar; no añade auditorías ni archivos de estado.
+
+### Informe final por defecto
+
+Toda tarea completada termina con un resumen operativo en español y proporcional: resultado/cambios, verificaciones reales y su estado, agentes usados solo si los hubo, Reviewer y resultado solo si intervino, bloqueos/pendientes reales y archivos principales cuando ayuden. Si hubo commit, incluye hash corto y mensaje exacto; informa ausencia de commit solo cuando importe y de push cuando exista Git y el estado remoto pueda generar duda. No listes agentes no usados, skills/tools por rutina, cronologías ni razonamiento interno. El cierre no usa una plantilla rígida: DIRECT es muy breve; TASK/STRUCTURAL agregan solo trazabilidad pertinente. No afirmes pruebas sin evidencia. Tras informar, detente: no abras trabajo opcional ni preguntes rutinariamente si se desea algo más.
+
+Las reglas operativas permanentes del Blueprint se aplican sin que el usuario las repita en cada prompt. Una instrucción específica explícita puede sustituir un default de forma segura: «no hagas commit» desactiva el commit; «solo analiza» excluye modificaciones y commit; una acción remota se ejecuta solo bajo autorización explícita y controles vigentes.
 
 Antes de cerrar una tarea que modifica archivos, considera: «¿Este cambio vuelve incorrecta, incompleta o desactualizada alguna información estable del README del proyecto?». No audites todo el README ni lo edites por rutina. Si afecta su propósito, stack principal, dominio documentado, ubicación del código, estructura, integración central o requisitos/comandos permanentes de instalación, ejecución o build, consulta solo la parte pertinente y sincroniza lo necesario con el cambio autorizado. Añade información omitida solo si es imprescindible para entender, localizar, instalar, ejecutar o desarrollar el proyecto; no copies cada dato nuevo de `PROJECT.md`.
 

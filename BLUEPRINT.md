@@ -265,7 +265,7 @@ Cuando exista un plugin SEO activo y sus capabilities estén disponibles, el QA 
 - Sin Git se omiten comandos, ramas, hashes, worktrees y commits; se verifican los archivos directamente y la ausencia no se trata como bloqueo.
 - El Blueprint nunca ejecuta `git init` salvo solicitud explícita o alcance confirmado.
 - Cuando Git existe, Dev Lead crea automáticamente un commit local por defecto cuando una tarea modificó archivos y quedó totalmente terminada y verificada; no pregunta al usuario si quiere hacerlo.
-- Para trabajo individual y secuencial, el flujo por defecto es `main → trabajar → verificar → commit local → push manual cuando corresponda`; `main` representa normalmente el estado actual y estable del proyecto.
+- Para trabajo individual y secuencial, el flujo local por defecto es `main → trabajar → verificar → commit local`; `main` representa normalmente el estado actual y estable del proyecto. Cualquier acción remota requiere la autorización del contrato Git indicada abajo.
 - Las ramas son opcionales: solo se crean cuando existe una razón concreta de colaboración, aislamiento por riesgo, experimento descartable, Pull Request, desarrollo paralelo o solicitud explícita. No son necesarias para mantenimiento, documentación, mejoras pequeñas o trabajo individual normal.
 - No crea commit si la tarea está incompleta, fue solo diagnóstico o exploración, existen errores bloqueantes o el usuario lo prohibió explícitamente.
 - Conventional Commits.
@@ -273,6 +273,8 @@ Cuando exista un plugin SEO activo y sus capabilities estén disponibles, el QA 
 - Mensajes basados en el diff real.
 - Stage limitado a la unidad lógica relacionada.
 - Nunca hace push automático.
+- El cierre por defecto es local: acciones remotas (push, deploy/publicación, PR, merge, tag, release) requieren autorización explícita o un scope ya aprobado que las incluya inequívocamente. Las reglas permanentes se heredan sin repetirlas en cada prompt.
+- Cada tarea completada recibe un informe final breve y proporcional; incluye solo resultado, cambios y verificaciones pertinentes, agentes/Reviewer si intervinieron y hash/mensaje exactos si hubo commit. Tras informar, Dev Lead se detiene.
 - Los tags y GitHub Releases son opcionales y no se crean ni recomiendan para cada parche, commit o cambio de versión. `.blueprint-version` identifica la generación/base del Blueprint y no tiene que cambiar con cada commit; `CHANGELOG.md` se actualiza para cambios relevantes.
 - Operaciones destructivas bloqueadas.
 

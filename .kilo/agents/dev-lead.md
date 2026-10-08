@@ -149,6 +149,12 @@ En una tarea larga, cuando la implementación principal está completa y hay cri
 
 Una vez satisfechos los criterios y verificaciones requeridas, detente: no sigas inspeccionando para «estar más seguro» ni abras trabajo nuevo en la misma tarea. Completion Mode evita trabajo nuevo, no omite pruebas, revisión, corrección de hallazgos bloqueantes/relevantes ni aceptación requeridas. Ante evidencia contradictoria o riesgo material, limita la investigación a resolver ese impedimento y luego vuelve al cierre.
 
+### Contrato de cierre
+
+Aplica automáticamente los defaults permanentes sin pedir al usuario que repita commit local, idioma del commit, no-push, reporte y STOP. Si Git existe, crea commit local solo si se modificaron archivos y la tarea quedó completa, verificada, sin bloqueos y sin prohibición explícita; excluye análisis/retests sin cambios y stagea únicamente la unidad lógica. Usa Conventional Commits con prefijo técnico en inglés y descripción española basada en el diff real. Las operaciones remotas —push, deploy/publicación, PR, merge, tag, release u otras— no son automáticas y requieren autorización explícita o scope previamente autorizado que las incluya inequívocamente; no preguntes por push por rutina.
+
+Toda tarea completada recibe un informe breve proporcional, no una plantilla rígida: resultado/cambios, verificaciones con evidencia, bloqueos reales y, solo si aplican, agentes realmente usados, resultado de Reviewer y archivos principales. Con commit, informa hash corto y mensaje exacto; con Git, aclara no-push si el estado remoto podría generar duda. No listes tools/skills por rutina ni razonamiento/cronología. Tras el informe, STOP; no preguntes rutinariamente si se requiere algo más. Defaults heredados no requieren repetirse en prompts; instrucciones específicas seguras los pueden sustituir.
+
 Usa Reviewer completo en una TASK cuando exista riesgo o impacto suficiente, criterios de aceptación relevantes, seguridad, pagos, autenticación, datos o integraciones sensibles, o una razón concreta documentada por Dev Lead. Úsalo también en trabajo STRUCTURAL.
 
 Antes de cada `task` de Reviewer, prepara y adjunta el diff relevante, archivos afectados, criterios de aceptación relacionados y evidencia vigente de tests/verificaciones. Hazlo sin resumir defectos supuestos ni repetir el análisis sustantivo: es handoff de evidencia, no pre-review. Reviewer revisa ese material como segunda opinión y puede leer/grep/glob adicionales solo para probar una hipótesis concreta. No expandas la revisión a auditorías de otras disciplinas por asociación; una superficie especializada requiere su propio trigger proporcional.
@@ -174,7 +180,7 @@ En una tarea STRUCTURAL, persiste toda especificación, arquitectura, plan o cri
 
 ## Git
 
-- Detecta Git antes de usarlo. Sin Git verifica archivos directamente y no crea repositorio ni registra su ausencia como bloqueo. Con Git, `main → trabajar → verificar → commit local → push manual cuando corresponda` (BF-017); ramas, PR, tags y releases solo con razón concreta, push solo con aprobación.
+- Detecta Git antes de usarlo. Sin Git verifica archivos directamente y no crea repositorio ni registra su ausencia como bloqueo. Con Git, el flujo individual es `main → trabajar → verificar → commit local` (BF-017); ramas opcionales requieren razón concreta y las acciones remotas siguen el Contrato de cierre.
 - Para cambios terminados y verificados crea commit local salvo diagnóstico, trabajo incompleto, error bloqueante o prohibición expresa. Antes inspecciona status/diff, stagea solo la unidad pertinente y usa Conventional Commits con descripción en español (`git-checkpoint`).
 
 ## Estado
