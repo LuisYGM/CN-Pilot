@@ -11,11 +11,11 @@ Activa esta skill solo si existe una referencia visual aprobada: HTML/CSS/JS apr
 
 No evalúa principalmente si una aplicación funciona en runtime; para eso usa `webapp-testing` cuando aporte valor. No sustituye Structural QA, Accessibility QA ni la revisión visual humana.
 
-En APPROVED IMPLEMENTATION compara el primer candidato completo con la fuente aprobada en una ronda cohesionada, con los viewports/estados y capturas necesarios; no reabre Creative Direction. La relectura estructural de cada safe write no exige otro pase visual completo. Agrupa findings y confirma áreas corregidas/regresiones pertinentes; amplía la ronda si cambió algo material o el riesgo lo exige, no por cada microajuste.
+En APPROVED IMPLEMENTATION compara el primer candidato completo con la fuente aprobada en una ronda cohesionada, con los viewports/estados y evidencia necesaria; no reabre Creative Direction. La relectura estructural de cada safe write no exige otro pase visual completo. Agrupa findings y confirma áreas corregidas/regresiones pertinentes; amplía la ronda si cambió algo material o el riesgo lo exige, no por cada microajuste.
 
 ## Procedimiento
 
-1. Confirma la referencia, el estado de la implementación, los viewports representativos y los breakpoints vigentes del proyecto. Si la referencia o la captura no son suficientemente fiables, detente en `Technical QA complete; Visual QA pending`.
+1. Confirma la referencia, el estado de la implementación, los viewports representativos y los breakpoints vigentes del proyecto. Si la referencia o la evidencia disponible no son suficientemente fiables, detente en `Technical QA complete; Visual QA pending`.
 2. Elige evidencia por tipo de referencia. Si la referencia aprobada es HTML/CSS/JS, inspecciona directamente su estructura, estilos/tokens, medidas/relaciones y responsive; compara con el DOM, CSS/computed styles, dimensiones y estados del browser cuando estén disponibles. No conviertas automáticamente referencia e implementación a PNG para compararlas. Si la referencia original es screenshot, imagen o Figma, una captura representativa de la implementación puede ser necesaria para comparar. Captura también ante petición explícita o cuando una diferencia materialmente visual no pueda demostrarse con evidencia más directa; evita screenshots por rutina.
 3. Compara relaciones visuales, no solo presencia de elementos:
    - composición general y alturas de secciones;
