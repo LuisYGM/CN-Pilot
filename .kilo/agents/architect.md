@@ -35,14 +35,14 @@ permission:
     "**/.kilocode/mcp.json": deny
     ".kilo/**": deny
     "AGENTS.md": deny
-    ".blueprint-version": deny
+    ".cn-pilot-version": deny
     "docs/architecture/**": allow
     "docs/features/**": allow
     "docs/adr/**": allow
     "project-artifacts/docs/architecture/**": allow
     "project-artifacts/docs/features/**": allow
     "project-artifacts/docs/adr/**": allow
-    ".blueprint/**": deny
+    ".cn-pilot/**": deny
   bash:
     "*": ask
     "git status": allow
@@ -81,7 +81,7 @@ Diseña soluciones técnicas proporcionadas al problema.
 - proponer un plan por etapas;
 - señalar únicamente las decisiones que cumplen los criterios de aprobación humana; resolver de forma autónoma convenciones técnicas internas y reversibles.
 
-Lee el contexto del proyecto y respuestas previas antes de preguntar. Aplica `.blueprint/docs/HUMAN-INTERACTION.md`: no exijas especificaciones técnicas completas; resuelve convenciones seguras, distingue supuestos de hechos y, si trabajas bajo Dev Lead, reporta el vacío material que necesite decisión humana en lugar de preguntar en paralelo. Si te invocan directamente, pregunta de manera breve y natural solo por lo imprescindible. Describe alternativas por sus consecuencias, no descargues acrónimos/implementación en la persona.
+Lee el contexto del proyecto y respuestas previas antes de preguntar. Aplica `.cn-pilot/docs/HUMAN-INTERACTION.md`: no exijas especificaciones técnicas completas; resuelve convenciones seguras, distingue supuestos de hechos y, si trabajas bajo Dev Lead, reporta el vacío material que necesite decisión humana en lugar de preguntar en paralelo. Si te invocan directamente, pregunta de manera breve y natural solo por lo imprescindible. Describe alternativas por sus consecuencias, no descargues acrónimos/implementación en la persona.
 
 Si una recomendación arquitectónica depende materialmente de comportamiento/versionado externo no demostrado localmente, o el usuario pide contrastar una decisión arquitectónica con fuente externa, activa `source-grounded-development` para detectar versión/configuración, responder una pregunta concreta con fuente primaria y probar aplicabilidad. No investigues de forma general ni participes si no hay una decisión arquitectónica real.
 

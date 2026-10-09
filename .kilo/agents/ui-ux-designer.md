@@ -35,10 +35,10 @@ permission:
     "**/.kilocode/mcp.json": deny
     ".kilo/**": deny
     "AGENTS.md": deny
-    ".blueprint-version": deny
+    ".cn-pilot-version": deny
     "design/**": allow
     "project-artifacts/design/**": allow
-    ".blueprint/**": deny
+    ".cn-pilot/**": deny
   bash:
     "*": ask
     "git status": allow
@@ -63,7 +63,7 @@ permission:
 
 # UI/UX Designer
 
-Actúa como diseñador web/product designer senior. Convierte contexto, contenido y posicionamiento en una dirección visual original, coherente e implementable. Aplica `.blueprint/docs/HUMAN-INTERACTION.md`: reutiliza el contexto confirmado y, al trabajar bajo Dev Lead, entrega los gaps materiales a Dev Lead en lugar de preguntar al usuario en paralelo.
+Actúa como diseñador web/product designer senior. Convierte contexto, contenido y posicionamiento en una dirección visual original, coherente e implementable. Aplica `.cn-pilot/docs/HUMAN-INTERACTION.md`: reutiliza el contexto confirmado y, al trabajar bajo Dev Lead, entrega los gaps materiales a Dev Lead en lugar de preguntar al usuario en paralelo.
 
 Antes de diseñar comprende objetivo, público, contenido, posicionamiento, plataforma/punto de entrega, identidad existente y fidelidad esperada. Pregunta solo por ausencias materiales; composición, spacing, grids, jerarquía, cards, botones, whitespace, tipografía y microinteracciones son decisiones profesionales propias.
 

@@ -5,7 +5,7 @@ agent: dev-lead
 
 # Diagnóstico de CN Pilot
 
-Comando manual, read-only y local para responder únicamente: «¿La infraestructura técnica de CN Pilot está suficientemente íntegra y coherente para operar?». Diagnostica Blueprint Core en la carpeta actual, no la aplicación ni el contenido de negocio. No es gate rutinario ni sustituye tests de proyecto, Reviewer o QA especializado.
+Comando manual, read-only y local para responder únicamente: «¿La infraestructura técnica de CN Pilot está suficientemente íntegra y coherente para operar?». Diagnostica CN Pilot Core en la carpeta actual, no la aplicación ni el contenido de negocio. No es gate rutinario ni sustituye tests de proyecto, Reviewer o QA especializado.
 
 ## Fresh Diagnostic Snapshot — cada invocación
 
@@ -13,10 +13,10 @@ Cada ejecución obtiene una instantánea nueva del filesystem local actual antes
 
 Al inicio de **cada** invocación, vuelve a consultar de forma read-only y proporcional:
 
-- contenido actual de `.blueprint-version` y existencia de cada Core file requerido;
-- inventario actual de `.kilo/agents/*.md`, carpetas inmediatas de `.kilo/skills/`/sus `SKILL.md`, `.kilo/commands/*.md` y `.blueprint/profiles/`;
+- contenido actual de `.cn-pilot-version` y existencia de cada Core file requerido;
+- inventario actual de `.kilo/agents/*.md`, carpetas inmediatas de `.kilo/skills/`/sus `SKILL.md`, `.kilo/commands/*.md` y `.cn-pilot/profiles/`;
 - conteos de cualquier categoría adicional que MANIFEST declare explícitamente y Doctor vaya a comparar;
-- contenido actual de `.blueprint/MANIFEST.md`;
+- contenido actual de `.cn-pilot/MANIFEST.md`;
 - frontmatter/routing actuales de Dev Lead y commands, y permisos críticos actuales de Reviewer;
 - referencias operativas que formen parte de este diagnóstico.
 
@@ -24,13 +24,13 @@ No uses la ejecución previa como PASS ni para mantener conteos, MANIFEST, permi
 
 ## Alcance del diagnóstico
 
-1. **Versión y Core:** confirma `.blueprint-version`, SemVer no vacía, y existencia de los indispensables: `AGENTS.md`, `.blueprint/BLUEPRINT.md`, `.blueprint/MANIFEST.md`, `.blueprint/config/responsive.json`, `.blueprint/docs/`, `.blueprint/profiles/`, `.blueprint/templates/`, `kilo.jsonc`, agentes Dev Lead/Reviewer y comandos `new-project`, `checkpoint`, `review` y `doctor`. La ausencia de `project-resources/README.md` es WARNINGS por scaffold esperado, no BROKEN. `product/` y `project-artifacts/` no son Core ni son obligatorios antes de implementation/output; no los exijas ni audites su contenido. Versión antigua pero válida no es error. No compares con releases/web. No exijas README ni Project Context; `PROJECT.md`, `REQUIREMENTS.md`, `STATE.md` y `DECISIONS.md` son mutables.
+1. **Versión y Core:** confirma `.cn-pilot-version`, SemVer no vacía, y existencia de los indispensables: `AGENTS.md`, `.cn-pilot/CORE.md`, `.cn-pilot/MANIFEST.md`, `.cn-pilot/config/responsive.json`, `.cn-pilot/docs/`, `.cn-pilot/profiles/`, `.cn-pilot/templates/`, `kilo.jsonc`, agentes Dev Lead/Reviewer y comandos `new-project`, `checkpoint`, `review` y `doctor`. La ausencia de `project-resources/README.md` es WARNINGS por scaffold esperado, no BROKEN. `product/` y `project-artifacts/` no son Core ni son obligatorios antes de implementation/output; no los exijas ni audites su contenido. Versión antigua pero válida no es error. No compares con releases/web. No exijas README ni Project Context; `PROJECT.md`, `REQUIREMENTS.md`, `STATE.md` y `DECISIONS.md` son mutables.
 2. **Agents:** enumera `.kilo/agents/*.md`; confirma frontmatter delimitado y `description` y `mode` legibles. Dev Lead y Reviewer deben existir. Contrasta referencias explícitas a agentes y destinos permitidos de `task` desde Dev Lead con nombres de archivos reales; no hardcodees el total ni atribuyas nombre de agente a palabras genéricas.
 3. **Skills:** enumera las carpetas inmediatas de `.kilo/skills/` y los archivos `SKILL.md`; confirma que cada carpeta de skill contiene su `SKILL.md` y frontmatter mínimo legible con `name`/`description`. Revisa solo referencias canónicas expresas en routing de agentes y commands: si una skill se menciona como destino de activación debe existir. No interpretes arbitrariamente cada backtick como referencia a skill.
 4. **Commands:** enumera `.kilo/commands/*.md`. Cada comando debe tener frontmatter con `description` y `agent`, y cada `agent` declarado debe existir. No uses el conteo esperado fijo: compáralo con MANIFEST.
 5. **Rutas operativas:** valida determinísticamente los destinos de `task` permitidos/ruteados por Dev Lead, los agentes indicados por commands, las skills explícitamente ruteadas y las rutas Core citadas por comandos cuando su existencia pueda comprobarse directamente. No hagas link-check universal.
 6. **Permisos críticos:** inspecciona estáticamente `.kilo/agents/reviewer.md`. Debe permitir `read`, `glob`, `grep` según su contrato y declarar explícitamente `bash`, `websearch`, `webfetch`, `skill`, `task`, `agent_manager`, `write`, `edit` y `apply_patch: deny`. Si una denegación falta, no es explícita o queda debilitada de modo que permita la capacidad protegida, es BROKEN. Comprueba en Dev Lead solo que conserva `task`/allow para los destinos que realmente enruta. No cambies ni pruebes escrituras/permisos.
-7. **MANIFEST:** cuenta desde filesystem agentes, skills, commands, `.blueprint/profiles/` y cualquier otra categoría que MANIFEST numere explícitamente (incluidas referencias/plantillas declaradas bajo `.blueprint/`). MANIFEST resume, no es autoridad sobre el filesystem. Diferencias de conteo son normalmente WARNINGS, salvo que también revelen infraestructura requerida ausente.
+7. **MANIFEST:** cuenta desde filesystem agentes, skills, commands, `.cn-pilot/profiles/` y cualquier otra categoría que MANIFEST numere explícitamente (incluidas referencias/plantillas declaradas bajo `.cn-pilot/`). MANIFEST resume, no es autoridad sobre el filesystem. Diferencias de conteo son normalmente WARNINGS, salvo que también revelen infraestructura requerida ausente.
 
 Usa inspección local (glob/read/grep y conteos de archivos); si el directorio es oculto, consulta su ruta explícita. Lee solo metadatos, frontmatter y routing necesarios; no inspecciones contenido editorial o archivos de usuario ajenos a comprobar estructura. No hace falta parsear completamente YAML/JSONC/Markdown: marca como problema solo evidencia clara de estructura requerida ilegible. Runtime introspection es opcional si existe una capacidad local read-only fiable; no inventes comandos ni trates su ausencia como BROKEN.
 
@@ -45,7 +45,7 @@ Si coexisten resultados, cualquier BROKEN determina el estado global; si no, cua
 Formato breve:
 
 ```text
-Blueprint Doctor
+CN Pilot Health Check
 Version: <versión local o inválida/no disponible>
 Status: HEALTHY | WARNINGS | BROKEN
 Checks: Core · Agents · Skills · Commands · Routing · Critical permissions · MANIFEST
@@ -54,4 +54,4 @@ Checks: Core · Agents · Skills · Commands · Routing · Critical permissions 
 
 ## Read-only y activación
 
-Ejecútalo solo por petición explícita o si Dev Lead observa una señal concreta de posible corrupción/desalineación del Blueprint y lo recomienda. Nunca lo ejecutes automáticamente desde `/new-project`, checkpoint, antes de commit/Reviewer, en una tarea normal, Completion Mode ni al abrir sesión. No uses web, Reviewer, Agent Manager, scripts, hooks o auto-repair. No modifiques archivos, `STATE.md`, MANIFEST ni artefactos; no crees commit ni hagas push. Diagnostica → informa HEALTHY/WARNINGS/BROKEN → STOP. Una reparación solicitada será una tarea separada.
+Ejecútalo solo por petición explícita o si Dev Lead observa una señal concreta de posible corrupción/desalineación del CN Pilot y lo recomienda. Nunca lo ejecutes automáticamente desde `/new-project`, checkpoint, antes de commit/Reviewer, en una tarea normal, Completion Mode ni al abrir sesión. No uses web, Reviewer, Agent Manager, scripts, hooks o auto-repair. No modifiques archivos, `STATE.md`, MANIFEST ni artefactos; no crees commit ni hagas push. Diagnostica → informa HEALTHY/WARNINGS/BROKEN → STOP. Una reparación solicitada será una tarea separada.

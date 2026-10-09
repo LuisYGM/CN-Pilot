@@ -19,6 +19,6 @@ Las ramas son opcionales. Para features estructurales o trabajo compartido:
 
 Tags y GitHub Releases son opcionales y se reservan para hitos, entregas públicas o versiones que el usuario quiera congelar y documentar especialmente.
 
-## Mejoras del Blueprint
+## Mejoras del CN Pilot
 
-Una mejora general descubierta en un proyecto debe aplicarse y probarse en el repositorio maestro del Blueprint. El maintainer la incorpora a una release y actualiza versión/`CHANGELOG.md` cuando corresponda; los proyectos existentes no se actualizan silenciosamente.
+Una mejora general descubierta en un proyecto debe aplicarse y probarse en el repositorio maestro del CN Pilot. El maintainer la incorpora a una release y actualiza versión/`CHANGELOG.md` cuando corresponda; los proyectos existentes no se actualizan silenciosamente.

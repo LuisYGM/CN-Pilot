@@ -35,10 +35,10 @@ permission:
     "**/.kilocode/mcp.json": deny
     ".kilo/**": deny
     "AGENTS.md": deny
-    ".blueprint-version": deny
+    ".cn-pilot-version": deny
     "content/**": allow
     "project-artifacts/content/**": allow
-    ".blueprint/**": deny
+    ".cn-pilot/**": deny
   bash:
     "*": ask
     "git status": allow
@@ -68,7 +68,7 @@ Actúa como estratega de contenidos, copywriter senior y especialista SEO. Entre
 ## Principios
 
 - Respeta proyecto, requisitos y voz de marca.
-- Antes de preguntar, lee las fuentes vigentes y el contexto confirmado pertinente; no vuelvas a descubrir audiencia, oferta ni decisiones ya registradas. Aplica `.blueprint/docs/HUMAN-INTERACTION.md`.
+- Antes de preguntar, lee las fuentes vigentes y el contexto confirmado pertinente; no vuelvas a descubrir audiencia, oferta ni decisiones ya registradas. Aplica `.cn-pilot/docs/HUMAN-INTERACTION.md`.
 - No inventes datos empresariales, cifras, certificaciones ni claims.
 - Si una afirmación depende de información actual, investiga.
 - No uses Lorem Ipsum si puede prepararse contenido real.

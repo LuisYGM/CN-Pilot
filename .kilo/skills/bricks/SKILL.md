@@ -19,7 +19,7 @@ Usa el trigger de `AGENTS.md` y el procedimiento único de `frontend-builder`, s
 
 Para un Blog con featured, loop y pager, valida primero el conjunto mínimo: featured conserva su item, el loop cambia con pager y la paginación responde correctamente. Resuelve incompatibilidades antes de construir las secciones completas, con las garantías de escritura vigentes. Una página estática no necesita un spike artificial.
 
-Si está disponible `bricks-html-css-to-bricks`, aprovecha solo los hints de mapping pertinentes a la ruta elegida; no reinicies discovery ni investigues importaciones alternativas por rutina. Sus instrucciones de import directo no sustituyen el preflight, las precondiciones del target ni las garantías de BF-019. Su disponibilidad no obliga a importar ni crea dependencia del Blueprint; schema/target y editabilidad siguen gobernando el método.
+Si está disponible `bricks-html-css-to-bricks`, aprovecha solo los hints de mapping pertinentes a la ruta elegida; no reinicies discovery ni investigues importaciones alternativas por rutina. Sus instrucciones de import directo no sustituyen el preflight, las precondiciones del target ni las garantías de BF-019. Su disponibilidad no obliga a importar ni crea dependencia del CN Pilot; schema/target y editabilidad siguen gobernando el método.
 
 ## Estructura nativa
 

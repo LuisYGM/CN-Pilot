@@ -64,4 +64,4 @@ Revisa dependencias abandonadas o vulnerables solo con evidencia, duplicación y
 
 `tool can perform action != action is authorized`. Una capability capaz de editar usuarios, permisos, configuración, PHP, archivos o settings globales no amplía scope. Mantén BF-019: `specialized capability → safe generic capability → low-level fallback only when justified`; no caigas automáticamente a raw SQL, Execute PHP, shell, filesystem o metadata directa cuando exista una API segura y específica.
 
-No requiere scanners, SaaS, Burp Suite, OWASP ZAP, SAST ni vulnerability database API. Pueden utilizarse si están disponibles y autorizados, pero no son dependencias del Blueprint.
+No requiere scanners, SaaS, Burp Suite, OWASP ZAP, SAST ni vulnerability database API. Pueden utilizarse si están disponibles y autorizados, pero no son dependencias del CN Pilot.

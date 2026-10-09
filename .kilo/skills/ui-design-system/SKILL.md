@@ -5,13 +5,11 @@ description: Crear o ampliar un design system para un proyecto web: tokens, tipo
 
 # ui-design-system
 
-Procedencia: este `SKILL.md` adapta heurísticas visuales seleccionadas de Impeccable; el alcance y la licencia se detallan en [`ATTRIBUTION.md`](ATTRIBUTION.md).
-
 Deriva la dirección visual del objetivo, público, posicionamiento, contenido, identidad y fidelidad esperada. No uses tokens o componentes por costumbre ni conviertas azul, sans-serif, cards, radios y gradientes en una solución universal.
 
 Define solo lo necesario para el alcance: tipografía, colores, spacing, radios, sombras, containers, botones, forms, cards, navegación, estados, breakpoints y restricciones de accesibilidad. Explica la intención de las decisiones relevantes para que Frontend pueda preservarlas.
 
-Usa `.blueprint/config/responsive.json` en proyectos nuevos y la configuración vigente en proyectos existentes. Los breakpoints no obligan a crear overrides.
+Usa `.cn-pilot/config/responsive.json` en proyectos nuevos y la configuración vigente en proyectos existentes. Los breakpoints no obligan a crear overrides.
 
 No conviertas una landing sencilla en una librería empresarial.
 

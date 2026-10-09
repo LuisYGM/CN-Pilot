@@ -6,7 +6,7 @@ description: Implementar o revisar responsive, CSS Grid/Flexbox, tipografía flu
 # frontend-responsive
 
 1. Determina si el proyecto es nuevo o existente. En proyectos existentes, los breakpoints implementados son source of truth; no los reemplaces salvo solicitud o migración aprobada.
-2. Para proyectos nuevos, lee `.blueprint/config/responsive.json` como fuente de verdad. No dupliques sus valores en otra configuración sin necesidad.
+2. Para proyectos nuevos, lee `.cn-pilot/config/responsive.json` como fuente de verdad. No dupliques sus valores en otra configuración sin necesidad.
 3. Construye la mayor parte del diseño en Base, sin media query, con estrategia `fluid-first`. Elige por intención: CSS Grid distribuye múltiples unidades en layouts bidimensionales; Flexbox resuelve flujos lineales sencillos. No cambies a Grid solo para cumplir una convención.
 4. Prefiere cuando corresponda `clamp(min-px, fluid-vw, max-px)`, unidades relativas, `min()`, `max()`, `minmax()` y layouts intrínsecos. En proyectos existentes prevalece la convención vigente; `clamp()` es una preferencia, no un dogma.
 5. Trata los breakpoints como overrides condicionales, no como fases. No añadas reglas si el diseño ya funciona.

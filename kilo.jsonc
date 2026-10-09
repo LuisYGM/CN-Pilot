@@ -1,7 +1,7 @@
 {
   "$schema": "https://app.kilo.ai/config.json",
 
-  // No se fija proveedor/modelo para mantener el Blueprint portable.
+  // No se fija proveedor/modelo para mantener el CN Pilot portable.
 
   "permission": {
     "read": {

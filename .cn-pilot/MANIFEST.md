@@ -1,0 +1,20 @@
+# Manifiesto de CN Pilot Core
+
+Inventario de CN Pilot Core. No sustituye `../ARTIFACTS.md`, que registra entregables específicos del proyecto.
+
+- 7 agentes en `.kilo/agents/`
+- 24 skills (`.kilo/skills/*/SKILL.md`)
+- 6 documentos de referencia bajo `.kilo/skills/technical-seo/references/` (no son skills adicionales)
+- 12 comandos en `.kilo/commands/`
+- 7 perfiles en `.cn-pilot/profiles/`
+- 8 archivos de plantilla en la raíz de `.cn-pilot/templates/` y 17 archivos en total bajo `.cn-pilot/templates/` (incluye subdirectorios)
+- Core portable en `.cn-pilot/` (config, docs, profiles y templates)
+- documentación operativa bajo `.cn-pilot/docs/`
+- registro base de artefactos del proyecto
+- configuración responsive versionada en `.cn-pilot/config/`
+- configuración Kilo compartible en `kilo.jsonc` y controles locales en `.gitignore` / `.kilocodeignore`
+- política de formato portable en `.editorconfig` / `.gitattributes`
+- MCP y workflows GitHub Actions opcionales, no preconfigurados en el template; se materializan dentro de tareas explícitas autorizadas
+- input scaffold `project-resources/README.md`
+- política Git y seguridad; sin expedientes detallados de revisión/research del mantenedor
+- licencia principal de CN Pilot Core en `LICENSE`

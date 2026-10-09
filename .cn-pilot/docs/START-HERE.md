@@ -16,7 +16,7 @@ No necesitas conocer previamente los agentes, profiles, capabilities, skills ni 
 
 ### 1. Crea tu carpeta de trabajo
 
-Usa el repositorio como GitHub Template, clónalo o copia sus archivos a una carpeta local. Git es opcional: no ejecutes `git init` solo para poder usar el sistema. El CN Pilot Core usa [`GPL-3.0-or-later`](../../LICENSE); el [README explica el alcance y las atribuciones](../../README.md#licencia-y-atribuciones).
+Usa el repositorio como GitHub Template, clónalo o copia sus archivos a una carpeta local. Git es opcional: no ejecutes `git init` solo para poder usar el sistema. El CN Pilot Core usa [`GPL-3.0-or-later`](../../LICENSE); el [README explica la licencia principal](../../README.md#licencia).
 
 ### 2. Abre el proyecto
 
@@ -32,7 +32,7 @@ Sigue [Configuración de Kilo](KILO-SETUP.md). CN Pilot no recomienda modelos po
 
 `dev-lead` es el interlocutor normal. Basta explicar en lenguaje natural qué quieres conseguir, incluso en una frase sencilla: no necesitas escribir un prompt elaborado ni conocer nombres internos. Dev Lead inspecciona el contexto, pregunta solo si falta algo material y coordina a los especialistas necesarios.
 
-No selecciones manualmente `architect`, `developer`, `reviewer` u otros subagentes salvo que estés diagnosticando o manteniendo el propio Blueprint.
+No selecciones manualmente `architect`, `developer`, `reviewer` u otros subagentes salvo que estés diagnosticando o manteniendo el propio CN Pilot.
 
 ### 5. Ejecuta `/new-project`
 
@@ -44,7 +44,7 @@ Si no basta el contexto disponible, Dev Lead preguntará progresivamente y en le
 
 Tras la confirmación actualizará el contexto. No desarrollará todavía páginas o funcionalidades. Si Git existe, creará el commit local de inicialización; sin Git guardará los archivos y continuará sin tratarlo como bloqueo.
 
-El README de CN Pilot presenta el producto y su onboarding. Al inicializar un proyecto real, `/new-project` convierte ese README genérico en una presentación breve del proyecto, basada en contexto confirmado; un README propio existente se conserva por defecto. `.blueprint/BLUEPRINT.md` mantiene la especificación técnica del sistema y los archivos canónicos de contexto prevalecen sobre el resumen del README.
+El README de CN Pilot presenta el producto y su onboarding. Al inicializar un proyecto real, `/new-project` convierte ese README genérico en una presentación breve del proyecto, basada en contexto confirmado; un README propio existente se conserva por defecto. `.cn-pilot/CORE.md` mantiene la especificación técnica del sistema y los archivos canónicos de contexto prevalecen sobre el resumen del README.
 
 No vuelvas a ejecutar `/new-project` si `PROJECT.md` ya describe el proyecto real y `STATE.md` dejó atrás la inicialización. Los datos que no hacen falta todavía pueden dejarse para una tarea posterior.
 
@@ -74,7 +74,7 @@ Los slash commands como `/plan`, `/content`, `/design`, `/debug`, `/review` o `/
 
 ## Proyectos soportados
 
-| Escenario | Cómo puede usarse el Blueprint |
+| Escenario | Cómo puede usarse el CN Pilot |
 |---|---|
 | Landing HTML/CSS/JS | Contenido, diseño, frontend responsive y entrega de archivos estáticos. |
 | WordPress + Bricks con handoff manual | Preparar contenido, diseño y referencia de implementación para que otra persona maquete en Bricks. |
@@ -93,7 +93,7 @@ Estos escenarios no activan automáticamente todas las fases ni capacidades. El 
 
 El sistema separa las capas de infraestructura, contexto, inputs, outputs auxiliares y producto:
 
-- **Blueprint Core:** infraestructura portable heredada bajo `.blueprint/`, además de rutas técnicas como `.kilo/`, `.github/`, `.kilocode/`, `AGENTS.md` y `kilo.jsonc`. Su inventario está en [`MANIFEST.md`](../MANIFEST.md).
+- **CN Pilot Core:** infraestructura portable bajo `.cn-pilot/`, además de rutas técnicas como `.kilo/`, `.github/`, `.kilocode/`, `AGENTS.md` y `kilo.jsonc`. Su inventario está en [`MANIFEST.md`](../MANIFEST.md).
 - **Project Context:** resumen y memoria breve que permiten continuar el trabajo: `README.md`, `PROJECT.md`, `REQUIREMENTS.md`, `STATE.md`, `DECISIONS.md` y `ARTIFACTS.md`.
 - **Project input:** materiales proporcionados en `project-resources/`; no equivalen a código/assets de producción ni se registran en `ARTIFACTS.md` por defecto.
 - **Producto activo del workspace:** `product/` es el container canónico en Greenfield y Existing importado; se crea al iniciar implementación/adopción, no durante onboarding, y se preserva el layout interno observado. Existing repository previamente operativo puede conservar su product root real solo con `Existing compatibility exception` documentada en `PROJECT.md`.
@@ -113,19 +113,19 @@ Rutas habituales de Project Artifacts:
 | ADRs | `project-artifacts/docs/adr/` cuando exista un ADR formal |
 | Auditorías | `project-artifacts/docs/audits/` cuando se solicite un informe durable |
 | Código y pruebas | Producto activo en `product/` para Greenfield/Existing importado, con estructura/harness nativos; en adopted exception, product root real registrado |
-| Handoff | Entregable auxiliar en `project-artifacts/` cuando corresponda, con `.blueprint/templates/handoff.md` como base; respeta destinos acordados |
+| Handoff | Entregable auxiliar en `project-artifacts/` cuando corresponda, con `.cn-pilot/templates/handoff.md` como base; respeta destinos acordados |
 
 Al pedir el diseño visual de una página web, el resultado de alta fidelidad es un prototipo HTML/CSS/JS responsive que puedes revisar como página. Una spec Markdown puede acompañarlo, pero no sustituirlo; visualizar el prototipo no significa implementar o publicar el producto.
 
-[`ARTIFACTS.md`](../../ARTIFACTS.md) es el mapa de entregables significativos de todo el proyecto, no solo de `project-artifacts/`: puede incluir implementación bajo `product/` cuando aporte valor y entregables excepcionales. No incluye Core, Project Context, inputs originales, caches, dependencias ni placeholders. No es una copia del contenido, changelog ni inventario del Blueprint; se actualiza ante altas/bajas, movimientos o cambios materiales de propósito/estado.
+[`ARTIFACTS.md`](../../ARTIFACTS.md) es el mapa de entregables significativos de todo el proyecto, no solo de `project-artifacts/`: puede incluir implementación bajo `product/` cuando aporte valor y entregables excepcionales. No incluye Core, Project Context, inputs originales, caches, dependencias ni placeholders. No es una copia del contenido, changelog ni inventario del CN Pilot; se actualiza ante altas/bajas, movimientos o cambios materiales de propósito/estado.
 
 En proyectos existentes, el modo de producto se infiere con evidencia: Existing importado al workspace activo usa `product/`; source en `project-resources/` es solo input; repositorio operativo adoptado puede registrar excepción y preservar root real. El código top-level sin contratos operativos no se vuelve excepción por inferencia. Las rutas de contenido/diseño/documentación ya vigentes se preservan durante onboarding; no se reorganizan bajo `project-artifacts/` sin tarea explícita.
 
 ## Responsive y breakpoints
 
-En proyectos nuevos, `.blueprint/config/responsive.json` define la convención `fluid-first`: Base no usa media query y los breakpoints descendentes son correcciones condicionales, no pasos que deban aplicarse siempre.
+En proyectos nuevos, `.cn-pilot/config/responsive.json` define la convención `fluid-first`: Base no usa media query y los breakpoints descendentes son correcciones condicionales, no pasos que deban aplicarse siempre.
 
-En proyectos existentes prevalecen los breakpoints ya implementados. No se sustituyen por la configuración del Blueprint salvo que se apruebe una migración. Consulta [Configuración del Blueprint](CONFIGURATION.md#responsive).
+En proyectos existentes prevalecen los breakpoints ya implementados. No se sustituyen por la configuración del CN Pilot salvo que se apruebe una migración. Consulta [Configuración del CN Pilot](CONFIGURATION.md#responsive).
 
 ## Qué decide el agente
 
@@ -140,4 +140,4 @@ Requieren aprobación humana las decisiones que cambian alcance o arquitectura, 
 - [Trabajo con Git](GIT-WORKFLOW.md)
 - [Ciclo de vida y puntos de entrega](LIFECYCLE.md)
 - [Troubleshooting](TROUBLESHOOTING.md)
-- [Especificación para maintainers](../BLUEPRINT.md)
+- [CN Pilot Core](../CORE.md)

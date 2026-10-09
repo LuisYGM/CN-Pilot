@@ -1,37 +1,37 @@
-# Configuración del Blueprint
+# Configuración del CN Pilot
 
 Fuente de verdad para las capas de configuración compartible, responsive, MCP, deployment opcional y secretos locales. La separación de responsabilidades sobre IA se documenta en [Configuración de IA en Kilo](MODEL-STRATEGY.md).
 
 ## Capas de configuración
 
-- **Convenciones universales:** fuentes versionadas y portables que aplican por defecto, como `.blueprint/config/responsive.json`.
+- **Convenciones universales:** fuentes versionadas y portables que aplican por defecto, como `.cn-pilot/config/responsive.json`.
 - **Configuración del proyecto:** decisiones compartibles del proyecto, sin secretos, como configuración general en `kilo.jsonc` o un workflow de deployment aprobado.
 - **Configuración local:** preferencias, autenticación y ajustes propios del desarrollador o máquina. Se mantienen fuera de Git.
 - **Selección de IA:** proveedor, modelos principal/pequeño/de subagentes/de compactación, overrides y esfuerzo de razonamiento pertenecen al usuario y al runtime de Kilo. El proyecto no los fija por defecto ni los registra como decisiones compartidas.
 - **Secretos:** tokens, API keys, passwords, claves privadas y credenciales. Nunca se versionan.
-- **Templates opcionales:** ejemplos inactivos bajo `.blueprint/templates/`; se consultan/adaptan solo cuando el alcance lo requiere.
+- **Templates opcionales:** ejemplos inactivos bajo `.cn-pilot/templates/`; se consultan/adaptan solo cuando el alcance lo requiere.
 
 ## Responsive
 
-`.blueprint/config/responsive.json` es la fuente de verdad para proyectos nuevos. Define una estrategia `fluid-first`, Base sin media query y los breakpoints descendentes disponibles. Base concentra la mayor parte del diseño mediante `clamp()`, unidades relativas, Grid, Flexbox, `min()`, `max()`, `minmax()` y layouts intrínsecos.
+`.cn-pilot/config/responsive.json` es la fuente de verdad para proyectos nuevos. Define una estrategia `fluid-first`, Base sin media query y los breakpoints descendentes disponibles. Base concentra la mayor parte del diseño mediante `clamp()`, unidades relativas, Grid, Flexbox, `min()`, `max()`, `minmax()` y layouts intrínsecos.
 
 Los breakpoints son correcciones condicionales, no fases obligatorias. No se crea un override si el diseño ya funciona. Cuando la implementación directa usa un builder con breakpoints configurables, se mapea la fuente de verdad al builder solo si esa implementación forma parte del alcance. En un handoff manual se documenta la convención para quien continúe.
 
-En proyectos existentes, los breakpoints implementados son la fuente de verdad. `.blueprint/config/responsive.json` no los reemplaza salvo solicitud o decisión explícita de migración.
+En proyectos existentes, los breakpoints implementados son la fuente de verdad. `.cn-pilot/config/responsive.json` no los reemplaza salvo solicitud o decisión explícita de migración.
 
 ## MCP opcional
 
-El Blueprint no incluye ejemplos ni configura MCPs por defecto y no depende de un proveedor concreto. Cuando la persona solicite una integración MCP para su proyecto:
+El CN Pilot no incluye ejemplos ni configura MCPs por defecto y no depende de un proveedor concreto. Cuando la persona solicite una integración MCP para su proyecto:
 
 1. verifica que la integración forma parte del alcance y que está disponible;
 2. descubre el servidor, sus capabilities/tools y el esquema real que soporta; prepara únicamente los campos no secretos necesarios para este proyecto;
-3. conserva en `kilo.jsonc` únicamente configuración general de Kilo/Blueprint a nivel de proyecto y sin secretos;
+3. conserva en `kilo.jsonc` únicamente configuración general de Kilo/CN Pilot a nivel de proyecto y sin secretos;
 4. guía a la persona para aplicar configuración y autenticación local por un mecanismo soportado por Kilo/el servicio; no pidas, leas ni guardes secretos;
 5. valida, mediante capabilities disponibles y autorización, la conexión antes de usarla para publicar o modificar el sistema objetivo.
 
 Las ubicaciones tienen responsabilidades distintas:
 
-- `kilo.jsonc`: configuración general y compartible de Kilo/Blueprint a nivel de proyecto.
+- `kilo.jsonc`: configuración general y compartible de Kilo/CN Pilot a nivel de proyecto.
 - `.kilocode/mcp.json`: si el runtime utiliza esta ubicación, es configuración local activa y puede contener referencias sensibles. Está ignorada por Git y protegida frente a lectura/edición de agentes; no forma parte del template.
 
 Un proyecto puede utilizar varios MCP simultáneamente, con responsabilidades diferentes. Dev Lead debe elegir herramientas por la capability real que exponen, no por el nombre o la intención declarada del servidor. El uso de MCP es capability-first, no provider-first: primero se descubren servidores y tools disponibles, después se mapea `capability → responsabilidad`, se elige la ruta funcional más específica y segura y se usa fallback solo si otro MCP expone legítimamente la capability necesaria. No se duplican llamadas cuando un MCP ya proporciona la capability requerida.
@@ -62,7 +62,7 @@ No se distribuye ni crea un workflow de deployment durante onboarding. Su ausenc
 
 Triggers automáticos —incluidos `push` y `schedule`— solo se añaden con intención y autorización explícitas para esa automatización. Configurar un workflow no autoriza publicar en producción; esa publicación mantiene su propio gate. No se solicitan ni escriben secretos: se referencian mediante GitHub Actions Secrets/environments o el mecanismo seguro aplicable. La ausencia de workflow no produce una ejecución fallida ni es una incidencia.
 
-En workspace canónico, `product/` es la superficie primaria candidata, no un target universal: el stack determina artifact, public root, build output y exclusiones. Para `Existing compatibility exception`, usa el artifact/source real registrado en `PROJECT.md`; no muevas ni cambies deployment solo para satisfacer la convención de carpetas. `.blueprint/`, `project-resources/` y `project-artifacts/` quedan fuera del deployment productivo por defecto. Un output auxiliar puede ser la entrega/handoff final sin convertirse por ello en runtime. Los recursos recibidos se integran/copian a ubicaciones internas del producto autorizadas si se necesitan; nunca se publica `project-resources/` por inferencia.
+En workspace canónico, `product/` es la superficie primaria candidata, no un target universal: el stack determina artifact, public root, build output y exclusiones. Para `Existing compatibility exception`, usa el artifact/source real registrado en `PROJECT.md`; no muevas ni cambies deployment solo para satisfacer la convención de carpetas. `.cn-pilot/`, `project-resources/` y `project-artifacts/` quedan fuera del deployment productivo por defecto. Un output auxiliar puede ser la entrega/handoff final sin convertirse por ello en runtime. Los recursos recibidos se integran/copian a ubicaciones internas del producto autorizadas si se necesitan; nunca se publica `project-resources/` por inferencia.
 
 ## Archivos locales y secretos
 

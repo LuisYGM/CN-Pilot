@@ -1,8 +1,8 @@
-# Web Project Blueprint — Especificación V1.1
+# CN Pilot Core — Especificación V1.2
 
-**Versión:** `1.1.1`
+**Versión:** `1.2.0`
 
-Documento de referencia para maintainers del Blueprint. Un usuario nuevo debe empezar por [`docs/START-HERE.md`](docs/START-HERE.md); no necesita leer esta especificación para trabajar.
+Documento de referencia para maintainers del CN Pilot. Un usuario nuevo debe empezar por [`docs/START-HERE.md`](docs/START-HERE.md); no necesita leer esta especificación para trabajar.
 
 ## Objetivo
 
@@ -10,21 +10,21 @@ Sistema portable y versionado para desarrollar proyectos web con agentes de IA s
 
 ## Principio local-first y modo de entrega
 
-El Blueprint prepara el trabajo localmente por defecto y lo versiona cuando Git está disponible. La plataforma objetivo, el alcance del repositorio y el modo de entrega son dimensiones independientes: un destino WordPress, Bricks, Elementor o WooCommerce no implica automáticamente implementación dentro de esa plataforma.
+El CN Pilot prepara el trabajo localmente por defecto y lo versiona cuando Git está disponible. La plataforma objetivo, el alcance del repositorio y el modo de entrega son dimensiones independientes: un destino WordPress, Bricks, Elementor o WooCommerce no implica automáticamente implementación dentro de esa plataforma.
 
 Cada proyecto define hasta dónde llega el repositorio y cómo se entrega cada artefacto: trabajo manual posterior, integración/MCP opcional o implementación completa desde el repositorio. Diferentes entregables pueden tener destinos distintos. El núcleo no depende de ningún proveedor o MCP; si una integración no está disponible o queda fuera de alcance, se produce un handoff completo y el flujo se detiene en el punto acordado.
 
-`/new-project` inicializa una sola vez el contexto de cada carpeta de proyecto creada desde el Blueprint; no significa «crear una web nueva». Puede describir trabajo nuevo o un sistema existente y debe preservar como fuente de verdad la implementación vigente que corresponda.
+`/new-project` inicializa una sola vez el contexto de cada carpeta de proyecto creada desde el CN Pilot; no significa «crear una web nueva». Puede describir trabajo nuevo o un sistema existente y debe preservar como fuente de verdad la implementación vigente que corresponda.
 
 ## Capas de configuración
 
-El repositorio separa Core portable en `.blueprint/`, rutas técnicas requeridas por herramientas, contexto mutable, inputs del proyecto y código/artefactos. `.blueprint/config/responsive.json` es la fuente versionada para responsive de proyectos nuevos; los proyectos existentes conservan sus breakpoints salvo migración aprobada.
+El repositorio separa Core portable en `.cn-pilot/`, rutas técnicas requeridas por herramientas, contexto mutable, inputs del proyecto y código/artefactos. `.cn-pilot/config/responsive.json` es la fuente versionada para responsive de proyectos nuevos; los proyectos existentes conservan sus breakpoints salvo migración aprobada.
 
-Los MCPs y workflows de deployment no se activan ni distribuyen por defecto. Ante una solicitud explícita, prepara la configuración MCP local con base en el servidor, capability y configuración real; no se crea durante `/new-project`, no se leen/escriben archivos MCP protegidos ni se solicitan secretos. Si se solicita GitHub Actions y el método/destino están definidos y autorizados, crea un workflow específico para el proyecto. Los triggers automáticos requieren autorización independiente. `kilo.jsonc` conserva únicamente configuración general compartible sin secretos. Consulta `.blueprint/docs/CONFIGURATION.md`.
+Los MCPs y workflows de deployment no se activan ni distribuyen por defecto. Ante una solicitud explícita, prepara la configuración MCP local con base en el servidor, capability y configuración real; no se crea durante `/new-project`, no se leen/escriben archivos MCP protegidos ni se solicitan secretos. Si se solicita GitHub Actions y el método/destino están definidos y autorizados, crea un workflow específico para el proyecto. Los triggers automáticos requieren autorización independiente. `kilo.jsonc` conserva únicamente configuración general compartible sin secretos. Consulta `.cn-pilot/docs/CONFIGURATION.md`.
 
 ## Capas de archivos y artefactos
 
-- **Blueprint Core:** infraestructura interna reusable en `.blueprint/`, junto a ubicaciones técnicas como `.kilo/`, `.github/`, `AGENTS.md` y `kilo.jsonc`. `.blueprint/MANIFEST.md` describe esta capa.
+- **CN Pilot Core:** infraestructura interna reusable en `.cn-pilot/`, junto a ubicaciones técnicas como `.kilo/`, `.github/`, `AGENTS.md` y `kilo.jsonc`. `.cn-pilot/MANIFEST.md` describe esta capa.
 - **Project Context:** `README.md`, memoria operativa (`PROJECT.md`, `REQUIREMENTS.md`, `STATE.md`, `DECISIONS.md`) y el índice raíz `ARTIFACTS.md`.
 - **Project input:** materiales recibidos bajo `project-resources/`; son input, no producción ni output.
 - **Project Artifacts:** outputs auxiliares reales bajo `project-artifacts/` en greenfield; container y subcarpetas on-demand, creados solo al aparecer el primer artefacto, sin README-placeholder ni `.gitkeep`.
@@ -32,7 +32,7 @@ Los MCPs y workflows de deployment no se activan ni distribuyen por defecto. Ant
 
 ## Contrato de payload del template
 
-La rama predeterminada `main` es el payload distribuible del template. Cada archivo versionado debe tener una función real para el proyecto derivado o el Core que recibe: operación de CN Pilot, bootstrap que se transforma al inicializar, Project Context limpio, configuración portable, catálogo Core reusable o aviso legal/atribución aplicable. El catálogo puede activarse solo cuando una tarea lo necesite; la distribución de la capacidad no precrea sus outputs.
+La rama predeterminada `main` es el payload distribuible del template. Cada archivo versionado debe tener una función real para el proyecto derivado o el Core que recibe: operación de CN Pilot, bootstrap que se transforma al inicializar, Project Context limpio, configuración portable, catálogo Core reusable o aviso legal aplicable. El catálogo puede activarse solo cuando una tarea lo necesite; la distribución de la capacidad no precrea sus outputs.
 
 El payload excluye expedientes detallados de revisión/validación del mantenedor, research y arquitectura interna del repositorio; el changelog conserva solo la evolución resumida del Core. Tampoco incluye datos propios de CN Pilot ni integraciones opcionales inactivas «por si acaso». No se configuran MCPs ni workflows de deployment durante `/new-project`: solo se materializan tras una tarea explícita y cuando alcance, configuración y autorización son suficientes. Triggers automáticos requieren intención y autorización explícitas.
 
@@ -40,9 +40,8 @@ El payload excluye expedientes detallados de revisión/validación del mantenedo
 
 `LICENSE` distribuye el CN Pilot Core/harness bajo GPL-3.0-or-later. El repositorio define qué parte propia ofrece CN Pilot como Core; no convierte automáticamente en GPL cualquier obra nueva que se guarde junto a él.
 
-- **Core/harness:** el Core original y sus modificaciones que formen parte del Core se distribuyen según `LICENSE`, conservando las licencias/atribuciones externas aplicables. Los textos necesarios están en `LICENSES/`; cada atribución permanece junto a la skill que identifica.
+- **Core/harness:** los archivos propios de CN Pilot Core se distribuyen según `LICENSE`.
 - **Producto y outputs:** código, diseño, contenido y assets nuevos creados por el usuario en `product/` o `project-artifacts/` no quedan cubiertos solo por usar el harness, sus agentes/instrucciones o compartir repositorio. Pueden tener una licencia propia cuando sean obras independientes y su autor tenga los derechos para decidirla. La carpeta, por sí sola, no prueba independencia.
-- **Material incorporado:** si se copia/adapta expresión protegida del Core o upstream, se evalúa esa parte y su relación real con el resto antes de redistribuirla. Un output nuevo no hereda automáticamente la licencia de una herramienta solo por haber sido producido con ella; sí puede haber condiciones si reproduce o constituye una obra cubierta, o si se combina de forma derivada.
 - **Uso y distribución:** la GPL permite explotación comercial sujeta a sus términos cuando se distribuye material cubierto. Hacer/usar cambios privadamente sin transmitirlos a otros no obliga a publicarlos; si se distribuyen copias de obras cubiertas se aplican sus condiciones. El uso del mismo repositorio o publicar un servicio no resuelve por sí solo qué copias de código se entregan.
 - **Inputs:** `project-resources/` conserva las licencias y derechos de sus fuentes originales.
 
@@ -52,13 +51,13 @@ La relación entre una obra concreta y código/texto protegido depende de su con
 
 ## Repository root y product boundary
 
-La raíz del repositorio Blueprint no es el product root canónico ni el destino habitual de outputs generados. En los workspaces Greenfield y Existing importados regidos por el Repository Layout Contract, la implementación activa vive bajo `product/`; outputs auxiliares bajo `project-artifacts/`; inputs recibidos bajo `project-resources/`. Los containers pueden no existir: `/new-project` registra ubicaciones canónicas pero nunca los crea por sí solo. `product/` se crea al iniciar implementación/adopción explícita y `project-artifacts/` al producir el primer artefacto. El stack decide la estructura nativa dentro de `product/`, sin wrapper universal. No coloques código productivo, prototipos, documentos de arquitectura/specs/auditorías, copy, design systems ni reportes en repo root por rutina.
+La raíz del repositorio CN Pilot no es el product root canónico ni el destino habitual de outputs generados. En los workspaces Greenfield y Existing importados regidos por el Repository Layout Contract, la implementación activa vive bajo `product/`; outputs auxiliares bajo `project-artifacts/`; inputs recibidos bajo `project-resources/`. Los containers pueden no existir: `/new-project` registra ubicaciones canónicas pero nunca los crea por sí solo. `product/` se crea al iniciar implementación/adopción explícita y `project-artifacts/` al producir el primer artefacto. El stack decide la estructura nativa dentro de `product/`, sin wrapper universal. No coloques código productivo, prototipos, documentos de arquitectura/specs/auditorías, copy, design systems ni reportes en repo root por rutina.
 
 La raíz queda destinada principalmente a infraestructura técnica requerida, Project Context, `project-resources/` y, solo cuando existan, `project-artifacts/` y `product/`. Para greenfield, `content/`, `design/` y `docs/` de proyecto pertenecen bajo `project-artifacts/`; igual para outputs auxiliares de Existing importado. Esos mismos nombres dentro de `product/` pertenecen a la estructura nativa del producto y no colisionan. Existing importado al workspace se organiza con su producto activo bajo `product/`, sin capa `legacy-site/` salvo significado técnico real. Existing repository adoptado preserva el root operativo como excepción solo con evidencia material de contratos externos; registra modo, product root real y razón en `PROJECT.md`. Código o carpetas source top-level fuera de `product/` —p. ej. `legacy-site/`— sin esa evidencia quedan `Pending normalization/migration`: no los eleves a excepción por comodidad ni comiences implementación allí hasta resolverlo de forma segura. No muevas ninguna estructura durante onboarding.
 
 Dentro de `product/`, la estructura depende del stack: puede alojar directamente un sitio estático o un proyecto framework, o contener una raíz interna como un plugin/theme WordPress. Una raíz interna/múltiples componentes solo se añaden si hay significado técnico o productos reales; un único sitio no se envuelve en `product/<slug>/` por rutina. El Repository Layout Contract de `PROJECT.md` registra por separado Product container, Product root(s) internos, entry points, public/static roots, comandos, artifact/build output, tests/harness y rutas generated/cache. Registra solo ubicaciones observadas/decididas; no exige crear carpetas. Una necesidad material demostrada de tooling/hosting o una `Existing compatibility exception` documentada con contratos operativos puede justificar un product root fuera de `product/`; registra ruta y evidencia en `PROJECT.md`, no inventes excepciones por costumbre.
 
-Hay dos modos Existing. **Imported into Blueprint workspace:** el Blueprint es workspace y la implementación activa reside en `product/`; si el código está en `product/`, inspecciona y conserva su estructura interna. Si solo está en `project-resources/source/`, sigue siendo original/input, no active product: no lo edites ni copies durante onboarding; una tarea explícita de adopción prepara conscientemente la working copy en `product/` y preserva el original. Si aparece código o una carpeta source top-level fuera de `product/` sin contratos operativos, registra discrepancia `Pending normalization/migration`, no empieces implementación allí ni muevas nada durante onboarding. **Adopted operational repository:** se incorpora Blueprint sobre un repositorio ya ligado materialmente a hosting/document root, CI/CD, imports, scripts, tooling, producción u otros paths externos. Preserva el product root observado (incluido `.`), documéntalo como `Existing compatibility exception` en `PROJECT.md` y continúa allí sin wrapper/migración automática. En ambos modos, alterar rutas requiere tarea explícita y evaluación de impacto. Una adopción autorizada a `product/` no termina hasta verificar working root, estructura interna, entry points, imports/assets/referencias, Project Context y que el source anterior no sea necesario ni queden refs obsoletas. El source container anterior se elimina solo si la misma migración verificada lo dejó vacío, con cero archivos y sin función independiente; no se borran no-vacíos, contenido desconocido ni originales de `project-resources/`. `project-artifacts/` no sustituye salidas existentes sin autorización. El producto no depende directamente de `project-resources/` ni de `project-artifacts/` salvo excepción material explícita.
+Hay dos modos Existing. **Imported into CN Pilot workspace:** el CN Pilot es workspace y la implementación activa reside en `product/`; si el código está en `product/`, inspecciona y conserva su estructura interna. Si solo está en `project-resources/source/`, sigue siendo original/input, no active product: no lo edites ni copies durante onboarding; una tarea explícita de adopción prepara conscientemente la working copy en `product/` y preserva el original. Si aparece código o una carpeta source top-level fuera de `product/` sin contratos operativos, registra discrepancia `Pending normalization/migration`, no empieces implementación allí ni muevas nada durante onboarding. **Adopted operational repository:** se incorpora CN Pilot sobre un repositorio ya ligado materialmente a hosting/document root, CI/CD, imports, scripts, tooling, producción u otros paths externos. Preserva el product root observado (incluido `.`), documéntalo como `Existing compatibility exception` en `PROJECT.md` y continúa allí sin wrapper/migración automática. En ambos modos, alterar rutas requiere tarea explícita y evaluación de impacto. Una adopción autorizada a `product/` no termina hasta verificar working root, estructura interna, entry points, imports/assets/referencias, Project Context y que el source anterior no sea necesario ni queden refs obsoletas. El source container anterior se elimina solo si la misma migración verificada lo dejó vacío, con cero archivos y sin función independiente; no se borran no-vacíos, contenido desconocido ni originales de `project-resources/`. `project-artifacts/` no sustituye salidas existentes sin autorización. El producto no depende directamente de `project-resources/` ni de `project-artifacts/` salvo excepción material explícita.
 
 ## Convención de idioma
 
@@ -105,7 +104,7 @@ El perfil define contexto y capacidades disponibles; no obliga a ejecutar todo e
 
 ## Permisos
 
-En Kilo 7.8.1, las reglas por patrón verificadas aplican la última coincidencia: el fallback va antes de las excepciones. Tras editar permisos se comprueba su resolución en el runtime instalado, sin asumir que otras versiones o tools usan idéntica semántica. Cada agente tiene `allow` en su área habitual, `ask` fuera cuando una edición puede ser legítima y `deny` para secretos, Core del Blueprint que no le corresponde y operaciones peligrosas. Reviewer permanece en lectura y verificación.
+En Kilo 7.8.1, las reglas por patrón verificadas aplican la última coincidencia: el fallback va antes de las excepciones. Tras editar permisos se comprueba su resolución en el runtime instalado, sin asumir que otras versiones o tools usan idéntica semántica. Cada agente tiene `allow` en su área habitual, `ask` fuera cuando una edición puede ser legítima y `deny` para secretos, Core del CN Pilot que no le corresponde y operaciones peligrosas. Reviewer permanece en lectura y verificación.
 
 ## Niveles de trabajo
 
@@ -142,7 +141,7 @@ Si la implementación depende materialmente de comportamiento externo/versionado
 
 ## Filosofía creativa y conversacional
 
-El Blueprint opera como un equipo senior en lenguaje natural durante todo el ciclo de vida: inspecciona el contexto, infiere lo seguro, pregunta progresivamente solo por vacíos materiales, integra respuestas y continúa. No exige prompt engineering, vocabulario interno, contenido ni diseño completos; permite `Pending` no material y no convierte conversación en formulario. Dev Lead es el interlocutor normal y consolida las incertidumbres de los especialistas. El contexto solo se persiste ante un delta material bajo su fuente de verdad; la guía [`HUMAN-INTERACTION.md`](docs/HUMAN-INTERACTION.md) es canónica para materialidad, ownership y continuidad.
+El CN Pilot opera como un equipo senior en lenguaje natural durante todo el ciclo de vida: inspecciona el contexto, infiere lo seguro, pregunta progresivamente solo por vacíos materiales, integra respuestas y continúa. No exige prompt engineering, vocabulario interno, contenido ni diseño completos; permite `Pending` no material y no convierte conversación en formulario. Dev Lead es el interlocutor normal y consolida las incertidumbres de los especialistas. El contexto solo se persiste ante un delta material bajo su fuente de verdad; la guía [`HUMAN-INTERACTION.md`](docs/HUMAN-INTERACTION.md) es canónica para materialidad, ownership y continuidad.
 
 Content/SEO distingue propuestas creativas de hechos empresariales. Puede construir arquitectura de contenidos, narrativa, copy, CTAs, metadata, enlaces y estrategia SEO, pero nunca inventa datos materiales. UI/UX deriva una dirección visual de sector, producto, audiencia, posicionamiento, contenido, assets y uso; evita defaults no justificados y conserva el lenguaje aprobado de proyectos Existing. La paleta puede ser cualquier familia si está fundada; no existe un color prohibido ni una cuota de novedad. Frontend conserva la intención visual, responsive, estados e interacciones del diseño.
 
@@ -168,11 +167,11 @@ Para una revisión que bloquea el siguiente paso se usa preferentemente un subag
 
 `task` es también el mecanismo predeterminado para delegar trabajo que forma parte de la tarea actual y no requiere branch, worktree, filesystem aislado ni una conversación top-level separada. Agent Manager no se usa automáticamente para paralelizar; Dev Lead lo reserva para aislamiento real, alternativas concurrentes, trabajo realmente independiente o una sesión top-level separada. Antes de abrirlo evalúa si un subagente `task` es suficiente.
 
-El Blueprint define workflow, responsabilidades, criterios de decisión y calidad; Kilo y la configuración del desarrollador definen proveedor, modelos, overrides y esfuerzo de razonamiento. La selección de IA está controlada por el usuario/entorno: Dev Lead decide cuándo delegar y a quién, pero no asigna modelos a subagentes. Todos los agentes y skills deben funcionar con proveedores y modelos distintos sin cambiar el proceso. Una dependencia concreta solo pertenece al proyecto si la exige realmente el producto o un requisito técnico. La calidad se evalúa mediante resultados, evidencia, QA y alcance, no por branding o versión del modelo. Mantén un enfoque cost-aware: usa la vía menos costosa que complete la tarea con fiabilidad, evitando agentes, iteraciones y trabajo duplicado innecesarios.
+El CN Pilot define workflow, responsabilidades, criterios de decisión y calidad; Kilo y la configuración del desarrollador definen proveedor, modelos, overrides y esfuerzo de razonamiento. La selección de IA está controlada por el usuario/entorno: Dev Lead decide cuándo delegar y a quién, pero no asigna modelos a subagentes. Todos los agentes y skills deben funcionar con proveedores y modelos distintos sin cambiar el proceso. Una dependencia concreta solo pertenece al proyecto si la exige realmente el producto o un requisito técnico. La calidad se evalúa mediante resultados, evidencia, QA y alcance, no por branding o versión del modelo. Mantén un enfoque cost-aware: usa la vía menos costosa que complete la tarea con fiabilidad, evitando agentes, iteraciones y trabajo duplicado innecesarios.
 
 Por defecto no se abren más de dos sesiones Agent Manager pagadas simultáneamente. Si más de dos aportan un beneficio real, Dev Lead solicita confirmación antes de iniciarlas. El criterio es aislamiento, paralelismo real, complejidad, coste y utilidad; la selección de modelos permanece en Kilo/el entorno del desarrollador.
 
-Las sesiones separadas de Agent Manager tienen transcript y ciclo de vida propios; no existe garantía del Blueprint de entregar un resultado a una sesión padre ya terminada. Si el informe sigue accesible, se reutiliza.
+Las sesiones separadas de Agent Manager tienen transcript y ciclo de vida propios; no existe garantía del CN Pilot de entregar un resultado a una sesión padre ya terminada. Si el informe sigue accesible, se reutiliza.
 
 El cleanup distingue cuatro estados: sesión finalizada, worktree desregistrado de Git, carpeta física eliminada y carpeta huérfana no registrada. Dev Lead solo declara la limpieza completada después de verificar ausencia de cambios, consultar `git worktree list`, usar mecanismos seguros, ejecutar `git worktree prune` cuando corresponda y volver a comprobar el listado y la ruta. Nunca elimina automáticamente un worktree con cambios no confirmados ni una carpeta huérfana cuya eliminación segura no pueda demostrar. Si Kilo no expone control suficiente, reporta el estado real y la limpieza pendiente en lugar de editar `.kilo/agent-manager.json` o fingir automatización.
 
@@ -180,7 +179,7 @@ El cleanup distingue cuatro estados: sesión finalizada, worktree desregistrado 
 
 Complejidad y riesgo se evalúan por separado. Un cambio pequeño puede elevarse si afecta producción, DB, autenticación, pagos, DNS, servidor o información sensible.
 
-`/doctor` diagnostica bajo demanda y en solo lectura la integridad local del Core, routing, permisos críticos e inventario del Blueprint; no es un test del proyecto, no se ejecuta automáticamente ni repara.
+`/doctor` diagnostica bajo demanda y en solo lectura la integridad local del Core, routing, permisos críticos e inventario del CN Pilot; no es un test del proyecto, no se ejecuta automáticamente ni repara.
 
 ## Criterios de aceptación
 
@@ -208,7 +207,7 @@ En WordPress se evalúan primero las capacidades disponibles en Core y el stack 
 
 ## Onboarding de proyectos
 
-`/new-project` se ejecuta una sola vez para inicializar el contexto de la carpeta del proyecto; no equivale a crear una web nueva. Debe inspeccionar primero las reglas, la versión del Blueprint, las plantillas de contexto y la implementación existente. Si hace falta preguntar, avanzará de forma progresiva con una pregunta natural breve o un grupo pequeño estrechamente relacionado; solo preguntará por gaps materiales aún sin resolver y no repetirá información inferida con fiabilidad. No exigirá que el usuario conozca o elija un stack técnico cuando no sea necesario todavía.
+`/new-project` se ejecuta una sola vez para inicializar el contexto de la carpeta del proyecto; no equivale a crear una web nueva. Debe inspeccionar primero las reglas, la versión del CN Pilot, las plantillas de contexto y la implementación existente. Si hace falta preguntar, avanzará de forma progresiva con una pregunta natural breve o un grupo pequeño estrechamente relacionado; solo preguntará por gaps materiales aún sin resolver y no repetirá información inferida con fiabilidad. No exigirá que el usuario conozca o elija un stack técnico cuando no sea necesario todavía.
 
 El sistema inferirá si se parte de un proyecto nuevo o existente, objetivo, plataforma/stack, alcance del repositorio, punto y modo de entrega, fuentes de verdad y destinos distintos por entregable. Marcará como `Pending` lo desconocido sin convertir estos conceptos en un formulario técnico para el usuario.
 
@@ -300,9 +299,9 @@ Cuando exista un plugin SEO activo y sus capabilities estén disponibles, el QA 
 
 ## Git
 
-- Git es una capacidad opcional: el Blueprint funciona en carpetas sin Git, repositorios locales y repositorios con GitHub u otros remotos.
+- Git es una capacidad opcional: el CN Pilot funciona en carpetas sin Git, repositorios locales y repositorios con GitHub u otros remotos.
 - Sin Git se omiten comandos, ramas, hashes, worktrees y commits; se verifican los archivos directamente y la ausencia no se trata como bloqueo.
-- El Blueprint nunca ejecuta `git init` salvo solicitud explícita o alcance confirmado.
+- El CN Pilot nunca ejecuta `git init` salvo solicitud explícita o alcance confirmado.
 - Cuando Git existe, Dev Lead crea automáticamente un commit local por defecto cuando una tarea modificó archivos y quedó totalmente terminada y verificada; no pregunta al usuario si quiere hacerlo.
 - Para trabajo individual y secuencial, el flujo local por defecto es `main → trabajar → verificar → commit local`; `main` representa normalmente el estado actual y estable del proyecto. Cualquier acción remota requiere la autorización del contrato Git indicada abajo.
 - Las ramas son opcionales: solo se crean cuando existe una razón concreta de colaboración, aislamiento por riesgo, experimento descartable, Pull Request, desarrollo paralelo o solicitud explícita. No son necesarias para mantenimiento, documentación, mejoras pequeñas o trabajo individual normal.
@@ -315,7 +314,7 @@ Cuando exista un plugin SEO activo y sus capabilities estén disponibles, el QA 
 - El cierre por defecto es local: acciones remotas (push, deploy/publicación, PR, merge, tag, release) requieren autorización explícita o un scope ya aprobado que las incluya inequívocamente. Las reglas permanentes se heredan sin repetirlas en cada prompt.
 - No se hereda un workflow GitHub Actions de deployment. Se crea uno específico solo cuando el proyecto solicita configurarlo, método/destino están definidos y existe autorización; un trigger automático exige además intención y autorización explícitas.
 - Cada tarea completada recibe un informe final breve y proporcional; incluye solo resultado, cambios y verificaciones pertinentes, agentes/Reviewer si intervinieron y hash/mensaje exactos si hubo commit. Tras informar, Dev Lead se detiene.
-- Los tags y GitHub Releases son opcionales y no se crean ni recomiendan para cada parche, commit o cambio de versión. `.blueprint-version` identifica la generación/base del Blueprint y no tiene que cambiar con cada commit; `CHANGELOG.md` se actualiza para cambios relevantes.
+- Los tags y GitHub Releases son opcionales y no se crean ni recomiendan para cada parche, commit o cambio de versión. `.cn-pilot-version` identifica la generación/base del CN Pilot y no tiene que cambiar con cada commit; `CHANGELOG.md` se actualiza para cambios relevantes.
 - Operaciones destructivas bloqueadas.
 
 ## Versionado
@@ -326,7 +325,7 @@ SemVer:
 - MINOR: capacidades compatibles.
 - MAJOR: cambios estructurales/incompatibles.
 
-Cada proyecto conserva `.blueprint-version`.
+Cada proyecto conserva `.cn-pilot-version`.
 
 ## Entornos
 
@@ -360,7 +359,7 @@ Las fases son puntos posibles de entrega, no una secuencia obligatoria. Un flujo
 
 ## Principio de contexto
 
-El Blueprint puede ser completo sin cargarlo entero en cada tarea. Los agentes deben usar solo archivos, skills y documentación relevantes; evitar releer lo ya analizado, rehacer razonamientos correctos del especialista, delegar sin necesidad o activar reviews sin beneficio.
+El CN Pilot puede ser completo sin cargarlo entero en cada tarea. Los agentes deben usar solo archivos, skills y documentación relevantes; evitar releer lo ya analizado, rehacer razonamientos correctos del especialista, delegar sin necesidad o activar reviews sin beneficio.
 
 ## Criterio de éxito
 

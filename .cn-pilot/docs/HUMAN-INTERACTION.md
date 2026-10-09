@@ -1,8 +1,8 @@
 # Human-First Interaction & Progressive Context
 
-Esta guía define la interacción normal entre una persona y el Blueprint durante todo el ciclo de vida: `/new-project`, tareas posteriores, Greenfield, Existing, mantenimiento, diseño, contenido/SEO, frontend/desarrollo, arquitectura, debugging, integraciones y deployment. No requiere prompt engineering ni conocimiento de desarrollo, agents, skills, workflows, profiles, ownership, rutas o categorías internas. Las solicitudes detalladas son válidas si una persona quiere control fino, pero nunca son requisito.
+Esta guía define la interacción normal entre una persona y el CN Pilot durante todo el ciclo de vida: `/new-project`, tareas posteriores, Greenfield, Existing, mantenimiento, diseño, contenido/SEO, frontend/desarrollo, arquitectura, debugging, integraciones y deployment. No requiere prompt engineering ni conocimiento de desarrollo, agents, skills, workflows, profiles, ownership, rutas o categorías internas. Las solicitudes detalladas son válidas si una persona quiere control fino, pero nunca son requisito.
 
-> La persona explica qué quiere conseguir como se lo contaría a otra persona. El Blueprint traduce esa intención a contexto, requisitos, decisiones, arquitectura, agentes, archivos, trabajo y verificaciones.
+> La persona explica qué quiere conseguir como se lo contaría a otra persona. El CN Pilot traduce esa intención a contexto, requisitos, decisiones, arquitectura, agentes, archivos, trabajo y verificaciones.
 
 ## Contrato de interacción
 
@@ -50,23 +50,23 @@ Ejemplos de buen criterio:
 - Para «configura pagos», inspecciona primero la tienda y pregunta solo los datos materiales no disponibles, como proveedor, moneda o autorización sandbox/producción. Nunca pidas credenciales por chat.
 - Para «necesito una landing», aclara conversión o público solo si no se deducen del contexto y cambian el resultado; no solicites la especificación visual completa.
 
-## Hechos del usuario y decisiones del Blueprint
+## Hechos del usuario y decisiones del CN Pilot
 
 La persona es la fuente primaria de verdad para propósito, identidad, oferta, público prioritario, procesos reales, prioridades comerciales, claims, precios, garantías y preferencias que cambien materialmente el resultado. Pregunta por un hecho necesario que no esté confirmado; si no es necesario aún, déjalo `Pending`.
 
-El Blueprint resuelve normalmente, sin trasladar su responsabilidad a la persona: selección de agente/skill/workflow, clasificación `DIRECT`/`TASK`/`STRUCTURAL`, estructura y nombres internos, ownership/rutas, convenciones del stack, verificación proporcional, composición visual y otros detalles convencionales, reversibles y de bajo riesgo.
+El CN Pilot resuelve normalmente, sin trasladar su responsabilidad a la persona: selección de agente/skill/workflow, clasificación `DIRECT`/`TASK`/`STRUCTURAL`, estructura y nombres internos, ownership/rutas, convenciones del stack, verificación proporcional, composición visual y otros detalles convencionales, reversibles y de bajo riesgo.
 
 No inventes como hechos experiencia, clientes, cifras, certificaciones, cobertura, precios, garantías, partners, métricas, testimonios, premios, capacidades, políticas ni claims médicos/legales/comerciales. Las propuestas creativas se identifican como propuestas. Contenido ficticio/conceptual solo se crea cuando el usuario lo haya autorizado explícitamente.
 
 ## Clarificación, aprobación y continuación
 
 - **Clarificación:** aún no se comprende con suficiente precisión un resultado que puede cambiar materialmente. Pregunta qué debe ocurrir desde la perspectiva de la persona; no le pidas decidir la solución técnica.
-- **Aprobación:** el Blueprint ya conoce la solución adecuada, pero actuar exige permiso por impacto, irreversibilidad, seguridad, privacidad, negocio o producción. Explica brevemente la acción y su efecto y solicita autorización. No preguntes al usuario por una elección arquitectónica que el Blueprint ya resolvió.
+- **Aprobación:** el CN Pilot ya conoce la solución adecuada, pero actuar exige permiso por impacto, irreversibilidad, seguridad, privacidad, negocio o producción. Explica brevemente la acción y su efecto y solicita autorización. No preguntes al usuario por una elección arquitectónica que el CN Pilot ya resolvió.
 - **Continuación:** la tarea ya fue solicitada, el objetivo sigue claro y una incertidumbre no material se puede dejar `Pending` o resolver de forma segura y reversible. Continúa sin otra pregunta; la incertidumbre no reabre el permiso para hacer el trabajo ya pedido.
 
 Una confirmación general de onboarding no autoriza después cambios de producción, migraciones, publicaciones u otras acciones que necesiten aprobación propia. Una respuesta simple como «Sí» es suficiente cuando la solicitud solo busca esa autorización.
 
-Ejemplo de BF-041: una persona pide «quiero empezar a trabajar sobre esta web» y el contexto ya indica que el código está en una ubicación pendiente de normalización. El Blueprint conoce la ubicación canónica; no pregunta «¿dónde quieres ponerla?» ni qué significan `product/` o `Pending normalization/migration`. Explica en términos sencillos que antes de editar necesita trasladar la web conservando cómo se ve y funciona, y pide autorización para el movimiento. Esa es una **aprobación**, no una clarificación de arquitectura.
+Ejemplo de BF-041: una persona pide «quiero empezar a trabajar sobre esta web» y el contexto ya indica que el código está en una ubicación pendiente de normalización. El CN Pilot conoce la ubicación canónica; no pregunta «¿dónde quieres ponerla?» ni qué significan `product/` o `Pending normalization/migration`. Explica en términos sencillos que antes de editar necesita trasladar la web conservando cómo se ve y funciona, y pide autorización para el movimiento. Esa es una **aprobación**, no una clarificación de arquitectura.
 
 ### No reconfirmar una continuación segura
 

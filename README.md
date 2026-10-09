@@ -6,9 +6,9 @@ Kilo Code nativo · agnóstico al proveedor/modelo dentro de Kilo
 
 CN Pilot coordina el trabajo de proyectos web con agentes de IA sin convertir a la persona en operadora de una cadena de herramientas. Describe el resultado en lenguaje natural; el sistema inspecciona el contexto, activa solo el proceso necesario y mantiene las decisiones importantes bajo control humano.
 
-[Empieza aquí](.blueprint/docs/START-HERE.md) · [Configuración de Kilo](.blueprint/docs/KILO-SETUP.md) · [Documentación](#documentación) · [Repositorio](https://github.com/LuisYGM/cn-pilot)
+[Empieza aquí](.cn-pilot/docs/START-HERE.md) · [Configuración de Kilo](.cn-pilot/docs/KILO-SETUP.md) · [Documentación](#documentación) · [Repositorio](https://github.com/LuisYGM/cn-pilot)
 
-> **Estado actual:** integración nativa con Kilo Code. El contenido de este repositorio está en español. El CN Pilot Core/harness se distribuye bajo [GNU GPL v3.0 or later (`GPL-3.0-or-later`)](LICENSE); consulta el [alcance y las atribuciones por componente](#licencia-y-atribuciones).
+> **Estado actual:** integración nativa con Kilo Code. El contenido de este repositorio está en español. CN Pilot Core se distribuye bajo [GNU GPL v3.0 or later (`GPL-3.0-or-later`)](LICENSE).
 
 ## El problema que resuelve
 
@@ -44,12 +44,11 @@ No hay instalador ni CLI: el uso actual consiste en abrir este workspace con VS 
 
 1. Usa [`cn-pilot`](https://github.com/LuisYGM/cn-pilot) como template de GitHub, clónalo o copia sus archivos a una carpeta de trabajo. Git puede usarse, pero no es requisito del harness.
 2. Abre la carpeta del repositorio en VS Code e instala/activa la extensión Kilo Code.
-3. Configura en Kilo un proveedor y un modelo disponibles para tu cuenta. CN Pilot no prescribe proveedor ni modelo. Sigue [Configuración de Kilo](.blueprint/docs/KILO-SETUP.md).
-4. Selecciona **Dev Lead** (`dev-lead`) como interlocutor y ejecuta `/doctor` para comprobar localmente la integridad del harness.
-5. Ejecuta `/new-project` una vez en la carpeta de trabajo. Resume el proyecto nuevo o existente cuando Dev Lead lo solicite.
-6. Describe en lenguaje natural el resultado que quieres conseguir. Para empezar a trabajar sobre la web: `/new-project` registra el contexto; no mueve ni adopta código por sí solo.
+3. Configura en Kilo un proveedor y un modelo disponibles para tu cuenta. CN Pilot no prescribe proveedor ni modelo. Sigue [Configuración de Kilo](.cn-pilot/docs/KILO-SETUP.md).
+4. Selecciona **Dev Lead** (`dev-lead`) como interlocutor y ejecuta `/new-project` una vez. Resume el proyecto nuevo o existente cuando Dev Lead lo solicite.
+5. Describe en lenguaje natural el resultado que quieres conseguir. `/new-project` registra el contexto; no mueve ni adopta código por sí solo.
 
-Consulta el [recorrido del primer día](.blueprint/docs/START-HERE.md) para los pasos completos y escenarios Greenfield/Existing.
+Consulta el [recorrido del primer día](.cn-pilot/docs/START-HERE.md) para los pasos completos y escenarios Greenfield/Existing.
 
 ## Diseño, implementación y entrega
 
@@ -82,9 +81,9 @@ La estructura ayuda al sistema a conservar límites y contexto; no necesitas apr
 | `project-resources/` | Material que se recibe para el proyecto, como referencias o archivos de entrada. |
 | `project-artifacts/` | Entregables de trabajo y revisión: contenido, diseños, especificaciones y documentación auxiliar. |
 | `product/` | Implementación activa real cuando el layout del workspace la ubica allí. |
-| `.blueprint/` | Blueprint Core: documentación y estructura técnica interna de CN Pilot. |
+| `.cn-pilot/` | CN Pilot Core: documentación y estructura técnica interna de CN Pilot. |
 
-La estructura interna del producto depende de su stack; un repositorio existente con contratos operativos puede conservar su root real documentada. Consulta el [layout y ciclo de vida](.blueprint/docs/LIFECYCLE.md).
+La estructura interna del producto depende de su stack; un repositorio existente con contratos operativos puede conservar su root real documentada. Consulta el [layout y ciclo de vida](.cn-pilot/docs/LIFECYCLE.md).
 
 ## Agentes, skills y stacks
 
@@ -98,23 +97,21 @@ Se inspecciona el estado vigente antes de editar; el acceso a secretos se limita
 
 ## Documentación
 
-- [Primer día y proyectos Greenfield/Existing](.blueprint/docs/START-HERE.md)
-- [Configuración de Kilo](.blueprint/docs/KILO-SETUP.md)
-- [Interacción human-first](.blueprint/docs/HUMAN-INTERACTION.md)
-- [Ciclo de vida y entregas](.blueprint/docs/LIFECYCLE.md)
-- [Seguridad](.blueprint/docs/SECURITY.md)
-- [Configuración, MCP y deployment](.blueprint/docs/CONFIGURATION.md)
-- [Troubleshooting](.blueprint/docs/TROUBLESHOOTING.md)
-- [Especificación técnica para maintainers](.blueprint/BLUEPRINT.md)
-- [Licencia y atribuciones](#licencia-y-atribuciones)
+- [Primer día y proyectos Greenfield/Existing](.cn-pilot/docs/START-HERE.md)
+- [Configuración de Kilo](.cn-pilot/docs/KILO-SETUP.md)
+- [Interacción human-first](.cn-pilot/docs/HUMAN-INTERACTION.md)
+- [Ciclo de vida y entregas](.cn-pilot/docs/LIFECYCLE.md)
+- [Seguridad](.cn-pilot/docs/SECURITY.md)
+- [Configuración, MCP y deployment](.cn-pilot/docs/CONFIGURATION.md)
+- [Troubleshooting](.cn-pilot/docs/TROUBLESHOOTING.md)
+- [CN Pilot Core](.cn-pilot/CORE.md)
+- [Licencia](#licencia)
 
-## Licencia y atribuciones
+## Licencia
 
 ### Qué cubre la licencia del Core
 
 El CN Pilot Core/harness que ofrece este repositorio se distribuye bajo [GNU GPL v3.0 or later (`GPL-3.0-or-later`)](LICENSE). **Usar CN Pilot, usar sus agentes o compartir repositorio no coloca automáticamente bajo GPL un producto independiente** creado por el usuario. El Core puede modificarse conforme a su licencia; el código, contenido y assets nuevos del usuario pueden tener licencia propia si son obras independientes y sus otras dependencias lo permiten. Así, un producto comercial, privado o bajo otra licencia puede coexistir con el Core cuando su autor tiene esos derechos y no incorpora material sujeto a términos incompatibles. La ubicación en `product/` o `project-artifacts/`, o en el mismo repositorio, por sí sola no decide esa relación.
-
-Si una web o un plugin copia/adapta material expresivo del Core o de terceros, las condiciones pueden alcanzar ese material y, según la relación efectiva entre las obras, componentes combinados o derivados. No asumas independencia ni cobertura automática: evalúa qué se incorporó realmente. La salida de una herramienta GPL no queda automáticamente bajo GPL; importa si reproduce o constituye material cubierto. Consulta la [FAQ oficial GNU GPL sobre output](https://www.gnu.org/licenses/gpl-faq.html#WhatCaseIsOutputGPL) y [aggregate](https://www.gnu.org/licenses/gpl-faq.html#MereAggregation).
 
 Crear un plugin WordPress con CN Pilot tampoco determina su licencia por el solo uso del harness; el stack, sus dependencias y el material realmente incorporado se evalúan por separado.
 
@@ -122,15 +119,4 @@ La GPL no prohíbe el uso o la venta comerciales: al distribuir material cubiert
 
 `project-resources/` conserva las licencias de sus fuentes originales. No se asigna ni pregunta una licencia predeterminada para el producto durante `/new-project`.
 
-### Atribuciones de material de terceros del Core
-
-Las atribuciones se conservan junto a cada skill. Los textos completos de las licencias aplicables están en [`LICENSES/`](LICENSES/).
-
-| Componente | Licencia upstream declarada | Atribución y detalle |
-|---|---|---|
-| [`ui-design-system`](.kilo/skills/ui-design-system/ATTRIBUTION.md) | Apache-2.0 | Heurísticas seleccionadas de Impeccable; no se incorpora su CLI/engine ni su NOTICE no aplicable a estas referencias. |
-| [`accessibility-review`](.kilo/skills/accessibility-review/ATTRIBUTION.md) | MIT | Conocimiento adaptado de `web-accessibility`. |
-| [`performance-review`](.kilo/skills/performance-review/ATTRIBUTION.md) | GPL-2.0-or-later | Conocimiento adaptado de `wp-performance`; la procedencia conserva la opción original «or later». |
-| [`webapp-testing`](.kilo/skills/webapp-testing/ATTRIBUTION.md) | Apache-2.0 | Adaptación textual de Anthropic; no se copian scripts, ejemplos, browsers ni dependencias. |
-
-La versión base del Blueprint Core se registra en `.blueprint-version`; no representa por sí sola una versión del producto CN Pilot.
+La versión base del CN Pilot Core se registra en `.cn-pilot-version`; no representa por sí sola una versión del producto CN Pilot.

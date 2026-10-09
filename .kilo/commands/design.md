@@ -7,7 +7,7 @@ agent: dev-lead
 
 1. Infiere si se necesita fidelidad `Structural`, `Visual` o `Implementation reference` sin pedir al usuario estas etiquetas. Una petición normal de diseñar una página de inicio/página visual se trata como `Visual` por defecto; no requiere que el usuario pida HTML o alta fidelidad con esos términos.
 2. Inspecciona contexto y artefactos vigentes; evalúa de forma ligera objetivo, público, contenido, posicionamiento, plataforma/punto de entrega, identidad, assets, restricciones y referencias.
-3. Pregunta únicamente por ausencias materiales, progresivamente y en lenguaje humano conforme a `.blueprint/docs/HUMAN-INTERACTION.md`. Las decisiones de composición, jerarquía, spacing, grids, tipografía, componentes y microinteracciones corresponden al diseñador; no repitas datos confirmados.
+3. Pregunta únicamente por ausencias materiales, progresivamente y en lenguaje humano conforme a `.cn-pilot/docs/HUMAN-INTERACTION.md`. Las decisiones de composición, jerarquía, spacing, grids, tipografía, componentes y microinteracciones corresponden al diseñador; no repitas datos confirmados.
 4. Delega a `ui-ux-designer` y permite investigación externa de referencias cuando aporte valor; en greenfield guarda el análisis útil en `project-artifacts/design/references/` sin copiar diseños.
 5. Usa `ui-design-system` si hace falta.
 6. En greenfield guarda diseños de páginas en `project-artifacts/design/pages/` y referencias visuales en `project-artifacts/design/references/`; crea las rutas solo cuando exista el primer artefacto. Preserva destinos existentes.

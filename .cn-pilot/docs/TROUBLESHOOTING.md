@@ -1,12 +1,12 @@
 # Troubleshooting
 
-Problemas operativos frecuentes del Blueprint. Para la primera puesta en marcha, empieza por [Empieza aquí](START-HERE.md).
+Problemas operativos frecuentes del CN Pilot. Para la primera puesta en marcha, empieza por [Empieza aquí](START-HERE.md).
 
 ## Git no está inicializado
 
 **Síntoma:** `git status` indica que la carpeta no es un repositorio.
 
-**Comportamiento esperado:** el Blueprint continúa trabajando, verifica los archivos directamente y no registra la ausencia de Git como bloqueo. No ejecuta `git init` salvo petición explícita o alcance confirmado.
+**Comportamiento esperado:** el CN Pilot continúa trabajando, verifica los archivos directamente y no registra la ausencia de Git como bloqueo. No ejecuta `git init` salvo petición explícita o alcance confirmado.
 
 `/commit` sí requiere Git y debe detener únicamente ese comando. `/new-project`, `/checkpoint`, `/review`, `/handoff` y `/pre-deploy` pueden operar sin Git. Las ramas, hashes, commits y worktrees no están disponibles.
 
@@ -20,7 +20,7 @@ Problemas operativos frecuentes del Blueprint. Para la primera puesta en marcha,
 4. Valida capabilities disponibles y autorización antes de publicar o modificar el sistema objetivo.
 5. Si no puede utilizarse, detén el flujo en contenido, diseño, código o handoff manual según lo acordado.
 
-La falta de MCP no impide que el Blueprint produzca un entregable completo para continuación manual.
+La falta de MCP no impide que el CN Pilot produzca un entregable completo para continuación manual.
 
 ## Un subagente usa un modelo inesperado
 
@@ -89,7 +89,7 @@ Detén el commit. No pegues credenciales en prompts, documentación, manifests o
 
 - `.env`, sus variantes sensibles y `secrets/**` deben quedar fuera de Git.
 - `kilo.local.json` y `kilo.local.jsonc` están destinados a configuración local ignorada.
-- Los ejemplos bajo `.blueprint/templates/` deben conservar placeholders y permanecer inactivos.
+- Los ejemplos bajo `.cn-pilot/templates/` deben conservar placeholders y permanecer inactivos.
 - Si un secreto llegó al historial o a un remoto, revócalo y sigue el procedimiento de seguridad del proveedor; borrarlo del archivo actual no basta.
 
 Consulta [Configuración](CONFIGURATION.md#archivos-locales-y-secretos) y [Seguridad](SECURITY.md).

@@ -22,7 +22,7 @@ main → trabajar → verificar → commit local → push manual cuando correspo
 
 Las ramas son opcionales y no se crean ni recomiendan por defecto. Úsalas cuando exista una razón concreta: trabajo simultáneo, cambios grandes o de alto riesgo que requieran aislamiento, experimentos descartables, Pull Requests, desarrollo paralelo o una solicitud explícita.
 
-## Comandos del Blueprint
+## Comandos del CN Pilot
 
 - `/commit` requiere un repositorio Git; sin Git informa que no aplica y no inicializa uno.
 - `/checkpoint` verifica siempre, pero solo crea commit si Git existe.
@@ -65,4 +65,4 @@ refactor/permisos-usuarios
 
 ## Versiones y CHANGELOG
 
-`.blueprint-version` identifica la generación/base del Blueprint, pero no debe cambiar con cada commit. `CHANGELOG.md` se actualiza para cambios relevantes, no para cada modificación menor. No es necesario crear un tag o una GitHub Release para cada cambio de versión; ambos son opcionales y dependen de un hito o una decisión explícita.
+`.cn-pilot-version` identifica la generación/base del CN Pilot, pero no debe cambiar con cada commit. `CHANGELOG.md` se actualiza para cambios relevantes, no para cada modificación menor. No es necesario crear un tag o una GitHub Release para cada cambio de versión; ambos son opcionales y dependen de un hito o una decisión explícita.
