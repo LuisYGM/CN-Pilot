@@ -1,6 +1,6 @@
 # Web Project Blueprint — Especificación V1.1
 
-**Versión:** `1.1.0`
+**Versión:** `1.1.1`
 
 Documento de referencia para maintainers del Blueprint. Un usuario nuevo debe empezar por [`docs/START-HERE.md`](docs/START-HERE.md); no necesita leer esta especificación para trabajar.
 
@@ -42,7 +42,7 @@ LICENSE y las atribuciones acompañan al harness distribuido. Su presencia no de
 
 ## Repository root y product boundary
 
-La raíz del repositorio Blueprint no es el product root canónico ni el destino habitual de outputs generados. En workspaces 1.1.0 gestionados por Blueprint, implementación activa —Greenfield o Existing importado— vive bajo `product/`; outputs auxiliares bajo `project-artifacts/`; inputs recibidos bajo `project-resources/`. Los containers pueden no existir: `/new-project` registra ubicaciones canónicas pero nunca los crea por sí solo. `product/` se crea al iniciar implementación/adopción explícita y `project-artifacts/` al producir el primer artefacto. El stack decide la estructura nativa dentro de `product/`, sin wrapper universal. No coloques código productivo, prototipos, documentos de arquitectura/specs/auditorías, copy, design systems ni reportes en repo root por rutina.
+La raíz del repositorio Blueprint no es el product root canónico ni el destino habitual de outputs generados. En los workspaces Greenfield y Existing importados regidos por el Repository Layout Contract, la implementación activa vive bajo `product/`; outputs auxiliares bajo `project-artifacts/`; inputs recibidos bajo `project-resources/`. Los containers pueden no existir: `/new-project` registra ubicaciones canónicas pero nunca los crea por sí solo. `product/` se crea al iniciar implementación/adopción explícita y `project-artifacts/` al producir el primer artefacto. El stack decide la estructura nativa dentro de `product/`, sin wrapper universal. No coloques código productivo, prototipos, documentos de arquitectura/specs/auditorías, copy, design systems ni reportes en repo root por rutina.
 
 La raíz queda destinada principalmente a infraestructura técnica requerida, Project Context, `project-resources/` y, solo cuando existan, `project-artifacts/` y `product/`. Para greenfield, `content/`, `design/` y `docs/` de proyecto pertenecen bajo `project-artifacts/`; igual para outputs auxiliares de Existing importado. Esos mismos nombres dentro de `product/` pertenecen a la estructura nativa del producto y no colisionan. Existing importado al workspace se organiza con su producto activo bajo `product/`, sin capa `legacy-site/` salvo significado técnico real. Existing repository adoptado preserva el root operativo como excepción solo con evidencia material de contratos externos; registra modo, product root real y razón en `PROJECT.md`. Código o carpetas source top-level fuera de `product/` —p. ej. `legacy-site/`— sin esa evidencia quedan `Pending normalization/migration`: no los eleves a excepción por comodidad ni comiences implementación allí hasta resolverlo de forma segura. No muevas ninguna estructura durante onboarding.
 

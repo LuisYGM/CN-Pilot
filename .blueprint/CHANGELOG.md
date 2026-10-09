@@ -1,5 +1,16 @@
 # Changelog
 
+## [1.1.1] - 2026-10-09
+
+Actualización compatible de mantenimiento sobre 1.1.0; conserva las capacidades del harness.
+
+### Mantenimiento
+
+- **Payload del template:** se elimina material maintainer-only de `main`, sin alterar las capacidades del Core.
+- **Deployment y MCP on-demand:** no se distribuyen workflow de deployment ni ejemplo MCP inactivos; cada integración se prepara para el proyecto únicamente tras una solicitud explícita y la autorización/configuración aplicables.
+- **Contrato de distribución:** `.blueprint/BLUEPRINT.md` formaliza el payload de `main` y la separación entre el harness distribuido y el producto del usuario. Project Context inicial continúa limpio para `/new-project`.
+- **BF-043** permanece `Testing`; este mantenimiento no cambia su estado.
+
 ## [1.1.0] - 2026-10-08
 
 ### Añadido
@@ -7,8 +18,7 @@
 - **BF-043 — Visual Diversity & High-Fidelity Output Contract (Testing):** dirección visual fundamentada en el proyecto, continuidad para Existing, prototipo HTML high-fidelity como salida de diseño y frontera explícita previa a implementación en Product.
 - **BF-042 — Human-First Interaction & Progressive Context:** guía canónica para lenguaje natural, inspección antes de preguntar, preguntas materiales/progresivas, reutilización y persistencia proporcional del contexto durante onboarding y tareas posteriores.
 - **BF-041 — Repository Structure & Blueprint Boundary:** Core portable bajo `.blueprint/`; `project-resources/` para inputs; `project-artifacts/` on-demand para outputs auxiliares; `product/` para producto activo Greenfield/Existing importado. Repositorios Existing ya operativos adoptados pueden preservar su root real mediante excepción de compatibilidad documentada. Project Context permanece en raíz y `ARTIFACTS.md` indexa entregables significativos de todo el proyecto. Retirados placeholders y scaffolds duplicados.
-- **BF-040 — Deployment Workflow on-demand:** no se incluye workflow en el template. Se crea uno específico solo tras una solicitud, definición suficiente del proyecto y autorización; triggers automáticos requieren intención y autorización explícitas. La ausencia es fail-closed por defecto.
-- **Configuración MCP on-demand:** se retira el ejemplo MCP del payload. La configuración se prepara únicamente para una integración solicitada, según capabilities/esquema real, sin secretos ni escritura a archivos activos protegidos.
+- **BF-040 — Deployment Workflow Scaffold:** workflow GitHub Actions heredable, manual y fail-closed por defecto; no publica hasta configuración específica autorizada y trigger automático explícito.
 - **BF-039 — Gate Self-Test:** validación proporcional de gates custom decisivos mediante controles KNOWN-GOOD/PASS y KNOWN-BAD/FAIL aislados, sin self-test rutinario de tooling estándar ni pruebas inseguras en producción.
 - **BF-038 — Blueprint Doctor:** comando `/doctor` local y read-only para diagnosticar integridad de Core, agentes, skills, comandos, routing, permisos críticos y MANIFEST sin reparar ni ejecutarse por rutina.
 - **BF-037 — Verified Blocking Findings:** verificación fresca única orientada a refutar findings Reviewer HIGH/CRITICAL realmente bloqueantes y no demostrados; discrimina CONFIRMED/REFUTED/UNPROVEN sin crear un gate universal.
@@ -40,7 +50,7 @@ Parche backward-compatible con Blueprint 1.0.0.
 
 ### Mejorado
 
-- **BF-014 — Configuración MCP:** configuración MCP activa por proyecto, mantenida local e ignorada por Git; el ejemplo seguro/versionado pertenecía a la entrega 1.0.1 y ya no forma parte del payload vigente; separación clara entre `kilo.jsonc` como configuración general y la configuración MCP; manejo seguro de secretos y preferencia por OAuth cuando corresponda.
+- **BF-014 — Configuración MCP:** configuración MCP activa por proyecto en `.kilocode/mcp.json`, mantenida local e ignorada por Git; `.kilocode/mcp.example.json` versionado, seguro y sin secretos; separación clara entre `kilo.jsonc` como configuración general y la configuración MCP; manejo seguro de secretos y preferencia por OAuth cuando corresponda.
 - **BF-015 — Orquestación MCP:** enfoque capability-first con discovery de tools y capabilities reales; flujo `Discovery → Read-only → Plan → Write autorizado → Verification`; fallback legítimo entre integraciones; restricciones reforzadas para producción y verificación posterior a las escrituras.
 - **BF-016 — Calidad estructural de maquetación:** convención conceptual `Sección → Contenedor de layout → Bloque lógico → Contenido`; formulación Grid-first refinada posteriormente por layout intent; un Container por Section como default y múltiples Containers solo para regiones de layout independientes; Blocks como unidades/celdas lógicas; wrappers auxiliares únicamente con función real; builder-native; semántica para HTML/custom themes; schema-first; implementación incremental; recuperación segura tras fallos MCP/remotos; y QA estructural además de QA técnico.
 - **BF-018 — Flujo visual de alta fidelidad:** dirección creativa, prototipo high-fidelity, aprobación visual humana, implementación builder-native, fidelity pass, parity QA y Human Visual QA proporcionales; contenido aprobado como fuente editorial y CSS scoped mínimo cuando sea necesario.
