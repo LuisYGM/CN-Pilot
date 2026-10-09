@@ -4,31 +4,34 @@
 
 ## Identidad
 
-- **Nombre:** Pending
-- **Perfil:** Pending
-- **Repositorio o carpeta:** Pending
-- **Control de versiones:** Git local / Git con remoto / No inicializado / Pending
+- **Nombre:** CN Pilot
+- **Perfil:** Harness human-first para proyectos web con agentes de IA
+- **Repositorio o carpeta:** https://github.com/LuisYGM/cn-pilot
+- **Control de versiones:** Git con remoto (`origin`)
 - **Versión del Blueprint:** 1.1.0
 
 ## Objetivo
 
-Pending.
+Coordinar contexto, contenido, diseño, desarrollo, QA y entrega proporcionalmente para proyectos web mediante integración nativa con Kilo Code. Marca madre: Código Nocturno (https://codigonocturno.com/).
 
 ## Contexto de partida
 
-- **Tipo:** Proyecto nuevo / Sistema existente / Pending
-- **Implementación existente a respetar:** Pending
+- **Tipo:** Sistema existente (repositorio público de CN Pilot)
+- **Implementación existente a respetar:** Blueprint Core bajo `.blueprint/` y configuración Kilo en `.kilo/`; preservarlos como conceptos/rutas técnicas internas.
 
 ## Alcance del repositorio
 
 ### Incluido
-- Pending.
+- Packaging y documentación pública de CN Pilot; prototipo estático del sitio institucional bajo `site/`.
+- Integración nativa actual con Kilo Code; proveedores/modelos elegidos en Kilo son externos y configurables.
 
 ### Fuera de alcance
-- Pending.
+- Adapters nativos para Claude Code, Codex, Cursor, Gemini u otros runtimes.
+- Publicar GitHub Pages, configurar deployment o cambiar settings/metadatos remotos del repositorio.
+- Cambiar la versión base `.blueprint-version` por branding.
 
 ## Plataforma objetivo y stack
-- Pending.
+- Harness de configuración/agentes/skills para Kilo Code; documentación en español.
 
 ## Estructura del repositorio
 
@@ -54,14 +57,14 @@ Ejemplos orientativos: sitio estático → container/root `product/`, entry `pro
 
 ## Modelo de entrega
 
-- **Punto de entrega:** Pending
-- **Implementación:** Manual / MCP o integración / Completa desde el repositorio / Pending
-- **Publicación o deployment:** Manual / MCP o integración / Desde el repositorio / Fuera de alcance / Pending
-- **Destinos específicos por entregable:** Pending
+- **Punto de entrega:** Sitio documental en estado de revisión visual; repositorio público.
+- **Implementación:** HTML/CSS/JS estático en `site/` (sin build obligatorio).
+- **Publicación o deployment:** Fuera de alcance por ahora; GitHub Pages no habilitado.
+- **Destinos específicos por entregable:** README y docs en GitHub; sitio de `site/` preparado para Pages, URL canónica pendiente.
 
 ## Fuentes de verdad
 
-- Pending.
+- `.blueprint/BLUEPRINT.md`, documentación vigente de inicio/Kilo, estado del repositorio y contenido real del código; identidad pública del producto CN Pilot by Código Nocturno.
 
 ## Capacidades
 

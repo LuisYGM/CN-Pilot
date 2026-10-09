@@ -3,19 +3,20 @@
 > Mantener breve; si existe Git, contiene el historial.
 
 ## Trabajando en
-Pending.
+Preparación pública de CN Pilot; sitio estático en revisión visual humana.
 
 ## Completado
-- Pending.
+- README público y rebranding CN Pilot; auditoría histórica de secretos sin candidatos detectados dentro del alcance documentado.
+- Sitio estático preparado; GitHub Pages no habilitado.
 
 ## Bloqueos
 - Ninguno.
 
 ## Siguiente paso
-Ejecutar `/new-project`.
+Revisar visualmente `site/` y decidir la licencia pública del repositorio. BF-043 permanece `Testing`.
 
 ## Rama actual (si aplica)
-Pending.
+main
 
 ## Último checkpoint Git (si aplica)
-Pending.
+Pendiente de commit local de esta tarea.

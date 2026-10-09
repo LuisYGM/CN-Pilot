@@ -1,6 +1,6 @@
 # Empieza aquí
 
-Guía práctica para el primer día con Web Project Blueprint. Está dirigida a quien va a usarlo en un proyecto, no a quien mantiene su infraestructura interna.
+Guía práctica para el primer día con CN Pilot. Está dirigida a quien va a usar el harness en un proyecto, no a quien mantiene su infraestructura interna.
 
 ## Qué necesitas
 
@@ -10,13 +10,13 @@ Guía práctica para el primer día con Web Project Blueprint. Está dirigida a 
 - Las herramientas propias del stack del proyecto.
 - Git y GitHub Desktop solo si el proyecto utilizará control de versiones.
 
-No necesitas conocer previamente los agentes, profiles, capabilities, skills ni workflows del Blueprint.
+No necesitas conocer previamente los agentes, profiles, capabilities, skills ni workflows internos de CN Pilot.
 
 ## Recorrido del primer día
 
 ### 1. Crea tu carpeta de trabajo
 
-Usa el repositorio como GitHub Template y clona el proyecto, o copia el Blueprint a una carpeta local. Git es opcional: no ejecutes `git init` solo para poder usar el sistema.
+Usa el repositorio como GitHub Template, clónalo o copia sus archivos a una carpeta local. Git es opcional: no ejecutes `git init` solo para poder usar el sistema. La licencia pública de CN Pilot está pendiente de decisión; consulta [`THIRD_PARTY_NOTICES.md`](../../THIRD_PARTY_NOTICES.md) antes de redistribuir.
 
 ### 2. Abre el proyecto
 
@@ -26,7 +26,7 @@ Abre la carpeta raíz en VS Code e inicia Kilo Code. Kilo debe detectar `dev-lea
 
 Autentica cualquier proveedor compatible y comprueba que sus modelos estén disponibles. La configuración personal no se incluye al clonar el repositorio.
 
-Sigue [Configuración de Kilo](KILO-SETUP.md). El Blueprint no recomienda modelos por agente; tus preferencias de IA se mantienen en Kilo, fuera del contexto de `/new-project`.
+Sigue [Configuración de Kilo](KILO-SETUP.md). CN Pilot no recomienda modelos por agente; tus preferencias de IA se mantienen en Kilo, fuera del contexto de `/new-project`.
 
 ### 4. Selecciona Dev Lead
 
@@ -44,7 +44,7 @@ Si no basta el contexto disponible, Dev Lead preguntará progresivamente y en le
 
 Tras la confirmación actualizará el contexto. No desarrollará todavía páginas o funcionalidades. Si Git existe, creará el commit local de inicialización; sin Git guardará los archivos y continuará sin tratarlo como bloqueo.
 
-El README del template presenta el Blueprint y su onboarding. Al inicializar un proyecto real, `/new-project` convierte ese README genérico en una presentación breve del proyecto, basada en contexto confirmado; un README propio existente se conserva por defecto. `.blueprint/BLUEPRINT.md` mantiene la documentación del sistema y los archivos canónicos de contexto prevalecen sobre el resumen del README.
+El README de CN Pilot presenta el producto y su onboarding. Al inicializar un proyecto real, `/new-project` convierte ese README genérico en una presentación breve del proyecto, basada en contexto confirmado; un README propio existente se conserva por defecto. `.blueprint/BLUEPRINT.md` mantiene la especificación técnica del sistema y los archivos canónicos de contexto prevalecen sobre el resumen del README.
 
 No vuelvas a ejecutar `/new-project` si `PROJECT.md` ya describe el proyecto real y `STATE.md` dejó atrás la inicialización. Los datos que no hacen falta todavía pueden dejarse para una tarea posterior.
 

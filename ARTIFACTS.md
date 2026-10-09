@@ -1,7 +1,7 @@
 # Artefactos del proyecto
 
 > Este archivo registra los artefactos creados específicamente para este proyecto.
-> La infraestructura heredada del Blueprint se documenta en [`.blueprint/MANIFEST.md`](.blueprint/MANIFEST.md).
+> La infraestructura interna heredada se documenta en [`.blueprint/MANIFEST.md`](.blueprint/MANIFEST.md).
 
 Forma parte del contexto operativo y no se registra a sí mismo como artefacto. Tampoco incluye normalmente `PROJECT.md`, `REQUIREMENTS.md`, `STATE.md`, `DECISIONS.md` ni archivos internos irrelevantes.
 
@@ -15,6 +15,8 @@ Formato recomendado por categoría:
 
 | Artefacto | Estado | Propósito |
 | --- | --- | --- |
+| [`site/`](site/index.html) | Review | Sitio público estático de CN Pilot, preparado para revisión; aún no publicado. |
+| [`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md) | Review | Atribuciones de terceros y análisis informativo para decidir licencia del repositorio. |
 
 Usa la ruta canónica como artefacto. Si responsabilidad u origen aportan información material, puede añadirse una columna breve; nunca se utiliza para etiquetar contenido como generado por IA.
 

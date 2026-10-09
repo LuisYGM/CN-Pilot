@@ -1,11 +1,11 @@
 ---
-description: Diagnostica localmente la integridad estructural del Web Project Blueprint sin modificarlo.
+description: Diagnostica localmente la integridad estructural del Core de CN Pilot sin modificarlo.
 agent: dev-lead
 ---
 
-# Blueprint Doctor
+# Diagnóstico de CN Pilot
 
-Comando manual, read-only y local para responder únicamente: «¿La infraestructura de este Blueprint está suficientemente íntegra y coherente para operar?». Diagnostica el Blueprint/Core de la carpeta actual, no la aplicación ni el contenido de negocio. No es gate rutinario ni sustituye tests de proyecto, Reviewer o QA especializado.
+Comando manual, read-only y local para responder únicamente: «¿La infraestructura técnica de CN Pilot está suficientemente íntegra y coherente para operar?». Diagnostica Blueprint Core en la carpeta actual, no la aplicación ni el contenido de negocio. No es gate rutinario ni sustituye tests de proyecto, Reviewer o QA especializado.
 
 ## Fresh Diagnostic Snapshot — cada invocación
 
