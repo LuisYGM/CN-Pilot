@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://luisygm.github.io/cn-pilot/sitemap.xml
+Sitemap: https://luisygm.github.io/CN-Pilot/sitemap.xml
