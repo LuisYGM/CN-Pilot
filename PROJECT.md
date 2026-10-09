@@ -4,34 +4,31 @@
 
 ## Identidad
 
-- **Nombre:** CN Pilot
-- **Perfil:** Harness human-first para proyectos web con agentes de IA
-- **Repositorio o carpeta:** https://github.com/LuisYGM/cn-pilot
-- **Control de versiones:** Git con remoto (`origin`)
+- **Nombre:** Pending
+- **Perfil:** Pending
+- **Repositorio o carpeta:** Pending
+- **Control de versiones:** Git local / Git con remoto / No inicializado / Pending
 - **Versión del Blueprint:** 1.1.0
 
 ## Objetivo
 
-Coordinar contexto, contenido, diseño, desarrollo, QA y entrega proporcionalmente para proyectos web mediante integración nativa con Kilo Code. Marca madre: Código Nocturno (https://codigonocturno.com/).
+Pending.
 
 ## Contexto de partida
 
-- **Tipo:** Sistema existente (repositorio público de CN Pilot)
-- **Implementación existente a respetar:** Blueprint Core bajo `.blueprint/` y configuración Kilo en `.kilo/`; preservarlos como conceptos/rutas técnicas internas.
+- **Tipo:** Proyecto nuevo / Sistema existente / Pending
+- **Implementación existente a respetar:** Pending
 
 ## Alcance del repositorio
 
 ### Incluido
-- Packaging y documentación pública del harness en `main`; el sitio público se mantiene aparte en la rama huérfana `gh-pages` y no forma parte del template.
-- Integración nativa actual con Kilo Code; proveedores/modelos elegidos en Kilo son externos y configurables.
+- Pending.
 
 ### Fuera de alcance
-- Adapters nativos para Claude Code, Codex, Cursor, Gemini u otros runtimes.
-- Publicar GitHub Pages, configurar deployment o cambiar settings/metadatos remotos del repositorio.
-- Cambiar la versión base `.blueprint-version` por branding.
+- Pending.
 
 ## Plataforma objetivo y stack
-- Harness de configuración/agentes/skills para Kilo Code; documentación en español.
+- Pending.
 
 ## Estructura del repositorio
 
@@ -57,14 +54,14 @@ Ejemplos orientativos: sitio estático → container/root `product/`, entry `pro
 
 ## Modelo de entrega
 
-- **Punto de entrega:** Template/harness desde `main`; sitio público complementario desde `gh-pages`.
-- **Implementación:** Configuración Kilo y documentación del harness en `main`; sitio HTML/CSS/JS estático en la raíz de `gh-pages` (sin build obligatorio).
-- **Publicación o deployment:** GitHub Pages aún no habilitado; configuración futura prevista para `gh-pages` / root.
-- **Destinos específicos por entregable:** El sitio está preparado para `https://luisygm.github.io/cn-pilot/`; URL prevista, aún no publicada.
+- **Punto de entrega:** Pending
+- **Implementación:** Manual / MCP o integración / Completa desde el repositorio / Pending
+- **Publicación o deployment:** Manual / MCP o integración / Desde el repositorio / Fuera de alcance / Pending
+- **Destinos específicos por entregable:** Pending
 
 ## Fuentes de verdad
 
-- `.blueprint/BLUEPRINT.md`, documentación vigente de inicio/Kilo, estado del repositorio y contenido real del código; identidad pública del producto CN Pilot by Código Nocturno.
+- Pending.
 
 ## Capacidades
 
