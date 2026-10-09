@@ -1,5 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="CN Pilot">
-  <rect width="64" height="64" rx="32" fill="#1a1b1e"/>
-  <path d="M28 17a15 15 0 1 0 0 30M48 17v30l-17-30v30" fill="none" stroke="#f7f8f4" stroke-linecap="square" stroke-width="5"/>
-  <circle cx="50" cy="47" r="4" fill="#00c3ff"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title">
+  <title id="title">CN Pilot</title>
+  <rect width="64" height="64" rx="12" fill="#FFFFFF"/>
+  <path d="M27 12H14L8 18v28l6 6h13V42H17V22h10zM34 12h10l12 23V12h8v40H53L42 30v22h-8z" fill="#1A1B1E"/>
+  <circle cx="56" cy="51" r="5" fill="#FE4C1C"/>
 </svg>

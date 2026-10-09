@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title">
+  <title id="title">Monograma CN</title>
+  <path d="M27 12H14L8 18v28l6 6h13V42H17V22h10z" fill="#1A1B1E"/>
+  <path d="M34 12h10l12 23V12h8v40H53L42 30v22h-8z" fill="#1A1B1E"/>
+  <circle cx="56" cy="51" r="5" fill="#FE4C1C"/>
+</svg>

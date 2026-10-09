@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
+  <title id="title">CN Pilot — La IA hace más. Tú sigues al mando.</title>
+  <desc id="desc">Monograma geométrico CN y trayectoria de cuatro estaciones sobre fondo tinta.</desc>
+  <rect width="1200" height="630" fill="#1A1B1E"/>
+  <path d="M0 0h14v630H0z" fill="#00C3FF"/>
+  <g transform="translate(84 70) scale(1.08)">
+    <path d="M27 12H14L8 18v28l6 6h13V42H17V22h10z" fill="#FFFFFF"/>
+    <path d="M34 12h10l12 23V12h8v40H53L42 30v22h-8z" fill="#FFFFFF"/>
+    <circle cx="56" cy="51" r="5" fill="#FE4C1C"/>
+  </g>
+  <text x="190" y="125" fill="#FFFFFF" font-family="Arial,sans-serif" font-size="26" font-weight="700" letter-spacing="1">CN PILOT</text>
+  <text x="86" y="286" fill="#FFFFFF" font-family="Arial,sans-serif" font-size="72" font-weight="700" letter-spacing="-3">La IA hace más.</text>
+  <text x="86" y="372" fill="#AEB5BA" font-family="Arial,sans-serif" font-size="72" font-weight="700" letter-spacing="-3">Tú sigues al mando.</text>
+  <text x="88" y="432" fill="#C1C6CA" font-family="Arial,sans-serif" font-size="23">Desarrollo web human-first, nativo de Kilo Code.</text>
+  <path d="M88 516h166v46h-26v-20H88zm166 0h208v26H254zm208 0h211v46h-28v-20H462zm211 0h151" fill="none" stroke="#596168" stroke-width="2"/>
+  <circle cx="100" cy="516" r="8" fill="#FE4C1C"/><circle cx="254" cy="516" r="7" fill="#00C3FF"/><circle cx="462" cy="516" r="7" fill="#00C3FF"/><circle cx="673" cy="516" r="7" fill="#00C3FF"/>
+  <text x="88" y="590" fill="#AEB5BA" font-family="Arial,sans-serif" font-size="13" font-weight="700" letter-spacing="2">INTENCIÓN HUMANA  /  ORQUESTACIÓN  /  DISEÑO + BUILD  /  VERIFICACIÓN</text>
+  <rect x="1050" width="150" height="630" fill="#222428"/>
+  <path d="M1050 630V0" stroke="#45494D" stroke-width="1"/>
+  <text x="1082" y="130" fill="#00C3FF" font-family="Arial,sans-serif" font-size="15" font-weight="700" letter-spacing="3" transform="rotate(90 1082 130)">PERSONAS DIRIGEN</text>
+  <circle cx="1125" cy="505" r="28" fill="none" stroke="#FE4C1C" stroke-width="2"/><circle cx="1125" cy="505" r="6" fill="#FE4C1C"/>
+</svg>

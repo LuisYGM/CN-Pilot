@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#1a1b1e">
+  <meta name="theme-color" content="#1A1B1E">
   <title>CN Pilot — desarrollo web human-first con agentes de IA</title>
   <meta name="description" content="CN Pilot coordina proyectos web con IA desde Kilo Code: contexto, diseño, implementación y QA, guiados por personas.">
   <link rel="canonical" href="https://luisygm.github.io/CN-Pilot/">
@@ -14,13 +14,13 @@
   <meta property="og:image" content="https://luisygm.github.io/CN-Pilot/assets/og-image.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
-  <meta property="og:image:alt" content="CN Pilot — La IA hace más. Tú sigues al mando.">
+  <meta property="og:image:alt" content="Monograma geométrico CN con punto naranja de decisión humana sobre fondo tinta; La IA hace más. Tú sigues al mando.">
   <meta property="og:site_name" content="CN Pilot">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="CN Pilot — desarrollo web human-first">
   <meta name="twitter:description" content="Un harness web human-first y nativo de Kilo Code.">
   <meta name="twitter:image" content="https://luisygm.github.io/CN-Pilot/assets/og-image.png">
-  <meta name="twitter:image:alt" content="CN Pilot — La IA hace más. Tú sigues al mando.">
+  <meta name="twitter:image:alt" content="Monograma geométrico CN con punto naranja de decisión humana sobre fondo tinta.">
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="assets/styles.css">
   <script src="assets/site.js" defer></script>
@@ -29,7 +29,7 @@
   <a class="skip-link" href="#contenido">Saltar al contenido</a>
   <header class="site-header">
     <a class="brand" href="#inicio" aria-label="CN Pilot, inicio">
-      <span class="brand-mark" aria-hidden="true">CN<span>.</span></span>
+      <img class="brand-mark" src="assets/cn-pilot-mark.svg" alt="" aria-hidden="true">
       <span class="brand-name">CN Pilot</span>
     </a>
     <button class="menu-toggle" aria-expanded="false" aria-controls="site-nav" aria-label="Abrir menú">Menú <span aria-hidden="true">＋</span></button>
@@ -37,33 +37,28 @@
       <a href="#como-funciona">Cómo funciona</a>
       <a href="#compatibilidad">Compatibilidad</a>
       <a href="#empezar">Primeros pasos</a>
-      <a class="nav-cta" href="https://github.com/LuisYGM/cn-pilot">Ver en GitHub <span aria-hidden="true">↗</span></a>
+      <a class="nav-cta" href="https://github.com/LuisYGM/CN-Pilot">Ver en GitHub <span aria-hidden="true">↗</span></a>
     </nav>
   </header>
 
   <main id="contenido">
     <section class="hero" id="inicio" aria-labelledby="hero-title">
-      <div class="hero-copy">
+        <div class="hero-copy">
         <p class="eyebrow"><span class="signal" aria-hidden="true"></span> Human-first web development harness</p>
         <h1 id="hero-title">La IA hace más.<br><em>Tú sigues al mando.</em></h1>
         <p class="hero-lede">Desarrollo web human-first con agentes de IA. Explica el resultado que buscas; CN Pilot organiza contexto, diseño, implementación y QA sin pedirte dirigir cada herramienta.</p>
         <div class="hero-actions">
           <a class="button button-primary" href="#empezar">Empieza en Kilo Code <span aria-hidden="true">↗</span></a>
-          <a class="text-link" href="https://github.com/LuisYGM/cn-pilot">Explora el repositorio <span aria-hidden="true">→</span></a>
+          <a class="text-link" href="https://github.com/LuisYGM/CN-Pilot">Explora el repositorio <span aria-hidden="true">→</span></a>
         </div>
         <div class="hero-meta"><span class="kilo-dot" aria-hidden="true"></span> Kilo Code nativo <span class="meta-divider">·</span> Independiente del proveedor dentro de Kilo</div>
       </div>
-      <div class="hero-visual" aria-label="Ilustración conceptual del flujo de trabajo">
-        <div class="visual-top"><span>CN / PILOT</span><span>WORKFLOW 01</span></div>
-        <div class="visual-lines" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
-        <div class="orbit orbit-one" aria-hidden="true"></div><div class="orbit orbit-two" aria-hidden="true"></div>
-        <div class="pilot-core"><span class="core-cross" aria-hidden="true">✳</span><strong>Pilot</strong><small>context-aware</small></div>
-        <div class="node node-human"><b>01</b><span>Tu intención</span></div>
-        <div class="node node-design"><b>02</b><span>Diseño</span></div>
-        <div class="node node-build"><b>03</b><span>Construcción</span></div>
-        <div class="node node-qa"><b>04</b><span>Verificación</span></div>
-        <div class="visual-bottom"><span>PERSONA AL CENTRO</span><span>FASES, SOLO SI APORTAN</span></div>
-      </div>
+      <figure class="hero-visual" role="img" aria-label="Cuatro estaciones conectadas: intención humana, orquestación, diseño y construcción, y verificación">
+        <div class="visual-top"><span>CN / PILOT</span><span>RECORRIDO 01—04</span></div>
+        <svg class="route-line" viewBox="0 0 600 390" preserveAspectRatio="none" aria-hidden="true"><path d="M56 86H208V165H350V255H520V322"/><path class="route-pulse" d="M56 86H208V165H350V255H520V322"/></svg>
+        <ol class="route-stations"><li class="station station-human"><span class="station-number">01</span><span class="station-point human-point"></span><span class="station-label">INTENCIÓN<br>HUMANA</span></li><li class="station station-orchestrate"><span class="station-number">02</span><span class="station-point"></span><span class="station-label">ORQUESTACIÓN</span></li><li class="station station-design"><span class="station-number">03</span><span class="station-point"></span><span class="station-label">DISEÑO + BUILD</span></li><li class="station station-verify"><span class="station-number">04</span><span class="station-point"></span><span class="station-label">VERIFICACIÓN</span></li></ol>
+        <div class="visual-bottom"><span>PERSONAS DIRIGEN</span><span>FASES, SOLO SI APORTAN</span></div>
+      </figure>
       <div class="hero-index" aria-hidden="true"><span>01</span><span class="index-line"></span><span>04</span></div>
     </section>
 
@@ -85,7 +80,7 @@
     </section>
 
     <section class="human-first section-shell" aria-labelledby="human-title">
-      <div class="human-copy"><p class="section-kicker">03 / Human-first</p><h2 id="human-title">Una conversación natural.<br><em>Control humano real.</em></h2><p>No necesitas conocer cómo está armado CN Pilot para usarlo. La arquitectura está al servicio del proyecto, no al revés.</p><a class="text-link" href="https://github.com/LuisYGM/cn-pilot/blob/main/.blueprint/docs/HUMAN-INTERACTION.md">Lee cómo conversa <span aria-hidden="true">→</span></a></div>
+      <div class="human-copy"><p class="section-kicker">03 / Human-first</p><h2 id="human-title">Una conversación natural.<br><em>Control humano real.</em></h2><p>No necesitas conocer cómo está armado CN Pilot para usarlo. La arquitectura está al servicio del proyecto, no al revés.</p><a class="text-link" href="https://github.com/LuisYGM/CN-Pilot/blob/main/.cn-pilot/docs/HUMAN-INTERACTION.md">Lee cómo conversa <span aria-hidden="true">→</span></a></div>
       <aside class="quote-card"><span class="quote-mark" aria-hidden="true">“</span><blockquote>Quiero arreglar el formulario móvil sin cambiar cómo se ve en escritorio.</blockquote><div class="quote-rule"></div><p>Describe el objetivo. Dev Lead descubre lo demás.</p><span class="quote-index">SIN PROMPTS PERFECTOS&nbsp; / &nbsp;SIN FRICCIÓN EXTRA</span></aside>
     </section>
 
@@ -99,14 +94,14 @@
 
     <section class="compat" id="compatibilidad" aria-labelledby="compat-title"><div class="section-shell compat-layout"><div><p class="section-kicker">06 / Compatibilidad actual</p><h2 id="compat-title">Nativo en Kilo.<br><em>Honesto con lo demás.</em></h2><p>El harness está hecho para Kilo Code. La elección de proveedor y modelo dentro de Kilo es tuya y no está fijada por CN Pilot.</p></div><div class="compat-list"><div class="compat-row"><span class="compat-name">Kilo Code</span><span class="compat-state native">Nativo / soportado</span></div><div class="compat-row"><span class="compat-name">Modelos y proveedores en Kilo</span><span class="compat-state configurable">Configurables en Kilo</span></div><div class="compat-row"><span class="compat-name">Claude Code · Codex · Cursor · Gemini</span><span class="compat-state later">Sin adapter nativo todavía</span></div><p>Algunos archivos pueden inspeccionarse o aprovecharse manualmente en otros entornos. Eso no equivale a integración ni soporte de runtime.</p></div></div></section>
 
-    <section class="start section-shell" id="empezar" aria-labelledby="start-title"><div class="start-heading"><p class="section-kicker">07 / Primeros pasos</p><h2 id="start-title">Tu proyecto. Tu forma de hablar.</h2><p>Sin instaladores inventados. El flujo actual vive en un workspace de Kilo Code.</p></div><ol class="start-list"><li><span>01</span><p><strong>Clona, usa como template o copia</strong> el <a href="https://github.com/LuisYGM/cn-pilot">repositorio público</a>.</p></li><li><span>02</span><p><strong>Abre la carpeta en VS Code</strong> y activa la extensión Kilo Code.</p></li><li><span>03</span><p><strong>Configura proveedor y modelo en Kilo.</strong> No hay preferencias impuestas por CN Pilot.</p></li><li><span>04</span><p><strong>Selecciona Dev Lead</strong> y ejecuta <code>/doctor</code>; luego <code>/new-project</code>.</p></li><li><span>05</span><p><strong>Describe en lenguaje natural</strong> tu proyecto y lo que necesitas lograr.</p></li></ol><a class="button button-dark" href="https://github.com/LuisYGM/cn-pilot">Ir al repositorio <span aria-hidden="true">↗</span></a></section>
+     <section class="start section-shell" id="empezar" aria-labelledby="start-title"><div class="start-heading"><p class="section-kicker">07 / Primeros pasos</p><h2 id="start-title">Tu proyecto. Tu forma de hablar.</h2><p>El flujo actual vive en un workspace de Kilo Code.</p></div><ol class="start-list"><li><span>01</span><p><strong>Clona o usa como template</strong> el <a href="https://github.com/LuisYGM/CN-Pilot">repositorio público</a>.</p></li><li><span>02</span><p><strong>Abre VS Code con Kilo Code</strong> en el workspace.</p></li><li><span>03</span><p><strong>Configura proveedor y modelo</strong> en Kilo.</p></li><li><span>04</span><p><strong>Selecciona Dev Lead</strong> y ejecuta <code>/new-project</code>.</p></li><li><span>05</span><p><strong>Describe tu objetivo en lenguaje natural.</strong></p></li></ol><a class="button button-dark" href="https://github.com/LuisYGM/CN-Pilot">Ir al repositorio <span aria-hidden="true">↗</span></a></section>
 
     <section class="architecture" aria-labelledby="architecture-title"><div class="section-shell architecture-inner"><div><p class="section-kicker">08 / Una arquitectura al servicio del proyecto</p><h2 id="architecture-title">Orden para el sistema.<br><em>Libertad para ti.</em></h2></div><div class="architecture-map"><div><code>project-resources/</code><span>Material recibido</span></div><b aria-hidden="true">→</b><div><code>project-artifacts/</code><span>Diseños y entregables</span></div><b aria-hidden="true">→</b><div><code>product/</code><span>Implementación activa</span></div><p>En sistemas existentes se conserva el root operativo documentado. Publicar es otra etapa, siempre según el alcance y con autorización.</p></div></div></section>
 
-    <section class="transparency section-shell" aria-labelledby="transparency-title"><p class="section-kicker">09 / Estado y transparencia</p><div><h2 id="transparency-title">Un producto en evolución, sin claims inflados.</h2><p>CN Pilot es un harness especializado en proyectos web, human-first y nativo de Kilo Code. No ofrece hoy adapters nativos para otros runtimes ni un instalador CLI. Su documentación principal está en español. El repositorio usa la licencia <a href="https://github.com/LuisYGM/cn-pilot/blob/main/LICENSE">GNU GPL-3.0-or-later</a> y conserva por separado las atribuciones de terceros.</p></div></section>
+     <section class="transparency section-shell" aria-labelledby="transparency-title"><p class="section-kicker">09 / Estado y transparencia</p><div><h2 id="transparency-title">Un producto en evolución, sin claims inflados.</h2><p>CN Pilot es un harness especializado en proyectos web, human-first y nativo de Kilo Code. No ofrece hoy adapters nativos para otros runtimes. Su documentación principal está en español. El repositorio usa la licencia <a href="https://github.com/LuisYGM/CN-Pilot/blob/main/LICENSE">GNU GPL-3.0-or-later</a>.</p></div></section>
 
-    <section class="closing"><div class="section-shell closing-inner"><span class="closing-mark" aria-hidden="true">CN<span>.</span></span><p>Haz que la IA trabaje<br><em>a la altura de tu proyecto.</em></p><a class="button button-light" href="https://github.com/LuisYGM/cn-pilot">Explora CN Pilot <span aria-hidden="true">↗</span></a></div></section>
+     <section class="closing"><div class="section-shell closing-inner"><img class="closing-mark" src="assets/cn-pilot-mark-light.svg" alt="" aria-hidden="true"><p>Haz que la IA trabaje<br><em>a la altura de tu proyecto.</em></p><a class="button button-light" href="https://github.com/LuisYGM/CN-Pilot">Explora CN Pilot <span aria-hidden="true">↗</span></a></div></section>
   </main>
-  <footer class="site-footer"><div class="footer-brand"><a href="#inicio">CN Pilot</a></div><p>Human-first web development harness for AI agents.</p><div class="footer-links"><a href="https://github.com/LuisYGM/cn-pilot">GitHub</a><a href="https://github.com/LuisYGM/cn-pilot/tree/main/.blueprint/docs">Documentación</a></div></footer>
+   <footer class="site-footer"><div class="footer-brand"><a href="#inicio" aria-label="CN Pilot, volver al inicio"><img src="assets/cn-pilot-mark.svg" alt="" aria-hidden="true"><span>CN Pilot</span></a></div><p>Human-first web development harness for AI agents.</p><div class="footer-links"><a href="https://github.com/LuisYGM/CN-Pilot">GitHub</a><a href="https://github.com/LuisYGM/CN-Pilot/tree/main/.cn-pilot/docs">Documentación</a></div></footer>
 </body>
 </html>
