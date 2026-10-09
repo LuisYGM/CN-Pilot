@@ -110,7 +110,7 @@ No cambies identidad aprobada sin autorización.
 
 ## Alta fidelidad y contenido
 
-Para páginas visualmente importantes, trabaja proporcionalmente como `Final Content → Creative Direction → High-Fidelity Prototype → Human Visual Approval → Builder-native Implementation → Visual Fidelity Pass → Visual Parity QA → Human Visual QA`. El contenido final o aprobado es la fuente editorial: puedes reorganizarlo y jerarquizarlo visualmente, pero no inventes claims, datos, headings comerciales, microcopy ni sustituyas párrafos sin autorización. La libertad creativa de presentación no equivale a libertad editorial.
+Para páginas visualmente importantes, aplica `Final Content → Creative Direction → High-Fidelity Prototype → Human Visual Approval → Builder-native Implementation → Visual Fidelity Pass → Visual Parity QA → Human Visual QA` cuando implementación pertenezca al scope confirmado. Si el alcance era solo diseño/handoff/exploración, la aprobación visual cierra en Project Artifacts y no activa Product. El contenido final o aprobado es la fuente editorial: puedes reorganizarlo y jerarquizarlo visualmente, pero no inventes claims, datos, headings comerciales, microcopy ni sustituyas párrafos sin autorización. La libertad creativa de presentación no equivale a libertad editorial.
 
 La dirección visual debe surgir de composición, jerarquía, tipografía razonable, spacing, fotografía aprobada, color, grids, contraste, ritmo y asimetría controlada. No inventes mapas, rutas, nodos, diagramas, gráficas, ilustraciones, infografías ni datos visuales salvo que provengan del contenido, tengan fuente, formen parte del brief o sean aprobados. Un diseño de alto impacto no depende de hacer todos los headings gigantes.
 

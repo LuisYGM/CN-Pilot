@@ -935,13 +935,23 @@ El benchmark demuestra rango real de composición, densidad, tipografía, geomet
 - Un prototipo pendiente de aprobación no se escribe en `product/`; Product empieza tras Human Visual Approval y un trigger suficiente de implementación. Assets conceptuales siguen siendo distinguibles de hechos empresariales; no se inventan clientes, instalaciones, testimonios, datos de contacto o claims.
 - Se conservan BF-018, BF-021, BF-034, BF-035, BF-041 y BF-042: fases proporcionales, prototipo funcional/HTML, QA adecuado, separación de ownership y human-first. Se mantienen heurísticas de dirección visual, atribución de `ui-design-system` y referencias opcionales; no se revierte ese trabajo ni se obliga a websearch.
 
+**Gate Design Approval → Implementation:**
+
+- Lee scope/decisiones confirmadas antes de la aprobación visual. Si ya incluían diseñar y desarrollar, una aprobación inequívoca del prototipo (p. ej. «Está aprobado», «Perfecto, así queda», «Me gusta, adelante», «Este diseño es el definitivo») satisface Human Visual Approval. Sin otro blocker material, continúa a Product Implementation como `Continuation` de BF-042; no vuelvas a preguntar si quiere implementarlo.
+- Si el scope confirmado era solo diseño/prototipo/handoff/exploración, la aprobación cierra en Project Artifacts y no crea `product/` ni autoriza código.
+- Si no puede inferirse si desarrollo forma parte del scope y la persona solo aprueba visualmente, mantén esa aprobación y haz una única pregunta humana sobre si también quiere desarrollar, p. ej. «¿Quieres que siga y lo implemente, o dejamos terminado el trabajo con el diseño aprobado?». No preguntes sobre rutas o términos internos.
+- Una petición de preview —«quiero verlo funcionando», abrir en navegador, responsive, revisar la página real— solo autoriza materializar/revisar el prototipo dentro de Design. No es aprobación visual por sí sola ni implementación.
+- `product/` significa implementación real, no producción publicada. Deployment, hosting y entorno productivo conservan gates de autorización propios.
+
+Para reporting humano, prefiere «El diseño queda aprobado» o «Como el desarrollo ya estaba en el alcance, comienzo la implementación». Los paths ayudan a trazabilidad pero no son la explicación principal del workflow.
+
 **Criterios de aceptación:**
 1. No se usa una estética cromática/compositiva como default sin grounding en el proyecto.
 2. El rango visual depende de varios ejes coherentes; no se exigen colores diferentes, variantes visibles ni originalidad artificial.
 3. Existing conserva continuidad visual cuando ya existe identidad vigente.
 4. Una página/interfaz web cuyo scope es diseño visual/high-fidelity produce prototipo HTML/CSS/JS responsive; Markdown no lo sustituye.
 5. «Quiero verlo como una página real/responsive» materializa el Design Artifact bajo Project Artifacts, no Product.
-6. Solo aprobación visual humana + trigger de implementación trasladan el trabajo a Product.
+6. La aprobación visual permite implementación sin reconfirmación solo cuando desarrollo ya estaba confirmado; scope de diseño-only se detiene en Design y scope ambiguo pregunta una vez. Ninguna preview solicita implementación.
 7. Ninguna política hace obligatorio investigar referencias, cambia screenshot defaults, degrada UX/accesibilidad ni crea burocracia en DIRECT.
 
 **Plan de retest (pendiente; no simular resultados):**
@@ -950,6 +960,6 @@ El benchmark demuestra rango real de composición, densidad, tipografía, geomet
 - **R2 — Natural Preview Request:** mientras el prototipo espera aprobación, «Quiero verlo como una página web real y responsive para revisarlo» debe mejorar/materializar la preview dentro de Design, sin cambiarla a Product ni pedir rutas.
 - **R3 — Visual Diversity Benchmark:** tres o más proyectos Greenfield de sectores/personalidades diferentes con identidad abierta. Evaluar grounding de color, tipografía, composición, densidad, geometría, componentes e imagen. No exigir paletas distintas ni scores; coincidencias cromáticas pueden ser correctas si están justificadas.
 - **R4 — Existing Design Continuity:** con Home u otra página visualmente resuelta, «Necesito ahora la página Nosotros» debe inspeccionar y reutilizar tokens, tipos, composición, componentes y comportamiento; no debe iniciar otra dirección, branding o novedad.
-- **R5 — Approved Design → Product:** tras Human Visual Approval y «Implementa este diseño», conservar el prototipo como source visual, implementar en `product/`, no reabrir dirección y ejecutar QA proporcional posterior.
+- **R5 — Approved Design → Product:** con scope diseño+desarrollo previamente confirmado, una aprobación visual inequívoca debe continuar a implementación sin reconfirmar; con scope diseño-only debe detenerse en Project Artifacts; con scope ambiguo preguntar una vez en lenguaje humano. Las peticiones de preview antes de aprobación permanecen en Design. Después de aprobación + trigger suficiente, conservar el prototipo como source visual, implementar en `product/`, no reabrir dirección y ejecutar QA proporcional posterior.
 
 No se declaran R1–R5 ejecutados. BF-043 permanece `Testing` hasta validar esos retests; esta evidencia previa D01–D05 no los sustituye.
