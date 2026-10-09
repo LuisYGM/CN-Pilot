@@ -22,7 +22,7 @@ Coordinar contexto, contenido, diseño, desarrollo, QA y entrega proporcionalmen
 ## Alcance del repositorio
 
 ### Incluido
-- Packaging y documentación pública de CN Pilot; prototipo estático del sitio institucional bajo `site/`.
+- Packaging y documentación pública del harness en `main`; el sitio público se mantiene aparte en la rama huérfana `gh-pages` y no forma parte del template.
 - Integración nativa actual con Kilo Code; proveedores/modelos elegidos en Kilo son externos y configurables.
 
 ### Fuera de alcance
@@ -57,10 +57,10 @@ Ejemplos orientativos: sitio estático → container/root `product/`, entry `pro
 
 ## Modelo de entrega
 
-- **Punto de entrega:** Sitio documental en estado de revisión visual; repositorio público.
-- **Implementación:** HTML/CSS/JS estático en `site/` (sin build obligatorio).
-- **Publicación o deployment:** Fuera de alcance por ahora; GitHub Pages no habilitado.
-- **Destinos específicos por entregable:** README y docs en GitHub; sitio de `site/` preparado para Pages, URL canónica pendiente.
+- **Punto de entrega:** Template/harness desde `main`; sitio público complementario desde `gh-pages`.
+- **Implementación:** Configuración Kilo y documentación del harness en `main`; sitio HTML/CSS/JS estático en la raíz de `gh-pages` (sin build obligatorio).
+- **Publicación o deployment:** GitHub Pages aún no habilitado; configuración futura prevista para `gh-pages` / root.
+- **Destinos específicos por entregable:** El sitio está preparado para `https://luisygm.github.io/cn-pilot/`; URL prevista, aún no publicada.
 
 ## Fuentes de verdad
 

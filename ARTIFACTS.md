@@ -15,7 +15,6 @@ Formato recomendado por categoría:
 
 | Artefacto | Estado | Propósito |
 | --- | --- | --- |
-| [`site/`](site/index.html) | Review | Sitio público estático de CN Pilot, preparado para revisión; aún no publicado. |
 | [`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md) | Review | Atribuciones de terceros y análisis informativo para decidir licencia del repositorio. |
 
 Usa la ruta canónica como artefacto. Si responsabilidad u origen aportan información material, puede añadirse una columna breve; nunca se utiliza para etiquetar contenido como generado por IA.
