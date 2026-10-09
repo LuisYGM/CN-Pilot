@@ -8,7 +8,7 @@ CN Pilot coordina el trabajo de proyectos web con agentes de IA sin convertir a 
 
 [Empieza aquí](.blueprint/docs/START-HERE.md) · [Configuración de Kilo](.blueprint/docs/KILO-SETUP.md) · [Documentación](#documentación) · [Repositorio](https://github.com/LuisYGM/cn-pilot)
 
-> **Estado actual:** integración nativa con Kilo Code. El contenido de este repositorio está en español. **Licencia: [GNU GPL v3.0 or later (`GPL-3.0-or-later`)](LICENSE).** Consulta también las [atribuciones y licencias de terceros](THIRD_PARTY_NOTICES.md).
+> **Estado actual:** integración nativa con Kilo Code. El contenido de este repositorio está en español. El CN Pilot Core/harness se distribuye bajo [GNU GPL v3.0 or later (`GPL-3.0-or-later`)](LICENSE); consulta el [alcance y las atribuciones por componente](#licencia-y-atribuciones).
 
 ## El problema que resuelve
 
@@ -106,10 +106,31 @@ Se inspecciona el estado vigente antes de editar; el acceso a secretos se limita
 - [Configuración, MCP y deployment](.blueprint/docs/CONFIGURATION.md)
 - [Troubleshooting](.blueprint/docs/TROUBLESHOOTING.md)
 - [Especificación técnica para maintainers](.blueprint/BLUEPRINT.md)
-- [Atribuciones y licencias de terceros](THIRD_PARTY_NOTICES.md)
+- [Licencia y atribuciones](#licencia-y-atribuciones)
 
-## Licencia y estado
+## Licencia y atribuciones
 
-CN Pilot se distribuye bajo **GNU GPL v3.0 or later (`GPL-3.0-or-later`)**; consulta el texto completo en [`LICENSE`](LICENSE). El repositorio también conserva avisos y procedencias de material de terceros bajo MIT, Apache-2.0 y GPL-2.0-or-later en [`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md) y sus atribuciones originales.
+### Qué cubre la licencia del Core
+
+El CN Pilot Core/harness que ofrece este repositorio se distribuye bajo [GNU GPL v3.0 or later (`GPL-3.0-or-later`)](LICENSE). **Usar CN Pilot, usar sus agentes o compartir repositorio no coloca automáticamente bajo GPL un producto independiente** creado por el usuario. El Core puede modificarse conforme a su licencia; el código, contenido y assets nuevos del usuario pueden tener licencia propia si son obras independientes y sus otras dependencias lo permiten. Así, un producto comercial, privado o bajo otra licencia puede coexistir con el Core cuando su autor tiene esos derechos y no incorpora material sujeto a términos incompatibles. La ubicación en `product/` o `project-artifacts/`, o en el mismo repositorio, por sí sola no decide esa relación.
+
+Si una web o un plugin copia/adapta material expresivo del Core o de terceros, las condiciones pueden alcanzar ese material y, según la relación efectiva entre las obras, componentes combinados o derivados. No asumas independencia ni cobertura automática: evalúa qué se incorporó realmente. La salida de una herramienta GPL no queda automáticamente bajo GPL; importa si reproduce o constituye material cubierto. Consulta la [FAQ oficial GNU GPL sobre output](https://www.gnu.org/licenses/gpl-faq.html#WhatCaseIsOutputGPL) y [aggregate](https://www.gnu.org/licenses/gpl-faq.html#MereAggregation).
+
+Crear un plugin WordPress con CN Pilot tampoco determina su licencia por el solo uso del harness; el stack, sus dependencias y el material realmente incorporado se evalúan por separado.
+
+La GPL no prohíbe el uso o la venta comerciales: al distribuir material cubierto, sus destinatarios reciben los derechos y condiciones de esa licencia. Para copias/uso GPL privados que no se transmiten a otros, la GPL no exige publicar el código al público. Que un servicio esté alojado en una web no resuelve por sí solo qué archivos cubiertos se transmiten a sus usuarios. Estas notas explican la intención de alcance de CN Pilot, no determinan si un caso concreto es una obra derivada ni son asesoría legal.
+
+`project-resources/` conserva las licencias de sus fuentes originales. No se asigna ni pregunta una licencia predeterminada para el producto durante `/new-project`.
+
+### Atribuciones de material de terceros del Core
+
+Las atribuciones se conservan junto a cada skill. Los textos completos de las licencias aplicables están en [`LICENSES/`](LICENSES/).
+
+| Componente | Licencia upstream declarada | Atribución y detalle |
+|---|---|---|
+| [`ui-design-system`](.kilo/skills/ui-design-system/ATTRIBUTION.md) | Apache-2.0 | Heurísticas seleccionadas de Impeccable; no se incorpora su CLI/engine ni su NOTICE no aplicable a estas referencias. |
+| [`accessibility-review`](.kilo/skills/accessibility-review/ATTRIBUTION.md) | MIT | Conocimiento adaptado de `web-accessibility`. |
+| [`performance-review`](.kilo/skills/performance-review/ATTRIBUTION.md) | GPL-2.0-or-later | Conocimiento adaptado de `wp-performance`; la procedencia conserva la opción original «or later». |
+| [`webapp-testing`](.kilo/skills/webapp-testing/ATTRIBUTION.md) | Apache-2.0 | Adaptación textual de Anthropic; no se copian scripts, ejemplos, browsers ni dependencias. |
 
 La versión base del Blueprint Core se registra en `.blueprint-version`; no representa por sí sola una versión del producto CN Pilot.

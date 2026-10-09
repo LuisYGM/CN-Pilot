@@ -17,3 +17,4 @@ Inventario de la infraestructura heredada del Blueprint. No sustituye `../ARTIFA
 - MCP y workflows GitHub Actions opcionales, no preconfigurados en el template; se materializan dentro de tareas explícitas autorizadas
 - input scaffold `project-resources/README.md`
 - política Git y seguridad; sin expedientes detallados de revisión/research del mantenedor
+- licencia del Core en `LICENSE`, textos externos necesarios en `LICENSES/` y cuatro atribuciones junto a las skills adaptadas

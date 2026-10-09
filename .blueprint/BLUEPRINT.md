@@ -36,7 +36,17 @@ La rama predeterminada `main` es el payload distribuible del template. Cada arch
 
 El payload excluye expedientes detallados de revisión/validación del mantenedor, research y arquitectura interna del repositorio; el changelog conserva solo la evolución resumida del Core. Tampoco incluye datos propios de CN Pilot ni integraciones opcionales inactivas «por si acaso». No se configuran MCPs ni workflows de deployment durante `/new-project`: solo se materializan tras una tarea explícita y cuando alcance, configuración y autorización son suficientes. Triggers automáticos requieren intención y autorización explícitas.
 
-LICENSE y las atribuciones acompañan al harness distribuido. Su presencia no decide por ubicación la licencia de un producto independiente que un usuario cree dentro de su proyecto; esa política se determina por separado considerando su contenido y relación con el Core.
+## Frontera de licencias: Core, producto e inputs
+
+`LICENSE` distribuye el CN Pilot Core/harness bajo GPL-3.0-or-later. El repositorio define qué parte propia ofrece CN Pilot como Core; no convierte automáticamente en GPL cualquier obra nueva que se guarde junto a él.
+
+- **Core/harness:** el Core original y sus modificaciones que formen parte del Core se distribuyen según `LICENSE`, conservando las licencias/atribuciones externas aplicables. Los textos necesarios están en `LICENSES/`; cada atribución permanece junto a la skill que identifica.
+- **Producto y outputs:** código, diseño, contenido y assets nuevos creados por el usuario en `product/` o `project-artifacts/` no quedan cubiertos solo por usar el harness, sus agentes/instrucciones o compartir repositorio. Pueden tener una licencia propia cuando sean obras independientes y su autor tenga los derechos para decidirla. La carpeta, por sí sola, no prueba independencia.
+- **Material incorporado:** si se copia/adapta expresión protegida del Core o upstream, se evalúa esa parte y su relación real con el resto antes de redistribuirla. Un output nuevo no hereda automáticamente la licencia de una herramienta solo por haber sido producido con ella; sí puede haber condiciones si reproduce o constituye una obra cubierta, o si se combina de forma derivada.
+- **Uso y distribución:** la GPL permite explotación comercial sujeta a sus términos cuando se distribuye material cubierto. Hacer/usar cambios privadamente sin transmitirlos a otros no obliga a publicarlos; si se distribuyen copias de obras cubiertas se aplican sus condiciones. El uso del mismo repositorio o publicar un servicio no resuelve por sí solo qué copias de código se entregan.
+- **Inputs:** `project-resources/` conserva las licencias y derechos de sus fuentes originales.
+
+La relación entre una obra concreta y código/texto protegido depende de su contenido, integración, procedencia y distribución. Estas reglas expresan el alcance previsto del Core y no son asesoría jurídica para un producto individual.
 
 `ARTIFACTS.md` es el mapa legible de entregables significativos de todo el proyecto, no solo los ubicados bajo `project-artifacts/`: puede indexar outputs auxiliares, producto significativo bajo `product/` y otros entregables reales. No registra Core, Project Context, inputs originales, caches, dependencias ni placeholders. Se organiza solo con categorías presentes y estados simples cuando aportan valor. Se actualiza ante altas, bajas, movimientos o cambios materiales de estado/propósito, no por cada edición interna, inspeccionando archivos con o sin Git.
 

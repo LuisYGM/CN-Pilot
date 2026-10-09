@@ -10,6 +10,7 @@ Actualización compatible de mantenimiento sobre 1.1.0; conserva las capacidades
 - **Deployment y MCP on-demand:** no se distribuyen workflow de deployment ni ejemplo MCP inactivos; cada integración se prepara para el proyecto únicamente tras una solicitud explícita y la autorización/configuración aplicables.
 - **Contrato de distribución:** `.blueprint/BLUEPRINT.md` formaliza el payload de `main` y la separación entre el harness distribuido y el producto del usuario. Project Context inicial continúa limpio para `/new-project`.
 - **BF-043** permanece `Testing`; este mantenimiento no cambia su estado.
+- **Scope de licencias:** se aclara la frontera CN Pilot Core/producto y se conservan textos upstream y atribuciones por componente en la distribución.
 
 ## [1.1.0] - 2026-10-08
 
