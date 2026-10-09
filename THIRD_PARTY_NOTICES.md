@@ -8,7 +8,7 @@ CN Pilot se distribuye bajo [GNU GPL v3.0 or later (`GPL-3.0-or-later`)](LICENSE
 |---|---|---|---|
 | Heurísticas visuales adaptadas de Impeccable (`impeccable`) | [ui-design-system](.kilo/skills/ui-design-system/ATTRIBUTION.md) | Apache-2.0 | El archivo atribuye heurísticas selectivas y declara que no incorpora el sistema, CLI, engine ni comandos upstream. |
 | Conocimiento adaptado de `web-accessibility` de agent-skills | [accessibility-review](.kilo/skills/accessibility-review/ATTRIBUTION.md) | MIT | Conservar atribución y avisos aplicables al material derivado. |
-| Conocimiento seleccionado de `wp-performance` de WordPress Agent Skills | [performance-review](.kilo/skills/performance-review/ATTRIBUTION.md) | GPL-2.0-or-later | La atribución limita su adaptación a WordPress/WooCommerce; revisar su efecto al elegir la licencia del conjunto. |
+| Conocimiento seleccionado de `wp-performance` de WordPress Agent Skills | [performance-review](.kilo/skills/performance-review/ATTRIBUTION.md) | GPL-2.0-or-later | La atribución limita su adaptación a WordPress/WooCommerce y conserva la licencia declarada para el material adaptado. |
 | Ideas seleccionadas de `webapp-testing` de Anthropic | [webapp-testing](.kilo/skills/webapp-testing/ATTRIBUTION.md) | Apache-2.0 | La atribución indica que no se copian scripts, ejemplos, browsers ni dependencias upstream. |
 
 Las atribuciones locales no incluyen copias de las licencias upstream completas. Verifica los avisos originales aplicables y conserva los notices requeridos si se redistribuye material derivado. Las referencias a rutas de snapshots locales describen la procedencia registrada; no forman parte de este repositorio.
