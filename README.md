@@ -8,7 +8,7 @@ CN Pilot coordina el trabajo de proyectos web con agentes de IA sin convertir a 
 
 [Empieza aquí](.blueprint/docs/START-HERE.md) · [Configuración de Kilo](.blueprint/docs/KILO-SETUP.md) · [Documentación](#documentación) · [Repositorio](https://github.com/LuisYGM/cn-pilot)
 
-> **Estado actual:** integración nativa con Kilo Code. El contenido de este repositorio está en español. La licencia pública del producto está pendiente de decisión del propietario; consulta [atribuciones y licencias de terceros](THIRD_PARTY_NOTICES.md).
+> **Estado actual:** integración nativa con Kilo Code. El contenido de este repositorio está en español. **Licencia: [GNU GPL v3.0 or later (`GPL-3.0-or-later`)](LICENSE).** Consulta también las [atribuciones y licencias de terceros](THIRD_PARTY_NOTICES.md).
 
 ## El problema que resuelve
 
@@ -110,6 +110,6 @@ Se inspecciona el estado vigente antes de editar; el acceso a secretos se limita
 
 ## Licencia y estado
 
-La licencia pública de CN Pilot aún no está decidida. El repositorio contiene material adaptado con atribuciones MIT, Apache-2.0 y GPL-2.0-or-later; revisa [`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md). No asumas que el repositorio completo se distribuye bajo una licencia común hasta que el propietario elija y se completen las comprobaciones necesarias.
+CN Pilot se distribuye bajo **GNU GPL v3.0 or later (`GPL-3.0-or-later`)**; consulta el texto completo en [`LICENSE`](LICENSE). El repositorio también conserva avisos y procedencias de material de terceros bajo MIT, Apache-2.0 y GPL-2.0-or-later en [`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md) y sus atribuciones originales.
 
 La versión base del Blueprint Core se registra en `.blueprint-version`; no representa por sí sola una versión del producto CN Pilot.

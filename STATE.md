@@ -13,7 +13,7 @@ Preparación pública de CN Pilot; sitio estático en revisión visual humana.
 - Ninguno.
 
 ## Siguiente paso
-Revisar visualmente `site/` y decidir la licencia pública del repositorio. BF-043 permanece `Testing`.
+Revisar visualmente `site/`. BF-043 permanece `Testing`.
 
 ## Rama actual (si aplica)
 main

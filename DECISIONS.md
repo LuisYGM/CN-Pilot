@@ -24,3 +24,15 @@ Opciones razonables y tradeoffs relevantes.
 - cambian dependencias críticas.
 
 No registrar aquí recomendaciones `PROVISIONAL` ni convertir este archivo en un changelog.
+
+### D-001 — Licencia pública de CN Pilot
+
+**Estado:** Accepted
+
+**Decisión:** Distribuir CN Pilot bajo GNU GPL v3.0 or later (`GPL-3.0-or-later`), conforme al texto completo de `LICENSE`.
+
+**Razón:** Mantener una licencia única para la distribución del repositorio, considerando el material de terceros atribuido.
+
+**Alternativas consideradas:** Decisión del propietario; se eligió explícitamente GPL-3.0-or-later.
+
+**Reconsiderar solo si:** el propietario cambia la licencia de distribución.

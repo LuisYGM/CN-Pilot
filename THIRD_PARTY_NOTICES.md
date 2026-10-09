@@ -1,6 +1,6 @@
 # Atribuciones y licencias de terceros
 
-Este inventario identifica material derivado externo atribuido en el repositorio. No determina por sí solo la licencia del producto CN Pilot ni constituye asesoría legal. Consulta cada archivo `ATTRIBUTION.md` enlazado para la procedencia y el alcance declarados.
+CN Pilot se distribuye bajo [GNU GPL v3.0 or later (`GPL-3.0-or-later`)](LICENSE). Este inventario conserva por separado la procedencia y la licencia atribuida al material de terceros; la licencia del conjunto no sustituye esos avisos. Consulta cada archivo `ATTRIBUTION.md` enlazado para su detalle.
 
 ## Material atribuido
 
@@ -13,15 +13,8 @@ Este inventario identifica material derivado externo atribuido en el repositorio
 
 Las atribuciones locales no incluyen copias de las licencias upstream completas. Verifica los avisos originales aplicables y conserva los notices requeridos si se redistribuye material derivado. Las referencias a rutas de snapshots locales describen la procedencia registrada; no forman parte de este repositorio.
 
-## Licencia del repositorio: decisión pendiente
+## Licencia global del repositorio
 
-El propietario debe elegir la licencia de CN Pilot antes de añadir un `LICENSE` raíz o presentar el producto como reutilizable bajo una licencia determinada. Opciones que merecen evaluación:
+La decisión del propietario es `GPL-3.0-or-later`; su texto completo está en [`LICENSE`](LICENSE). Las cuatro atribuciones anteriores permanecen sin cambios y siguen indicando Apache-2.0, MIT, GPL-2.0-or-later y Apache-2.0 para el material identificado.
 
-- **GPL-3.0-or-later para el conjunto:** puede ser una opción compatible con el material Apache-2.0 y GPL-2.0-or-later bajo términos GPLv3, sujeto a verificar cada pieza, avisos y forma de distribución. Impone obligaciones copyleft al distribuir obras cubiertas bajo GPLv3.
-- **GPL-2.0-only para el conjunto:** el material marcado Apache-2.0 no se debe combinar automáticamente bajo GPLv2-only; la compatibilidad es un obstáculo que exige análisis y posiblemente separar o sustituir el material afectado.
-- **Licencia permisiva como MIT o Apache-2.0 para el producto:** no debe aplicarse sin resolver la atribución GPL-2.0-or-later. La opción puede requerir retirar/reimplementar esa adaptación o mantener componentes con licencias y límites claramente separados; la mera creación de un archivo de notices no elimina obligaciones de licencia.
-- **Sin licencia pública del producto por ahora:** mantener `LICENSE` pendiente evita conceder una licencia general inadvertidamente. Las obligaciones de redistribución de material de terceros aún se deben respetar si se distribuye el repositorio.
-
-Una distribución podría requerir una combinación de `LICENSE` raíz para el material propio, `THIRD_PARTY_NOTICES.md` para un inventario legible y los avisos/licencias específicos de cada componente derivado. Según el análisis final, podrían ser necesarios textos de licencia por archivo o directorio. No se declara aquí que una combinación concreta resuelva todas las obligaciones legales.
-
-**Estado:** decisión del propietario pendiente. No se ha creado `LICENSE` raíz en esta preparación.
+`THIRD_PARTY_NOTICES.md` es el índice legible de esos componentes; conserva también sus archivos originales de atribución. No se han alterado ni eliminado dichos avisos.

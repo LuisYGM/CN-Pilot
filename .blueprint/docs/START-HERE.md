@@ -16,7 +16,7 @@ No necesitas conocer previamente los agentes, profiles, capabilities, skills ni 
 
 ### 1. Crea tu carpeta de trabajo
 
-Usa el repositorio como GitHub Template, clónalo o copia sus archivos a una carpeta local. Git es opcional: no ejecutes `git init` solo para poder usar el sistema. La licencia pública de CN Pilot está pendiente de decisión; consulta [`THIRD_PARTY_NOTICES.md`](../../THIRD_PARTY_NOTICES.md) antes de redistribuir.
+Usa el repositorio como GitHub Template, clónalo o copia sus archivos a una carpeta local. Git es opcional: no ejecutes `git init` solo para poder usar el sistema. CN Pilot usa [`GPL-3.0-or-later`](../../LICENSE) y conserva las atribuciones de terceros en [`THIRD_PARTY_NOTICES.md`](../../THIRD_PARTY_NOTICES.md).
 
 ### 2. Abre el proyecto
 
