@@ -48,7 +48,7 @@ El recorrido completo del primer día está en [Empieza aquí](START-HERE.md).
 
 ## Configuración MCP por proyecto
 
-MCP es opcional. Si el proyecto utiliza Kilo con integración MCP, copia [`.kilocode/mcp.example.json`](../../.kilocode/mcp.example.json) como `.kilocode/mcp.json` y configura allí los servidores activos. `kilo.jsonc` en la raíz contiene la configuración general de Kilo/Blueprint; `.kilocode/mcp.json` contiene la configuración MCP activa local y no versionada; `.kilocode/mcp.example.json` es el ejemplo MCP versionado y sin secretos. Un proyecto puede tener varios MCP. Antes de escribir sobre un sistema real, Dev Lead descubre las capabilities/tools expuestas y ejecuta exactamente el flujo `Discovery → Read-only → Plan → Write autorizado → Verification` descrito en [Configuración del Blueprint](CONFIGURATION.md#mcp-opcional).
+MCP es opcional y el template no incluye una configuración activa ni un archivo de ejemplo. Si el proyecto solicita una integración, Dev Lead descubre el servidor/capabilities reales y prepara solo las instrucciones y campos no secretos de la configuración local correspondiente. Configúrala mediante una superficie local soportada por Kilo; no pegues ni envíes secretos al agente. Si el runtime usa `.kilocode/mcp.json`, esa configuración queda ignorada por Git y protegida contra lectura/edición de agentes. `kilo.jsonc` contiene la configuración compartible general de Kilo/Blueprint, no servidores ni credenciales. Antes de escribir sobre un sistema real, Dev Lead descubre las capabilities/tools expuestas y ejecuta exactamente el flujo `Discovery → Read-only → Plan → Write autorizado → Verification` descrito en [Configuración del Blueprint](CONFIGURATION.md#mcp-opcional).
 
 ## Seguridad
 

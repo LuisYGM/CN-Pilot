@@ -39,7 +39,7 @@ No cargues contexto irrelevante.
 - Distingue convenciones universales versionadas, configuración compartible del proyecto, configuración local del desarrollador, secretos y templates opcionales.
 - La selección de IA pertenece al usuario/entorno de Kilo, no al Blueprint: proveedor, modelos, overrides y esfuerzo de razonamiento no se prescriben por agente ni se versionan como preferencias del proyecto. Agentes y skills deben funcionar con distintos proveedores y modelos; evalúa resultados y QA, no marcas o versiones. Solo registra una dependencia concreta cuando sea un requisito técnico real del producto.
 - Para responsive nuevo, usa `.blueprint/config/responsive.json` como fuente de verdad y aplica la skill `frontend-responsive`. En proyectos existentes prevalece la configuración vigente salvo migración explícita.
-- No actives MCPs ni workflows de deployment por defecto. Configúralos solo cuando formen parte del alcance, usando ejemplos seguros bajo `.blueprint/templates/` cuando aplique.
+- No actives MCPs ni workflows de deployment por defecto. Materializa la configuración local MCP o un workflow específico de proyecto solo tras una solicitud explícita y dentro del alcance autorizado; nunca distribuyas credenciales.
 - Versiona únicamente configuración compartible sin secretos. Mantén credenciales y configuración sensible en variables, OAuth, secrets del proveedor o configuración local ignorada.
 - Tener producción, WordPress o un builder no implica crear deployment, MCP ni overrides responsive innecesarios.
 
@@ -195,7 +195,7 @@ Bloqueados por defecto:
 
 ## Producción
 
-Cambios relevantes en producción requieren aprobación. Antes de una operación riesgosa define cómo revertirla. `.github/workflows/deploy.yml` es un scaffold manual/fail-closed: su presencia no significa deployment configurado. Automatic deployment requiere intención explícita; configuración incompleta no publica. `product/` es la superficie primaria candidata de deployment, no un target universal: selecciona artifact/public root/build output y exclusiones según el stack. Excluye `.blueprint/`, `project-resources/` y `project-artifacts/` del deployment productivo por defecto; un entregable auxiliar puede ser una entrega final/handoff pero no se convierte por ello en runtime. Solo incluye outputs productivos autorizados.
+Cambios relevantes en producción requieren aprobación. Antes de una operación riesgosa define cómo revertirla. No se distribuye un workflow de deployment por defecto: su ausencia es el comportamiento fail-closed del template. En una tarea explícita de configuración, crea el workflow adecuado al stack, artifact, destino y método confirmados, y solo con autorización para configurarlo. Triggers automáticos requieren intención y autorización explícitas; configurar un workflow no autoriza ejecutar un deploy. `product/` es la superficie primaria candidata de deployment, no un target universal: selecciona artifact/public root/build output y exclusiones según el stack. Excluye `.blueprint/`, `project-resources/` y `project-artifacts/` del deployment productivo por defecto; un entregable auxiliar puede ser una entrega final/handoff pero no se convierte por ello en runtime. Solo incluye outputs productivos autorizados.
 
 ## Definición de terminado
 

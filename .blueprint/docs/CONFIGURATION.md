@@ -21,19 +21,18 @@ En proyectos existentes, los breakpoints implementados son la fuente de verdad. 
 
 ## MCP opcional
 
-El Blueprint no activa MCPs por defecto ni depende de un proveedor concreto. Cuando un proyecto confirme un MCP:
+El Blueprint no incluye ejemplos ni configura MCPs por defecto y no depende de un proveedor concreto. Cuando la persona solicite una integración MCP para su proyecto:
 
 1. verifica que la integración forma parte del alcance y que está disponible;
-2. crea `.kilocode/mcp.json` a partir de [`.kilocode/mcp.example.json`](../../.kilocode/mcp.example.json) y adapta uno o varios servidores;
+2. descubre el servidor, sus capabilities/tools y el esquema real que soporta; prepara únicamente los campos no secretos necesarios para este proyecto;
 3. conserva en `kilo.jsonc` únicamente configuración general de Kilo/Blueprint a nivel de proyecto y sin secretos;
-4. configura autenticación mediante OAuth administrado por Kilo, variables/secretos del entorno o configuración local fuera del repositorio, según admita el servicio;
-5. valida la conexión antes de usarla para publicar o modificar el sistema objetivo.
+4. guía a la persona para aplicar configuración y autenticación local por un mecanismo soportado por Kilo/el servicio; no pidas, leas ni guardes secretos;
+5. valida, mediante capabilities disponibles y autorización, la conexión antes de usarla para publicar o modificar el sistema objetivo.
 
 Las ubicaciones tienen responsabilidades distintas:
 
 - `kilo.jsonc`: configuración general y compartible de Kilo/Blueprint a nivel de proyecto.
-- `.kilocode/mcp.json`: configuración activa local de los servidores MCP de este proyecto. Está ignorada por Git y puede contener referencias sensibles.
-- `.kilocode/mcp.example.json`: ejemplo versionado, genérico y sin secretos para uno o varios servidores. Cada desarrollador crea su propio `.kilocode/mcp.json`.
+- `.kilocode/mcp.json`: si el runtime utiliza esta ubicación, es configuración local activa y puede contener referencias sensibles. Está ignorada por Git y protegida frente a lectura/edición de agentes; no forma parte del template.
 
 Un proyecto puede utilizar varios MCP simultáneamente, con responsabilidades diferentes. Dev Lead debe elegir herramientas por la capability real que exponen, no por el nombre o la intención declarada del servidor. El uso de MCP es capability-first, no provider-first: primero se descubren servidores y tools disponibles, después se mapea `capability → responsabilidad`, se elige la ruta funcional más específica y segura y se usa fallback solo si otro MCP expone legítimamente la capability necesaria. No se duplican llamadas cuando un MCP ya proporciona la capability requerida.
 
@@ -59,17 +58,11 @@ Si un servidor exige valores sensibles dentro de su definición, mantén esa def
 
 ## Deployment mediante GitHub Actions
 
-`.github/workflows/deploy.yml` se hereda como scaffold manual y fail-closed. La presencia del archivo no significa deployment configurado; sin especializarlo, una invocación manual termina explícitamente con error y no despliega.
+No se distribuye ni crea un workflow de deployment durante onboarding. Su ausencia es la condición segura por defecto: no hay acción que ejecutar o trigger que pueda publicar. Una persona puede solicitar configurar deployment; solo entonces Dev Lead identifica método, destino/entorno, stack, artifact/source, exclusiones, autorización, verificación y recuperación antes de crear un workflow adecuado a ese proyecto. Si falta un dato material o autorización para configurarlo, no crea ni ejecuta el workflow; ofrece un handoff de lo pendiente. No existe método universal.
 
-Solo cuando el proyecto confirme GitHub Actions como modo de deployment, Dev Lead puede:
+Triggers automáticos —incluidos `push` y `schedule`— solo se añaden con intención y autorización explícitas para esa automatización. Configurar un workflow no autoriza publicar en producción; esa publicación mantiene su propio gate. No se solicitan ni escriben secretos: se referencian mediante GitHub Actions Secrets/environments o el mecanismo seguro aplicable. La ausencia de workflow no produce una ejecución fallida ni es una incidencia.
 
-1. especializar el scaffold existente `.github/workflows/deploy.yml` (no copiar un segundo workflow base);
-2. definir el método real —SSH, SFTP, rsync, build + artifact, hosting, WordPress, custom u otro—;
-3. referenciar credenciales mediante GitHub Actions Secrets o secrets de environments y configurar las aprobaciones/protecciones requeridas;
-4. retirar el bloqueo únicamente después de revisar permisos, triggers, backup, smoke tests y rollback; habilitar triggers automáticos solo con intención explícita;
-5. validar el workflow sin ejecutar producción sin aprobación.
-
-Tener un entorno de producción no activa deployment ni justifica crear/configurar el workflow. No existe un método universal. En workspace canónico, `product/` es la superficie primaria candidata de deployment, no un target universal: el stack determina artifact, public root, build output y exclusiones (por ejemplo, un build `dist/`, una app Laravel o un plugin pueden requerir destinos distintos). Para `Existing compatibility exception`, usa el artifact/source real registrado en `PROJECT.md`; no muevas ni cambies deployment solo para satisfacer la convención de carpetas. `.blueprint/`, `project-resources/` y `project-artifacts/` quedan fuera del deployment productivo por defecto. Un output auxiliar puede ser la entrega/handoff final sin convertirse por ello en runtime. Los recursos recibidos se integran/copian a ubicaciones internas del producto autorizadas si se necesitan; nunca se publica `project-resources/` por inferencia.
+En workspace canónico, `product/` es la superficie primaria candidata, no un target universal: el stack determina artifact, public root, build output y exclusiones. Para `Existing compatibility exception`, usa el artifact/source real registrado en `PROJECT.md`; no muevas ni cambies deployment solo para satisfacer la convención de carpetas. `.blueprint/`, `project-resources/` y `project-artifacts/` quedan fuera del deployment productivo por defecto. Un output auxiliar puede ser la entrega/handoff final sin convertirse por ello en runtime. Los recursos recibidos se integran/copian a ubicaciones internas del producto autorizadas si se necesitan; nunca se publica `project-resources/` por inferencia.
 
 ## Archivos locales y secretos
 

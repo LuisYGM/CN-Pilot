@@ -20,7 +20,7 @@ Cada proyecto define hasta dónde llega el repositorio y cómo se entrega cada a
 
 El repositorio separa Core portable en `.blueprint/`, rutas técnicas requeridas por herramientas, contexto mutable, inputs del proyecto y código/artefactos. `.blueprint/config/responsive.json` es la fuente versionada para responsive de proyectos nuevos; los proyectos existentes conservan sus breakpoints salvo migración aprobada.
 
-Los MCPs y workflows de deployment no se activan por defecto. El ejemplo de configuración MCP por proyecto vive en `.kilocode/mcp.example.json`; la configuración activa `.kilocode/mcp.json` permanece local e ignorada por Git. `kilo.jsonc` conserva configuración general compartible sin secretos. Consulta `.blueprint/docs/CONFIGURATION.md`.
+Los MCPs y workflows de deployment no se activan ni distribuyen por defecto. Ante una solicitud explícita, prepara la configuración MCP local con base en el servidor, capability y configuración real; no se crea durante `/new-project`, no se leen/escriben archivos MCP protegidos ni se solicitan secretos. Si se solicita GitHub Actions y el método/destino están definidos y autorizados, crea un workflow específico para el proyecto. Los triggers automáticos requieren autorización independiente. `kilo.jsonc` conserva únicamente configuración general compartible sin secretos. Consulta `.blueprint/docs/CONFIGURATION.md`.
 
 ## Capas de archivos y artefactos
 
@@ -29,6 +29,14 @@ Los MCPs y workflows de deployment no se activan por defecto. El ejemplo de conf
 - **Project input:** materiales recibidos bajo `project-resources/`; son input, no producción ni output.
 - **Project Artifacts:** outputs auxiliares reales bajo `project-artifacts/` en greenfield; container y subcarpetas on-demand, creados solo al aparecer el primer artefacto, sin README-placeholder ni `.gitkeep`.
 - **Product:** implementación/runtime activo administrado en el workspace bajo `product/` para Greenfield y Existing importado; el stack define el layout interno nativo, separado de supporting artifacts. Solo un Existing repository operativo adoptado puede conservar un product root real fuera del container como excepción documentada.
+
+## Contrato de payload del template
+
+La rama predeterminada `main` es el payload distribuible del template. Cada archivo versionado debe tener una función real para el proyecto derivado o el Core que recibe: operación de CN Pilot, bootstrap que se transforma al inicializar, Project Context limpio, configuración portable, catálogo Core reusable o aviso legal/atribución aplicable. El catálogo puede activarse solo cuando una tarea lo necesite; la distribución de la capacidad no precrea sus outputs.
+
+El payload excluye expedientes detallados de revisión/validación del mantenedor, research y arquitectura interna del repositorio; el changelog conserva solo la evolución resumida del Core. Tampoco incluye datos propios de CN Pilot ni integraciones opcionales inactivas «por si acaso». No se configuran MCPs ni workflows de deployment durante `/new-project`: solo se materializan tras una tarea explícita y cuando alcance, configuración y autorización son suficientes. Triggers automáticos requieren intención y autorización explícitas.
+
+LICENSE y las atribuciones acompañan al harness distribuido. Su presencia no decide por ubicación la licencia de un producto independiente que un usuario cree dentro de su proyecto; esa política se determina por separado considerando su contenido y relación con el Core.
 
 `ARTIFACTS.md` es el mapa legible de entregables significativos de todo el proyecto, no solo los ubicados bajo `project-artifacts/`: puede indexar outputs auxiliares, producto significativo bajo `product/` y otros entregables reales. No registra Core, Project Context, inputs originales, caches, dependencias ni placeholders. Se organiza solo con categorías presentes y estados simples cuando aportan valor. Se actualiza ante altas, bajas, movimientos o cambios materiales de estado/propósito, no por cada edición interna, inspeccionando archivos con o sin Git.
 
@@ -295,7 +303,7 @@ Cuando exista un plugin SEO activo y sus capabilities estén disponibles, el QA 
 - Stage limitado a la unidad lógica relacionada.
 - Nunca hace push automático.
 - El cierre por defecto es local: acciones remotas (push, deploy/publicación, PR, merge, tag, release) requieren autorización explícita o un scope ya aprobado que las incluya inequívocamente. Las reglas permanentes se heredan sin repetirlas en cada prompt.
-- `.github/workflows/deploy.yml` se hereda como scaffold manual/fail-closed; su existencia no implica deployment configurado. GitHub Actions se especializa solo si el proyecto lo requiere y un trigger automático exige intención explícita.
+- No se hereda un workflow GitHub Actions de deployment. Se crea uno específico solo cuando el proyecto solicita configurarlo, método/destino están definidos y existe autorización; un trigger automático exige además intención y autorización explícitas.
 - Cada tarea completada recibe un informe final breve y proporcional; incluye solo resultado, cambios y verificaciones pertinentes, agentes/Reviewer si intervinieron y hash/mensaje exactos si hubo commit. Tras informar, Dev Lead se detiene.
 - Los tags y GitHub Releases son opcionales y no se crean ni recomiendan para cada parche, commit o cambio de versión. `.blueprint-version` identifica la generación/base del Blueprint y no tiene que cambiar con cada commit; `CHANGELOG.md` se actualiza para cambios relevantes.
 - Operaciones destructivas bloqueadas.

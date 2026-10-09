@@ -141,4 +141,4 @@ Un especialista que trabaja dentro de una tarea coordinada informa el gap precis
 | «Cambia el texto Enviar a Solicitar información» | Ejecuta un `DIRECT` acotado, verifica el texto y cierra sin discovery adicional. |
 | «Quiero que al subir cambios a GitHub se actualice el servidor» | Inspecciona el deployment conocido; pregunta únicamente por destino/método/entorno que no pueda descubrirse y sea necesario. Nunca solicita secretos. |
 
-Estos ejemplos ilustran el contrato, no son un wizard, checklist de onboarding ni resultados de retest. Los retests de aceptación vigentes se registran por BF-042 en [feedback del Blueprint](blueprint-feedback.md).
+Estos ejemplos ilustran el contrato, no son un wizard, checklist de onboarding ni evidencia de aceptación o retest.

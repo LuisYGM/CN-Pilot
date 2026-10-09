@@ -12,8 +12,8 @@ Inventario de la infraestructura heredada del Blueprint. No sustituye `../ARTIFA
 - documentación operativa bajo `.blueprint/docs/`
 - registro base de artefactos del proyecto
 - configuración responsive versionada en `.blueprint/config/`
-- configuración Kilo y ejemplo MCP local seguro
-- configuración VS Code
-- scaffold fail-closed de GitHub Actions en `.github/workflows/deploy.yml`
+- configuración Kilo compartible en `kilo.jsonc` y controles locales en `.gitignore` / `.kilocodeignore`
+- política de formato en `.editorconfig` / `.gitattributes` y recomendaciones de extensiones en `.vscode/extensions.json`
+- MCP y workflows GitHub Actions opcionales, no preconfigurados en el template; se materializan dentro de tareas explícitas autorizadas
 - input scaffold `project-resources/README.md`
-- política Git y seguridad
+- política Git y seguridad; sin expedientes detallados de revisión/research del mantenedor

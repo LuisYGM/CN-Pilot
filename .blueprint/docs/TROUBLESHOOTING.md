@@ -14,10 +14,10 @@ Problemas operativos frecuentes del Blueprint. Para la primera puesta en marcha,
 
 **Síntoma:** el servidor no aparece, no conecta o la herramienta requerida no está autorizada.
 
-1. Confirma que MCP forma parte del alcance; no lo actives por rutina.
-2. Revisa la configuración efectiva y el ejemplo MCP canónico [`.kilocode/mcp.example.json`](../../.kilocode/mcp.example.json).
-3. Verifica URL, estado `enabled`, autenticación y permisos sin copiar secretos al repositorio.
-4. Valida la conexión antes de publicar o modificar el sistema objetivo.
+1. Confirma que se solicitó la integración; su ausencia antes de una solicitud es normal.
+2. Descubre el servidor, capabilities y configuración local disponible en Kilo; el template no incluye un ejemplo MCP genérico.
+3. Durante una tarea explícita de setup, prepara solo los campos no secretos que correspondan al esquema real y guía la configuración local del usuario. No pidas, leas ni copies secretos.
+4. Valida capabilities disponibles y autorización antes de publicar o modificar el sistema objetivo.
 5. Si no puede utilizarse, detén el flujo en contenido, diseño, código o handoff manual según lo acordado.
 
 La falta de MCP no impide que el Blueprint produzca un entregable completo para continuación manual.
@@ -102,6 +102,6 @@ Solo `/commit` depende estrictamente de Git. `/checkpoint` crea commit únicamen
 
 ## El deployment no puede ejecutarse
 
-Comprueba que deployment forma parte del alcance, existe un método aprobado y están definidos backup, smoke test y rollback. `.github/workflows/deploy.yml` es la única superficie canónica heredada; se especializa en su sitio y permanece manual/fail-closed hasta que el método y la autorización estén completos.
+La ausencia de un workflow es el estado esperado hasta que se solicite configurar deployment. Solo una tarea explícita con método, destino/entorno, alcance y autorización suficientes genera un workflow específico para el proyecto. Si faltan, prepara un handoff de lo pendiente y no crees ni ejecutes el workflow. No se habilitan triggers automáticos sin intención y autorización explícitas; publicar en producción mantiene su propia aprobación.
 
 Si falta método, autorización o acceso, prepara un handoff y detente. Nunca improvises credenciales ni despliegues a producción sin aprobación.
