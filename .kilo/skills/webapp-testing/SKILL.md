@@ -1,12 +1,11 @@
 ---
 name: webapp-testing
 description: Verificar comportamiento browser/runtime de una aplicación web mediante navegación, interacción, DOM/estados, URL, consola y network pertinente. Úsala para bugs o QA de runtime; no para comparar una implementación con una referencia visual aprobada ni para cualquier tarea frontend.
-license: Apache-2.0 (adaptación de webapp-testing, Anthropic; upstream snapshot, commit unknown)
 ---
 
 # webapp-testing
 
-Esta es una adaptación reducida de `webapp-testing` del snapshot local de Anthropic. Responde: **Does the implementation actually work correctly in a browser/runtime?** La fidelidad frente a una referencia aprobada pertenece a `visual-parity-review`.
+Responde: **Does the implementation actually work correctly in a browser/runtime?** La fidelidad frente a una referencia aprobada pertenece a `visual-parity-review`.
 
 ## Capacidad opcional
 
@@ -29,4 +28,4 @@ No convierte un prototipo en producción: los formularios, búsquedas, filtros o
 
 ## Dependencias opcionales
 
-El upstream usa scripts Python y Playwright. Esta adaptación no exige scripts auxiliares ni una instalación universal. Si el proyecto ya dispone de Playwright/Python y un runner seguro, puede reutilizarse; documenta versión, navegador, URL/archivo, viewports, estados y comandos usados. Si se incorpora un helper del upstream en el futuro, debe ejecutarse como herramienta acotada y no como requisito del Blueprint.
+Playwright y Python son opcionales. Esta skill no exige scripts auxiliares ni una instalación universal. Si el proyecto ya dispone de un runner seguro, puede reutilizarse; documenta versión, navegador, URL/archivo, viewports, estados y comandos usados. Si se incorpora un helper en el futuro, debe ejecutarse como herramienta acotada y no como requisito del CN Pilot.

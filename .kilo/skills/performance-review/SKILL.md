@@ -1,7 +1,6 @@
 ---
 name: performance-review
 description: Diagnosticar rendimiento web medible y, cuando el stack sea WordPress/WooCommerce, revisar también queries, autoloaded options, object cache, cron y HTTP API. Úsala ante síntomas medibles, regresiones o una solicitud de optimización; no para cualquier cambio frontend.
-license: GPL-2.0-or-later (conocimiento adaptado de wp-performance, WordPress Contributors; upstream snapshot, commit unknown)
 ---
 
 # performance-review

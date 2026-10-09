@@ -1,7 +1,6 @@
 ---
 name: accessibility-review
 description: Revisar accesibilidad específica de UI y frontend: semántica, teclado, foco, formularios, nombres accesibles, contraste, movimiento y responsive. Úsala para requisitos a11y, WCAG, ARIA o interacción accesible; no para cualquier tarea frontend.
-license: MIT (adaptación de web-accessibility, Magnus Hedemark / agent-skills; upstream snapshot, commit unknown)
 ---
 
 # accessibility-review
