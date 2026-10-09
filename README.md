@@ -2,7 +2,7 @@
 
 **Human-first web development harness for AI agents.**
 
-**CN Pilot by [Código Nocturno](https://codigonocturno.com/)** · Kilo Code nativo · agnóstico al proveedor/modelo configurado en Kilo
+Kilo Code nativo · agnóstico al proveedor/modelo dentro de Kilo
 
 CN Pilot coordina el trabajo de proyectos web con agentes de IA sin convertir a la persona en operadora de una cadena de herramientas. Describe el resultado en lenguaje natural; el sistema inspecciona el contexto, activa solo el proceso necesario y mantiene las decisiones importantes bajo control humano.
 
