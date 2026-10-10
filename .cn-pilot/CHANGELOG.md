@@ -14,6 +14,7 @@ Migración estructural del Core y limpieza del payload del template.
 - **BF-044 — Visual Resource Integrity (Validated):** retests verifican que un recurso representacional solo se proponga con source o autorización para diseñarlo; gaps materiales sin fuente se reportan fuera de UI; se componen interiores sin falsa escena/plano, se conservan SVGs para diagramas sustentados y Existing reutiliza assets aprobados. Sin placeholders ni notas de estado en UI.
 - **BF-045 — Visual Asset Strategy (Validated):** retests A–E validan alternativas visuales sin foto, fotos aprobadas, SVG sustentado, video/motion y sobriedad Existing. Validan decisiones/routing de medios, no inspección de binarios, derechos ni runtime; no obligan una cuota ni una fórmula.
 - **BF-046 — Design System First (Validated):** retests focalizados A–J PASS; UI Kit/page consumen tokens compartidos (H1 64→56px propagado), el fixture Chrome responsive 390/768/1024/1440 no muestra overflow e incluye states/focus/reduced motion/content-resilience; Reviewer APPROVED. Fixtures temporales eliminados.
+- **BF-047 — Completion-Driven Execution & Recovery (Validated):** retests A–J PASS; Reviewer APPROVED; checkpoint runtime local, reanudación focalizada y preservación del working tree verificados. Continuación CLI nativa disponible; auto-resume queda `DEFERRED` porque no se halló señal terminal estable para distinguir interrupciones/bloqueos.
 
 ## [1.1.1] - 2026-10-09
 

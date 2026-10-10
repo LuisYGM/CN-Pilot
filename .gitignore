@@ -6,6 +6,7 @@ secrets/
 kilo.local.json
 kilo.local.jsonc
 .kilocode/mcp.json
+/.cn-pilot/runtime/
 
 # Dependencies / caches
 node_modules/

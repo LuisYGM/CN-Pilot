@@ -2,6 +2,8 @@
 
 Inventario de CN Pilot Core. No sustituye `../ARTIFACTS.md`, que registra entregables específicos del proyecto.
 
+`.cn-pilot/runtime/` es estado operacional local e ignorado por Git; no forma parte del Core distribuido ni del manifiesto versionado.
+
 - 7 agentes en `.kilo/agents/`
 - 24 skills (`.kilo/skills/*/SKILL.md`)
 - 6 documentos de referencia bajo `.kilo/skills/technical-seo/references/` (no son skills adicionales)

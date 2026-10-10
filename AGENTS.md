@@ -25,6 +25,8 @@ Cuando sea relevante consulta:
 
 No cargues contexto irrelevante.
 
+Al comenzar una nueva interacción de Dev Lead, comprueba solo si existe `.cn-pilot/runtime/active-task.json`. Si existe, aplica BF-047 del Core para reconciliar el estado y los gates pendientes; no busques checkpoints ni telemetría en otros archivos. Si el prompt trata de una tarea distinta, aclara brevemente si continuar primero o dejar pendiente la anterior.
+
 ## Modelo local-first y entrega
 
 - Prepara el trabajo localmente en la carpeta del proyecto y, si existe Git, versiónalo en el repositorio.
@@ -47,7 +49,7 @@ No cargues contexto irrelevante.
 
 Distingue tres capas:
 
-- **CN Pilot Core:** infraestructura portable y reusable en `.cn-pilot/`, además de rutas técnicas como `.github/`, `.kilo/`, `.kilocode/`, `AGENTS.md`, `kilo.jsonc` y `.cn-pilot-version`. El inventario canónico está en `.cn-pilot/MANIFEST.md`.
+- **CN Pilot Core:** infraestructura portable y reusable en `.cn-pilot/`, además de rutas técnicas como `.github/`, `.kilo/`, `.kilocode/`, `AGENTS.md`, `kilo.jsonc` y `.cn-pilot-version`. El inventario canónico está en `.cn-pilot/MANIFEST.md`; `.cn-pilot/runtime/` es un checkpoint local transitorio, ignorado y fuera del payload.
 - **Project Context:** `README.md`, `PROJECT.md`, `REQUIREMENTS.md`, `STATE.md`, `DECISIONS.md` y `ARTIFACTS.md`. Mantienen contexto/resumen, pero no son entregables.
 - **Project Artifacts:** trabajo específico del proyecto en sus rutas canónicas: contenido, diseño, frontend, plugins/themes, specs, arquitectura, reportes, handoffs y otros entregables.
 
@@ -81,7 +83,7 @@ Evita releer archivos ya analizados, cargar contexto irrelevante, volver a razon
 
 **APPROVED IMPLEMENTATION:** si existe fuente aprobada utilizable, contenido resuelto, target confirmado, scope acotado y ninguna decisión material bloqueante abierta, usa fast path de traducción y verificación, no nuevo discovery/Strategy/diseño. Señales como «implementa este HTML aprobado» requieren comprobar esas condiciones, no asumirlas. Es una ruta de ejecución dentro de TASK/STRUCTURAL según alcance/riesgo, no sinónimo de DIRECT ni cuarta categoría. Dev Lead conserva coordinación y prefiere un solo owner de implementación acorde al target; para frontend/builders aplica el procedimiento de `frontend-builder`. Reabre solo lo afectado por evidencia de contradicción material. Se mantienen safe writes, QA proporcional, Reviewer cuando lo exijan riesgo/clasificación, aceptación humana visual y autorización de publicación.
 
-No omitas planificación, pruebas o revisión en cambios estructurales o de alto riesgo.
+No omitas planificación, pruebas o revisión en cambios estructurales o de alto riesgo. En tareas largas/STRUCTURAL usa BF-047 en `.cn-pilot/CORE.md`: planifica/reserva gates desde el inicio, checkpoints en milestones y estado `COMPLETED` solo cuando la Definition of Done aplicable esté satisfecha.
 
 ## Decisiones técnicas y aprobación
 

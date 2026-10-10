@@ -93,6 +93,14 @@ Resolver la petición utilizando el proceso mínimo suficiente sin sacrificar se
 4. Evalúa el riesgo por separado.
 5. Decide si necesitas delegar.
 
+## BF-047 — Continuación y checkpoints
+
+- Al inicio de una nueva interacción comprueba solo `.cn-pilot/runtime/active-task.json`. Si falta, procede normalmente; si existe, inspecciona el working tree/HEAD y reconcilia únicamente gates pendientes con `.cn-pilot/CORE.md`. Si la petición no continúa esa tarea, pregunta brevemente si terminarla primero o dejarla pendiente.
+- En tareas `STRUCTURAL`/largas define objetivo, aceptación, tests, Reviewer, cleanup, checks y commit antes de implementar; inicializa/actualiza un único checkpoint local en milestones, no por tool call. Reserva capacidad de cierre desde el principio.
+- Conserva tests `PASS` mientras la surface que verifican no cambie semánticamente; evalúa `changed paths`/impacto y retestea solo áreas posiblemente invalidadas. No repitas discovery/checks PASS para aplazar un gate obligatorio.
+- Si un child `task` devuelve `task_id` y su ejecución se interrumpe, reanuda ese mismo child cuando la sesión/permisos lo permitan; Agent Manager se continúa solo con session ID real y confirmación de que existe. Usa continuidad CLI únicamente donde el `--help` instalado la confirme; no uses `--auto` ni crees un wrapper de resume por texto/exit codes.
+- `INTERRUPTED`, `BLOCKED_HUMAN` o `BLOCKED_EXTERNAL` nunca son Done. `COMPLETED` requiere DoD aplicable y cleanup del checkpoint. No uses `/doctor` como requisito.
+
 ## Modelo de trabajo
 
 - Trabaja local-first: prepara artefactos en la carpeta del proyecto y versiónalos solo cuando Git exista.
@@ -170,8 +178,8 @@ Resuelve sin consultar los detalles técnicos internos, convencionales, reversib
 
 - DIRECT solo si la decisión es inequívoca, la fuente exacta está localizada, el riesgo es bajo y la verificación clara: inspeccionar → cambiar lo mínimo → verificar lo afectado → commit local si corresponde → detenerse. No delegues ni abras Agent Manager, plan extenso, auditoría o documentación por rutina. Un slug publicado, rol/permiso, dato vivo, publicación, configuración global o cambio SEO material no entra automáticamente por ser pequeño; evalúa riesgo y enruta a la skill apropiada.
 - TASK rutinaria de bajo riesgo: especialista → verificación básica proporcional → inspección de cambios → commit local automático si Git existe. No uses Reviewer independiente por defecto.
-- TASK con riesgo o impacto suficiente: criterios relevantes → especialista → pruebas proporcionales → Reviewer cuando aporte una segunda opinión necesaria → inspección de cambios → checkpoint.
-- STRUCTURAL: requisitos → arquitectura → criterios → implementación incremental → pruebas → review → checkpoint → staging/rollback si aplica.
+- TASK con riesgo o impacto suficiente: criterios relevantes y gates → especialista → pruebas focales proporcionales → Reviewer cuando aporte una segunda opinión necesaria → checks/cleanup/checkpoint final.
+- STRUCTURAL: requisitos → decisión arquitectónica real → plan compacto y checkpoint inicial → implementación por batches → pruebas dirigidas → Reviewer → correcciones pertinentes → checks finales/cleanup → commit/rollback según autorización.
 
 Estas secuencias se recortan según el alcance y punto de entrega del proyecto; staging, integración CMS, deployment u otras fases no son obligatorias por defecto.
 
@@ -179,7 +187,7 @@ Si una señal concreta indica posible corrupción/desalineación del Core o rout
 
 ### Completion Mode
 
-En una tarea larga, cuando la implementación principal está completa y hay criterios suficientes para verificarla, cambia a modo de cierre: `verify → Reviewer si lo exige el riesgo/scope → corregir hallazgos relevantes → regresión focalizada → checkpoint → STOP`. No inicies en ese modo discovery, auditorías, investigación opcional, refactors, optimizaciones, features, decisiones arquitectónicas ni lecturas completas nuevas por iniciativa propia. No repitas pruebas o reviews aún válidas ni añadas QA especializado no previsto por el riesgo/alcance. Una mejora fuera de scope se reporta como follow-up, no se implementa.
+En una tarea larga, cuando la implementación principal está completa y hay criterios suficientes para verificarla, cambia a modo de cierre sobre el checkpoint ya existente: `reconcile → verify → Reviewer si lo exige el riesgo/scope → corregir findings relevantes → retest focal → cleanup/checks finales → commit local si aplica → eliminar checkpoint → STOP`. No inicies en ese modo discovery, auditorías, investigación opcional, refactors, optimizaciones, features, decisiones arquitectónicas ni lecturas completas nuevas por iniciativa propia. No repitas pruebas o reviews aún válidas ni añadas QA especializado no previsto por el riesgo/alcance. Una mejora fuera de scope se reporta como follow-up, no se implementa.
 
 Una vez satisfechos los criterios y verificaciones requeridas, detente: no sigas inspeccionando para «estar más seguro» ni abras trabajo nuevo en la misma tarea. Completion Mode evita trabajo nuevo, no omite pruebas, revisión, corrección de hallazgos bloqueantes/relevantes ni aceptación requeridas. Ante evidencia contradictoria o riesgo material, limita la investigación a resolver ese impedimento y luego vuelve al cierre.
 
