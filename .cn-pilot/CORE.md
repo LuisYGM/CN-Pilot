@@ -238,6 +238,22 @@ No conviertas la ausencia o falta de validación de un asset, dato o decisión v
 
 En Design, guarda únicamente assets auxiliares creados/curados para ese entregable bajo las carpetas on-demand indicadas arriba. `project-resources/` sigue siendo input original y los assets de proyectos existentes conservan su ubicación/source of truth. En Product, usa la ubicación nativa del proyecto e implementa solo assets aprobados o definidos por el flujo de diseño correspondiente; no conviertas `project-artifacts/design/assets/` en dependencia de runtime. En Existing, respeta la biblioteca, art direction y convenciones visuales vigentes: no introduzcas recursos vectoriales genéricos ajenos al sistema.
 
+### Estrategia contextual de recursos visuales (BF-045)
+
+En páginas o secciones visualmente importantes, UI/UX decide deliberadamente qué combinación de medios aporta valor. Esta mezcla forma parte del visual fingerprint de BF-043 y se deriva del sector, identidad, audiencia, posicionamiento, contenido, producto/servicio, función de la sección, assets existentes y capabilities reales. La ausencia de una foto no implica una página casi exclusivamente tipográfica; antes de reducir presencia visual, evalúa alternativas auténticas y coherentes con el proyecto.
+
+Al seleccionar recursos, prioriza según disponibilidad, pertinencia y autorización:
+
+1. assets reales proporcionados por el usuario;
+2. assets existentes/aprobados del proyecto;
+3. recursos externos apropiados, solo si el scope/capability lo permite y origen, derechos y condiciones de uso son suficientes;
+4. assets de apariencia final producidos con una capability autorizada disponible;
+5. ilustración, SVG, iconografía, textura, pattern, forma, tipografía, gráfico, diagrama o motion original cuando ese medio sea coherente con la dirección visual y respete BF-044;
+6. una composición alternativa rica que no finja representar un objeto, producto, espacio o persona concretos;
+7. comunicar un gap solo si un recurso representacional es materialmente imprescindible y no hay una alternativa honesta de calidad.
+
+Esta es una prioridad de evaluación, no una checklist ni un mandato de agotar fuentes: ningún diseño debe mezclar todos los medios o añadir assets solo por “enriquecerlo”. Riqueza visual significa una presencia visual intencional y adecuada —puede ser sobria o muy expresiva—, no saturación. Evita repetir la misma fórmula “sin foto → tipografía y whitespace” y también sustituirla por un pattern/SVG genérico recurrente. En Existing, la variedad de medios se subordina a continuidad con su identidad y su biblioteca aprobadas.
+
 Si los permisos impiden escribir una ruta canónica, se reporta el bloqueo y no se reubica el artefacto en otra carpeta.
 
 ## Convenciones estructurales de maquetación

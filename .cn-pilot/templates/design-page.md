@@ -16,6 +16,8 @@ Structural / Visual / Implementation reference
 ## Notas de accesibilidad
 ## Recursos visuales
 - Clase: representacional / gráfico-vectorial
+- Estrategia de medios y función de cada uno:
+- Razón contextual y relación con assets existentes:
 - Fuente y aprobación:
 - Asset/ubicación canónica (on-demand): `project-artifacts/design/assets/{images,illustrations,icons}/`
 - Si no se usa imagen representacional, criterio de composición image-free:
