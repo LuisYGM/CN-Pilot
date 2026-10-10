@@ -453,6 +453,12 @@ Si falla: `rollback`.
 
 Pruebas proporcionales: syntax, lint, unit, integration, browser/e2e, smoke, responsive y accessibility cuando correspondan.
 
+## QA ejecutable del Core (BF-051)
+
+`.cn-pilot/qa/core-check.mjs` comprueba de forma read-only, determinística y portable las invariantes estructurales expresas de CN Pilot. Usa solo APIs built-in de Node; no instala dependencias, accede a la red, ejecuta código de Product ni modifica archivos. `--json` produce el contrato machine-readable y los exit codes documentan PASS/WARN/FAIL/runtime error. `node:test` es estable desde Node 20 según la [documentación oficial](https://nodejs.org/api/test.html); la suite se verificó con Node 24.19.0, sin fijar una versión/engine para el Core.
+
+Actívalo para mantenimiento del Core o desde `/doctor` cuando Node esté disponible y su ejecución autorizada, no para tareas normales de proyecto. Sin Node/acceso, reporta QA como `UNAVAILABLE` (no `BROKEN`); `/doctor` conserva fallback manual read-only. QA puede acelerar la instantánea de Doctor, pero no la evaluación contextual ni reemplaza Reviewer, behavioral retests, testing del producto o `/doctor`. No auto-repair.
+
 ## Seguridad
 
 Considerar según aplique: sanitización, escaping, auth, capabilities, nonce/CSRF, XSS, SQL, uploads, REST/AJAX, secretos y exposición de datos.

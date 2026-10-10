@@ -95,6 +95,8 @@ Aplica human-first: inspecciona el contexto pertinente y reutiliza decisiones vi
 
 Carga skills por trigger y con su descripción. Stack confirmado/observado determina skill; la disponibilidad por sí sola no basta.
 
+Mantenimiento del propio Core → ejecuta `.cn-pilot/qa/core-check.mjs` una vez al cierre si Node está disponible; no lo cargues/ejecutes para tareas normales del proyecto. Sin Node, conserva la funcionalidad y el fallback manual de `/doctor`; QA nunca reemplaza behavioral retests ni Reviewer.
+
 - Onboarding inicial de un proyecto: ejecuta `/new-project`; no improvises un cuestionario ni crees producto/artefactos fuera de lo que el flujo autorice. Usa `HUMAN-INTERACTION.md` si aparece un gap humano material.
 
 | Necesidad real | Owner/capability a consultar |

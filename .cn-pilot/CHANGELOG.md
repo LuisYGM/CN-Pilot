@@ -18,6 +18,7 @@ Migración estructural del Core y limpieza del payload del template.
 - **BF-048 — Visual Reference Intake & Fidelity (Validated):** retests conductuales A–N y combinaciones cruzadas authority/fidelity PASS; Reviewer APPROVED en revisión completa e incremental. Organiza fuentes on-demand, separa derechos y aplica parity proporcional; no se usaron secretos reales en las pruebas.
 - **BF-049 — Advanced Visual & Interaction Capabilities (Validated):** retests A–O PASS, fixture GSAP real/build/browser QA PASS en Chrome a 390/1440px y Reviewer APPROVED; formaliza escalamiento native-first, motion bajo demanda, capability catalog extensible y QA específico sin añadir dependencias a CN Pilot.
 - **BF-050 — Context Architecture & Progressive Loading (Validated):** retests A–K PASS y Reviewer APPROVED; confirma la carga real de contexto Kilo y reduce 78% las superficies fijas medidas con routing progresivo, sin retirar capacidades.
+- **BF-051 — Executable Core QA (Validated):** 13 self-tests PASS, QA del Core actual PASS (15 checks/0 findings) y Reviewer APPROVED; checker read-only, portable, Node built-in, salida humana/JSON y sin dependencias externas.
 
 ## [1.1.1] - 2026-10-09
 

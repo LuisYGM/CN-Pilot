@@ -9,20 +9,20 @@ Comando manual, read-only y local para responder únicamente: «¿La infraestruc
 
 ## Fresh Diagnostic Snapshot — cada invocación
 
-Cada ejecución obtiene una instantánea nueva del filesystem local actual antes de clasificar. No reutilices como evidencia suficiente resultados ni lecturas de otra ejecución de `/doctor`, aunque ocurriera momentos antes en la misma conversación/sesión: detectar cambios entre ejecuciones es parte de este comando. El conocimiento estable de qué comprobar se conserva; los valores observados se vuelven a leer.
+Cada ejecución obtiene una instantánea nueva del filesystem local actual antes de clasificar. No reutilices resultados ni lecturas de otra ejecución de `/doctor`, aunque ocurriera momentos antes en la misma conversación/sesión. El conocimiento estable de qué comprobar se conserva; los valores observados se vuelven a leer.
 
 Al inicio de **cada** invocación, vuelve a consultar de forma read-only y proporcional:
 
-- contenido actual de `.cn-pilot-version` y existencia de cada Core file requerido;
-- inventario actual de `.kilo/agents/*.md`, carpetas inmediatas de `.kilo/skills/`/sus `SKILL.md`, `.kilo/commands/*.md` y `.cn-pilot/profiles/`;
-- conteos de cualquier categoría adicional que MANIFEST declare explícitamente y Doctor vaya a comparar;
-- contenido actual de `.cn-pilot/MANIFEST.md`;
-- frontmatter/routing actuales de Dev Lead y commands, y permisos críticos actuales de Reviewer;
-- referencias operativas que formen parte de este diagnóstico.
+- Si Node está disponible y el comando está permitido, ejecuta únicamente `node .cn-pilot/qa/core-check.mjs --json` y toma ese resultado como snapshot fresco para versión, rutas, inventarios, MANIFEST, routing y permisos determinísticos. Es read-only, usa solo APIs built-in y no instala paquetes.
+- Si Node/QA no está disponible, no se permite su ejecución, devuelve exit `2` o el JSON no puede validarse, clasifica QA como `UNAVAILABLE` (no `BROKEN`) y sigue el fallback manual read-only enumerado bajo “Alcance del diagnóstico”.
+- Exit `0` incluye `PASS` o `WARN`; exit `1` indica invariantes `FAIL`; exit `2` es usage/runtime error y no prueba por sí solo que Core esté roto.
+- Tras un snapshot QA válido no repitas inspecciones determinísticas sin una contradicción concreta; añade solo el juicio diagnóstico que el checker no cubra.
 
 No uses la ejecución previa como PASS ni para mantener conteos, MANIFEST, permisos, routing o inventarios en PASS: estado previo ≠ evidencia actual suficiente. Limita la relectura a ese scope; no releas contenido de negocio ni audites el repositorio completo. Sigue el orden `fresh local snapshot → comparar invariantes → clasificar HEALTHY/WARNINGS/BROKEN → reportar → STOP`.
 
 ## Alcance del diagnóstico
+
+Usa la lista manual siguiente **solo como fallback** cuando Executable Core QA esté `UNAVAILABLE`, o para investigar una finding concreta sin repetir checks ya `PASS`.
 
 1. **Versión y Core:** confirma `.cn-pilot-version`, SemVer no vacía, y existencia de los indispensables: `AGENTS.md`, `.cn-pilot/CORE.md`, `.cn-pilot/MANIFEST.md`, `.cn-pilot/config/responsive.json`, `.cn-pilot/docs/`, `.cn-pilot/profiles/`, `.cn-pilot/templates/`, `kilo.jsonc`, agentes Dev Lead/Reviewer y comandos `new-project`, `checkpoint`, `review` y `doctor`. La ausencia de `project-resources/README.md` es WARNINGS por scaffold esperado, no BROKEN. `product/` y `project-artifacts/` no son Core ni son obligatorios antes de implementation/output; no los exijas ni audites su contenido. Versión antigua pero válida no es error. No compares con releases/web. No exijas README ni Project Context; `PROJECT.md`, `REQUIREMENTS.md`, `STATE.md` y `DECISIONS.md` son mutables.
 2. **Agents:** enumera `.kilo/agents/*.md`; confirma frontmatter delimitado y `description` y `mode` legibles. Dev Lead y Reviewer deben existir. Contrasta referencias explícitas a agentes y destinos permitidos de `task` desde Dev Lead con nombres de archivos reales; no hardcodees el total ni atribuyas nombre de agente a palabras genéricas.
@@ -40,7 +40,7 @@ Usa inspección local (glob/read/grep y conteos de archivos); si el directorio e
 - **WARNINGS:** drift no bloqueante, como MANIFEST desactualizado, metadata secundaria incompleta o runtime no introspectable. Cada warning incluye categoría/código breve, archivo/área, evidencia, impacto y acción sugerida (sin ejecutarla).
 - **BROKEN:** falla material que compromete operación o control, como Core esencial ausente, versión inválida, command a agente inexistente, frontmatter operativo inutilizable, destino crítico irresoluble o invariante protegida de Reviewer rota. Describe evidencia exacta y acción sugerida; no la apliques.
 
-Si coexisten resultados, cualquier BROKEN determina el estado global; si no, cualquier warning determina WARNINGS. Resume checks de versión/Core, agentes, skills, commands, routing, permisos críticos y MANIFEST con PASS/WARN/FAIL según evidencia. Diferencia ausencia de prueba de evidencia de fallo y evita falsos positivos por imperfecciones editoriales.
+Si coexisten resultados, cualquier BROKEN determina el estado global; si no, cualquier warning determina WARNINGS. Resume checks de versión/Core, agentes, skills, commands, routing, permisos críticos y MANIFEST con PASS/WARN/FAIL según evidencia. Diferencia ausencia de prueba de evidencia de fallo y evita falsos positivos por imperfecciones editoriales. La falta del runtime deja QA en `UNAVAILABLE`, pero permite seguir con este diagnóstico manual.
 
 Formato breve:
 
@@ -48,10 +48,11 @@ Formato breve:
 CN Pilot Health Check
 Version: <versión local o inválida/no disponible>
 Status: HEALTHY | WARNINGS | BROKEN
+Core QA: PASS | WARN | FAIL | UNAVAILABLE
 Checks: Core · Agents · Skills · Commands · Routing · Critical permissions · MANIFEST
 [Warnings/Broken: código/categoría, archivo, evidencia, impacto, acción sugerida]
 ```
 
 ## Read-only y activación
 
-Ejecútalo solo por petición explícita o si Dev Lead observa una señal concreta de posible corrupción/desalineación del CN Pilot y lo recomienda. Nunca lo ejecutes automáticamente desde `/new-project`, checkpoint, antes de commit/Reviewer, en una tarea normal, Completion Mode ni al abrir sesión. No uses web, Reviewer, Agent Manager, scripts, hooks o auto-repair. No modifiques archivos, `STATE.md`, MANIFEST ni artefactos; no crees commit ni hagas push. Diagnostica → informa HEALTHY/WARNINGS/BROKEN → STOP. Una reparación solicitada será una tarea separada.
+Ejecútalo solo por petición explícita o si Dev Lead observa una señal concreta de posible corrupción/desalineación del CN Pilot y lo recomienda. Nunca lo ejecutes automáticamente desde `/new-project`, checkpoint, antes de commit/Reviewer, en una tarea normal, Completion Mode ni al abrir sesión. No uses web, Reviewer, Agent Manager, npm/npx, scripts distintos del checker Core permitido, hooks o auto-repair. Ejecutar el checker read-only no autoriza escrituras. No modifiques archivos, `STATE.md`, MANIFEST ni artefactos; no crees commit ni hagas push. Diagnostica → informa HEALTHY/WARNINGS/BROKEN/QA UNAVAILABLE → STOP. Una reparación solicitada será una tarea separada.
