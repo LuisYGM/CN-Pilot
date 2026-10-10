@@ -10,7 +10,7 @@ Migración estructural del Core y limpieza del payload del template.
 - **Versionado:** versión base del Core actualizada a `1.2.0`.
 - **Onboarding:** `/new-project` pasa a ser el primer slash command del Quick Start; `/doctor` queda como diagnóstico manual avanzado, read-only y bajo demanda.
 - **Payload del template:** se depura material auxiliar que no forma parte del payload portable; `.vscode/` queda excluido para configuración local. Se conservan `.editorconfig`, `.gitattributes`, `.kilocodeignore` y el `LICENSE` principal.
-- **BF-043:** permanece `Testing`; R1 queda pendiente de prueba manual nativa de `/new-project`.
+- **BF-043 — Validated:** R1 PASS mediante invocación nativa manual de `/new-project` en Kilo Code; R2, R3, R4 y R5-A/B/C PASS. `/doctor` se ejecutó en `1.2.0`: `WARNINGS` solo por no poder introspectar estáticamente los permisos efectivos de Reviewer; los permisos declarados son correctos y la limitación no es bloqueante.
 
 ## [1.1.1] - 2026-10-09
 
