@@ -95,7 +95,7 @@ El sistema separa las capas de infraestructura, contexto, inputs, outputs auxili
 
 - **CN Pilot Core:** infraestructura portable bajo `.cn-pilot/`, además de rutas técnicas como `.kilo/`, `.github/`, `.kilocode/`, `AGENTS.md` y `kilo.jsonc`. Su inventario está en [`MANIFEST.md`](../MANIFEST.md).
 - **Project Context:** resumen y memoria breve que permiten continuar el trabajo: `README.md`, `PROJECT.md`, `REQUIREMENTS.md`, `STATE.md`, `DECISIONS.md` y `ARTIFACTS.md`.
-- **Project input:** materiales proporcionados en `project-resources/`; no equivalen a código/assets de producción ni se registran en `ARTIFACTS.md` por defecto.
+- **Project input:** materiales proporcionados en `project-resources/`; no equivalen a código/assets de producción ni se registran en `ARTIFACTS.md` por defecto. Puedes adjuntar referencias visuales o compartir un Figma/URL en la conversación; Dev Lead organiza sus fuentes on-demand sin pedirte que prepares carpetas.
 - **Producto activo del workspace:** `product/` es el container canónico en Greenfield y Existing importado; se crea al iniciar implementación/adopción, no durante onboarding, y se preserva el layout interno observado. Existing repository previamente operativo puede conservar su product root real solo con `Existing compatibility exception` documentada en `PROJECT.md`.
 - **Project Artifacts:** outputs auxiliares reales bajo `project-artifacts/` en greenfield. El container puede no existir; se crea con el primer artefacto, no durante onboarding. Documentación de producto dentro de `product/docs/` sigue perteneciendo al producto.
 

@@ -9,7 +9,7 @@ Inventario de CN Pilot Core. No sustituye `../ARTIFACTS.md`, que registra entreg
 - 6 documentos de referencia bajo `.kilo/skills/technical-seo/references/` (no son skills adicionales)
 - 12 comandos en `.kilo/commands/`
 - 7 perfiles en `.cn-pilot/profiles/`
-- 8 archivos de plantilla en la raíz de `.cn-pilot/templates/` y 17 archivos en total bajo `.cn-pilot/templates/` (incluye subdirectorios)
+- 9 archivos de plantilla en la raíz de `.cn-pilot/templates/` y 18 archivos en total bajo `.cn-pilot/templates/` (incluye subdirectorios)
 - Core portable en `.cn-pilot/` (config, docs, profiles y templates)
 - documentación operativa bajo `.cn-pilot/docs/`
 - registro base de artefactos del proyecto

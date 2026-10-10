@@ -7,7 +7,7 @@ description: Comparar implementación con referencia aprobada, priorizando inspe
 
 ## Trigger y responsabilidad
 
-Activa esta skill solo si existe una referencia visual aprobada: HTML/CSS/JS aprobado, screenshot aprobado, diseño Figma aprobado, prototype aprobado u otra referencia explícitamente designada como source of truth. Su responsabilidad es `approved visual reference → implementation → inspect/representative evidence → compare → batch findings → correction pass → confirmation pass → Human Visual QA`.
+Activa esta skill solo si existe una referencia `APPROVED VISUAL REFERENCE` o `STRICT IMPLEMENTATION REFERENCE` dentro del scope de comparación: HTML/CSS/JS, screenshot, Figma, prototype u otra fuente designada. Lee su entry de `project-resources/references/REFERENCES.md` para conservar authority/fidelity/scope/preserve/may-adapt. `INSPIRATION` no activa parity ni pixel comparison; una referencia `DIRECTIONAL` se evalúa por principios desde Creative Direction, no como source of truth. Su responsabilidad es `approved/strict reference → implementation → inspect/evidence → compare within scope → findings → grouped fix → confirmation → Human Visual QA`.
 
 No evalúa principalmente si una aplicación funciona en runtime; para eso usa `webapp-testing` cuando aporte valor. No sustituye Structural QA, Accessibility QA ni la revisión visual humana.
 
@@ -15,9 +15,10 @@ En APPROVED IMPLEMENTATION compara el primer candidato completo con la fuente ap
 
 ## Procedimiento
 
-1. Confirma la referencia, el estado de la implementación, los viewports representativos y los breakpoints vigentes del proyecto. Si la referencia o la evidencia disponible no son suficientemente fiables, detente en `Technical QA complete; Visual QA pending`.
+1. Confirma entry/source y su authority/fidelity/scope, el estado de la implementación, viewports representativos y breakpoints vigentes del proyecto. No compares regiones fuera del scope ni simules fidelidad de breakpoints no proporcionados. Si la referencia o la evidencia disponible no son suficientemente fiables, detente en `Technical QA complete; Visual QA pending`.
 2. Elige evidencia por tipo de referencia. Si la referencia aprobada es HTML/CSS/JS, inspecciona directamente su estructura, estilos/tokens, medidas/relaciones y responsive; compara con el DOM, CSS/computed styles, dimensiones y estados del browser cuando estén disponibles. No conviertas automáticamente referencia e implementación a PNG para compararlas. Si la referencia original es screenshot, imagen o Figma, una captura representativa de la implementación puede ser necesaria para comparar. Captura también ante petición explícita o cuando una diferencia materialmente visual no pueda demostrarse con evidencia más directa; evita screenshots por rutina.
-3. Compara relaciones visuales, no solo presencia de elementos:
+3. Ajusta la tolerancia exclusivamente a `fidelity`: `LOOSE` no exige paridad visual detallada, `DIRECTIONAL` compara principios, `HIGH` preserva con precisión relaciones observables y `STRICT` exige la mayor correspondencia razonable de todo el scope registrado. `APPROVED`/`STRICT` authority habilita comparar con la fuente de verdad, pero no eleva la fidelity declarada. Admite adapters técnicos explícitamente permitidos en `may adapt`; registra desviaciones visuales materiales y no las apruebes silenciosamente. Nunca exijas pixel-perfect matemático.
+4. Compara relaciones visuales, no solo presencia de elementos:
    - composición general y alturas de secciones;
    - widths, max-width, ratios de grid, proporciones y whitespace;
    - spacing horizontal/vertical y ritmo visual;
@@ -26,9 +27,9 @@ En APPROVED IMPLEMENTATION compara el primer candidato completo con la fuente ap
    - imágenes, aspect ratio, object-fit y prominencia;
    - botones, métricas/números, alineaciones y jerarquía;
    - responsive: orden, colapso, legibilidad, relaciones y comportamiento.
-4. Agrupa hallazgos relacionados y clasifica cada diferencia como `equivalent`, `minor difference` o `visible difference remaining`. No produzcas scores numéricos artificiales.
-5. Ejecuta una única pasada agrupada de correcciones sobre diferencias concretas y una única pasada de confirmación. No reconstruyas automáticamente toda la página ni inicies loops indefinidos.
-6. Si solo quedan microajustes de bajo retorno, repórtalos separadamente, distingue cualquier diferencia importante y detente para Human Visual QA. No declares paridad visual final sin la revisión humana correspondiente.
+5. Agrupa hallazgos relacionados y clasifica cada diferencia como `equivalent`, `minor difference` o `visible difference remaining`. No produzcas scores numéricos artificiales.
+6. Ejecuta una única pasada agrupada de correcciones sobre diferencias concretas y una única pasada de confirmación. No reconstruyas automáticamente toda la página ni inicies loops indefinidos.
+7. Si solo quedan microajustes de bajo retorno, repórtalos separadamente, distingue cualquier diferencia importante y detente para Human Visual QA. No declares paridad visual final sin la revisión humana correspondiente.
 
 ## Evidencia y límites
 

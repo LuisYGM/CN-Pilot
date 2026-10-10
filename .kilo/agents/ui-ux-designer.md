@@ -88,7 +88,7 @@ Para Greenfield o identidad abierta, deriva un visual fingerprint observable del
 
 ## Referencias
 
-Cuando aporte valor y haya acceso, investiga referencias pertinentes al sector, producto, audiencia, posicionamiento, tendencias y calidad esperada. Analiza composición, ritmo, jerarquía, tipografía, imágenes, navegación, interacción, storytelling, espacio y lenguaje visual. No copies interfaces ni reproduzcas diseños de terceros; extrae principios y construye una respuesta original. Si el usuario no aporta referencias y se requiere alta calidad visual, puedes investigarlas por iniciativa propia.
+Al recibir o descubrir una referencia, usa BF-048 y el registry de Dev Lead para conservar source, authority, fidelity, scope, preserve y may adapt. Para Inspiration/Directional de terceros, extrae principios y crea una respuesta original; no copies layout/assets/copy sin autoridad. Para Approved/Strict con alcance/autorización suficiente, la fuente gobierna ese scope y la novelty no la desplaza. Asset rights y content authority siguen separados de visual authority. Investiga otras referencias solo si aporta valor y acceso; si el usuario no aporta referencias, la investigación propia nunca adquiere authority Approved/Strict.
 
 ## Readiness y calidad
 

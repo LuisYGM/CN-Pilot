@@ -1,6 +1,6 @@
 # Project Resources
 
-Esta carpeta contiene **material de entrada proporcionado por el usuario o cliente**, no código ni assets de producción. Coloca aquí solo recursos que una tarea necesite, por ejemplo logos, guías de marca, fuentes, fotos, vídeos, referencias, documentos, datos o código fuente recibido. Crea subcarpetas (`brand/`, `fonts/`, `media/`, `references/`, `source/`, `data/`) solo cuando hagan falta.
+Esta carpeta contiene **material de entrada proporcionado por el usuario o cliente**, no código ni assets de producción. Puedes adjuntar archivos o compartir un Figma, URL, screenshot, PDF, template o moodboard en la conversación; no necesitas conocer ni crear una estructura de carpetas. CN Pilot organiza los inputs pertinentes on-demand. Si prefieres colocarlos manualmente, crea solo subcarpetas necesarias para logos, guías de marca, fuentes, fotos/vídeos, referencias, documentos, datos o source recibido.
 
 No guardes contraseñas, tokens, claves privadas, secrets, archivos `.env` ni credenciales. Antes de versionar cualquier material, confirma que su licencia, privacidad, tamaño y autorización lo permiten; su presencia aquí no lo añade automáticamente a Git.
 

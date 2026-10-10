@@ -11,7 +11,10 @@ Structural / Visual / Implementation reference
 - Tokens, global styles y components compartidos:
 - Variants/additions de esta página:
 - Estado de approval del sistema / página:
-## Referencias analizadas y principios extraídos
+## Referencias aplicadas (IDs del registry BF-048)
+- Reference ID/source y type:
+- Authority/fidelity/scope:
+- Preserve/may-adapt y principios aplicados:
 ## Estructura visual
 ## Componentes
 ## Escritorio
