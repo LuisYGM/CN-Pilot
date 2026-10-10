@@ -21,6 +21,12 @@ Structural / Visual / Implementation reference
 ## Tableta
 ## Móvil
 ## Interacciones
+## Motion e interacción material (BF-049, si aplica)
+- Intent, trigger/lifecycle, character/timing y estados/secuencias aprobados:
+- Reference ID/authority/fidelity/scope de motion, si aplica:
+- Comportamiento responsive y simplificaciones propuestas:
+- Comportamiento `prefers-reduced-motion` y estado sin JavaScript:
+- Capability de Prototype (temporal) y Product (si aprobada/justificada), con razón:
 ## Notas de accesibilidad
 ## Recursos visuales
 - Clase: representacional / gráfico-vectorial

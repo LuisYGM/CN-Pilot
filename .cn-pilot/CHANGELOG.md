@@ -16,6 +16,7 @@ Migración estructural del Core y limpieza del payload del template.
 - **BF-046 — Design System First (Validated):** retests focalizados A–J PASS; UI Kit/page consumen tokens compartidos (H1 64→56px propagado), el fixture Chrome responsive 390/768/1024/1440 no muestra overflow e incluye states/focus/reduced motion/content-resilience; Reviewer APPROVED. Fixtures temporales eliminados.
 - **BF-047 — Completion-Driven Execution & Recovery (Validated):** retests A–J PASS; Reviewer APPROVED; checkpoint runtime local, reanudación focalizada y preservación del working tree verificados. Continuación CLI nativa disponible; auto-resume queda `DEFERRED` porque no se halló señal terminal estable para distinguir interrupciones/bloqueos.
 - **BF-048 — Visual Reference Intake & Fidelity (Validated):** retests conductuales A–N y combinaciones cruzadas authority/fidelity PASS; Reviewer APPROVED en revisión completa e incremental. Organiza fuentes on-demand, separa derechos y aplica parity proporcional; no se usaron secretos reales en las pruebas.
+- **BF-049 — Advanced Visual & Interaction Capabilities (Validated):** retests A–O PASS, fixture GSAP real/build/browser QA PASS en Chrome a 390/1440px y Reviewer APPROVED; formaliza escalamiento native-first, motion bajo demanda, capability catalog extensible y QA específico sin añadir dependencias a CN Pilot.
 
 ## [1.1.1] - 2026-10-09
 

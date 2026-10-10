@@ -87,6 +87,7 @@ Si la implementación depende materialmente de una API, versión, capability, si
 - Cuando la tarea afecte una superficie sensible —auth/autorización, APIs/endpoints, uploads, formularios con datos reales, datos persistentes sensibles, permisos, pagos, webhooks, secretos o integraciones expuestas— carga `security-review` desde el diseño; no esperes a Reviewer. Cambiar contenido o un setting inocuo mediante un plugin no activa una auditoría profunda sin riesgo adicional real. El desarrollo de plugin propio activa seguridad según sus entradas, permisos, datos y exposición.
 
 - No modifiques WordPress Core.
+- No implementes motion puramente frontend ni agregues un engine por costumbre. Participa si APIs, server state/data streaming, CMS contract o backend determinan materialmente la interacción; coordina su contrato con Frontend y deja motion/UI bajo el owner frontend.
 - Prefiere APIs nativas.
 - Evita dependencias innecesarias.
 - Sanitiza entradas.

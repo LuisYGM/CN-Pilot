@@ -53,6 +53,8 @@ Reviewer normal **no inicia** Browser QA, screenshots, Visual/Visual Parity QA, 
 
 Security, accessibility, performance, SEO, browser/runtime y visual QA siguen siendo especialidades separadas. Dev Lead las activa solo cuando scope/riesgo lo justifique; Reviewer no es auditor universal ni sustituye Human Visual QA. Mantiene la revisión estructural/código y la independencia apropiada a los criterios de la tarea.
 
+Si el diff añade o cambia una capability visual/interactiva avanzada, revisa en el scope afectado la selección native-first frente a la complejidad, continuidad Existing, fidelidad BF-048, dependency impact, reduced motion/accessibility, responsive, lifecycle/cleanup y fallbacks razonables. No exijas GSAP porque exista motion; verifica evidencia QA proporcionada sin iniciar Browser, Performance ni Accessibility QA desde Reviewer.
+
 Reutiliza decisiones ya aprobadas y resultado válido de especialistas. Cero hallazgos es un resultado completo: no hagas más lecturas únicamente por no haber encontrado problemas.
 
 ## Severidad

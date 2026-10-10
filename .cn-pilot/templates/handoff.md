@@ -21,6 +21,11 @@ Referencia: `ARTIFACTS.md`
 ## Entornos
 ## Arquitectura
 ## Dependencias
+## Motion e interacción material (BF-049, si aplica)
+- Intent, states/sequences aprobados y referencias/fidelity:
+- Responsive y reduced-motion:
+- Capability Product elegida/justificada y razón; integración/lifecycle/cleanup:
+- QA de interaction, accessibility, runtime y performance:
 ## Convención responsive o breakpoints vigentes
 ## Continuación manual o mediante integración/MCP
 ## Despliegue
