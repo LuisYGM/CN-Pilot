@@ -14,6 +14,11 @@ Structural / Visual / Implementation reference
 ## Móvil
 ## Interacciones
 ## Notas de accesibilidad
-## Recursos
-## Elementos provisionales o pendientes de validación
+## Recursos visuales
+- Clase: representacional / gráfico-vectorial
+- Fuente y aprobación:
+- Asset/ubicación canónica (on-demand): `project-artifacts/design/assets/{images,illustrations,icons}/`
+- Si no se usa imagen representacional, criterio de composición image-free:
+
+## Supuestos, procedencia y validaciones (fuera del lienzo)
 ## Preguntas abiertas
