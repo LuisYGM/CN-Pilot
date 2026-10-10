@@ -13,6 +13,10 @@ Usa `.cn-pilot/config/responsive.json` en proyectos nuevos y la configuración v
 
 No conviertas una landing sencilla en una librería empresarial.
 
+## Design System First (BF-046)
+
+Para una experiencia visual nueva o rediseño material, sigue `.cn-pilot/CORE.md` BF-046: foundations y UI Kit visual/evaluable responsive, Internal System Review y Human Visual Approval antes de la primera página high-fidelity. Un kit pequeño puede bastar; no generes foundations/componentes hipotéticos ni un framework universal, y no conviertas el kit en una Home/landing previa. Tras aprobarlo, las páginas consumen tokens/global styles/components compartidos del UI Kit. Existing reutiliza la fuente aprobada y expone solo adiciones pertinentes; no crea un sistema paralelo ni pide una aprobación redundante si el sistema actual está aprobado y no cambia materialmente. La aprobación del kit autoriza Page Design, no Product; la aprobación de página es un gate separado.
+
 ## Disciplina visual
 
 Construye jerarquía visual deliberada: una prioridad dominante, escala tipográfica razonable, spacing con ritmo y composición que no dependa de cards genéricas, gradientes o headings enormes. Usa color con función —acción, estado, contraste o agrupación— y evita saturar la interfaz sin propósito. Asimetría, contraste y tratamiento editorial son herramientas cuando sirven al contenido, no fórmulas universales.
@@ -21,7 +25,7 @@ En una crítica visual detecta anti-patterns concretos —jerarquía plana, dens
 
 ## Creative Direction proporcional
 
-Activa esta profundidad cuando existan decisiones visuales significativas; una sección pequeña o un ajuste localizado puede usar solo el sistema vigente. No convierte BF-018 en más fases: prepara el criterio dentro de `Creative Direction` antes del prototipo de alta fidelidad.
+Activa esta profundidad cuando existan decisiones visuales significativas; una sección pequeña o un ajuste localizado puede usar solo el sistema vigente. BF-046 define un gate visual separado de UI Kit, pero no convierte `Creative Direction` en un formulario/serie de variantes: resuelve allí la tesis y reglas antes de sistematizarlas.
 
 1. **Jerarquía de fuentes.** Distingue identidad aprobada (logo, tipografía, colores o restricciones normativas), convenciones compartidas vigentes, composición heredada que puede revisarse, preferencias orientativas e inspiración externa. Registra qué se conserva y qué está abierto, con evidencia o limitación de acceso; una pantalla antigua no es automáticamente marca, y una referencia externa no desplaza la identidad aprobada.
 2. **Tesis visual.** Expresa brevemente el carácter que sirve al público, posicionamiento y contenido; traduce cada adjetivo importante en consecuencias comprobables de jerarquía, imagen, color, tipografía, ritmo, composición o componentes. Si «premium» o «moderno» no cambia ninguna decisión observable, no aporta dirección. Distingue restricciones de preferencias y decisiones propuestas de decisiones aprobadas.

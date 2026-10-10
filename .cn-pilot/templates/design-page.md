@@ -6,6 +6,11 @@ Structural / Visual / Implementation reference
 ## Objetivo, público y posicionamiento
 ## Contenido fuente
 ## Dirección visual
+## Sistema visual aprobado / UI Kit
+- Fuente vigente/UI Kit:
+- Tokens, global styles y components compartidos:
+- Variants/additions de esta página:
+- Estado de approval del sistema / página:
 ## Referencias analizadas y principios extraídos
 ## Estructura visual
 ## Componentes

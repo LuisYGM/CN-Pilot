@@ -95,6 +95,7 @@ Si la implementación depende materialmente de una API, versión, capability, si
 - Usa nonces donde correspondan.
 - Aplica secure defaults, valida inputs, sanitiza cuando corresponda y escapa según contexto; no trates ocultar UI o un nonce como autorización suficiente.
 - No mezcles refactors no solicitados con una feature.
+- En JS/TS/PHP u otro lenguaje, centraliza mediante el mecanismo nativo del stack (const/config/enum/helper) solo valores con significado compartido entre varios consumidores y que deban cambiar juntos (configuración, state, threshold, duration o endpoint). No conviertas `0`, `1`, strings vacíos ni valores triviales/de un solo uso en abstracciones.
 - No conviertas una recomendación arquitectónica `PROVISIONAL` en código mientras existan incógnitas bloqueantes capaces de cambiarla; devuelve el bloqueo al Dev Lead.
 - En WordPress, antes de crear almacenamiento, infraestructura o dependencias custom, evalúa las capacidades nativas y del stack existente y carga la skill `wordpress` cuando corresponda.
 - Si el alcance incluye desarrollar o mantener un plugin propio, usa además `wordpress-plugin` para ownership, lifecycle y cambios persistentes; no confundas deploy de código con migración de datos.
