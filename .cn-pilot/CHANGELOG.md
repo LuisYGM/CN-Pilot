@@ -17,6 +17,7 @@ Migración estructural del Core y limpieza del payload del template.
 - **BF-047 — Completion-Driven Execution & Recovery (Validated):** retests A–J PASS; Reviewer APPROVED; checkpoint runtime local, reanudación focalizada y preservación del working tree verificados. Continuación CLI nativa disponible; auto-resume queda `DEFERRED` porque no se halló señal terminal estable para distinguir interrupciones/bloqueos.
 - **BF-048 — Visual Reference Intake & Fidelity (Validated):** retests conductuales A–N y combinaciones cruzadas authority/fidelity PASS; Reviewer APPROVED en revisión completa e incremental. Organiza fuentes on-demand, separa derechos y aplica parity proporcional; no se usaron secretos reales en las pruebas.
 - **BF-049 — Advanced Visual & Interaction Capabilities (Validated):** retests A–O PASS, fixture GSAP real/build/browser QA PASS en Chrome a 390/1440px y Reviewer APPROVED; formaliza escalamiento native-first, motion bajo demanda, capability catalog extensible y QA específico sin añadir dependencias a CN Pilot.
+- **BF-050 — Context Architecture & Progressive Loading (Validated):** retests A–K PASS y Reviewer APPROVED; confirma la carga real de contexto Kilo y reduce 78% las superficies fijas medidas con routing progresivo, sin retirar capacidades.
 
 ## [1.1.1] - 2026-10-09
 
