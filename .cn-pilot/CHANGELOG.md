@@ -19,6 +19,7 @@ Migración estructural del Core y limpieza del payload del template.
 - **BF-049 — Advanced Visual & Interaction Capabilities (Validated):** retests A–O PASS, fixture GSAP real/build/browser QA PASS en Chrome a 390/1440px y Reviewer APPROVED; formaliza escalamiento native-first, motion bajo demanda, capability catalog extensible y QA específico sin añadir dependencias a CN Pilot.
 - **BF-050 — Context Architecture & Progressive Loading (Validated):** retests A–K PASS y Reviewer APPROVED; confirma la carga real de contexto Kilo y reduce 78% las superficies fijas medidas con routing progresivo, sin retirar capacidades.
 - **BF-051 — Executable Core QA (Validated):** 13 self-tests PASS, QA del Core actual PASS (15 checks/0 findings) y Reviewer APPROVED; checker read-only, portable, Node built-in, salida humana/JSON y sin dependencias externas.
+- **BF-052 — Skill Quality & Implementation Depth (Validated):** auditoría proporcional de las 25 skills; mejoradas `api-integration`, `elementor`, `systematic-debugging` y `woocommerce`; `git-checkpoint` permanece intencionalmente compacta, sin nuevas skills ni cambios de inventory. Añade estándar canónico mínimo sin inflar kernel (BF-050), retests A–O dirigidos PASS, seis escenarios realistas PASS, fuentes oficiales actuales de WooCommerce/Elementor consultadas, Core QA PASS (15 checks) y Reviewer APPROVED; no se afirma despacho de skills en runtime ni pruebas de producto.
 
 ## [1.1.1] - 2026-10-09
 

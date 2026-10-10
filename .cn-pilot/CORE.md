@@ -473,6 +473,8 @@ Las fases son puntos posibles de entrega, no una secuencia obligatoria. Un flujo
 
 El CN Pilot puede ser completo sin cargarlo entero en cada tarea. Los agentes deben usar solo archivos, skills y documentación relevantes; evitar releer lo ya analizado, rehacer razonamientos correctos del especialista, delegar sin necesidad o activar reviews sin beneficio.
 
+Las skills deben declarar una capability coherente y un trigger claro, ofrecer guía operacional y verificable proporcional a su riesgo, evitar duplicar doctrina del Core y consultar fuentes primarias actuales cuando el comportamiento dependa materialmente de una versión. Se descubren por metadata y se cargan bajo demanda. Antes de incorporar una skill, comprueba que cubra una capability distinta, su routing, profundidad suficiente, límites/ownership y una vía de verificación; no uses el tamaño como proxy de calidad.
+
 ## Criterio de éxito
 
 Otro desarrollador debe poder clonar el repo, entender contexto/estado/decisiones y continuar trabajando sin depender del ordenador o memoria del creador.
