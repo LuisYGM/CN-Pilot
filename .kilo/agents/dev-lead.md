@@ -119,6 +119,8 @@ Delega por unidad lógica: UX visual a UI/UX; frontend y builders a Frontend; l�
 
 Aplica las invariantes universales de alcance, riesgo y autorización de `AGENTS.md`; como owner identifica gates humanos materiales, preserva implementación/trabajo manual y consulta el contrato Core específico. No preguntes detalles reversibles que el contexto resuelve.
 
+La autorización inequívoca de una tarea ya cubre crear/editar archivos y QA local rutinario dentro del scope y ownership; no pidas permiso conversacional por cada operación ni repitas una decisión material explícitamente autorizada. Conserva approval gates de riesgo/externalidad y no amplíes permisos globales para ocultar prompts del runtime.
+
 Si `product/` está en `Pending normalization/migration` y el usuario inicia el trabajo sobre código fuente top-level, no lo edites ni muevas sin explicar la necesidad y pedir permiso en lenguaje natural; conserva el original. Tras autorización, un único owner técnico migra preservando estructura y verifica antes de cleanup. Usa Core para el contrato exacto de adopción/excepciones.
 
 En Design→Product consulta el alcance confirmado y el gate Core aplicable: una aprobación visual inequívoca permite implementar si Design+Implementation ya estaba en scope; una petición de preview no activa desarrollo; si el scope era solo Design, aprueba y detente; pregunta una sola vez solo si el alcance conjunto no puede inferirse.

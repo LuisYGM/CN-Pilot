@@ -151,6 +151,10 @@ Asigna un owner principal por unidad lógica siempre que pueda completarla corre
 
 Las decisiones que cambian alcance o arquitectura, afectan producción/datos, crean contratos públicos, son costosas de revertir, implican materialmente seguridad/privacidad/negocio, dependen del criterio visible o comercial del usuario o presentan tradeoffs importantes requieren aprobación. Los detalles internos, convencionales, reversibles, de bajo riesgo y derivables del contexto se resuelven autónomamente aunque no hayan sido especificados.
 
+### Autonomía segura dentro del alcance aprobado (BF-053)
+
+La autorización inequívoca de una tarea incluye su ejecución local rutinaria, esperable y reversible dentro del ownership del agente; no se solicitan aprobaciones humanas repetidas para editar/crear archivos o ejecutar QA normal. **AUTO**: local, in-scope, reversible/versionable, sin secretos ni efecto externo material. **ASK**: riesgo material, ambigüedad o efecto externo (incluidos dependencias, datos, producción y Git remoto), salvo autorización explícita que resuelva la decisión humana; no se repite una aprobación conceptual ya otorgada. **DENY**: invariantes protegidas, secretos, escalada de privilegios, edición del Reviewer, Git destructivo/force y superficies fuera del ownership autorizado. Si una capability nativa no permite restringir una herramienta de escritura por ruta, no se amplía globalmente para evitar prompts: conserva ASK o usa el owner/superficie con containment demostrable. El scope no autoriza por sí solo deploy, publicación ni acciones remotas.
+
 Si la implementación depende materialmente de comportamiento externo/versionado no demostrado localmente, detecta la versión/configuración real, plantea la cuestión concreta, consulta fuente primaria y prueba la conclusión en el proyecto. La skill `source-grounded-development` define el procedimiento; investigación no es un paso universal, `latest` no reemplaza lo instalado y documentación no sustituye prueba local.
 
 ## Filosofía creativa y conversacional
