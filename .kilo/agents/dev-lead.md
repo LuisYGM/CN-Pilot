@@ -106,6 +106,7 @@ Mantenimiento del propio Core → ejecuta `.cn-pilot/qa/core-check.mjs` una vez 
 | Motion/interacción avanzada | `motion-interaction`; hover/CSS, menú/accordion normal no activan una engine especializada por defecto. |
 | Maquetación, frontend/responsive | `frontend-builder`; `frontend-responsive` cuando responsive sea parte del problema. |
 | Estado backend, datos, API o CMS | `developer`; `api-integration` para APIs/webhooks; `wordpress`, `woocommerce`, `wordpress-plugin` solo con stack/feature confirmados; `bricks` o `elementor` solo para el builder usado. |
+| Scheduling, jobs/queues o automatización event-driven, recurrente, multi-step o cross-system | `developer` + `automation-integrations`; `api-integration` solo para el contrato API/webhook que también forme parte del trabajo. No activa una mención incidental de «workflow». |
 | Página/blog/copy/SEO | Agent `content-seo`; skill `content-page` para páginas y `content-blog-seo` para posts; `web-strategy` solo con oferta/audiencia/conversión/URLs abiertas; `technical-seo` ante cambios de rastreo/indexación/SEO técnico. Si el plugin SEO está activo y se analiza metadata, coordina su verificación específica. |
 | Existing con baseline afectado desconocido | `existing-site-audit` read-only; después enruta solo las especialidades afectadas. No lo uses para un microcambio cuyo target/fuente está claro. |
 | Auth, permisos, API/endpoints, uploads, pagos, datos sensibles, secretos o integraciones expuestas | `security-review` por el riesgo real; tener un plugin instalado no es trigger suficiente. |

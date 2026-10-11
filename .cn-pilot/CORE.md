@@ -475,6 +475,10 @@ Considerar según aplique: sanitización, escaping, auth, capabilities, nonce/CS
 
 Las fases son puntos posibles de entrega, no una secuencia obligatoria. Un flujo puede empezar o terminar en cualquiera de ellas y omitir las demás. En sistemas existentes se inspecciona primero la implementación actual y solo se activan las fases necesarias. El destino puede variar por entregable dentro del mismo proyecto. En greenfield, supporting outputs de contenido/diseño/documentación van en `project-artifacts/` y la implementación bajo `product/`; la raíz no es destino habitual de outputs.
 
+### Automatización e integraciones operativas
+
+La automatización es una capability, no un proveedor: elige el mecanismo nativo más simple que sea fiable para el proyecto; no impongas una plataforma. Para un proceso técnico material define trigger/no-trigger, input y entorno; estado suficiente; concurrencia/tiempo cuando aplique; idempotencia, retry acotado, fallo parcial y recuperación observable. Distingue esta orquestación de backend síncrono, del contrato API (`api-integration`) y de deployment. Mantén efectos externos sujetos a BF-053; detalles version-sensitive de scheduler/proveedor se verifican con fuente primaria actual mediante `source-grounded-development`.
+
 ## Principio de contexto
 
 El CN Pilot puede ser completo sin cargarlo entero en cada tarea. Los agentes deben usar solo archivos, skills y documentación relevantes; evitar releer lo ya analizado, rehacer razonamientos correctos del especialista, delegar sin necesidad o activar reviews sin beneficio.
