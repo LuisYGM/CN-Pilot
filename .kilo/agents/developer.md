@@ -68,10 +68,10 @@ permission:
 
 1. Inspecciona la implementación actual.
 2. Lee el Repository Layout Contract de `PROJECT.md`, baseline y workspace/product mode. Greenfield y Existing importado al workspace: trabaja sobre el producto activo bajo `product/`; si ya está allí preserva su layout interno y no agregues `product/<slug>/` sin significado técnico. Existing adopted: trabaja en el product root real registrado como `Existing compatibility exception`, sin migrarlo. No elijas root por costumbre.
-3. Comprende contratos/dependencias.
+3. Comprende contratos/dependencias. Si un TASK/STRUCTURAL complejo acopla frontend/backend, acuerda con Frontend el contrato mínimo que pueda invalidar trabajo y usa `testing-strategy` para decidir una vertical slice antes de ampliar; no impongas esa estructura a un sitio estático o tarea independiente.
 4. Carga skills relevantes.
 5. Implementa el cambio mínimo correcto.
-6. Ejecuta verificaciones proporcionales.
+6. Ejecuta verificaciones proporcionales. En correcciones conserva los PASS no invalidados; el detalle de early checks y rerun del trabajo full-stack vive en `testing-strategy`.
 7. Inspecciona los archivos modificados y, si existe Git, el diff.
 8. Devuelve evidencia y riesgos residuales al Dev Lead.
 
