@@ -68,7 +68,9 @@ Si una interacción es esencial para validar UX, puede incluir lógica local det
 Cuando exista un plugin SEO activo y sus capabilities estén disponibles, añade al flujo SEO: inspección actual → metadata autorizada → análisis real del plugin → corrección de checks relevantes → reanálisis → reporte de checks pendientes. No se modifica copy aprobado ni se fuerzan puntuaciones a costa de UX o naturalidad.
 
 ## Mantenimiento
-`Request → Classification → Specialist → Verification → Checkpoint`
+`Current state → risk / evidence → specialist diagnosis as needed → authorized change or recovery → affected-surface verification → current state / next action`
+
+Es proporcional: un microcambio localizado conocido sigue `DIRECT`; incidents, planned maintenance, cambios materiales de producción y recovery coordinan entorno, evidencia, autorización y recuperación con `maintenance-operations`. Baseline read-only, deploy y specialist reviews siguen sus capabilities propias; no se ejecutan por rutina.
 
 ## Funcionalidad estructural
 `Requirements → Architecture → Feature branch si se justifica → Implementation → Tests → Independent review → Checkpoint → Staging`

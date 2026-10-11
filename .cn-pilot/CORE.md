@@ -199,6 +199,10 @@ El cleanup distingue cuatro estados: sesión finalizada, worktree desregistrado 
 
 Complejidad y riesgo se evalúan por separado. Un cambio pequeño puede elevarse si afecta producción, DB, autenticación, pagos, DNS, servidor o información sensible.
 
+### Maintenance & Operations (BF-055)
+
+El mantenimiento de sistemas vivos es proporcional al riesgo; los cambios de producción consideran entorno, recuperación y verificación. Incidentes preservan evidencia y limitan scope antes de cambios. La existencia de backup no prueba restore; rollback y restore son distintos. Diagnóstico especializado permanece bajo demanda (`maintenance-operations` coordina lifecycle, no sustituye specialist skills). Un microcambio conocido conserva `DIRECT`; no se instala monitoring ni se fuerza staging por defecto.
+
 `/doctor` diagnostica bajo demanda y en solo lectura la integridad local del Core, routing, permisos críticos e inventario del CN Pilot; no es un test del proyecto, no se ejecuta automáticamente ni repara.
 
 ## Criterios de aceptación
