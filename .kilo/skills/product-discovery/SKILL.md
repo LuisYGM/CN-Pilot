@@ -1,0 +1,38 @@
+---
+name: product-discovery
+description: Resolver comportamiento de producto materialmente abierto antes de decisiones dependientes de arquitectura, UX o implementación; no activar para web/content strategy, trabajo claro, bugs localizados o cualquier mención de “product”.
+---
+
+# product-discovery
+
+## Activación y frontera
+
+Actívala cuando un producto/app existente o nuevo tenga decisiones de comportamiento funcional materialmente abiertas que cambien la solución antes de diseñar o construir: actores y autoridad, resultado, flujos, reglas, estados, ownership de datos, primera entrega o acceptance. Ejemplos: SaaS nuevo, portal multi-role, marketplace/workflow, dashboard complejo o extensión de una app con comportamiento indefinido. Dev Lead coordina la conversación; la skill organiza el descubrimiento, no crea un nuevo agent.
+
+No activar por default para landing, sitio corporativo/content/SEO, producto WooCommerce/product page, copy, CSS, metadata, blog, mantenimiento, bug localizado o feature pequeña cuyo comportamiento y fuente ya estén claros. La palabra “product” sola no es trigger. Un ecommerce estándar usa `woocommerce`; marketplace o workflow custom puede necesitar Product Discovery por sus decisiones funcionales abiertas. Si marketing site y aplicación coexisten, delimita `web-strategy` para el sitio y esta skill para el comportamiento de la app; activa solo lo que el scope requiera.
+
+`web-strategy` conserva oferta/audiencia/conversión, IA, URLs, intent y estrategia editorial/migración. `existing-site-audit` aporta baseline existente read-only solo si estado o fuente desconocidos condicionan la tarea. `Architect` decide HOW técnicamente cuando WHAT/WHO/WHEN/RULES alcanzan suficiencia. UI/UX define experiencia visual consumiendo comportamiento pertinente; no requiere la especificación de todo el producto antes de empezar el scope actual. Developer/Frontend implementan. `security-review`, `database-migrations`, `woocommerce`, `automation-integrations` y demás skills se activan por su propia superficie, no por la etiqueta Product Discovery.
+
+## Descubrimiento progresivo
+
+1. **Inspecciona antes de preguntar.** Delimita resultado y scope actual. Lee Project Context, requisitos/decisiones, ticket/brief/feature spec y, para Existing, implementación y comportamiento/datos actuales pertinentes. La conducta actual es evidencia, no prueba automática de conducta deseada; registra restricciones y usage/support/analytics solo si están disponibles, autorizados y afectan decisión. No hagas baseline exhaustivo si no aporta.
+2. **Empieza por el outcome.** Qué resultado intenta conseguir usuario/negocio y cuál es el problema actual. No empieces con una lista automática de features, framework ni forma de datos.
+3. **Identifica actores solo si cambian conducta.** Para cada actor relevante expresa meta y autoridad concreta. Usa etiquetas funcionales (miembro, manager, admin); no inventes marketing personas, biografías ni journey maps decorativos. Roles no definidos se aclaran en términos humanos si afectan acceso o responsabilidad; no preguntes RBAC/ACL.
+4. **Modela los flujos que determinan el resultado.** Describe los pasos/límites importantes (p. ej. crear → asignar → iniciar → revisar), no cada click. Considera éxito, validación, empty/error/retry, cancelación, expiración, duplicados y permisos solo donde alteren UX, datos, riesgo o aceptación.
+5. **Captura comportamiento, no diseño técnico.** Explicita reglas de negocio y quién puede ver/crear/editar/borrar/aprobar/publicar cuando importe; entidades/ownership/relaciones/source of truth existentes; estados/transiciones relevantes; dependencias y decisiones pendientes. No diseñes esquema, RBAC ni state machine técnico salvo que sea trabajo arquitectónico posterior. Los hechos/policies materiales requieren fuente humana/contextual; no se inventan.
+6. **Prioriza si el scope lo necesita.** Define la primera entrega como el release coherente mínimo que produce el outcome, no lista arbitraria de features. Separa `NOW / LATER / OUT` cuando ayude; considera valor, necesidad, dependencias, riesgo, incertidumbre y orden. No uses scoring/framework por costumbre ni elimines seguridad, accesibilidad, responsive o manejo de errores llamándolo MVP.
+7. **Distingue éxito de aceptación.** Product success describe resultado buscado; acceptance define conducta observable y verificable de esta entrega, sin prescribir implementación. Pide métrica solo si cambia una decisión; ausencia queda unavailable/Pending, nunca inventada.
+8. **Separa evidencia e incertidumbre.** Usa `CONFIRMED`, `ASSUMPTION`, `PENDING` o `UNAVAILABLE` según evidencia. Research de usuario significa personas/datos realmente observados; hipótesis no son hallazgos. Competidores informan posibles patrones, no prueban necesidad. Research externa/actual es opcional: usa `source-grounded-development` solo si una afirmación cambiante afecta una decisión. No recolectes PII innecesaria.
+9. **Pregunta progresivamente por un gap material.** Inspecciona una vez → identifica la única decisión humana que puede cambiar behavior/scope/data/business → pregunta en lenguaje de resultado → integra → reevalúa. No preguntes lo que puede quedar Pending sin alterar el scope actual. Cuando hay suficiente behavior para el trabajo presente, `STOP ASKING`; futuras features pueden descubrirse después.
+
+## Gates, persistencia y handoff
+
+No impongas discovery workshop ni gates burocráticos. Una landing con brief suficiente va a estrategia de web/contenido; una feature clara puede continuar como DIRECT/TASK; behavior ambiguo que cambia permisos, datos, reglas o UX se resuelve antes de la decisión dependiente. Architecture no rellena requisitos humanos faltantes. UI/UX recibe solo outcomes, actores, flujos, estados y constraints necesarios para la experiencia en scope; se puede diseñar incrementalmente sin congelar comportamiento aún abierto.
+
+El resultado puede quedar en conversación si es pequeño y se ejecuta ahora. Persiste si gobierna varias fases/agentes, requiere aprobación, evita rediscovery o describe comportamiento complejo: `REQUIREMENTS.md` para scope/acceptance durable; `DECISIONS.md` para decisión aprobada material; feature spec existente para behavior detallado; Strategy pack para web/content/search; docs de arquitectura para HOW técnico. Usa una sola fuente de verdad y crea artefacto solo con valor durable. La plantilla feature-spec es opcional y sus secciones irrelevantes se eliminan. No crear PRD, personas, user stories, roadmap o template nuevo por default.
+
+Antes de entregar comprueba que: outcome y scope se entienden; reglas y hechos materiales tienen fuente o quedan abiertos; uncertainty está explícita; no hay requisito/assumption inventado; las acceptance son observables; la siguiente fase recibe WHAT sin acoplarla a HOW; preguntas y artifacts fueron proporcionales. Reporta qué se confirmó, asumió o quedó Pending, decisión humana pendiente si existe y siguiente owner/fase; no afirma user research o métricas no realizadas.
+
+## Anti-patterns
+
+No questionnaire; outcome antes que feature dump; no personas ficticias, empathy/journey map, story-map, workshop, PRD o scoring teatral; no market/business consulting ajeno al producto web; no requirements gigantes en `/new-project` o `REQUIREMENTS.md`; no inventar negocio, policy, metrics ni user research; no confundir product page con aplicación; no reabrir estrategia o behavior existente sin necesidad; no dejar a Architect inventar behavior; no bloquear una entrega por unknown no material; no exigir que todo producto se especifique antes de implementar el primer scope coherente.

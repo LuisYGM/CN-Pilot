@@ -12,6 +12,24 @@
 
 ## Requisitos
 
+## Comportamiento de producto (opcional)
+
+> Completa solo lo que cambie el comportamiento; elimina secciones no pertinentes.
+
+### Actores y objetivos
+
+### Flujos principales
+
+### Reglas y permisos
+
+### Estados y transiciones
+
+### Excepciones relevantes
+
+### Primera entrega: NOW / LATER / OUT
+
+## Resultado buscado / señal de éxito (opcional)
+
 ## Criterios de aceptación
 - AC1:
 - AC2:

@@ -211,6 +211,8 @@ TASK y STRUCTURAL deben convertir requisitos en condiciones verificables cuando 
 
 ## Madurez de decisiones arquitectónicas
 
+Discovery es progresivo y proporcional, no un requisito exhaustivo del onboarding. Si decisiones de comportamiento de producto afectan materialmente arquitectura, UX o implementación, acláralas primero sin inventar hechos de negocio; una incógnita no material puede permanecer `Pending`. `web-strategy` conserva estrategia web/content y `product-discovery` solo comportamiento funcional abierto. Persistir según valor durable y fuente de verdad; no imponer PRD ni cuestionarios.
+
 Architect distingue, cuando sea relevante, hechos confirmados, restricciones, supuestos, recomendaciones provisionales y decisiones aprobadas. Si una incógnita pendiente puede cambiar materialmente la arquitectura, la propuesta permanece `PROVISIONAL` e indica razones, alternativas, tradeoffs, información pendiente y qué debe confirmarse antes de implementar.
 
 Cuando requisitos y restricciones son suficientes, Architect puede recomendar con claridad y avanzar. Developer no convierte una recomendación provisional en código si persisten puntos bloqueantes. `DECISIONS.md` y los ADRs se reservan para decisiones aprobadas o suficientemente establecidas.
