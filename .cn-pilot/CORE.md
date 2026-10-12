@@ -469,7 +469,7 @@ Si falla: `rollback`.
 
 ## Pruebas
 
-Pruebas proporcionales: syntax, lint, unit, integration, browser/e2e, smoke, responsive y accessibility cuando correspondan.
+Pruebas proporcionales: syntax, lint, unit, integration, browser/e2e, smoke, responsive y accessibility cuando correspondan. Antes de una fase material, plan breve de superficies/riesgos/evidencia mínima/PASS; conserva PASS que el cambio no invalide y rerun dirigido tras fixes. Detente cuando acceptance y riesgo estén suficientemente cubiertos, sin contradicción ni findings materiales. Más métodos/evidencia no implican mayor calidad; no reduzcas profundidad necesaria para el outcome.
 
 ## QA ejecutable del Core (BF-051)
 

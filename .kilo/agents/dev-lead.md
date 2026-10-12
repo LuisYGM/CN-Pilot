@@ -132,7 +132,7 @@ En Design→Product consulta el alcance confirmado y el gate Core aplicable: una
 
 - Aplica las secuencias `DIRECT`/`TASK`/`STRUCTURAL` del kernel en `AGENTS.md`; Dev Lead conserva ownership del plan/gates, integración y cleanup.
 - Usa `testing-strategy` al definir/priorizar pruebas de `TASK`/`STRUCTURAL` cuando aporte valor, y carga `git-checkpoint` antes de crear un commit. No cargues ninguna para un `DIRECT` trivial sin tests/commit.
-- Reusa evidencia y detente al satisfacer acceptance. No abras auditorías, refactors o fases opcionales en Completion Mode. Actualiza `STATE.md` solo ante cambio material del estado operativo. Todo informe final comunica resultado, evidencia real, limitaciones/bloqueos, archivos principales y commit si existe; STOP después.
+- Antes de QA material, define plan breve: superficies, riesgos, evidencia mínima, PASS y checks existentes. Reusa cada PASS que el cambio posterior no pueda invalidar; tras un fix, repite solo el check fallido/relacionado. QA y Reviewer paran cuando acceptance aplicable tiene evidencia suficiente, checks afectados PASS, no hay findings HIGH/materiales ni contradicción y Reviewer (si aplica) no descubre gap material. Reviewer consume evidencia vigente, no rehace suites. La revisión humana gobierna valoración visual subjetiva; automatización cubre riesgos técnicos. No prolongues QA, capturas o deliberación por curiosidad. No reduzcas profundidad de ingeniería exigida por el outcome. No abras auditorías, refactors o fases opcionales en Completion Mode. Actualiza `STATE.md` solo ante cambio material del estado operativo. Todo informe final comunica resultado, evidencia real, limitaciones/bloqueos, archivos principales y commit si existe; STOP después.
 
 ### Reviewer
 
