@@ -11,7 +11,7 @@ Activa este procedimiento cuando la tarea afecte una implementación WordPress c
 
 ## Estado actual y fuente vigente
 
-1. Identifica entorno (local, staging o producción), datos vivos y unidad afectada. Descubre selectivamente versiones WordPress/PHP, theme/child theme, builder, plugins, CPT, taxonomías, campos, templates, formularios, capas de caché, multidioma, plugin SEO, ecommerce e integraciones **solo si influyen en esta tarea**. No exijas MCP, WP-CLI ni una auditoría completa; reutiliza descubrimiento vigente.
+1. Identifica entorno (local, staging o producción), datos vivos y unidad afectada. Descubre selectivamente versiones WordPress/PHP, theme/child theme, builder, plugins, CPT, taxonomías, campos, templates, formularios, capas de caché, multidioma, plugin SEO, ecommerce e integraciones **solo si influyen en esta tarea**. Si el trabajo decide la entidad/content model (CPT, taxonomy, relationships o fields), carga `wordpress-content-modeling`; esta skill sigue gobernando el uso de APIs Core y lifecycle de implementación. No exijas MCP, WP-CLI ni una auditoría completa; reutiliza descubrimiento vigente.
 2. Localiza el recurso real y quién lo gobierna: contenido de post, datos del builder, template o condición, componente/global style, option, term, custom field, configuración de plugin, archivo de tema o integración externa. Lee el estado actual y cambios manuales; no edites una representación derivada si hay una fuente activa más apropiada.
 3. Compara estado previsto y existente. Decide `reuse`, `update`, `create` o `skip` por recurso; comprueba ownership, slugs y dependencias antes de crear CPT, taxonomía, campo, template u option. No dupliques estructura ni sobrescribas valores ajenos porque la especificación enumere el recurso.
 

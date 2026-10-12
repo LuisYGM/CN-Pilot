@@ -32,6 +32,8 @@ Revisa según corresponda:
 
 `authentication = who are you?`; `authorization = are you allowed to do this?`. Comprueba roles, capabilities, ownership, least privilege, acceso directo a objetos, escalación, acciones admin y verificaciones server-side. Ocultar UI no es autorización.
 
+`auth-access-control` es la capability de implementación/policy; esta skill realiza threat/risk review focalizado de esos controles. Cárgalas juntas en un cambio de auth real, sin duplicar la especificación/implementación de roles.
+
 Para acciones con cambio de estado revisa CSRF, nonces/tokens cuando correspondan, validación de origen/contexto, replay e idempotency solo cuando aporten valor. No asumas que un nonce sustituye autorización ni exijas idempotency en operaciones donde no aplica.
 
 ## Datos, base de datos y archivos

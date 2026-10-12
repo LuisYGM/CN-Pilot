@@ -32,6 +32,8 @@ Migración estructural del Core y limpieza del payload del template.
 
 - **BF-060 — Canonical UI Kit Construction:** separa la construcción y sus checks pre-aprobación de Creative Direction/design-system decisions. Añade skill `ui-kit-construction`, activación obligatoria desde UI/UX/Dev Lead y estándar global para root 100%, base body ≥16px, font-size/spacing tokens fluidos en clamp con endpoints px, specimens con identifiers exactos, primitives, accordion motion/reduced-motion, field focus, carga de fuentes y responsividad. Core QA ya calcula inventario de skills; MANIFEST actualizado a 29, sin lógica/count hardcodeado ni nueva suite/checker.
 
+- **BF-061 — Specialized Design & Delivery Capabilities (Validated):** añade page-composition, visual-art-direction, application-ui, form-experience, auth-access-control, wordpress-content-modeling y release-deployment. Aclara fronteras con system/kit, security review, WordPress y deployment WordPress; routing progresivo por owner/trigger, sin pipeline ni agents nuevos. Retests tabletop A–D (UX/visual/forms), E–F (auth y WP model) y G (Vite artifact/deploy autorizado + dispatch WordPress) evaluaron decisiones, exclusiones y checks; sin runtime de producto/deploy. Core tests 13/13 PASS; Core QA 36 skills/15 checks/0 findings; `git diff --check` PASS; Reviewer APPROVED. MANIFEST 29→36; no se cambia AGENTS/Core ni tooling porque el routing ya se gobierna desde los agents propietarios y Core QA inventaría skills automáticamente.
+
 ## [1.1.1] - 2026-10-09
 
 Actualización compatible de mantenimiento sobre 1.1.0; conserva las capacidades del harness.
