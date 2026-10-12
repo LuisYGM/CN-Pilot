@@ -30,6 +30,8 @@ Migración estructural del Core y limpieza del payload del template.
 
 - **BF-059 — Execution Proportionality & Bounded Completion:** corrige gaps de aplicación y hace operativos el mínimo suficiente, QA de máximo dos rondas normales + excepción acotada a blocker, Product PASS independiente del cierre documental/Git, clasificación de runtime estático portable/HTTP/app, límite Product/Artifacts, labels de tokens, clamps px y focus de campos. Añade continuidad Existing, preguntas seleccionables nativas y checks locales en el punto de generación; preserva profundidad según outcome/riesgo, gates Reviewer, seguridad y QA de alta fidelidad. Core health PASS (15 checks/0 findings), tests existentes del checker PASS (13/13), `git diff --check` PASS y Reviewer APPROVED. La evidencia es contractual/checker/estática: este repositorio no contiene Product/Kit/browser fixture con el cual ejecutar los escenarios de output A–J; no se afirma validación runtime de dichos productos. Sin nueva capability, suite ni framework.
 
+- **BF-060 — Canonical UI Kit Construction:** separa la construcción y sus checks pre-aprobación de Creative Direction/design-system decisions. Añade skill `ui-kit-construction`, activación obligatoria desde UI/UX/Dev Lead y estándar global para root 100%, base body ≥16px, font-size/spacing tokens fluidos en clamp con endpoints px, specimens con identifiers exactos, primitives, accordion motion/reduced-motion, field focus, carga de fuentes y responsividad. Core QA ya calcula inventario de skills; MANIFEST actualizado a 29, sin lógica/count hardcodeado ni nueva suite/checker.
+
 ## [1.1.1] - 2026-10-09
 
 Actualización compatible de mantenimiento sobre 1.1.0; conserva las capacidades del harness.

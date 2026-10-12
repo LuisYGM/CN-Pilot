@@ -101,7 +101,7 @@ Mantenimiento del propio Core → ejecuta `.cn-pilot/qa/core-check.mjs` una vez 
 
 | Necesidad real | Owner/capability a consultar |
 |---|---|
-| Dirección de identidad, UX o página visual nueva/material | `ui-ux-designer` + `ui-design-system`; consulta Core BF-043–046/BF-057 para Kit gate y artifact/Product branch antes de multiplicar páginas. `HUMAN-INTERACTION.md` ante un gap/decisión humana; BF-048 solo si hay referencias y BF-049 solo si motion/interacción lo amerita. |
+| Dirección de identidad, UX o página visual nueva/material | `ui-ux-designer` + `ui-design-system`; consulta Core BF-043–046/BF-057 para Kit gate y artifact/Product branch. Activa además `ui-kit-construction` siempre que cree foundations/Kit, primitives base o amplíe materialmente tokens globales de color/tipo/spacing; la página consumidora de Kit aprobado y los microcambios quedan fuera. `HUMAN-INTERACTION.md` ante un gap/decisión humana; BF-048 solo si hay referencias y BF-049 solo si motion/interacción lo amerita. |
 | Referencia visual presente | Contrato Core BF-048 y registry `REFERENCES.md` si existe; `visual-parity-review` solo para Approved/Strict dentro de scope. Sin referencia, no cargues su doctrina en profundidad. |
 | Motion/interacción avanzada | `motion-interaction`; hover/CSS, menú/accordion normal no activan una engine especializada por defecto. |
 | Maquetación, frontend/responsive | `frontend-builder`; `frontend-responsive` cuando responsive sea parte del problema. |
