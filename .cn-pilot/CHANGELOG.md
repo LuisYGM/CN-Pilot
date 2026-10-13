@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.3.1] - 2026-10-13
+
+Parche backward-compatible del Core.
+
+### Corregido
+
+- **BF-065 — Safe Optional Active Task Detection:** la ausencia de `.cn-pilot/runtime/active-task.json` es normal; Dev Lead verifica existencia sin error antes de leerlo y continúa sin warning cuando no existe. Un archivo existente inválido sigue siendo un error visible.
+
 ## [1.3.0] - 2026-10-13
 
 Release compatible del Core que incorpora BF-063 y BF-064. Desde esta versión, toda distribución futura requiere bump SemVer.

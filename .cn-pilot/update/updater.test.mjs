@@ -99,6 +99,25 @@ test("B: unchanged baseline file safely receives upstream update", (t) => {
   assert.equal(JSON.parse(fs.readFileSync(path.join(root, MANIFEST_PATH), "utf8")).cnPilotVersion, "1.4.0");
 });
 
+test("1.3.0 baseline detects the 1.3.1 PATCH distribution as available", (t) => {
+  const { root, put } = fixture(t);
+  put(root, ".cn-pilot-version", "1.3.0\n");
+  put(root, "AGENTS.md", "unchanged framework instructions\n");
+  const installed = manifest("1.3.0", [
+    entry(".cn-pilot-version", "1.3.0\n"),
+    entry("AGENTS.md", "unchanged framework instructions\n"),
+  ]);
+  const latest = manifest("1.3.1", [
+    entry(".cn-pilot-version", "1.3.1\n"),
+    entry("AGENTS.md", "unchanged framework instructions\n"),
+  ]);
+  const plan = planUpdate(root, installed, latest);
+  assert.equal(plan.installedVersion, "1.3.0");
+  assert.equal(plan.latestVersion, "1.3.1");
+  assert.deepEqual(plan.actions.map((action) => action.path), [".cn-pilot-version"]);
+  assert.equal(plan.conflicts.length, 0);
+});
+
 test("C: concurrent local and upstream edits conflict without overwrite", (t) => {
   const { root, put } = fixture(t);
   put(root, ".cn-pilot/CORE.md", "local\n");
@@ -202,9 +221,17 @@ test("H2: updater blocks dirty tracked tree before consulting source or writing"
 
 test("I: active pending task blocks, absence and completed task do not", (t) => {
   const { root, put } = fixture(t);
+  // Case A: neither runtime nor checkpoint exists.
   assert.deepEqual(checkActiveTask(root), { exists: false, blocked: false, status: "none" });
   put(root, ".cn-pilot/runtime/active-task.json", '{"status":"ACTIVE"}\n');
+  // Case C: a valid pending checkpoint remains detectable.
   assert.equal(checkActiveTask(root).blocked, true);
+  put(root, ".cn-pilot/runtime/active-task.json", '{"status":\n');
+  // Case D: malformed content is not treated as “none”.
+  assert.deepEqual(checkActiveTask(root), { exists: true, blocked: true, status: "unreadable" });
+  put(root, ".cn-pilot/runtime/active-task.json", '{"status":"UNRECOGNIZED"}\n');
+  // Invalid schema/status is also an explicit blocker, not an ignored state.
+  assert.deepEqual(checkActiveTask(root), { exists: true, blocked: true, status: "invalid" });
   put(root, ".cn-pilot/runtime/active-task.json", '{"status":"COMPLETED"}\n');
   assert.equal(checkActiveTask(root).blocked, false);
 });
@@ -388,6 +415,8 @@ test("status with same version is read-only and does not create a remote", async
   execFileSync("git", ["remote", "add", "origin", "https://github.com/LuisYGM/cn-pilot.git"], { cwd: source.root });
   target.put(target.root, ".cn-pilot-version", "1.4.0\n");
   target.put(target.root, ".cn-pilot/CORE.md", content);
+  // Case B/E: runtime exists but the optional checkpoint file does not.
+  fs.mkdirSync(path.join(target.root, ".cn-pilot/runtime"), { recursive: true });
   writeManifestFile(target.root, upstream);
   initRepo(target.root, [".cn-pilot-version", ".cn-pilot/CORE.md", MANIFEST_PATH]);
   const before = execFileSync("git", ["status", "--porcelain"], { cwd: target.root, encoding: "utf8" });
@@ -396,6 +425,7 @@ test("status with same version is read-only and does not create a remote", async
   assert.equal(code, 0, stderr);
   assert.match(stdout, /Update available: NO/);
   assert.match(stdout, /Installed: 1\.4\.0/);
+  assert.match(stdout, /Active task: none/);
   assert.match(stdout, /Kilo PASS/);
   assert.equal(execFileSync("git", ["status", "--porcelain"], { cwd: target.root, encoding: "utf8" }), before);
   assert.equal(execFileSync("git", ["remote"], { cwd: target.root, encoding: "utf8" }), "");

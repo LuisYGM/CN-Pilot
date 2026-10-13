@@ -394,9 +394,12 @@ export function checkActiveTask(root) {
   let state;
   try { state = JSON.parse(fs.readFileSync(file, "utf8")); }
   catch { return { exists: true, blocked: true, status: "unreadable" }; }
-  const status = String(state?.status ?? "").toUpperCase();
+  const allowedStatuses = new Set(["ACTIVE", "INTERRUPTED", "BLOCKED", "BLOCKED_HUMAN", "BLOCKED_EXTERNAL", "FAILED", "COMPLETED"]);
+  if (!state || typeof state !== "object" || Array.isArray(state) || typeof state.status !== "string") return { exists: true, blocked: true, status: "invalid" };
+  const status = state.status.toUpperCase();
+  if (!allowedStatuses.has(status)) return { exists: true, blocked: true, status: "invalid" };
   const pending = new Set(["ACTIVE", "INTERRUPTED", "BLOCKED", "BLOCKED_HUMAN", "BLOCKED_EXTERNAL", "FAILED"]);
-  return { exists: true, blocked: pending.has(status) || !status, status: status || "unknown" };
+  return { exists: true, blocked: pending.has(status), status };
 }
 
 export function inspectGit(root) {
