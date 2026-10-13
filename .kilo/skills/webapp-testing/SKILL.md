@@ -7,6 +7,8 @@ description: Verificar comportamiento browser/runtime de una aplicación web med
 
 Responde: **Does the implementation actually work correctly in a browser/runtime?** La fidelidad frente a una referencia aprobada pertenece a `visual-parity-review`.
 
+Browser/runtime QA responde «¿funciona?» —navegación, interacción, estados, DOM, URL, consola y red pertinente—, no «¿cómo hacerlo ver mejor?». Conforme a BF-063, findings de estética no basada en una regla/autoridad aprobada no son defects. QA técnico conserva toda su profundidad y corrige defectos objetivos; cambios visuales materiales se devuelven a decisión/review, sin usar una prueba funcional como permiso de rediseño.
+
 ## Capacidad opcional
 
 Playwright y browser tooling son opcionales. Si están disponibles, úsalos cuando aporten evidencia; si no, la tarea no falla únicamente por su ausencia. No asumas Node, Python, React/SPA, un servidor local ni una arquitectura concreta. No vendorices browsers, `node_modules`, caches, virtual environments ni infraestructura externa.
