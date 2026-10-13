@@ -15,6 +15,7 @@ Estas reglas son el **kernel compartido** de CN Pilot. El contrato completo de u
 - Respeta ownership: `project-resources/` contiene input original; `project-artifacts/` contiene entregables de apoyo; el runtime activo vive en el product root registrado. No edites/muevas inputs ni crees carpetas de producto/output por convención sin scope autorizado. Consulta el contrato Core pertinente antes de resolver rutas o límites de adopción.
 - `README.md` es presentación/navegación, no memoria duplicada. Actualízalo solo si cambia materialmente propósito, stack, estructura verificada, comandos permanentes o enlaces; conserva contenido manual y no lo reescribas por un cambio trivial.
 - `CORE.md` conserva contratos transversales; la fuente especializada contiene la operación; el agent contiene responsabilidades del rol; un template define la forma del entregable. Resume o enlaza esa doctrina, no mantengas una copia que pueda divergir.
+- Project Context raíz es single-writer de Dev Lead; specialists devuelven deltas materiales y conservan ownership de sus outputs de dominio. Antes de escribir algo potencialmente stale/shared, refresca la fuente actual; si falla un patch, reread + un retry focalizado como máximo y luego para/escalade. Aplica el procedimiento compacto Core BF-062.
 
 ## Seguridad y autorización
 

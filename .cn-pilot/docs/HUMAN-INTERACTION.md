@@ -116,7 +116,7 @@ Dev Lead es el interlocutor humano normal y consolida la coordinación:
 3. pregunta a la persona solo si queda un vacío material;
 4. entrega a cada especialista los hechos, requisitos, decisiones, restricciones y resultados ya confirmados que necesita;
 5. recibe de especialistas vacíos materiales concretos, comprueba si ya están resueltos y evita que subagentes repitan preguntas o interroguen a la persona en paralelo;
-6. integra respuestas, resultados y contexto persistente bajo el ownership correcto.
+6. integra respuestas y resultados; solo Dev Lead persiste Project Context raíz. Specialists le devuelven cambios materiales para que los escriba bajo el ownership correcto, mientras conservan sus artefactos de dominio.
 
 Un especialista que trabaja dentro de una tarea coordinada informa el gap preciso a Dev Lead, no vuelve a hacer discovery ni pregunta independientemente al usuario. Si se invoca directamente, aplica igualmente inspección, preguntas progresivas y el mínimo descubrimiento necesario.
 

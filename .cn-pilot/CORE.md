@@ -183,13 +183,23 @@ Reviewer permanece independiente, de solo lectura y verificación. Su revisión 
 
 Solo si un finding suyo `HIGH`/`CRITICAL` es materialmente bloqueante y aún discutible, Dev Lead puede abrir un único task fresco de Reviewer para intentar refutarlo y obtener `CONFIRMED`, `REFUTED` o `UNPROVEN`. No se verifican así hallazgos ya demostrados, notas ni severidades menores; no es una cadena ni un gate general.
 
-Para una revisión que bloquea el siguiente paso se usa preferentemente un subagente `task` en primer plano; Agent Manager/worktrees se reservan para aislamiento real o trabajo independiente. La solicitud exige un informe conciso, priorizado y accionable, sin polling ni repetición completa tras cada corrección si basta una revisión incremental.
+Para una revisión que bloquea el siguiente paso se usa preferentemente un subagente `task` en primer plano; Agent Manager/worktrees se reservan para una tarea que requiere aislamiento. Reviewer inicia solo tras terminar specialists y cuando Dev Lead haya estabilizado/reconciliado implementación y evidencia. La solicitud exige un informe conciso, priorizado y accionable, sin polling ni repetición completa tras cada corrección si basta una revisión incremental.
 
-`task` es también el mecanismo predeterminado para delegar trabajo que forma parte de la tarea actual y no requiere branch, worktree, filesystem aislado ni una conversación top-level separada. Agent Manager no se usa automáticamente para paralelizar; Dev Lead lo reserva para aislamiento real, alternativas concurrentes, trabajo realmente independiente o una sesión top-level separada. Antes de abrirlo evalúa si un subagente `task` es suficiente.
+`task` es el mecanismo predeterminado para una unidad de la tarea actual que no requiere branch, worktree, filesystem aislado ni conversación top-level separada. Agent Manager puede usarse para una única sesión aislada; worktrees no habilitan paralelismo por default.
+
+### Serial Subagent Orchestration / Single-Writer Execution (BF-062)
+
+En cualquier trabajo coordinado del CN Pilot, máximo **un subagente de proyecto activo** a la vez, incluido Agent Manager y Reviewer; no hay excepción read-only. Dev Lead no inicia un segundo specialist hasta recibir resultado final/terminación del actual. Cuando se necesitan varios: specialist → termina → Dev Lead reconcilia handoff/working tree/contexto → decide si hace falta el siguiente. No lance varios `task` en una misma respuesta ni deje tasks/background agents ejecutándose mientras continúa delegando. Usa un único owner cuando baste. STRUCTURAL puede pasar por varios owners, pero en serie. Reviewer va al final, tras todas las escrituras de implementación y reconciliación de Dev Lead.
+
+La conciliación es ligera: conoce archivos/cambios pertinentes, comprueba diff/status si hace falta, recibe propuestas materiales para Project Context, resuelve/bloquea dependencias y vuelve a decidir alcance/owner. La salida válida del specialist se considera trabajo procesado; no reanalices todo sin contradicción, evidencia insuficiente, riesgo o cambio de estado. No fuerces el siguiente handoff si el resultado anterior ya cubre acceptance.
+
+Antes de editar un archivo cuya lectura pueda estar stale —Project Context (`PROJECT.md`, `REQUIREMENTS.md`, `STATE.md`, `DECISIONS.md`, `ARTIFACTS.md`, `README.md`), `package.json`, config o archivo compartido/central del Product, uno modificado en fase anterior o tras un intervalo/cambio de estado— relee su contenido actual pertinente. No es obligación reabrir archivos intactos antes de cada edición.
+
+Clasifica `apply_patch verification failed` primero como posible `STALE CONTEXT / PATCH MISMATCH`: relee archivo/fragmento vigente, comprueba qué cambió y regenera el patch. Un solo retry focalizado contra el contenido fresco; si vuelve a fallar, no repitas a ciegas: usa una edición directa/simple solo si es segura o devuelve bloqueo al owner. No implica automáticamente un fallo de Product.
 
 El CN Pilot define workflow, responsabilidades, criterios de decisión y calidad; Kilo y la configuración del desarrollador definen proveedor, modelos, overrides y esfuerzo de razonamiento. La selección de IA está controlada por el usuario/entorno: Dev Lead decide cuándo delegar y a quién, pero no asigna modelos a subagentes. Todos los agentes y skills deben funcionar con proveedores y modelos distintos sin cambiar el proceso. Una dependencia concreta solo pertenece al proyecto si la exige realmente el producto o un requisito técnico. La calidad se evalúa mediante resultados, evidencia, QA y alcance, no por branding o versión del modelo. Mantén un enfoque cost-aware: usa la vía menos costosa que complete la tarea con fiabilidad, evitando agentes, iteraciones y trabajo duplicado innecesarios.
 
-Por defecto no se abren más de dos sesiones Agent Manager pagadas simultáneamente. Si más de dos aportan un beneficio real, Dev Lead solicita confirmación antes de iniciarlas. El criterio es aislamiento, paralelismo real, complejidad, coste y utilidad; la selección de modelos permanece en Kilo/el entorno del desarrollador.
+Por defecto se mantiene **una sola sesión subagent activa en total**, remunerada o no. No se lanza una segunda sesión Agent Manager simultáneamente ni siquiera para read-only, tareas independientes o worktrees separados; no paralelices para ahorrar tiempo. Espera el cierre y reconciliación del agente activo antes de iniciar el siguiente. La selección de modelos permanece en Kilo/el entorno del desarrollador.
 
 Las sesiones separadas de Agent Manager tienen transcript y ciclo de vida propios; no existe garantía del CN Pilot de entregar un resultado a una sesión padre ya terminada. Si el informe sigue accesible, se reutiliza.
 
@@ -230,6 +240,8 @@ En WordPress se evalúan primero las capacidades disponibles en Core y el stack 
 - `project-artifacts/docs/adr/`: ADRs formales greenfield.
 - `project-artifacts/docs/audits/`: informes durables greenfield.
 - `ARTIFACTS.md`: índice de entregables reales del proyecto.
+
+Los archivos raíz de Project Context (`README.md`, `PROJECT.md`, `REQUIREMENTS.md`, `STATE.md`, `DECISIONS.md`, `ARTIFACTS.md`) tienen writer único: Dev Lead. Los specialists los leen solo según scope y devuelven hechos/cambios materiales propuestos en su handoff; no persisten la memoria global. Mantienen ownership normal de sus artefactos especializados y del Product.
 
 ## Onboarding de proyectos
 
@@ -444,7 +456,7 @@ Cuando exista un plugin SEO activo y sus capabilities estén disponibles, el QA 
 - El CN Pilot nunca ejecuta `git init` salvo solicitud explícita o alcance confirmado.
 - Cuando Git existe, Dev Lead crea automáticamente un commit local por defecto cuando una tarea modificó archivos y quedó totalmente terminada y verificada; no pregunta al usuario si quiere hacerlo.
 - Para trabajo individual y secuencial, el flujo local por defecto es `main → trabajar → verificar → commit local`; `main` representa normalmente el estado actual y estable del proyecto. Cualquier acción remota requiere la autorización del contrato Git indicada abajo.
-- Las ramas son opcionales: solo se crean cuando existe una razón concreta de colaboración, aislamiento por riesgo, experimento descartable, Pull Request, desarrollo paralelo o solicitud explícita. No son necesarias para mantenimiento, documentación, mejoras pequeñas o trabajo individual normal.
+- Las ramas son opcionales: solo se crean cuando existe una razón concreta de colaboración/aislamiento por riesgo, experimento descartable, Pull Request o solicitud explícita. No habilitan ejecución paralela de subagentes; no son necesarias para mantenimiento, documentación, mejoras pequeñas o trabajo individual normal.
 - No crea commit si la tarea está incompleta, fue solo diagnóstico o exploración, existen errores bloqueantes o el usuario lo prohibió explícitamente.
 - Conventional Commits.
 - Descripciones siempre en español.

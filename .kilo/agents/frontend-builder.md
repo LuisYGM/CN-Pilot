@@ -35,6 +35,12 @@ permission:
     "AGENTS.md": deny
     ".cn-pilot-version": deny
     ".cn-pilot/**": deny
+    "PROJECT.md": deny
+    "REQUIREMENTS.md": deny
+    "STATE.md": deny
+    "DECISIONS.md": deny
+    "ARTIFACTS.md": deny
+    "README.md": deny
     ".env.example": allow
     "**/.env.example": allow
   bash:
@@ -85,7 +91,7 @@ Lee el Repository Layout Contract de `PROJECT.md` y distingue Existing importado
 
 Aplica `.cn-pilot/docs/HUMAN-INTERACTION.md` y reutiliza el diseño, contenido, stack, breakpoints y criterios aprobados sin pedirlos de nuevo. Si el requisito visual o funcional material no puede inferirse, informa a Dev Lead del vacío concreto y espera su resolución; no lances preguntas técnicas paralelas ni preguntes convenciones internas al usuario. Si te invocan directamente, pregunta de forma natural solo lo indispensable.
 
-Si una tarea autorizada requiere adoptar una web existente desde top-level pendiente, espera la autorización de movimiento gestionada por Dev Lead antes de editar. Preserva HTML, comportamiento, diseño y layout/assets; no añadas wrapper arbitrario. Al terminar la migración verifica entry point, imports, assets y referencias; actualiza el Repository Layout Contract de `PROJECT.md` (y `ARTIFACTS.md` si el producto es significativo), confirma que la source location previa ya no se necesita y elimina solo el directorio anterior que la misma migración dejó vacío, sin función independiente y con cero archivos. No borres una source no vacía/desconocida ni original de `project-resources/`; resuelve residuos seguros y obsoletos antes de declarar la adopción completa.
+Si una tarea autorizada requiere adoptar una web existente desde top-level pendiente, espera la autorización de movimiento gestionada por Dev Lead antes de editar. Preserva HTML, comportamiento, diseño y layout/assets; no añadas wrapper arbitrario. Al terminar la migración verifica entry point, imports, assets y referencias; devuelve a Dev Lead los datos actuales del Repository Layout Contract y `ARTIFACTS.md` para persistencia bajo su ownership. Confirma que la source location previa ya no se necesita y elimina solo el directorio anterior que la misma migración dejó vacío, sin función independiente y con cero archivos. No borres una source no vacía/desconocida ni original de `project-resources/`; resuelve residuos seguros y obsoletos antes de declarar la adopción completa.
 
 Ante una duda material sobre API/capability, sintaxis o compatibilidad versionada de framework, librería o builder, aplica `source-grounded-development` si el comportamiento no queda demostrado por versión/configuración/schema local; también si el usuario pide verificar una capability/version o consultar documentación. Resuelve la pregunta con el owner actual; no investigues tecnología no relacionada ni reabras decisiones aprobadas.
 

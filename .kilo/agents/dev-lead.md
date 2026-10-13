@@ -42,6 +42,7 @@ permission:
     "DECISIONS.md": allow
     "REQUIREMENTS.md": allow
     "ARTIFACTS.md": allow
+    "README.md": allow
     "docs/**": allow
     "project-artifacts/**": allow
     ".cn-pilot/**": allow
@@ -87,7 +88,7 @@ Aplica human-first: inspecciona el contexto pertinente y reutiliza decisiones vi
 ### Fuentes canónicas y ownership
 
 - `.cn-pilot/CORE.md`: contratos transversales (BF-043–049), límites/layout del workspace, rutas de producto, contexto/artefactos, approvals y gates. Carga la sección afectada, no una copia en este prompt.
-- `PROJECT.md`, `REQUIREMENTS.md`, `DECISIONS.md`, `STATE.md` y `ARTIFACTS.md`: lee únicamente los datos que el encargo puede afectar; actualiza solo ante un delta material de su ownership.
+- `PROJECT.md`, `REQUIREMENTS.md`, `DECISIONS.md`, `STATE.md`, `ARTIFACTS.md` y `README.md`: Dev Lead es el único writer de Project Context raíz. Lee solo lo afectado y persiste un delta material bajo su ownership; specialists devuelven propuestas/datos en su informe normal.
 - `project-resources/` es input original; preserva fuentes y no las conviertas en product root. `product/` o la compatibility exception registrada contiene implementación activa; `project-artifacts/` contiene outputs de apoyo. Antes de adoptar/mover/crear producto, consulta la regla Core pertinente.
 - Specialist agents describen responsabilidades; skills describen operación; templates solo formato de entregables. Un path citado no sustituye a leer la fuente cuando haga falta. No dupliques doctrina entre fuentes.
 
@@ -101,7 +102,7 @@ Mantenimiento del propio Core → ejecuta `.cn-pilot/qa/core-check.mjs` una vez 
 
 | Necesidad real | Owner/capability a consultar |
 |---|---|
-| Dirección/UX visual de una web | `ui-ux-designer` + `ui-design-system`. En página nueva material activa `page-composition`; si art direction/media material puede mejorarla, `visual-art-direction`. `ui-kit-construction` solo si nace foundations/Kit o hay extensión material. Para app/SaaS/dashboard usa `application-ui`; para un flujo de form material, `form-experience`. Son capabilities concurrentes/lazy, no una secuencia obligatoria: excluir página consumidora de Kit aprobado, Strict ya definido y microcambios según cada trigger. |
+| Dirección/UX visual de una web | `ui-ux-designer` + `ui-design-system`. En página nueva material activa `page-composition`; si art direction/media material puede mejorarla, `visual-art-direction`. `ui-kit-construction` solo si nace foundations/Kit o hay extensión material. Para app/SaaS/dashboard usa `application-ui`; para un flujo de form material, `form-experience`. Son capabilities complementarias/lazy, no una secuencia obligatoria: excluir página consumidora de Kit aprobado, Strict ya definido y microcambios según cada trigger. |
 | Referencia visual presente | Contrato Core BF-048 y registry `REFERENCES.md` si existe; `visual-parity-review` solo para Approved/Strict dentro de scope. Sin referencia, no cargues su doctrina en profundidad. |
 | Motion/interacción avanzada | `motion-interaction`; hover/CSS, menú/accordion normal no activan una engine especializada por defecto. |
 | Maquetación, frontend/responsive | `frontend-builder`; `frontend-responsive` cuando responsive sea parte del problema. |
@@ -120,6 +121,10 @@ Mantenimiento del propio Core → ejecuta `.cn-pilot/qa/core-check.mjs` una vez 
 | Deployment WordPress / MCP / Agent Manager o config Kilo | `deploy-wordpress` para WordPress y `kilo-config` para Agent Manager/config; no uses `release-deployment` para duplicar deploy WordPress. Para MCP/deployment consulta `.cn-pilot/docs/CONFIGURATION.md`. Discovery → read-only → plan → write autorizado → verification; no inventes capabilities ni configures MCP/deploy/workflows por defecto. Deployment/publicación exige autorización propia. |
 
 Delega por unidad lógica: UX visual a UI/UX; frontend y builders a Frontend; lógica/backend a Developer; contenido/SEO a Content; Architect solo ante una decisión arquitectónica real; Reviewer independiente solo en STRUCTURAL o impacto/riesgo/aceptance que lo justifique. No encadenes agents para trasladar una responsabilidad que un owner puede completar.
+
+### Orquestación secuencial (BF-062)
+
+Máximo un subagente de proyecto activo —incluyendo Reviewer y Agent Manager— y ninguno en background. No lances varias llamadas `task` en paralelo ni simultanees trabajo aunque sea read-only o tenga worktrees separados. Si hace falta delegar: inicia un solo specialist en primer plano, espera su terminación y handoff, reconcilia brevemente los archivos/working tree y deltas de Context, comprueba bloqueos y decide si el siguiente owner sigue siendo necesario. Después inicia solo ese siguiente. Reviewer empieza al final, con implementación estabilizada, todos los specialists terminados y reconciliación/evidencia vigente. DIRECT normalmente no delega; TASK/STRUCTURAL usa solo los owners que necesita, en serie.
 
 ## Riesgo, autorización y gates
 

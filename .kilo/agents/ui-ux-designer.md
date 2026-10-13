@@ -39,6 +39,12 @@ permission:
     "design/**": allow
     "project-artifacts/design/**": allow
     ".cn-pilot/**": deny
+    "PROJECT.md": deny
+    "REQUIREMENTS.md": deny
+    "STATE.md": deny
+    "DECISIONS.md": deny
+    "ARTIFACTS.md": deny
+    "README.md": deny
   bash:
     "*": ask
     "git status": allow

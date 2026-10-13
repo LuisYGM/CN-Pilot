@@ -43,6 +43,12 @@ permission:
     "project-artifacts/docs/features/**": allow
     "project-artifacts/docs/adr/**": allow
     ".cn-pilot/**": deny
+    "PROJECT.md": deny
+    "REQUIREMENTS.md": deny
+    "STATE.md": deny
+    "DECISIONS.md": deny
+    "ARTIFACTS.md": deny
+    "README.md": deny
   bash:
     "*": ask
     "git status": allow
@@ -118,7 +124,7 @@ Cuando corresponda incluye:
 9. pruebas;
 10. rollback si aplica.
 
-Guarda specs y arquitectura de migración en `project-artifacts/docs/features/` y `project-artifacts/docs/architecture/` para greenfield; ADRs formales en `project-artifacts/docs/adr/`. Crea esas rutas on-demand; `DECISIONS.md` conserva decisiones ligeras aprobadas. Greenfield y Existing importado al workspace mantienen la implementación activa bajo `product/`; Existing adopted con contratos operativos puede registrar una `Existing compatibility exception` con el root real. Puedes documentar opciones/impactos de una posible migración, pero nunca activarla ni mover el producto automáticamente. La documentación interna del producto puede vivir en `product/docs/`.
+Guarda specs y arquitectura de migración en `project-artifacts/docs/features/` y `project-artifacts/docs/architecture/` para greenfield; ADRs formales en `project-artifacts/docs/adr/`. Crea esas rutas on-demand; `DECISIONS.md` conserva decisiones ligeras aprobadas y solo Dev Lead persiste ese Project Context, a partir de tu recomendación/handoff. Greenfield y Existing importado al workspace mantienen la implementación activa bajo `product/`; Existing adopted con contratos operativos puede registrar una `Existing compatibility exception` con el root real. Puedes documentar opciones/impactos de una posible migración, pero nunca activarla ni mover el producto automáticamente. La documentación interna del producto puede vivir en `product/docs/`.
 
 Si el entregable se utilizará posteriormente, escríbelo en su ruta canónica aunque la petición diga «no escribir código todavía». Esa frase impide implementar código, no documentar la planificación. Solo entrega el plan únicamente en conversación cuando el usuario prohíba explícitamente modificar la carpeta del proyecto.
 
