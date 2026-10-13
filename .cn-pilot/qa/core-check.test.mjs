@@ -103,6 +103,20 @@ function createFixture(t) {
   put(".cn-pilot/templates/sub/nested.md", "# Plantilla anidada\n");
   put(".cn-pilot/qa/core-check.mjs", "// checker fixture\n");
   put(".cn-pilot/qa/core-check.test.mjs", "// self-test fixture\n");
+  put(".cn-pilot/update/updater.mjs", "// updater fixture\n");
+  put(".cn-pilot/update/updater.test.mjs", "// updater test fixture\n");
+  put(".cn-pilot/update/manifest.json", `${JSON.stringify({
+    schemaVersion: 1,
+    cnPilotVersion: "1.2.0",
+    sourceRepository: "https://github.com/LuisYGM/cn-pilot.git",
+    stableBranch: "main",
+    sourceCommit: null,
+    compatibility: { nodeMin: "20.0.0", kiloMin: "7.8.8" },
+    managedFiles: [],
+    addedFiles: [],
+    removedFiles: [],
+    migrations: [],
+  })}\n`);
   put("project-resources/README.md", "# Input scaffold\n");
   put("kilo.jsonc", "{}\n");
   put(".gitignore", "/.cn-pilot/runtime/\n");

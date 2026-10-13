@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.3.0] - 2026-10-13
+
+Release compatible del Core que incorpora BF-063 y BF-064. Desde esta versión, toda distribución futura requiere bump SemVer.
+
+### Añadido
+
+- **BF-064 — Versioned Core Update System:** `/cn-status` read-only y `/cn-update` manual con rama estable `main`, manifest de baseline/hash SHA-256, instalador allowlisted, detección de conflictos, compatibilidad, bloqueos active-task/dirty-tree, legacy bootstrap sujeto a revisión humana y commit local posterior a Core QA. Project Owned, configuración mixta y runtime quedan fuera; no auto-update, merge, push, tags/releases ni migrations ejecutables en v1. La distribución SemVer `1.3.0` incluye también BF-063.
+- **BF-063 distribuible:** preservación de candidato visual y separación entre QA/fixes objetivos y rediseño subjetivo, aprobado en el registro BF-063 anterior.
+
 ## [1.2.0] - 2026-10-09
 
 Migración estructural del Core y limpieza del payload del template.

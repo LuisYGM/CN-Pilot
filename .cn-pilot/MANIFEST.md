@@ -7,12 +7,13 @@ Inventario de CN Pilot Core. No sustituye `../ARTIFACTS.md`, que registra entreg
 - 7 agentes en `.kilo/agents/`
 - 36 skills (`.kilo/skills/*/SKILL.md`)
 - 6 documentos de referencia bajo `.kilo/skills/technical-seo/references/` (no son skills adicionales)
-- 12 comandos en `.kilo/commands/`
+- 14 comandos en `.kilo/commands/`
 - 7 perfiles en `.cn-pilot/profiles/`
 - 9 archivos de plantilla en la raíz de `.cn-pilot/templates/` y 18 archivos en total bajo `.cn-pilot/templates/` (incluye subdirectorios)
 - QA ejecutable read-only y on-demand del Core en `.cn-pilot/qa/` (Node built-in; sin dependencias npm)
 - Core portable en `.cn-pilot/` (config, docs, profiles y templates)
 - documentación operativa bajo `.cn-pilot/docs/`
+- updater versionado en `.cn-pilot/update/` (manifest SHA-256 reproducible; runtime y temporales excluidos)
 - registro base de artefactos del proyecto
 - configuración responsive versionada en `.cn-pilot/config/`
 - configuración Kilo compartible en `kilo.jsonc` y controles locales en `.gitignore` / `.kilocodeignore`

@@ -6,7 +6,7 @@ Kilo Code nativo · agnóstico al proveedor/modelo dentro de Kilo
 
 CN Pilot coordina el trabajo de proyectos web con agentes de IA sin convertir a la persona en operadora de una cadena de herramientas. Describe el resultado en lenguaje natural; el sistema inspecciona el contexto, activa solo el proceso necesario y mantiene las decisiones importantes bajo control humano.
 
-[Empieza aquí](.cn-pilot/docs/START-HERE.md) · [Configuración de Kilo](.cn-pilot/docs/KILO-SETUP.md) · [Documentación](#documentación) · [Repositorio](https://github.com/LuisYGM/cn-pilot)
+[Empieza aquí](.cn-pilot/docs/START-HERE.md) · [Configuración de Kilo](.cn-pilot/docs/KILO-SETUP.md) · [Actualizaciones del Core](.cn-pilot/docs/UPDATES.md) · [Documentación](#documentación) · [Repositorio](https://github.com/LuisYGM/cn-pilot)
 
 > **Estado actual:** integración nativa con Kilo Code. El contenido de este repositorio está en español. CN Pilot Core se distribuye bajo [GNU GPL v3.0 or later (`GPL-3.0-or-later`)](LICENSE).
 
@@ -102,6 +102,7 @@ Se inspecciona el estado vigente antes de editar; el acceso a secretos se limita
 - [Interacción human-first](.cn-pilot/docs/HUMAN-INTERACTION.md)
 - [Ciclo de vida y entregas](.cn-pilot/docs/LIFECYCLE.md)
 - [Seguridad](.cn-pilot/docs/SECURITY.md)
+- [Actualizaciones del Core](.cn-pilot/docs/UPDATES.md)
 - [Configuración, MCP y deployment](.cn-pilot/docs/CONFIGURATION.md)
 - [Troubleshooting](.cn-pilot/docs/TROUBLESHOOTING.md)
 - [CN Pilot Core](.cn-pilot/CORE.md)
@@ -119,4 +120,4 @@ La GPL no prohíbe el uso o la venta comerciales: al distribuir material cubiert
 
 `project-resources/` conserva las licencias de sus fuentes originales. No se asigna ni pregunta una licencia predeterminada para el producto durante `/new-project`.
 
-La versión base del CN Pilot Core se registra en `.cn-pilot-version`; no representa por sí sola una versión del producto CN Pilot.
+La versión SemVer distribuible del CN Pilot Core se registra en `.cn-pilot-version`; no representa por sí sola una versión del producto CN Pilot. En proyectos administrados se puede consultar manualmente con `/cn-status` y actualizar, tras preflight, con `/cn-update`; véase [ownership y recovery](.cn-pilot/docs/UPDATES.md). Las actualizaciones nunca se ejecutan en background.

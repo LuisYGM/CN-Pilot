@@ -1,6 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { verifyManifestMetadata } from "../update/updater.mjs";
 
 const SCRIPT_PATH = fileURLToPath(import.meta.url);
 const DEFAULT_ROOT = path.resolve(path.dirname(SCRIPT_PATH), "..", "..");
@@ -10,6 +11,7 @@ const REQUIRED_PATHS = [
   [".cn-pilot/config/responsive.json", "file"], [".cn-pilot/docs", "directory"],
   [".cn-pilot/profiles", "directory"], [".cn-pilot/templates", "directory"],
   [".cn-pilot/qa/core-check.mjs", "file"], [".cn-pilot/qa/core-check.test.mjs", "file"],
+  [".cn-pilot/update/updater.mjs", "file"], [".cn-pilot/update/updater.test.mjs", "file"], [".cn-pilot/update/manifest.json", "file"],
   ["kilo.jsonc", "file"], [".kilo/agents/dev-lead.md", "file"], [".kilo/agents/reviewer.md", "file"],
   [".kilo/commands/new-project.md", "file"], [".kilo/commands/checkpoint.md", "file"],
   [".kilo/commands/review.md", "file"], [".kilo/commands/doctor.md", "file"],
@@ -299,6 +301,15 @@ function checkManifest(root) {
   return { status, details: { declarationsChecked: parsed.declarations.length, mismatches, unknownNumericLines: parsed.unknownNumericLines } };
 }
 
+function checkDistributionManifest(root) {
+  try {
+    const result = verifyManifestMetadata(root);
+    return { status: "PASS", details: { version: result.manifest.cnPilotVersion, hashesDeclared: result.hashesDeclared, mode: "baseline metadata; local customization is permitted" } };
+  } catch (error) {
+    return { status: "FAIL", details: { code: String(error?.code ?? "INVALID_MANIFEST").replace(/[\r\n\t]/g, " ") } };
+  }
+}
+
 function readVersion(root) {
   const local = readText(root, ".cn-pilot-version");
   const core = readText(root, ".cn-pilot/CORE.md");
@@ -374,6 +385,8 @@ export function runCoreChecks({ rootDir = DEFAULT_ROOT } = {}) {
 
   const manifest = checkManifest(root);
   add("manifest.inventory", manifest.status, manifest.details);
+  const distribution = checkDistributionManifest(root);
+  add("distribution.manifest", distribution.status, distribution.details);
 
   const status = checks.some((item) => item.status === "FAIL") ? "FAIL" : checks.some((item) => item.status === "WARN") ? "WARN" : "PASS";
   return {
@@ -391,6 +404,7 @@ const LABELS = new Map([
   ["routing.commands", "Command routing"], ["routing.devLead", "Dev Lead routes"], ["permissions.reviewer", "Reviewer permissions"],
   ["security.devLead", "Dev Lead safety"], ["profiles.inventory", "Profiles"], ["templates.inventory", "Templates"],
   ["references.technicalSeo", "Technical SEO refs"], ["runtime.gitignore", "Runtime isolation"], ["manifest.inventory", "MANIFEST"],
+  ["distribution.manifest", "Distribution manifest"],
 ]);
 
 function humanOutput(report) {

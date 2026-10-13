@@ -1,6 +1,6 @@
-# CN Pilot Core — Especificación V1.2
+# CN Pilot Core — Especificación V1.3
 
-**Versión:** `1.2.0`
+**Versión:** `1.3.0`
 
 Documento de referencia para maintainers del CN Pilot. Un usuario nuevo debe empezar por [`docs/START-HERE.md`](docs/START-HERE.md); no necesita leer esta especificación para trabajar.
 
@@ -448,6 +448,10 @@ Tras alcanzar el candidato coherente y antes de QA, el estado pre-QA debe ser re
 ## Lifecycle de capabilities y SEO
 
 Las capabilities MCP son dinámicas. Tras instalar o activar plugins, módulos, licencias, integraciones, servidores o configuraciones, se debe reconectar o refrescar, repetir Discovery y actualizar la comprensión de capabilities antes de declarar una limitación. Prioriza `specialized capability → safe generic capability → low-level workaround only when justified`; capacidad de lectura no implica capacidad de escritura, y capacidad técnica no amplía el scope autorizado. Cuando aporte valor, documenta de forma ligera `capability → provider → read/write → scope → risk`.
+
+### Versioned Core Updates (BF-064)
+
+`.cn-pilot-version` es SemVer distribuible del CN Pilot Core. `/cn-status` y `/cn-update` son explícitos, sin autocheck. La operación, inventory managed/project-owned, baseline SHA-256, conflicto, legacy y recovery pertenecen a [UPDATES.md](docs/UPDATES.md) y `.cn-pilot/update/`; el manifest distribuible generado es la autoridad de archivos y hashes. Updater es instalador de paths allowlisted, nunca Git merge/pull: solo actualiza CN Pilot managed, excluye `.cn-pilot/runtime/`, contexto/proyecto/README, Product, resources, artifacts, secrets y configuración mixta. No hay push, auto-update, tags, preview ni Releases. Tracked dirty tree, active task, incompatibilidad, manifest/hash inválido y conflicto detienen writes. Legacy sin baseline exige plan y revisión humana antes de overwrite no clasificable. V1 no ejecuta migraciones; las declaradas bloquean hasta que exista implementación y aprobación explícitas. Cada distribución futura requiere SemVer bump, aunque un cambio interno BF aislado no requiera release.
 
 No hardcodees un builder, plugin o proveedor como requisito del Core: una integración puede exponer elementos, updates, revisions, templates, components, global classes, variables, Theme Styles, design context, import/export o render. Descubre lo realmente disponible y elige la capability específica y segura. Una tool de importación HTML/CSS debe evaluarse en entorno seguro por estructura nativa, editabilidad, wrappers, clases globales, responsive, fidelidad y mantenibilidad; `import successful` no equivale a implementación builder-native limpia.
 

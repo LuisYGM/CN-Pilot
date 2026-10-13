@@ -65,4 +65,4 @@ refactor/permisos-usuarios
 
 ## Versiones y CHANGELOG
 
-`.cn-pilot-version` identifica la generación/base del CN Pilot, pero no debe cambiar con cada commit. `CHANGELOG.md` se actualiza para cambios relevantes, no para cada modificación menor. No es necesario crear un tag o una GitHub Release para cada cambio de versión; ambos son opcionales y dependen de un hito o una decisión explícita.
+`.cn-pilot-version` es la versión SemVer distribuible del Core, pero no debe cambiar con cada commit de desarrollo. Desde `1.3.0`, cada release/cambio del Core que se distribuya a proyectos existentes requiere bump SemVer; un BF interno no obliga por sí mismo a publicar versión. `CHANGELOG.md` se actualiza para cambios relevantes, no para cada modificación menor. No se crean tags ni GitHub Releases automáticamente. Consulta [Actualizaciones de CN Pilot Core](UPDATES.md) para `/cn-status`, `/cn-update`, manifest, bootstrap y ownership.
