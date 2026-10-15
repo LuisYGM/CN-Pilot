@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.5.0] - 2026-10-15
+
+Release MINOR compatible que incorpora BF-067.
+
+### Cambiado
+
+- **BF-067 — Creative Discovery & Divergence:** discovery basado en evidencia y ejecución real de reference/font scouting; Input Audit READY/ENRICHABLE/BLOCKED, Creative Opportunity Questions agrupadas, MEDIA GAP/Content Enrichment Opportunity, Concept Divergence y Creative Quality Gate basado en fuentes, alternativas y motion intent. Existing/Application UI/Approved/Strict preservados; sin agentes, runners ni dependencias nuevos. BF-059/062/063 no cambian.
+
 ## [1.4.0] - 2026-10-15
 
 Release MINOR backward-compatible que incorpora BF-066.

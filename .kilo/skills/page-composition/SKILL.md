@@ -21,6 +21,8 @@ No activar para un CSS/copy change puntual, metadata, una página con composici�
 4. Elige cada vez container restringido, full-bleed, grid editorial, split, asimetría, simetría o whitespace por contenido/identidad. Un statement, quote, cifra o media puede romper ritmo si tiene significado. El CTA/cierre se deriva del journey y no se repite mecánicamente.
 5. Contrasta con UI Kit aprobado: reutiliza su gramática sin hacer que toda página tenga la misma silueta. No añadas card grids ni secciones solo para exhibir componentes. Detecta módulos repetidos por comodidad, varía ritmo intencionalmente y ubica un memorable moment cuando journey/contenido lo permitan; no es cuota ni espectáculo.
 
+En una nueva dirección material, consume `Concept Divergence Pass` de `creative-web-experience`: explica brevemente por qué gana esta silueta y qué alternativa macro real se descartó. No repitas la divergencia de sistema en páginas derivadas ni generes prototipos paralelos; la diferencia debe aparecer en la composición elegida, no en variaciones de color o cards.
+
 ## Evitar plantillas previsibles
 
 No uses por default `hero → split text/image → three cards → section → CTA`. Antes de aceptar una fórmula, pregunta qué necesidad de contenido o conversión justifica cada sección y si dos regiones consecutivas tienen la misma densidad/composición sin motivo. Una fórmula puede ser correcta si el brief la sustenta.

@@ -1,6 +1,6 @@
-# CN Pilot Core — Especificación V1.3
+# CN Pilot Core — Especificación V1.5
 
-**Versión:** `1.4.0`
+**Versión:** `1.5.0`
 
 Documento de referencia para maintainers del CN Pilot. Un usuario nuevo debe empezar por [`docs/START-HERE.md`](docs/START-HERE.md); no necesita leer esta especificación para trabajar.
 
@@ -349,7 +349,7 @@ Si los permisos impiden escribir una ruta canónica, se reporta el bloqueo y no 
 
 ### Creative Web Experience (BF-066)
 
-En public web Greenfield/rediseño visual material, UI/UX activa por default `creative-web-experience` para ambición creativa y Creative Quality Gate antes de `VISUAL INTENT STABILIZED`; las skills existentes conservan ownership de sistema, Kit, composición, media, motion e implementación. Application UI/dashboard sigue `application-ui`; Existing localized conserva continuidad; Approved/Strict BF-048 gobierna scope/fidelity. Tras estabilizar, QA conserva BF-063 y no reabre creatividad. No implica imponer efectos, research sin acceso, derechos de assets ni dependencias/tooling del Core.
+En public web Greenfield/rediseño visual material, UI/UX activa por default `creative-web-experience` y completa discovery/evidencia antes de `VISUAL INTENT STABILIZED`. Research read-only disponible no pide permiso; un gap ENRICHABLE puede justificar una pregunta agrupada no bloqueante; Dev Lead sigue siendo interlocutor. Las skills existentes conservan ownership de sistema, Kit, composition, media, content, motion e implementación. Application UI/dashboard sigue `application-ui`; Existing localized conserva continuidad; Approved/Strict BF-048 gobierna scope/fidelity. Tras estabilizar, QA conserva BF-063 y no reabre creatividad. No impone effects, research sin acceso, uso de rights no acreditados ni dependencies/tooling del Core.
 
 ## Convenciones estructurales de maquetación
 

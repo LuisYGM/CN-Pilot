@@ -145,6 +145,30 @@ test("1.3.1 baseline detects the 1.4.0 MINOR distribution and added capability",
   assert.equal(plan.conflicts.length, 0);
 });
 
+test("1.4.0 baseline detects the 1.5.0 MINOR discovery update as available", (t) => {
+  const { root, put } = fixture(t);
+  const oldSkill = "BF-066 creative direction\n";
+  const newSkill = "BF-067 evidence-based discovery\n";
+  put(root, ".cn-pilot-version", "1.4.0\n");
+  put(root, ".kilo/skills/creative-web-experience/SKILL.md", oldSkill);
+  const installed = manifest("1.4.0", [
+    entry(".cn-pilot-version", "1.4.0\n"),
+    entry(".kilo/skills/creative-web-experience/SKILL.md", oldSkill),
+  ]);
+  const latest = manifest("1.5.0", [
+    entry(".cn-pilot-version", "1.5.0\n"),
+    entry(".kilo/skills/creative-web-experience/SKILL.md", newSkill),
+  ]);
+  const plan = planUpdate(root, installed, latest);
+  assert.equal(plan.installedVersion, "1.4.0");
+  assert.equal(plan.latestVersion, "1.5.0");
+  assert.deepEqual(plan.actions.map(({ type, path: name }) => [type, name]), [
+    ["update", ".cn-pilot-version"],
+    ["update", ".kilo/skills/creative-web-experience/SKILL.md"],
+  ]);
+  assert.equal(plan.conflicts.length, 0);
+});
+
 test("C: concurrent local and upstream edits conflict without overwrite", (t) => {
   const { root, put } = fixture(t);
   put(root, ".cn-pilot/CORE.md", "local\n");
