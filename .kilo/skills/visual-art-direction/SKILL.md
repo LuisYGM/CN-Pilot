@@ -25,11 +25,15 @@ Para páginas/experiencias visuales materiales determina sin artefacto separado 
 
 Cuando se elija imagen/foto concreta, especifica suficiente art direction accionable: subject, punto de vista/distancia, framing, luz, environment, treatment/color, orientación/aspect ratio y desktop/mobile crop. Decide contained/full-bleed/overlay con `page-composition`. Evita stock cliché (handshake, laptop, skyline, familia/doctor genéricos) si no demuestra una razón del proyecto. No reutilices una misma foto/crop como decoración repetida.
 
+Para public web Greenfield/rediseño material, media discovery es proactivo cuando media mejora materialmente: inspecciona PROVIDED y EXISTING; considera externa licenciada/reputada, original creada/generada solo con capability y autoridad suficientes, brand-derived graphic art direction o no-media intencional. No agotes opciones ni termines en `PENDING` solo porque no dieron fotos. Limita búsqueda a lo pertinente; comunica falta de acceso/licencia, no finjas verificación. Stock/editorial puede aportar atmósfera, nunca presentarse como cliente real, empleados, oficinas, instalaciones, producto o trabajo sin evidencia.
+
+Sin foto adecuada, considera fragmentos de isotipo, geometría, trazos, patterns, typography, masks, color fields, branded shapes, collage o sistema ilustrativo como graphic art direction. No finjas personas/productos/espacios/mapas/datos/arquitectura/instalaciones reales. Handoff conserva source, estado, límites de uso/claims y provenance PROVIDED, EXISTING, APPROVED_EXTERNAL, ORIGINAL_CREATED o PENDING.
+
 ## Video, ilustración e iconografía
 
 Video solo si material real o creación autorizada sirve narrativa/atmósfera/demo/testimonial. Elige función, duración/loop, poster/fallback, controles/autoplay/muted/playsinline, mobile y reduced-motion; no inventes que existe un archivo. La producción/video runtime avanzado se escala solo si es necesidad material.
 
-Diagram, chart, map, illustration, texture o pattern deben explicar contenido o expresar identidad. No conviertas SVG abstracto en pseudo-fotografía ni inventes datos/geografía/procesos. El icon set conserva familia, trazo/relleno, optical alignment, tamaños y semántica; no mezcles packs al azar ni uses emoji como icono salvo intención explícita. Shapes/gradients son legítimos si aportan relación formal/material y no sustituyen sin razón una media representacional necesaria.
+Diagram, chart, map, illustration, texture o pattern deben explicar contenido o expresar identidad. No conviertas SVG abstracto en pseudo-fotografía ni inventes datos/geografía/procesos. Para muchos iconos funcionales, prefiere una familia profesional coherente y selección por necesidad; verifica fuente oficial/licencia/consumo, no instales globalmente ni mezcles packs sin razón. Logos/brand icons pueden usar fuente separada. Custom icons se justifican por identidad, hueco o lenguaje propio; siguen reglas comunes de grid, stroke/fill, weight, esquinas, optical alignment, viewBox, sizing y semántica. Shapes/gradients no sustituyen sin razón media representacional.
 
 ## Revisión de riqueza visual
 

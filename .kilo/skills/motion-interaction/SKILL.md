@@ -11,9 +11,15 @@ Opera BF-049 en una tarea frontend concreta. **Use the smallest capable tool**: 
 
 Actívala cuando motion/interaction sea parte material de la intención visual o comportamiento, supere una interacción nativa rutinaria, use timelines/scroll coordinado, presente lifecycle/performance/accessibility risk o requiera capability especializada. Para hover, focus, toggle o transición simple, CSS/HTML existente normalmente basta.
 
-1. Define el intent antes del tooling: elemento, propósito, trigger, lifecycle, estados/secuencia, character/timing, scope, responsive, reduced-motion y comportamiento sin JS cuando sea razonable.
+1. Define el intent antes del tooling: elemento, propósito, trigger, lifecycle, estados/secuencia, character/timing, scope, responsive, reduced-motion y comportamiento sin JS cuando sea razonable. Para public web Greenfield/material, `creative-web-experience` considera motion direction por default; aquí se decide implementación, no se reabre ambición.
 2. Inspecciona stack, motion system actual, arquitectura Existing, references BF-048 y autoridad/fidelity de motion. Conserva un sistema Existing que funcione; no migres para preferir GSAP. Una referencia Approved/Strict rige su scope; una imagen estática no autoriza inventar motion y presentarlo como parte de la referencia. Declara cualquier motion nuevo como inferred/proposed.
 3. Elige la capability mínima con base en complejidad, mantenibilidad, fidelidad, performance, accesibilidad, browser support, duración, responsive y scope. Compara alternativas solo si pueden cambiar la implementación.
+
+## Personality e intención visual
+
+Deriva, si está abierta, personality de brand signals: sobriedad, energía, precisión, editorialidad, organicidad, lujo, tecnología, juego o ritmo. Traduce a motion character/tokens (easing, tempo/duration family, distance, scale, stagger, overshoot/bounce, sequencing, scroll coupling) sin presets ni valores universales. Cadena: **brand signals → motion character → tokens → capability técnica**.
+
+Dirección y nivel de motion se consideran explícitamente en public web aunque la decisión sea NONE/mínima/sutil. **Signature Motion** solo cuando identidad, memoria y viabilidad lo justifican; puede rimar sutilmente en otros momentos, sin cuota/repetición constante. Jerarquiza intensidad HIGH/MEDIUM/LOW/NONE como modelo mental: evita el mismo `opacity + translateY + stagger` en todo. Conserva **calm zones** en forms, pricing/checkout, comparación, lectura densa, decisiones críticas y legal/compliance: feedback/entrada sutil es válido; evita movimiento continuo competitivo. `creative-web-experience` define intent/gate; esta skill decide implementación.
 
 ## Motion ladder
 
@@ -38,7 +44,7 @@ La fuente oficial actual de instalación/distribución e imports es <https://gsa
 ## Reduced motion, accessibility y responsive
 
 - Respeta `prefers-reduced-motion`: elimina/reduce desplazamiento, pin, scrub, parallax y secuencias decorativas según contexto; deja visible de inmediato el contenido, estado final y layout funcional. No inicialices `opacity: 0` de forma que el fallback quede invisible. En GSAP, `gsap.matchMedia()` puede crear/revertir setups por preferencia/breakpoint y recoge animations/ScrollTriggers creados en su handler; usa `revert()` al desmontar y elimina aparte listeners/side effects propios. No envuelvas MatchMedia en otro context si es redundante; revalida el patrón en la documentación oficial <https://gsap.com/docs/v3/GSAP/gsap.matchMedia/>.
-- El propósito o información esencial no depende de observar animación. Conserva semántica, controles nativos, teclado/foco, tiempo razonable y acceso al contenido; motion no sustituye estados visibles ni confirmaciones. No uses flashing con riesgo de seizure.
+- El propósito o información esencial no depende de observar animación. En marketing/static donde JS se usa principalmente para motion, contenido esencial queda visible si la animación no inicializa razonablemente; no significa que toda SPA deba funcionar sin JS. Conserva semántica, controles nativos, teclado/foco, tiempo razonable y acceso al contenido; motion no sustituye estados visibles ni confirmaciones. No uses flashing con riesgo de seizure.
 - No diseñes acciones críticas solo con hover: soporta keyboard, focus, click/tap y pointer coarse según interacción. Respeta targets y navegación/anchors.
 - No copies motion desktop ciegamente a mobile. Reduce distancia, duration/sequence, elimina pin/scrub pesado o cambia trigger si preserva intención y reference fidelity. Usa breakpoints vigentes en Existing/config en Greenfield.
 - Si motion controla video/audio, verifica `preload`, poster/loading state, reglas muted/autoplay, `playsinline`, bandwidth/mobile, captions/transcript cuando apliquen y reduced motion. 3D/Canvas añade fallback y disposal/memory. Estas capacidades no autorizan recursos pesados solo por decoración.

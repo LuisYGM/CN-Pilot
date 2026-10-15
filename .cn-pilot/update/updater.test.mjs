@@ -118,6 +118,33 @@ test("1.3.0 baseline detects the 1.3.1 PATCH distribution as available", (t) => 
   assert.equal(plan.conflicts.length, 0);
 });
 
+test("1.3.1 baseline detects the 1.4.0 MINOR distribution and added capability", (t) => {
+  const { root, put } = fixture(t);
+  const oldCore = "Core 1.3.1\n";
+  const newCore = "Core 1.4.0 with BF-066\n";
+  const skill = "---\nname: creative-web-experience\ndescription: Creative direction\n---\n";
+  put(root, ".cn-pilot-version", "1.3.1\n");
+  put(root, ".cn-pilot/CORE.md", oldCore);
+  const installed = manifest("1.3.1", [
+    entry(".cn-pilot-version", "1.3.1\n"),
+    entry(".cn-pilot/CORE.md", oldCore),
+  ]);
+  const latest = manifest("1.4.0", [
+    entry(".cn-pilot-version", "1.4.0\n"),
+    entry(".cn-pilot/CORE.md", newCore),
+    entry(".kilo/skills/creative-web-experience/SKILL.md", skill),
+  ], { addedFiles: [".kilo/skills/creative-web-experience/SKILL.md"] });
+  const plan = planUpdate(root, installed, latest);
+  assert.equal(plan.installedVersion, "1.3.1");
+  assert.equal(plan.latestVersion, "1.4.0");
+  assert.deepEqual(plan.actions.map(({ type, path: name }) => [type, name]), [
+    ["update", ".cn-pilot-version"],
+    ["update", ".cn-pilot/CORE.md"],
+    ["add", ".kilo/skills/creative-web-experience/SKILL.md"],
+  ]);
+  assert.equal(plan.conflicts.length, 0);
+});
+
 test("C: concurrent local and upstream edits conflict without overwrite", (t) => {
   const { root, put } = fixture(t);
   put(root, ".cn-pilot/CORE.md", "local\n");

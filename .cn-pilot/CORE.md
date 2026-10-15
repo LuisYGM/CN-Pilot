@@ -1,6 +1,6 @@
 # CN Pilot Core — Especificación V1.3
 
-**Versión:** `1.3.1`
+**Versión:** `1.4.0`
 
 Documento de referencia para maintainers del CN Pilot. Un usuario nuevo debe empezar por [`docs/START-HERE.md`](docs/START-HERE.md); no necesita leer esta especificación para trabajar.
 
@@ -346,6 +346,10 @@ En Existing primero descubre Figma/tokens/framework/theme/builders/component lib
 Design y Product mantienen la misma intención aprobada, pero Product implementa su sistema mediante la solución nativa al stack (Figma/Design source, CSS, framework theme, WordPress/theme.json, Bricks Variables/Global Classes, Elementor Globals u otra fuente vigente); no exige compartir los mismos archivos. Conserva una sola fuente de verdad en cada fase, traduce tokens/variants/states y no introduzcas un sistema paralelo.
 
 Si los permisos impiden escribir una ruta canónica, se reporta el bloqueo y no se reubica el artefacto en otra carpeta.
+
+### Creative Web Experience (BF-066)
+
+En public web Greenfield/rediseño visual material, UI/UX activa por default `creative-web-experience` para ambición creativa y Creative Quality Gate antes de `VISUAL INTENT STABILIZED`; las skills existentes conservan ownership de sistema, Kit, composición, media, motion e implementación. Application UI/dashboard sigue `application-ui`; Existing localized conserva continuidad; Approved/Strict BF-048 gobierna scope/fidelity. Tras estabilizar, QA conserva BF-063 y no reabre creatividad. No implica imponer efectos, research sin acceso, derechos de assets ni dependencias/tooling del Core.
 
 ## Convenciones estructurales de maquetación
 

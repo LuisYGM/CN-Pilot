@@ -1,0 +1,52 @@
+---
+name: creative-web-experience
+description: Define the creative ambition and brand-grounded direction of a new public web experience or material visual redesign. UI/UX Designer owns the direction; not frontend implementation.
+---
+
+# creative-web-experience
+
+**Owner: UI/UX Designer.** Responde «¿qué hace que esta experiencia sea propia, memorable, visualmente rica y difícil de intercambiar con otra marca?». Define ambición, research acotado, intención visual y Creative Quality Gate; coordina conceptualmente sistema, composición, media, motion y UI Kit. No implementa frontend ni sustituye esas capacidades. Stack-agnostic.
+
+## Trigger y autoridad
+
+Default para una **public web** nueva o rediseño visual material: Home, landing, About, servicios, product marketing, portfolio/case study, ecommerce storefront/product marketing, corporativa, hospitality, restaurantes, real estate, arquitectura, agencia, NGO, B2B, industria/logística, tecnología, campañas y experiencias editoriales públicas; aplica en HTML, frameworks, Laravel frontend, WordPress, Bricks, Elementor, WooCommerce y otros stacks.
+
+No es default para SaaS application UI, dashboard, CRM, backoffice, intranet, portal interno, data-heavy ni admin: usa `application-ui`. En SaaS híbrido, Home pública usa esta skill y dashboard `application-ui`. Excluye microcambios, CSS/metadata/copy localizado, Existing con continuidad cerrada y reproducción Approved/Strict que prescribe completamente el resultado. Existing conserva `continuity > novelty`; BF-048 Approved/Strict gobierna su scope/fidelity y la novedad solo cabe en `may adapt`/scope abierto.
+
+En sitios multipage la primera dirección/rediseño establece lenguaje creativo; páginas derivadas consumen sistemas, referencias, typography, media language y motion language aprobados. No repitas scouting ni redefinas sistemas salvo necesidad material nueva. `page-composition` define silueta específica de cada página.
+
+## Ambición y brand-led exploration
+
+Infiere, no preguntes ni publiques como score por rutina, un nivel de ambición apropiado: **QUIET, REFINED, EXPRESSIVE o IMMERSIVE**, desde identidad, sector, público, posicionamiento, contenido, objetivo/conversión, recursos, contexto, referencias y restricciones. QUIET no es genérico; no fuerces IMMERSIVE, experimento, efectos ni sacrifiques UX/conversión/accesibilidad/performance.
+
+Con identidad/logo/material suficiente, analiza **brand grammar** observable: curvas, ángulos, proporciones, strokes, inclinación, remates, geometría, ritmo, repetición, contraste, carácter tipográfico y relaciones. Traduce propiedades útiles a decisiones visuales concretas —radios, strokes, iconos, masks, separadores, patterns, crops, containers, botones, geometría, transiciones o trayectorias— solo con intención; no uses fórmulas universales.
+
+Conserva anti-default/swap test. Añade dos pruebas: **anti-template**: si cambian logo/copy/fotos, ¿la propuesta se vendería casi intacta a otro sector? Si sí, sigue genérica. **anti-copy**: con referencia Inspiration/Directional, si se cambia la marca del proyecto por la de la referencia, ¿podría confundirse razonablemente con ella? Si sí, extrajiste demasiado poco: toma principios, no clones identidad/composición. Approved/Strict mantiene authority BF-048.
+
+## Research y selección acotados
+
+Para Greenfield/rediseño material sin referencias suficientes ni dirección aprobada, reference scouting es normal si existe acceso web: pocas fuentes relevantes (límite operativo normal seis), explorando contexto/sector y atributos visuales; no colecciones grandes de competidores. Referencias descubiertas son Inspiration/Directional, nunca Approved/Strict. Descompón solo ejes útiles: composition/grid/hierarchy, typography, proporción/jerarquía cromática (no trasplantes color), whitespace/densidad, media treatment, shapes, interacción/motion observable o tono. Extrae únicamente principios materiales; identidad del proyecto manda.
+
+Typography discovery es activa en ese scope si no hay brand font/Approved/Existing que preservar: explora internamente pocas opciones plausibles atendiendo personalidad, display/body, legibilidad, densidad, idioma/caracteres, weights reales, variable axes si aportan, tono, carga y performance. No caer por comodidad en Arial, Georgia, Inter o system-ui, aunque pueden ganar por razones reales. Google Fonts es fuente práctica preferente para descubrir opciones gratuitas/production-friendly, no elección obligatoria. Carga realmente los weights elegidos y conserva fallback; verifica fuente/licencia/consumo oficial vigente cuando sea material. No uses una fuente de origen/licencia inciertos.
+
+Considera si media mejoraría materialmente la experiencia y coordina `visual-art-direction`: inspecciona PROVIDED y EXISTING; considera media externa licenciada/reputada, original creada/generada si capability y autoridad existen, brand-derived graphic art direction o no-media intencional. No agotes opciones ni dependas de red. “No dieron fotos” no equivale a “texto + cards”. Conserva provenance **PROVIDED, EXISTING, APPROVED_EXTERNAL, ORIGINAL_CREATED, PENDING**, source/uso/límites suficientes para el siguiente owner; stock/editorial puede crear atmósfera, no afirmar que representa empleados, oficinas, instalaciones, producto o trabajo del cliente sin evidencia. No inventes disponibilidad, derechos ni investigación.
+
+Sin fotografía adecuada, considera visual moment gráfico basado en identidad: fragmentos de isotipo, geometría, trazos, patterns, composición tipográfica, masks, color fields, branded shapes, collage o sistemas ilustrativos. No finjas personas, productos, espacios, mapas, datos, instalaciones o arquitectura reales sin evidencia.
+
+Cuando hay muchos iconos funcionales, prefiere una familia profesional coherente por proyecto/sistema; logos/brand marks pueden usar fuente separada apropiada. Posibles opciones a validar según stack/necesidad: Lucide (ISC; paquetes vanilla/framework y tree-shaking documentados), Tabler Icons (MIT; sistema consistente 24×24/stroke 2), Phosphor (MIT en su repositorio core; estilos/weights como vocabulario alternativo) y Simple Icons (CC0 copyright para iconos de marcas; no concede derechos de trademark). Selecciona según necesidad, verifica fuente oficial/licencia/consumo antes de formalizar nombres y no fijes versiones. No instales globalmente ni todas las librerías; los términos del icono no eliminan posibles derechos de marca registrada. Custom SVG se justifica por identidad, ausencia de concepto en el pack o lenguaje definido; comparte grid, stroke/fill, peso, esquinas, alineación óptica, viewBox, sizing y semántica. No inventes iconos inconexos.
+
+Sin web/capability, no bloquees: informa brevemente qué research no pudo hacerse, usa identidad/contenido/recursos disponibles y decide profesionalmente. No afirmes investigación, disponibilidad o licencia no verificadas. Scouting es una ronda acotada, no un estudio por página.
+
+## Composición y motion intent
+
+Toda región material justifica su función en journey/contenido y su composición; una lista de tres elementos no implica tres cards. Vocabulario posible, no checklist/templates: editorial grids, asimetría controlada, display type, capas, full-bleed/masked media, collage/mixed media, sticky/horizontal storytelling, scroll-linked media, grids modulares irregulares, split-screen, typography sections, floating media, paneles apilados, comparación interactiva, timelines visuales, sistemas ilustrativos, macro-details, secuencias cinematográficas, media por hover/focus, galerías, whitespace y progresión sticky. Elige lo que sirva contenido/marca/conversión y sea viable, usable y responsive. Sitúa un memorable moment cuando el contexto lo permita; puede ser sutil, no es cuota ni espectáculo.
+
+En public web Greenfield/material redesign **motion direction siempre se considera explícitamente**, aunque el resultado sea NONE/mínimo/sutil/refinado/expresivo/inmersivo. Evalúa proporcionalmente hero choreography, reveal, scroll-responsive media/depth, transición, sticky narrative, gesto de marca, SVG/path, mask reveal, kinetic type, microinteraction, reacción hover/focus o cierre; no acumules efectos. Deriva personality de brand signals (sobriedad, energía, precisión, editorialidad, organicidad, lujo, tecnología, juego, ritmo) a easing/tempo/duration/distance/scale/stagger/overshoot/secuencia/scroll coupling, sin valores universales/presets. **Signature Motion** es gesto opcional ligado a identidad que perdería sentido al cambiar marca; considera rima sutil si aporta, no repetición por cuota. Jerarquiza intensidad; conserva calm zones en forms, pricing, checkout, comparación, lectura densa, decisiones críticas y legal/compliance; evita movimiento continuo competitivo. `motion-interaction` decide implementación; capacidad mínima/native-first, reduced motion, performance y lifecycle prevalecen.
+
+## Creative Quality Gate (pre-BF-063)
+
+Antes de `VISUAL INTENT STABILIZED`, evalúa internamente: idea reconocible; typography elegida para el proyecto; composición dominante con identidad; ritmo/secuencia intencionales; módulos no repetidos por comodidad; media/art direction considerada; motion direction considerada; memorable moment si el contexto lo permite; brand grammar si aporta; anti-template; anti-copy con inspiración; production feasibility; UX/accesibilidad/responsive/contenido/conversión; y ausencia de template intercambiable de IA.
+
+Si queda genericidad material con mejora razonable, haz **una sola Creative Refinement Pass focalizada** en ejes débiles, sin decoración aleatoria, y reevalúa. Si limita assets, acceso, authority, contenido o stack, entrega la mejor solución viable y reporta límite. Solo entonces declara dirección coherente/presentable y `VISUAL INTENT STABILIZED`. Después aplica BF-063: QA verifica defectos objetivos, no reabre creatividad. Ambición nunca degrada semántica, teclado/foco, reduced motion, visibilidad esencial, responsive o performance. En marketing/static donde JS se usa principalmente para motion, contenido esencial sigue visible si animación no inicializa razonablemente; esto no obliga a que toda SPA funcione sin JS.
+
+Entrega handoff compacto a Dev Lead/Frontend: tesis/ambición si aporta, brand grammar, principios/source/authority propuestos, fuentes, media/provenance, icon family, composición/momentos, motion direction/personality, limitaciones y decisiones abiertas. No escribe Project Context root ni implementa Product.

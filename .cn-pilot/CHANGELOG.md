@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.4.0] - 2026-10-15
+
+Release MINOR backward-compatible que incorpora BF-066.
+
+### Añadido
+
+- **BF-066 — Creative Web Experience:** nueva capability default para public web Greenfield/rediseño material con brand grammar, reference scouting, typography/media/icon discovery, vocabulario compositivo, motion direction/personality/signature opcional y Creative Quality Gate pre-`VISUAL INTENT STABILIZED`. Existing localized, Application UI y Approved/Strict conservan continuidad/routing/authority; scouting acotado, sin QA runner ni dependencies.
+
 ## [1.3.1] - 2026-10-13
 
 Parche backward-compatible del Core.

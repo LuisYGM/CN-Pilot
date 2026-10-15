@@ -16,10 +16,10 @@ No activar para un CSS/copy change puntual, metadata, una página con composici�
 ## Resolver la silueta de página
 
 1. Define la prioridad visual y qué debe comprender/hacer la persona en el primer viewport; ordena después la página por su recorrido real, no por un inventario de componentes.
-2. Agrupa contenido por propósito/relación y decide jerarquía entre secciones. Esboza una silueta/ritmo: anchuras, densidad, alineación, espacio, contraste y transiciones; permite variación intencional entre páginas de objetivos distintos.
+2. Agrupa contenido por propósito/relación y decide jerarquía entre secciones. Justifica función y composición de cada región material antes de elegir módulos. Esboza silueta/ritmo (anchuras, densidad, alineación, espacio, contraste, transiciones) y variación intencional. Considera, según contexto, editorial grids, controlled asymmetry, display type, capas, full-bleed/masked media, collage/mixed media, sticky/horizontal storytelling, scroll-linked media, grids irregulares, split-screen, typography sections, floating media, stacked panels, comparación interactiva, timelines, sistemas ilustrativos, macro-details, secuencias cinematográficas, media hover/focus, galerías, whitespace y progresión sticky. Es vocabulario, no checklist/templates; selecciona solo lo adecuado a contenido/marca/conversión/stack/uso/responsive.
 3. Asigna media a su función: evidencia, atmósfera, producto, narrativa o comprensión. Coordina el placement/framing con `visual-art-direction` cuando la dirección de medios sea material; no sustituyas una imagen ausente con ornamento genérico.
 4. Elige cada vez container restringido, full-bleed, grid editorial, split, asimetría, simetría o whitespace por contenido/identidad. Un statement, quote, cifra o media puede romper ritmo si tiene significado. El CTA/cierre se deriva del journey y no se repite mecánicamente.
-5. Contrasta con UI Kit aprobado: reutiliza su gramática sin hacer que toda página tenga la misma silueta. No añadas card grids ni secciones solo para exhibir componentes.
+5. Contrasta con UI Kit aprobado: reutiliza su gramática sin hacer que toda página tenga la misma silueta. No añadas card grids ni secciones solo para exhibir componentes. Detecta módulos repetidos por comodidad, varía ritmo intencionalmente y ubica un memorable moment cuando journey/contenido lo permitan; no es cuota ni espectáculo.
 
 ## Evitar plantillas previsibles
 
