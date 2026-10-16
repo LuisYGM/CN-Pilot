@@ -289,3 +289,30 @@ test("No-op closure preserves durable decisions, visual authority, and active-ta
   assert.match(closure, /Decisiones durables comunicadas junto al cierre se persisten/);
   assert.match(closure, /active-task\.json` sigue preservando tareas activas, interrumpidas o bloqueadas/);
 });
+
+test("Dev Lead checkpoint writer matches updater's minimum recovery contract", () => {
+  const core = fs.readFileSync(new URL("../CORE.md", import.meta.url), "utf8");
+  const devLead = fs.readFileSync(new URL("../../.kilo/agents/dev-lead.md", import.meta.url), "utf8");
+  const recovery = core.slice(core.indexOf("### Completion-Driven Execution & Recovery (BF-047)"), core.indexOf("### No-op / Silent Closure"));
+
+  for (const field of ["schemaVersion: 1", "`status`", "`objective`", "`nextAction`", "BLOCKED_HUMAN", "BLOCKED_EXTERNAL", "INTERRUPTED"]) {
+    assert.ok(recovery.includes(field), `BF-047 describes ${field}`);
+  }
+  assert.match(devLead, /schemaVersion: 1.*status.*objective.*nextAction/s);
+  assert.match(recovery, /reader conserva además `BLOCKED` para compatibilidad/);
+  assert.match(recovery, /`COMPLETED` se elimina al cerrar todos los gates/);
+});
+
+test("update commands require deterministic filesystem discovery and preserve silent closure", () => {
+  const status = fs.readFileSync(new URL("../../.kilo/commands/cn-status.md", import.meta.url), "utf8");
+  const update = fs.readFileSync(new URL("../../.kilo/commands/cn-update.md", import.meta.url), "utf8");
+  const updates = fs.readFileSync(new URL("../docs/UPDATES.md", import.meta.url), "utf8");
+
+  assert.match(status, /No uses `Glob`/);
+  assert.match(update, /No uses `Glob`/);
+  assert.match(updates, /rev-parse/);
+  assert.match(updates, /--show-toplevel/);
+  assert.match(updates, /fs\.lstatSync/);
+  assert.match(updates, /Solo updater realmente ausente clasifica como `LEGACY`/);
+  assert.match(updates, /inválido bloquea.*sin reparar/s);
+});

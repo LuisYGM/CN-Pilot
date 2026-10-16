@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.5.2] - 2026-10-16
+
+Parche backward-compatible del Core.
+
+### Corregido
+
+- **Updater root discovery:** `/cn-status` y `/cn-update` resuelven el Git root y revisan los paths de updater/manifest con filesystem literal, distinguiendo legacy real, baseline ausente, manifiesto inválido y errores de root/paths unsafe; el CLI encuentra el root desde subdirectorios.
+- **Checkpoint BF-047:** contrato mínimo obligatorio `schemaVersion: 1`, `status`, `objective` y `nextAction` para tareas abiertas; writer/reader alineados, compatibilidad de lectura con `BLOCKED` histórico y `COMPLETED` terminal legacy, con diagnósticos de validación específicos. Checkpoints inválidos siguen bloqueando update sin reparación. Retests de filesystem, root, lifecycle y Silent Closure PASS; sin rediseño del updater.
+
 ## [1.5.1] - 2026-10-16
 
 Parche backward-compatible del Core.

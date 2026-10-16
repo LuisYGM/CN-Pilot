@@ -2,6 +2,16 @@
 
 CN Pilot se actualiza solo por solicitud explícita. `/cn-status` consulta la rama estable `main`; `/cn-update` instala archivos framework gestionados, verifica Core QA y crea un commit local. No hay auto-update, polling, channels alternativos, GitHub Releases, tags ni push.
 
+## Preflight determinista de `/cn-status` y `/cn-update`
+
+Antes de invocar el updater, determina el Git root real y comprueba los paths literales con Node filesystem (nunca `Glob`). Desde cualquier subdirectorio Git, este probe read-only clasifica los paths sin depender del cwd relativo:
+
+```sh
+node -e "const fs=require('node:fs'),path=require('node:path'),cp=require('node:child_process');let root;try{root=cp.execFileSync('git',['rev-parse','--show-toplevel'],{encoding:'utf8'}).trim()}catch(e){console.error('GIT_ROOT_NOT_FOUND: '+(e.code||e.message));process.exit(2)}console.log('Git root: '+root);for(const p of ['.cn-pilot/update/updater.mjs','.cn-pilot/update/manifest.json']){try{const s=fs.lstatSync(path.join(root,...p.split('/')));console.log(p+': '+(s.isFile()&&!s.isSymbolicLink()?'present':'UNSAFE'))}catch(e){console.log(p+': '+(e.code==='ENOENT'?'missing':'ERROR '+(e.code||e.message)))}}"
+```
+
+Solo updater realmente ausente clasifica como `LEGACY`. Updater presente + manifest ausente es `MANIFEST_MISSING`/baseline ausente (bootstrap manual explícito); manifest existente se valida, y corrupción/schema/hash/runtime unsafe se informa como error bloqueante, nunca como legacy. Root no determinable es error explícito. Con root válido, ejecutar `node "<root>/.cn-pilot/update/updater.mjs" status --target "<root>"` o `update --target "<root>"`; status informa aunque haya checkpoint bloqueante, update lo bloquea. El CLI también descubre el root automáticamente cuando no se pasa `--target`; un target explícito debe ser el root.
+
 ## Ownership
 
 La distribución de `.cn-pilot/update/manifest.json` registra SemVer, source repository/branch/commit, compatibilidad mínima, migraciones y el inventario exacto con SHA-256 de los archivos administrados. El hash normaliza únicamente CRLF→LF para que line endings de Windows no aparezcan como personalización. El manifiesto es metadata baseline y no se incluye a sí mismo en su lista (evita un hash recursivo); su estructura y versión se validan por separado.
@@ -12,11 +22,11 @@ Project-owned y fuera de overwrite automático: Project Context (`PROJECT.md`, `
 
 ## `/cn-status`
 
-Solo bajo invocación manual: clona shallow la rama `main` canónica a un subdirectorio temporal dentro de `.cn-pilot/runtime/`, verifica repo/branch/manifest/hashes y limpia el temporal. No cambia tracked files, versión, configuración Git ni remotes del proyecto. Informa versión instalada/latest, compatibilidad de Node/Kilo, baseline, cambios locales, conflictos, migraciones y active task. El source commit real se obtiene del checkout temporal; el campo `sourceCommit` del manifest puede ser `null` al generarse antes del commit que incorpora la distribución, evitando autorreferencia.
+Solo bajo invocación manual: descubre el Git root y hace el preflight literal anterior; después clona shallow la rama `main` canónica a un subdirectorio temporal dentro de `.cn-pilot/runtime/`, verifica repo/branch/manifest/hashes y limpia el temporal. No cambia tracked files, versión, configuración Git ni remotes del proyecto. Informa versión instalada/latest, compatibilidad de Node/Kilo, baseline, cambios locales, conflictos, migraciones y active task. Un checkpoint inválido se informa como `INVALID` con razón concreta. El source commit real se obtiene del checkout temporal; el campo `sourceCommit` del manifest puede ser `null` al generarse antes del commit que incorpora la distribución, evitando autorreferencia.
 
 ## `/cn-update`
 
-El comando exige invocación explícita. Preflight exige Git en su raíz, branch y HEAD disponibles, ausencia de tracked changes y ausencia de `ACTIVE`, `INTERRUPTED`, `BLOCKED`/`BLOCKED_*` o `FAILED` en `active-task.json`. Un checkpoint ausente es válido. Untracked files no bloquean salvo colisión con un archivo a agregar/reemplazar. No hay stash, reset, clean, remote persistente, pull, merge o Git remoto mutante.
+El comando exige invocación explícita. Preflight resuelve el Git root real, requiere branch y HEAD disponibles, ausencia de tracked changes y ausencia de `ACTIVE`, `INTERRUPTED`, `BLOCKED`/`BLOCKED_*` o `FAILED` en `active-task.json`. Un checkpoint ausente es válido. Un checkpoint de tarea abierta requiere objeto, `schemaVersion: 1`, enum `status`, `objective` y `nextAction` no vacíos; inválido bloquea con causa concreta, sin reparar, inferir, borrar o sobrescribir. Reader acepta `BLOCKED` heredado bajo el schema y `COMPLETED` histórico como terminal legacy sin campos de recovery; writers emiten solo `ACTIVE`, `INTERRUPTED`, `BLOCKED_HUMAN`, `BLOCKED_EXTERNAL` o `FAILED`, y eliminan al completar. Untracked files no bloquean salvo colisión con un archivo a agregar/reemplazar. No hay stash, reset, clean, remote persistente, pull, merge o Git remoto mutante.
 
 El plan compara `local` vs baseline instalada vs hashes de `main`. Se actualiza cuando local coincide con baseline y upstream cambió; se agregan archivos nuevos sin colisión y se elimina un archivo solo si local coincide con baseline y upstream lo retiró. Modificaciones locales cuyo upstream no cambió, y borrados locales cuyo upstream no cambió, se preservan mientras avanza la baseline. Cambios divergentes concurrentes, paths symlink/unsafe y colisiones se reportan y bloquean antes del primer write. No hay merge automático.
 

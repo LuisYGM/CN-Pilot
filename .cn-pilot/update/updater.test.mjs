@@ -15,6 +15,7 @@ import {
   commitManagedUpdate,
   hashBytes,
   inspectGit,
+  inspectInstallation,
   planLegacyBootstrap,
   planUpdate,
   validateManifest,
@@ -53,6 +54,10 @@ function manifest(version, entries, changes = {}) {
 }
 
 function entry(relative, content) { return { path: relative, sha256: hashBytes(Buffer.from(content), relative) }; }
+
+function activeCheckpoint(status = "ACTIVE", overrides = {}) {
+  return { schemaVersion: 1, status, objective: "Recuperar tarea de prueba", nextAction: "Continuar gates pendientes", ...overrides };
+}
 
 function writeManifestFile(root, value) {
   const file = path.join(root, ...MANIFEST_PATH.split("/"));
@@ -169,6 +174,18 @@ test("1.4.0 baseline detects the 1.5.0 MINOR discovery update as available", (t)
   assert.equal(plan.conflicts.length, 0);
 });
 
+test("1.5.1 baseline detects the compatible 1.5.2 PATCH as available", (t) => {
+  const { root, put } = fixture(t);
+  put(root, ".cn-pilot-version", "1.5.1\n");
+  put(root, ".cn-pilot/CORE.md", "Core 1.5.1\n");
+  const installed = manifest("1.5.1", [entry(".cn-pilot-version", "1.5.1\n"), entry(".cn-pilot/CORE.md", "Core 1.5.1\n")]);
+  const latest = manifest("1.5.2", [entry(".cn-pilot-version", "1.5.2\n"), entry(".cn-pilot/CORE.md", "Core 1.5.2\n")]);
+  const plan = planUpdate(root, installed, latest);
+  assert.equal(plan.installedVersion, "1.5.1");
+  assert.equal(plan.latestVersion, "1.5.2");
+  assert.deepEqual(plan.actions.map(({ type, path: name }) => [type, name]), [["update", ".cn-pilot-version"], ["update", ".cn-pilot/CORE.md"]]);
+});
+
 test("C: concurrent local and upstream edits conflict without overwrite", (t) => {
   const { root, put } = fixture(t);
   put(root, ".cn-pilot/CORE.md", "local\n");
@@ -270,33 +287,57 @@ test("H2: updater blocks dirty tracked tree before consulting source or writing"
   assert.equal(fs.readFileSync(path.join(root, "tracked.txt"), "utf8"), before);
 });
 
-test("I: active pending task blocks, absence and completed task do not", (t) => {
+test("I: active-task schema, lifecycle statuses, and actionable diagnostics", (t) => {
   const { root, put } = fixture(t);
-  // Case A: neither runtime nor checkpoint exists.
   assert.deepEqual(checkActiveTask(root), { exists: false, blocked: false, status: "none" });
-  put(root, ".cn-pilot/runtime/active-task.json", '{"status":"ACTIVE"}\n');
-  // Case C: a valid pending checkpoint remains detectable.
-  assert.equal(checkActiveTask(root).blocked, true);
-  put(root, ".cn-pilot/runtime/active-task.json", '{"status":\n');
-  // Case D: malformed content is not treated as “none”.
-  assert.deepEqual(checkActiveTask(root), { exists: true, blocked: true, status: "unreadable" });
-  put(root, ".cn-pilot/runtime/active-task.json", '{"status":"UNRECOGNIZED"}\n');
-  // Invalid schema/status is also an explicit blocker, not an ignored state.
-  assert.deepEqual(checkActiveTask(root), { exists: true, blocked: true, status: "invalid" });
-  put(root, ".cn-pilot/runtime/active-task.json", '{"status":"COMPLETED"}\n');
+  for (const status of ["ACTIVE", "INTERRUPTED", "BLOCKED", "BLOCKED_HUMAN", "BLOCKED_EXTERNAL", "FAILED"]) {
+    put(root, ".cn-pilot/runtime/active-task.json", `${JSON.stringify(activeCheckpoint(status))}\n`);
+    const result = checkActiveTask(root);
+    assert.equal(result.status, status);
+    assert.equal(result.blocked, true);
+  }
+  put(root, ".cn-pilot/runtime/active-task.json", `${JSON.stringify(activeCheckpoint("COMPLETED"))}\n`);
   assert.equal(checkActiveTask(root).blocked, false);
+  put(root, ".cn-pilot/runtime/active-task.json", '{"status":"COMPLETED"}\n');
+  assert.deepEqual(checkActiveTask(root), { exists: true, blocked: false, status: "COMPLETED" }, "historical terminal checkpoints remain readable without recovery-only fields");
+  put(root, ".cn-pilot/runtime/active-task.json", `${JSON.stringify(activeCheckpoint("UNKNOWN"))}\n`);
+  assert.match(checkActiveTask(root).reason, /unsupported status/);
+  put(root, ".cn-pilot/runtime/active-task.json", `${JSON.stringify({ ...activeCheckpoint(), schemaVersion: undefined })}\n`);
+  assert.match(checkActiveTask(root).reason, /missing required field "schemaVersion"/);
+  put(root, ".cn-pilot/runtime/active-task.json", `${JSON.stringify({ ...activeCheckpoint(), status: undefined })}\n`);
+  assert.match(checkActiveTask(root).reason, /missing required field "status"/);
+  put(root, ".cn-pilot/runtime/active-task.json", `${JSON.stringify({ objective: "Review in progress", mode: "STRUCTURAL", resume_state: "qa_done", environment: {}, working_tree: {}, sources_and_evidence: [], qa_plan: {}, gates: {}, next_step: "Wait for Human Visual Review" })}\n`);
+  assert.match(checkActiveTask(root).reason, /missing required field "status"/);
+  put(root, ".cn-pilot/runtime/active-task.json", `${JSON.stringify(activeCheckpoint("ACTIVE", { schemaVersion: 99 }))}\n`);
+  assert.match(checkActiveTask(root).reason, /unsupported schemaVersion/);
+  put(root, ".cn-pilot/runtime/active-task.json", `${JSON.stringify(activeCheckpoint("ACTIVE", { objective: " " }))}\n`);
+  assert.match(checkActiveTask(root).reason, /objective/);
+  put(root, ".cn-pilot/runtime/active-task.json", `${JSON.stringify(activeCheckpoint("ACTIVE", { nextAction: "" }))}\n`);
+  assert.match(checkActiveTask(root).reason, /nextAction/);
+  put(root, ".cn-pilot/runtime/active-task.json", "[]\n");
+  assert.match(checkActiveTask(root).reason, /invalid root/);
+  put(root, ".cn-pilot/runtime/active-task.json", '{"status":\n');
+  assert.match(checkActiveTask(root).reason, /corrupt JSON/);
 });
 
 test("I2: pending active task blocks updater before source access", async (t) => {
   const { root, put } = fixture(t);
   put(root, "tracked.txt", "base\n");
   initRepo(root, ["tracked.txt"]);
-  put(root, ".cn-pilot/runtime/active-task.json", '{"status":"BLOCKED_HUMAN"}\n');
+  put(root, ".cn-pilot/runtime/active-task.json", `${JSON.stringify(activeCheckpoint("BLOCKED_HUMAN"))}\n`);
   let stderr = "";
   const code = await runCli(["update", "--target", root, "--source-dir", path.join(root, "missing-source")], { stderr: { write: (value) => { stderr += value; } }, stdout: { write() {} } });
   assert.equal(code, 1);
   assert.match(stderr, /ACTIVE_TASK/);
-  assert.equal(fs.readFileSync(path.join(root, ".cn-pilot/runtime/active-task.json"), "utf8"), '{"status":"BLOCKED_HUMAN"}\n');
+  assert.equal(JSON.parse(fs.readFileSync(path.join(root, ".cn-pilot/runtime/active-task.json"), "utf8")).status, "BLOCKED_HUMAN");
+
+  put(root, ".cn-pilot/runtime/active-task.json", `${JSON.stringify({ schemaVersion: 1, objective: "Human review", nextAction: "Wait" })}\n`);
+  stderr = "";
+  const invalidCode = await runCli(["update", "--target", root, "--source-dir", path.join(root, "missing-source")], { stderr: { write: (value) => { stderr += value; } }, stdout: { write() {} } });
+  assert.equal(invalidCode, 1);
+  assert.match(stderr, /missing required field "status"/);
+  assert.match(stderr, /ACTIVE_TASK/);
+  assert.equal(JSON.parse(fs.readFileSync(path.join(root, ".cn-pilot/runtime/active-task.json"), "utf8")).status, undefined, "invalid checkpoint is not repaired");
 });
 
 test("J: upstream source hash mismatch blocks before target writes", (t) => {
@@ -344,7 +385,99 @@ test("active-task probe fails closed when runtime is a symlink", (t) => {
   fs.mkdirSync(path.join(root, ".cn-pilot"), { recursive: true });
   try { fs.symlinkSync(outside.root, path.join(root, ".cn-pilot/runtime"), process.platform === "win32" ? "junction" : "dir"); }
   catch (error) { t.skip(`directory symlink unavailable (${error.code})`); return; }
-  assert.deepEqual(checkActiveTask(root), { exists: true, blocked: true, status: "unsafe-runtime" });
+  assert.deepEqual(checkActiveTask(root), { exists: true, blocked: true, status: "INVALID", reason: "unsafe runtime: path is a symlink" });
+});
+
+test("literal updater/manifest detection distinguishes managed, legacy, baseline, invalid, and Git root", (t) => {
+  const { root, put } = fixture(t);
+  put(root, "tracked.txt", "fixture\n");
+  initRepo(root, ["tracked.txt"]);
+  const subdirectory = path.join(root, "nested", "cwd");
+  fs.mkdirSync(subdirectory, { recursive: true });
+  assert.deepEqual(inspectInstallation(subdirectory), { root, status: "LEGACY" });
+
+  put(root, ".cn-pilot/update/updater.mjs", "fixture updater\n");
+  assert.equal(fs.existsSync(path.join(root, ".cn-pilot/update/updater.mjs")), true); // Literal filesystem check; no glob result participates.
+  assert.deepEqual(inspectInstallation(root), { root, status: "MANIFEST_MISSING" });
+
+  writeManifestFile(root, manifest("1.5.1", []));
+  assert.deepEqual(inspectInstallation(root), { root, status: "MANAGED" });
+  put(root, MANIFEST_PATH, "{broken\n");
+  const invalid = inspectInstallation(root);
+  assert.equal(invalid.status, "MANIFEST_INVALID");
+  assert.match(invalid.reason, /INVALID_MANIFEST/);
+  assert.throws(() => inspectInstallation(os.tmpdir()), { code: "GIT_ROOT_NOT_FOUND" });
+});
+
+test("status reports missing or corrupt baseline without misclassifying updater as legacy", async (t) => {
+  const { root, put } = fixture(t);
+  put(root, "tracked.txt", "fixture\n");
+  put(root, ".cn-pilot-version", "1.5.1\n");
+  put(root, ".cn-pilot/update/updater.mjs", "fixture updater\n");
+  initRepo(root, ["tracked.txt", ".cn-pilot-version", ".cn-pilot/update/updater.mjs"]);
+  for (const [manifestContents, expected] of [[null, /MANIFEST_MISSING/], ["{broken\n", /MANIFEST_INVALID.*not valid JSON/s]]) {
+    if (manifestContents === null) fs.rmSync(path.join(root, ...MANIFEST_PATH.split("/")), { force: true });
+    else put(root, MANIFEST_PATH, manifestContents);
+    let stdout = ""; let stderr = "";
+    const code = await runCli(["status", "--target", root, "--source-dir", path.join(root, "missing-source")], { stdout: { write: (value) => { stdout += value; } }, stderr: { write: (value) => { stderr += value; } } });
+    assert.equal(code, 0, stderr);
+    assert.match(stdout, expected);
+    assert.doesNotMatch(stdout, /LEGACY BOOTSTRAP REQUIRED/);
+  }
+});
+
+test("unsafe updater or manifest symlinks are not classified as legacy", (t) => {
+  const { root, put } = fixture(t); const outside = fixture(t);
+  put(root, "tracked.txt", "fixture\n"); initRepo(root, ["tracked.txt"]);
+  put(outside.root, "updater.mjs", "fixture\n");
+  fs.mkdirSync(path.join(root, ".cn-pilot/update"), { recursive: true });
+  try { fs.symlinkSync(path.join(outside.root, "updater.mjs"), path.join(root, ".cn-pilot/update/updater.mjs")); }
+  catch (error) { t.skip(`file symlink unavailable (${error.code})`); return; }
+  assert.throws(() => inspectInstallation(root), { code: "UNSAFE_INSTALLATION_PATH" });
+
+  fs.rmSync(path.join(root, ".cn-pilot/update/updater.mjs"));
+  put(root, ".cn-pilot/update/updater.mjs", "fixture updater\n");
+  put(outside.root, "manifest.json", `${JSON.stringify(manifest("1.5.1", []))}\n`);
+  try { fs.symlinkSync(path.join(outside.root, "manifest.json"), path.join(root, MANIFEST_PATH)); }
+  catch (error) { t.skip(`manifest symlink unavailable (${error.code})`); return; }
+  assert.equal(inspectInstallation(root).status, "UNSAFE_MANIFEST");
+});
+
+test("unsafe active-task file symlink blocks with an explicit reason", (t) => {
+  const { root, put } = fixture(t); const outside = fixture(t);
+  put(root, ".cn-pilot/runtime/outside.json", "{}\n");
+  fs.mkdirSync(path.join(outside.root, ".cn-pilot/runtime"), { recursive: true });
+  put(outside.root, ".cn-pilot/runtime/active-task.json", `${JSON.stringify(activeCheckpoint())}\n`);
+  try { fs.symlinkSync(path.join(outside.root, ".cn-pilot/runtime/active-task.json"), path.join(root, ".cn-pilot/runtime/active-task.json")); }
+  catch (error) { t.skip(`file symlink unavailable (${error.code})`); return; }
+  const result = checkActiveTask(root);
+  assert.equal(result.status, "INVALID");
+  assert.match(result.reason, /unsafe task file/);
+});
+
+test("removing a closed ignored checkpoint causes no tracked diff or new commit", (t) => {
+  const { root, put } = fixture(t);
+  put(root, ".gitignore", "/.cn-pilot/runtime/\n");
+  put(root, "tracked.txt", "unchanged\n");
+  initRepo(root, [".gitignore", "tracked.txt"]);
+  const head = execFileSync("git", ["rev-parse", "HEAD"], { cwd: root, encoding: "utf8" }).trim();
+  put(root, ".cn-pilot/runtime/active-task.json", `${JSON.stringify(activeCheckpoint("BLOCKED_HUMAN"))}\n`);
+  assert.equal(checkActiveTask(root).blocked, true);
+  fs.rmSync(path.join(root, ".cn-pilot/runtime/active-task.json"));
+  assert.deepEqual(checkActiveTask(root), { exists: false, blocked: false, status: "none" });
+  assert.equal(execFileSync("git", ["status", "--porcelain"], { cwd: root, encoding: "utf8" }), "");
+  assert.equal(execFileSync("git", ["rev-parse", "HEAD"], { cwd: root, encoding: "utf8" }).trim(), head);
+});
+
+test("update preflight proceeds past an absent/closed checkpoint", async (t) => {
+  const { root, put } = fixture(t);
+  put(root, ".gitignore", "/.cn-pilot/runtime/\n"); put(root, "tracked.txt", "unchanged\n");
+  initRepo(root, [".gitignore", "tracked.txt"]);
+  let stderr = "";
+  const code = await runCli(["update", "--target", root, "--source-dir", path.join(root, "missing-source")], { stderr: { write: (value) => { stderr += value; } }, stdout: { write() {} } });
+  assert.equal(code, 1);
+  assert.doesNotMatch(stderr, /ACTIVE_TASK/);
+  assert.match(stderr, /MANIFEST_MISSING|COMMAND_FAILED/);
 });
 
 test("legacy cleanup removes only its exact temp source and preserves other runtime state", (t) => {
@@ -466,10 +599,12 @@ test("status with same version is read-only and does not create a remote", async
   execFileSync("git", ["remote", "add", "origin", "https://github.com/LuisYGM/cn-pilot.git"], { cwd: source.root });
   target.put(target.root, ".cn-pilot-version", "1.4.0\n");
   target.put(target.root, ".cn-pilot/CORE.md", content);
-  // Case B/E: runtime exists but the optional checkpoint file does not.
+  target.put(target.root, ".cn-pilot/update/updater.mjs", "fixture updater\n");
+  // Case: runtime exists but the optional checkpoint file does not.
   fs.mkdirSync(path.join(target.root, ".cn-pilot/runtime"), { recursive: true });
   writeManifestFile(target.root, upstream);
-  initRepo(target.root, [".cn-pilot-version", ".cn-pilot/CORE.md", MANIFEST_PATH]);
+  target.put(target.root, ".gitignore", "/.cn-pilot/runtime/\n");
+  initRepo(target.root, [".cn-pilot-version", ".cn-pilot/CORE.md", ".cn-pilot/update/updater.mjs", MANIFEST_PATH, ".gitignore"]);
   const before = execFileSync("git", ["status", "--porcelain"], { cwd: target.root, encoding: "utf8" });
   let stdout = ""; let stderr = "";
   const code = await runCli(["status", "--target", target.root, "--source-dir", source.root], { stdout: { write: (value) => { stdout += value; } }, stderr: { write: (value) => { stderr += value; } } });
@@ -480,6 +615,32 @@ test("status with same version is read-only and does not create a remote", async
   assert.match(stdout, /Kilo PASS/);
   assert.equal(execFileSync("git", ["status", "--porcelain"], { cwd: target.root, encoding: "utf8" }), before);
   assert.equal(execFileSync("git", ["remote"], { cwd: target.root, encoding: "utf8" }), "");
+
+  const nested = path.join(target.root, "nested", "cwd");
+  fs.mkdirSync(nested, { recursive: true });
+  const previousCwd = process.cwd();
+  try {
+    process.chdir(nested);
+    stdout = ""; stderr = "";
+    const nestedCode = await runCli(["status", "--source-dir", source.root], { stdout: { write: (value) => { stdout += value; } }, stderr: { write: (value) => { stderr += value; } } });
+    assert.equal(nestedCode, 0, stderr);
+    assert.match(stdout, /Installed: 1\.4\.0/);
+  } finally { process.chdir(previousCwd); }
+
+  target.put(target.root, ".cn-pilot/runtime/active-task.json", `${JSON.stringify(activeCheckpoint("BLOCKED_HUMAN"))}\n`);
+  stdout = ""; stderr = "";
+  const blockedStatusCode = await runCli(["status", "--target", target.root, "--source-dir", source.root], { stdout: { write: (value) => { stdout += value; } }, stderr: { write: (value) => { stderr += value; } } });
+  assert.equal(blockedStatusCode, 0, stderr);
+  assert.match(stdout, /Active task: BLOCKED_HUMAN/);
+  assert.equal(execFileSync("git", ["status", "--porcelain"], { cwd: target.root, encoding: "utf8" }), before);
+
+  target.put(target.root, ".cn-pilot/runtime/active-task.json", `${JSON.stringify({ objective: "Human review", nextAction: "Wait" })}\n`);
+  stdout = ""; stderr = "";
+  const invalidStatusCode = await runCli(["status", "--target", target.root, "--source-dir", source.root], { stdout: { write: (value) => { stdout += value; } }, stderr: { write: (value) => { stderr += value; } } });
+  assert.equal(invalidStatusCode, 0, stderr);
+  assert.match(stdout, /Active task: INVALID/);
+  assert.match(stdout, /Active task reason: missing required field "status"/);
+  assert.equal(execFileSync("git", ["status", "--porcelain"], { cwd: target.root, encoding: "utf8" }), before);
 });
 
 test("end-to-end local source → plan → apply → Core QA → versioned commit", async (t) => {

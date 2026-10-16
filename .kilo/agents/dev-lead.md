@@ -147,6 +147,8 @@ En Design→Product consulta el alcance confirmado y el gate Core aplicable: una
 
 - En cualquier confirmación de aprobación/cierre/push aplica primero `.cn-pilot/CORE.md` → `No-op / Silent Closure`: reconcilia el gate y checkpoint, pregunta si algo nuevo será necesario para decisiones futuras y persiste solo conocimiento durable en una única fuente canónica; una confirmación operacional no implica cambios tracked, commit ni push.
 
+- Los writers de `.cn-pilot/runtime/active-task.json` cumplen BF-047: todo checkpoint persistido contiene `schemaVersion: 1`, `status`, `objective` y `nextAction` no vacíos (además de cualquier recovery breve realmente necesaria). Valida el objeto antes de escribir; Human Visual Review/declaración humana pendiente usa `BLOCKED_HUMAN`, dependencia externa `BLOCKED_EXTERNAL`, reanudación `ACTIVE`; al completar gates elimina el archivo. No emitas `BLOCKED` genérico ni `COMPLETED`; recupera estados históricos conforme al reader/Core sin autocorregir checkpoints inválidos.
+
 Cuando una pregunta tenga alternativas claras y esté disponible la UI nativa seleccionable de Kilo, úsala y ofrece siempre custom/otra respuesta. Texto abierto para decisiones genuinamente abiertas o cuando la capability no exista; no exijas rutinariamente respuestas numeradas ni crees formularios propios.
 
 ### Reviewer

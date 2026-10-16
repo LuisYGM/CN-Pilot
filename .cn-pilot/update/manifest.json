@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "cnPilotVersion": "1.5.1",
+  "cnPilotVersion": "1.5.2",
   "sourceRepository": "https://github.com/LuisYGM/cn-pilot.git",
   "stableBranch": "main",
   "sourceCommit": null,
@@ -11,15 +11,15 @@
   "managedFiles": [
     {
       "path": ".cn-pilot-version",
-      "sha256": "dfe7d71b3f428eb73ed853f8fded65e2986896e21d69f45ebf06bb623b450e14"
+      "sha256": "ded1b601e81d31ca1f65c4f3ccf2ebd7992b6390e37bc2a86f3837282f1e00cf"
     },
     {
       "path": ".cn-pilot/CHANGELOG.md",
-      "sha256": "2e30a49c51bd03e6081bb7077cbbcaee90cb69ef666bc7d315d874db24d91a25"
+      "sha256": "06fdfd1c25be926736af328cc93ed1ae951c07b6c58567daec2cdc7ce6937fec"
     },
     {
       "path": ".cn-pilot/CORE.md",
-      "sha256": "512b08f75adb528a3333a3d73bf72e38c4c3f65fee37aadc47d366408149cabf"
+      "sha256": "4ce9fb3281c3f01dbd0cfcac98276c05b7390eeb09646cb61a33e1d78d1e3300"
     },
     {
       "path": ".cn-pilot/MANIFEST.md",
@@ -71,7 +71,7 @@
     },
     {
       "path": ".cn-pilot/docs/UPDATES.md",
-      "sha256": "278ad184b79253bf88b02487110a701f10fc598dd0f856dddca48b073d89e4b9"
+      "sha256": "8b775951ec38a7065efb2ecc5237a9b75c276ed511527f198f0025d5b48fb7d4"
     },
     {
       "path": ".cn-pilot/profiles/content-site.md",
@@ -107,7 +107,7 @@
     },
     {
       "path": ".cn-pilot/qa/core-check.test.mjs",
-      "sha256": "6a20cf20dcd8bd0ec1d1299d98a680977146ea15654a1d2f0f6e8f50da2167f0"
+      "sha256": "e7b69eb5c666799c91a7c0d7ebca9849f6964770e969b940b643643beb5393d2"
     },
     {
       "path": ".cn-pilot/templates/adr.md",
@@ -183,11 +183,11 @@
     },
     {
       "path": ".cn-pilot/update/updater.mjs",
-      "sha256": "a9e69972a99a6a82701b501a763fa4c0d004205ab551a4fd0448a3363b56e3c3"
+      "sha256": "53e1f9414802a70e80448238e21d9c4f682c3bdfaab95f7b5eaa849959bd0226"
     },
     {
       "path": ".cn-pilot/update/updater.test.mjs",
-      "sha256": "46c3e7592321875ef485b27cfd1c85ef583344d52ce6c2c899047d0a57c90cef"
+      "sha256": "390a5591647146e1e398708662cb6aa604729ac13d2e05934b76535b2759a7f2"
     },
     {
       "path": ".kilo/agents/architect.md",
@@ -199,7 +199,7 @@
     },
     {
       "path": ".kilo/agents/dev-lead.md",
-      "sha256": "8fd491f797d28b0974b6d6fceb6dbd5d3735c7bbb97e30b80d9bcbb673b629ad"
+      "sha256": "47190242f9d814f251cd49f0e0dcc235a010ce4057c8fe0c396ac62c0e825a38"
     },
     {
       "path": ".kilo/agents/developer.md",
@@ -223,11 +223,11 @@
     },
     {
       "path": ".kilo/commands/cn-status.md",
-      "sha256": "31683c71d5510bdb61961cfa157d0a8bcb5cccbd0499435c7b13842397bd2c74"
+      "sha256": "98557da037b8d66811903abb093668ea54d398681528a96eca0a5ed5a1927439"
     },
     {
       "path": ".kilo/commands/cn-update.md",
-      "sha256": "e9fc93d8745d059ec01727a6f13ecdaf33f597cb3973b26be51b40da234f7d4e"
+      "sha256": "669e87c6a467f04cbdfaabb52eec29b55247ef86e1cc95af1ed198df67c9d6c8"
     },
     {
       "path": ".kilo/commands/commit.md",

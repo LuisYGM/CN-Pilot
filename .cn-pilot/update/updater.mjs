@@ -111,7 +111,7 @@ export function hashFile(root, relative) {
 export function validateManifest(value) {
   let manifest = value;
   if (typeof value === "string") {
-    try { manifest = JSON.parse(value); } catch { fail("INVALID_MANIFEST", "Distribution manifest is not valid JSON."); }
+    try { manifest = JSON.parse(value); } catch (error) { fail("INVALID_MANIFEST", `Distribution manifest is not valid JSON (${error.message}).`); }
   }
   if (!manifest || typeof manifest !== "object" || Array.isArray(manifest) || manifest.schemaVersion !== 1) fail("INVALID_MANIFEST", "Unsupported distribution manifest schema.");
   if (!VERSION.test(manifest.cnPilotVersion ?? "")) fail("INVALID_MANIFEST", "Manifest has an invalid CN Pilot SemVer.");
@@ -386,18 +386,32 @@ export function cleanupBootstrapSource(targetRoot, sourceRoot) {
 export function checkActiveTask(root) {
   const runtime = path.join(root, ".cn-pilot/runtime");
   const file = path.join(runtime, "active-task.json");
-  try { if (fs.lstatSync(runtime).isSymbolicLink()) return { exists: true, blocked: true, status: "unsafe-runtime" }; }
-  catch (error) { if (error.code === "ENOENT") return { exists: false, blocked: false, status: "none" }; throw error; }
+  const invalid = (reason) => ({ exists: true, blocked: true, status: "INVALID", reason });
+  try { if (fs.lstatSync(runtime).isSymbolicLink()) return invalid("unsafe runtime: path is a symlink"); }
+  catch (error) { if (error.code === "ENOENT") return { exists: false, blocked: false, status: "none" }; return invalid(`cannot inspect runtime (${error.code ?? error.message})`); }
   let stat;
-  try { stat = fs.lstatSync(file); } catch (error) { if (error.code === "ENOENT") return { exists: false, blocked: false, status: "none" }; throw error; }
-  if (stat.isSymbolicLink() || !stat.isFile()) return { exists: true, blocked: true, status: "unsafe-task-file" };
+  try { stat = fs.lstatSync(file); } catch (error) { if (error.code === "ENOENT") return { exists: false, blocked: false, status: "none" }; return invalid(`cannot inspect task file (${error.code ?? error.message})`); }
+  if (stat.isSymbolicLink() || !stat.isFile()) return invalid("unsafe task file: not a regular non-symlink file");
   let state;
-  try { state = JSON.parse(fs.readFileSync(file, "utf8")); }
-  catch { return { exists: true, blocked: true, status: "unreadable" }; }
-  const allowedStatuses = new Set(["ACTIVE", "INTERRUPTED", "BLOCKED", "BLOCKED_HUMAN", "BLOCKED_EXTERNAL", "FAILED", "COMPLETED"]);
-  if (!state || typeof state !== "object" || Array.isArray(state) || typeof state.status !== "string") return { exists: true, blocked: true, status: "invalid" };
+  let contents;
+  try { contents = fs.readFileSync(file, "utf8"); }
+  catch (error) { return invalid(`unreadable task file (${error.code ?? error.message})`); }
+  try { state = JSON.parse(contents); }
+  catch (error) { return invalid(`corrupt JSON (${error.message})`); }
+  if (!state || typeof state !== "object" || Array.isArray(state)) return invalid('invalid root: expected a JSON object');
+  if (!Object.hasOwn(state, "status")) return invalid('missing required field "status"');
+  if (typeof state.status !== "string") return invalid('invalid field "status": expected a string');
   const status = state.status.toUpperCase();
-  if (!allowedStatuses.has(status)) return { exists: true, blocked: true, status: "invalid" };
+  const allowedStatuses = new Set(["ACTIVE", "INTERRUPTED", "BLOCKED", "BLOCKED_HUMAN", "BLOCKED_EXTERNAL", "FAILED", "COMPLETED"]);
+  if (!allowedStatuses.has(status)) return invalid(`unsupported status "${state.status}"`);
+  if (status === "COMPLETED") {
+    if (Object.hasOwn(state, "schemaVersion") && state.schemaVersion !== 1) return invalid(`unsupported schemaVersion ${JSON.stringify(state.schemaVersion)} (expected 1)`);
+    return { exists: true, blocked: false, status };
+  }
+  if (!Object.hasOwn(state, "schemaVersion")) return invalid('missing required field "schemaVersion"');
+  if (state.schemaVersion !== 1) return invalid(`unsupported schemaVersion ${JSON.stringify(state.schemaVersion)} (expected 1)`);
+  if (typeof state.objective !== "string" || !state.objective.trim()) return invalid('missing or empty required field "objective"');
+  if (typeof state.nextAction !== "string" || !state.nextAction.trim()) return invalid('missing or empty required field "nextAction"');
   const pending = new Set(["ACTIVE", "INTERRUPTED", "BLOCKED", "BLOCKED_HUMAN", "BLOCKED_EXTERNAL", "FAILED"]);
   return { exists: true, blocked: pending.has(status), status };
 }
@@ -411,6 +425,44 @@ export function inspectGit(root) {
   const status = run("git", ["status", "--porcelain=v1", "--untracked-files=all"], root).stdout.split(/\r?\n/).filter(Boolean);
   const trackedChanges = status.filter((line) => !line.startsWith("??"));
   return { branch: branch.ok ? branch.stdout.trim() : null, head, trackedChanges, untracked: status.filter((line) => line.startsWith("??")) };
+}
+
+function projectGitRoot(cwd) {
+  const result = run("git", ["rev-parse", "--show-toplevel"], cwd, { allowFailure: true });
+  if (!result.ok || !result.stdout.trim()) fail("GIT_ROOT_NOT_FOUND", "Cannot determine the project Git root from the current directory.");
+  const root = path.resolve(result.stdout.trim());
+  inspectGit(root);
+  return root;
+}
+
+export function inspectInstallation(cwd) {
+  const root = projectGitRoot(cwd);
+  const updaterPath = path.join(root, ".cn-pilot/update/updater.mjs");
+  const manifestPath = path.join(root, ...MANIFEST_PATH.split("/"));
+  const inspectFile = (file, label) => {
+    try {
+      const stat = fs.lstatSync(file);
+      if (stat.isSymbolicLink() || !stat.isFile()) fail("UNSAFE_INSTALLATION_PATH", `${label} is not a regular non-symlink file.`);
+      return true;
+    } catch (error) {
+      if (error.code === "ENOENT") return false;
+      throw error;
+    }
+  };
+  if (!inspectFile(updaterPath, "Updater")) return { root, status: "LEGACY" };
+  let manifestExists;
+  try { manifestExists = inspectFile(manifestPath, "Distribution manifest"); }
+  catch (error) {
+    if (error.code === "UNSAFE_INSTALLATION_PATH") return { root, status: "UNSAFE_MANIFEST", reason: `${error.code}: ${error.message}` };
+    throw error;
+  }
+  if (!manifestExists) return { root, status: "MANIFEST_MISSING" };
+  try { readManifest(root); }
+  catch (error) {
+    const unsafe = String(error.code ?? "").startsWith("UNSAFE_");
+    return { root, status: unsafe ? "UNSAFE_MANIFEST" : "MANIFEST_INVALID", reason: `${error.code ?? "INVALID_MANIFEST"}: ${error.message}` };
+  }
+  return { root, status: "MANAGED" };
 }
 
 function checkCompatibility(manifest) {
@@ -488,7 +540,7 @@ function writeStatus(root, upstream, commit, writer = process.stdout) {
   try {
     const baseline = readManifest(root);
     plan = planUpdate(root, baseline, upstream);
-  } catch (error) { localError = error.code ?? "LEGACY_BOOTSTRAP_REQUIRED"; }
+  } catch (error) { localError = `${error.code ?? "BASELINE_ERROR"}: ${error.message}`; }
   const compatibility = checkCompatibility(upstream);
   const conflicts = plan?.conflicts.length ?? 0;
   const available = installedVersion !== "unknown" && (installedVersion !== upstream.cnPilotVersion || Boolean(plan?.actions.length));
@@ -508,7 +560,8 @@ function writeStatus(root, upstream, commit, writer = process.stdout) {
     `Migration: ${upstream.migrations.length ? "required" : "none"}`,
     `Active task: ${active.exists ? active.status : "none"}`,
   ];
-  if (localError) lines.push(`Baseline: ${localError === "MANIFEST_MISSING" ? "LEGACY BOOTSTRAP REQUIRED" : `BLOCKED (${localError})`}`);
+  if (active.reason) lines.push(`Active task reason: ${active.reason}`);
+  if (localError) lines.push(`Baseline: ${localError.startsWith("MANIFEST_MISSING:") ? "BASELINE MANIFEST MISSING (bootstrap required)" : `BLOCKED (${localError})`}`);
   if (conflicts) lines.push(`Conflicts: ${plan.conflicts.map((item) => item.path).join(", ")}`);
   if (plan && !conflicts && available && compatibility.ok && !active.blocked) lines.push("Ready to update.");
   writer.write(`${lines.join("\n")}\n`);
@@ -661,7 +714,24 @@ export async function runCli(argv = process.argv.slice(2), { stdout = process.st
       }
       return 0;
     }
-    const target = path.resolve(options.target ?? process.cwd());
+    const target = options.target ? path.resolve(options.target) : projectGitRoot(process.cwd());
+    inspectGit(target);
+    if (options.command === "status") {
+      const installation = inspectInstallation(target);
+      if (installation.status !== "MANAGED") {
+        const active = checkActiveTask(target);
+        const baseline = installation.status === "LEGACY" ? "LEGACY BOOTSTRAP REQUIRED" : installation.status;
+        stdout.write([
+          "CN Pilot status",
+          `Installed: ${versionFromFile(target)}`,
+          "Latest stable: not checked",
+          `Baseline: ${baseline}${installation.reason ? ` (${installation.reason})` : ""}`,
+          `Active task: ${active.exists ? active.status : "none"}`,
+          ...(active.reason ? [`Active task reason: ${active.reason}`] : []),
+        ].join("\n") + "\n");
+        return 0;
+      }
+    }
     if (options.command === "bootstrap") {
       const sourceRoot = options.sourceDir ? path.resolve(options.sourceDir) : sourceRootFor(fileURLToPath(import.meta.url));
       if (options.cleanupSource && sourceRoot !== path.join(target, ".cn-pilot", "runtime", "cn-pilot-update-source")) fail("UNSAFE_CLEANUP_PATH", "--cleanup-source only accepts the documented runtime bootstrap clone.");
@@ -677,7 +747,7 @@ export async function runCli(argv = process.argv.slice(2), { stdout = process.st
       if (!initialGit.branch) fail("DETACHED_HEAD", "Update blocked: project is not on a named Git branch.");
       if (initialGit.trackedChanges.length) fail("DIRTY_TRACKED_TREE", "Update blocked: tracked working tree changes present.");
       const active = checkActiveTask(target);
-      if (active.blocked) fail("ACTIVE_TASK", `Update blocked: active CN Pilot task (${active.status}).`);
+      if (active.blocked) fail("ACTIVE_TASK", `Update blocked: active CN Pilot task (${active.status})${active.reason ? ` — ${active.reason}` : ""}.`);
     }
     let result;
     await withSource(target, options.sourceDir, (sourceRoot) => {
