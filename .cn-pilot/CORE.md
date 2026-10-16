@@ -1,6 +1,6 @@
 # CN Pilot Core — Especificación V1.5
 
-**Versión:** `1.5.0`
+**Versión:** `1.5.1`
 
 Documento de referencia para maintainers del CN Pilot. Un usuario nuevo debe empezar por [`docs/START-HERE.md`](docs/START-HERE.md); no necesita leer esta especificación para trabajar.
 
@@ -140,6 +140,18 @@ Estados de la tarea: `ACTIVE`, `INTERRUPTED`, `BLOCKED_HUMAN`, `BLOCKED_EXTERNAL
 Usa continuation nativa cuando la superficie actual la exponga: un child `task_id` retornado puede reanudarse mediante `task` sujeto a sesión/permisos; una sesión Agent Manager existente se retoma solo con su ID real verificado y mientras Kilo la mantenga disponible; el Kilo CLI actual documenta `kilo --continue`/`-c` para la última sesión del workspace, `--session` para ID y `kilo run --continue` para enviar follow-up ([CLI session continuation](https://kilo.ai/docs/code-with-ai/platforms/cli#session-continuation), [CLI reference](https://kilo.ai/docs/code-with-ai/platforms/cli-reference), [Agent Manager tasks](https://kilo.ai/docs/automate/agent-manager#task-subagents)). Verifica siempre el `--help`/versión instalada antes de instruir; `/continue` es alias nativo de CLI para `/sessions`, así que no crees slash command homónimo ni hace falta un comando CN Pilot adicional. El CLI instalado verificado expone también `--format json` (eventos raw) y exit codes genéricos, pero la documentación/interfaz actual no define una señal estable que discrimine interrupción por step limit de pregunta humana/error: `CLI AUTO-RESUME` queda `DEFERRED`. No implementes un loop por strings/texto/exit code ambiguo ni uses `--auto`, cambies permissions o evadas aprobaciones.
 
 Al quedar `BLOCKED_HUMAN`/`BLOCKED_EXTERNAL`, conserva checkpoint y explica lo mínimo necesario. Al completar todos los gates, elimina el checkpoint activo. Solo los hechos/decisiones reutilizables pasan a Project Context según su ownership; nunca copies allí el registro runtime completo.
+
+### No-op / Silent Closure
+
+El cierre operacional y la persistencia durable son decisiones separadas. Cuando una persona confirma un gate pendiente (incluidos Human Visual Review, push, sincronización o cierre), reconcilia únicamente la evidencia necesaria, resuelve el gate, elimina el checkpoint cuando todos los gates estén satisfechos y detente. La confirmación por sí sola no abre otro ciclo de documentación, commit ni push.
+
+Antes de editar Project Context, documentación de deployment u otros archivos tracked pregunta: **¿esta información seguirá siendo necesaria para tomar decisiones correctas en una futura sesión?** Persiste solo si la respuesta es sí y existe un delta nuevo durable (arquitectura, requisitos, alcance, reglas de negocio, comportamiento, decisión relevante, procedimiento o autoridad visual que deba gobernar trabajo futuro). Escribe solo en la fuente canónica mínima de su ownership. Si la respuesta es no, no edites archivos tracked, no stages ni crees commit; cierra/elimina el checkpoint y STOP.
+
+Push realizado, HEAD/origin sincronizados, ahead/behind, aprobación que solo satisface el gate actual, tarea cerrada, Reviewer completado, commits existentes, working tree y confirmación de operación son estado operativo/efímero: no se propagan a PROJECT, REQUIREMENTS, STATE, DECISIONS, ARTIFACTS, README ni runbooks como diario. `STATE.md` puede cambiar únicamente si cambia materialmente el siguiente paso, un bloqueo o un estado que seguirá siendo relevante tras el cierre; no registra eventos ya representados por Git/runtime. REQUIREMENTS nunca cambia por estado de push/review/Git. ARTIFACTS cambia solo si la revisión altera materialmente autoridad/lifecycle/uso futuro y la fuente canónica aún no lo expresa. Los runbooks describen procedimientos, no despliegues/push puntuales. La confirmación de push no autoriza otro push.
+
+Excepción visual: BF-063 integra la aprobación inequívoca como referencia Approved bajo BF-048, en su scope/fidelity, cuando ese baseline nuevo debe gobernar trabajo futuro. Registra únicamente la autoridad mínima en su fuente canónica; si ya está representada suficientemente o la aprobación solo cierra el gate, no dupliques documentación. Decisiones durables comunicadas junto al cierre se persisten independientemente del cierre operacional y sin registrar la aprobación/push como evento.
+
+Esta regla no debilita BF-047: `active-task.json` sigue preservando tareas activas, interrumpidas o bloqueadas y sus gates/evidencia para recovery. La eliminación aplica solo tras reconciliar que todos los gates están satisfechos.
 
 El flujo reutiliza análisis, tests y reviews todavía válidos, evita verificaciones duplicadas y reserva margen antes de Reviewer para recibir hallazgos, corregir, probar y cerrar. Si una sesión debe continuar, recupera el estado vigente y ejecuta únicamente el trabajo pendiente.
 

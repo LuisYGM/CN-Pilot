@@ -276,3 +276,16 @@ test("the current CN Pilot repository passes Core QA", () => {
   const report = runCoreChecks();
   assert.equal(report.status, "PASS", JSON.stringify(report.findings));
 });
+
+test("No-op closure preserves durable decisions, visual authority, and active-task recovery", () => {
+  const core = fs.readFileSync(new URL("../CORE.md", import.meta.url), "utf8");
+  const devLead = fs.readFileSync(new URL("../../.kilo/agents/dev-lead.md", import.meta.url), "utf8");
+  const closure = core.slice(core.indexOf("### No-op / Silent Closure"), core.indexOf("\n## ", core.indexOf("### No-op / Silent Closure")));
+
+  assert.match(devLead, /No-op \/ Silent Closure/);
+  assert.match(closure, /no edites archivos tracked, no stages ni crees commit/);
+  assert.match(closure, /La confirmación de push no autoriza otro push/);
+  assert.match(closure, /BF-063 integra la aprobación inequívoca como referencia Approved bajo BF-048/);
+  assert.match(closure, /Decisiones durables comunicadas junto al cierre se persisten/);
+  assert.match(closure, /active-task\.json` sigue preservando tareas activas, interrumpidas o bloqueadas/);
+});

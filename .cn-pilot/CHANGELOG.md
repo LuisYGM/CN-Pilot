@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.5.1] - 2026-10-16
+
+Parche backward-compatible del Core.
+
+### Corregido
+
+- **No-op / Silent Closure:** separa cierre operacional de persistencia durable. La confirmación humana resuelve gates y cierra checkpoint sin propagar push, sincronización, review o cierre ya representados por Git/runtime; solo cambios durables se registran en su fuente canónica mínima. Retests conductuales A–F cubren cierre/push sin commit, baseline visual nuevo, decisión durable y recovery; sin framework QA nuevo.
+
 ## [1.5.0] - 2026-10-15
 
 Release MINOR compatible que incorpora BF-067.
