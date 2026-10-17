@@ -316,3 +316,32 @@ test("update commands require deterministic filesystem discovery and preserve si
   assert.match(updates, /Solo updater realmente ausente clasifica como `LEGACY`/);
   assert.match(updates, /inválido bloquea.*sin reparar/s);
 });
+
+test("visual cleanup removes obsolete restrictions without weakening creative or technical authority", () => {
+  const system = fs.readFileSync(new URL("../../.kilo/skills/ui-design-system/SKILL.md", import.meta.url), "utf8");
+  const designer = fs.readFileSync(new URL("../../.kilo/agents/ui-ux-designer.md", import.meta.url), "utf8");
+  const core = fs.readFileSync(new URL("../CORE.md", import.meta.url), "utf8");
+  const artDirection = fs.readFileSync(new URL("../../.kilo/skills/visual-art-direction/SKILL.md", import.meta.url), "utf8");
+  const creative = fs.readFileSync(new URL("../../.kilo/skills/creative-web-experience/SKILL.md", import.meta.url), "utf8");
+  const composition = fs.readFileSync(new URL("../../.kilo/skills/page-composition/SKILL.md", import.meta.url), "utf8");
+  const application = fs.readFileSync(new URL("../../.kilo/skills/application-ui/SKILL.md", import.meta.url), "utf8");
+
+  assert.match(system, /Calidad no equivale a moderación/);
+  assert.match(system, /Display typography extrema, paletas intensas, densidad rica/);
+  assert.match(designer, /La escala tipográfica puede ser contenida o extrema; no la moderes por convención/);
+  assert.match(core, /La presencia visual puede ser sobria, densa, intensa o maximalista/);
+  assert.match(artDirection, /también lo son intensidad, densidad y color fuertes/);
+  assert.match(creative, /Default para una \*\*public web\*\* nueva/);
+  assert.match(creative, /QUIET, REFINED, EXPRESSIVE o IMMERSIVE/);
+  assert.match(creative, /Existing conserva `continuity > novelty`/);
+  assert.match(creative, /Approved\/Strict mantiene authority BF-048/);
+  assert.match(creative, /Genericity Risk/);
+  assert.match(creative, /si queda Genericity Risk material.*continúa el refinamiento específico/s);
+  assert.match(composition, /No prohíbas cards, simetría, centrado, split layouts ni simplicidad/);
+  assert.match(application, /no páginas de marketing/);
+
+  for (const skill of ["creative-web-experience", "page-composition", "visual-art-direction", "motion-interaction", "ui-kit-construction", "visual-parity-review", "application-ui", "accessibility-review", "performance-review", "webapp-testing"]) {
+    assert.equal(fs.existsSync(new URL(`../../.kilo/skills/${skill}/SKILL.md`, import.meta.url)), true, `${skill} remains active`);
+  }
+  assert.equal(fs.existsSync(new URL("../../.kilo/skills/ui-design-system/ATTRIBUTION.md", import.meta.url)), false);
+});

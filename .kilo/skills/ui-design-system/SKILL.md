@@ -21,11 +21,11 @@ Para una experiencia visual nueva o rediseño material, sigue `.cn-pilot/CORE.md
 
 Los detalles de foundations, tokenización, specimens, primitives, estados e implementación visual pertenecen exclusivamente a `ui-kit-construction`. No copies su checklist aquí. Usa un Kit pequeño, neutral y no-domain-specific; sus decisiones se derivan del sistema visual, no se vuelven una Home ni un template universal.
 
-## Disciplina visual
+## Expresión contextual y rigor del sistema
 
-Construye jerarquía visual deliberada: una prioridad dominante, escala tipográfica razonable, spacing con ritmo y composición que no dependa de cards genéricas, gradientes o headings enormes. Usa color con función —acción, estado, contraste o agrupación— y evita saturar la interfaz sin propósito. Asimetría, contraste y tratamiento editorial son herramientas cuando sirven al contenido, no fórmulas universales.
+Calidad no equivale a moderación. Deriva jerarquía, tipografía, escala, color/intensidad, densidad, spacing y composición de la identidad, el contenido, el objetivo, el uso, el sistema aprobado y las condiciones responsive; ninguno tiene que ser contenido, simétrico, de baja intensidad o convencional. Display typography extrema, paletas intensas, densidad rica, capas, full-bleed, asimetría, overlapping, grids irregulares o tratamiento editorial son opciones válidas cuando expresan la dirección y siguen siendo legibles/usables; la moderación tampoco es un objetivo obligatorio.
 
-En una crítica visual detecta anti-patterns concretos —jerarquía plana, densidad accidental, alineaciones inconsistentes, controles con estados incompletos, texto difícil de leer, responsive que aplana la composición— y propone correcciones acotadas. El refinamiento es bounded: una pasada agrupada y una confirmación suelen ser preferibles a loops indefinidos; preserva contenido aprobado y scope del proyecto.
+Revisa un sistema con criterios verificables —roles/tokens coherentes, contraste y foco accesibles, estados completos, jerarquía entendible para su contenido, responsive funcional y fidelidad a referencias Approved/Strict o continuidad Existing— en sus fuentes canónicas. No conviertas preferencias de estilo (intensidad, escala, densidad, simetría, cards, gradientes o motion) en defectos por sí solas; detecta genericidad solo con la evidencia/Creative Quality Gate de `creative-web-experience` y la composición específica de `page-composition`. En Greenfield, no cierres una dirección que siga intercambiable o genérica: ejecuta el refinamiento material que requiera el gate. Detén iteraciones según BF-059 solo cuando ya no aporten mejora material; preserva contenido aprobado, authority y scope.
 
 ## Creative Direction proporcional
 
@@ -50,6 +50,6 @@ Aplica esta profundidad en Greenfield, marcas conceptuales o cuando la identidad
 - **Sin originalidad artificial:** conserva UX, conversión, accesibilidad y legibilidad. No fuerces paletas distintas, composiciones experimentales, referencias externas, múltiples propuestas ni una métrica de originalidad. Investiga referencias solo si aporta valor; extrae principios sin copiar.
 - **Existing, continuidad primero:** ante identidad vigente, Design System, páginas ya resueltas o referencia aprobada, inspecciónalos y conserva tokens, tipografía, color, spacing, geometría, imagen, componentes y carácter. `Continuity > novelty`: diversity nunca obliga a rediseñar un Existing ni a apartar una referencia aprobada.
 
-Las heurísticas existentes de jerarquía, ritmo, bounded refinement y detección de anti-patterns siguen vigentes; se aplican al contexto, no como otra plantilla segura. Conserva la atribución de esta skill sin cambios.
+La dirección debe quedar visible en la composición prioritaria y su responsive, respetar identidad/copy y ser viable en el stack. No limites escala, color o densidad por convención; tampoco impongas experimentar o maximizar intensidad cuando el contexto pide sobriedad.
 
 Antes de entregar, contrasta tesis y reglas con al menos la composición prioritaria y su responsive: ¿son visibles las decisiones, respeta identidad y copy, es viable en el stack, conserva editabilidad y evita dispositivos visuales inventados? Documenta adaptaciones técnicas relevantes sin sustituir `visual-parity-review`, `webapp-testing` ni Human Visual QA. Detén el refinamiento cuando queden microajustes de bajo retorno, pero no ignores una diferencia material.

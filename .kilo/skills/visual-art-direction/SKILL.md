@@ -39,7 +39,7 @@ Diagram, chart, map, illustration, texture o pattern deben explicar contenido o 
 
 ## Revisión de riqueza visual
 
-En Greenfield/rediseño, si el candidato acaba siendo casi solo texto, cards y fondos planos, contrasta activamente con brief, contenido y librería si un visual moment/media significativo lo mejoraría. Si sí, propón/integra el medio autorizado dentro del scope; si no hay fuente, no finjas autenticidad y escala PENDING cuando sea material. Sobriedad deliberada es un resultado válido. «Impactante» no es saturación, gradients aleatorios, imágenes stock irrelevantes, animación gratuita o medios sin foco.
+En Greenfield/rediseño, si el candidato acaba siendo casi solo texto, cards y fondos planos, contrasta activamente con brief, contenido y librería si un visual moment/media significativo lo mejoraría. Si sí, propón/integra el medio autorizado dentro del scope; si no hay fuente, no finjas autenticidad y escala PENDING cuando sea material. Sobriedad deliberada es un resultado válido; también lo son intensidad, densidad y color fuertes cuando expresan la dirección. El impacto no depende por sí solo de acumular gradientes aleatorios, imágenes stock irrelevantes, animación gratuita o medios sin foco.
 
 ## Producción, responsive y checks
 

@@ -1,5 +1,16 @@
 # Changelog
 
+## [1.5.3] - 2026-10-17
+
+Parche backward-compatible del Core.
+
+### Corregido
+
+- Eliminadas las heurísticas de disciplina visual con atribución histórica a un upstream externo y la instrucción huérfana que pedía conservar esa atribución. La expresión tipográfica, el color, la densidad y la composición se derivan del contexto, sin moderación automática.
+- Reconciliados wording heredado de UI/UX y expresiones de BF-045/dirección de medios que podían sugerir límites estilísticos generales. Se mantienen intención, usable/accessibility, contenido veraz, referencias Approved/Strict, continuidad Existing y Creative Quality Gate.
+- Creative Refinement ahora continúa focalmente si queda Genericity Risk o falla evidencia material; una pasada no es límite de creatividad. BF-059 sigue deteniendo loops de bajo retorno cuando el gate creativo ya está satisfecho.
+- Retest contractual confirma cero menciones/archivos activos de esa atribución y conserva las capacidades creativas, a11y, performance, motion, responsive y browser QA existentes.
+
 ## [1.5.2] - 2026-10-16
 
 Parche backward-compatible del Core.

@@ -186,6 +186,18 @@ test("1.5.1 baseline detects the compatible 1.5.2 PATCH as available", (t) => {
   assert.deepEqual(plan.actions.map(({ type, path: name }) => [type, name]), [["update", ".cn-pilot-version"], ["update", ".cn-pilot/CORE.md"]]);
 });
 
+test("1.5.2 baseline detects the compatible 1.5.3 PATCH as available", (t) => {
+  const { root, put } = fixture(t);
+  put(root, ".cn-pilot-version", "1.5.2\n");
+  put(root, ".cn-pilot/CORE.md", "Core 1.5.2\n");
+  const installed = manifest("1.5.2", [entry(".cn-pilot-version", "1.5.2\n"), entry(".cn-pilot/CORE.md", "Core 1.5.2\n")]);
+  const latest = manifest("1.5.3", [entry(".cn-pilot-version", "1.5.3\n"), entry(".cn-pilot/CORE.md", "Core 1.5.3\n")]);
+  const plan = planUpdate(root, installed, latest);
+  assert.equal(plan.installedVersion, "1.5.2");
+  assert.equal(plan.latestVersion, "1.5.3");
+  assert.deepEqual(plan.actions.map(({ type, path: name }) => [type, name]), [["update", ".cn-pilot-version"], ["update", ".cn-pilot/CORE.md"]]);
+});
+
 test("C: concurrent local and upstream edits conflict without overwrite", (t) => {
   const { root, put } = fixture(t);
   put(root, ".cn-pilot/CORE.md", "local\n");

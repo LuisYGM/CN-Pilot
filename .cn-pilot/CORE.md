@@ -1,6 +1,6 @@
 # CN Pilot Core — Especificación V1.5
 
-**Versión:** `1.5.2`
+**Versión:** `1.5.3`
 
 Documento de referencia para maintainers del CN Pilot. Un usuario nuevo debe empezar por [`docs/START-HERE.md`](docs/START-HERE.md); no necesita leer esta especificación para trabajar.
 
@@ -341,7 +341,7 @@ Al seleccionar recursos, prioriza según disponibilidad, pertinencia y autorizac
 6. una composición alternativa rica que no finja representar un objeto, producto, espacio o persona concretos;
 7. comunicar un gap solo si un recurso representacional es materialmente imprescindible y no hay una alternativa honesta de calidad.
 
-Esta es una prioridad de evaluación, no una checklist ni un mandato de agotar fuentes: ningún diseño debe mezclar todos los medios o añadir assets solo por “enriquecerlo”. Riqueza visual significa una presencia visual intencional y adecuada —puede ser sobria o muy expresiva—, no saturación. Evita repetir la misma fórmula “sin foto → tipografía y whitespace” y también sustituirla por un pattern/SVG genérico recurrente. En Existing, la variedad de medios se subordina a continuidad con su identidad y su biblioteca aprobadas.
+Esta es una prioridad de evaluación, no una checklist ni un mandato de agotar fuentes: ningún diseño debe mezclar todos los medios o añadir assets solo por “enriquecerlo”. La presencia visual puede ser sobria, densa, intensa o maximalista según la dirección; su nivel no es un defecto por sí mismo y se evalúa por intención, jerarquía, usabilidad y accesibilidad. Evita repetir la misma fórmula “sin foto → tipografía y whitespace” y también sustituirla por un pattern/SVG genérico recurrente. En Existing, la variedad de medios se subordina a continuidad con su identidad y su biblioteca aprobadas.
 
 ### Design System First (BF-046)
 
