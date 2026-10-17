@@ -563,7 +563,8 @@ function writeStatus(root, upstream, commit, writer = process.stdout) {
   if (active.reason) lines.push(`Active task reason: ${active.reason}`);
   if (localError) lines.push(`Baseline: ${localError.startsWith("MANIFEST_MISSING:") ? "BASELINE MANIFEST MISSING (bootstrap required)" : `BLOCKED (${localError})`}`);
   if (conflicts) lines.push(`Conflicts: ${plan.conflicts.map((item) => item.path).join(", ")}`);
-  if (plan && !conflicts && available && compatibility.ok && !active.blocked) lines.push("Ready to update.");
+  if (git.trackedChanges.length) lines.push("Update readiness: BLOCKED", "Reason: tracked working tree changes present.");
+  if (plan && !conflicts && available && compatibility.ok && !active.blocked && !git.trackedChanges.length) lines.push("Ready to update.");
   writer.write(`${lines.join("\n")}\n`);
   return { installedVersion, upstreamVersion: upstream.cnPilotVersion, available, plan, compatibility, active, localError, commit };
 }

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "cnPilotVersion": "1.5.3",
+  "cnPilotVersion": "1.5.4",
   "sourceRepository": "https://github.com/LuisYGM/cn-pilot.git",
   "stableBranch": "main",
   "sourceCommit": null,
@@ -11,15 +11,15 @@
   "managedFiles": [
     {
       "path": ".cn-pilot-version",
-      "sha256": "c03e3824001f39b9518249b8d6522422fc4de7227e12a568c0164662b03b7758"
+      "sha256": "879a67a197446479e783c8e22a58681fed324f09eac1ce808f6a5a4c5e1894ad"
     },
     {
       "path": ".cn-pilot/CHANGELOG.md",
-      "sha256": "bff112967940f8ac869e7464e4e9ff1a30f208e96806ec1e2ed047c26a9ad90f"
+      "sha256": "db2683bd7afc310a1a548c0137ec23f0d4ba09c6da07c94b8e1e3625a3d6e0c6"
     },
     {
       "path": ".cn-pilot/CORE.md",
-      "sha256": "e8fa5420e528b3e151564f8396f2690c135b96322525b746f6c0e94db5e69f76"
+      "sha256": "bbf9c3b6dd309e858ca21eaa20825403b05c1661057b1a9a3b703ebc201566c3"
     },
     {
       "path": ".cn-pilot/MANIFEST.md",
@@ -183,11 +183,11 @@
     },
     {
       "path": ".cn-pilot/update/updater.mjs",
-      "sha256": "53e1f9414802a70e80448238e21d9c4f682c3bdfaab95f7b5eaa849959bd0226"
+      "sha256": "7bd07b29eb0a5f28bf8044f6f3256179f7a3de1e18d187b0327c79a8400921ce"
     },
     {
       "path": ".cn-pilot/update/updater.test.mjs",
-      "sha256": "b640742d011f2a8e7c5bc86cc765ea7efafcbe68889dde6acdba9294afd48dac"
+      "sha256": "1488196360e2feb18adf87b7cac52e0ceab07c0f125be63f80de07b0df96e2a3"
     },
     {
       "path": ".kilo/agents/architect.md",

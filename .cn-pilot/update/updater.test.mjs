@@ -198,6 +198,18 @@ test("1.5.2 baseline detects the compatible 1.5.3 PATCH as available", (t) => {
   assert.deepEqual(plan.actions.map(({ type, path: name }) => [type, name]), [["update", ".cn-pilot-version"], ["update", ".cn-pilot/CORE.md"]]);
 });
 
+test("1.5.3 baseline detects the compatible 1.5.4 PATCH as available", (t) => {
+  const { root, put } = fixture(t);
+  put(root, ".cn-pilot-version", "1.5.3\n");
+  put(root, ".cn-pilot/CORE.md", "Core 1.5.3\n");
+  const installed = manifest("1.5.3", [entry(".cn-pilot-version", "1.5.3\n"), entry(".cn-pilot/CORE.md", "Core 1.5.3\n")]);
+  const latest = manifest("1.5.4", [entry(".cn-pilot-version", "1.5.4\n"), entry(".cn-pilot/CORE.md", "Core 1.5.4\n")]);
+  const plan = planUpdate(root, installed, latest);
+  assert.equal(plan.installedVersion, "1.5.3");
+  assert.equal(plan.latestVersion, "1.5.4");
+  assert.deepEqual(plan.actions.map(({ type, path: name }) => [type, name]), [["update", ".cn-pilot-version"], ["update", ".cn-pilot/CORE.md"]]);
+});
+
 test("C: concurrent local and upstream edits conflict without overwrite", (t) => {
   const { root, put } = fixture(t);
   put(root, ".cn-pilot/CORE.md", "local\n");
@@ -436,6 +448,68 @@ test("status reports missing or corrupt baseline without misclassifying updater 
     assert.match(stdout, expected);
     assert.doesNotMatch(stdout, /LEGACY BOOTSTRAP REQUIRED/);
   }
+});
+
+test("status readiness requires a clean tracked tree but ignores unrelated untracked files", async (t) => {
+  const target = fixture(t); const source = fixture(t);
+  const targetCore = "Core 1.5.3\n"; const sourceCore = "Core 1.5.4\n";
+  target.put(target.root, ".cn-pilot-version", "1.5.3\n");
+  target.put(target.root, ".cn-pilot/CORE.md", targetCore);
+  target.put(target.root, ".cn-pilot/update/updater.mjs", "fixture updater\n");
+  target.put(target.root, "README.md", "project-owned baseline\n");
+  target.put(target.root, ".gitignore", "/.cn-pilot/runtime/\n");
+  const baseline = manifest("1.5.3", [entry(".cn-pilot-version", "1.5.3\n"), entry(".cn-pilot/CORE.md", targetCore)]);
+  writeManifestFile(target.root, baseline);
+  initRepo(target.root, [".cn-pilot-version", ".cn-pilot/CORE.md", ".cn-pilot/update/updater.mjs", "README.md", ".gitignore", MANIFEST_PATH]);
+  const baselineHead = execFileSync("git", ["rev-parse", "HEAD"], { cwd: target.root, encoding: "utf8" }).trim();
+  execFileSync("git", ["update-ref", "refs/remotes/origin/main", baselineHead], { cwd: target.root });
+  target.put(target.root, "README.md", "local commit ahead of origin\n");
+  execFileSync("git", ["add", "README.md"], { cwd: target.root });
+  execFileSync("git", ["commit", "-qm", "local commit ahead"], { cwd: target.root });
+  assert.equal(execFileSync("git", ["rev-list", "--count", "origin/main..HEAD"], { cwd: target.root, encoding: "utf8" }).trim(), "1");
+
+  source.put(source.root, ".cn-pilot-version", "1.5.4\n");
+  source.put(source.root, ".cn-pilot/CORE.md", sourceCore);
+  const latest = manifest("1.5.4", [entry(".cn-pilot-version", "1.5.4\n"), entry(".cn-pilot/CORE.md", sourceCore)]);
+  writeManifestFile(source.root, latest);
+  initRepo(source.root, [".cn-pilot-version", ".cn-pilot/CORE.md", MANIFEST_PATH]);
+  execFileSync("git", ["remote", "add", "origin", "https://github.com/LuisYGM/cn-pilot.git"], { cwd: source.root });
+
+  const status = async () => {
+    let stdout = ""; let stderr = "";
+    const code = await runCli(["status", "--target", target.root, "--source-dir", source.root], { stdout: { write: (value) => { stdout += value; } }, stderr: { write: (value) => { stderr += value; } } });
+    assert.equal(code, 0, stderr);
+    return stdout;
+  };
+
+  let stdout = await status();
+  assert.match(stdout, /Update available: YES/);
+  assert.match(stdout, /tracked changes no/);
+  assert.match(stdout, /Ready to update\./);
+
+  target.put(target.root, ".cn-pilot/runtime/active-task.json", `${JSON.stringify(activeCheckpoint("BLOCKED_HUMAN"))}\n`);
+  stdout = await status();
+  assert.match(stdout, /Active task: BLOCKED_HUMAN/);
+  assert.doesNotMatch(stdout, /Ready to update\./);
+  fs.rmSync(path.join(target.root, ".cn-pilot/runtime/active-task.json"));
+
+  target.put(target.root, "project-resources/untracked-note.txt", "untracked\n");
+  stdout = await status();
+  assert.match(stdout, /tracked changes no/);
+  assert.match(stdout, /Ready to update\./);
+
+  target.put(target.root, "README.md", "tracked local edit\n");
+  stdout = await status();
+  assert.match(stdout, /tracked changes YES/);
+  assert.match(stdout, /Update readiness: BLOCKED/);
+  assert.match(stdout, /Reason: tracked working tree changes present\./);
+  assert.doesNotMatch(stdout, /Ready to update\./);
+
+  let stderr = "";
+  const updateCode = await runCli(["update", "--target", target.root, "--source-dir", source.root], { stderr: { write: (value) => { stderr += value; } }, stdout: { write() {} } });
+  assert.equal(updateCode, 1);
+  assert.match(stderr, /DIRTY_TRACKED_TREE/);
+  assert.equal(fs.readFileSync(path.join(target.root, "README.md"), "utf8"), "tracked local edit\n");
 });
 
 test("unsafe updater or manifest symlinks are not classified as legacy", (t) => {

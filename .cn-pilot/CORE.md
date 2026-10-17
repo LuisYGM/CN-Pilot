@@ -1,6 +1,6 @@
 # CN Pilot Core — Especificación V1.5
 
-**Versión:** `1.5.3`
+**Versión:** `1.5.4`
 
 Documento de referencia para maintainers del CN Pilot. Un usuario nuevo debe empezar por [`docs/START-HERE.md`](docs/START-HERE.md); no necesita leer esta especificación para trabajar.
 

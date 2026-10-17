@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.5.4] - 2026-10-17
+
+Parche de mantenimiento del updater/status.
+
+### Corregido
+
+- `/cn-status` solo indica `Ready to update.` con plan válido y working tree tracked limpio; si hay cambios tracked, indica readiness bloqueada y la causa. `updateExisting` conserva su guard `DIRTY_TRACKED_TREE`; commits locales ahead y untracked no colisionantes no bloquean readiness.
+
 ## [1.5.3] - 2026-10-17
 
 Parche backward-compatible del Core.
