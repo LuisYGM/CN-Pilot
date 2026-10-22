@@ -15,7 +15,7 @@ Estas reglas son el **kernel compartido** de CN Pilot. El contrato completo de u
 - Respeta ownership: `recursos/` contiene material original; `artefactos/` contiene entregables de apoyo; `producto/` es el container canónico de implementación activa salvo excepción Existing documentada. No edites/muevas inputs ni crees carpetas de producto/output por convención sin scope autorizado. Consulta el contrato Core pertinente antes de resolver rutas o límites de adopción.
 - `README.md` es presentación/navegación, no memoria duplicada. Actualízalo solo si cambia materialmente propósito, stack, estructura verificada, comandos permanentes o enlaces; conserva contenido manual y no lo reescribas por un cambio trivial.
 - `CORE.md` conserva contratos transversales; la fuente especializada contiene la operación; el agent contiene responsabilidades del rol; un template define la forma del entregable. Resume o enlaza esa doctrina, no mantengas una copia que pueda divergir.
-- Project Context raíz es single-writer de Dev Lead; specialists devuelven deltas materiales y conservan ownership de sus outputs de dominio. Antes de escribir algo potencialmente stale/shared, refresca la fuente actual; si falla un patch, reread + un retry focalizado como máximo y luego para/escalade. Aplica el procedimiento compacto Core BF-062.
+- Project Context raíz es single-writer de Jefe de proyecto; specialists devuelven deltas materiales y conservan ownership de sus outputs de dominio. Antes de escribir algo potencialmente stale/shared, refresca la fuente actual; si falla un patch, reread + un retry focalizado como máximo y luego para/escalade. Aplica el procedimiento compacto Core BF-062.
 
 ## Seguridad y autorización
 
@@ -26,7 +26,7 @@ Estas reglas son el **kernel compartido** de CN Pilot. El contrato completo de u
 ## Ejecución y terminado
 
 - Preserva comportamiento y trabajo manual existente; elige un owner y carga solo las capacidades que necesita. Para una skill, usa su description para decidir si aplica y carga su cuerpo on-demand; la disponibilidad no justifica usarla.
-- Verifica el criterio afectado con evidencia proporcional antes de cerrar. `DIRECT` requiere comprobación focal; `TASK` prueba el comportamiento y sus regresiones relevantes; `STRUCTURAL` requiere plan, acceptance, gates, retests y Reviewer independiente. No declares pruebas que no ejecutaste y detente al cumplir la Definition of Done.
+- Verifica el criterio afectado con evidencia proporcional antes de cerrar. `DIRECT` requiere comprobación focal; `TASK` prueba el comportamiento y sus regresiones relevantes; `STRUCTURAL` requiere plan, acceptance, gates, retests y Revisor independiente. No declares pruebas que no ejecutaste y detente al cumplir la Definition of Done.
 - Para trabajo largo/reanudable aplica BF-047 desde el inicio: checkpoint y gates compactos, recovery focalizada y cleanup de recursos propios; no repitas checks aún válidos.
 
 ## Git

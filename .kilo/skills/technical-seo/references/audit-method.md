@@ -4,7 +4,7 @@
 
 FOCUSED resuelve una cuestión delimitada y puede terminar con evidencia en la sesión. FORMAL produce una evaluación acordada de varias superficies: define objetivo, URLs/clases/plantillas, entornos, muestra, herramientas/datos disponibles, restricciones de acceso y ventana temporal relevante. No expande una corrección de metadata a una auditoría completa.
 
-Reutiliza baseline y fuentes vigentes. Selecciona controles por necesidad, no por tamaño de un catálogo. En una auditoría transversal, Dev Lead coordina las especialidades; deriva contenido, rendimiento, seguridad o UX sin asumir su QA completo. Un informe puede tener límites declarados y seguir siendo útil.
+Reutiliza baseline y fuentes vigentes. Selecciona controles por necesidad, no por tamaño de un catálogo. En una auditoría transversal, Jefe de proyecto coordina las especialidades; deriva contenido, rendimiento, seguridad o UX sin asumir su QA completo. Un informe puede tener límites declarados y seguir siendo útil.
 
 ## Aplicabilidad y resultado son dimensiones distintas
 
@@ -48,4 +48,4 @@ Por hallazgo registra identificador, controles afectados, evidencia, impacto, al
 
 El informe explica conclusiones y acciones; el registro de cobertura muestra qué se comprobó. Pueden enlazarse por `control_id`/`finding_id`, sin duplicar el contenido del hallazgo. [Informe opcional](../../../../.cn-pilot/plantillas/seo/informe-auditoria-seo.md) y [estructura de cobertura](../../../../.cn-pilot/plantillas/seo/cobertura-auditoria-seo.csv) solo para entregables que lo necesiten. En greenfield conserva informes durables en `artefactos/documentacion/auditorias/<scope>/` y registra entregables significativos en `ARTEFACTOS.md`; en existentes respeta el layout documental vigente. `ESTADO.md` sigue siendo estado operativo, no una segunda matriz de auditoría.
 
-Tras un cambio verifica de nuevo controles afectados y regresiones pertinentes. Conserva el contraste antes/después, fecha y muestra; «implementado» no significa «verificado». No repitas toda la auditoría salvo cambio de alcance, evidencia invalidada o riesgo que lo justifique. Reviewer puede cuestionar muestras y conclusiones de forma independiente; este método no se autoaprueba ni modifica sus permisos.
+Tras un cambio verifica de nuevo controles afectados y regresiones pertinentes. Conserva el contraste antes/después, fecha y muestra; «implementado» no significa «verificado». No repitas toda la auditoría salvo cambio de alcance, evidencia invalidada o riesgo que lo justifique. Revisor puede cuestionar muestras y conclusiones de forma independiente; este método no se autoaprueba ni modifica sus permisos.

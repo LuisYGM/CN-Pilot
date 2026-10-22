@@ -8,7 +8,7 @@ description: Crear o modificar páginas, plantillas, Theme Builder, widgets, est
 ## Preflight: estado existente primero
 
 - Confirma Elementor y, si aplica, Elementor Pro/licencia y versiones instaladas; inspecciona la página/plantilla, tipo de editor, dependencias, condiciones, Site Settings, Global Colors/Fonts, breakpoints, widgets/addons y fuente de estilos actual. La instalación/configuración del sitio prevalece sobre defaults de documentación.
-- Identifica si el alcance es contenido visual, plantilla, widget custom, formulario o lógica de negocio. Mantén el ownership en Elementor para presentación editable; lógica compleja, persistencia, permisos e integraciones pertenecen a plugin/tema/API/Developer según arquitectura vigente.
+- Identifica si el alcance es contenido visual, plantilla, widget custom, formulario o lógica de negocio. Mantén el ownership en Elementor para presentación editable; lógica compleja, persistencia, permisos e integraciones pertenecen a plugin/tema/API/Desarrollador según arquitectura vigente.
 - No migres builder, estructura, globals ni extensiones existentes para seguir una receta. Si algo depende de API interna, documentación/versiones, confirma fuentes oficiales actuales antes de custom-code.
 
 ## Implementación builder-native
@@ -23,4 +23,4 @@ description: Crear o modificar páginas, plantillas, Theme Builder, widgets, est
 
 - Trabaja en la fuente editable del builder, no en HTML renderizado/cache como fuente de verdad. Guarda/publica solo si ese es el scope autorizado; ante una operación incierta, relee el recurso antes de repetir cambios.
 - Verifica la edición en Elementor editor y frontend real: contenido/estructura editable, template match/conditions, estados dinámicos, links/forms relevantes, consola/errores, y desktop + breakpoints afectados. Distingue bug de editor, frontend, caché o CSS generado antes de regenerar CSS/limpiar caché; solo ejecuta regeneración cuando la evidencia lo requiere y vuelve a comprobar editor/frontend.
-- Comprueba que no hay CSS duplicado, layout overflow, templates competidores o regresión de componentes compartidos. Rendimiento medible → `performance-review`; responsive como problema principal → `frontend-responsive`; sistema global incoherente → `ui-design-system`; capacidad/código de extensión Elementor version-sensitive → `source-grounded-development` y Developer si implica PHP/backend. No actives toda la cadena para una edición visual sencilla.
+- Comprueba que no hay CSS duplicado, layout overflow, templates competidores o regresión de componentes compartidos. Rendimiento medible → `performance-review`; responsive como problema principal → `frontend-responsive`; sistema global incoherente → `ui-design-system`; capacidad/código de extensión Elementor version-sensitive → `source-grounded-development` y Desarrollador si implica PHP/backend. No actives toda la cadena para una edición visual sencilla.

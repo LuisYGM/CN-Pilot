@@ -5,7 +5,7 @@ description: Verificar comportamiento externo/versionado mediante fuentes primar
 
 # Source-Grounded Development
 
-Procedimiento condicional para Architect, Developer y Frontend/Builder. No es una fase general de discovery, no crea un owner de investigación y no se activa por rutina. Resuelve una cuestión concreta con la mínima evidencia suficiente.
+Procedimiento condicional para Arquitecto, Desarrollador y Maquetador frontend. No es una fase general de discovery, no crea un owner de investigación y no se activa por rutina. Resuelve una cuestión concreta con la mínima evidencia suficiente.
 
 ## DETECT → QUESTION → SOURCE → APPLY → PROVE → REPORT
 
@@ -49,4 +49,4 @@ Incluye brevemente versión/configuración detectada, fuente primaria y conclusi
 
 ## Límites de coste y Completion Mode
 
-Detente cuando una fuente primaria aplicable y evidencia local suficiente resuelvan la pregunta. No recorras manuales, compares versiones irrelevantes ni abras preguntas colaterales. Durante `Completion Mode`, no empieces research opcional: solo reabre esta skill si una verificación requerida revela un fallo concreto cuya resolución depende de comportamiento externo/versionado. El owner actual resuelve la pregunta y, cuando pueda, continúa la implementación; no derives a un investigador separado. Reviewer no participa y conserva su aislamiento de web y skills.
+Detente cuando una fuente primaria aplicable y evidencia local suficiente resuelvan la pregunta. No recorras manuales, compares versiones irrelevantes ni abras preguntas colaterales. Durante `Completion Mode`, no empieces research opcional: solo reabre esta skill si una verificación requerida revela un fallo concreto cuya resolución depende de comportamiento externo/versionado. El owner actual resuelve la pregunta y, cuando pueda, continúa la implementación; no derives a un investigador separado. Revisor no participa y conserva su aislamiento de web y skills.

@@ -7,7 +7,7 @@ Sitio corporativo, institucional, blog o portal cuyo CMS principal es WordPress.
 content, seo, design, wordpress, forms, frontend, performance, security.
 
 ## Flujo estructural habitual
-`Requirements → Content → Design → Frontend → Developer → Reviewer → Staging`
+`Requirements → Content → Design → Maquetador frontend → Desarrollador → Revisor → Staging`
 
 ## Skills habituales
 `wordpress`, `bricks` o `elementor`, `frontend-responsive`, `content-page`, `technical-seo`, `performance-review`, `accessibility-review`.

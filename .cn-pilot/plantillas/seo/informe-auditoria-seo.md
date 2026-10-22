@@ -1,6 +1,6 @@
 # Informe de evaluación SEO
 
-> Opcional para una evaluación FORMAL. Adapta secciones al alcance; no es memoria global ni aprobación del Reviewer. La cobertura puede enlazarse como CSV sin repetir aquí todas sus filas.
+> Opcional para una evaluación FORMAL. Adapta secciones al alcance; no es memoria global ni aprobación del Revisor. La cobertura puede enlazarse como CSV sin repetir aquí todas sus filas.
 
 ## Objetivo y alcance
 

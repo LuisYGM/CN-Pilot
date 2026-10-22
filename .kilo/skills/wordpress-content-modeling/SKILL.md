@@ -1,11 +1,11 @@
 ---
 name: wordpress-content-modeling
-description: Modelar entidades, tipos, taxonomías, relaciones y fields para contenido/editorial dinámico en un WordPress confirmado. Developer owner; Architect solo para modelado transversal/migración de impacto real. No activar para layout/copy, WordPress no confirmado o cambios locales en un modelo estable.
+description: Modelar entidades, tipos, taxonomías, relaciones y fields para contenido/editorial dinámico en un WordPress confirmado. Desarrollador owner; Arquitecto solo para modelado transversal/migración de impacto real. No activar para layout/copy, WordPress no confirmado o cambios locales en un modelo estable.
 ---
 
 # wordpress-content-modeling
 
-**Owner técnico:** Developer. Architect solo ante decisión de arquitectura, coexistencia/migración de esquemas o múltiples sistemas con tradeoffs materiales. Content/SEO informa necesidades editoriales/URLs confirmadas, no define implementación técnica. `wordpress` conserva lifecycle/API general y `technical-seo` auditoría SEO; esta skill decide modelo de contenido. Builder (Bricks/Elementor/Gutenberg) se confirma y debe poder consumir lo elegido.
+**Owner técnico:** Desarrollador. Arquitecto solo ante decisión de arquitectura, coexistencia/migración de esquemas o múltiples sistemas con tradeoffs materiales. Contenido / SEO informa necesidades editoriales/URLs confirmadas, no define implementación técnica. `wordpress` conserva lifecycle/API general y `technical-seo` auditoría SEO; esta skill decide modelo de contenido. Builder (Bricks/Elementor/Gutenberg) se confirma y debe poder consumir lo elegido.
 
 ## Preflight
 
@@ -33,7 +33,7 @@ Verifica queries reales previstas: listing, archive, filtro compuesto, relations
 
 ## URLs, Existing y migración
 
-Comprueba slug uniqueness, public/archive routes, rewrite collision, permalink legacy y SEO implications con Content/SEO. No cambia URL publicada automáticamente; `technical-seo` gobierna auditoría y redirect. Migración de schema/content/relationships usa `database-migrations` cuando altera datos/versiones/parcialidad; no incluye migración escondida en registro de CPT. Antes de migrar registra cardinalidad y ownership mínimo que necesite la operación; backup no prueba rollback. Mantén compatibilidad de consumer/API y un plan reversible/forward-recovery según riesgo. Sin datos/query evidence no introduzcas tabla custom/index/infra.
+Comprueba slug uniqueness, public/archive routes, rewrite collision, permalink legacy y SEO implications con Contenido / SEO. No cambia URL publicada automáticamente; `technical-seo` gobierna auditoría y redirect. Migración de schema/content/relationships usa `database-migrations` cuando altera datos/versiones/parcialidad; no incluye migración escondida en registro de CPT. Antes de migrar registra cardinalidad y ownership mínimo que necesite la operación; backup no prueba rollback. Mantén compatibilidad de consumer/API y un plan reversible/forward-recovery según riesgo. Sin datos/query evidence no introduzcas tabla custom/index/infra.
 
 ## Resultado accionable y checks
 

@@ -29,7 +29,7 @@ Usa esta valoración internamente; no enseñes etiquetas de confianza al usuario
 
 - **HIGH — evidencia directa o intención explícita:** úsala y continúa.
 - **MEDIUM — inferencia razonable, reversible y de bajo riesgo:** decide profesionalmente. Indica una hipótesis solo si su conocimiento afecta el resultado.
-- **LOW + impacto material — varias interpretaciones con consecuencias relevantes:** pausa esa parte y consulta a Dev Lead; si el contexto no resuelve la duda, Dev Lead pregunta en lenguaje humano.
+- **LOW + impacto material — varias interpretaciones con consecuencias relevantes:** pausa esa parte y consulta a Jefe de proyecto; si el contexto no resuelve la duda, Jefe de proyecto pregunta en lenguaje humano.
 - **Desconocido no material para el trabajo actual:** déjalo `Pending` o para después y avanza en lo independiente.
 
 `Pending` es un estado válido, no una deuda que haya que eliminar antes de empezar. Pregunta cuando el dato pase a ser necesario; no para conseguir contexto perfecto.
@@ -109,7 +109,7 @@ Antes de cada escritura al contexto del proyecto, Jefe de proyecto responde inte
 
 Un mismo dato se escribe en su fuente de verdad, no se copia por rutina a los cinco archivos. Git/producto proporcionan la trazabilidad técnica normal; no crees notas/documentación para demostrar trabajo realizado. Ejecución trivial, `DIRECT` o código editado no implica automáticamente cambios de Context.
 
-## Dev Lead y especialistas
+## Jefe de proyecto y especialistas
 
 Jefe de proyecto es el interlocutor humano normal y consolida la coordinación:
 

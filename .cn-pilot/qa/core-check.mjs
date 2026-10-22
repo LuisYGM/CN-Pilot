@@ -41,6 +41,21 @@ const REVIEWER_DENY = ["bash", "websearch", "webfetch", "skill", "task", "agent_
 const SENSITIVE_PATHS = [".env", ".env.*", "**/.env", "**/.env.*", "secrets/**", ".kilocode/mcp.json", "**/.kilocode/mcp.json"];
 const DESTRUCTIVE_GIT = ["git push --force*", "git push -f*", "git reset --hard*", "git clean*"];
 const CN_PILOT_AGENTS = ["arquitecto", "contenido-seo", "desarrollador", "disenador-ui-ux", "jefe-proyecto", "maquetador-frontend", "revisor"];
+const LEGACY_ROLE_NAME = /\b(?:Dev Lead|Architect|Reviewer|Developer|Frontend\s*\/\s*Builder|Frontend\s+Builder|Content\s*\/\s*SEO|Content SEO(?: agent)?|UI\/UX Designer)\b/g;
+const ACTIVE_LANGUAGE_ROOTS = [
+  ".cn-pilot/documentacion", ".cn-pilot/perfiles", ".cn-pilot/plantillas",
+  ".kilo/agents", ".kilo/commands", ".kilo/skills",
+];
+const PROJECT_CONTEXT_DOCS = ["AGENTS.md", "README.md", "PROYECTO.md", "REQUISITOS.md", "ESTADO.md", "DECISIONES.md", "ARTEFACTOS.md"];
+const CN_PILOT_AGENT_HEADINGS = {
+  "jefe-proyecto": "Jefe de proyecto",
+  "arquitecto": "Arquitecto",
+  "contenido-seo": "Contenido / SEO",
+  "disenador-ui-ux": "Diseñador UI/UX",
+  "desarrollador": "Desarrollador",
+  "maquetador-frontend": "Maquetador frontend",
+  "revisor": "Revisor",
+};
 
 function safeText(value) { return String(value).replace(/[\r\n\t]/g, " "); }
 
@@ -221,6 +236,43 @@ function checkAgentStepCaps(root) {
     if (typeof result.fields.steps === "number") findings.push({ path: relative, code: "EXPLICIT_AGENT_STEP_CAP" });
   }
   return findings;
+}
+
+function checkSpanishFirst(root) {
+  const findings = [];
+  const paths = [".cn-pilot/NUCLEO.md"];
+  const listingProblems = [];
+  for (const directory of ACTIVE_LANGUAGE_ROOTS) {
+    const listing = listFiles(root, directory, { extension: ".md", recursive: true });
+    paths.push(...listing.files.filter((file) => !(directory === ".kilo/skills" && file.includes("/references/"))));
+    listingProblems.push(...listing.problems);
+  }
+  for (const relative of PROJECT_CONTEXT_DOCS) {
+    if (inspectPath(root, relative).kind === "ok") paths.push(relative);
+  }
+  if (listingProblems.length) findings.push(...listingProblems.map((problem) => ({ ...problem, code: "ACTIVE_LANGUAGE_PATH_UNAVAILABLE" })));
+
+  for (const relative of [...new Set(paths)].sort()) {
+    if (relative === ".cn-pilot/CAMBIOS.md") continue; // Changelog histórico no refleja la terminología activa.
+    const source = readText(root, relative);
+    if (source.kind !== "ok") { findings.push({ path: relative, code: "ACTIVE_LANGUAGE_FILE_UNREADABLE" }); continue; }
+    for (const match of source.text.matchAll(LEGACY_ROLE_NAME)) findings.push({ path: relative, code: "LEGACY_ROLE_NAME", value: match[0] });
+  }
+
+  for (const [name, heading] of Object.entries(CN_PILOT_AGENT_HEADINGS)) {
+    const relative = `.kilo/agents/${name}.md`;
+    const source = readText(root, relative);
+    if (source.kind !== "ok" || !source.text.split(/\r\n|\n|\r/).includes(`# ${heading}`)) {
+      findings.push({ path: relative, code: "NON_CANONICAL_AGENT_HEADING", expected: `# ${heading}` });
+    }
+  }
+
+  const core = readText(root, ".cn-pilot/NUCLEO.md");
+  const canonical = core.kind === "ok" && core.text.includes("Las superficies propias de CN Pilot destinadas a personas usan español por defecto")
+    && core.text.includes("nombres visibles de roles, documentos, comandos y estructuras")
+    && !/estructura técnica permanece en inglés.{0,100}(?:archivos|carpetas|agentes)/i.test(core.text);
+  if (!canonical) findings.push({ path: ".cn-pilot/NUCLEO.md", code: "SPANISH_FIRST_DOCTRINE_MISSING_OR_CONTRADICTORY" });
+  return { findings, scanned: [...new Set(paths)].length };
 }
 
 function checkSkills(root) {
@@ -424,6 +476,8 @@ export function runCoreChecks({ rootDir = DEFAULT_ROOT } = {}) {
   add("agents.frontmatter", agentInventory.problems.length ? "FAIL" : agentInventory.symlinks.length ? "WARN" : "PASS", { count: agentInventory.count, problems: agentInventory.problems, uninspectedSymlinks: agentInventory.symlinks });
   const stepCaps = checkAgentStepCaps(root);
   add("agents.noStepCaps", stepCaps.length ? "FAIL" : "PASS", { inspected: CN_PILOT_AGENTS.length, findings: stepCaps, reason: "Los agentes activos deben terminar por outcome/gates/bloqueo real, no por un límite numérico artificial de steps." });
+  const spanishFirst = checkSpanishFirst(root);
+  add("language.spanishFirst", spanishFirst.findings.length ? "FAIL" : "PASS", { scanned: spanishFirst.scanned, findings: spanishFirst.findings, reason: "La documentación y los prompts activos de CN Pilot usan roles Spanish-first y declaran la excepción técnica canónica; el changelog histórico queda fuera del control." });
   const skills = checkSkills(root);
   add("skills.frontmatter", skills.problems.length ? "FAIL" : skills.symlinks.length ? "WARN" : "PASS", { count: skills.count, problems: skills.problems, uninspectedSymlinks: skills.symlinks });
   const commands = checkCommands(root, agentInventory.names);
@@ -470,8 +524,9 @@ const LABELS = new Map([
   ["core.version", "Version"], ["core.paths", "Core paths"], ["core.optionalScaffold", "Input scaffold"],
   ["agents.frontmatter", "Agents"], ["skills.frontmatter", "Skills"], ["commands.frontmatter", "Commands"],
   ["agents.noStepCaps", "Agent step caps"],
-  ["routing.commands", "Command routing"], ["routing.devLead", "Dev Lead routes"], ["permissions.reviewer", "Reviewer permissions"],
-  ["security.devLead", "Dev Lead safety"], ["profiles.inventory", "Profiles"], ["templates.inventory", "Templates"],
+  ["language.spanishFirst", "Spanish-first role terminology"],
+  ["routing.commands", "Command routing"], ["routing.devLead", "Rutas de Jefe de proyecto"], ["permissions.reviewer", "Permisos de Revisor"],
+  ["security.devLead", "Seguridad de Jefe de proyecto"], ["profiles.inventory", "Profiles"], ["templates.inventory", "Templates"],
   ["references.technicalSeo", "Technical SEO refs"], ["runtime.gitignore", "Runtime isolation"], ["manifest.inventory", "MANIFEST"],
   ["distribution.manifest", "Distribution manifest"],
 ]);

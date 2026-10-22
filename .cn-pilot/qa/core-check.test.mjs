@@ -50,7 +50,7 @@ function createFixture(t) {
     '    "git reset --hard*": deny',
     '    "git clean*": deny',
     "---",
-    "# Dev Lead fixture",
+    "# Jefe de proyecto",
   ].join("\n") + "\n";
 
   const reviewer = [
@@ -80,7 +80,7 @@ function createFixture(t) {
     "  edit: deny",
     "  apply_patch: deny",
     "---",
-    "# Reviewer fixture",
+    "# Revisor",
   ].join("\n") + "\n";
 
   const manifest = [
@@ -98,8 +98,8 @@ function createFixture(t) {
   put("DECISIONES.md", "# Decisions fixture\n");
   put("ARTEFACTOS.md", "# Artifacts fixture\n");
   put("AGENTS.md", "# Minimal test kernel\n");
-  put(".cn-pilot-version", "2.1.0\n");
-  put(".cn-pilot/NUCLEO.md", "**Versión:** `2.1.0`\n");
+  put(".cn-pilot-version", "2.1.1\n");
+  put(".cn-pilot/NUCLEO.md", "**Versión:** `2.1.1`\n\nLas superficies propias de CN Pilot destinadas a personas usan español por defecto, incluidos los nombres visibles de roles, documentos, comandos y estructuras.\n");
   put(".cn-pilot/MANIFIESTO.md", manifest);
   put(".cn-pilot/config/responsive.json", "{}\n");
   put(".cn-pilot/documentacion/.keep");
@@ -112,7 +112,7 @@ function createFixture(t) {
   put(".cn-pilot/update/updater.test.mjs", "// updater test fixture\n");
   put(".cn-pilot/update/manifest.json", `${JSON.stringify({
     schemaVersion: 1,
-    cnPilotVersion: "2.1.0",
+    cnPilotVersion: "2.1.1",
     sourceRepository: "https://github.com/LuisYGM/cn-pilot.git",
     stableBranch: "main",
     sourceCommit: null,
@@ -127,8 +127,15 @@ function createFixture(t) {
   put(".gitignore", "/.cn-pilot/runtime/\n");
   put(".kilo/agents/jefe-proyecto.md", devLead);
   put(".kilo/agents/revisor.md", reviewer);
-  for (const agent of ["arquitecto", "contenido-seo", "disenador-ui-ux", "desarrollador", "maquetador-frontend"]) {
-    put(`.kilo/agents/${agent}.md`, `---\ndescription: Agente de fixture\nmode: subagent\n---\n# ${agent}\n`);
+  const fixtureHeadings = {
+    arquitecto: "Arquitecto",
+    "contenido-seo": "Contenido / SEO",
+    "disenador-ui-ux": "Diseñador UI/UX",
+    desarrollador: "Desarrollador",
+    "maquetador-frontend": "Maquetador frontend",
+  };
+  for (const [agent, heading] of Object.entries(fixtureHeadings)) {
+    put(`.kilo/agents/${agent}.md`, `---\ndescription: Agente de fixture\nmode: subagent\n---\n# ${heading}\n`);
   }
   put(".kilo/skills/sample/SKILL.md", "---\nname: sample\ndescription: Skill de fixture\n---\n# Sample\n");
   put(".kilo/skills/technical-seo/SKILL.md", "---\nname: technical-seo\ndescription: Skill SEO de fixture\n---\n# SEO\n");
@@ -165,7 +172,7 @@ test("known-good minimal fixture passes deterministic invariants", (t) => {
   const report = runCoreChecks({ rootDir: fixture.root });
   assert.equal(report.status, "PASS", JSON.stringify(report.findings));
   assert.deepEqual(runCoreChecks({ rootDir: fixture.root }), report, "same read-only snapshot yields the same report");
-  assert.equal(report.version, "2.1.0");
+  assert.equal(report.version, "2.1.1");
   assert.equal(getCheck(report, "agents.frontmatter").details.count, 7);
   assert.equal(getCheck(report, "skills.frontmatter").details.count, 2);
   assert.equal(getCheck(report, "commands.frontmatter").details.count, 14);
@@ -203,6 +210,28 @@ test("step-cap history outside active agents does not trigger the guard", (t) =>
   fixture.put(".cn-pilot/CAMBIOS.md", "Historical sample: steps: 25\n");
   fixture.put(".cn-pilot/qa/fixtures/agent-example.md", "steps: 25\n");
   assert.equal(getCheck(runCoreChecks({ rootDir: fixture.root }), "agents.noStepCaps").status, "PASS");
+});
+
+test("legacy CN Pilot role names fail only in active human-facing files", (t) => {
+  const fixture = createFixture(t);
+  fixture.put(".kilo/commands/diagnostico.md", "---\ndescription: Fixture\nagent: jefe-proyecto\n---\nDev Lead coordina la revisión.\n");
+  fixture.put(".cn-pilot/CAMBIOS.md", "Historial: Dev Lead y Reviewer eran nombres antiguos.\n");
+  fixture.put(".cn-pilot/qa/fixtures/legacy.md", "Fixture histórico: Architect y Developer.\n");
+  const check = getCheck(runCoreChecks({ rootDir: fixture.root }), "language.spanishFirst");
+  assert.equal(check.status, "FAIL");
+  assert.deepEqual(check.details.findings, [{ path: ".kilo/commands/diagnostico.md", code: "LEGACY_ROLE_NAME", value: "Dev Lead" }]);
+});
+
+test("Spanish-first doctrine is required and generic technical wording is not translated", (t) => {
+  const fixture = createFixture(t);
+  fixture.put(".kilo/skills/sample/SKILL.md", "---\nname: sample\ndescription: Skill de fixture\n---\nEl developer experience no equivale a un rol; frontend development sigue siendo término genérico.\n");
+  fixture.put(".kilo/skills/technical-seo/references/audit.md", "Cita externa de ejemplo: Developer.\n");
+  assert.equal(getCheck(runCoreChecks({ rootDir: fixture.root }), "language.spanishFirst").status, "PASS");
+
+  fixture.put(".cn-pilot/NUCLEO.md", "**Versión:** `2.1.1`\n\nLa estructura técnica permanece en inglés: archivos, carpetas, agentes.\n");
+  const check = getCheck(runCoreChecks({ rootDir: fixture.root }), "language.spanishFirst");
+  assert.equal(check.status, "FAIL");
+  assert.ok(check.details.findings.some((finding) => finding.code === "SPANISH_FIRST_DOCTRINE_MISSING_OR_CONTRADICTORY"));
 });
 
 test("legacy canonical paths are rejected in a clean 2.0 installation", (t) => {

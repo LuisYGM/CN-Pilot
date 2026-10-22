@@ -1,11 +1,11 @@
 ---
 name: auth-access-control
-description: Implementar o modificar autenticación, sesiones, identidad, roles, capabilities, ownership y autorización server-side en una app/backend. Owner Developer; Architect solo para decisión estructural real. No activar para login mock de prototipo ni para un UI-only change sin cambio de policy.
+description: Implementar o modificar autenticación, sesiones, identidad, roles, capabilities, ownership y autorización server-side en una app/backend. Owner Desarrollador; Arquitecto solo para decisión estructural real. No activar para login mock de prototipo ni para un UI-only change sin cambio de policy.
 ---
 
 # auth-access-control
 
-**Owner:** Developer. Implementa el control; `security-review` evalúa riesgo y hace revisión focalizada independiente cuando superficie/riesgo lo requieran. No la sustituye ni requiere Architect automáticamente. Architect interviene solo si elección real de identidad/tenancy/provider/session boundary impacta arquitectura. `application-ui`/`form-experience` gobiernan presentación y UX, no autorización.
+**Owner:** Desarrollador. Implementa el control; `security-review` evalúa riesgo y hace revisión focalizada independiente cuando superficie/riesgo lo requieran. No la sustituye ni requiere Arquitecto automáticamente. Arquitecto interviene solo si elección real de identidad/tenancy/provider/session boundary impacta arquitectura. `application-ui`/`form-experience` gobiernan presentación y UX, no autorización.
 
 ## Preflight y scope
 

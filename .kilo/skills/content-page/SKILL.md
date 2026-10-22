@@ -6,7 +6,7 @@ description: Crear contenido estructurado para páginas web antes o durante el d
 # content-page
 
 1. Comprende objetivo, audiencia, oferta confirmada, voz y papel de la página en el journey, inspeccionando el contexto y contenido vigentes antes de preguntar.
-2. Reutiliza respuestas confirmadas. Si falta información material, pregunta solo lo que pueda cambiar sustancialmente la propuesta; trabajando bajo Dev Lead, informa el vacío concreto a Dev Lead en vez de repetir discovery con la persona. Si el usuario ya solicitó la página y un hecho desconocido puede quedar `Pending` sin inventarlo ni cambiar riesgo/alcance, crea un borrador honesto sin reconfirmar. Si la skill se invoca directamente, pregunta de manera breve y natural.
+2. Reutiliza respuestas confirmadas. Si falta información material, pregunta solo lo que pueda cambiar sustancialmente la propuesta; trabajando bajo Jefe de proyecto, informa el vacío concreto a Jefe de proyecto en vez de repetir discovery con la persona. Si el usuario ya solicitó la página y un hecho desconocido puede quedar `Pending` sin inventarlo ni cambiar riesgo/alcance, crea un borrador honesto sin reconfirmar. Si la skill se invoca directamente, pregunta de manera breve y natural.
 3. Propón según aplique arquitectura de contenido, propuesta principal, H1, hero, secciones H2/H3, narrativa, CTAs, enlaces internos, metatitle, metadescription, slug y notas para diseño.
 4. Toma decisiones profesionales sobre estructura, titulares, transiciones y jerarquía; no esperes un briefing exhaustivo.
 5. Separa copy creativo de hechos empresariales. No inventes cifras, experiencia, precios, garantías, certificaciones, cobertura, partners, testimonios, premios o capacidades no confirmadas.
@@ -15,7 +15,7 @@ description: Crear contenido estructurado para páginas web antes o durante el d
 
 ### Content Enrichment Opportunity (BF-067)
 
-Cuando Dev Lead enrute una oportunidad de enriquecimiento autorizada para esta página, reorganiza/expande únicamente con hechos confirmados: por ejemplo explicar proceso/servicios, FAQ sustentada, transición, framing, narrativa o contenido educativo. No rellenes con hechos/claims nuevos. Si un hecho factual (clientes, cifras, certificaciones, resultados, proyectos, garantías, precios, experiencia, coverage, etc.) mejoraría materialmente confianza/conversión y falta evidencia, comunica un gap concreto al Dev Lead para una pregunta agrupada; no hagas un cuestionario. `Decide tú` delega estructura y copy derivable dentro del scope, no claims ni expansión de autorización.
+Cuando Jefe de proyecto enrute una oportunidad de enriquecimiento autorizada para esta página, reorganiza/expande únicamente con hechos confirmados: por ejemplo explicar proceso/servicios, FAQ sustentada, transición, framing, narrativa o contenido educativo. No rellenes con hechos/claims nuevos. Si un hecho factual (clientes, cifras, certificaciones, resultados, proyectos, garantías, precios, experiencia, coverage, etc.) mejoraría materialmente confianza/conversión y falta evidencia, comunica un gap concreto a Jefe de proyecto para una pregunta agrupada; no hagas un cuestionario. `Decide tú` delega estructura y copy derivable dentro del scope, no claims ni expansión de autorización.
 
 En greenfield guarda la fuente editable en `artefactos/contenido/paginas/`; crea la ruta solo si existe el primer artefacto. En proyectos existentes conserva el destino editorial vigente. Si los permisos lo impiden, reporta el bloqueo y no la reubiques.
 

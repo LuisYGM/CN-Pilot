@@ -29,6 +29,6 @@ Los logs pueden describir peticiones, no intención o conversión; datos de labo
 
 ## Handoff y privacidad
 
-Si una fricción consulta → página → conversión emerge de los datos, entrega a Content/SEO o UI/UX necesidad, evidencia, segmento, hipótesis y criterio de éxito. SEO no decide composición visual ni presenta rebote/tiempo/scroll como factores directos de ranking.
+Si una fricción consulta → página → conversión emerge de los datos, entrega a Contenido / SEO o Diseñador UI/UX necesidad, evidencia, segmento, hipótesis y criterio de éxito. SEO no decide composición visual ni presenta rebote/tiempo/scroll como factores directos de ranking.
 
 Minimiza datos personales en exports, URLs, logs y capturas; no envíes PII a analytics ni publiques datos de clientes en informes. Cambiar tracking, consentimiento o integraciones requiere alcance/autorización propios y revisión de seguridad cuando corresponda. Esta referencia diagnostica: no instala instrumentación ni crea memoria paralela.

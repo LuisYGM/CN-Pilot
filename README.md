@@ -1,6 +1,6 @@
 # CN Pilot
 
-**CN Pilot 2.1.0 · Base Spanish-first para proyectos web con agentes de IA.**
+**CN Pilot 2.1.1 · Base Spanish-first para proyectos web con agentes de IA.**
 
 Kilo Code nativo · agnóstico al proveedor/modelo dentro de Kilo
 
@@ -20,7 +20,7 @@ Sirve para proyectos web nuevos y existentes: sitios estáticos, contenido y SEO
 
 ```mermaid
 flowchart LR
-    H[Petición en lenguaje natural] --> D[Dev Lead]
+    H[Petición en lenguaje natural] --> D[Jefe de proyecto]
     D --> C[Contexto y alcance]
     C --> S[Especialistas y skills, si hacen falta]
     S --> W[Diseño o implementación, según el objetivo]
@@ -33,7 +33,7 @@ El diagrama representa caminos posibles, no una secuencia obligatoria. Una tarea
 ### Human-first, de principio a fin
 
 - La persona explica qué necesita con sus propias palabras; no requiere prompt engineering ni conocer rutas, agentes o skills.
-- Dev Lead inspecciona el contexto y pregunta solo si falta una decisión material.
+- Jefe de proyecto inspecciona el contexto y pregunta solo si falta una decisión material.
 - Greenfield y Existing parten de sus fuentes reales; en proyectos existentes se preserva la implementación vigente.
 - Diseño y desarrollo se separan cuando aporta valor: **Design → aprobación visual → implementación → QA**, sin activar fases posteriores por rutina.
 - La profundidad se ajusta al riesgo. Acceso a producción, datos, seguridad, publicación y decisiones costosas permanecen bajo control humano.
@@ -87,7 +87,7 @@ La estructura interna del producto depende de su stack; un repositorio existente
 
 ## Agentes, skills y stacks
 
-Dev Lead coordina; agentes especialistas y skills son mecanismos internos que se usan bajo demanda, no una lista de tareas manual que deba dirigir la persona. La colección cubre contenido/SEO, UX y diseño, frontend, desarrollo, WordPress/WooCommerce y revisiones específicas.
+Jefe de proyecto coordina; agentes especialistas y skills son mecanismos internos que se usan bajo demanda, no una lista de tareas manual que deba dirigir la persona. La colección cubre contenido/SEO, UX y diseño, frontend, desarrollo, WordPress/WooCommerce y revisiones específicas.
 
 Se pueden trabajar proyectos HTML/CSS/JS, PHP, WordPress, Bricks, Elementor, WooCommerce, APIs, contenido y SEO cuando el alcance y las herramientas disponibles lo permiten. Esto no significa que CN Pilot instale o suministre esos stacks, ni que todas sus integraciones estén habilitadas por defecto. MCP y deployment son opcionales.
 

@@ -1,15 +1,15 @@
 ---
 name: form-experience
-description: Diseñar o implementar la experiencia de un formulario material: selección/orden de fields, validación, estados, recuperación, submit y accesibilidad. UI/UX Designer es owner; Frontend/Developer la consumen para su parte al crear/alterar forms. No activar para un input aislado, copy trivial o prototipo sin flujo de form significativo.
+description: Diseñar o implementar la experiencia de un formulario material: selección/orden de fields, validación, estados, recuperación, submit y accesibilidad. Diseñador UI/UX es owner; Maquetador frontend/Desarrollador la consumen para su parte al crear/alterar forms. No activar para un input aislado, copy trivial o prototipo sin flujo de form significativo.
 ---
 
 # form-experience
 
-**Owner de experiencia:** UI/UX Designer. Frontend implementa interacción visual/browser; Developer datos/validación server-side. Una tarea puede ser completada por un solo owner si el scope lo permite; la skill no crea handoffs automáticos. `auth-access-control` gobierna login/auth; `security-review` cubre riesgos de datos reales. BF-059/BF-060 gobiernan focus visual del campo.
+**Owner de experiencia:** Diseñador UI/UX. Maquetador frontend implementa interacción visual/browser; Desarrollador datos/validación server-side. Una tarea puede ser completada por un solo owner si el scope lo permite; la skill no crea handoffs automáticos. `auth-access-control` gobierna login/auth; `security-review` cubre riesgos de datos reales. BF-059/BF-060 gobiernan focus visual del campo.
 
 ## Preflight y diseño de campos
 
-Identifica formulario (contact, lead/quote, registration/login, account/settings, data-entry, filter/search, upload, multistep), objetivo, actor, riesgo, destino de datos, endpoint/persistencia si existen y source UI/Existing. Reusa datos/config/modelo ya conocidos. En Existing, preserva flujo correcto; Approved/Strict fully specified rige sus campos, orden y estados: resuelve únicamente gaps no cubiertos dentro del scope, no reabre el diseño. Si es mock, mantén mock/local state; no inventes backend. Pregunta a Dev Lead solo por resultado/data/consent que cambie materialmente el flujo.
+Identifica formulario (contact, lead/quote, registration/login, account/settings, data-entry, filter/search, upload, multistep), objetivo, actor, riesgo, destino de datos, endpoint/persistencia si existen y source UI/Existing. Reusa datos/config/modelo ya conocidos. En Existing, preserva flujo correcto; Approved/Strict fully specified rige sus campos, orden y estados: resuelve únicamente gaps no cubiertos dentro del scope, no reabre el diseño. Si es mock, mantén mock/local state; no inventes backend. Pregunta a Jefe de proyecto solo por resultado/data/consent que cambie materialmente el flujo.
 
 Por cada field pregunta qué decisión permite y si se necesita ahora; elimina duplicados y “por si acaso”. Agrupa campos por modelo mental; ordena de simple/contexto a dependiente/sensible. Elige label persistente (no placeholder-only), helper cuando evite error, required/optional real (no marques todo required), tipo/autocomplete/inputmode nativo, width según formato, defaults solo seguros, y conditional disclosure si depende de una respuesta. No solicites PII adicional porque sea técnicamente posible. `readonly` y `disabled` no son sinónimos; explica bloqueo si corresponde.
 
@@ -31,7 +31,7 @@ Usa labels, semantic inputs, `fieldset/legend` para grupos, instrucciones `descr
 
 ## Handoff y checks
 
-En alcance de diseño, entrega fields/orden/grupos, reglas de required/conditional, copy de helper/error, momentos de validación, estados, submit/recovery y casos móvil. Frontend/Developer consume solo la parte pertinente.
+En alcance de diseño, entrega fields/orden/grupos, reglas de required/conditional, copy de helper/error, momentos de validación, estados, submit/recovery y casos móvil. Maquetador frontend/Desarrollador consume solo la parte pertinente.
 
 Comprueba: ¿puede eliminarse field? ¿label explica el dato? ¿orden y grouping evitan relectura? ¿errores dejan corregir sin perder valor? ¿server/client rules tienen una autoridad? ¿submit/loading/error/success dan feedback? ¿teclado y mobile input son apropiados? ¿hay duplicación segura ante retry? Detente al cubrir los flujos aceptados; en mocks no simules una producción inexistente.
 

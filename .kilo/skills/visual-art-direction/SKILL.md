@@ -5,7 +5,7 @@ description: Definir la estrategia de medios y dirección de imagen para experie
 
 # visual-art-direction
 
-**Owner:** UI/UX Designer. Resuelve «¿qué medios expresa esta experiencia y cómo?». `ui-design-system` gobierna marca/tokens; `page-composition` placement y ritmo de página; esta skill decide lenguaje visual de medios y provenance. Frontend implementa carga/render; no sustituye `performance-review`, `accessibility-review` ni licenciamiento/approval humano.
+**Owner:** Diseñador UI/UX. Resuelve «¿qué medios expresa esta experiencia y cómo?». `ui-design-system` gobierna marca/tokens; `page-composition` placement y ritmo de página; esta skill decide lenguaje visual de medios y provenance. Maquetador frontend implementa carga/render; no sustituye `performance-review`, `accessibility-review` ni licenciamiento/approval humano.
 
 ## Source y autoridad de assets
 
@@ -27,7 +27,7 @@ Cuando se elija imagen/foto concreta, especifica suficiente art direction accion
 
 Para public web Greenfield/rediseño material, media discovery es proactivo cuando media mejora materialmente: inspecciona PROVIDED y EXISTING; considera externa licenciada/reputada, original creada/generada solo con capability y autoridad suficientes, brand-derived graphic art direction o no-media intencional. No agotes opciones ni termines en `PENDING` solo porque no dieron fotos. Limita búsqueda a lo pertinente; comunica falta de acceso/licencia, no finjas verificación. Stock/editorial puede aportar atmósfera, nunca presentarse como cliente real, empleados, oficinas, instalaciones, producto o trabajo sin evidencia.
 
-Si faltan medios adecuados y foto/media mejoraría materialmente la dirección, declara `MEDIA GAP = ENRICHABLE` con la función concreta que se beneficiaría e informa al Dev Lead para su única pregunta agrupada. Una exploración read-only puede identificar fuentes/candidatos, pero no equivale a permiso de uso. No saltes por defecto a graphics/text-only antes de resolver la oportunidad. Si la persona elige buscar, crea candidatos desde art direction concreta y verifica source/licensing/provenance; si elige aportar, deja eso pending y avanza lo independiente; si elige no-media/Decide tú, procede honestamente. La generación solo si existe capability real y authority/scope suficiente.
+Si faltan medios adecuados y foto/media mejoraría materialmente la dirección, declara `MEDIA GAP = ENRICHABLE` con la función concreta que se beneficiaría e informa a Jefe de proyecto para su única pregunta agrupada. Una exploración read-only puede identificar fuentes/candidatos, pero no equivale a permiso de uso. No saltes por defecto a graphics/text-only antes de resolver la oportunidad. Si la persona elige buscar, crea candidatos desde art direction concreta y verifica source/licensing/provenance; si elige aportar, deja eso pending y avanza lo independiente; si elige no-media/Decide tú, procede honestamente. La generación solo si existe capability real y authority/scope suficiente.
 
 Sin foto adecuada, considera fragmentos de isotipo, geometría, trazos, patterns, typography, masks, color fields, branded shapes, collage o sistema ilustrativo como graphic art direction. No finjas personas/productos/espacios/mapas/datos/arquitectura/instalaciones reales. Handoff conserva source, estado, límites de uso/claims y provenance PROVIDED, EXISTING, APPROVED_EXTERNAL, ORIGINAL_CREATED o PENDING.
 
@@ -43,7 +43,7 @@ En Greenfield/rediseño, si el candidato acaba siendo casi solo texto, cards y f
 
 ## Producción, responsive y checks
 
-Entrega selección/provenance, función, tratamiento, crop/ratio por viewport, destino/nombre de archivo o requerimiento de producción, estado de derechos/aprobación y fallback cuando ayude al siguiente owner. Usa provided/existing first cuando encajen; no descargues medios por rutina. Frontend maneja `srcset`/`sizes`, formato, lazy loading fuera del hero, poster y fallback según necesidad; alt depende de si la imagen informa o es decorativa. Motion y video respetan reduced motion y controls; nunca ocultes información esencial.
+Entrega selección/provenance, función, tratamiento, crop/ratio por viewport, destino/nombre de archivo o requerimiento de producción, estado de derechos/aprobación y fallback cuando ayude al siguiente owner. Usa provided/existing first cuando encajen; no descargues medios por rutina. Maquetador frontend maneja `srcset`/`sizes`, formato, lazy loading fuera del hero, poster y fallback según necesidad; alt depende de si la imagen informa o es decorativa. Motion y video respetan reduced motion y controls; nunca ocultes información esencial.
 
 Antes de handoff comprueba: cada recurso tiene fuente/estado claro y función; selección responde al contenido, no a decoración; crop/treatment se coordina con composición; no se alteraron originales/no se atribuyen claims; mobile conserva sujeto/legibilidad; asset pendiente no se maquilla como del proyecto. Para Existing conserva librería, art direction y treatment salvo cambio de scope aprobado. Detente al quedar una decisión implementable; no produzcas plan visual separado por rutina.
 

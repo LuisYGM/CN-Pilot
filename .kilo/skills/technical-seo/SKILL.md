@@ -16,8 +16,8 @@ Revisa según alcance: status codes, index/noindex, canonical, robots, sitemap, 
 
 1. Reutiliza baseline y arquitectura aprobados; no repitas discovery de `existing-site-audit` ni abras Strategy porque haya un hallazgo técnico.
 2. Selecciona controles y referencias por tarea; recoge hechos observados separados de hipótesis y decisiones autorizadas. En FORMAL separa aplicabilidad de resultado y documenta cobertura, muestra y limitaciones.
-3. Propón causa, cambio mínimo, dueño y criterio de verificación. Implementa solo dentro del alcance autorizado: Developer y skills del stack conservan implementación; WordPress no es requisito general.
-4. Revalida controles afectados y regresiones relevantes; distingue cambio implementado de cambio verificado. Una auditoría propia no equivale a aprobación del Reviewer independiente.
+3. Propón causa, cambio mínimo, dueño y criterio de verificación. Implementa solo dentro del alcance autorizado: Desarrollador y skills del stack conservan implementación; WordPress no es requisito general.
+4. Revalida controles afectados y regresiones relevantes; distingue cambio implementado de cambio verificado. Una auditoría propia no equivale a aprobación del Revisor independiente.
 
 Strategy conserva intención, ownership y arquitectura editorial/URLs. Esta skill comprueba comportamiento servido; no cambia ownership aprobado, copy ni slugs publicados por iniciativa propia. `performance-review` mantiene diagnóstico de rendimiento. Si datos SEO sugieren fricción en consulta → página → conversión, entrega a UI/UX evidencia, hipótesis y necesidad funcional; no prescribe composición ni rediseña.
 

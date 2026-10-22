@@ -34,13 +34,13 @@ Las ubicaciones tienen responsabilidades distintas:
 - `kilo.jsonc`: configuración general y compartible de Kilo/CN Pilot a nivel de proyecto.
 - `.kilocode/mcp.json`: si el runtime utiliza esta ubicación, es configuración local activa y puede contener referencias sensibles. Está ignorada por Git y protegida frente a lectura/edición de agentes; no forma parte del template.
 
-Un proyecto puede utilizar varios MCP simultáneamente, con responsabilidades diferentes. Dev Lead debe elegir herramientas por la capability real que exponen, no por el nombre o la intención declarada del servidor. El uso de MCP es capability-first, no provider-first: primero se descubren servidores y tools disponibles, después se mapea `capability → responsabilidad`, se elige la ruta funcional más específica y segura y se usa fallback solo si otro MCP expone legítimamente la capability necesaria. No se duplican llamadas cuando un MCP ya proporciona la capability requerida.
+Un proyecto puede utilizar varios MCP simultáneamente, con responsabilidades diferentes. Jefe de proyecto debe elegir herramientas por la capability real que exponen, no por el nombre o la intención declarada del servidor. El uso de MCP es capability-first, no provider-first: primero se descubren servidores y tools disponibles, después se mapea `capability → responsabilidad`, se elige la ruta funcional más específica y segura y se usa fallback solo si otro MCP expone legítimamente la capability necesaria. No se duplican llamadas cuando un MCP ya proporciona la capability requerida.
 
 Las capabilities no son permanentes: pueden cambiar al instalar o activar plugins, módulos, licencias, integraciones, actualizar servidores o modificar la configuración MCP. Después de esos cambios, reconecta o refresca MCP, repite Discovery y actualiza la comprensión de capabilities. Antes de declarar que algo no puede hacerse mediante MCP, comprueba servidor activo, abilities expuestas, especializaciones, versiones relevantes, módulos y Discovery posterior al refresh. Prioriza `specialized capability → safe generic capability → low-level workaround only when justified`; una capability de lectura no implica escritura y una capability disponible no amplía el scope autorizado. Cuando aporte valor, documenta de forma ligera `capability → provider → read/write → scope → risk`.
 
 ### Flujo de conexión a un sistema real
 
-En la primera conexión mediante MCP, Dev Lead sigue este orden:
+En la primera conexión mediante MCP, Jefe de proyecto sigue este orden:
 
 1. **Discovery:** identifica MCP disponibles, inspecciona capabilities/tools reales, identifica entorno y recursos y distingue recursos locales, específicos, globales y compartidos.
 2. **Read-only:** inspecciona antes de escribir, verifica el estado actual, busca recursos reutilizables, conflictos y limitaciones.
@@ -58,7 +58,7 @@ Si un servidor exige valores sensibles dentro de su definición, mantén esa def
 
 ## Deployment mediante GitHub Actions
 
-No se distribuye ni crea un workflow de deployment durante onboarding. Su ausencia es la condición segura por defecto: no hay acción que ejecutar o trigger que pueda publicar. Una persona puede solicitar configurar deployment; solo entonces Dev Lead identifica método, destino/entorno, stack, artifact/source, exclusiones, autorización, verificación y recuperación antes de crear un workflow adecuado a ese proyecto. Si falta un dato material o autorización para configurarlo, no crea ni ejecuta el workflow; ofrece un handoff de lo pendiente. No existe método universal.
+No se distribuye ni crea un workflow de deployment durante onboarding. Su ausencia es la condición segura por defecto: no hay acción que ejecutar o trigger que pueda publicar. Una persona puede solicitar configurar deployment; solo entonces Jefe de proyecto identifica método, destino/entorno, stack, artifact/source, exclusiones, autorización, verificación y recuperación antes de crear un workflow adecuado a ese proyecto. Si falta un dato material o autorización para configurarlo, no crea ni ejecuta el workflow; ofrece un handoff de lo pendiente. No existe método universal.
 
 Triggers automáticos —incluidos `push` y `schedule`— solo se añaden con intención y autorización explícitas para esa automatización. Configurar un workflow no autoriza publicar en producción; esa publicación mantiene su propio gate. No se solicitan ni escriben secretos: se referencian mediante GitHub Actions Secrets/environments o el mecanismo seguro aplicable. La ausencia de workflow no produce una ejecución fallida ni es una incidencia.
 

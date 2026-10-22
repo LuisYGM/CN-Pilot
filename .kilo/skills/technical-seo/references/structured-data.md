@@ -10,7 +10,7 @@ No inventes precios, autores, imágenes, rating, reseñas, direcciones o disponi
 
 Inspecciona qué componentes producen cada entidad/grafo y la salida real. En WordPress pueden participar plugin SEO, tema, plugin funcional, builder, código manual o tercero. Prefiere un responsable por entidad/salida cuando sea práctico; varias fuentes pueden coexistir si sus límites y relaciones son coherentes.
 
-No elimines schema sin localizar su generador. Configuración persistida no prueba emisión correcta: observa salida servida y renderizada según necesidad, URLs/idiomas/plantillas y efecto de caché. Implementa cambios mediante Developer y APIs del stack dentro de autorización; esta referencia no crea un plugin ni otro owner WordPress.
+No elimines schema sin localizar su generador. Configuración persistida no prueba emisión correcta: observa salida servida y renderizada según necesidad, URLs/idiomas/plantillas y efecto de caché. Implementa cambios mediante Desarrollador y APIs del stack dentro de autorización; esta referencia no crea un plugin ni otro owner WordPress.
 
 ## Verificación proporcional
 

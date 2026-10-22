@@ -5,7 +5,7 @@ description: Construir o ampliar materialmente un UI Kit web, sus foundations, t
 
 # ui-kit-construction
 
-Fuente de verdad operativa para crear un UI Kit desde cero y ampliar materialmente uno existente. UI/UX Designer carga esta skill siempre que aplica; no depende de que la persona mencione «UI Kit». Se usa junto con `ui-design-system` cuando también se resuelve Creative Direction. No aplica a un color puntual de Product, copy, microcambios frontend que reutilizan un sistema aprobado ni páginas que solo consumen el Kit.
+Fuente de verdad operativa para crear un UI Kit desde cero y ampliar materialmente uno existente. Diseñador UI/UX carga esta skill siempre que aplica; no depende de que la persona mencione «UI Kit». Se usa junto con `ui-design-system` cuando también se resuelve Creative Direction. No aplica a un color puntual de Product, copy, microcambios frontend que reutilizan un sistema aprobado ni páginas que solo consumen el Kit.
 
 ## Alcance y relación con el sistema visual
 
@@ -91,7 +91,7 @@ El Kit entero y sus specimens reflow correctamente, sin overflow material ni ver
 
 ## Pre-approval check obligatorio y local
 
-Antes de Human Visual Approval, inspecciona las fuentes reales del Kit. Haz un único pase compacto y corrige en el mismo batch los incumplimientos; no traslades defectos básicos a Reviewer/browser QA.
+Antes de Human Visual Approval, inspecciona las fuentes reales del Kit. Haz un único pase compacto y corrige en el mismo batch los incumplimientos; no traslades defectos básicos a Revisor/browser QA.
 
 1. **Root:** existe `html { font-size: 100%; }`; no hay override que cambie la equivalencia `1rem = 16px`.
 2. **Body:** body/base usa token real con mínimo de 16px; sub-16px solo en roles explícitos.

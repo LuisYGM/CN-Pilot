@@ -28,7 +28,7 @@ Autentica cualquier proveedor compatible y comprueba que sus modelos estén disp
 
 Sigue [Configuración de Kilo](CONFIGURACION-KILO.md). CN Pilot no recomienda modelos por agente; tus preferencias de IA se mantienen en Kilo, fuera del contexto de `/nuevo-proyecto`.
 
-### 4. Selecciona Dev Lead
+### 4. Selecciona Jefe de proyecto
 
 `jefe-proyecto` es el interlocutor normal. Basta explicar en lenguaje natural qué quieres conseguir, incluso en una frase sencilla: no necesitas escribir un prompt elaborado ni conocer nombres internos. Jefe de proyecto inspecciona el contexto, pregunta solo si falta algo material y coordina a los especialistas necesarios.
 
@@ -38,7 +38,7 @@ No selecciones manualmente `arquitecto`, `desarrollador`, `revisor` u otros suba
 
 Ejecuta `/nuevo-proyecto` una sola vez por carpeta creada desde el template. El comando **no crea una web nueva**: inspecciona la carpeta e inicializa su contexto, también cuando se trata de una web existente o de mantenimiento.
 
-Si no basta el contexto disponible, Dev Lead preguntará progresivamente y en lenguaje natural por una ausencia material; no convertirá propósito, público y stack en campos obligatorios ni exigirá elegir tecnología. Después mostrará un resumen sencillo y pedirá confirmar:
+Si no basta el contexto disponible, Jefe de proyecto preguntará progresivamente y en lenguaje natural por una ausencia material; no convertirá propósito, público y stack en campos obligatorios ni exigirá elegir tecnología. Después mostrará un resumen sencillo y pedirá confirmar:
 
 > ¿Inicializo el proyecto con esta información?
 
@@ -50,7 +50,7 @@ No vuelvas a ejecutar `/nuevo-proyecto` si `PROYECTO.md` ya describe el proyecto
 
 ### 6. Confirma el contexto y empieza a trabajar
 
-Comprueba el resumen de Dev Lead y pide la primera tarea en lenguaje natural, por ejemplo:
+Comprueba el resumen de Jefe de proyecto y pide la primera tarea en lenguaje natural, por ejemplo:
 
 - «Prepara el contenido de la landing de captación».
 - «Corrige el menú móvil sin cambiar el diseño de escritorio».
@@ -68,9 +68,9 @@ Los slash commands como `/plan`, `/contenido`, `/diseno`, `/depurar`, `/revision
 - **MCP opcional:** solo se configura si la integración existe, está autorizada y forma parte del alcance.
 - **Deployment opcional:** disponer de producción no activa un método de despliegue ni autoriza usarlo.
 - **Source of truth:** en sistemas existentes prevalece la implementación vigente; en trabajo nuevo se usan las fuentes versionadas acordadas.
-- **Conversación natural:** Dev Lead pregunta por decisiones del proyecto, no por campos internos ni estructuras de archivos.
+- **Conversación natural:** Jefe de proyecto pregunta por decisiones del proyecto, no por campos internos ni estructuras de archivos.
 - **Contexto progresivo:** puedes completar el contexto a medida que surjan tareas; la información no necesaria ahora puede quedar pendiente.
-- **Equipo coordinado:** los especialistas se activan por necesidad y Dev Lead integra y verifica sus resultados.
+- **Equipo coordinado:** los especialistas se activan por necesidad y Jefe de proyecto integra y verifica sus resultados.
 
 ## Proyectos soportados
 
@@ -129,7 +129,7 @@ En proyectos existentes prevalecen los breakpoints ya implementados. No se susti
 
 ## Qué decide el agente
 
-Dev Lead resuelve sin interrumpir detalles internos, convencionales, reversibles y de bajo riesgo: estructura interna, nombres técnicos provisionales, selección de skills y profundidad proporcional del proceso.
+Jefe de proyecto resuelve sin interrumpir detalles internos, convencionales, reversibles y de bajo riesgo: estructura interna, nombres técnicos provisionales, selección de skills y profundidad proporcional del proceso.
 
 Requieren aprobación humana las decisiones que cambian alcance o arquitectura, afectan producción o datos existentes, crean contratos públicos, son costosas de revertir, implican seguridad, privacidad o negocio, dependen de criterio visual/comercial o incluyen tradeoffs materiales. `push`, `merge`, deployment, DNS, servidor y operaciones destructivas también permanecen bajo control humano.
 

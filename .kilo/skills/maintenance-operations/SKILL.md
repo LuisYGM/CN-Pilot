@@ -7,7 +7,7 @@ description: Coordinar lifecycle operativo de proyectos existentes: mantenimient
 
 ## Activación y ownership
 
-Dev Lead coordina cuando la solicitud es un incidente, mantenimiento planificado/actualización, recuperación, degradación operativa o cambio material en un sistema vivo. No se activa solo porque el proyecto sea Existing o esté publicado: copy/CSS/localized fix conocido sigue `DIRECT`. El equipo no necesita una plataforma de monitoring ni automatización para operar. Dev Lead gobierna lifecycle, entorno, riesgo y handoff; Developer, Frontend, Content u otro owner implementa según la superficie.
+Jefe de proyecto coordina cuando la solicitud es un incidente, mantenimiento planificado/actualización, recuperación, degradación operativa o cambio material en un sistema vivo. No se activa solo porque el proyecto sea Existing o esté publicado: copy/CSS/localized fix conocido sigue `DIRECT`. El equipo no necesita una plataforma de monitoring ni automatización para operar. Jefe de proyecto gobierna lifecycle, entorno, riesgo y handoff; Desarrollador, Maquetador frontend, Contenido / SEO u otro owner implementa según la superficie.
 
 Esta capability conecta `OPERATE → OBSERVE → TRIAGE → CHANGE SAFELY → VERIFY → RECOVER → LEARN`. No sustituye:
 

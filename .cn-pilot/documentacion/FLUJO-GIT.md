@@ -9,7 +9,7 @@ Este workflow aplica únicamente cuando el proyecto utiliza Git. Una carpeta sin
 - Mensaje basado en `git diff`.
 - Un commit = unidad lógica.
 - Kilo puede crear commits locales.
-- Dev Lead crea el commit local automáticamente cuando una tarea con cambios queda completa y verificada, salvo exclusión explícita o error bloqueante.
+- Jefe de proyecto crea el commit local automáticamente cuando una tarea con cambios queda completa y verificada, salvo exclusión explícita o error bloqueante.
 - Push bajo aprobación humana.
 
 ## Flujo individual por defecto

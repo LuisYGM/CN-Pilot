@@ -1,5 +1,11 @@
 # Changelog
 
+## [2.1.1] - 2026-10-22
+
+Corrección de consistencia Spanish-first en la documentación y los prompts activos del Core.
+
+- Se unifican los nombres visibles de roles y la doctrina de idioma; se añade Core QA para prevenir regresiones terminológicas.
+
 ## [2.1.0] - 2026-10-22
 
 Actualización compatible del Core centrada en continuidad y finalización.

@@ -5,7 +5,7 @@ description: Diseñar interfaces de software con shell, navegación, datos, tabl
 
 # application-ui
 
-**Owner:** UI/UX Designer. Diseña superficies de software, no páginas de marketing (`page-composition`). Consume comportamiento/actores confirmados de `product-discovery`, sistema visual de `ui-design-system` y, si cambia materialmente, `ui-kit-construction`. Frontend implementa UI; Developer define behavior/data contract. Carga `form-experience` solo cuando forms sean un flujo material. No inventes funcionalidades para llenar un dashboard.
+**Owner:** Diseñador UI/UX. Diseña superficies de software, no páginas de marketing (`page-composition`). Consume comportamiento/actores confirmados de `product-discovery`, sistema visual de `ui-design-system` y, si cambia materialmente, `ui-kit-construction`. Maquetador frontend implementa UI; Desarrollador define behavior/data contract. Carga `form-experience` solo cuando forms sean un flujo material. No inventes funcionalidades para llenar un dashboard.
 
 ## Descubrimiento y shell
 
@@ -27,10 +27,10 @@ Tabs agrupan vistas hermanas; filters refinan dataset; drawer/dialog solo usa di
 
 ## Roles y contrato
 
-Usa actores/capabilities/ownership definidos por requisitos. La UI refleja acciones disponibles y estados de permiso para orientar; no crea roles ni convierte «hidden» en autorización. Comportamiento de enforcement pertenece a `auth-access-control` y Developer. En handoff describe un permiso/action solo como confirmado, y separa UI (visible/disabled/unavailable) de la regla server-side esperada.
+Usa actores/capabilities/ownership definidos por requisitos. La UI refleja acciones disponibles y estados de permiso para orientar; no crea roles ni convierte «hidden» en autorización. Comportamiento de enforcement pertenece a `auth-access-control` y Desarrollador. En handoff describe un permiso/action solo como confirmado, y separa UI (visible/disabled/unavailable) de la regla server-side esperada.
 
 ## Checks y handoff
 
-Comprueba: el usuario sabe dónde está; tarea siguiente y acción principal son claras; densidad/columnas se ajustan al uso; filtros/sort/bulk actúan sobre el dataset correcto; empty/error/partial/loading/permission states responden a condiciones verdaderas; móvil conserva lectura y acción; roles en UI corresponden a requisitos; tabla/dialogs se operan con teclado. Devuelve flujos, componentes, jerarquía, estados y restricciones responsive concisamente a Frontend/Developer sin mini-PRD. Si behavior material falta, informa al Dev Lead; no lo inventes. Detente al cubrir task/risk confirmados.
+Comprueba: el usuario sabe dónde está; tarea siguiente y acción principal son claras; densidad/columnas se ajustan al uso; filtros/sort/bulk actúan sobre el dataset correcto; empty/error/partial/loading/permission states responden a condiciones verdaderas; móvil conserva lectura y acción; roles en UI corresponden a requisitos; tabla/dialogs se operan con teclado. Devuelve flujos, componentes, jerarquía, estados y restricciones responsive concisamente a Maquetador frontend/Desarrollador sin mini-PRD. Si behavior material falta, informa a Jefe de proyecto; no lo inventes. Detente al cubrir task/risk confirmados.
 
 **Failure modes:** cuatro metric cards + chart + activity por receta; una tabla gigante recortada en móvil; disabled sin explicación; gráfica ornamental; mezclar filtros con navegación; añadir role-based UI como sustituto de server policy.

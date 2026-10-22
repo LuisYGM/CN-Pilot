@@ -6,7 +6,7 @@ El proyecto ya está vivo y la solicitud implica un cambio operativo, mantenimie
 ## Orientación
 `Current state/source → scope, environment & risk → evidence → specialist if needed → authorized change or recovery → affected-surface verification → current state / next action`
 
-Reutiliza la fuente vigente y el estado operativo conocido. Haz baseline read-only con `existing-site-audit` solo si una incógnita material del estado/stack/fuente condiciona el trabajo. Dev Lead coordina lifecycle e impacto; el especialista pertinente conserva diagnóstico e implementación. `maintenance-operations` es bajo demanda para incidentes, mantenimiento planificado, cambios de producción o recuperación, no para microcambios conocidos.
+Reutiliza la fuente vigente y el estado operativo conocido. Haz baseline read-only con `existing-site-audit` solo si una incógnita material del estado/stack/fuente condiciona el trabajo. Jefe de proyecto coordina lifecycle e impacto; el especialista pertinente conserva diagnóstico e implementación. `maintenance-operations` es bajo demanda para incidentes, mantenimiento planificado, cambios de producción o recuperación, no para microcambios conocidos.
 
 Antes de un cambio material, identifica entorno/superficie, autorización, dependencias, prueba y opción de recuperación proporcionales. Producción es una superficie distinta; staging, backup y ventana se usan cuando reducen riesgo material, no por ceremonia. Backup existente no prueba restore; rollback no equivale a restore y datos vivos requieren protección explícita.
 

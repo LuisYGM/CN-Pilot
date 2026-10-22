@@ -67,7 +67,7 @@ permission:
     "git revert*": deny
 ---
 
-# Architect
+# Arquitecto
 
 Diseña soluciones técnicas proporcionadas al problema.
 

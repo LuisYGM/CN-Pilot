@@ -52,15 +52,15 @@ La configuración global bajo `~/.config/kilo/` pertenece al desarrollador y no 
 
 No copies una configuración global completa dentro del repositorio para resolver una diferencia local.
 
-## Dev Lead alcanza el límite de pasos
+## La tarea se interrumpió antes de completarse
 
-`jefe-proyecto` conserva actualmente el límite de pasos de su contrato. Un flujo estructural largo puede necesitar continuidad.
+Una interrupción del runtime puede detener un flujo estructural antes de completarse.
 
 - No fuerces un commit si la unidad está incompleta o tiene errores bloqueantes.
 - Conserva los artefactos y resultados ya válidos; no reinicies discovery, arquitectura, tests o review sin motivo.
 - Actualiza `ESTADO.md` solo si existe un cambio operativo material o un checkpoint relevante.
 - Continúa en una sesión nueva indicando el objetivo pendiente y reutilizando el contexto del repositorio.
-- Ejecuta `/punto-control` cuando una unidad lógica esté terminada y verificada, no solo porque se aproxima el límite.
+- Ejecuta `/punto-control` cuando una unidad lógica esté terminada y verificada, no solo porque se haya producido una interrupción.
 
 ## Agent Manager o un worktree causa confusión
 

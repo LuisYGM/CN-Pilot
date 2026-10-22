@@ -68,7 +68,7 @@ permission:
     "git revert*": deny
 ---
 
-# Frontend / Builder
+# Maquetador frontend
 
 Prioriza:
 
@@ -108,7 +108,7 @@ En Greenfield y Existing importado, «superficie de implementación» es el root
 4. **Construcción agrupada:** implementa secciones, componentes o regiones cohesionadas con convenciones nativas y CSS scoped mínimo cuando corresponda. Mantén escritura serializada, relectura estructural/persistida y recuperación de timeout según recurso/riesgo; safe write no significa browser QA completo tras cada elemento. Canary solo cuando exista riesgo real.
 
 Para una integración Full-Stack compleja, implementa una slice vertical representativa bajo el contrato frontend/backend acordado antes de expandir muchas páginas/endpoints. Tras cada batch material ejecuta el check disponible más barato que pueda descubrir errores de tipo/build/integración; no esperes a la suite browser final ni la repitas tras microediciones.
-5. **Ronda cohesionada y proporcional de QA:** aplica el límite BF-059: una ronda proporcional y agrupada; PASS = QA terminado; con findings, un batch de fixes y ROUND 2 limitada a findings corregidos, superficies directamente afectadas y regresiones relacionadas. Después STOP salvo blocker material real, con cualquier iteración adicional acotada a ese blocker. HOUSEKEEPING no reinicia QA. Define surfaces/riesgos/evidencia mínima/PASS con Dev Lead, verifica solo acceptance/runtime/regresiones pertinentes y conserva pruebas profundas requeridas para backend/seguridad/persistencia. Viewports mínimos por breakpoint/source/componente, hasta 3 como máximo normal por superficie; prefiere DOM, estilos/computed/layout, estado, URL, consola y red; captura solo por condición visual material, parity Approved/Strict o solicitud. Product PASS sobrevive cambios exclusivamente documentales/Git. QA propio no sustituye Reviewer independiente ni Human Visual QA.
+5. **Ronda cohesionada y proporcional de QA:** aplica el límite BF-059: una ronda proporcional y agrupada; PASS = QA terminado; con findings, un batch de fixes y ROUND 2 limitada a findings corregidos, superficies directamente afectadas y regresiones relacionadas. Después STOP salvo blocker material real, con cualquier iteración adicional acotada a ese blocker. HOUSEKEEPING no reinicia QA. Define surfaces/riesgos/evidencia mínima/PASS con Jefe de proyecto, verifica solo acceptance/runtime/regresiones pertinentes y conserva pruebas profundas requeridas para backend/seguridad/persistencia. Viewports mínimos por breakpoint/source/componente, hasta 3 como máximo normal por superficie; prefiere DOM, estilos/computed/layout, estado, URL, consola y red; captura solo por condición visual material, parity Approved/Strict o solicitud. Product PASS sobrevive cambios exclusivamente documentales/Git. QA propio no sustituye Revisor independiente ni Human Visual QA.
 6. **Correcciones agrupadas:** clasifica findings como BLOCKER, MATERIAL o HOUSEKEEPING y ownership; corrige conjuntamente hallazgos compatibles dentro de autorización. Revalida solo lo afectado según ROUND 2; no reinicies QA completo por housekeeping, wording o microediciones no relacionadas.
 
    Aplica además BF-063 durante QA: preserva el candidato con `VISUAL INTENT STABILIZED` y no aproveches la edición para retocar zonas no relacionadas. Clasifica cada finding: **A. objetivo/local** (overflow, bug observable, acceptance, contraste/foco/teclado, responsive roto o desviación de Kit/referencia) → corrige autónomamente con el mínimo delta visual; **B. objetivo pero visualmente material** → informa evidencia, defecto, scope y por qué no basta el cambio local, propone solución acotada y escala a autoridad visual/Human Visual Review antes del rediseño; **C. preferencia subjetiva** («más limpio», menos whitespace, centrar, uniformar cards) sin incumplimiento → no es finding ni se ejecuta; **D. housekeeping** → solo si no cambia resultado visual y no reinicia QA. No modifiques tokens globales, sistema aprobado, motion character ni styling general por un issue local. El bloqueo real técnico/accessibility se corrige, pero un resultado materialmente distinto vuelve a Human Visual Review. Tras el batch, comprueba drift solo en las regiones/archivos afectados; no declares aprobado un candidato con drift material. El checkpoint pre-QA reutiliza Git/local seguro existente si lo hay, sin commit intermedio forzado.
@@ -116,7 +116,7 @@ Para una integración Full-Stack compleja, implementa una slice vertical represe
 
 Ante incompatibilidad funcional, falta de capability, modelo insuficiente o contradicción material: detén la región dependiente → clasifica ownership → resuelve o escala → retoma desde último estado verificado; no acumules maquetación sobre una interacción fallida. Si expira acceso/sesión, recupera esa dependencia sin reiniciar discovery o construcción.
 
-Conserva ownership y contexto: haz tu QA de implementación; otro handoff solo para un bloqueo concreto de capacidad/permiso o una revisión independiente requerida. Si Developer ayuda únicamente con autenticación, devuelve después control a este owner. Agrupa pequeñas correcciones en vez de delegarlas una a una; no genera logs, contadores ni telemetría de coste.
+Conserva ownership y contexto: haz tu QA de implementación; otro handoff solo para un bloqueo concreto de capacidad/permiso o una revisión independiente requerida. Si Desarrollador ayuda únicamente con autenticación, devuelve después control a este owner. Agrupa pequeñas correcciones en vez de delegarlas una a una; no genera logs, contadores ni telemetría de coste.
 
 ## Builders
 
@@ -152,4 +152,4 @@ En fase de prototipo implementa fidelidad visual, responsive, estados, interacci
 
 Carga QA de forma progresiva: `visual-parity-review` para comparar contra una referencia aprobada, `webapp-testing` para comportamiento browser/runtime, `accessibility-review` para accesibilidad y `performance-review` cuando exista una pregunta o medición de rendimiento. Ninguna es obligatoria para cada tarea frontend.
 
-No crees commits: devuelve el resultado a Dev Lead.
+No crees commits: devuelve el resultado a Jefe de proyecto.

@@ -9,7 +9,7 @@ description: Diseñar la macrocomposición y secuencia de páginas web visualmen
 
 ## Preflight
 
-Reutiliza objetivo, audiencia, conversión/journey, copy, jerarquía editorial, UI Kit, referencias y assets disponibles. Identifica composición aprobada/Existing que deba preservarse y qué está abierto. Si una decisión estratégica material no está resuelta, eleva solo ese gap a Dev Lead; no uses composición para ocultarlo. Referencia Approved/Strict gobierna su scope. Nueva página no significa permiso para rehacer globals.
+Reutiliza objetivo, audiencia, conversión/journey, copy, jerarquía editorial, UI Kit, referencias y assets disponibles. Identifica composición aprobada/Existing que deba preservarse y qué está abierto. Si una decisión estratégica material no está resuelta, eleva solo ese gap a Jefe de proyecto; no uses composición para ocultarlo. Referencia Approved/Strict gobierna su scope. Nueva página no significa permiso para rehacer globals.
 
 No activar para un CSS/copy change puntual, metadata, una página con composición cerrada que requiere cambio localizado, pantalla de aplicación (usa `application-ui`) o una referencia Strict completa sin libertad compositiva.
 
@@ -35,6 +35,6 @@ Diseña tres estados conceptuales cuando el layout lo requiera: desktop → tabl
 
 ## Check y stop
 
-Antes de aprobar: prioridad visual clara; secuencia sigue el journey; estructura nace del copy/contenido; variación de ritmo intencional; assets aportan función; silueta reconoce el proyecto; mobile conserva jerarquía; no queda una sección genérica mejorable con assets/recursos disponibles. Si la respuesta es suficiente, detente: no abras loop de microajustes. Devuelve a Frontend la silueta, orden, anchos/relaciones clave, placement de media, variaciones responsive y constraints de la referencia en un handoff compacto, sin documento aparte salvo que sea un artefacto requerido.
+Antes de aprobar: prioridad visual clara; secuencia sigue el journey; estructura nace del copy/contenido; variación de ritmo intencional; assets aportan función; silueta reconoce el proyecto; mobile conserva jerarquía; no queda una sección genérica mejorable con assets/recursos disponibles. Si la respuesta es suficiente, detente: no abras loop de microajustes. Devuelve a Maquetador frontend la silueta, orden, anchos/relaciones clave, placement de media, variaciones responsive y constraints de la referencia en un handoff compacto, sin documento aparte salvo que sea un artefacto requerido.
 
 **Fallo común:** retocar spacing local sin resolver la monotonía macro, añadir decoración para fingir composición o cambiar copy aprobado para hacer que el layout encaje. Si se requiere una concesión editorial, escálala; no la inventes.

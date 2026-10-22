@@ -1,11 +1,11 @@
 ---
 name: release-deployment
-description: Preparar y coordinar un release/deployment solicitado de una aplicación no WordPress, incluidos artifact, target y método de entrega. Dev Lead owner/coordinador. No activar para desarrollo normal, Git-only ni despliegue WordPress (usa deploy-wordpress).
+description: Preparar y coordinar un release/deployment solicitado de una aplicación no WordPress, incluidos artifact, target y método de entrega. Jefe de proyecto owner/coordinador. No activar para desarrollo normal, Git-only ni despliegue WordPress (usa deploy-wordpress).
 ---
 
 # release-deployment
 
-**Owner/coordinador:** Dev Lead. Developer/Frontend preparan build y artifact de su stack; ejecutan cambios solo dentro de ownership y autorización. `deploy-wordpress` es canónica para publicación WordPress y prevalece. `maintenance-operations` coordina riesgo/incidentes vivos, no sustituye método técnico. `database-migrations` gobierna migraciones persistentes. No hay deploy por el hecho de estar publicado o tener acceso.
+**Owner/coordinador:** Jefe de proyecto. Desarrollador/Maquetador frontend preparan build y artifact de su stack; ejecutan cambios solo dentro de ownership y autorización. `deploy-wordpress` es canónica para publicación WordPress y prevalece. `maintenance-operations` coordina riesgo/incidentes vivos, no sustituye método técnico. `database-migrations` gobierna migraciones persistentes. No hay deploy por el hecho de estar publicado o tener acceso.
 
 ## Autorización y clasificación
 
