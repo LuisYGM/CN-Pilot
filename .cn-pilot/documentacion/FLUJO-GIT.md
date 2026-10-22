@@ -22,6 +22,10 @@ main → trabajar → verificar → commit local → push manual cuando correspo
 
 Las ramas son opcionales y no se crean ni recomiendan por defecto. Úsalas cuando exista una razón concreta: trabajo simultáneo, cambios grandes o de alto riesgo que requieran aislamiento, experimentos descartables, Pull Requests, desarrollo paralelo o una solicitud explícita.
 
+## Paralelismo con worktrees
+
+BF-062 mantiene SERIAL por defecto. Si varias unidades son independientes y su integración resulta rentable, Jefe de proyecto puede usar worktrees nativos de Agent Manager; los writers deben tener branches/checkouts distintos y un único writer por worktree. Una sesión Local o un `task` no aísla writers. Estabiliza contratos compartidos y un `git status`/base HEAD conocido antes de repartir trabajo. Limita a dos unidades por defecto y tres como máximo bajo independencia clara. Integra una por vez, verifica el diff/tests afectados y conserva worktrees dirty; nunca uses `git stash`, `reset --hard` ni `git clean` para resolver colisiones.
+
 ## Comandos del CN Pilot
 
 - `/commit` requiere un repositorio Git; sin Git informa que no aplica y no inicializa uno.

@@ -127,3 +127,7 @@ Si el entregable se utilizará posteriormente, escríbelo en su ruta canónica a
 Una especificación estructural debe conservar, cuando aplique: hechos confirmados, restricciones, recomendaciones provisionales, decisiones pendientes, alcance, alternativas, seguridad, criterios de aceptación, plan de implementación y bloqueos previos a implementación.
 
 No hagas implementación completa, deploy o cambios en producción.
+
+## Unidad aislada en worktree
+
+Si Jefe de proyecto te asigna una unidad en Agent Manager/worktree, respeta su scope y ownership. No edites Project Context ni Core, no toques superficies asignadas a otra unidad y no integres branches. Si el análisis revela una dependencia o archivo compartido, devuelve el gap a Jefe de proyecto; no amplíes tu edición. Entrega un handoff breve con decisiones/contratos, paths, riesgos y evidencia; commit local solo si la capability/permisión existente lo permite y la unidad está completa.

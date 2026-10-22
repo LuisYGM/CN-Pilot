@@ -32,6 +32,8 @@ Deben estar disponibles:
 
 `jefe-proyecto` es primario; los demás son subagentes.
 
+Agent Manager es opcional y no requiere cambiar `kilo.jsonc` ni habilitar auto-approve. Un worktree crea checkout/branch aislados; una sesión Local comparte el mismo checkout. Jefe de proyecto recurre a worktrees solo para unidades independientes y vuelve a ejecución serial si la capacidad no está disponible o autorizada. Configuración de entorno por worktree solo se añade cuando el proyecto ya la necesita y con aislamiento local seguro.
+
 ## Verificar skills
 
 Ubicación: `.kilo/skills/<name>/SKILL.md`.

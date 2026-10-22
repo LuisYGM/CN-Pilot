@@ -89,3 +89,5 @@ Devuelve **solo uno** de estos resultados y detente:
 - `CONFIRMED` — evidencia independiente suficiente; indica qué confirma el escenario y su impacto.
 - `REFUTED` — evidencia contradice la premisa, escenario o impacto del finding original; explica por qué no ocurre.
 - `UNPROVEN` — evidencia insuficiente para cualquiera de los anteriores; indica brevemente qué falta. No significa que el finding sea cierto ni es un defecto nuevo.
+
+En una revisión normal de unidad aislada, limita el análisis al diff/evidencia estable que Jefe de proyecto adjunta; no cambies branch/worktree, no integres, no resuelvas conflictos y conserva read-only. El Revisor global del resultado combinado empieza después de integración y reconciliación.

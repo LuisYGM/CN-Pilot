@@ -98,8 +98,8 @@ function createFixture(t) {
   put("DECISIONES.md", "# Decisions fixture\n");
   put("ARTEFACTOS.md", "# Artifacts fixture\n");
   put("AGENTS.md", "# Minimal test kernel\n");
-  put(".cn-pilot-version", "2.2.0\n");
-  put(".cn-pilot/NUCLEO.md", "**Versión:** `2.2.0`\n\nLas superficies propias de CN Pilot destinadas a personas usan español por defecto, incluidos los nombres visibles de roles, documentos, comandos y estructuras.\n");
+  put(".cn-pilot-version", "2.3.0\n");
+  put(".cn-pilot/NUCLEO.md", "**Versión:** `2.3.0`\n\nLas superficies propias de CN Pilot destinadas a personas usan español por defecto, incluidos los nombres visibles de roles, documentos, comandos y estructuras.\n");
   put(".cn-pilot/MANIFIESTO.md", manifest);
   put(".cn-pilot/config/responsive.json", "{}\n");
   put(".cn-pilot/documentacion/.keep");
@@ -112,7 +112,7 @@ function createFixture(t) {
   put(".cn-pilot/update/updater.test.mjs", "// updater test fixture\n");
   put(".cn-pilot/update/manifest.json", `${JSON.stringify({
     schemaVersion: 1,
-    cnPilotVersion: "2.2.0",
+    cnPilotVersion: "2.3.0",
     sourceRepository: "https://github.com/LuisYGM/cn-pilot.git",
     stableBranch: "main",
     sourceCommit: null,
@@ -172,7 +172,7 @@ test("known-good minimal fixture passes deterministic invariants", (t) => {
   const report = runCoreChecks({ rootDir: fixture.root });
   assert.equal(report.status, "PASS", JSON.stringify(report.findings));
   assert.deepEqual(runCoreChecks({ rootDir: fixture.root }), report, "same read-only snapshot yields the same report");
-  assert.equal(report.version, "2.2.0");
+  assert.equal(report.version, "2.3.0");
   assert.equal(getCheck(report, "agents.frontmatter").details.count, 7);
   assert.equal(getCheck(report, "skills.frontmatter").details.count, 2);
   assert.equal(getCheck(report, "commands.frontmatter").details.count, 14);
@@ -228,7 +228,7 @@ test("Spanish-first doctrine is required and generic technical wording is not tr
   fixture.put(".kilo/skills/technical-seo/references/audit.md", "Cita externa de ejemplo: Developer.\n");
   assert.equal(getCheck(runCoreChecks({ rootDir: fixture.root }), "language.spanishFirst").status, "PASS");
 
-  fixture.put(".cn-pilot/NUCLEO.md", "**Versión:** `2.2.0`\n\nLa estructura técnica permanece en inglés: archivos, carpetas, agentes.\n");
+  fixture.put(".cn-pilot/NUCLEO.md", "**Versión:** `2.3.0`\n\nLa estructura técnica permanece en inglés: archivos, carpetas, agentes.\n");
   const check = getCheck(runCoreChecks({ rootDir: fixture.root }), "language.spanishFirst");
   assert.equal(check.status, "FAIL");
   assert.ok(check.details.findings.some((finding) => finding.code === "SPANISH_FIRST_DOCTRINE_MISSING_OR_CONTRADICTORY"));
@@ -259,6 +259,56 @@ test("Guided Project Journey contains the required behavioral scenarios A-K", ()
     ["Next best step tras milestone", command, "dónde está el proyecto y cuál es el siguiente mejor paso"],
   ];
   for (const [scenario, source, required] of scenarios) assert.ok(source.includes(required), `${scenario}: guidance is present`);
+});
+
+test("BF-062 supports controlled parallel modes, keeps single-writer isolation and limits", () => {
+  const core = fs.readFileSync(new URL("../NUCLEO.md", import.meta.url), "utf8");
+  const lead = fs.readFileSync(new URL("../../.kilo/agents/jefe-proyecto.md", import.meta.url), "utf8");
+  const start = core.indexOf("### Orquestación paralela segura / Single Writer per Worktree (BF-062)");
+  const end = core.indexOf("\n## Riesgo", start);
+  assert.ok(start >= 0 && end > start, "BF-062 section remains present and bounded");
+  const policy = core.slice(start, end);
+  const scenarios = [
+    ["A independent units", policy, "dos o más unidades útiles, independientes"],
+    ["B dependencies stay serial", policy, "La duda material, el riesgo o la falta de beneficio suficiente implican SERIAL"],
+    ["C no same-file writers", policy, "No asignes el mismo archivo ni superficie lógica a writers diferentes"],
+    ["C lockfiles/config remain shared surfaces", policy, "`package.json`/lockfiles"],
+    ["D stabilize shared contracts", policy, "Estabiliza interfaces y decisiones compartidas antes de dividir"],
+    ["D unresolved shared contracts stay serial", policy, "contrato compartido abierto"],
+    ["E safe read-only parallel", policy, "PARALLEL READ-ONLY"],
+    ["F native worktree isolation", policy, "PARALLEL WORKTREES"],
+    ["Agent Manager primary-only selection stays capability-grounded", policy, "a agentes `primary`/`all`"],
+    ["F serial fallback", policy, "continúa en SERIAL sin bloquear el proyecto"],
+    ["parallel content requires stable page intent", policy, "page intent/contrato está suficientemente definido"],
+    ["design approval stays a prerequisite", policy, "Diseño visual material no se implementa en paralelo antes del gate/aprobación vigente"],
+    ["G preserve dirty worktree", lead, "Conserva cualquier worktree dirty/no reconciliado"],
+    ["H isolated blocker does not cancel peers", policy, "no cancela automáticamente unidades independientes"],
+    ["I sequential integration", policy, "una unidad a la vez"],
+    ["J recovery reconciles real sessions", policy, "`git worktree list`"],
+    ["J does not recreate existing worktree", policy, "no recrees un worktree/sesión que ya existe"],
+    ["K Project Context remains single-writer", policy, "Especialistas no escriben `PROYECTO.md`"],
+    ["L Revisor remains read-only", policy, "Revisor permanece read-only"],
+    ["M concurrency limits stay conservative", policy, "dos unidades por defecto"],
+    ["M explicit maximum is three", policy, "tres como máximo"],
+  ];
+  for (const [scenario, source, required] of scenarios) assert.ok(source.includes(required), `${scenario}: contract is present`);
+  assert.doesNotMatch(`${core}\n${lead}`, /máximo \*\*un subagente de proyecto activo\*\*|una sola sesión subagent activa en total|worktrees no habilitan paralelismo por default/i);
+  assert.ok(lead.includes("Agent Manager en modo `worktree`"));
+  assert.ok(lead.includes("Jefe de proyecto es owner de integración"));
+});
+
+test("BF-047 keeps legacy serial checkpoints valid with optional parallel recovery", () => {
+  const core = fs.readFileSync(new URL("../NUCLEO.md", import.meta.url), "utf8");
+  const globalRecovery = core.slice(core.indexOf("Las tareas `STRUCTURAL`/largas mantienen un único checkpoint"), core.indexOf("### No-op / Silent Closure"));
+  const parallelStart = core.indexOf("BF-047 conserva **un único**");
+  const parallelRecovery = core.slice(parallelStart, core.indexOf("\n## Riesgo", parallelStart));
+  assert.match(globalRecovery, /schemaVersion: 1/);
+  assert.match(globalRecovery, /`status`, `objective` y `nextAction`/);
+  assert.match(parallelRecovery, /campo opcional `parallelUnits`/);
+  assert.match(parallelRecovery, /checkpoint serial válido 2\.2 sin `parallelUnits` sigue siendo válido/);
+  for (const status of ["PLANNED", "ACTIVE", "BLOCKED_HUMAN", "BLOCKED_EXTERNAL", "FAILED", "READY_TO_INTEGRATE", "INTEGRATED"])
+    assert.ok(parallelRecovery.includes(status), `parallel unit status ${status} is documented`);
+  assert.match(parallelRecovery, /worktreeID.*worktreePath.*branch.*baseBranch.*baseHEAD.*sessionID.*resultCommit/s);
 });
 
 test("/nuevo-proyecto es progresivo, lee antes de preguntar y no es un wizard", () => {
@@ -425,11 +475,11 @@ test("Progress Guard preserves recoverable work and bounded evidence without tre
   const devLead = fs.readFileSync(new URL("../../.kilo/agents/jefe-proyecto.md", import.meta.url), "utf8");
   const guard = core.slice(core.indexOf("#### Progress Guard"), core.indexOf("### No-op / Silent Closure"));
 
-  for (const contract of ["primer fallo", "Segundo fallo comparable", "STOP VERIFYING THAT SURFACE", "INCOMPLETE + RECOVERABLE", "BLOCKED_HUMAN", "BLOCKED_EXTERNAL", "Completion Mode", "BF-062", "continuidad"])
+  for (const contract of ["primer fallo", "Segundo fallo comparable", "STOP VERIFYING THAT SURFACE", "INCOMPLETE + RECOVERABLE", "BLOCKED_HUMAN", "BLOCKED_EXTERNAL", "Completion Mode", "BF-062", "recovery"])
     assert.ok(guard.includes(contract), `Progress Guard keeps ${contract}`);
   assert.match(devLead, /La respuesta de un especialista que deja trabajo incompleto es un handoff/);
   assert.match(devLead, /Si acceptance sigue pendiente y el trabajo es recuperable.*continúa/s);
-  assert.match(guard, /no crea mecanismos automáticos de resume/);
+  assert.match(core, /No implementes un loop por strings\/texto\/exit code ambiguo/);
   assert.match(core, /una tercera iteración solo atiende un blocker material demostrable/i);
 });
 

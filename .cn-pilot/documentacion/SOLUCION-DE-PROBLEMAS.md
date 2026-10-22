@@ -37,9 +37,9 @@ Si la herencia multiplica el coste de sesiones paralelas, revisa tu configuraci�
 
 ## Agent Manager abre demasiadas sesiones o paraleliza sin necesidad
 
-`task` debe ser la opción predeterminada cuando el trabajo forma parte de la tarea actual y no necesita branch, worktree, filesystem aislado ni conversación top-level separada. Agent Manager se reserva para aislamiento real, alternativas concurrentes, trabajo independiente o una sesión top-level separada.
+SERIAL es el modo por defecto. Usa `task` para una unidad sin aislamiento; sus writers comparten el worktree padre. Usa Agent Manager `worktree` solo para writers independientes con branch/checkout propio; las sesiones `local` comparten archivos y no permiten writers simultáneos. READ-ONLY puede coincidir cuando las preguntas sean independientes y el estado esté estable.
 
-No abras por defecto más de dos sesiones Agent Manager pagadas simultáneamente. Si más de dos fueran realmente necesarias, detén la apertura y solicita confirmación antes de continuar. La cantidad depende de aislamiento, paralelismo real, complejidad, coste y utilidad, no del modelo.
+Limita el paralelo a dos unidades por defecto y tres como máximo solo con independencia clara, integración barata y beneficio/capacidad demostrables. No hagas swarm ni multipliques research/tests/evidencia. Si falta Agent Manager, worktree o permiso, continúa en SERIAL sin bloquear el trabajo.
 
 ## La configuración global y la del proyecto no coinciden
 
@@ -64,11 +64,11 @@ Una interrupción del runtime puede detener un flujo estructural antes de comple
 
 ## Agent Manager o un worktree causa confusión
 
-Los subagentes normales no necesitan un worktree. Agent Manager se reserva para aislamiento real o trabajo independiente y los worktrees requieren un repositorio Git.
+Los `task` normales no aíslan el filesystem. En Agent Manager, `worktree` crea un checkout/branch independiente; `local` comparte el worktree y solo admite paralelo read-only seguro. El uso de worktrees requiere Git; si no está disponible, sigue SERIAL.
 
-Antes de integrar, identifica qué rama y carpeta contienen el trabajo, revisa sus cambios y elige un único método: Apply de Agent Manager, merge controlado o Pull Request. No uses `git stash` para mover cambios entre worktrees porque el stash se comparte entre ellos.
+Antes de integrar, identifica base/branch/worktree/HEAD y revisa el scope/diff. Jefe de proyecto integra una unidad a la vez mediante el método local o nativo más sencillo disponible (Apply a local, cherry-pick o merge según el flujo real). No hay auto-merge; no uses `git stash`, que se comparte entre worktrees. Push/PR requiere la autorización vigente.
 
-Una sesión finalizada no demuestra que el worktree o su carpeta se hayan eliminado.
+Una sesión finalizada no demuestra que el worktree o su carpeta se hayan eliminado; el cierre de sesión tampoco implica descartar los cambios.
 
 ## Quedan worktrees o carpetas residuales
 
@@ -79,7 +79,7 @@ Distingue siempre:
 3. carpeta física todavía presente;
 4. carpeta huérfana bajo `.kilo/worktrees/` que Git ya no registra.
 
-Para limpiar un worktree temporal: conserva primero el resultado, comprueba que no tenga cambios pendientes, consulta `git worktree list`, usa un mecanismo seguro de eliminación, ejecuta `git worktree prune` cuando corresponda y vuelve a verificar listado y ruta.
+Para limpiar un worktree temporal: integra o conserva primero el resultado; consulta `Agent Manager list`, `git worktree list` y el status/branch del path. Solo cierra/elimina el checkout cuando esté limpio e integrado o su descarte seguro esté resuelto. Prefiere el cierre nativo; `kilo worktree remove` puede borrar también la branch. Usa `git worktree prune` solo ante registro realmente stale y vuelve a verificar.
 
 No elimines automáticamente un worktree con cambios ni una carpeta huérfana cuyo origen no puedas demostrar. No edites `.kilo/agent-manager.json` para forzar el estado.
 

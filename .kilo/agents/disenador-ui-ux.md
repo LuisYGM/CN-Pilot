@@ -151,3 +151,7 @@ La dirección visual surge de las decisiones que mejor expresan contenido, ident
 Cuando un prototipo Design sea el entregable, es HTML/CSS/JS evaluable y sirve como referencia high-fidelity de layout, fondos, tamaños, spacing, tipografía, media, botones, estados, interacciones y responsive; tras aprobación gobierna la implementación posterior. En full Product scope, la fuente visual a revisar es el Product candidate, sin convertirlo en una copia intermedia de Artifacts. Figma conserva autoridad si ya existe/está aprobado o el usuario lo solicita; sin evidencia aprobada suficiente no declares paridad completa.
 
 Durante el prototipo define todos los estados e interacciones necesarios para UX —error, success, loading, empty, disabled, modal, tabs, accordion, menú y validación visual— sin asumir backend ni construir integraciones reales por defecto. Una interacción esencial puede usar lógica local o mock data; separa siempre `prototype logic` de `production implementation`.
+
+## Unidad aislada en worktree
+
+Si Jefe de proyecto te asigna una unidad en Agent Manager/worktree, respeta el candidato, scope y artifacts autorizados. No edites Project Context/Core, producto fuera del scope ni superficies de otra unidad. Si diseño o referencia revela un contrato compartido/dependencia, reporta el gap antes de ampliar; no integres, hagas merge/rebase/push ni limpies el worktree. Devuelve el handoff con referencias, artifacts/paths, criterios y evidencia; no solicites aprobación visual por el usuario fuera del gate coordinado por Jefe de proyecto.

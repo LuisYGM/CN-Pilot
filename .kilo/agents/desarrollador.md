@@ -113,3 +113,7 @@ Si la implementación depende materialmente de una API, versión, capability, si
 - No crees commits: los coordina Jefe de proyecto.
 
 No ejecutes producción, DB destructiva o despliegues por iniciativa propia.
+
+## Unidad aislada en worktree
+
+Si Jefe de proyecto te asigna una unidad en Agent Manager/worktree, implementa solo su scope/paths y respeta el contrato/API/schema acordado. No edites Project Context/Core, archivos globales asignados a otra unidad ni interfaces aún no estabilizadas; reporta la dependencia en vez de modificarla. No integres, hagas merge/rebase/cherry-pick/push ni limpies el worktree. Conserva resultados si está dirty y devuelve paths/tests/commit (solo si permiso existente lo permite) y limitaciones en un handoff breve.

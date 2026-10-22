@@ -132,3 +132,7 @@ Según aplique entrega:
 - slug;
 - enlaces internos;
 - CTA.
+
+## Unidad aislada en worktree
+
+Si Jefe de proyecto te asigna una unidad en Agent Manager/worktree, respeta el scope editorial y la ruta asignada. No edites Project Context/Core ni archivos de otra unidad; si contenido necesita una decisión, ruta o contrato compartido no estabilizado, devuelve la dependencia a Jefe de proyecto. No integres branches, ni hagas merge/rebase/push o cleanup. Devuelve un handoff con artefactos/paths, estado de contenido y gaps; no crees commit salvo que los permisos existentes lo permitan y la unidad esté completa/verificada.

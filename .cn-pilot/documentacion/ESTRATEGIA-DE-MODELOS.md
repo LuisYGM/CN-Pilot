@@ -16,6 +16,6 @@ Solo se documenta un proveedor o modelo concreto como requisito **del proyecto/p
 
 Usa el enfoque menos costoso que complete la tarea con fiabilidad: menos sesiones e iteraciones, scope preciso, skills adecuadas y ninguna duplicación innecesaria. Una tarea compleja puede beneficiarse de mayor capacidad de razonamiento, pero la elección concreta de modelo o esfuerzo pertenece al desarrollador y a Kilo. Evalúa el resultado, evidencia, QA y cumplimiento del alcance, no la marca ni la versión del modelo.
 
-`task` sirve para delegación integrada; Agent Manager se reserva para aislamiento, alternativas o trabajo realmente independiente. No se abren por defecto más de dos sesiones Agent Manager pagadas simultáneamente; para más se pide confirmación. Este límite es de orquestación y coste, no una regla ligada a un modelo.
+`task` sirve para delegación integrada; Agent Manager con worktrees se reserva para unidades escritoras realmente independientes. Dos unidades paralelas como máximo por defecto; una tercera solo con scopes aislados, integración barata y capability real. Revisor/read-only puede coincidir solo sobre estado estable e independiente. Considera el coste y el riesgo, no uses sesiones duplicadas para ahorrar tiempo. Este es un límite de coordinación, no de modelos ni steps.
 
 Consulta [Configuración de Kilo](CONFIGURACION-KILO.md) para las opciones personales y [Configuración de CN Pilot](CONFIGURACION.md) para separar preferencias locales, configuración compartible y secretos. El `kilo.jsonc` versionado no fija modelos ni proveedor.

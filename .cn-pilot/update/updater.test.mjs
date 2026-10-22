@@ -367,6 +367,26 @@ test("I2: pending active task blocks updater before source access", async (t) =>
   assert.equal(JSON.parse(fs.readFileSync(path.join(root, ".cn-pilot/runtime/active-task.json"), "utf8")).status, undefined, "invalid checkpoint is not repaired");
 });
 
+test("I3: optional parallelUnits keep one valid global checkpoint and block updater", async (t) => {
+  const { root, put } = fixture(t);
+  put(root, "tracked.txt", "base\n");
+  initRepo(root, ["tracked.txt"]);
+  const checkpoint = activeCheckpoint("ACTIVE", {
+    parallelUnits: [
+      { unit: "api", owner: "desarrollador", scope: ["producto/api/**"], mode: "WRITER", status: "ACTIVE", worktreeID: "test-wt-api", worktreePath: "C:/worktrees/api", branch: "cn/test-api", baseBranch: "main", baseHEAD: "a".repeat(40), sessionID: "ses_test_api", nextAction: "Validar endpoints" },
+      { unit: "copy", owner: "contenido-seo", scope: ["artefactos/contenido/**"], mode: "WRITER", status: "READY_TO_INTEGRATE", worktreeID: "test-wt-copy", worktreePath: "C:/worktrees/copy", branch: "cn/test-copy", baseBranch: "main", baseHEAD: "a".repeat(40), resultCommit: "b".repeat(40), nextAction: "Esperar integración" },
+    ],
+  });
+  put(root, ".cn-pilot/runtime/active-task.json", `${JSON.stringify(checkpoint)}\n`);
+  assert.deepEqual(checkActiveTask(root), { exists: true, blocked: true, status: "ACTIVE" });
+
+  let stderr = "";
+  const code = await runCli(["update", "--target", root, "--source-dir", path.join(root, "missing-source")], { stderr: { write: (value) => { stderr += value; } }, stdout: { write() {} } });
+  assert.equal(code, 1);
+  assert.match(stderr, /ACTIVE_TASK/);
+  assert.deepEqual(JSON.parse(fs.readFileSync(path.join(root, ".cn-pilot/runtime/active-task.json"), "utf8")), checkpoint, "updater preserves the optional unit recovery data");
+});
+
 test("J: upstream source hash mismatch blocks before target writes", (t) => {
   const { root, put } = fixture(t); const source = fixture(t);
   put(root, ".cn-pilot/docs/a.md", "target\n");

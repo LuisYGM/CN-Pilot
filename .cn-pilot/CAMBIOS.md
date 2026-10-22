@@ -1,5 +1,10 @@
 # Changelog
 
+## [2.3.0] - 2026-10-22
+
+- BF-062 incorpora SERIAL por defecto, paralelismo read-only y worktrees nativos de Agent Manager solo para unidades realmente independientes, con un writer por worktree e integración secuencial.
+- Se refuerzan la recuperación global por unidad paralela y la limpieza segura; Agent Manager es opcional y el fallback es SERIAL.
+
 ## [2.2.0] - 2026-10-22
 
 - Se incorpora Guided Project Journey: onboarding conversacional, orientación del siguiente paso, aceptación de skips y decisiones «Decide tú» sin wizard rígido.

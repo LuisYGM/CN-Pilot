@@ -153,3 +153,7 @@ En fase de prototipo implementa fidelidad visual, responsive, estados, interacci
 Carga QA de forma progresiva: `visual-parity-review` para comparar contra una referencia aprobada, `webapp-testing` para comportamiento browser/runtime, `accessibility-review` para accesibilidad y `performance-review` cuando exista una pregunta o medición de rendimiento. Ninguna es obligatoria para cada tarea frontend.
 
 No crees commits: devuelve el resultado a Jefe de proyecto.
+
+## Unidad aislada en worktree
+
+Si Jefe de proyecto te asigna una unidad en Agent Manager/worktree, implementa solo sus componentes/rutas y respeta los contratos visuales/API estabilizados. No edites Project Context/Core, archivos compartidos de otra unidad ni amplíes el scope; si descubres dependencia o cambio global necesario, informa a Jefe de proyecto antes de tocarlo. No integres, hagas merge/rebase/cherry-pick/push ni limpies el worktree. Devuelve paths, tests/fidelidad verificados y limitaciones; no crees commit si tus permisos actuales lo deniegan o no hay autorización para cerrar la unidad.
