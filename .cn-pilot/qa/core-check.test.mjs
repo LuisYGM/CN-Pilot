@@ -329,6 +329,7 @@ test("Visual Pipeline 2.0 covers the public-web divergence, synthesis, flagship 
     ["D inspect user references and material families first", pipeline, "inspecciona primero el índice/brief/recursos suministrados"],
     ["E material URLs must be opened", creative, "abre e inspecciona las relevantes antes de afirmar Reference Coverage completa"],
     ["F user may choose, mix, reject, or delegate", creative, "elegir un concepto, mezclar piezas, rechazar todos o delegar"],
+    ["F a rejected set requires new directional evidence", creative, "no regeneres variantes idénticas ni repitas research sin evidencia nueva"],
     ["G kit is derived after synthesis", creative, "Solo después de Visual Synthesis activa"],
     ["H Approved and Strict fast paths", pipeline, "La ruta **Approved/Strict** no genera Concept Studies artificiales"],
     ["I app UI bypasses public-web concepts", pipeline, "No se activa por app/dashboard (`application-ui`)"],

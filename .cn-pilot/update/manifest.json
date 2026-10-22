@@ -179,7 +179,7 @@
     },
     {
       "path": ".cn-pilot/qa/core-check.test.mjs",
-      "sha256": "ee2e683a304b1c625fd924e40e31ee7821bbe1657d56ed7ba3f3390c10146597"
+      "sha256": "c7a934b3eb3f3f725e88e49914b0e765435f57d058adfb2f4f77486a0029bca8"
     },
     {
       "path": ".cn-pilot/update/updater.mjs",
@@ -307,7 +307,7 @@
     },
     {
       "path": ".kilo/skills/creative-web-experience/SKILL.md",
-      "sha256": "ab7db3dde536e2f75e8fc1b8eed6091bce11d020d8c5c0d50b2d138dd2aa13f9"
+      "sha256": "241f54540864125142981281077082d2c2bb9f352c5bde41082ee025803966ca"
     },
     {
       "path": ".kilo/skills/database-migrations/SKILL.md",
