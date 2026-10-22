@@ -98,8 +98,8 @@ function createFixture(t) {
   put("DECISIONES.md", "# Decisions fixture\n");
   put("ARTEFACTOS.md", "# Artifacts fixture\n");
   put("AGENTS.md", "# Minimal test kernel\n");
-  put(".cn-pilot-version", "2.3.0\n");
-  put(".cn-pilot/NUCLEO.md", "**Versión:** `2.3.0`\n\nLas superficies propias de CN Pilot destinadas a personas usan español por defecto, incluidos los nombres visibles de roles, documentos, comandos y estructuras.\n");
+  put(".cn-pilot-version", "2.4.0\n");
+  put(".cn-pilot/NUCLEO.md", "**Versión:** `2.4.0`\n\nLas superficies propias de CN Pilot destinadas a personas usan español por defecto, incluidos los nombres visibles de roles, documentos, comandos y estructuras.\n");
   put(".cn-pilot/MANIFIESTO.md", manifest);
   put(".cn-pilot/config/responsive.json", "{}\n");
   put(".cn-pilot/documentacion/.keep");
@@ -112,7 +112,7 @@ function createFixture(t) {
   put(".cn-pilot/update/updater.test.mjs", "// updater test fixture\n");
   put(".cn-pilot/update/manifest.json", `${JSON.stringify({
     schemaVersion: 1,
-    cnPilotVersion: "2.3.0",
+    cnPilotVersion: "2.4.0",
     sourceRepository: "https://github.com/LuisYGM/cn-pilot.git",
     stableBranch: "main",
     sourceCommit: null,
@@ -172,7 +172,7 @@ test("known-good minimal fixture passes deterministic invariants", (t) => {
   const report = runCoreChecks({ rootDir: fixture.root });
   assert.equal(report.status, "PASS", JSON.stringify(report.findings));
   assert.deepEqual(runCoreChecks({ rootDir: fixture.root }), report, "same read-only snapshot yields the same report");
-  assert.equal(report.version, "2.3.0");
+  assert.equal(report.version, "2.4.0");
   assert.equal(getCheck(report, "agents.frontmatter").details.count, 7);
   assert.equal(getCheck(report, "skills.frontmatter").details.count, 2);
   assert.equal(getCheck(report, "commands.frontmatter").details.count, 14);
@@ -228,7 +228,7 @@ test("Spanish-first doctrine is required and generic technical wording is not tr
   fixture.put(".kilo/skills/technical-seo/references/audit.md", "Cita externa de ejemplo: Developer.\n");
   assert.equal(getCheck(runCoreChecks({ rootDir: fixture.root }), "language.spanishFirst").status, "PASS");
 
-  fixture.put(".cn-pilot/NUCLEO.md", "**Versión:** `2.3.0`\n\nLa estructura técnica permanece en inglés: archivos, carpetas, agentes.\n");
+  fixture.put(".cn-pilot/NUCLEO.md", "**Versión:** `2.4.0`\n\nLa estructura técnica permanece en inglés: archivos, carpetas, agentes.\n");
   const check = getCheck(runCoreChecks({ rootDir: fixture.root }), "language.spanishFirst");
   assert.equal(check.status, "FAIL");
   assert.ok(check.details.findings.some((finding) => finding.code === "SPANISH_FIRST_DOCTRINE_MISSING_OR_CONTRADICTORY"));
@@ -309,6 +309,67 @@ test("BF-047 keeps legacy serial checkpoints valid with optional parallel recove
   for (const status of ["PLANNED", "ACTIVE", "BLOCKED_HUMAN", "BLOCKED_EXTERNAL", "FAILED", "READY_TO_INTEGRATE", "INTEGRATED"])
     assert.ok(parallelRecovery.includes(status), `parallel unit status ${status} is documented`);
   assert.match(parallelRecovery, /worktreeID.*worktreePath.*branch.*baseBranch.*baseHEAD.*sessionID.*resultCommit/s);
+});
+
+test("Visual Pipeline 2.0 covers the public-web divergence, synthesis, flagship and fast-path scenarios", () => {
+  const read = (relative) => fs.readFileSync(new URL(`../../${relative}`, import.meta.url), "utf8");
+  const core = read(".cn-pilot/NUCLEO.md");
+  const creative = read(".kilo/skills/creative-web-experience/SKILL.md");
+  const designer = read(".kilo/agents/disenador-ui-ux.md");
+  const pipelineStart = core.indexOf("### Visual Pipeline 2.0 / Creative Web Experience (BF-066)");
+  const pipelineEnd = core.indexOf("\n## Convenciones estructurales de maquetación", pipelineStart);
+  assert.ok(pipelineStart >= 0 && pipelineEnd > pipelineStart, "canonical pipeline is scoped in Core");
+  const pipeline = core.slice(pipelineStart, pipelineEnd);
+  const scenarios = [
+    ["A public-web open-direction trigger", pipeline, "Aplica solo a public web Greenfield/rediseño visual material con libertad creativa abierta"],
+    ["B two or three real studies", creative, "2–3 Concept Studies reales"],
+    ["B concept count remains small", creative, "nunca más de tres por defecto"],
+    ["B concepts differ in multiple visual dimensions", creative, "difieren en **varias** decisiones macro"],
+    ["C studies are not full Homes or screenshots", creative, "No es moodboard textual, screenshot, UI Kit, Flagship final, Product ni una Home completa"],
+    ["D inspect user references and material families first", pipeline, "inspecciona primero el índice/brief/recursos suministrados"],
+    ["E material URLs must be opened", creative, "abre e inspecciona las relevantes antes de afirmar Reference Coverage completa"],
+    ["F user may choose, mix, reject, or delegate", creative, "elegir un concepto, mezclar piezas, rechazar todos o delegar"],
+    ["G kit is derived after synthesis", creative, "Solo después de Visual Synthesis activa"],
+    ["H Approved and Strict fast paths", pipeline, "La ruta **Approved/Strict** no genera Concept Studies artificiales"],
+    ["I app UI bypasses public-web concepts", pipeline, "No se activa por app/dashboard (`application-ui`)"],
+    ["J Existing and derived pages bypass repeated divergence", pipeline, "Existing localized, página derivada de sistema aprobado"],
+    ["K one Flagship is a complete page, not a study", creative, "una sola Flagship de página completa"],
+    ["K Flagship is not Product runtime", creative, "no es Product runtime"],
+    ["L human approval gates Product", pipeline, "Human Visual Approval → Product implementation si está en scope"],
+    ["M Designer does not implement Product before approval", designer, "no edites Product antes de la aprobación visual del Flagship"],
+    ["N screenshots are not primary evidence", creative, "sin matrices screenshot"],
+    ["N studies demonstrate mobile transformation proportionally", creative, "mobile demuestra cómo se adapta hero y una región compleja"],
+    ["O user assets retain priority/provenance", creative, "Reutiliza assets PROVIDED/EXISTING cuando correspondan"],
+    ["O Visual Synthesis resolves a mix", creative, "la **Visual Synthesis** convierte esos elementos en una gramática única y coherente"],
+    ["P parallel studies are alternatives, not merges", creative, "la síntesis seleccionada es una unidad nueva, no una integración automática de ramas"],
+  ];
+  for (const [scenario, source, required] of scenarios) assert.ok(source.includes(required), `${scenario}: contract is present`);
+});
+
+test("Visual Pipeline sequence does not construct the UI Kit before creative exploration", () => {
+  const core = fs.readFileSync(new URL("../NUCLEO.md", import.meta.url), "utf8");
+  const creative = fs.readFileSync(new URL("../../.kilo/skills/creative-web-experience/SKILL.md", import.meta.url), "utf8");
+  const coreStart = core.indexOf("### Visual Pipeline 2.0 / Creative Web Experience (BF-066)");
+  const coreEnd = core.indexOf("\n## Convenciones estructurales de maquetación", coreStart);
+  const policy = core.slice(coreStart, coreEnd);
+  const routeStart = policy.indexOf("Flujo canónico cuando aplica:");
+  const route = policy.slice(routeStart);
+  const routeStages = ["Reference & Asset Coverage", "2–3 Concept Studies reales", "Human Creative Review", "Visual Synthesis", "UI Kit derivado", "Flagship Page", "Human Visual Approval", "Product implementation"];
+  let previousStage = -1;
+  for (const stage of routeStages) {
+    const index = route.indexOf(stage);
+    assert.ok(index > previousStage, `canonical flow orders ${stage}`);
+    previousStage = index;
+  }
+
+  const coverage = creative.indexOf("## Reference & Asset Coverage");
+  const studies = creative.indexOf("## Concept Studies y divergencia visual real");
+  const review = creative.indexOf("## Human Creative Review y Visual Synthesis");
+  const derivedKit = creative.indexOf("Solo después de Visual Synthesis activa `ui-design-system`/`ui-kit-construction`");
+  const flagship = creative.indexOf("una sola Flagship de página completa");
+  assert.ok(coverage >= 0 && studies > coverage, "reference coverage precedes studies");
+  assert.ok(review > studies && derivedKit > review && flagship > derivedKit, "review/mix and synthesis precede kit and flagship");
+  assert.ok(creative.slice(studies, review).includes("No generes UI Kits/component libraries para cada alternativa"));
 });
 
 test("/nuevo-proyecto es progresivo, lee antes de preguntar y no es un wizard", () => {
@@ -516,7 +577,8 @@ test("visual cleanup removes obsolete restrictions without weakening creative or
   assert.match(creative, /Existing conserva `continuity > novelty`/);
   assert.match(creative, /Approved\/Strict mantiene authority BF-048/);
   assert.match(creative, /Genericity Risk/);
-  assert.match(creative, /si queda Genericity Risk material.*continúa el refinamiento específico/s);
+  assert.match(creative, /Si este riesgo es material.*Creative Refinement Pass focalizada/s);
+  assert.match(creative, /Synthesis\/Flagship sigue genérica.*continúa el refinamiento específico necesario/s);
   assert.match(composition, /No prohíbas cards, simetría, centrado, split layouts ni simplicidad/);
   assert.match(application, /no páginas de marketing/);
 

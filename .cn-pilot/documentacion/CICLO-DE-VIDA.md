@@ -47,17 +47,15 @@ Empieza por inspeccionar la implementación vigente y sus fuentes de verdad. Omi
 ## Proyecto completo
 `Discovery → Requirements → Architecture → Content → Design → Development → QA → Staging → Acceptance → Production → Maintenance`
 
-## Páginas visualmente importantes
+## Páginas públicas visualmente importantes
 
-Para landings, páginas comerciales, páginas corporativas importantes y otras interfaces con alta fidelidad requerida, aplica proporcionalmente:
+Para public web Greenfield o rediseño material con dirección abierta, adapta el recorrido según el material existente:
 
-`Final Content → Creative Direction → High-Fidelity Prototype → Human Visual Approval → Builder-native Implementation → Visual Fidelity Pass → Visual Parity QA → Human Visual QA → Publish`
+`Creative Input/Reference Coverage → Concept Studies reales (2–3) → Human Creative Review → Visual Synthesis → UI Kit derivado → Flagship high-fidelity → Human Visual Approval → Product implementation si está en scope → páginas derivadas`
 
-Para diseño visual high-fidelity de páginas/interfaces web, el prototype evaluable es HTML/CSS/JS responsive bajo `artefactos/diseno/paginas/`; Markdown puede explicar Creative Direction, nunca sustituirlo. Una preview pedida en navegador sigue siendo un artefacto de diseño. En Existing conserva el sistema aprobado; no estrenes una dirección visual por buscar novedad.
+Los Concept Studies y el Flagship de diseño son artefactos ejecutables HTML/CSS/JS en `artefactos/diseno/`, no screenshots ni Product runtime. Flagship se aprueba antes de implementar o multiplicar páginas. Si se solicitó solo diseño, conserva los artefactos y entrega handoff. Si desarrollo ya estaba en scope, continúa tras la aprobación sin volver a preguntar; publishing/deployment conserva su autorización independiente.
 
-La transición Design → Implementation se decide con el alcance ya confirmado: si incluye diseño y desarrollo, una aprobación visual inequívoca satisface el gate y se continúa sin reconfirmar; si era solo diseño, la aprobación cierra en Design; si no puede inferirse, se pregunta una vez sobre la intención humana de desarrollar. Pedir una preview no es trigger de implementación. `producto/` significa implementación, no producción publicada; `deployment` mantiene su autorización independiente.
-
-No es obligatorio para cambios pequeños, mantenimiento, cambios de texto, correcciones simples, pequeñas modificaciones CSS ni páginas sin prototipo solicitado. Sin referencia visual aprobada no se exige Visual Parity QA; sin representación visual fiable se informa que Technical QA está completo y Visual QA queda pendiente.
+Approved/Strict, Existing con sistema vigente, aplicaciones (`application-ui`), microcambios y páginas derivadas mantienen sus fast paths: no repitas divergence ni estrategia genérica. Una preview de navegador sigue siendo artefacto de diseño cuando esa era la entrega. Sin referencia visual aprobada no se exige Visual Parity QA; si falta representación visual fiable se informa que Technical QA está completo y Visual QA queda pendiente.
 
 ## Límite funcional del prototipo
 

@@ -21,7 +21,7 @@ No activar para un CSS/copy change puntual, metadata, una página con composici�
 4. Elige cada vez container restringido, full-bleed, grid editorial, split, asimetría, simetría o whitespace por contenido/identidad. Un statement, quote, cifra o media puede romper ritmo si tiene significado. El CTA/cierre se deriva del journey y no se repite mecánicamente.
 5. Contrasta con UI Kit aprobado: reutiliza su gramática sin hacer que toda página tenga la misma silueta. No añadas card grids ni secciones solo para exhibir componentes. Detecta módulos repetidos por comodidad, varía ritmo intencionalmente y ubica un memorable moment cuando journey/contenido lo permitan; no es cuota ni espectáculo.
 
-En una nueva dirección material, consume `Concept Divergence Pass` de `creative-web-experience`: explica brevemente por qué gana esta silueta y qué alternativa macro real se descartó. No repitas la divergencia de sistema en páginas derivadas ni generes prototipos paralelos; la diferencia debe aparecer en la composición elegida, no en variaciones de color o cards.
+En public web abierto, `creative-web-experience` dirige los Concept Studies y Human Creative Review; esta skill recibe la Synthesis seleccionada para componer UNA Flagship completa usando el sistema ya derivado. Conserva por qué gana la silueta y qué alternativa macro se descartó, pero no repitas divergence ni conviertas los estudios en varias páginas completas. Páginas derivadas consumen la Flagship aprobada sin reabrir exploración si no hay novedad material.
 
 ## Evitar plantillas previsibles
 

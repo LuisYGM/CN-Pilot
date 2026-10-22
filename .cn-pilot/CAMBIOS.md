@@ -1,5 +1,10 @@
 # Changelog
 
+## [2.4.0] - 2026-10-22
+
+- Visual Pipeline 2.0 añade Reference Coverage, Concept Studies visuales reales, Human Creative Review con selección/mezcla y Visual Synthesis antes del UI Kit derivado.
+- Se incorpora el workflow de Flagship y sus fast paths, manteniendo las aprobaciones humanas, Guided Journey, BF-062 y la compatibilidad Project Context.
+
 ## [2.3.0] - 2026-10-22
 
 - BF-062 incorpora SERIAL por defecto, paralelismo read-only y worktrees nativos de Agent Manager solo para unidades realmente independientes, con un writer por worktree e integración secuencial.
