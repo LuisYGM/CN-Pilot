@@ -1,21 +1,21 @@
 # Estado actual
 
-> Mantener breve; si existe Git, contiene el historial.
+> Mantener breve y orientado a decisiones próximas; Git conserva el historial.
+
+## Situación
+Contexto del proyecto aún sin inicializar.
 
 ## Trabajando en
-Pending.
+Ninguna tarea activa.
 
-## Completado
-- Pending.
+## Resuelto
+- Sin hitos del proyecto registrados.
+
+## Pendiente relevante
+- Definir el objetivo al iniciar el trabajo.
 
 ## Bloqueos
-- Ninguno.
+Ninguno.
 
-## Siguiente paso
-Ejecutar `/nuevo-proyecto`.
-
-## Rama actual (si aplica)
-Pending.
-
-## Último checkpoint Git (si aplica)
-Pending.
+## Siguiente paso recomendado
+Ejecutar `/nuevo-proyecto` o explicar en lenguaje natural qué se quiere conseguir.

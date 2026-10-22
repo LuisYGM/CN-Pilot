@@ -1,5 +1,10 @@
 # Changelog
 
+## [2.2.0] - 2026-10-22
+
+- Se incorpora Guided Project Journey: onboarding conversacional, orientación del siguiente paso, aceptación de skips y decisiones «Decide tú» sin wizard rígido.
+- El Journey se adapta al tipo y estado real del proyecto; `Pending` no material no bloquea y la continuidad respeta el scope autorizado y los gates humanos.
+
 ## [2.1.1] - 2026-10-22
 
 Corrección de consistencia Spanish-first en la documentación y los prompts activos del Core.

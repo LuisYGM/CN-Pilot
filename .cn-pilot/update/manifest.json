@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "cnPilotVersion": "2.1.1",
+  "cnPilotVersion": "2.2.0",
   "sourceRepository": "https://github.com/LuisYGM/cn-pilot.git",
   "stableBranch": "main",
   "sourceCommit": null,
@@ -11,11 +11,11 @@
   "managedFiles": [
     {
       "path": ".cn-pilot-version",
-      "sha256": "7b3ff271f1373cfb97e9e53349794e1450f3794e4c0788c54a2060c7596da821"
+      "sha256": "c4a2383a03bdb6739d16a0e24058e4b9c7da4e63d203e0be2f448868cc03c530"
     },
     {
       "path": ".cn-pilot/CAMBIOS.md",
-      "sha256": "2f4dfe2727770122c6eb30491644cf8c38560c671043775e9ba7e96c275d75fe"
+      "sha256": "08b0ef7078e82fb386245e30169b76706ec9fd61d49ce6c7789f9561c54e2dc8"
     },
     {
       "path": ".cn-pilot/MANIFIESTO.md",
@@ -23,7 +23,7 @@
     },
     {
       "path": ".cn-pilot/NUCLEO.md",
-      "sha256": "f434678506d5f052dec489fd7d997f3b3ce0acc354c0abea934d7eefb5094465"
+      "sha256": "848d9cb643dd2fe2f6daccaedce9ca57a4dfde10bc81edeac3bd2e6d7b595966"
     },
     {
       "path": ".cn-pilot/config/responsive.json",
@@ -47,7 +47,7 @@
     },
     {
       "path": ".cn-pilot/documentacion/EMPIEZA-AQUI.md",
-      "sha256": "00d43593f42653da1301eadb1d54e189700198fc9fe4e605a3f8194ebda918a0"
+      "sha256": "f775a476d3d40cfc08215ba48802bf10b831488873a3ca3c1aca78403f1c8be9"
     },
     {
       "path": ".cn-pilot/documentacion/ESTRATEGIA-DE-MODELOS.md",
@@ -63,7 +63,7 @@
     },
     {
       "path": ".cn-pilot/documentacion/INTERACCION-HUMANA.md",
-      "sha256": "3a50f2c6b110bb9f8361fc6b0d613bf88489f0127eda6a27ac8cb7b07347293a"
+      "sha256": "57ce3fb94ac858b9165ea7caa20c5684fc088fa6534c6e4f8521b353e94255a0"
     },
     {
       "path": ".cn-pilot/documentacion/SEGURIDAD.md",
@@ -179,7 +179,7 @@
     },
     {
       "path": ".cn-pilot/qa/core-check.test.mjs",
-      "sha256": "3b748d17daf8b6627cd0d341669f3a5d8b0540cbd7fe08eae314c349c1423187"
+      "sha256": "a3a39b0b46b5a203e1b91be06841bace7138948e0ad9a4f0fbfe3629f2945d64"
     },
     {
       "path": ".cn-pilot/update/updater.mjs",
@@ -187,7 +187,7 @@
     },
     {
       "path": ".cn-pilot/update/updater.test.mjs",
-      "sha256": "5d7bd17a7a35ef7672f9575f3d23d68b5146357161aad2097207bc03168aa81f"
+      "sha256": "8761075aa88420cea6104726733b7b70c9f95e6c04292ed00f7810abcd5e72d2"
     },
     {
       "path": ".kilo/agents/arquitecto.md",
@@ -207,7 +207,7 @@
     },
     {
       "path": ".kilo/agents/jefe-proyecto.md",
-      "sha256": "e5c1c5874653ae84b5e6fa238b98d7e51820e442332be88a62136066e5b1169b"
+      "sha256": "a1a3a333bb7db466b3760832e69f18eb62fb6fbb24a1041c332311d500eb65fd"
     },
     {
       "path": ".kilo/agents/maquetador-frontend.md",
@@ -255,7 +255,7 @@
     },
     {
       "path": ".kilo/commands/nuevo-proyecto.md",
-      "sha256": "e12417f219979703ab5e2b8a1b943811921ab7af6af0cc746d0bb6c1f45f775e"
+      "sha256": "2d0bb3a1aa005e556751ad07808578d4d4e6a5caf63e46f0ac1c410c0eadeece"
     },
     {
       "path": ".kilo/commands/plan.md",

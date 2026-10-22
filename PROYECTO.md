@@ -8,11 +8,15 @@
 - **Perfil:** Pending
 - **Repositorio o carpeta:** Pending
 - **Control de versiones:** Git local / Git con remoto / No inicializado / Pending
-- **Versión de CN Pilot Core:** 2.1.1
+- **Versión de CN Pilot Core:** 2.2.0
 
 ## Objetivo
 
-Pending.
+- **Resultado deseado:** Pending
+
+- **Público prioritario (si es relevante):** Pending
+
+No hace falta definir el público en el onboarding si no cambia el siguiente trabajo útil.
 
 ## Contexto de partida
 

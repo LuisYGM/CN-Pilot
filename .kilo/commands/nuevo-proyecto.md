@@ -1,68 +1,50 @@
 ---
-description: Inicializa un proyecto creado desde el CN Pilot y completa su contexto base.
+description: Inicia u orienta el proyecto con el contexto y los materiales que ya existen.
 agent: jefe-proyecto
 ---
 
-# New Project
+# Nuevo proyecto
 
-`/nuevo-proyecto` se ejecuta una sola vez para inicializar el contexto de cada carpeta de proyecto creada desde CN Pilot. No significa crear una web nueva. Si los documentos ya identifican el proyecto real y `ESTADO.md` ya no indica inicialización, no lo reinicialices aunque queden datos `Pending`; continúa mediante el workflow normal de la tarea solicitada.
+`/nuevo-proyecto` es la puerta de entrada recomendada para empezar o ubicar cualquier proyecto con CN Pilot. No significa crear una web nueva ni obliga a completar un wizard. Sirve para Greenfield y Existing, web pública, app/SaaS, WordPress, ecommerce, contenido, mantenimiento o evolución de código.
 
-1. Antes de preguntar o modificar archivos, inspecciona en este orden:
-   - `AGENTS.md` y `.cn-pilot-version`;
-   - el contexto `PROYECTO.md`, `REQUISITOS.md`, `ESTADO.md`, `DECISIONES.md` y el índice `ARTEFACTOS.md`;
-   - si existe y puede afectar el alcance, una lista ligera de los recursos pertinentes en `recursos/`; no recorras todo el contenido ni preguntes si falta o está vacío;
-   - `README.md`, si existe: identifica si presenta el CN Pilot heredado o el proyecto real; no deduzcas su propósito solo por el nombre del archivo;
-   - la estructura e implementación existente: manifiestos, configuración, documentación, código, assets y `.gitignore`; si la raíz contiene producto, verifica el vínculo real de scripts/imports/workspaces, CI/CD, hosting/document root y paths externos antes de tratarlo como excepción;
-   - el estado Git y el remote, solo si existen.
-2. Preserva la implementación y los cambios manuales existentes. No preguntes nada que pueda inferirse con fiabilidad de la inspección.
-3. Si la petición ya expresa qué se quiere conseguir, úsala como intención inicial: una persona puede empezar con una frase como «Quiero hacer una web para mi restaurante». Tras inspeccionar contexto, pregunta solo por ausencias que afecten materialmente la inicialización. Si aún hay un vacío, prioriza una pregunta breve y natural sobre resultado/propósito; puedes agrupar un público relacionado si cambia el trabajo, pero no enumeres campos como cuestionario. Stack o tecnología se inspeccionan/infiere primero; no exijas una elección técnica ni la preguntes si no es necesaria todavía.
-4. Reevalúa después de cada respuesta y formula otra pregunta solo si sigue existiendo un vacío material; para desconocidos no bloqueantes usa `Pending`. Acepta respuestas cortas, parciales o «no lo sé». No exijas prompts elaborados, YAML, booleanos, listas ni nombres internos como `profile` o `capabilities`.
-5. A partir de la inspección y las respuestas, infiere perfil, capacidades, objetivo, stack/plataforma objetivo, entornos, restricciones y requisitos. Infiere también, sin pedir campos internos:
-   - si el trabajo parte de un proyecto nuevo o de un sitio/sistema existente;
-   - el alcance concreto del repositorio;
-   - el punto de entrega previsto;
-   - si la implementación o publicación será manual, mediante MCP/integración o completa desde el repositorio;
-   - las fuentes de verdad relevantes del sistema existente;
-   - diferencias de destino entre entregables, si existen;
-   - baseline `Existing`/`Greenfield`, input, workspace/product mode, container y product root activo, entry points y layout observado. Existing con producto activo dentro de `producto/` → `Existing imported`, registra roots/entry points e internal layout y presérvalo. Código solo en `recursos/codigo-original/` → input original, no producto activo ni copia durante onboarding. Existing adoptado se reconoce solo por evidencia de repositorio previamente operativo/materialmente ligado a hosting/document root, CI/CD, imports, tooling, producción o paths externos; preserva el root real (incluido `.`) y registra `Existing compatibility exception`. Comprueba que scripts, CI/hosting, workspaces/imports o configuración externa dependan materialmente del root; la mera presencia de un manifest/config raíz o preferencia del framework no basta. Si hay código o una carpeta source de producto en root/top-level del workspace CN Pilot —por ejemplo `legacy-site/`, `src/` o `index.html`— sin esa evidencia, registra `Pending normalization/migration`; no lo trates como excepción ni comiences cambios allí hasta resolverlo de forma segura. No muevas archivos durante onboarding.
-   Marca como `Pending` lo que siga sin conocerse.
-   Si la persona indica que quiere publicar/desplegar desde GitHub hacia un servidor, infiere que el modelo de deployment será desde el repositorio y regístralo en `PROYECTO.md`; usa `Pending configuration` cuando falten método/destino/stack. No presupongas GitHub Actions ni preguntes por deployment si no se menciona. Durante `/nuevo-proyecto` nunca configures un workflow, triggers, secrets ni infraestructura, aunque exista intención de automatizar; setup de deployment es una tarea posterior explícitamente solicitada y autorizada.
-6. Haz preguntas adicionales de forma progresiva, una breve o un grupo pequeño estrechamente relacionado cada vez; inspecciona de nuevo y detente cuando exista información suficiente para inicializar. No resuelvas toda la especificación futura ni preguntes por curiosidad. Formula decisiones de comportamiento en lenguaje humano, no como opciones técnicas. No expongas conceptos internos salvo que sean necesarios para una decisión de proyecto. No preguntes qué modelo, proveedor o esfuerzo de razonamiento usar ni registres preferencias personales de IA como contexto o decisión de proyecto, salvo dependencia técnica real del producto.
-    Si la persona indica que utilizará MCP, registra únicamente la intención material. No actives ni configures MCP, no crees archivos locales ni pidas secretos durante `/nuevo-proyecto`; el setup local se prepara en una tarea posterior solicitada, tras Discovery y antes de escribir sobre un entorno real. MCP no es una pregunta obligatoria y puede haber varios servidores.
-7. Nunca pidas a la persona decidir dónde, en qué archivo, estructura o categoría se guardará la información. No expongas nombres de archivos, estructuras, categorías ni reglas internas del CN Pilot salvo que sean realmente útiles para una decisión del proyecto.
-8. Nunca solicites secretos, credenciales, tokens ni claves.
-9. Antes de modificar cualquier archivo, muestra un resumen breve, simple, natural y centrado en el proyecto que incluya únicamente:
-   - qué trabajo se realizará o qué se construirá, mejorará o mantendrá;
-   - su propósito y público;
-   - el stack conocido;
-   - qué trabajo se preparará en el repositorio y hasta qué punto llegará;
-   - cómo se entregará o continuará después, cuando sea relevante;
-   - las fuentes de verdad existentes que deban respetarse, cuando existan;
-   - los asuntos todavía por confirmar solo si afectan el inicio o el siguiente paso, expresados en lenguaje cotidiano.
-   No separes hechos de inferencias ni muestres el token `Pending`, destinos internos, listas de archivos, reglas operativas o recomendaciones de `.gitignore`.
-10. La única pregunta de confirmación será: «¿Inicializo el proyecto con esta información?». Una respuesta simple como «Sí» es suficiente. Si la persona realiza una corrección material, actualiza el resumen y repite esa misma pregunta antes de editar.
-11. Solo después de la confirmación, Jefe de proyecto distribuye contexto en `PROYECTO.md`, `REQUISITOS.md`, `ESTADO.md` y `DECISIONES.md` sin pedir campos internos. Registra Workspace/product mode, container y root activo real (o `Pending`), entry points y raíces internas. Greenfield: container `producto/` futuro, sin crear hasta implementación. Existing importado ya activo bajo `producto/`: container `producto/`, registra root observado y preserva layout interno. Source existente solo en `recursos/`: input original, no active product; container canónico `producto/`, root activo `Pending`; no copies ni desempaquetes durante onboarding. Existing operativo adoptado: si no hay container físico, registra Product container `N/A`, root real y `Existing compatibility exception` con evidencia, sin mover ni envolver. Código top-level sin esos contratos: `Pending normalization/migration`, sin implementarlo en root ni mover durante onboarding. Registra `artefactos/` como container de outputs auxiliares y `recursos/` como input sin materializarlos aparte del scaffold existente. Conserva `Pending` cuando falten datos; no hagas más preguntas por estas clasificaciones si la evidencia permite inferirlas.
-    Edita únicamente los archivos de contexto cuyo contenido material realmente cambió; conservar campos vacíos/pendientes no obliga a volver a guardarlos ni a sincronizar todos los documentos. Usa los owners de la guía human-first.
-12. Genera el contenido humano en el idioma de trabajo definido explícitamente por el proyecto; si no existe uno, usa español. Mantén en inglés nombres de archivos, carpetas, claves, valores e identificadores técnicos.
-13. Sustituye o elimina todos los placeholders, ejemplos y mensajes heredados de CN Pilot que ya no describan el proyecto real. En particular, no conserves en `ESTADO.md` textos como `CN Pilot created.`, `Project initialization.` o instrucciones para ejecutar `/nuevo-proyecto` después de inicializar.
-14. Actualiza `DECISIONES.md` solo para decisiones importantes que cumplan al menos una de estas condiciones:
-    - tienen alternativas razonables;
-    - condicionan la arquitectura o el desarrollo futuro;
-    - son costosas de cambiar posteriormente;
-    - fueron decididas explícitamente por la persona.
-    Requisitos, páginas, alcance y workflow no son decisiones automáticamente.
-15. Aplica internamente las reglas operativas del CN Pilot, incluida la prohibición de hacer push. No las traslades a la persona para que las recuerde ni las incluyas como elementos a confirmar.
-16. Durante la inicialización no desarrolles código ni copies/desempaquetes inputs ni crees carpetas vacías `producto/`, `artefactos/` (incluidas `contenido/`, `diseno/`, `documentacion/`), `tests/`, `src/`, `app/`, `public/` o `config/` por costumbre. Para greenfield y Existing importado, el activo product root va en `producto/`, pero se crea solo cuando comienza implementación/adopción explícita. No edites archivos de producto desde repo root ni originales en `recursos/codigo-original/`. En existing adopted con contratos operativos, preserva el root registrado; para código o carpetas source top-level en workspace CN Pilot sin esa evidencia —por ejemplo `legacy-site/`— registra discrepancia `Pending normalization/migration` y no comiences cambios allí hasta resolverla. No envuelvas el producto en `producto/<slug>/` salvo que esa raíz interna tenga significado técnico real. En existentes no muevas código ni outputs durante onboarding. Solo `recursos/README.md` viene precreada para inputs; subcarpetas se añaden cuando haya recursos.
-    Una petición posterior y natural para empezar el trabajo pasa al workflow normal: Jefe de proyecto usa la discrepancia registrada, explica en lenguaje sencillo cualquier movimiento necesario y obtiene autorización antes de actuar; no convierte la inicialización en un formulario de rutas internas.
-17. Conserva `ARTEFACTOS.md` como registro base sin secciones vacías ni entregables falsos. No registres CN Pilot Core, contexto del proyecto ni recursos originales de `recursos/`; incorpora solo artefactos significativos, reales y verificables que una persona deba poder descubrir si ya existen.
-18. Inicializa la presentación del repositorio en `README.md` solo dentro de la inicialización confirmada de un proyecto real, no durante mantenimiento del CN Pilot base:
-    - Reconoce el README genérico de CN Pilot por señales combinadas: título `CN Pilot` y contenido predominantemente de uso del template, setup Kilo, `/nuevo-proyecto` o referencia a `.cn-pilot-version`. Un título o una mención aislada no autorizan reemplazar un README propio; ante ambigüedad, consérvalo.
-    - Si es el README genérico heredado, sustitúyelo por un resumen del proyecto; si falta, puedes crear uno con el contexto confirmado. Si ya es propio y relevante, consérvalo por defecto: no borres documentación manual ni completes por rutina. Una sustitución o edición material necesita aprobación específica, no se infiere de confirmar la inicialización del contexto.
-    - Usa título con el nombre conocido y descripción breve. Resume tipo de proyecto, objetivo y contexto nuevo/existente; adapta a sitio, app, plugin, theme, ecommerce, landing, microsite o contenido sin asumir web corporativa. Incluye mercado/dominio solo si están confirmados y aportan valor.
-    - Añade `Stack` solo con tecnologías confirmadas; `Estructura` solo con directorios relevantes que realmente existan y su función real. Omite campos/secciones desconocidos en vez de inventarlos o llenar el README de `Pending`.
-    - En `Contexto del proyecto`, enlaza `PROYECTO.md` (hechos), `REQUISITOS.md` (alcance/aceptación), `ESTADO.md` (estado), `DECISIONES.md` (decisiones) y `ARTEFACTOS.md` (índice). El README es presentación y navegación resumidas: ante discrepancia prevalecen esas fuentes canónicas, no es otra memoria detallada.
-    - Una sección breve de desarrollo/atribución a CN Pilot es opcional. No copies bloques de contexto ni el manual del sistema; no conserves instalación/setup Kilo, onboarding `/nuevo-proyecto` ni la versión de CN Pilot Core como versión del proyecto. `.cn-pilot/NUCLEO.md`, `AGENTS.md` y `.kilo/` conservan su función sin duplicarlos ni modificarlos para generar el README.
-19. Comprueba siempre los archivos modificados y que no se sobrescribió trabajo manual. Para el README generado verifica título, descripción, tipo nuevo/existente, stack confirmado, estructura existente, links/rutas, ausencia de datos inventados/onboarding heredado y prioridad de fuentes canónicas. Incluye su cambio con el resto de la inicialización; no publiques todavía. Si existe Git, revisa además diff/status y evita cambios ajenos.
-20. Si existe Git y la inicialización produjo cambios válidos, incluye únicamente esos archivos y crea el commit local `chore: inicializar proyecto`.
-21. Si no existe Git, no ejecutes `git init`, no registres su ausencia como bloqueo y finaliza informando que los cambios quedaron guardados localmente sin commit. Registra «Control de versiones: no inicializado» en `PROYECTO.md` solo si aporta contexto.
-22. Nunca hagas push.
+## Inspecciona antes de preguntar
+
+- Reconcilia `AGENTS.md`, versión y Project Context (`PROYECTO.md`, `REQUISITOS.md`, `ESTADO.md`, `DECISIONES.md`, `ARTEFACTOS.md`) antes de preguntar o escribir.
+- Inspecciona `recursos/` de forma ligera: usa índices/brief/auditorías y detecta solo las familias pertinentes (branding, documentos, fotos, referencias, vídeo, código original o datos). No recorras cientos de archivos ni pidas información que ya aparece allí.
+- Reutiliza datos confirmados de auditorías, branding, sitemap, copy, referencias, assets e implementación; no vuelvas a preguntar lo que esos materiales resuelven salvo contradicción o información material ausente.
+- Identifica si el contexto ya describe el proyecto, qué está implementado, qué debe preservarse, el root real y si se trata de app, web pública, CMS, ecommerce o mantenimiento. Mira el código/manifiestos/configuración existentes solo hasta entender la petición actual; no inicies una auditoría completa por rutina.
+- Examina `README.md` para distinguir presentación genérica del template de documentación manual del producto. Conserva README propio por defecto.
+- Si hay un checkpoint activo, aplica recovery primero. No reinicies onboarding para continuar el mismo trabajo; ante una tarea nueva distinta, sigue el gate existente para continuar o dejar pendiente.
+
+## Conversa por necesidad, no por formulario
+
+Reutiliza el objetivo que la persona ya expresó. Si solo invoca `/nuevo-proyecto` y aún no se entiende qué desea conseguir, tras inspeccionar pregunta de forma abierta y natural, por ejemplo: «¿Qué te gustaría lograr con este proyecto?». Aclara el resultado esperado o cómo se reconocerá el éxito solo si esa diferencia cambia el trabajo actual; considera audiencia, restricciones y estado de partida con el mismo criterio, no como campos obligatorios. Agrupa solo cuestiones estrechamente relacionadas que deban resolverse ahora.
+
+Pregunta progresivamente y vuelve a evaluar después de cada respuesta. Pregunta únicamente por información que pueda cambiar materialmente la decisión o el trabajo actual. No hagas una lista fija de campos ni exijas de entrada audiencia, sitemap, stack, CMS, hosting, breakpoints, SEO, arquitectura, textos completos o plan de entrega. Infiere lo que permitan la petición y las fuentes existentes. Acepta «no lo sé» y «Pending» si el dato no bloquea el próximo trabajo útil.
+
+«Decide tú», «lo que recomiendes», «no tengo preferencia» y equivalentes delegan decisiones técnicas, reversibles, convencionales y de bajo riesgo dentro del alcance autorizado: resuélvelas profesionalmente sin volver a preguntar. No los interpretes como autorización para inventar hechos, cambiar alcance, escoger preferencias comerciales/visuales materiales, usar datos/servicios reales o ejecutar acciones irreversibles.
+
+Acepta que la persona posponga o salte una fase. Un paso recomendado no es un gate: continúa si no existe dependencia material ahora, conserva solo el pendiente que afectará una decisión futura y no repitas la advertencia. Si el dato pendiente sí determina la decisión actual, pregunta una vez en términos del resultado humano.
+
+## Cuándo basta para empezar
+
+El onboarding queda suficientemente resuelto cuando se entienden el objetivo actual, qué existe y qué preservar, las restricciones materiales ya conocidas y el siguiente trabajo útil. No necesita todos los detalles futuros ni todos los campos canónicos completos. La ruta depende del caso: una web pública puede necesitar objetivo/contenido y dirección visual; una app/SaaS puede necesitar actores, flujos o reglas abiertas, pero no un sitemap de marketing o SEO por defecto; un Existing localizado va directo a diagnóstico/cambio/verificación; mantenimiento sigue el problema concreto. Si auditoría, branding, contenido, referencias, assets o implementación ya cubren etapas, no las repitas. No impongas estrategia, sitemap, SEO, diseño o desarrollo si no pertenecen al objetivo ni son dependencias reales.
+
+Alcanza esa suficiencia sin una confirmación genérica obligatoria: la invocación de `/nuevo-proyecto` ya solicita orientar/inicializar el proyecto. Persiste únicamente los deltas durables bajo su fuente canónica. Si aparece una decisión humana material, una autorización requerida o un cambio irreversible, pide esa decisión concreta antes de actuar; no uses la confirmación para volver a pedir aprobación de lo ya delegado.
+
+## Contexto y límites
+
+- `PROYECTO.md`: hechos estables y fuentes de verdad; registra objetivo, público o tipo de partida solo si se conocen y aportan valor. Las clasificaciones internas/root/container se infieren de evidencia, nunca se presentan como campos.
+- `REQUISITOS.md`: alcance, comportamiento o criterios materiales que se hayan definido.
+- `DECISIONES.md`: solo decisiones aprobadas importantes; no acumules preferencias rutinarias ni tareas.
+- `ESTADO.md`: una orientación operativa breve; cambia solo ante un hito, bloqueo o siguiente paso que siga siendo relevante.
+- `ARTEFACTOS.md`: entregables reales/significativos, nunca recursos originales ni placeholders.
+- `README.md`: modifica solo el README genérico heredado cuando corresponda a inicialización autorizada; conserva contenido manual propio.
+
+Conserva todas las restricciones existentes de seguridad y layout: no pidas secretos; no configures MCP/deployment/workflows durante onboarding; no copies/desempaquetes `recursos/codigo-original/`; no muevas, adoptes ni edites implementación sin scope y autorización. `producto/` se crea al iniciar implementación/adopción explícita, nunca para completar un formulario. Existing operativo solo mantiene root real con evidencia de dependencia operativa. Código top-level sin esa evidencia queda `Pending normalization/migration`: conserva el source y solicita la autorización aplicable antes de moverlo o modificarlo. No crees carpetas vacías, placeholders ni artefactos estratégicos por rutina.
+
+Si el scope ya autorizado incluye trabajo posterior a la inicialización y no hay un gate material, continúa sin preguntar «¿quieres que siga?». Si solo se pidió preparar el proyecto, detente tras el onboarding, resume naturalmente lo resuelto y recomienda el próximo paso; no asumas que `/nuevo-proyecto` autoriza construir o publicar el producto.
+
+Un hito significativo puede comunicarse brevemente así, sin headings ni jerga obligatorios: qué quedó resuelto, dónde está el proyecto y cuál es el siguiente mejor paso. Mantén la ruta recomendada separada de la elegida por la persona; una recomendación nunca se convierte por sí sola en mandato.
+
+Antes de cerrar, comprueba que no se perdió trabajo manual ni información existente, actualiza solo archivos con delta durable y verifica rutas/consistencia. Si Git existe y se inicializó contexto nuevo, crea un único commit local `chore: inicializar proyecto` para los cambios completos y válidos; los cambios posteriores siguen el workflow normal. Si no existe, trabaja y cierra sin ejecutar `git init`. No hagas push.

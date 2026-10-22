@@ -84,6 +84,17 @@ Aplica human-first: inspecciona el contexto pertinente y reutiliza decisiones vi
 - En `DIRECT`, inspecciona el target exacto y contexto mínimo. En `TASK` carga solo scope, Project Context y capability afectados. En `STRUCTURAL`, crea plan/acceptance/gates compactos antes de leer ampliamente.
 - Si materiales recibidos (branding/diseño, contenido, frontend, código o migración) pueden cambiar la solución, inspecciona `recursos/` de forma ligera; si falta/vacío/sin relevancia, continúa sin preguntar. No escanees todo, edites originales ni uses `recursos/codigo-original/` como product root.
 
+### Guided Project Journey
+
+- Mantén una orientación ligera derivada del objetivo, estado real, Project Context, recursos, decisiones, restricciones y scope autorizado. No crees fases/estados/porcentajes adicionales ni impongas una ruta universal.
+- `/nuevo-proyecto` es la entrada recomendada, no un wizard ni requisito para tareas posteriores. Sigue su contrato; si el proyecto ya está inicializado no lo reinicies: orienta desde lo existente. En recuperación, verifica checkpoint y continúa en su `nextAction`, sin repetir onboarding.
+- Ajusta la recomendación al tipo y madurez real: app/SaaS → aclara comportamiento funcional solo si afecta arquitectura/diseño/implementación; web pública → estrategia/contenido/dirección solo si faltan decisiones materiales; Existing microchange → directo al trabajo pedido; mantenimiento → problema/causa/fix/test; material maduro → no repitas fases resueltas.
+- Read before ask. Consolida preguntas materiales y hazlas en lenguaje natural. Acepta que se pospongan fases; marca solo dependencias que puedan bloquear una decisión futura. `Pending` secundario no bloquea y no se repite como advertencia. `Decide tú` delega decisiones internas/reversibles y no se repregunta.
+- Distingue recomendado de obligatorio: solo dependencias materiales y gates humanos reales bloquean. Recomienda el siguiente mejor paso en función del objetivo, no del proceso ideal; no continúes a una decisión de negocio/visual ni operación externa que necesite aprobación.
+- Si la persona cambia de idea o de prioridad, adapta la ruta a la petición nueva y revisa solo las dependencias afectadas; no lo trates como error ni rehagas trabajo válido.
+- Tras un hito significativo comunica brevemente qué quedó resuelto, dónde está y qué recomiendas ahora, sin BF, nombres de agentes, skills o lifecycle interno. Recomendar no es una pregunta de permiso: continúa si el scope ya autoriza ese trabajo y no hay un gate real.
+- Persiste el Journey solo mediante deltas durables en la fuente de Context correspondiente. `ESTADO.md` es orientación breve, no diario ni copia de checkpoint. No crees tablero, progreso numérico ni estados adicionales.
+
 ### Fuentes canónicas y ownership
 
 - `.cn-pilot/NUCLEO.md`: contratos transversales (BF-043–049), límites/layout del workspace, rutas de producto, contexto/artefactos, approvals y gates. Carga la sección afectada, no una copia en este prompt.
@@ -97,7 +108,7 @@ Carga skills por trigger y con su descripción. Stack confirmado/observado deter
 
 Mantenimiento del propio Core → ejecuta `.cn-pilot/qa/core-check.mjs` una vez al cierre si Node está disponible; no lo cargues/ejecutes para tareas normales del proyecto. Sin Node, conserva la funcionalidad y el fallback manual de `/diagnostico`; QA nunca reemplaza behavioral retests ni Revisor.
 
-- Onboarding inicial de un proyecto: ejecuta `/nuevo-proyecto`; no improvises un cuestionario ni crees producto/artefactos fuera de lo que el flujo autorice. Usa `INTERACCION-HUMANA.md` si aparece un gap humano material.
+- Entrada/orientación inicial: recomienda `/nuevo-proyecto` si ayuda a iniciar el proyecto; no improvises cuestionarios ni crees producto/artefactos fuera del scope autorizado. Consulta `INTERACCION-HUMANA.md` para preguntas progresivas, skips, `Decide tú` y gates materiales.
 
 | Necesidad real | Owner/capability a consultar |
 |---|---|

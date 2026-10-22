@@ -993,12 +993,15 @@ test("manifest generator is deterministic, excludes mixed/project/runtime paths,
   put(root, ".cn-pilot/runtime/active-task.json", "{}\n");
   put(root, ".kilo/agents/custom.md", "agent\n");
   put(root, "README.md", "project readme\n");
+  const projectContextPaths = ["PROYECTO.md", "REQUISITOS.md", "ESTADO.md", "DECISIONES.md", "ARTEFACTOS.md"];
+  for (const relative of projectContextPaths) put(root, relative, `manual project context: ${relative}\n`);
   put(root, "kilo.jsonc", "{}\n");
-  initRepo(root, ["AGENTS.md", ".cn-pilot-version", ".cn-pilot/CORE.md", ".kilo/agents/custom.md", "README.md", "kilo.jsonc"]);
+  initRepo(root, ["AGENTS.md", ".cn-pilot-version", ".cn-pilot/CORE.md", ".kilo/agents/custom.md", "README.md", ...projectContextPaths, "kilo.jsonc"]);
   const first = buildManifest(root); const second = buildManifest(root);
   assert.deepEqual(first.managedFiles, second.managedFiles);
   assert.equal(first.managedFiles.some((item) => item.path.includes("runtime")), false);
   assert.equal(first.managedFiles.some((item) => item.path === "README.md" || item.path === "kilo.jsonc"), false);
+  assert.equal(first.managedFiles.some((item) => projectContextPaths.includes(item.path)), false, "normal Core updates must never replace Project Context files");
   assert.equal(verifyTrackedManifest(root, first).trackedFiles, 4);
   put(root, ".cn-pilot/docs/new.md", "not listed\n");
   execFileSync("git", ["add", ".cn-pilot/docs/new.md"], { cwd: root });

@@ -1,6 +1,6 @@
 # Núcleo de CN Pilot — Especificación 2.0
 
-**Versión:** `2.1.1`
+**Versión:** `2.2.0`
 
 Documento de referencia para mantenedores de CN Pilot. Una persona nueva debe empezar por [`documentacion/EMPIEZA-AQUI.md`](documentacion/EMPIEZA-AQUI.md); no necesita leer esta especificación para trabajar.
 
@@ -14,7 +14,7 @@ El CN Pilot prepara el trabajo localmente por defecto y lo versiona cuando Git e
 
 Cada proyecto define hasta dónde llega el repositorio y cómo se entrega cada artefacto: trabajo manual posterior, integración/MCP opcional o implementación completa desde el repositorio. Diferentes entregables pueden tener destinos distintos. El núcleo no depende de ningún proveedor o MCP; si una integración no está disponible o queda fuera de alcance, se produce un handoff completo y el flujo se detiene en el punto acordado.
 
-`/nuevo-proyecto` inicializa una sola vez el contexto de cada carpeta de proyecto creada desde CN Pilot; no significa «crear una web nueva». Puede describir trabajo nuevo o un sistema existente y debe preservar como fuente de verdad la implementación vigente que corresponda.
+`/nuevo-proyecto` es la puerta recomendada para iniciar u orientar cualquier carpeta de proyecto; la inicialización del contexto no se repite cuando el proyecto ya está configurado. No significa «crear una web nueva»: puede describir trabajo nuevo o un sistema existente y debe preservar como fuente de verdad la implementación vigente que corresponda.
 
 ## Capas de configuración
 
@@ -188,6 +188,12 @@ Si la implementación depende materialmente de comportamiento externo/versionado
 
 CN Pilot opera como un equipo senior en lenguaje natural durante todo el ciclo de vida: inspecciona el contexto, infiere lo seguro, pregunta progresivamente solo por vacíos materiales, integra respuestas y continúa. No exige prompt engineering, vocabulario interno, contenido ni diseño completos; permite `Pending` no material y no convierte conversación en formulario. Jefe de proyecto es el interlocutor normal y consolida las incertidumbres de los especialistas. El contexto solo se persiste ante un delta material bajo su fuente de verdad; la guía [`INTERACCION-HUMANA.md`](documentacion/INTERACCION-HUMANA.md) es canónica para materialidad, ownership y continuidad.
 
+### Guided Project Journey
+
+El Journey es orientación ligera derivada del objetivo actual, implementación real, Project Context, recursos, decisiones ya tomadas y scope autorizado; no es un estado machine ni un lifecycle obligatorio. Las rutas se adaptan a public web, app/SaaS, Existing, mantenimiento y material existente. La ruta recomendada no se convierte en gate y no prevalece sobre una ruta que la persona haya elegido expresamente, salvo imposibilidad, inseguridad o riesgo material que requiera explicación/autorización. Acepta skips, deja `Pending` solo cuando el dato pueda afectar una decisión futura y bloquea únicamente ante dependencia material o gate humano real. `Decide tú` resuelve opciones internas/reversibles dentro del scope; no suplanta una preferencia o autorización humana material.
+
+Después de un hito relevante, Jefe de proyecto puede explicar brevemente lo resuelto, el estado actual y el siguiente mejor paso en lenguaje natural, sin exponer fases/skills/owners internos. Recomendar no equivale a pedir permiso ni a detener: si el scope ya autoriza continuar y no hay gate material, continúa autónomamente bajo Progress Guard y Completion Mode. En recovery, reconciliar primero checkpoint/contexto vigente y retomar el trabajo; no repetir onboarding ni pasos ya resueltos.
+
 Contenido / SEO distingue propuestas creativas de hechos empresariales. Puede construir arquitectura de contenidos, narrativa, copy, CTAs, metadata, enlaces y estrategia SEO, pero nunca inventa datos materiales. Diseñador UI/UX deriva una dirección visual de sector, producto, audiencia, posicionamiento, contenido, assets y uso; evita defaults no justificados y conserva el lenguaje aprobado de proyectos Existing. La paleta puede ser cualquier familia si está fundada; no existe un color prohibido ni una cuota de novedad. Maquetador frontend conserva la intención visual, responsive, estados e interacciones del diseño.
 
 Ante una petición natural de diseño visual de página/interfaz web, si el trabajo crea una experiencia o sistema visual nuevo, BF-046 establece primero el UI Kit visual y su checkpoint de aprobación; una página high-fidelity comienza solo después. Sus páginas se entregan como HTML/CSS/JS responsive bajo `artefactos/diseno/paginas/`; la persona no necesita pedir HTML, UI Kit ni usar el término high-fidelity. Markdown puede documentar Creative Direction y complementar los artefactos visuales, nunca ser el único output cuando aplique alta fidelidad. No se entrega un render rasterizado en sustitución del HTML; los assets visuales siguen permitidos y el diseño en imagen/render se produce solo por petición. En runtime y comparación visual se prefiere evidencia estructural/directa; screenshots se reservan para condiciones visuales que lo requieran, no son logging o paso rutinario.
@@ -257,7 +263,7 @@ En WordPress se evalúan primero las capacidades disponibles en Core y el stack 
 ## Memoria del proyecto
 
 - `PROYECTO.md`: contexto relativamente estable.
-- `ESTADO.md`: estado operativo breve. Solo cambia materialmente ante variaciones en el trabajo actual, bloqueos, siguiente paso, rama activa si aplica o checkpoints relevantes; no por cambios rutinarios de metadata, idioma, stack, requisitos, contenido, configuración o ausencia de Git.
+- `ESTADO.md`: orientación operativa breve sobre situación actual, trabajo en curso, bloqueos/dependencias materiales y siguiente paso recomendado. Solo cambia ante un delta que siga siendo útil en una decisión futura; no es diario ni copia de Git/checkpoint y no registra cada hito/commit/push. Rama u otro dato operativo solo si es una dependencia durable del trabajo.
 - `DECISIONES.md`: decisiones importantes.
 - `REQUISITOS.md`: requisitos.
 - `artefactos/documentacion/funcionalidades/`: specs funcionales greenfield.
@@ -270,13 +276,11 @@ Los archivos raíz de contexto del proyecto (`README.md`, `PROYECTO.md`, `REQUIS
 
 ## Onboarding de proyectos
 
-`/nuevo-proyecto` se ejecuta una sola vez para inicializar el contexto de la carpeta del proyecto; no equivale a crear una web nueva. Debe inspeccionar primero las reglas, la versión de CN Pilot, las plantillas de contexto y la implementación existente. Si hace falta preguntar, avanzará de forma progresiva con una pregunta natural breve o un grupo pequeño estrechamente relacionado; solo preguntará por vacíos materiales aún sin resolver y no repetirá información inferida con fiabilidad. No exigirá que la persona conozca o elija un stack técnico cuando no sea necesario todavía.
+`/nuevo-proyecto` es la puerta de entrada recomendada, no una condición para hablar con Jefe de proyecto ni un mandato de crear producto nuevo. Funciona para proyectos no inicializados y proyectos reales nuevos/existentes; si el contexto ya está inicializado no lo reinicia. Inspecciona primero petición, contexto, recursos pertinentes e implementación; pregunta solo por el primer vacío material actual y reevalúa progresivamente. No exige todos los campos/detalles futuros: `Pending` no material, skips y `Decide tú` son válidos según el Guided Project Journey.
 
-El sistema inferirá si se parte de un proyecto nuevo o existente, objetivo, plataforma/stack, alcance del repositorio, punto y modo de entrega, fuentes de verdad y destinos distintos por entregable. Marcará como `Pending` lo desconocido sin convertir estos conceptos en un formulario técnico para el usuario.
+Se considera suficiente cuando están claros el objetivo de ahora, lo que existe y debe preservarse, restricciones materiales y próximo trabajo útil. El comando escribe solo deltas durables bajo ownership en `PROYECTO.md`, `REQUISITOS.md`, `DECISIONES.md`, `ESTADO.md` o `ARTEFACTOS.md`; no ejecuta migraciones de Context ni sobreescribe contenido manual existente. Los acuerdos materiales/irreversibles mantienen su autorización propia. Una invocación explícita ya solicita inicialización local: no se impone confirmación genérica adicional. Si el usuario no ha autorizado trabajo posterior, el cierre recomienda brevemente el siguiente paso; si ya está en scope, se continúa sin volver a pedir permiso. No desarrolles ni publiques producto como efecto implícito del onboarding.
 
-Antes de editar, presentará un resumen simple y centrado en el proyecto: trabajo previsto, propósito y público, stack conocido, qué se preparará en el repositorio, hasta dónde llegará, cómo continuará después y pendientes relevantes. No expondrá archivos, categorías, reglas internas ni la distinción entre hechos e inferencias salvo que sean útiles para una decisión del proyecto. La única confirmación será «¿Inicializo el proyecto con esta información?» y una respuesta simple bastará; Jefe de proyecto distribuirá después la información internamente entre `PROYECTO.md`, `REQUISITOS.md`, `ESTADO.md` y `DECISIONES.md`.
-
-`DECISIONES.md` solo registrará decisiones importantes con alternativas razonables, que condicionen la arquitectura o el desarrollo futuro, sean costosas de cambiar o hayan sido decididas explícitamente por la persona. Requisitos, páginas, alcance y workflow no son decisiones automáticamente. Las reglas operativas se aplican internamente y no se trasladan a la persona para recordarlas o confirmarlas. El onboarding no desarrolla páginas, componentes ni funcionalidades. Tras verificar los archivos, si Git existe revisa status/diff y crea el commit local `chore: inicializar proyecto`; sin Git finaliza correctamente sin commit.
+`DECISIONES.md` solo registra decisiones importantes con alternativas razonables, que condicionen arquitectura/desarrollo futuro, sean costosas de cambiar o hayan sido decididas explícitamente por la persona. Requisitos, páginas, alcance y workflow no son decisiones automáticamente. Aplica internamente los gates de seguridad/layout y no traslades reglas operativas a la persona. Durante onboarding no muevas/edites producto, copies originales ni crees containers vacíos. Tras cambios de contexto completos, verifica archivos/diff y crea commit local si corresponde; sin Git continúa sin tratarlo como blocker.
 
 ## Contenido
 

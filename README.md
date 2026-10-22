@@ -1,6 +1,6 @@
 # CN Pilot
 
-**CN Pilot 2.1.1 · Base Spanish-first para proyectos web con agentes de IA.**
+**CN Pilot 2.2.0 · Base Spanish-first para proyectos web y aplicaciones con agentes de IA.**
 
 Kilo Code nativo · agnóstico al proveedor/modelo dentro de Kilo
 
@@ -14,7 +14,7 @@ CN Pilot coordina el trabajo de proyectos web con agentes de IA sin convertir a 
 
 En un proyecto web asistido por IA, alguien suele tener que traducir cada petición a instrucciones técnicas, elegir manualmente especialistas y herramientas, reconstruir contexto, decidir cuándo revisar y vigilar que el trabajo no avance a producción sin autorización. CN Pilot organiza esas responsabilidades para que la conversación pueda empezar por el objetivo, no por la mecánica interna.
 
-Sirve para proyectos web nuevos y existentes: sitios estáticos, contenido y SEO, WordPress, WooCommerce, plugins, themes, Bricks, Elementor, PHP, APIs y combinaciones de entregables. El stack y el alcance real deciden qué fases hacen falta; no se presupone que cada proyecto necesite todas.
+Sirve para proyectos web y aplicaciones nuevos o existentes: sitios estáticos, SaaS, contenido y SEO, WordPress, WooCommerce, plugins, themes, Bricks, Elementor, PHP, APIs y combinaciones de entregables. El stack y el alcance real deciden qué trabajo hace falta; no se presupone que cada proyecto necesite todas las etapas.
 
 ## Cómo funciona
 
@@ -40,15 +40,14 @@ El diagrama representa caminos posibles, no una secuencia obligatoria. Una tarea
 
 ## Inicio rápido
 
-No hay instalador ni CLI: el uso actual consiste en abrir este workspace con VS Code y Kilo Code.
+1. Usa [`cn-pilot`](https://github.com/LuisYGM/cn-pilot) como template de GitHub, clónalo o copia sus archivos a la carpeta del proyecto. Git no es requisito.
+2. Abre la carpeta en VS Code con Kilo Code y configura tu cuenta siguiendo [esta guía](.cn-pilot/documentacion/CONFIGURACION-KILO.md). Si Kilo te pide elegir un agente, selecciona **Jefe de proyecto**.
+3. Ejecuta `/nuevo-proyecto`. Jefe de proyecto inspeccionará el contexto, los recursos pertinentes y si ya existe una implementación; hará solo las preguntas materiales que falten.
+4. Después, explica en lenguaje natural lo que quieres conseguir. **No necesitas memorizar comandos, fases ni nombres de agentes**: Jefe de proyecto orienta el siguiente paso y coordina el trabajo.
 
-1. Usa [`cn-pilot`](https://github.com/LuisYGM/cn-pilot) como template de GitHub, clónalo o copia sus archivos a una carpeta de trabajo. Git puede usarse, pero no es requisito del harness.
-2. Abre la carpeta del repositorio en VS Code e instala/activa la extensión Kilo Code.
-3. Configura en Kilo un proveedor y un modelo disponibles para tu cuenta. CN Pilot no prescribe proveedor ni modelo. Sigue [Configuración de Kilo](.cn-pilot/documentacion/CONFIGURACION-KILO.md).
-4. Selecciona **Jefe de proyecto** (`jefe-proyecto`) como interlocutor y ejecuta `/nuevo-proyecto` una vez. Resume el proyecto nuevo o existente cuando lo solicite.
-5. Describe en lenguaje natural el resultado que quieres conseguir. `/nuevo-proyecto` registra el contexto; no mueve ni adopta código por sí solo.
+`/nuevo-proyecto` sirve para proyectos nuevos y existentes; no crea por sí solo una web ni obliga a empezar de cero. Si el contexto ya está inicializado, no hace falta repetirlo: continúa hablando con Jefe de proyecto sobre el objetivo actual.
 
-Consulta el [recorrido del primer día](.cn-pilot/documentacion/EMPIEZA-AQUI.md) para los pasos completos y escenarios Greenfield/Existing.
+Consulta el [recorrido del primer día](.cn-pilot/documentacion/EMPIEZA-AQUI.md) si quieres una guía breve. Los comandos secundarios son atajos opcionales, no requisitos de uso.
 
 ## Diseño, implementación y entrega
 

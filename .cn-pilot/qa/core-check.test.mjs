@@ -98,8 +98,8 @@ function createFixture(t) {
   put("DECISIONES.md", "# Decisions fixture\n");
   put("ARTEFACTOS.md", "# Artifacts fixture\n");
   put("AGENTS.md", "# Minimal test kernel\n");
-  put(".cn-pilot-version", "2.1.1\n");
-  put(".cn-pilot/NUCLEO.md", "**Versión:** `2.1.1`\n\nLas superficies propias de CN Pilot destinadas a personas usan español por defecto, incluidos los nombres visibles de roles, documentos, comandos y estructuras.\n");
+  put(".cn-pilot-version", "2.2.0\n");
+  put(".cn-pilot/NUCLEO.md", "**Versión:** `2.2.0`\n\nLas superficies propias de CN Pilot destinadas a personas usan español por defecto, incluidos los nombres visibles de roles, documentos, comandos y estructuras.\n");
   put(".cn-pilot/MANIFIESTO.md", manifest);
   put(".cn-pilot/config/responsive.json", "{}\n");
   put(".cn-pilot/documentacion/.keep");
@@ -112,7 +112,7 @@ function createFixture(t) {
   put(".cn-pilot/update/updater.test.mjs", "// updater test fixture\n");
   put(".cn-pilot/update/manifest.json", `${JSON.stringify({
     schemaVersion: 1,
-    cnPilotVersion: "2.1.1",
+    cnPilotVersion: "2.2.0",
     sourceRepository: "https://github.com/LuisYGM/cn-pilot.git",
     stableBranch: "main",
     sourceCommit: null,
@@ -172,7 +172,7 @@ test("known-good minimal fixture passes deterministic invariants", (t) => {
   const report = runCoreChecks({ rootDir: fixture.root });
   assert.equal(report.status, "PASS", JSON.stringify(report.findings));
   assert.deepEqual(runCoreChecks({ rootDir: fixture.root }), report, "same read-only snapshot yields the same report");
-  assert.equal(report.version, "2.1.1");
+  assert.equal(report.version, "2.2.0");
   assert.equal(getCheck(report, "agents.frontmatter").details.count, 7);
   assert.equal(getCheck(report, "skills.frontmatter").details.count, 2);
   assert.equal(getCheck(report, "commands.frontmatter").details.count, 14);
@@ -228,10 +228,57 @@ test("Spanish-first doctrine is required and generic technical wording is not tr
   fixture.put(".kilo/skills/technical-seo/references/audit.md", "Cita externa de ejemplo: Developer.\n");
   assert.equal(getCheck(runCoreChecks({ rootDir: fixture.root }), "language.spanishFirst").status, "PASS");
 
-  fixture.put(".cn-pilot/NUCLEO.md", "**Versión:** `2.1.1`\n\nLa estructura técnica permanece en inglés: archivos, carpetas, agentes.\n");
+  fixture.put(".cn-pilot/NUCLEO.md", "**Versión:** `2.2.0`\n\nLa estructura técnica permanece en inglés: archivos, carpetas, agentes.\n");
   const check = getCheck(runCoreChecks({ rootDir: fixture.root }), "language.spanishFirst");
   assert.equal(check.status, "FAIL");
   assert.ok(check.details.findings.some((finding) => finding.code === "SPANISH_FIRST_DOCTRINE_MISSING_OR_CONTRADICTORY"));
+});
+
+test("Guided Project Journey contains the required behavioral scenarios A-K", () => {
+  const read = (relative) => fs.readFileSync(new URL(`../../${relative}`, import.meta.url), "utf8");
+  const command = read(".kilo/commands/nuevo-proyecto.md");
+  const interaction = read(".cn-pilot/documentacion/INTERACCION-HUMANA.md");
+  const core = read(".cn-pilot/NUCLEO.md");
+  const lead = read(".kilo/agents/jefe-proyecto.md");
+  const start = read(".cn-pilot/documentacion/EMPIEZA-AQUI.md");
+  const scenarios = [
+    ["A Greenfield simple", command, "¿Qué te gustaría lograr con este proyecto?"],
+    ["B material existente", command, "no vuelvas a preguntar lo que esos materiales resuelven"],
+    ["C skip se acepta", interaction, "«SEO después»"],
+    ["C skip no bloqueante", interaction, "continúa si no hay una dependencia material"],
+    ["D Decide tú", command, "«Decide tú»"],
+    ["E gate humano real", interaction, "decisión comercial/visual propia de la persona"],
+    ["E gate de revisión visual existente", core, "Human Visual Review"],
+    ["F continuación ya autorizada", command, "continúa sin preguntar «¿quieres que siga?»"],
+    ["G Existing microchange", start, "Un cambio pequeño puede ir directamente a inspección, corrección y prueba"],
+    ["H SaaS sin marketing web impuesto", core, "app/SaaS"],
+    ["H SaaS no recibe SEO de marketing por defecto", command, "no un sitemap de marketing o SEO por defecto"],
+    ["I recovery desde checkpoint", command, "Si hay un checkpoint activo, aplica recovery primero"],
+    ["J Pending no material", command, "«Pending» si el dato no bloquea el próximo trabajo útil"],
+    ["K checkpoint + tarea distinta", lead, "para un encargo nuevo distinto pregunta brevemente si se continúa o se deja en pausa"],
+    ["Next best step tras milestone", command, "dónde está el proyecto y cuál es el siguiente mejor paso"],
+  ];
+  for (const [scenario, source, required] of scenarios) assert.ok(source.includes(required), `${scenario}: guidance is present`);
+});
+
+test("/nuevo-proyecto es progresivo, lee antes de preguntar y no es un wizard", () => {
+  const command = fs.readFileSync(new URL("../../.kilo/commands/nuevo-proyecto.md", import.meta.url), "utf8");
+  const inspect = command.indexOf("## Inspecciona antes de preguntar");
+  const ask = command.indexOf("## Conversa por necesidad, no por formulario");
+  assert.ok(inspect >= 0 && ask > inspect, "context and resources are inspected before questions");
+  assert.ok(command.includes("ni obliga a completar un wizard"));
+  assert.ok(command.includes("No hagas una lista fija de campos"));
+  assert.ok(command.includes("Acepta que la persona posponga o salte una fase"));
+  assert.ok(command.includes("Alcanza esa suficiencia sin una confirmación genérica obligatoria"));
+  assert.ok(!command.includes("¿Inicializo el proyecto con esta información?"));
+  assert.ok(!command.includes("Pregunta 1 de"));
+});
+
+test("legacy ESTADO shape remains valid; optional journey headings are not an updater gate", (t) => {
+  const fixture = createFixture(t);
+  fixture.put("ESTADO.md", "# State in an older project\n\n## Working on\nAn existing task.\n");
+  const report = runCoreChecks({ rootDir: fixture.root });
+  assert.equal(report.status, "PASS", JSON.stringify(report.findings));
 });
 
 test("legacy canonical paths are rejected in a clean 2.0 installation", (t) => {

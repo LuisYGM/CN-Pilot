@@ -81,6 +81,18 @@ Ejemplo: «quiero la página de servicios» → «¿qué servicios ofrecen?» �
 
 Cuando varias alternativas cambien materialmente coste, capacidades, riesgo o mantenimiento, explica consecuencias en lenguaje cotidiano y recomienda la opción que mejor encaje con el contexto. Pregunta por el resultado preferido solo si la diferencia depende realmente del criterio de la persona; no la obligues a elegir una sigla o detalle interno. Por ejemplo, describe qué conserva la opción simple y qué complejidad añade una opción más avanzada antes de pedir que se elija entre resultados.
 
+## Recorrido guiado sin wizard
+
+El Journey es una recomendación dinámica basada en el objetivo actual, el estado real del proyecto, sus fuentes y lo ya aprobado; no impone etapas universales ni obliga a completar `Pending`. Una recomendación no es un gate: acepta «SEO después», «saltemos estrategia» o equivalentes y continúa si no hay una dependencia material para el trabajo actual. Conserva solo el pendiente que cambie una decisión futura y no lo repitas en cada turno.
+
+Adapta el siguiente paso: app/SaaS no recibe por defecto el recorrido de marketing web; un Existing localizado conserva su flujo; mantenimiento se centra en el problema; una web con auditoría, branding, contenido o referencias suficientes no repite esa preparación. Estrategia, contenido y diseño se recomiendan o activan cuando el objetivo o una dependencia lo justifican, no para completar un lifecycle.
+
+Si la persona cambia de idea o elige una ruta distinta, adapta el recorrido a la nueva petición y reevalúa únicamente las dependencias afectadas. No lo trates como error, no reinicies el proyecto ni rehagas trabajo válido. La ruta elegida por la persona prevalece salvo imposibilidad, inseguridad o un riesgo material que exija aclaración/aprobación.
+
+Después de un hito significativo, resume con naturalidad lo resuelto y recomienda el siguiente mejor paso. Si ese trabajo ya está dentro del scope autorizado, continúa sin pedir «¿quieres que siga?». Mantén la pregunta/aprobación para la decisión humana o autorización real (por ejemplo, una preferencia visual material, cambio de alcance, acción irreversible o externa). `Decide tú` delega elecciones reversibles internas; no decide prioridades de negocio ni presta consentimiento en nombre de la persona.
+
+`/nuevo-proyecto` es una puerta de entrada simple, no un formulario obligatorio ni un comando que haya que repetir. Inspecciona antes de preguntar; si ya existe contexto suficiente, reutilízalo y orienta desde ahí. Un checkpoint activo se recupera sin reiniciar onboarding.
+
 ## Contexto progresivo, persistencia y continuidad
 
 El proyecto puede completar contexto poco a poco, durante onboarding y tareas posteriores. Persiste solo información material, confirmada y reutilizable, en su fuente de verdad, sin copiar el mismo dato en todos los archivos ni registrar cada conversación:
