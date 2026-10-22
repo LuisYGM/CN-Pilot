@@ -1,6 +1,6 @@
 ---
 description: Crea un commit local coherente cuando Git existe; sin Git informa que el comando no aplica.
-agent: dev-lead
+agent: jefe-proyecto
 ---
 
 # Commit

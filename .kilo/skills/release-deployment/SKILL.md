@@ -17,7 +17,7 @@ Reutiliza contexto Existing, versión/estado/destino/método ya confirmado; pide
 
 ## Artifact y build
 
-Determina qué consume hosting: static output, source+composer/runtime, compiled package/container o release bundle existente. Ejecuta comando/versión local comprobados. Publica solo artifact runtime y archivos allowlisted; nunca subas repo entero por comodidad. Excluye `.git`, CN Pilot Core/config/control, `project-resources/`, `project-artifacts/` si no son runtime, caches, tests/dev deps si canal no los necesita, secret/env local, backups, logs y artefactos no desplegables. No cambies output mode/hosting ni añadas pipeline/infra por defecto. Valida que env config/paths persistentes no se sobreescriban y asset paths/base URL reflejen destino.
+Determina qué consume hosting: static output, source+composer/runtime, compiled package/container o release bundle existente. Ejecuta comando/versión local comprobados. Publica solo artifact runtime y archivos allowlisted; nunca subas repo entero por comodidad. Excluye `.git`, CN Pilot Core/config/control, `recursos/`, `artefactos/` si no son runtime, caches, tests/dev deps si canal no los necesita, secret/env local, backups, logs y artefactos no desplegables. No cambies output mode/hosting ni añadas pipeline/infra por defecto. Valida que env config/paths persistentes no se sobreescriban y asset paths/base URL reflejen destino.
 
 ## Orden y cambios persistentes
 

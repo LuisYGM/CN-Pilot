@@ -31,7 +31,7 @@ function createFixture(t) {
     '    "**/.kilocode/mcp.json": deny',
     "  task:",
     '    "*": deny',
-    '    "reviewer": allow',
+    '    "revisor": allow',
     "  edit:",
     '    "*": ask',
     '    ".env": deny',
@@ -84,30 +84,35 @@ function createFixture(t) {
   ].join("\n") + "\n";
 
   const manifest = [
-    "- 2 agentes en `.kilo/agents/`",
+    "- 7 agentes en `.kilo/agents/`",
     "- 2 skills (`.kilo/skills/*/SKILL.md`)",
     "- 1 documento de referencia bajo `.kilo/skills/technical-seo/references/` (no es una skill adicional)",
-    "- 4 comandos en `.kilo/commands/`",
-    "- 1 perfil en `.cn-pilot/profiles/`",
-    "- 1 archivo de plantilla en la raíz de `.cn-pilot/templates/` y 2 archivos en total bajo `.cn-pilot/templates/` (incluye subdirectorios)",
+    "- 14 comandos en `.kilo/commands/`",
+    "- 1 perfil en `.cn-pilot/perfiles/`",
+    "- 1 archivo de plantilla en la raíz de `.cn-pilot/plantillas/` y 2 archivos en total bajo `.cn-pilot/plantillas/` (incluye subdirectorios)",
   ].join("\n") + "\n";
 
+  put("PROYECTO.md", "# Project fixture\n");
+  put("REQUISITOS.md", "# Requirements fixture\n");
+  put("ESTADO.md", "# State fixture\n");
+  put("DECISIONES.md", "# Decisions fixture\n");
+  put("ARTEFACTOS.md", "# Artifacts fixture\n");
   put("AGENTS.md", "# Minimal test kernel\n");
-  put(".cn-pilot-version", "1.2.0\n");
-  put(".cn-pilot/CORE.md", "**Versión:** `1.2.0`\n");
-  put(".cn-pilot/MANIFEST.md", manifest);
+  put(".cn-pilot-version", "2.0.0\n");
+  put(".cn-pilot/NUCLEO.md", "**Versión:** `2.0.0`\n");
+  put(".cn-pilot/MANIFIESTO.md", manifest);
   put(".cn-pilot/config/responsive.json", "{}\n");
-  put(".cn-pilot/docs/.keep");
-  put(".cn-pilot/profiles/profile.md", "# Perfil de fixture\n");
-  put(".cn-pilot/templates/root.md", "# Plantilla raíz\n");
-  put(".cn-pilot/templates/sub/nested.md", "# Plantilla anidada\n");
+  put(".cn-pilot/documentacion/.keep");
+  put(".cn-pilot/perfiles/profile.md", "# Perfil de fixture\n");
+  put(".cn-pilot/plantillas/root.md", "# Plantilla raíz\n");
+  put(".cn-pilot/plantillas/sub/nested.md", "# Plantilla anidada\n");
   put(".cn-pilot/qa/core-check.mjs", "// checker fixture\n");
   put(".cn-pilot/qa/core-check.test.mjs", "// self-test fixture\n");
   put(".cn-pilot/update/updater.mjs", "// updater fixture\n");
   put(".cn-pilot/update/updater.test.mjs", "// updater test fixture\n");
   put(".cn-pilot/update/manifest.json", `${JSON.stringify({
     schemaVersion: 1,
-    cnPilotVersion: "1.2.0",
+    cnPilotVersion: "2.0.0",
     sourceRepository: "https://github.com/LuisYGM/cn-pilot.git",
     stableBranch: "main",
     sourceCommit: null,
@@ -117,16 +122,19 @@ function createFixture(t) {
     removedFiles: [],
     migrations: [],
   })}\n`);
-  put("project-resources/README.md", "# Input scaffold\n");
+  put("recursos/README.md", "# Input scaffold\n");
   put("kilo.jsonc", "{}\n");
   put(".gitignore", "/.cn-pilot/runtime/\n");
-  put(".kilo/agents/dev-lead.md", devLead);
-  put(".kilo/agents/reviewer.md", reviewer);
+  put(".kilo/agents/jefe-proyecto.md", devLead);
+  put(".kilo/agents/revisor.md", reviewer);
+  for (const agent of ["arquitecto", "contenido-seo", "disenador-ui-ux", "desarrollador", "maquetador-frontend"]) {
+    put(`.kilo/agents/${agent}.md`, `---\ndescription: Agente de fixture\nmode: subagent\n---\n# ${agent}\n`);
+  }
   put(".kilo/skills/sample/SKILL.md", "---\nname: sample\ndescription: Skill de fixture\n---\n# Sample\n");
   put(".kilo/skills/technical-seo/SKILL.md", "---\nname: technical-seo\ndescription: Skill SEO de fixture\n---\n# SEO\n");
   put(".kilo/skills/technical-seo/references/audit.md", "# Referencia\n");
-  for (const command of ["new-project", "checkpoint", "review", "doctor"]) {
-    put(`.kilo/commands/${command}.md`, `---\ndescription: Comando ${command}\nagent: dev-lead\n---\n# ${command}\n`);
+  for (const command of ["nuevo-proyecto", "cn-estado", "cn-actualizar", "diseno", "contenido", "revision", "entrega", "diagnostico", "depurar", "desplegar-pruebas", "preparar-despliegue", "punto-control", "plan", "commit"]) {
+    put(`.kilo/commands/${command}.md`, `---\ndescription: Comando ${command}\nagent: jefe-proyecto\n---\n# ${command}\n`);
   }
   return { root, put };
 }
@@ -157,10 +165,10 @@ test("known-good minimal fixture passes deterministic invariants", (t) => {
   const report = runCoreChecks({ rootDir: fixture.root });
   assert.equal(report.status, "PASS", JSON.stringify(report.findings));
   assert.deepEqual(runCoreChecks({ rootDir: fixture.root }), report, "same read-only snapshot yields the same report");
-  assert.equal(report.version, "1.2.0");
-  assert.equal(getCheck(report, "agents.frontmatter").details.count, 2);
+  assert.equal(report.version, "2.0.0");
+  assert.equal(getCheck(report, "agents.frontmatter").details.count, 7);
   assert.equal(getCheck(report, "skills.frontmatter").details.count, 2);
-  assert.equal(getCheck(report, "commands.frontmatter").details.count, 4);
+  assert.equal(getCheck(report, "commands.frontmatter").details.count, 14);
   assert.equal(getCheck(report, "templates.inventory").details.rootFiles, 1);
   assert.equal(getCheck(report, "templates.inventory").details.totalFiles, 2);
 });
@@ -180,25 +188,41 @@ test("invalid SemVer fails the version check", (t) => {
   assert.equal(report.status, "FAIL");
 });
 
+test("legacy canonical paths are rejected in a clean 2.0 installation", (t) => {
+  const fixture = createFixture(t);
+  fixture.put("PROJECT.md", "stale legacy context\n");
+  const report = runCoreChecks({ rootDir: fixture.root });
+  assert.equal(getCheck(report, "core.legacyPaths").status, "FAIL");
+  assert.deepEqual(getCheck(report, "core.legacyPaths").details.paths, ["PROJECT.md"]);
+});
+
+test("legacy path references outside migration history and updater fixtures are rejected", (t) => {
+  const fixture = createFixture(t);
+  fixture.put("README.md", "Use PROJECT.md and product/ as canonical paths.\n");
+  const report = runCoreChecks({ rootDir: fixture.root });
+  assert.equal(getCheck(report, "core.legacyReferences").status, "FAIL");
+  assert.deepEqual(getCheck(report, "core.legacyReferences").details.files, ["README.md"]);
+});
+
 test("command target must resolve to an existing agent", (t) => {
   const fixture = createFixture(t);
-  fixture.put(".kilo/commands/review.md", "---\ndescription: Revisión\nagent: missing-agent\n---\n");
+  fixture.put(".kilo/commands/revision.md", "---\ndescription: Revisión\nagent: missing-agent\n---\n");
   const report = runCoreChecks({ rootDir: fixture.root });
   assert.equal(getCheck(report, "routing.commands").status, "FAIL");
 });
 
 test("Dev Lead task target must resolve to an existing agent", (t) => {
   const fixture = createFixture(t);
-  const file = ".kilo/agents/dev-lead.md";
+  const file = ".kilo/agents/jefe-proyecto.md";
   const source = fs.readFileSync(path.join(fixture.root, file), "utf8");
-  fixture.put(file, source.replace('"reviewer": allow', '"ghost-reviewer": allow'));
+  fixture.put(file, source.replace('"revisor": allow', '"ghost-reviewer": allow'));
   const report = runCoreChecks({ rootDir: fixture.root });
   assert.equal(getCheck(report, "routing.devLead").status, "FAIL");
 });
 
 test("a destructive Git permission regression in Dev Lead fails", (t) => {
   const fixture = createFixture(t);
-  const file = ".kilo/agents/dev-lead.md";
+  const file = ".kilo/agents/jefe-proyecto.md";
   const source = fs.readFileSync(path.join(fixture.root, file), "utf8");
   fixture.put(file, source.replace('"git reset --hard*": deny', '"git reset --hard*": allow'));
   const report = runCoreChecks({ rootDir: fixture.root });
@@ -207,7 +231,7 @@ test("a destructive Git permission regression in Dev Lead fails", (t) => {
 
 test("a weakened Reviewer permission fails the protected check", (t) => {
   const fixture = createFixture(t);
-  const file = ".kilo/agents/reviewer.md";
+  const file = ".kilo/agents/revisor.md";
   const source = fs.readFileSync(path.join(fixture.root, file), "utf8");
   fixture.put(file, source.replace("  edit: deny", "  edit: allow"));
   const report = runCoreChecks({ rootDir: fixture.root });
@@ -216,7 +240,7 @@ test("a weakened Reviewer permission fails the protected check", (t) => {
 
 test("Reviewer background-process capability remains denied", (t) => {
   const fixture = createFixture(t);
-  const file = ".kilo/agents/reviewer.md";
+  const file = ".kilo/agents/revisor.md";
   const source = fs.readFileSync(path.join(fixture.root, file), "utf8");
   fixture.put(file, source.replace("background_process: deny", "background_process: allow"));
   const report = runCoreChecks({ rootDir: fixture.root });
@@ -232,7 +256,7 @@ test("a missing SKILL.md is detected", (t) => {
 
 test("MANIFEST inventory drift warns and retains non-strict success", (t) => {
   const fixture = createFixture(t);
-  const file = ".cn-pilot/MANIFEST.md";
+  const file = ".cn-pilot/MANIFIESTO.md";
   const source = fs.readFileSync(path.join(fixture.root, file), "utf8");
   fixture.put(file, source.replace("2 skills", "3 skills"));
   const report = runCoreChecks({ rootDir: fixture.root });
@@ -278,8 +302,8 @@ test("the current CN Pilot repository passes Core QA", () => {
 });
 
 test("No-op closure preserves durable decisions, visual authority, and active-task recovery", () => {
-  const core = fs.readFileSync(new URL("../CORE.md", import.meta.url), "utf8");
-  const devLead = fs.readFileSync(new URL("../../.kilo/agents/dev-lead.md", import.meta.url), "utf8");
+  const core = fs.readFileSync(new URL("../NUCLEO.md", import.meta.url), "utf8");
+  const devLead = fs.readFileSync(new URL("../../.kilo/agents/jefe-proyecto.md", import.meta.url), "utf8");
   const closure = core.slice(core.indexOf("### No-op / Silent Closure"), core.indexOf("\n## ", core.indexOf("### No-op / Silent Closure")));
 
   assert.match(devLead, /No-op \/ Silent Closure/);
@@ -291,8 +315,8 @@ test("No-op closure preserves durable decisions, visual authority, and active-ta
 });
 
 test("Dev Lead checkpoint writer matches updater's minimum recovery contract", () => {
-  const core = fs.readFileSync(new URL("../CORE.md", import.meta.url), "utf8");
-  const devLead = fs.readFileSync(new URL("../../.kilo/agents/dev-lead.md", import.meta.url), "utf8");
+  const core = fs.readFileSync(new URL("../NUCLEO.md", import.meta.url), "utf8");
+  const devLead = fs.readFileSync(new URL("../../.kilo/agents/jefe-proyecto.md", import.meta.url), "utf8");
   const recovery = core.slice(core.indexOf("### Completion-Driven Execution & Recovery (BF-047)"), core.indexOf("### No-op / Silent Closure"));
 
   for (const field of ["schemaVersion: 1", "`status`", "`objective`", "`nextAction`", "BLOCKED_HUMAN", "BLOCKED_EXTERNAL", "INTERRUPTED"]) {
@@ -304,9 +328,9 @@ test("Dev Lead checkpoint writer matches updater's minimum recovery contract", (
 });
 
 test("update commands require deterministic filesystem discovery and preserve silent closure", () => {
-  const status = fs.readFileSync(new URL("../../.kilo/commands/cn-status.md", import.meta.url), "utf8");
-  const update = fs.readFileSync(new URL("../../.kilo/commands/cn-update.md", import.meta.url), "utf8");
-  const updates = fs.readFileSync(new URL("../docs/UPDATES.md", import.meta.url), "utf8");
+  const status = fs.readFileSync(new URL("../../.kilo/commands/cn-estado.md", import.meta.url), "utf8");
+  const update = fs.readFileSync(new URL("../../.kilo/commands/cn-actualizar.md", import.meta.url), "utf8");
+  const updates = fs.readFileSync(new URL("../documentacion/ACTUALIZACIONES.md", import.meta.url), "utf8");
 
   assert.match(status, /No uses `Glob`/);
   assert.match(update, /No uses `Glob`/);
@@ -319,8 +343,8 @@ test("update commands require deterministic filesystem discovery and preserve si
 
 test("visual cleanup removes obsolete restrictions without weakening creative or technical authority", () => {
   const system = fs.readFileSync(new URL("../../.kilo/skills/ui-design-system/SKILL.md", import.meta.url), "utf8");
-  const designer = fs.readFileSync(new URL("../../.kilo/agents/ui-ux-designer.md", import.meta.url), "utf8");
-  const core = fs.readFileSync(new URL("../CORE.md", import.meta.url), "utf8");
+  const designer = fs.readFileSync(new URL("../../.kilo/agents/disenador-ui-ux.md", import.meta.url), "utf8");
+  const core = fs.readFileSync(new URL("../NUCLEO.md", import.meta.url), "utf8");
   const artDirection = fs.readFileSync(new URL("../../.kilo/skills/visual-art-direction/SKILL.md", import.meta.url), "utf8");
   const creative = fs.readFileSync(new URL("../../.kilo/skills/creative-web-experience/SKILL.md", import.meta.url), "utf8");
   const composition = fs.readFileSync(new URL("../../.kilo/skills/page-composition/SKILL.md", import.meta.url), "utf8");

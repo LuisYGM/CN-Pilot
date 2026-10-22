@@ -7,7 +7,9 @@ import { execFileSync } from "node:child_process";
 import { test } from "node:test";
 import {
   MANIFEST_PATH,
+  SOURCE_REPOSITORY,
   applyPlan,
+  applyMajorMigration,
   applyValidateAndCommit,
   buildManifest,
   checkActiveTask,
@@ -17,6 +19,7 @@ import {
   inspectGit,
   inspectInstallation,
   planLegacyBootstrap,
+  planMajorMigration,
   planUpdate,
   validateManifest,
   verifyManifestFiles,
@@ -803,6 +806,176 @@ test("legacy bootstrap is plan-only until approval and preserves selected local 
   assert.equal(fs.readFileSync(path.join(target.root, "product/index.html"), "utf8"), "client product\n");
   assert.equal(JSON.parse(fs.readFileSync(path.join(target.root, MANIFEST_PATH), "utf8")).cnPilotVersion, "1.4.0");
   assert.equal(execFileSync("git", ["status", "--porcelain"], { cwd: target.root, encoding: "utf8" }), "");
+});
+
+test("major migration preview preserves 1.x project data and blocks divergent destinations", (t) => {
+  const { root, put } = fixture(t);
+  put(root, ".cn-pilot-version", "1.5.4\n");
+  put(root, ".cn-pilot/CORE.md", "CN Pilot Core 1.5.4\n");
+  put(root, "PROJECT.md", "real project context\n");
+  put(root, "project-resources/reference.txt", "original reference\n");
+  put(root, "project-artifacts/report.md", "review output\n");
+  put(root, "product/index.html", "implementation\n");
+  writeManifestFile(root, manifest("1.5.4", [
+    entry(".cn-pilot-version", "1.5.4\n"), entry(".cn-pilot/CORE.md", "CN Pilot Core 1.5.4\n"),
+  ]));
+  initRepo(root, [".cn-pilot-version", ".cn-pilot/CORE.md", MANIFEST_PATH, "PROJECT.md", "project-resources/reference.txt", "project-artifacts/report.md", "product/index.html"]);
+  let plan = planMajorMigration(root);
+  assert.equal(plan.conflicts.length, 0);
+  assert.deepEqual(plan.moves.map(({ from, to }) => [from, to]), [
+    ["PROJECT.md", "PROYECTO.md"], ["project-resources", "recursos"],
+    ["project-artifacts", "artefactos"], ["product", "producto"],
+  ]);
+  put(root, "PROYECTO.md", "different context\n");
+  plan = planMajorMigration(root);
+  assert.equal(plan.conflicts[0].from, "PROJECT.md");
+  assert.equal(fs.readFileSync(path.join(root, "PROJECT.md"), "utf8"), "real project context\n");
+});
+
+test("1.x status shows the migration plan and collision before any project writes", async (t) => {
+  const target = fixture(t); const source = fixture(t);
+  const updaterSource = "export const fixtureUpdater = true;\n";
+  target.put(target.root, ".cn-pilot-version", "1.5.4\n");
+  target.put(target.root, ".cn-pilot/CORE.md", "legacy core\n");
+  target.put(target.root, ".cn-pilot/update/updater.mjs", updaterSource);
+  target.put(target.root, "PROJECT.md", "project context\n");
+  target.put(target.root, "project-resources/input.txt", "input\n");
+  const before = manifest("1.5.4", [
+    entry(".cn-pilot-version", "1.5.4\n"), entry(".cn-pilot/CORE.md", "legacy core\n"),
+    entry(".cn-pilot/update/updater.mjs", updaterSource),
+  ]);
+  writeManifestFile(target.root, before);
+  initRepo(target.root, [".cn-pilot-version", ".cn-pilot/CORE.md", ".cn-pilot/update/updater.mjs", MANIFEST_PATH, "PROJECT.md", "project-resources/input.txt"]);
+  execFileSync("git", ["remote", "add", "origin", SOURCE_REPOSITORY], { cwd: target.root });
+
+  source.put(source.root, ".cn-pilot-version", "2.0.0\n");
+  source.put(source.root, ".cn-pilot/NUCLEO.md", "current core\n");
+  source.put(source.root, ".cn-pilot/update/updater.mjs", updaterSource);
+  const after = buildManifest(source.root, { files: [".cn-pilot-version", ".cn-pilot/NUCLEO.md", ".cn-pilot/update/updater.mjs"], previousManifest: before });
+  writeManifestFile(source.root, after);
+  initRepo(source.root, [".cn-pilot-version", ".cn-pilot/NUCLEO.md", ".cn-pilot/update/updater.mjs", MANIFEST_PATH]);
+  execFileSync("git", ["remote", "add", "origin", SOURCE_REPOSITORY], { cwd: source.root });
+
+  let output = ""; let stderr = "";
+  const code = await runCli(["status", "--target", target.root, "--source-dir", source.root], { stdout: { write: (value) => { output += value; } }, stderr: { write: (value) => { stderr += value; } } });
+  assert.equal(code, 0, stderr);
+  assert.match(output, /Migration: MAJOR 1\.x → 2\.0 REQUIRED/);
+  assert.match(output, /PROJECT\.md → PROYECTO\.md/);
+  assert.match(output, /project-resources → recursos/);
+  assert.match(output, /Ready to update\./);
+  assert.equal(fs.existsSync(path.join(target.root, "PROJECT.md")), true);
+  assert.equal(fs.existsSync(path.join(target.root, "PROYECTO.md")), false);
+  assert.equal(fs.readFileSync(path.join(target.root, "project-resources/input.txt"), "utf8"), "input\n");
+});
+
+test("2.0 manifest declares the major migration without blocking the managed Core update", (t) => {
+  const target = fixture(t); const source = fixture(t);
+  target.put(target.root, ".cn-pilot-version", "1.5.4\n");
+  target.put(target.root, ".cn-pilot/CORE.md", "legacy core\n");
+  const before = manifest("1.5.4", [entry(".cn-pilot-version", "1.5.4\n"), entry(".cn-pilot/CORE.md", "legacy core\n")]);
+  source.put(source.root, ".cn-pilot-version", "2.0.0\n");
+  source.put(source.root, ".cn-pilot/NUCLEO.md", "current core\n");
+  const after = buildManifest(source.root, { files: [".cn-pilot-version", ".cn-pilot/NUCLEO.md"], previousManifest: before });
+  assert.equal(after.migrations.length, 1);
+  assert.equal(after.migrations[0].id, "cn-pilot-1x-to-2x-foundation");
+  assert.equal(after.migrations[0].requiresApproval, true);
+  const plan = planUpdate(target.root, before, after);
+  assert.equal(plan.conflicts.length, 0);
+  assert.deepEqual(plan.actions.map(({ type, path: item }) => [type, item]), [
+    ["update", ".cn-pilot-version"], ["remove", ".cn-pilot/CORE.md"], ["add", ".cn-pilot/NUCLEO.md"],
+  ]);
+});
+
+test("2.0 managed rename destination collision is blocked without overwrite", (t) => {
+  const target = fixture(t); const source = fixture(t);
+  target.put(target.root, ".cn-pilot-version", "1.5.4\n");
+  target.put(target.root, ".cn-pilot/CORE.md", "legacy core\n");
+  target.put(target.root, ".cn-pilot/NUCLEO.md", "local managed-name collision\n");
+  const before = manifest("1.5.4", [entry(".cn-pilot-version", "1.5.4\n"), entry(".cn-pilot/CORE.md", "legacy core\n")]);
+  source.put(source.root, ".cn-pilot-version", "2.0.0\n");
+  source.put(source.root, ".cn-pilot/NUCLEO.md", "upstream core\n");
+  const after = buildManifest(source.root, { files: [".cn-pilot-version", ".cn-pilot/NUCLEO.md"], previousManifest: before });
+  const plan = planUpdate(target.root, before, after);
+  assert.equal(plan.conflicts.some(({ path: item }) => item === ".cn-pilot/NUCLEO.md"), true);
+  assert.equal(fs.readFileSync(path.join(target.root, ".cn-pilot/NUCLEO.md"), "utf8"), "local managed-name collision\n");
+});
+
+test("major migration blocks every divergent legacy/new project path pair", (t) => {
+  const { root, put } = fixture(t);
+  for (const [from, to] of [["product", "producto"], ["project-resources", "recursos"], ["project-artifacts", "artefactos"]]) {
+    put(root, `${from}/same.txt`, `legacy:${from}\n`);
+    put(root, `${to}/same.txt`, `new:${to}\n`);
+  }
+  const plan = planMajorMigration(root);
+  assert.deepEqual(plan.conflicts.map(({ from, to }) => [from, to]).sort(([a], [b]) => a.localeCompare(b)), [
+    ["project-resources", "recursos"], ["project-artifacts", "artefactos"], ["product", "producto"],
+  ].sort(([a], [b]) => a.localeCompare(b)));
+  assert.equal(plan.moves.length, 0);
+});
+
+test("major migration preview preserves an Existing compatibility product root", (t) => {
+  const { root, put } = fixture(t);
+  put(root, "PROJECT.md", "Existing compatibility exception: product root is .\n");
+  put(root, "product/index.html", "operational implementation\n");
+  const plan = planMajorMigration(root);
+  assert.equal(plan.moves.some(({ from }) => from === "product"), false);
+  assert.equal(plan.preserved.some(({ path: item }) => item === "product"), true);
+});
+
+test("major migration apply moves intact paths and leaves unrelated untracked inputs intact", (t) => {
+  const { root, put } = fixture(t);
+  put(root, "PROJECT.md", "real context\n");
+  put(root, "project-resources/README.md", "input index\n");
+  put(root, "project-resources/original.bin", "original bytes\n");
+  put(root, "project-artifacts/audit/report.md", "project output\n");
+  put(root, "product/src/index.js", "implementation bytes\n");
+  put(root, ".cn-pilot-version", "2.0.0\n");
+  initRepo(root, [".cn-pilot-version", "PROJECT.md", "project-resources/README.md"]);
+  const plan = planMajorMigration(root);
+  const applied = applyMajorMigration(root, plan);
+  assert.deepEqual(applied.moved, [
+    { from: "PROJECT.md", to: "PROYECTO.md" },
+    { from: "project-resources", to: "recursos" },
+    { from: "project-artifacts", to: "artefactos" },
+    { from: "product", to: "producto" },
+  ]);
+  assert.equal(fs.existsSync(path.join(root, "PROJECT.md")), false);
+  assert.equal(fs.readFileSync(path.join(root, "PROYECTO.md"), "utf8"), "real context\n");
+  assert.equal(fs.readFileSync(path.join(root, "recursos/original.bin"), "utf8"), "original bytes\n");
+  assert.equal(fs.readFileSync(path.join(root, "artefactos/audit/report.md"), "utf8"), "project output\n");
+  assert.equal(fs.readFileSync(path.join(root, "producto/src/index.js"), "utf8"), "implementation bytes\n");
+  assert.equal(applied.stagePaths.includes("recursos/README.md"), true);
+  assert.equal(applied.stagePaths.includes("recursos/original.bin"), false);
+  const followup = planMajorMigration(root);
+  assert.equal(followup.moves.length, 0);
+  assert.equal(followup.conflicts.length, 0);
+});
+
+test("major migration CLI previews without writes and honors dirty-tree and active-task gates", async (t) => {
+  const { root, put } = fixture(t);
+  put(root, ".cn-pilot-version", "2.0.0\n");
+  put(root, "PROJECT.md", "context\n");
+  initRepo(root, [".cn-pilot-version", "PROJECT.md"]);
+  let output = ""; let stderr = "";
+  const preview = await runCli(["migrate", "--target", root], { stdout: { write: (value) => { output += value; } }, stderr: { write: (value) => { stderr += value; } } });
+  assert.equal(preview, 3, stderr);
+  assert.match(output, /Preview only; no files changed/);
+  assert.equal(fs.existsSync(path.join(root, "PROJECT.md")), true);
+  assert.equal(fs.existsSync(path.join(root, "PROYECTO.md")), false);
+
+  put(root, "PROJECT.md", "edited context\n");
+  stderr = "";
+  const dirty = await runCli(["migrate", "--approve-migration", "--target", root], { stdout: { write() {} }, stderr: { write: (value) => { stderr += value; } } });
+  assert.equal(dirty, 1);
+  assert.match(stderr, /DIRTY_TRACKED_TREE/);
+
+  execFileSync("git", ["checkout", "--", "PROJECT.md"], { cwd: root });
+  put(root, ".cn-pilot/runtime/active-task.json", `${JSON.stringify(activeCheckpoint())}\n`);
+  stderr = "";
+  const active = await runCli(["migrate", "--approve-migration", "--target", root], { stdout: { write() {} }, stderr: { write: (value) => { stderr += value; } } });
+  assert.equal(active, 1);
+  assert.match(stderr, /ACTIVE_TASK/);
+  assert.equal(fs.existsSync(path.join(root, "PROJECT.md")), true);
 });
 
 test("unknown migrations block updates instead of executing unregistered code", (t) => {

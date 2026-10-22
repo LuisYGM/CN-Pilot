@@ -51,4 +51,4 @@ Ante feature/sintaxis/concurrencia/retry/retención/planes/capabilities/hosting 
 
 Evita: plataforma para todo; polling sin razón cuando exista evento fiable; fire-and-forget crítico; retries infinitos; falta de dedup; fallo parcial silencioso; credenciales hardcoded; test real en producción; source of truth ambiguo; loops bidireccionales; workflow monolítico irrecuperable; solapamiento de cron ignorado.
 
-Mantén un solo owner técnico (`developer` por defecto); `architect` solo ante decisión estructural material. Colabora con `api-integration`, `wordpress`, `woocommerce`, `database-migrations`, `deploy-wordpress`, `security-review` y `source-grounded-development` únicamente si sus responsabilidades/triggers aplican; no las actives en bloque.
+Mantén un solo owner técnico (`desarrollador` por defecto); `arquitecto` solo ante decisión estructural material. Colabora con `api-integration`, `wordpress`, `woocommerce`, `database-migrations`, `deploy-wordpress`, `security-review` y `source-grounded-development` únicamente si sus responsabilidades/triggers aplican; no las actives en bloque.

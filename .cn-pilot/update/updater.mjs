@@ -10,13 +10,30 @@ export const STABLE_BRANCH = "main";
 export const MANIFEST_PATH = ".cn-pilot/update/manifest.json";
 export const MANAGED_ROOTS = ["AGENTS.md", ".cn-pilot-version", ".cn-pilot/", ".kilo/agents/", ".kilo/skills/", ".kilo/commands/"];
 export const PROJECT_OWNED_PATHS = [
-  "PROJECT.md", "REQUIREMENTS.md", "STATE.md", "DECISIONS.md", "ARTIFACTS.md", "README.md",
-  "product/", "project-resources/", "project-artifacts/", ".env", ".env.*", "secrets/",
+  "PROYECTO.md", "REQUISITOS.md", "ESTADO.md", "DECISIONES.md", "ARTEFACTOS.md", "README.md",
+  "producto/", "recursos/", "artefactos/", ".env", ".env.*", "secrets/",
   ".cn-pilot/runtime/", "kilo.jsonc", ".gitignore", ".editorconfig", ".gitattributes", ".kilocodeignore", "LICENSE", ".vscode/",
+];
+const LEGACY_PROJECT_PATHS = [
+  ["PROJECT.md", "PROYECTO.md"], ["REQUIREMENTS.md", "REQUISITOS.md"],
+  ["STATE.md", "ESTADO.md"], ["DECISIONS.md", "DECISIONES.md"],
+  ["ARTIFACTS.md", "ARTEFACTOS.md"], ["project-resources", "recursos"],
+  ["project-artifacts", "artefactos"], ["product", "producto"],
 ];
 const HASH = /^[a-f0-9]{64}$/;
 const VERSION = /^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)$/;
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../..");
+const PROJECT_MIGRATION_PATHS = new Set([
+  "PROJECT.md", "REQUIREMENTS.md", "STATE.md", "DECISIONS.md", "ARTIFACTS.md",
+  "project-resources", "project-artifacts", "product", ".kilo/agents", ".kilo/commands",
+]);
+const MAJOR_MIGRATION_ID = "cn-pilot-1x-to-2x-foundation";
+const MAJOR_MIGRATION_PATHS = [
+  "PROJECT.md", "REQUIREMENTS.md", "STATE.md", "DECISIONS.md", "ARTIFACTS.md",
+  "project-resources", "project-artifacts", "product", ".cn-pilot/CORE.md",
+  ".cn-pilot/CHANGELOG.md", ".cn-pilot/MANIFEST.md", ".cn-pilot/docs",
+  ".cn-pilot/profiles", ".cn-pilot/templates", ".kilo/agents", ".kilo/commands",
+];
 
 export class UpdateError extends Error {
   constructor(code, message) { super(message); this.name = "UpdateError"; this.code = code; }
@@ -138,7 +155,9 @@ export function validateManifest(value) {
   }
   for (const migration of manifest.migrations) {
     if (!migration || typeof migration !== "object" || !VERSION.test(migration.from ?? "") || !VERSION.test(migration.to ?? "") || typeof migration.scope !== "string" || !migration.scope.trim() || !Array.isArray(migration.paths) || typeof migration.requiresApproval !== "boolean" || (typeof migration.idempotent !== "boolean" && typeof migration.detectAlreadyApplied !== "string")) fail("INVALID_MIGRATION", "Manifest migration must declare from/to, scope, paths, approval and idempotency/detection.");
-    for (const item of migration.paths) normalizeManagedPath(item);
+    for (const item of migration.paths) {
+      if (!PROJECT_MIGRATION_PATHS.has(item)) normalizeManagedPath(item);
+    }
   }
   return manifest;
 }
@@ -225,7 +244,15 @@ export function buildManifest(root, { files = listTrackedManagedFiles(root), sou
     managedFiles,
     addedFiles: previousManifest ? names.filter((item) => !priorSet.has(item)) : [],
     removedFiles: previousManifest ? prior.filter((item) => !currentSet.has(item)) : [],
-    migrations: [],
+    migrations: compareVersions(version, "2.0.0") >= 0 ? [{
+      id: MAJOR_MIGRATION_ID,
+      from: "1.0.0",
+      to: "2.0.0",
+      scope: "Project context and containers 1.x → 2.0; managed CN Pilot renames are distributed through manifest inventory.",
+      paths: MAJOR_MIGRATION_PATHS,
+      requiresApproval: true,
+      idempotent: true,
+    }] : [],
   };
 }
 
@@ -275,9 +302,66 @@ export function planUpdate(root, installedInput, upstreamInput) {
     if (exists && localHash === nextHash) { preserved.push({ path: relative, reason: "local file already matches upstream" }); continue; }
     conflicts.push({ path: relative, reason: "local and upstream both differ from installed baseline" });
   }
-  if (upstream.migrations.some((migration) => migration.requiresApproval)) conflicts.push({ path: "<migration>", reason: "migration requires human approval" });
-  if (upstream.migrations.length) conflicts.push({ path: "<migration>", reason: "no migration is registered for automatic execution in v1" });
+  const unsupportedMigrations = upstream.migrations.filter((migration) => migration.id !== MAJOR_MIGRATION_ID);
+  if (unsupportedMigrations.length) conflicts.push({ path: "<migration>", reason: `unsupported migration requires explicit review: ${unsupportedMigrations.map(({ id }) => id).join(", ")}` });
   return { installedVersion: installed.cnPilotVersion, latestVersion: upstream.cnPilotVersion, actions, preserved, conflicts, unchanged: [...before.keys()].filter((item) => before.get(item) === after.get(item)).length };
+}
+
+function projectPathFingerprint(root, relative) {
+  const absolute = path.join(root, relative);
+  let stat;
+  try { stat = fs.lstatSync(absolute); } catch (error) { if (error?.code === "ENOENT") return null; throw error; }
+  if (stat.isSymbolicLink()) fail("MIGRATION_UNSAFE_PATH", `Legacy migration path contains a symlink: ${relative}`);
+  if (stat.isFile()) return crypto.createHash("sha256").update(fs.readFileSync(absolute)).digest("hex");
+  if (!stat.isDirectory()) fail("MIGRATION_UNSAFE_PATH", `Legacy migration path is not a regular file or directory: ${relative}`);
+  const entries = fs.readdirSync(absolute).sort();
+  return crypto.createHash("sha256").update(entries.map((name) => `${name}\0${projectPathFingerprint(root, `${relative}/${name}`)}`).join("\n")).digest("hex");
+}
+
+/** Read-only major-upgrade preview; it never merges divergent project data. */
+export function planMajorMigration(root) {
+  const conflicts = []; const moves = []; const preserved = []; const reconciliations = [];
+  let projectContext = "";
+  for (const contextPath of ["PROJECT.md", "PROYECTO.md"]) {
+    try { projectContext += `\n${fs.readFileSync(path.join(root, contextPath), "utf8")}`; }
+    catch { /* missing context is not evidence of compatibility */ }
+  }
+  const existingException = /Existing compatibility exception/i.test(projectContext);
+  for (const [from, to] of LEGACY_PROJECT_PATHS) {
+    const source = projectPathFingerprint(root, from); const destination = projectPathFingerprint(root, to);
+    if (source === null) { if (destination !== null) preserved.push({ path: to, reason: "2.0 destination already exists" }); continue; }
+    if (from === "product" && existingException) { preserved.push({ path: from, reason: "Existing compatibility exception; operational product root is not reorganized" }); continue; }
+    if (destination === null) moves.push({ from, to, fingerprint: source });
+    else if (source === destination) { preserved.push({ path: to, reason: "source and destination are byte-equivalent" }); reconciliations.push({ from, to, fingerprint: source }); }
+    else conflicts.push({ from, to, reason: "both paths exist and differ; reconcile manually before migration" });
+  }
+  return { from: "1.x", to: "2.0.0", moves, reconciliations, preserved, conflicts, requiresApproval: true };
+}
+
+function migratedPath(relative, from, to) {
+  return relative === from ? to : relative.startsWith(`${from}/`) ? `${to}${relative.slice(from.length)}` : relative;
+}
+
+export function applyMajorMigration(root, plan) {
+  if (plan.conflicts.length) fail("MIGRATION_CONFLICTS", `Major migration has ${plan.conflicts.length} unresolved project path conflict(s).`);
+  const current = planMajorMigration(root);
+  if (JSON.stringify(current) !== JSON.stringify(plan)) fail("MIGRATION_PLAN_STALE", "Project paths changed after the migration preview; inspect a fresh plan.");
+  // Project-owned paths are outside the managed allowlist; inspect Git's index directly.
+  const trackedResult = run("git", ["ls-files", "-z"], root);
+  const tracked = trackedResult.stdout.split("\0").filter(Boolean).map((item) => item.replace(/\\/g, "/"));
+  const operations = [...plan.moves, ...plan.reconciliations];
+  const stagePaths = new Set();
+  for (const operation of operations) {
+    const source = path.join(root, operation.from);
+    const target = path.join(root, operation.to);
+    if (operation.fingerprint !== projectPathFingerprint(root, operation.from)) fail("MIGRATION_PLAN_STALE", `Migration source changed: ${operation.from}`);
+    if (plan.moves.some((item) => item.from === operation.from) && fs.existsSync(target)) fail("MIGRATION_CONFLICTS", `Migration destination appeared after preview: ${operation.to}`);
+    const sources = tracked.filter((item) => item === operation.from || item.startsWith(`${operation.from}/`));
+    for (const item of sources) { stagePaths.add(item); stagePaths.add(migratedPath(item, operation.from, operation.to)); }
+  }
+  for (const operation of plan.moves) fs.renameSync(path.join(root, operation.from), path.join(root, operation.to));
+  for (const operation of plan.reconciliations) fs.rmSync(path.join(root, operation.from), { recursive: true, force: false });
+  return { moved: plan.moves.map(({ from, to }) => ({ from, to })), reconciled: plan.reconciliations.map(({ from, to }) => ({ from, to })), stagePaths: [...stagePaths].sort() };
 }
 
 function atomicWrite(root, relative, bytes) {
@@ -536,6 +620,13 @@ function writeStatus(root, upstream, commit, writer = process.stdout) {
   const git = inspectGit(root);
   const installedVersion = versionFromFile(root);
   const active = checkActiveTask(root);
+  const migrationPlan = planMajorMigration(root);
+  const targetingMajor = compareVersions(upstream.cnPilotVersion, "2.0.0") >= 0;
+  const projectPathsRemain = migrationPlan.moves.length > 0 || migrationPlan.reconciliations.length > 0 || migrationPlan.conflicts.length > 0;
+  const majorMigration = targetingMajor && installedVersion !== "unknown" && compareVersions(installedVersion, "2.0.0") < 0
+    || installedVersion !== "unknown" && compareVersions(installedVersion, "2.0.0") >= 0 && projectPathsRemain
+    ? migrationPlan
+    : null;
   let plan = null; let localError = null;
   try {
     const baseline = readManifest(root);
@@ -557,16 +648,19 @@ function writeStatus(root, upstream, commit, writer = process.stdout) {
     `Project Git: ${git.branch ?? "detached"} @ ${git.head.slice(0, 12)}; tracked changes ${git.trackedChanges.length ? "YES" : "no"}`,
     `Compatibility: ${compatibility.nodeOk ? "Node PASS" : "Node BLOCK"}; ${compatibility.kiloOk ? "Kilo PASS" : "Kilo BLOCK/UNKNOWN"}`,
     `Managed files: unchanged ${plan?.unchanged ?? "?"}; planned ${plan?.actions.length ?? "?"}; local modifications ${localMods}; conflicts ${conflicts}`,
-    `Migration: ${upstream.migrations.length ? "required" : "none"}`,
+    `Migration: ${majorMigration ? "MAJOR 1.x → 2.0 REQUIRED" : upstream.migrations.length ? "required" : "none"}`,
+    ...(majorMigration ? [`Project data moves: ${majorMigration.moves.map(({ from, to }) => `${from} → ${to}`).join(", ") || "none"}`, `Project data preserved: ${majorMigration.preserved.map(({ path: item, reason }) => `${item} (${reason})`).join("; ") || "none"}`, `Migration conflicts: ${majorMigration.conflicts.map(({ from, to }) => `${from} → ${to}`).join(", ") || "none"}`] : []),
     `Active task: ${active.exists ? active.status : "none"}`,
   ];
   if (active.reason) lines.push(`Active task reason: ${active.reason}`);
   if (localError) lines.push(`Baseline: ${localError.startsWith("MANIFEST_MISSING:") ? "BASELINE MANIFEST MISSING (bootstrap required)" : `BLOCKED (${localError})`}`);
   if (conflicts) lines.push(`Conflicts: ${plan.conflicts.map((item) => item.path).join(", ")}`);
   if (git.trackedChanges.length) lines.push("Update readiness: BLOCKED", "Reason: tracked working tree changes present.");
+  if (majorMigration?.conflicts.length) lines.push("Migration readiness: BLOCKED", "Reason: project-owned path collisions require manual reconciliation; managed Core update remains a separate operation.");
+  if (majorMigration && !majorMigration.conflicts.length) lines.push("Migration readiness: requires explicit preview and approval after the managed Core update.");
   if (plan && !conflicts && available && compatibility.ok && !active.blocked && !git.trackedChanges.length) lines.push("Ready to update.");
   writer.write(`${lines.join("\n")}\n`);
-  return { installedVersion, upstreamVersion: upstream.cnPilotVersion, available, plan, compatibility, active, localError, commit };
+  return { installedVersion, upstreamVersion: upstream.cnPilotVersion, available, plan, majorMigration, compatibility, active, localError, commit };
 }
 
 async function updateExisting(root, sourceRoot, { autoCommit = true } = {}) {
@@ -688,6 +782,7 @@ function parseArgs(argv) {
       if (!value) fail("USAGE", `Missing value for ${arg}.`);
       if (arg === "--preserve") options.preserve.push(value); else options[arg === "--target" ? "target" : "sourceDir"] = value;
     } else if (arg === "--approve-legacy") options.approveLegacy = true;
+    else if (arg === "--approve-migration") options.approveMigration = true;
     else if (arg === "--cleanup-source") options.cleanupSource = true;
     else fail("USAGE", `Unknown argument: ${arg}`);
   }
@@ -697,7 +792,7 @@ function parseArgs(argv) {
 export async function runCli(argv = process.argv.slice(2), { stdout = process.stdout, stderr = process.stderr } = {}) {
   try {
     const options = parseArgs(argv);
-    if (!options.command || !["manifest", "verify-manifest", "status", "update", "bootstrap"].includes(options.command)) fail("USAGE", "Usage: updater.mjs manifest|verify-manifest|status|update|bootstrap [--target PATH] [--source-dir PATH] [--approve-legacy] [--preserve MANAGED_PATH] [--cleanup-source].");
+    if (!options.command || !["manifest", "verify-manifest", "status", "update", "bootstrap", "migrate"].includes(options.command)) fail("USAGE", "Usage: updater.mjs manifest|verify-manifest|status|update|bootstrap|migrate [--target PATH] [--source-dir PATH] [--approve-legacy] [--approve-migration] [--preserve MANAGED_PATH] [--cleanup-source].");
     if (options.command === "manifest" || options.command === "verify-manifest") {
       const root = path.resolve(options.target ?? ROOT);
       if (options.command === "manifest") {
@@ -717,6 +812,31 @@ export async function runCli(argv = process.argv.slice(2), { stdout = process.st
     }
     const target = options.target ? path.resolve(options.target) : projectGitRoot(process.cwd());
     inspectGit(target);
+    if (options.command === "migrate") {
+      if (compareVersions(versionFromFile(target), "2.0.0") < 0) fail("MANAGED_UPDATE_REQUIRED", "Install the 2.0 managed Core update before applying the project-data migration.");
+      const git = inspectGit(target);
+      if (!git.branch) fail("DETACHED_HEAD", "Major migration blocked: project is not on a named Git branch.");
+      if (git.trackedChanges.length) fail("DIRTY_TRACKED_TREE", "Major migration blocked: tracked working tree changes present.");
+      const active = checkActiveTask(target);
+      if (active.blocked) fail("ACTIVE_TASK", `Major migration blocked: active CN Pilot task (${active.status}).`);
+      const plan = planMajorMigration(target);
+      stdout.write(`Major migration ${plan.from} → ${plan.to}\nPlanned moves: ${plan.moves.map(({ from, to }) => `${from} → ${to}`).join(", ") || "none"}\nEquivalent paths to reconcile: ${plan.reconciliations.map(({ from, to }) => `${from} → ${to}`).join(", ") || "none"}\nPreserved paths: ${plan.preserved.map(({ path: item, reason }) => `${item} (${reason})`).join("; ") || "none"}\nConflicts: ${plan.conflicts.map(({ from, to, reason }) => `${from} → ${to} (${reason})`).join("; ") || "none"}\n`);
+      if (plan.conflicts.length) return 3;
+      if (!options.approveMigration) { stdout.write("Preview only; no files changed. Review this plan and rerun with --approve-migration to apply.\n"); return 3; }
+      const applied = applyMajorMigration(target, plan);
+      let qa;
+      try { qa = JSON.parse(run("node", [".cn-pilot/qa/core-check.mjs", "--json"], target).stdout); }
+      catch (error) { fail("POST_MIGRATION_QA_FAILED", `Migration applied but Core QA failed; paths remain for recovery (${error.code ?? error.message}).`); }
+      if (qa?.status !== "PASS") fail("POST_MIGRATION_QA_FAILED", `Migration applied but Core QA status is ${qa?.status ?? "unavailable"}; paths remain for recovery.`);
+      if (applied.stagePaths.length) {
+        run("git", ["add", "-A", "--", ...applied.stagePaths], target);
+        const staged = run("git", ["diff", "--cached", "--name-only", "--", ...applied.stagePaths], target).stdout.trim();
+        if (staged) run("git", ["commit", "-m", "chore: migrar proyecto a CN Pilot 2.0.0", "--", ...applied.stagePaths], target);
+      }
+      const head = run("git", ["rev-parse", "HEAD"], target).stdout.trim();
+      stdout.write(`Major migration complete\nCore QA: PASS\nCommit: ${head}\nPush: not performed\n`);
+      return 0;
+    }
     if (options.command === "status") {
       const installation = inspectInstallation(target);
       if (installation.status !== "MANAGED") {

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "cnPilotVersion": "1.5.4",
+  "cnPilotVersion": "2.0.0",
   "sourceRepository": "https://github.com/LuisYGM/cn-pilot.git",
   "stableBranch": "main",
   "sourceCommit": null,
@@ -11,267 +11,267 @@
   "managedFiles": [
     {
       "path": ".cn-pilot-version",
-      "sha256": "879a67a197446479e783c8e22a58681fed324f09eac1ce808f6a5a4c5e1894ad"
+      "sha256": "c28fcca53637bc88e124af1725df13cb98c69dedefd62fb3cdbe1cdb6b760624"
     },
     {
-      "path": ".cn-pilot/CHANGELOG.md",
-      "sha256": "db2683bd7afc310a1a548c0137ec23f0d4ba09c6da07c94b8e1e3625a3d6e0c6"
+      "path": ".cn-pilot/CAMBIOS.md",
+      "sha256": "78d9125d1f1d2ff8562973dd6866831de5f9b438559c8156f9cb525cb97d3db6"
     },
     {
-      "path": ".cn-pilot/CORE.md",
-      "sha256": "bbf9c3b6dd309e858ca21eaa20825403b05c1661057b1a9a3b703ebc201566c3"
+      "path": ".cn-pilot/MANIFIESTO.md",
+      "sha256": "b38ea1f3c9e00612e9c214700fd30e6741e5ae5f9241ed47c24ea9b824f3c738"
     },
     {
-      "path": ".cn-pilot/MANIFEST.md",
-      "sha256": "a28d67245bd7c4973eb1b91c960fc09bc53581d4b5c21d8dc1360b9685330e8d"
+      "path": ".cn-pilot/NUCLEO.md",
+      "sha256": "d6e6ed3bbf58318d1defb527103b2ea6aa95bb36a6dda0546ada257d7de82854"
     },
     {
       "path": ".cn-pilot/config/responsive.json",
       "sha256": "53def1c237c9f37eab92a8702be48a6c5d65c8a0d3dbf5cfb4c5645049956e78"
     },
     {
-      "path": ".cn-pilot/docs/CONFIGURATION.md",
-      "sha256": "93a60fb1634b7460e42b2e97f74d1103855dcf7e2c754b2b740d9fc26f6d6c60"
+      "path": ".cn-pilot/documentacion/ACTUALIZACIONES.md",
+      "sha256": "4673451f6ebfa0ee0207d3ab00143dd6e1b73b2b8e6ad44ffdebe9819124260f"
     },
     {
-      "path": ".cn-pilot/docs/GIT-WORKFLOW.md",
-      "sha256": "c8a609bd6c75f3d2a25385b2f4f785393d9324e5c622313c594f429f00618ddc"
+      "path": ".cn-pilot/documentacion/CICLO-DE-VIDA.md",
+      "sha256": "4a6e1071ce36c7b7a386787623829360bb58e0ede80b722a125734ce556f36bb"
     },
     {
-      "path": ".cn-pilot/docs/HUMAN-INTERACTION.md",
-      "sha256": "a015cbb62234324229d6d0774d5de8858bc8c351dbcd979866c7b18b83050d10"
+      "path": ".cn-pilot/documentacion/CONFIGURACION-KILO.md",
+      "sha256": "d9c38ddc1c7714688abd806abc1a99cde23fd8780d67126380c62a6690532e59"
     },
     {
-      "path": ".cn-pilot/docs/KILO-SETUP.md",
-      "sha256": "20d5f3b89c0e4fc769274ed67a414891f833ad6f76100a450cec95e5f24dec11"
+      "path": ".cn-pilot/documentacion/CONFIGURACION.md",
+      "sha256": "fb875d0370662a465a9d6bd4caaa56947d60c778a4fe03051f90cf42bc1088b8"
     },
     {
-      "path": ".cn-pilot/docs/LIFECYCLE.md",
-      "sha256": "638cb08c907501db7e4e52b6745681c97ded92c4e1eb8a76d3ca94a5cfc6a073"
+      "path": ".cn-pilot/documentacion/EMPIEZA-AQUI.md",
+      "sha256": "40df7a3c8bfd5c6768a13e273c510419dca1b0f307cbbdb1de9d04e45c39d75b"
     },
     {
-      "path": ".cn-pilot/docs/MODEL-STRATEGY.md",
-      "sha256": "eb2c2039e35f2d9e08bb7f7cd850d1e7a1c1c3609c9a4a8159965b689d281ce2"
+      "path": ".cn-pilot/documentacion/ESTRATEGIA-DE-MODELOS.md",
+      "sha256": "94ec91b24643df1079dcebb3ad723cfd5ac298329a982e032e7190a5a85e1cc2"
     },
     {
-      "path": ".cn-pilot/docs/SECURITY.md",
-      "sha256": "e82414f42caf8988977d61f624c8881b755d0307e50663ed1a8592f9041ac960"
+      "path": ".cn-pilot/documentacion/FLUJO-DE-EQUIPO.md",
+      "sha256": "e11f47108021ce58a698f6650444a12f8984a46d4ca7c17462a7244965674383"
     },
     {
-      "path": ".cn-pilot/docs/START-HERE.md",
-      "sha256": "26579cd901e73c4f2e5b9a224993a44c808440cf8ace43ba3dfef197454afeb3"
+      "path": ".cn-pilot/documentacion/FLUJO-GIT.md",
+      "sha256": "aac645608a8ed91f0250d91c04cab2134a962a37f88ecf3790068ab1b5a55be8"
     },
     {
-      "path": ".cn-pilot/docs/TEAM-WORKFLOW.md",
-      "sha256": "be9b7202489d4c96e3ee8fb0cd05f8e7e5bf647620444df505ce1406cc55709b"
+      "path": ".cn-pilot/documentacion/INTERACCION-HUMANA.md",
+      "sha256": "d99ccbf7f0144c7dd0fb0f9c90a4b12f59848f81a6bde95519047c121a72dfe3"
     },
     {
-      "path": ".cn-pilot/docs/TROUBLESHOOTING.md",
-      "sha256": "28d849748c40178a4855179fbeebe1ccf1611cde832a9efae92bdc4eec79f88c"
+      "path": ".cn-pilot/documentacion/SEGURIDAD.md",
+      "sha256": "6f7a6e7a284898884bea01bb27b478fb21d2d5ffde8bf629f62e0325e7128b4c"
     },
     {
-      "path": ".cn-pilot/docs/UPDATES.md",
-      "sha256": "8b775951ec38a7065efb2ecc5237a9b75c276ed511527f198f0025d5b48fb7d4"
+      "path": ".cn-pilot/documentacion/SOLUCION-DE-PROBLEMAS.md",
+      "sha256": "45e2596c4c84dc34ef82edde2182d61d1486f6a1041c7ad4cc5c5d54454ae068"
     },
     {
-      "path": ".cn-pilot/profiles/content-site.md",
-      "sha256": "abf7761b73971e5bbffb6626b0c2f68a752226fb9f9e97a3efb3514a0dbc5300"
-    },
-    {
-      "path": ".cn-pilot/profiles/custom-web.md",
-      "sha256": "81f42c2922ce2ea9cb473e4ddb2fda836866a6ae4e3d8e2de90d03bbed412f9b"
-    },
-    {
-      "path": ".cn-pilot/profiles/landing-page.md",
+      "path": ".cn-pilot/perfiles/landing.md",
       "sha256": "7128d042ee333ecd61e588e017c10363d3b86d823fb324da4136a321a89223d4"
     },
     {
-      "path": ".cn-pilot/profiles/maintenance.md",
+      "path": ".cn-pilot/perfiles/mantenimiento.md",
       "sha256": "f5ab4fbd49706fe8672791f31df6416569ef3a537870c9d0ff0841a6c55ff919"
     },
     {
-      "path": ".cn-pilot/profiles/woocommerce.md",
-      "sha256": "d8581bf0f1ed67dc2bdb37d4f74aaa44a583c91120244de0267482e4a9cf0e46"
-    },
-    {
-      "path": ".cn-pilot/profiles/wordpress-plugin.md",
+      "path": ".cn-pilot/perfiles/plugin-wordpress.md",
       "sha256": "8d1f81520b7b8ce06732e0241746375b3fe1e58ad578713305f5518ede558b35"
     },
     {
-      "path": ".cn-pilot/profiles/wordpress-site.md",
+      "path": ".cn-pilot/perfiles/sitio-contenido.md",
+      "sha256": "7e360a44eb067c9339a1aa1efae9336b5c989b999ca1c5fab94817fcf18bcf4e"
+    },
+    {
+      "path": ".cn-pilot/perfiles/sitio-wordpress.md",
       "sha256": "4e4f7df44761da07028da1fad4dbf4df41a82dce3ac3c9ba4e1cd9a9110e6a12"
     },
     {
-      "path": ".cn-pilot/qa/core-check.mjs",
-      "sha256": "8d96fa017ec65004d91d656b247e977e96b00ada023afa952cbf793de25462a7"
+      "path": ".cn-pilot/perfiles/web-personalizada.md",
+      "sha256": "bcb5416604b9eaccf2851f9b69263a78f9fde0f8ba90cfb2c740877ba2a24cdb"
     },
     {
-      "path": ".cn-pilot/qa/core-check.test.mjs",
-      "sha256": "6302287cf35a06f21cff357278ddd3bfdc281639570aae82c2d596751cbd6f71"
+      "path": ".cn-pilot/perfiles/woocommerce.md",
+      "sha256": "d8581bf0f1ed67dc2bdb37d4f74aaa44a583c91120244de0267482e4a9cf0e46"
     },
     {
-      "path": ".cn-pilot/templates/adr.md",
-      "sha256": "c8e875bdd35de025a641262256d78eeaf432e841cce177b9f23fedee9c5db079"
+      "path": ".cn-pilot/plantillas/adr.md",
+      "sha256": "3e5fa1a7d66752e43bddb4b493288d3ea48bc995474e59090e8657f3a42e7b90"
     },
     {
-      "path": ".cn-pilot/templates/blog-post.md",
+      "path": ".cn-pilot/plantillas/articulo-blog.md",
       "sha256": "179b22e419095a3034d4f91a588ea44e23e74ca41e156ca241c850761d417d36"
     },
     {
-      "path": ".cn-pilot/templates/deploy-manifest.md",
-      "sha256": "1b4d8fe9b06fdb854905d4aff767f3333a317c32678e0a8aec6e3e41d1f05120"
-    },
-    {
-      "path": ".cn-pilot/templates/design-page.md",
-      "sha256": "e244d4f43249e30bf7134e05295a01f9cc1df1e4aac5e7d1cd06082f0bfd8fb3"
-    },
-    {
-      "path": ".cn-pilot/templates/feature-spec.md",
-      "sha256": "b8597370e500682e861320c7c4a729261bfc5688707ba13b6402635f50f04654"
-    },
-    {
-      "path": ".cn-pilot/templates/handoff.md",
-      "sha256": "4900333762d12183666e6bc97becc1d1a06e849e1ad5169f1f8c5957b2d59224"
-    },
-    {
-      "path": ".cn-pilot/templates/page-content.md",
+      "path": ".cn-pilot/plantillas/contenido-pagina.md",
       "sha256": "03fcc4c33f3c8cd2c6200a85d01798ba73da2e5f01b69f54d1b85c5a850cbda4"
     },
     {
-      "path": ".cn-pilot/templates/references.md",
-      "sha256": "743d1eebc71955b61ceab0a1d20470bb9382f241846c6086c68c077909a91ed3"
+      "path": ".cn-pilot/plantillas/entrega.md",
+      "sha256": "6a13edc90814ecd941318839abcb730686eda0afa002a275c617a96a165a01b2"
     },
     {
-      "path": ".cn-pilot/templates/review-report.md",
-      "sha256": "5a2e74e7b8a9c279e0e5c58c3e1c9ec95b51e07ff15c88326c3ceb118167388d"
+      "path": ".cn-pilot/plantillas/especificacion-funcionalidad.md",
+      "sha256": "b8597370e500682e861320c7c4a729261bfc5688707ba13b6402635f50f04654"
     },
     {
-      "path": ".cn-pilot/templates/seo/seo-audit-coverage.csv",
-      "sha256": "af6e6161fd31729d36f04fa9da0593d1b464cb7926b72a7317e512da648ff725"
+      "path": ".cn-pilot/plantillas/estrategia/brief-estrategico.md",
+      "sha256": "33851b8172977a110b801188cdd26577fb0d3bfd3b5b8149b14b9d853734cb9a"
     },
     {
-      "path": ".cn-pilot/templates/seo/seo-audit-report.md",
-      "sha256": "d8376ba30560efe81570dfa77b17bc4ac701679fd95342301a7f04676041f72d"
-    },
-    {
-      "path": ".cn-pilot/templates/strategy/content-plan.md",
-      "sha256": "97e96ed0be4283dd2583f721a64a55e94add6f181f34850cf3f8d8601e0b9608"
-    },
-    {
-      "path": ".cn-pilot/templates/strategy/current-urls.csv",
-      "sha256": "2ead4c21c98acec91c52df326ec5ce315aec46058f0aca48984ab1b347c09b5b"
-    },
-    {
-      "path": ".cn-pilot/templates/strategy/keyword-map.csv",
+      "path": ".cn-pilot/plantillas/estrategia/mapa-palabras-clave.csv",
       "sha256": "fc3ca7a0b3a203fa64357cfd5129a19d7f86ebcecf37aed010da5a5b0060a440"
     },
     {
-      "path": ".cn-pilot/templates/strategy/redirect-map.csv",
+      "path": ".cn-pilot/plantillas/estrategia/mapa-redirecciones.csv",
       "sha256": "be9be3cc692feb9a496097db3d5bf2af808527299ef1198f8b017da601b4b46f"
     },
     {
-      "path": ".cn-pilot/templates/strategy/sitemap.md",
-      "sha256": "b381ede0b891c2d6506cff8310c3937e6bfdce9ee32a8fa2cf1d572c79a763ea"
-    },
-    {
-      "path": ".cn-pilot/templates/strategy/strategy-brief.md",
-      "sha256": "f016af2c495329430e557b024ac2708ce7b6e7e7490737f0546a0ee512df8b30"
-    },
-    {
-      "path": ".cn-pilot/templates/strategy/url-map.csv",
+      "path": ".cn-pilot/plantillas/estrategia/mapa-urls.csv",
       "sha256": "5bc2d7be6dcc374f080c543f4f54ee2cdcee8653c010e6545de94552ba959e73"
     },
     {
+      "path": ".cn-pilot/plantillas/estrategia/plan-contenidos.md",
+      "sha256": "97e96ed0be4283dd2583f721a64a55e94add6f181f34850cf3f8d8601e0b9608"
+    },
+    {
+      "path": ".cn-pilot/plantillas/estrategia/sitemap.md",
+      "sha256": "b381ede0b891c2d6506cff8310c3937e6bfdce9ee32a8fa2cf1d572c79a763ea"
+    },
+    {
+      "path": ".cn-pilot/plantillas/estrategia/urls-actuales.csv",
+      "sha256": "2ead4c21c98acec91c52df326ec5ce315aec46058f0aca48984ab1b347c09b5b"
+    },
+    {
+      "path": ".cn-pilot/plantillas/informe-revision.md",
+      "sha256": "5a2e74e7b8a9c279e0e5c58c3e1c9ec95b51e07ff15c88326c3ceb118167388d"
+    },
+    {
+      "path": ".cn-pilot/plantillas/manifiesto-despliegue.md",
+      "sha256": "1b4d8fe9b06fdb854905d4aff767f3333a317c32678e0a8aec6e3e41d1f05120"
+    },
+    {
+      "path": ".cn-pilot/plantillas/pagina-diseno.md",
+      "sha256": "87c8f3a0ced94ade509d36e26d88ab3bdce0ce7fb31d56b78421104221544051"
+    },
+    {
+      "path": ".cn-pilot/plantillas/referencias.md",
+      "sha256": "20098d4bad2704b8ce0b4fc6cc7f714592b75d8fbb5c6f6b343a80312358fab5"
+    },
+    {
+      "path": ".cn-pilot/plantillas/seo/cobertura-auditoria-seo.csv",
+      "sha256": "af6e6161fd31729d36f04fa9da0593d1b464cb7926b72a7317e512da648ff725"
+    },
+    {
+      "path": ".cn-pilot/plantillas/seo/informe-auditoria-seo.md",
+      "sha256": "d8376ba30560efe81570dfa77b17bc4ac701679fd95342301a7f04676041f72d"
+    },
+    {
+      "path": ".cn-pilot/qa/core-check.mjs",
+      "sha256": "07093d067a1371014aaddb8fb549c3d58735c218502188477edc0c0837544789"
+    },
+    {
+      "path": ".cn-pilot/qa/core-check.test.mjs",
+      "sha256": "e13d4c31f051ca42d0a4ce5b3eecfbd8ffbf8280c56bc7f50b5abd8d208425df"
+    },
+    {
       "path": ".cn-pilot/update/updater.mjs",
-      "sha256": "7bd07b29eb0a5f28bf8044f6f3256179f7a3de1e18d187b0327c79a8400921ce"
+      "sha256": "a7ec8df8981264bd2d7c0fac0007b6fd6cce1956298deee0dc5760153cf8e551"
     },
     {
       "path": ".cn-pilot/update/updater.test.mjs",
-      "sha256": "1488196360e2feb18adf87b7cac52e0ceab07c0f125be63f80de07b0df96e2a3"
+      "sha256": "5d7bd17a7a35ef7672f9575f3d23d68b5146357161aad2097207bc03168aa81f"
     },
     {
-      "path": ".kilo/agents/architect.md",
-      "sha256": "8823cb1aa6c7ea21d40d205c22501a8da8cb469d6fa654ca135fc284a3c0ba3e"
+      "path": ".kilo/agents/arquitecto.md",
+      "sha256": "ca41be6d49f86fb56b7e536083f203fb1328ae9513141acd320e058a9d760c54"
     },
     {
-      "path": ".kilo/agents/content-seo.md",
-      "sha256": "681d1def444ce4374d8d3bebb9889252586266773560e32cb2c1c9a7f152e350"
+      "path": ".kilo/agents/contenido-seo.md",
+      "sha256": "b45400ac02e72211bdc25a233048f9ad9f414892c97e98e658fe97a94d3a03e7"
     },
     {
-      "path": ".kilo/agents/dev-lead.md",
-      "sha256": "47190242f9d814f251cd49f0e0dcc235a010ce4057c8fe0c396ac62c0e825a38"
+      "path": ".kilo/agents/desarrollador.md",
+      "sha256": "f7c9c1f41d8f492138bf5ed5d562300224d2bf09991c0c1acad610380016762b"
     },
     {
-      "path": ".kilo/agents/developer.md",
-      "sha256": "71837dedba1cc1867c2ddbc7a0dcf7cfdd17fa0f6b43a097edd89cef530c8c01"
+      "path": ".kilo/agents/disenador-ui-ux.md",
+      "sha256": "cdd80788c88ee9c41919286b5946fd99e0099b55f82eb10d491aa4fa4dadee90"
     },
     {
-      "path": ".kilo/agents/frontend-builder.md",
-      "sha256": "4aeda06b761cbb32871392d8da2a1ca746195f5f5a63bbf93e53e68176f3aafb"
+      "path": ".kilo/agents/jefe-proyecto.md",
+      "sha256": "d7c453a8545ed0255cab77963d065a60d3f1d6461cfdb564d78e896592755d8f"
     },
     {
-      "path": ".kilo/agents/reviewer.md",
+      "path": ".kilo/agents/maquetador-frontend.md",
+      "sha256": "770c133961724b6eabe0a1a21321ede486cf70cddb385190eb8a0199354e8a71"
+    },
+    {
+      "path": ".kilo/agents/revisor.md",
       "sha256": "4b86f19c2b89066300bd280b5b64cc70f4d2863df9e8e9e4022d9d21434d8761"
     },
     {
-      "path": ".kilo/agents/ui-ux-designer.md",
-      "sha256": "9d91030833e7d1d18458d734af03a93ea46e30fea1dc98d9fdf45ef2d0165f08"
+      "path": ".kilo/commands/cn-actualizar.md",
+      "sha256": "0f79c159f67a1dc9e8e5000b43e3c23e82d55dfcc1949b83b529094cdf2516ea"
     },
     {
-      "path": ".kilo/commands/checkpoint.md",
-      "sha256": "90055ff09e7cf6aae0f1a5ab9d7f808327bd39fbcf4404c41d280e31d9402744"
-    },
-    {
-      "path": ".kilo/commands/cn-status.md",
-      "sha256": "98557da037b8d66811903abb093668ea54d398681528a96eca0a5ed5a1927439"
-    },
-    {
-      "path": ".kilo/commands/cn-update.md",
-      "sha256": "669e87c6a467f04cbdfaabb52eec29b55247ef86e1cc95af1ed198df67c9d6c8"
+      "path": ".kilo/commands/cn-estado.md",
+      "sha256": "da34ebcbc85f82ac13ab07dfa0ee624ac3bdd3c7d31945586fca3b8b8556d87b"
     },
     {
       "path": ".kilo/commands/commit.md",
-      "sha256": "e10855d2601f64dc0daf3be3db7fc96df5e723cb75c78c7d9b24c8a861c911f0"
+      "sha256": "f8f0e94ee1a9ceaa4a099fdac0edbc7bad92464ce942d77756d80dba1756e5de"
     },
     {
-      "path": ".kilo/commands/content.md",
-      "sha256": "6c2f8e21525b4fd721a01a8e8b8296ed67fa49f9c2c207e7698e483e9382496f"
+      "path": ".kilo/commands/contenido.md",
+      "sha256": "7c4b2781e1982a541a8de57c6b1f7dcc4828af6dbe72b4074d700817c7cabacb"
     },
     {
-      "path": ".kilo/commands/debug.md",
-      "sha256": "ca5e2e705989479d4743d4063481f7e05c35c853c2e84a2e8be68199072ef66a"
+      "path": ".kilo/commands/depurar.md",
+      "sha256": "a3b3ab15f1d9a44041e2662b3e39e22aea551144c7d1de155a76b612d3a56333"
     },
     {
-      "path": ".kilo/commands/deploy-staging.md",
-      "sha256": "93a471c4cdab20281d8c7cb874a6e30e00119e62793405b168b65971f1cd2245"
+      "path": ".kilo/commands/desplegar-pruebas.md",
+      "sha256": "3acbe8f82cb0702e96bc61d27f68b26737986e1651a7bb169ab4a5ad2be595da"
     },
     {
-      "path": ".kilo/commands/design.md",
-      "sha256": "82961642e8a9f296fc1f6754368ef772e58d0f06374f51789d36b156bcf3b2ec"
+      "path": ".kilo/commands/diagnostico.md",
+      "sha256": "94264522bb83136f2284f8ffdbddc139b157dd1b5b36b06b319f632541613494"
     },
     {
-      "path": ".kilo/commands/doctor.md",
-      "sha256": "c0264463727cbd973e194173cc0d42ae47e0e65209a2e6cc816566ee892e2df8"
+      "path": ".kilo/commands/diseno.md",
+      "sha256": "e1abcda91f1e17e9aca0fa29525e3087ed1812de6eafecf85fddc76e263c6353"
     },
     {
-      "path": ".kilo/commands/handoff.md",
-      "sha256": "f0426dc819855f9b901ed5aba7544959599c5ad16d4ffbc70a75334be9ddc788"
+      "path": ".kilo/commands/entrega.md",
+      "sha256": "1dcf9803bb00b353f19cd92b397e701790db1e6a8252406c727da5e7a4338080"
     },
     {
-      "path": ".kilo/commands/new-project.md",
-      "sha256": "2bfc91d62d8ece5a79d4b04494777726687aaeaa4335ce391df1e6869f5266f8"
+      "path": ".kilo/commands/nuevo-proyecto.md",
+      "sha256": "46eb203245967dd23a7654910780f4c1c90b919074ddf221a4043bb6ca3b169d"
     },
     {
       "path": ".kilo/commands/plan.md",
-      "sha256": "6c158c07bb383af2da1f1a821a37d4a73852499121e567b71ace8483fd7e31ca"
+      "sha256": "954104f5dd5342c8c204f9734e8afc6049c1c968371022dd12efe46db8cf99fd"
     },
     {
-      "path": ".kilo/commands/pre-deploy.md",
-      "sha256": "b9512fa03e34d3f70c5565c8b3f21cd233479709a2eec6fb8530e5399f6c9fc8"
+      "path": ".kilo/commands/preparar-despliegue.md",
+      "sha256": "7a77da5888c6fb55d7847882e5dfb6ee2b0b010318022fcd1f9c202fa03b3153"
     },
     {
-      "path": ".kilo/commands/review.md",
-      "sha256": "2325c55e13d17ff26dc8e5844233b695713a714e596d404550b3f60830754674"
+      "path": ".kilo/commands/punto-control.md",
+      "sha256": "5474887499cef1aef148006c6c0a1fea9bbc8fc61e4390b5813ad083a31117a4"
+    },
+    {
+      "path": ".kilo/commands/revision.md",
+      "sha256": "8140d0b18f9a9da217895ba1c6b3f43454c76c66f06bcedbedb0fc2612b567a7"
     },
     {
       "path": ".kilo/skills/accessibility-review/SKILL.md",
@@ -287,23 +287,23 @@
     },
     {
       "path": ".kilo/skills/auth-access-control/SKILL.md",
-      "sha256": "5d46f3770229b8348066f6ca753c38afcc026c251b8957a84cd78b960f0a293c"
+      "sha256": "22cbba1e4ac9324e37cef524ca8f6e08c4790da3d4320af755ed68024ed7ef3a"
     },
     {
       "path": ".kilo/skills/automation-integrations/SKILL.md",
-      "sha256": "bf493b61496f3959a5796a776a4d33b7d166b5bce770aafb2761617f69edd32d"
+      "sha256": "213faf983a173a38962ceac613fe371addf7f86cd299d9c48dca0a7ebb4a53ad"
     },
     {
       "path": ".kilo/skills/bricks/SKILL.md",
-      "sha256": "74e147cfef13793236ee5c91432d9265e50163c8b7ac09191c2ad65b0cf18350"
+      "sha256": "25c3324432dcbdb68720796a0eeec690bfc91baff5a4fc7f2e30de773bea085a"
     },
     {
       "path": ".kilo/skills/content-blog-seo/SKILL.md",
-      "sha256": "38f3790b6359b12ff638393eece71e21878ac49453bd83a75b9331ed4188970e"
+      "sha256": "1456ca1c87df98d3b9687e6191fb98252eac255664f155dc0691a0e9d0634704"
     },
     {
       "path": ".kilo/skills/content-page/SKILL.md",
-      "sha256": "12aa31856441938a0a31cf8ef00bcbce1100bf470e55b6bad486f6c14809475c"
+      "sha256": "2e43187959507719d4ba0ef0f93ffe26066be043d3495eb1a53e8359961ce6b9"
     },
     {
       "path": ".kilo/skills/creative-web-experience/SKILL.md",
@@ -315,7 +315,7 @@
     },
     {
       "path": ".kilo/skills/deploy-wordpress/SKILL.md",
-      "sha256": "d79499d736e7080670d2440869256aee376671e2dfd419bfb19094d7223c5b3b"
+      "sha256": "524f5072b8be4e24ca0970b38012da2d029b0052733c17799136951ede952de6"
     },
     {
       "path": ".kilo/skills/elementor/SKILL.md",
@@ -323,7 +323,7 @@
     },
     {
       "path": ".kilo/skills/existing-site-audit/SKILL.md",
-      "sha256": "c452c8a4bd1685d4fd013f4314dbbc7441543983429ea6d4980e4bc3ccb970d1"
+      "sha256": "b8d72b83fbb04511299af454a75830efbacf153a828b1bce796e866735b884b0"
     },
     {
       "path": ".kilo/skills/form-experience/SKILL.md",
@@ -343,11 +343,11 @@
     },
     {
       "path": ".kilo/skills/motion-interaction/SKILL.md",
-      "sha256": "8d2f8ebf6a0dc4e6f289534ae5d02394f5d7948a7aebd6f8d440f697de6337f2"
+      "sha256": "dbd8dbcb48a045acd7ec7137cb1e799e6a13829bbab8cad284761816fffd230f"
     },
     {
       "path": ".kilo/skills/page-composition/SKILL.md",
-      "sha256": "d892feb19b1a19b886ac6d6ffbdbcde8752a48aaabb1ed03df7aea290433af43"
+      "sha256": "533588fd53d2111c131c8c4b2cf48f0cc1a4f75c78ef01387586c0e13e334d9c"
     },
     {
       "path": ".kilo/skills/performance-review/SKILL.md",
@@ -355,11 +355,11 @@
     },
     {
       "path": ".kilo/skills/product-discovery/SKILL.md",
-      "sha256": "592ff63ba4a91bc915ecf90ef4ea4b5a21012732a39ff4afe380767f9a3bd0e4"
+      "sha256": "23fec5afcbeefa41eeb55cbf75b150e48e1559c27317facd57790716d06adee0"
     },
     {
       "path": ".kilo/skills/release-deployment/SKILL.md",
-      "sha256": "9e29bbc68910221143368e133821ba15fe3c8c06191f18db6a38a59a2067deae"
+      "sha256": "1788eeb9eb1502d97ebced266835edde3a5a02786303dbb4b12b12134bacdc66"
     },
     {
       "path": ".kilo/skills/security-review/SKILL.md",
@@ -375,11 +375,11 @@
     },
     {
       "path": ".kilo/skills/technical-seo/SKILL.md",
-      "sha256": "2103e923e247f60b6ad2e851fc192144be06208cb29fa0e17a78dc7767fe5441"
+      "sha256": "9f1f44bb843a630bdd3e01b2303d200b156b0036909a2a6fc2beb8e3f17aa8fa"
     },
     {
       "path": ".kilo/skills/technical-seo/references/audit-method.md",
-      "sha256": "23a65bc4082af1f3897eef889cbade32090282696f66d5fd0897328e3b4c8ccd"
+      "sha256": "fe69822f9c6b7991dd4ee81ccd0312647ed61d9e07ef45764f0ac338de579893"
     },
     {
       "path": ".kilo/skills/technical-seo/references/indexability-rendering.md",
@@ -407,11 +407,11 @@
     },
     {
       "path": ".kilo/skills/ui-design-system/SKILL.md",
-      "sha256": "411bf2686279a7724891ba524a04472e7da15f66ef8bda3720f214db82f955db"
+      "sha256": "c9c1ef1c0b45cfec924e6ff679285fc8129df27690480ec5e754ce67c1b19d5f"
     },
     {
       "path": ".kilo/skills/ui-kit-construction/SKILL.md",
-      "sha256": "2e08f5ac1c421de25bb67030d9422b86e1948707516d7a60e510052cf8ee9c99"
+      "sha256": "e015b1224453c01d1704df82523bfc34c96d51e3ffa6c89a7332dcf8647b9132"
     },
     {
       "path": ".kilo/skills/visual-art-direction/SKILL.md",
@@ -419,11 +419,11 @@
     },
     {
       "path": ".kilo/skills/visual-parity-review/SKILL.md",
-      "sha256": "c160e83e26f13409614aaba9d0410741e3de545a902756347c3f6b8d5c49d6d3"
+      "sha256": "740b920c4861d6e213d09d9269c1547e678e8ab6f85b6afc4202f551576507e6"
     },
     {
       "path": ".kilo/skills/web-strategy/SKILL.md",
-      "sha256": "faa64b36509f4ca22c9cb80c856413fd19a82bd01a449a69f57d102dce10c5f8"
+      "sha256": "3ebf8824dbc52817a086b9ce61734af39e60a6f16d0fddecbddd293d2be8d4e6"
     },
     {
       "path": ".kilo/skills/webapp-testing/SKILL.md",
@@ -447,10 +447,155 @@
     },
     {
       "path": "AGENTS.md",
-      "sha256": "6db1be82d39ceb0efd6f15b1c9f7602dc0166f1da38eef0b74ad019e4a18dc50"
+      "sha256": "4cb725edc0e61603a56700f8f3ee2203210ea8c29b626a79590d354ccb5a9531"
     }
   ],
-  "addedFiles": [],
-  "removedFiles": [],
-  "migrations": []
+  "addedFiles": [
+    ".cn-pilot/CAMBIOS.md",
+    ".cn-pilot/MANIFIESTO.md",
+    ".cn-pilot/NUCLEO.md",
+    ".cn-pilot/documentacion/ACTUALIZACIONES.md",
+    ".cn-pilot/documentacion/CICLO-DE-VIDA.md",
+    ".cn-pilot/documentacion/CONFIGURACION-KILO.md",
+    ".cn-pilot/documentacion/CONFIGURACION.md",
+    ".cn-pilot/documentacion/EMPIEZA-AQUI.md",
+    ".cn-pilot/documentacion/ESTRATEGIA-DE-MODELOS.md",
+    ".cn-pilot/documentacion/FLUJO-DE-EQUIPO.md",
+    ".cn-pilot/documentacion/FLUJO-GIT.md",
+    ".cn-pilot/documentacion/INTERACCION-HUMANA.md",
+    ".cn-pilot/documentacion/SEGURIDAD.md",
+    ".cn-pilot/documentacion/SOLUCION-DE-PROBLEMAS.md",
+    ".cn-pilot/perfiles/landing.md",
+    ".cn-pilot/perfiles/mantenimiento.md",
+    ".cn-pilot/perfiles/plugin-wordpress.md",
+    ".cn-pilot/perfiles/sitio-contenido.md",
+    ".cn-pilot/perfiles/sitio-wordpress.md",
+    ".cn-pilot/perfiles/web-personalizada.md",
+    ".cn-pilot/perfiles/woocommerce.md",
+    ".cn-pilot/plantillas/adr.md",
+    ".cn-pilot/plantillas/articulo-blog.md",
+    ".cn-pilot/plantillas/contenido-pagina.md",
+    ".cn-pilot/plantillas/entrega.md",
+    ".cn-pilot/plantillas/especificacion-funcionalidad.md",
+    ".cn-pilot/plantillas/estrategia/brief-estrategico.md",
+    ".cn-pilot/plantillas/estrategia/mapa-palabras-clave.csv",
+    ".cn-pilot/plantillas/estrategia/mapa-redirecciones.csv",
+    ".cn-pilot/plantillas/estrategia/mapa-urls.csv",
+    ".cn-pilot/plantillas/estrategia/plan-contenidos.md",
+    ".cn-pilot/plantillas/estrategia/sitemap.md",
+    ".cn-pilot/plantillas/estrategia/urls-actuales.csv",
+    ".cn-pilot/plantillas/informe-revision.md",
+    ".cn-pilot/plantillas/manifiesto-despliegue.md",
+    ".cn-pilot/plantillas/pagina-diseno.md",
+    ".cn-pilot/plantillas/referencias.md",
+    ".cn-pilot/plantillas/seo/cobertura-auditoria-seo.csv",
+    ".cn-pilot/plantillas/seo/informe-auditoria-seo.md",
+    ".kilo/agents/arquitecto.md",
+    ".kilo/agents/contenido-seo.md",
+    ".kilo/agents/desarrollador.md",
+    ".kilo/agents/disenador-ui-ux.md",
+    ".kilo/agents/jefe-proyecto.md",
+    ".kilo/agents/maquetador-frontend.md",
+    ".kilo/agents/revisor.md",
+    ".kilo/commands/cn-actualizar.md",
+    ".kilo/commands/cn-estado.md",
+    ".kilo/commands/contenido.md",
+    ".kilo/commands/depurar.md",
+    ".kilo/commands/desplegar-pruebas.md",
+    ".kilo/commands/diagnostico.md",
+    ".kilo/commands/diseno.md",
+    ".kilo/commands/entrega.md",
+    ".kilo/commands/nuevo-proyecto.md",
+    ".kilo/commands/preparar-despliegue.md",
+    ".kilo/commands/punto-control.md",
+    ".kilo/commands/revision.md"
+  ],
+  "removedFiles": [
+    ".cn-pilot/CHANGELOG.md",
+    ".cn-pilot/CORE.md",
+    ".cn-pilot/MANIFEST.md",
+    ".cn-pilot/docs/CONFIGURATION.md",
+    ".cn-pilot/docs/GIT-WORKFLOW.md",
+    ".cn-pilot/docs/HUMAN-INTERACTION.md",
+    ".cn-pilot/docs/KILO-SETUP.md",
+    ".cn-pilot/docs/LIFECYCLE.md",
+    ".cn-pilot/docs/MODEL-STRATEGY.md",
+    ".cn-pilot/docs/SECURITY.md",
+    ".cn-pilot/docs/START-HERE.md",
+    ".cn-pilot/docs/TEAM-WORKFLOW.md",
+    ".cn-pilot/docs/TROUBLESHOOTING.md",
+    ".cn-pilot/docs/UPDATES.md",
+    ".cn-pilot/profiles/content-site.md",
+    ".cn-pilot/profiles/custom-web.md",
+    ".cn-pilot/profiles/landing-page.md",
+    ".cn-pilot/profiles/maintenance.md",
+    ".cn-pilot/profiles/woocommerce.md",
+    ".cn-pilot/profiles/wordpress-plugin.md",
+    ".cn-pilot/profiles/wordpress-site.md",
+    ".cn-pilot/templates/adr.md",
+    ".cn-pilot/templates/blog-post.md",
+    ".cn-pilot/templates/deploy-manifest.md",
+    ".cn-pilot/templates/design-page.md",
+    ".cn-pilot/templates/feature-spec.md",
+    ".cn-pilot/templates/handoff.md",
+    ".cn-pilot/templates/page-content.md",
+    ".cn-pilot/templates/references.md",
+    ".cn-pilot/templates/review-report.md",
+    ".cn-pilot/templates/seo/seo-audit-coverage.csv",
+    ".cn-pilot/templates/seo/seo-audit-report.md",
+    ".cn-pilot/templates/strategy/content-plan.md",
+    ".cn-pilot/templates/strategy/current-urls.csv",
+    ".cn-pilot/templates/strategy/keyword-map.csv",
+    ".cn-pilot/templates/strategy/redirect-map.csv",
+    ".cn-pilot/templates/strategy/sitemap.md",
+    ".cn-pilot/templates/strategy/strategy-brief.md",
+    ".cn-pilot/templates/strategy/url-map.csv",
+    ".kilo/agents/architect.md",
+    ".kilo/agents/content-seo.md",
+    ".kilo/agents/dev-lead.md",
+    ".kilo/agents/developer.md",
+    ".kilo/agents/frontend-builder.md",
+    ".kilo/agents/reviewer.md",
+    ".kilo/agents/ui-ux-designer.md",
+    ".kilo/commands/checkpoint.md",
+    ".kilo/commands/cn-status.md",
+    ".kilo/commands/cn-update.md",
+    ".kilo/commands/content.md",
+    ".kilo/commands/debug.md",
+    ".kilo/commands/deploy-staging.md",
+    ".kilo/commands/design.md",
+    ".kilo/commands/doctor.md",
+    ".kilo/commands/handoff.md",
+    ".kilo/commands/new-project.md",
+    ".kilo/commands/pre-deploy.md",
+    ".kilo/commands/review.md"
+  ],
+  "migrations": [
+    {
+      "id": "cn-pilot-1x-to-2x-foundation",
+      "from": "1.0.0",
+      "to": "2.0.0",
+      "scope": "Project context and containers 1.x → 2.0; managed CN Pilot renames are distributed through manifest inventory.",
+      "paths": [
+        "PROJECT.md",
+        "REQUIREMENTS.md",
+        "STATE.md",
+        "DECISIONS.md",
+        "ARTIFACTS.md",
+        "project-resources",
+        "project-artifacts",
+        "product",
+        ".cn-pilot/CORE.md",
+        ".cn-pilot/CHANGELOG.md",
+        ".cn-pilot/MANIFEST.md",
+        ".cn-pilot/docs",
+        ".cn-pilot/profiles",
+        ".cn-pilot/templates",
+        ".kilo/agents",
+        ".kilo/commands"
+      ],
+      "requiresApproval": true,
+      "idempotent": true
+    }
+  ]
 }

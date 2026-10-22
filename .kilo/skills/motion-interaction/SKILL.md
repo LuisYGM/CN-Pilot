@@ -61,7 +61,7 @@ Smooth scroll es una capability distinta de animar algo en scroll; mantiene scro
 
 ## Design → Product y QA
 
-Motion System solo entra en UI Kit si materialmente define la dirección; expón los specimens necesarios (character, duration/easing, reveal, hover, transition/scroll y reduced-motion según necesidad), no una galería artificial. El Design prototype puede usar el engine necesario para demostrar la interacción esencial y sigue bajo `project-artifacts/design/`, no `product/`. El handoff registra intent, trigger/states, secuencia aprobada, reference ID/authority/fidelity/scope, responsive/reduced-motion y capability seleccionada cuando sea material. Product traduce al stack y arquitectura vigentes.
+Motion System solo entra en UI Kit si materialmente define la dirección; expón los specimens necesarios (character, duration/easing, reveal, hover, transition/scroll y reduced-motion según necesidad), no una galería artificial. El prototipo de diseño puede usar el engine necesario para demostrar la interacción esencial y sigue bajo `artefactos/diseno/`, no `producto/`. La entrega registra intent, trigger/states, secuencia aprobada, reference ID/authority/fidelity/scope, responsive/reduced-motion y capability seleccionada cuando sea material. Producto traduce al stack y arquitectura vigentes.
 
 QA focalizado para el behavior implementado:
 

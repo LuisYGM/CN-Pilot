@@ -5,7 +5,7 @@ description: Diseñar la macrocomposición y secuencia de páginas web visualmen
 
 # page-composition
 
-**Owner:** UI/UX Designer. Resuelve «¿cómo se convierte este contenido y sistema visual en una página excepcional?». No decide el design system (`ui-design-system`), no construye foundations (`ui-kit-construction`) ni implementa frontend (`frontend-builder`). Usa estrategia/contenido aprobados; no inventa negocio ni cambia su autoridad.
+**Owner:** Diseñador UI/UX. Resuelve «¿cómo se convierte este contenido y sistema visual en una página excepcional?». No decide el design system (`ui-design-system`), no construye foundations (`ui-kit-construction`) ni implementa frontend (`maquetador-frontend`). Usa estrategia/contenido aprobados; no inventa negocio ni cambia su autoridad.
 
 ## Preflight
 

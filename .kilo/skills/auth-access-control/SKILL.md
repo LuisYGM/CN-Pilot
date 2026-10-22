@@ -27,6 +27,6 @@ Prueba mínimo: acción permitida por actor; misma acción prohibida; recurso pr
 
 ## Handoff, blockers y stop
 
-Reporta action/resource/actor policy, enforcement point, regla ownership, flows de auth y tests ejecutados a caller/security reviewer. Si actor/ownership/cross-tenant behavior no está definido y cambia acceso real, no inventes permissive behavior: consulta al Dev Lead y bloquea solo esa ruta. Si auth/requisitos están claros, implementa y verifica cada boundary afectado, no hagas refactor de roles fuera de scope.
+Reporta action/resource/actor policy, enforcement point, regla ownership, flows de auth y tests ejecutados a caller/security reviewer. Si actor/ownership/cross-tenant behavior no está definido y cambia acceso real, no inventes permissive behavior: consulta a Jefe de proyecto y bloquea solo esa ruta. Si auth/requisitos están claros, implementa y verifica cada boundary afectado, no hagas refactor de roles fuera de scope.
 
 **Failure modes:** confiar en ocultar el control, aceptar owner/tenant desde request, proteger GET y dejar action/API sin guard, authorization after data leak/mutation, permitir registration/roles/admin por default, invalidar sesión de terceros innecesariamente.

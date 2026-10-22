@@ -1,0 +1,107 @@
+# Troubleshooting
+
+Problemas operativos frecuentes de CN Pilot. Para la primera puesta en marcha, empieza por [Empieza aquí](EMPIEZA-AQUI.md).
+
+## Git no está inicializado
+
+**Síntoma:** `git status` indica que la carpeta no es un repositorio.
+
+**Comportamiento esperado:** el CN Pilot continúa trabajando, verifica los archivos directamente y no registra la ausencia de Git como bloqueo. No ejecuta `git init` salvo petición explícita o alcance confirmado.
+
+`/commit` sí requiere Git y debe detener únicamente ese comando. `/nuevo-proyecto`, `/punto-control`, `/revision`, `/entrega` y `/preparar-despliegue` pueden operar sin Git. Las ramas, hashes, commits y worktrees no están disponibles.
+
+## El MCP no está disponible
+
+**Síntoma:** el servidor no aparece, no conecta o la herramienta requerida no está autorizada.
+
+1. Confirma que se solicitó la integración; su ausencia antes de una solicitud es normal.
+2. Descubre el servidor, capabilities y configuración local disponible en Kilo; el template no incluye un ejemplo MCP genérico.
+3. Durante una tarea explícita de setup, prepara solo los campos no secretos que correspondan al esquema real y guía la configuración local del usuario. No pidas, leas ni copies secretos.
+4. Valida capabilities disponibles y autorización antes de publicar o modificar el sistema objetivo.
+5. Si no puede utilizarse, detén el flujo en contenido, diseño, código o handoff manual según lo acordado.
+
+La falta de MCP no impide que el CN Pilot produzca un entregable completo para continuación manual.
+
+## Un subagente usa un modelo inesperado
+
+Los agentes del repositorio no fijan modelos. La selección procede de la configuración personal de Kilo y de la sesión activa. Una asignación `agent.<id>.model` en la configuración global puede mapear cada agente; si no existe, Kilo usa la selección heredada aplicable.
+
+1. Revisa `~/.config/kilo/kilo.jsonc` y cualquier archivo señalado por `KILO_CONFIG`.
+2. Comprueba el modelo y la variante activos en Kilo.
+3. Verifica que el ID del agente coincida con `jefe-proyecto`, `arquitecto`, `revisor` u otro agente real.
+4. Recarga Kilo o inicia una sesión nueva después de cambiar la configuración.
+
+Las sesiones nuevas de Agent Manager pueden heredar el modelo y la variante de la sesión que las crea, salvo configuración del desarrollador. Consulta [Configuración de IA en Kilo](ESTRATEGIA-DE-MODELOS.md).
+
+Si la herencia multiplica el coste de sesiones paralelas, revisa tu configuración en Kilo antes de iniciarlas. Jefe de proyecto no impone overrides de modelos.
+
+## Agent Manager abre demasiadas sesiones o paraleliza sin necesidad
+
+`task` debe ser la opción predeterminada cuando el trabajo forma parte de la tarea actual y no necesita branch, worktree, filesystem aislado ni conversación top-level separada. Agent Manager se reserva para aislamiento real, alternativas concurrentes, trabajo independiente o una sesión top-level separada.
+
+No abras por defecto más de dos sesiones Agent Manager pagadas simultáneamente. Si más de dos fueran realmente necesarias, detén la apertura y solicita confirmación antes de continuar. La cantidad depende de aislamiento, paralelismo real, complejidad, coste y utilidad, no del modelo.
+
+## La configuración global y la del proyecto no coinciden
+
+La configuración global bajo `~/.config/kilo/` pertenece al desarrollador y no se clona. `kilo.jsonc` pertenece al proyecto y contiene únicamente configuración compartible. Kilo combina sus capas de configuración; una capa de mayor prioridad puede cambiar el resultado efectivo.
+
+- Modelos, preferencias y autenticación: configuración personal.
+- Reglas y ajustes compartibles del proyecto: `kilo.jsonc`.
+- Secretos: mecanismo seguro local, OAuth o variables admitidas; nunca Git.
+- Overrides locales ignorados: `kilo.local.json` o `kilo.local.jsonc`, cargados mediante un mecanismo compatible como `KILO_CONFIG`.
+
+No copies una configuración global completa dentro del repositorio para resolver una diferencia local.
+
+## Dev Lead alcanza el límite de pasos
+
+`jefe-proyecto` conserva actualmente el límite de pasos de su contrato. Un flujo estructural largo puede necesitar continuidad.
+
+- No fuerces un commit si la unidad está incompleta o tiene errores bloqueantes.
+- Conserva los artefactos y resultados ya válidos; no reinicies discovery, arquitectura, tests o review sin motivo.
+- Actualiza `ESTADO.md` solo si existe un cambio operativo material o un checkpoint relevante.
+- Continúa en una sesión nueva indicando el objetivo pendiente y reutilizando el contexto del repositorio.
+- Ejecuta `/punto-control` cuando una unidad lógica esté terminada y verificada, no solo porque se aproxima el límite.
+
+## Agent Manager o un worktree causa confusión
+
+Los subagentes normales no necesitan un worktree. Agent Manager se reserva para aislamiento real o trabajo independiente y los worktrees requieren un repositorio Git.
+
+Antes de integrar, identifica qué rama y carpeta contienen el trabajo, revisa sus cambios y elige un único método: Apply de Agent Manager, merge controlado o Pull Request. No uses `git stash` para mover cambios entre worktrees porque el stash se comparte entre ellos.
+
+Una sesión finalizada no demuestra que el worktree o su carpeta se hayan eliminado.
+
+## Quedan worktrees o carpetas residuales
+
+Distingue siempre:
+
+1. sesión finalizada;
+2. worktree todavía registrado por Git;
+3. carpeta física todavía presente;
+4. carpeta huérfana bajo `.kilo/worktrees/` que Git ya no registra.
+
+Para limpiar un worktree temporal: conserva primero el resultado, comprueba que no tenga cambios pendientes, consulta `git worktree list`, usa un mecanismo seguro de eliminación, ejecuta `git worktree prune` cuando corresponda y vuelve a verificar listado y ruta.
+
+No elimines automáticamente un worktree con cambios ni una carpeta huérfana cuyo origen no puedas demostrar. No edites `.kilo/agent-manager.json` para forzar el estado.
+
+## Aparecen secretos o configuración local en los cambios
+
+Detén el commit. No pegues credenciales en prompts, documentación, manifests o archivos versionados.
+
+- `.env`, sus variantes sensibles y `secrets/**` deben quedar fuera de Git.
+- `kilo.local.json` y `kilo.local.jsonc` están destinados a configuración local ignorada.
+- Los ejemplos bajo `.cn-pilot/plantillas/` deben conservar placeholders y permanecer inactivos.
+- Si un secreto llegó al historial o a un remoto, revócalo y sigue el procedimiento de seguridad del proveedor; borrarlo del archivo actual no basta.
+
+Consulta [Configuración](CONFIGURACION.md#archivos-locales-y-secretos) y [Seguridad](SEGURIDAD.md).
+
+## Un comando parece requerir Git
+
+Solo `/commit` depende estrictamente de Git. `/punto-control` crea commit únicamente si Git existe; en caso contrario verifica por archivos. `/revision`, `/entrega`, `/nuevo-proyecto` y `/preparar-despliegue` también contemplan carpetas sin Git.
+
+`/desplegar-pruebas` requiere un entorno staging y un método de deployment documentado, no necesariamente Git. Agent Manager con worktrees, ramas, hashes, commits, merge, rebase, Pull Requests y `git worktree` sí dependen de Git.
+
+## El deployment no puede ejecutarse
+
+La ausencia de un workflow es el estado esperado hasta que se solicite configurar deployment. Solo una tarea explícita con método, destino/entorno, alcance y autorización suficientes genera un workflow específico para el proyecto. Si faltan, prepara un handoff de lo pendiente y no crees ni ejecutes el workflow. No se habilitan triggers automáticos sin intención y autorización explícitas; publicar en producción mantiene su propia aprobación.
+
+Si falta método, autorización o acceso, prepara un handoff y detente. Nunca improvises credenciales ni despliegues a producción sin aprobación.

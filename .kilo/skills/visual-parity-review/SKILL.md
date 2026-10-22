@@ -7,7 +7,7 @@ description: Comparar implementación con referencia aprobada, priorizando inspe
 
 ## Trigger y responsabilidad
 
-Activa esta skill solo si existe una referencia `APPROVED VISUAL REFERENCE` o `STRICT IMPLEMENTATION REFERENCE` dentro del scope de comparación: HTML/CSS/JS, screenshot, Figma, prototype u otra fuente designada. Lee su entry de `project-resources/references/REFERENCES.md` para conservar authority/fidelity/scope/preserve/may-adapt. `INSPIRATION` no activa parity ni pixel comparison; una referencia `DIRECTIONAL` se evalúa por principios desde Creative Direction, no como source of truth. Su responsabilidad es `approved/strict reference → implementation → inspect/evidence → compare within scope → findings → grouped fix → confirmation → Human Visual QA`.
+Activa esta skill solo si existe una referencia `APPROVED VISUAL REFERENCE` o `STRICT IMPLEMENTATION REFERENCE` dentro del scope de comparación: HTML/CSS/JS, screenshot, Figma, prototype u otra fuente designada. Lee su entrada de `recursos/referencias/REFERENCIAS.md` para conservar authority/fidelity/scope/preserve/may-adapt. `INSPIRATION` no activa parity ni pixel comparison; una referencia `DIRECTIONAL` se evalúa por principios desde Creative Direction, no como source of truth. Su responsabilidad es `approved/strict reference → implementation → inspect/evidence → compare within scope → findings → grouped fix → confirmation → Human Visual QA`.
 
 No evalúa principalmente si una aplicación funciona en runtime; para eso usa `webapp-testing` cuando aporte valor. No sustituye Structural QA, Accessibility QA ni la revisión visual humana.
 

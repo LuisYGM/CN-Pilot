@@ -17,7 +17,7 @@ description: Crear contenido estructurado para páginas web antes o durante el d
 
 Cuando Dev Lead enrute una oportunidad de enriquecimiento autorizada para esta página, reorganiza/expande únicamente con hechos confirmados: por ejemplo explicar proceso/servicios, FAQ sustentada, transición, framing, narrativa o contenido educativo. No rellenes con hechos/claims nuevos. Si un hecho factual (clientes, cifras, certificaciones, resultados, proyectos, garantías, precios, experiencia, coverage, etc.) mejoraría materialmente confianza/conversión y falta evidencia, comunica un gap concreto al Dev Lead para una pregunta agrupada; no hagas un cuestionario. `Decide tú` delega estructura y copy derivable dentro del scope, no claims ni expansión de autorización.
 
-En greenfield guarda la fuente editable en `project-artifacts/content/pages/`; crea la ruta solo si existe el primer artefacto. En proyectos existentes conserva el destino editorial vigente. Si los permisos lo impiden, reporta el bloqueo y no la reubiques.
+En greenfield guarda la fuente editable en `artefactos/contenido/paginas/`; crea la ruta solo si existe el primer artefacto. En proyectos existentes conserva el destino editorial vigente. Si los permisos lo impiden, reporta el bloqueo y no la reubiques.
 
 Los campos editoriales estructurados (Featured Image, excerpt, categoría, campos y metadata SEO) usan sus canales cuando existan; no se duplican en el body para compensar un template que no los renderiza. Las imágenes inline se eligen por necesidad editorial propia. Si el dato está persistido y falla presentación, deriva el issue a su owner dentro del alcance, no reescribas contenido como workaround.
 

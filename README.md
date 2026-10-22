@@ -1,14 +1,14 @@
 # CN Pilot
 
-**Human-first web development harness for AI agents.**
+**CN Pilot 2.0.0 · Base Spanish-first para proyectos web con agentes de IA.**
 
 Kilo Code nativo · agnóstico al proveedor/modelo dentro de Kilo
 
 CN Pilot coordina el trabajo de proyectos web con agentes de IA sin convertir a la persona en operadora de una cadena de herramientas. Describe el resultado en lenguaje natural; el sistema inspecciona el contexto, activa solo el proceso necesario y mantiene las decisiones importantes bajo control humano.
 
-[Empieza aquí](.cn-pilot/docs/START-HERE.md) · [Configuración de Kilo](.cn-pilot/docs/KILO-SETUP.md) · [Actualizaciones del Core](.cn-pilot/docs/UPDATES.md) · [Documentación](#documentación) · [Repositorio](https://github.com/LuisYGM/cn-pilot)
+[Empieza aquí](.cn-pilot/documentacion/EMPIEZA-AQUI.md) · [Configuración de Kilo](.cn-pilot/documentacion/CONFIGURACION-KILO.md) · [Actualizaciones](.cn-pilot/documentacion/ACTUALIZACIONES.md) · [Documentación](#documentación) · [Repositorio](https://github.com/LuisYGM/cn-pilot)
 
-> **Estado actual:** integración nativa con Kilo Code. El contenido de este repositorio está en español. CN Pilot Core se distribuye bajo [GNU GPL v3.0 or later (`GPL-3.0-or-later`)](LICENSE).
+> **Estado actual:** integración nativa con Kilo Code y estructura Spanish-first. Los identificadores técnicos de herramientas externas se conservan. CN Pilot Core se distribuye bajo [GNU GPL v3.0 or later (`GPL-3.0-or-later`)](LICENSE).
 
 ## El problema que resuelve
 
@@ -44,11 +44,11 @@ No hay instalador ni CLI: el uso actual consiste en abrir este workspace con VS 
 
 1. Usa [`cn-pilot`](https://github.com/LuisYGM/cn-pilot) como template de GitHub, clónalo o copia sus archivos a una carpeta de trabajo. Git puede usarse, pero no es requisito del harness.
 2. Abre la carpeta del repositorio en VS Code e instala/activa la extensión Kilo Code.
-3. Configura en Kilo un proveedor y un modelo disponibles para tu cuenta. CN Pilot no prescribe proveedor ni modelo. Sigue [Configuración de Kilo](.cn-pilot/docs/KILO-SETUP.md).
-4. Selecciona **Dev Lead** (`dev-lead`) como interlocutor y ejecuta `/new-project` una vez. Resume el proyecto nuevo o existente cuando Dev Lead lo solicite.
-5. Describe en lenguaje natural el resultado que quieres conseguir. `/new-project` registra el contexto; no mueve ni adopta código por sí solo.
+3. Configura en Kilo un proveedor y un modelo disponibles para tu cuenta. CN Pilot no prescribe proveedor ni modelo. Sigue [Configuración de Kilo](.cn-pilot/documentacion/CONFIGURACION-KILO.md).
+4. Selecciona **Jefe de proyecto** (`jefe-proyecto`) como interlocutor y ejecuta `/nuevo-proyecto` una vez. Resume el proyecto nuevo o existente cuando lo solicite.
+5. Describe en lenguaje natural el resultado que quieres conseguir. `/nuevo-proyecto` registra el contexto; no mueve ni adopta código por sí solo.
 
-Consulta el [recorrido del primer día](.cn-pilot/docs/START-HERE.md) para los pasos completos y escenarios Greenfield/Existing.
+Consulta el [recorrido del primer día](.cn-pilot/documentacion/EMPIEZA-AQUI.md) para los pasos completos y escenarios Greenfield/Existing.
 
 ## Diseño, implementación y entrega
 
@@ -78,12 +78,12 @@ La estructura ayuda al sistema a conservar límites y contexto; no necesitas apr
 
 | Ubicación | En palabras sencillas |
 |---|---|
-| `project-resources/` | Material que se recibe para el proyecto, como referencias o archivos de entrada. |
-| `project-artifacts/` | Entregables de trabajo y revisión: contenido, diseños, especificaciones y documentación auxiliar. |
-| `product/` | Implementación activa real cuando el layout del workspace la ubica allí. |
+| `recursos/` | Material original recibido para el proyecto, como referencias o archivos de entrada. |
+| `artefactos/` | Entregables auxiliares: contenido, diseños, especificaciones y documentación. |
+| `producto/` | Implementación activa real cuando el layout del workspace la ubica allí. |
 | `.cn-pilot/` | CN Pilot Core: documentación y estructura técnica interna de CN Pilot. |
 
-La estructura interna del producto depende de su stack; un repositorio existente con contratos operativos puede conservar su root real documentada. Consulta el [layout y ciclo de vida](.cn-pilot/docs/LIFECYCLE.md).
+La estructura interna del producto depende de su stack; un repositorio existente con contratos operativos puede conservar su root real documentada. Consulta el [layout y ciclo de vida](.cn-pilot/documentacion/CICLO-DE-VIDA.md).
 
 ## Agentes, skills y stacks
 
@@ -97,27 +97,27 @@ Se inspecciona el estado vigente antes de editar; el acceso a secretos se limita
 
 ## Documentación
 
-- [Primer día y proyectos Greenfield/Existing](.cn-pilot/docs/START-HERE.md)
-- [Configuración de Kilo](.cn-pilot/docs/KILO-SETUP.md)
-- [Interacción human-first](.cn-pilot/docs/HUMAN-INTERACTION.md)
-- [Ciclo de vida y entregas](.cn-pilot/docs/LIFECYCLE.md)
-- [Seguridad](.cn-pilot/docs/SECURITY.md)
-- [Actualizaciones del Core](.cn-pilot/docs/UPDATES.md)
-- [Configuración, MCP y deployment](.cn-pilot/docs/CONFIGURATION.md)
-- [Troubleshooting](.cn-pilot/docs/TROUBLESHOOTING.md)
-- [CN Pilot Core](.cn-pilot/CORE.md)
+- [Primer día y proyectos Greenfield/Existing](.cn-pilot/documentacion/EMPIEZA-AQUI.md)
+- [Configuración de Kilo](.cn-pilot/documentacion/CONFIGURACION-KILO.md)
+- [Interacción human-first](.cn-pilot/documentacion/INTERACCION-HUMANA.md)
+- [Ciclo de vida y entregas](.cn-pilot/documentacion/CICLO-DE-VIDA.md)
+- [Seguridad](.cn-pilot/documentacion/SEGURIDAD.md)
+- [Actualizaciones del Core](.cn-pilot/documentacion/ACTUALIZACIONES.md)
+- [Configuración, MCP y deployment](.cn-pilot/documentacion/CONFIGURACION.md)
+- [Solución de problemas](.cn-pilot/documentacion/SOLUCION-DE-PROBLEMAS.md)
+- [Núcleo de CN Pilot](.cn-pilot/NUCLEO.md)
 - [Licencia](#licencia)
 
 ## Licencia
 
 ### Qué cubre la licencia del Core
 
-El CN Pilot Core/harness que ofrece este repositorio se distribuye bajo [GNU GPL v3.0 or later (`GPL-3.0-or-later`)](LICENSE). **Usar CN Pilot, usar sus agentes o compartir repositorio no coloca automáticamente bajo GPL un producto independiente** creado por el usuario. El Core puede modificarse conforme a su licencia; el código, contenido y assets nuevos del usuario pueden tener licencia propia si son obras independientes y sus otras dependencias lo permiten. Así, un producto comercial, privado o bajo otra licencia puede coexistir con el Core cuando su autor tiene esos derechos y no incorpora material sujeto a términos incompatibles. La ubicación en `product/` o `project-artifacts/`, o en el mismo repositorio, por sí sola no decide esa relación.
+El CN Pilot Core/harness que ofrece este repositorio se distribuye bajo [GNU GPL v3.0 or later (`GPL-3.0-or-later`)](LICENSE). **Usar CN Pilot, usar sus agentes o compartir repositorio no coloca automáticamente bajo GPL un producto independiente** creado por el usuario. El Core puede modificarse conforme a su licencia; el código, contenido y assets nuevos del usuario pueden tener licencia propia si son obras independientes y sus otras dependencias lo permiten. Así, un producto comercial, privado o bajo otra licencia puede coexistir con el Core cuando su autor tiene esos derechos y no incorpora material sujeto a términos incompatibles. La ubicación en `producto/` o `artefactos/`, o en el mismo repositorio, por sí sola no decide esa relación.
 
 Crear un plugin WordPress con CN Pilot tampoco determina su licencia por el solo uso del harness; el stack, sus dependencias y el material realmente incorporado se evalúan por separado.
 
 La GPL no prohíbe el uso o la venta comerciales: al distribuir material cubierto, sus destinatarios reciben los derechos y condiciones de esa licencia. Para copias/uso GPL privados que no se transmiten a otros, la GPL no exige publicar el código al público. Que un servicio esté alojado en una web no resuelve por sí solo qué archivos cubiertos se transmiten a sus usuarios. Estas notas explican la intención de alcance de CN Pilot, no determinan si un caso concreto es una obra derivada ni son asesoría legal.
 
-`project-resources/` conserva las licencias de sus fuentes originales. No se asigna ni pregunta una licencia predeterminada para el producto durante `/new-project`.
+`recursos/` conserva las licencias de sus fuentes originales. No se asigna ni pregunta una licencia predeterminada para el producto durante `/nuevo-proyecto`.
 
-La versión SemVer distribuible del CN Pilot Core se registra en `.cn-pilot-version`; no representa por sí sola una versión del producto CN Pilot. En proyectos administrados se puede consultar manualmente con `/cn-status` y actualizar, tras preflight, con `/cn-update`; véase [ownership y recovery](.cn-pilot/docs/UPDATES.md). Las actualizaciones nunca se ejecutan en background.
+La versión SemVer distribuible del CN Pilot Core se registra en `.cn-pilot-version`; no representa por sí sola una versión del producto CN Pilot. En proyectos administrados se puede consultar manualmente con `/cn-estado` y actualizar, tras preflight, con `/cn-actualizar`; véase [actualizaciones y recuperación](.cn-pilot/documentacion/ACTUALIZACIONES.md). Las actualizaciones nunca se ejecutan en background.

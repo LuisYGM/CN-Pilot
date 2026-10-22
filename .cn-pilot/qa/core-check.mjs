@@ -7,14 +7,35 @@ const SCRIPT_PATH = fileURLToPath(import.meta.url);
 const DEFAULT_ROOT = path.resolve(path.dirname(SCRIPT_PATH), "..", "..");
 const SEMVER = /^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-((?:0|[1-9]\d*|\d*[A-Za-z-][0-9A-Za-z-]*)(?:\.(?:0|[1-9]\d*|\d*[A-Za-z-][0-9A-Za-z-]*))*))?(?:\+([0-9A-Za-z-]+(?:\.[0-9A-Za-z-]+)*))?$/;
 const REQUIRED_PATHS = [
-  ["AGENTS.md", "file"], [".cn-pilot/CORE.md", "file"], [".cn-pilot/MANIFEST.md", "file"],
-  [".cn-pilot/config/responsive.json", "file"], [".cn-pilot/docs", "directory"],
-  [".cn-pilot/profiles", "directory"], [".cn-pilot/templates", "directory"],
+  ["PROYECTO.md", "file"], ["REQUISITOS.md", "file"], ["ESTADO.md", "file"], ["DECISIONES.md", "file"], ["ARTEFACTOS.md", "file"],
+  ["AGENTS.md", "file"], [".cn-pilot/NUCLEO.md", "file"], [".cn-pilot/MANIFIESTO.md", "file"],
+  [".cn-pilot/config/responsive.json", "file"], [".cn-pilot/documentacion", "directory"],
+  [".cn-pilot/perfiles", "directory"], [".cn-pilot/plantillas", "directory"],
   [".cn-pilot/qa/core-check.mjs", "file"], [".cn-pilot/qa/core-check.test.mjs", "file"],
   [".cn-pilot/update/updater.mjs", "file"], [".cn-pilot/update/updater.test.mjs", "file"], [".cn-pilot/update/manifest.json", "file"],
-  ["kilo.jsonc", "file"], [".kilo/agents/dev-lead.md", "file"], [".kilo/agents/reviewer.md", "file"],
-  [".kilo/commands/new-project.md", "file"], [".kilo/commands/checkpoint.md", "file"],
-  [".kilo/commands/review.md", "file"], [".kilo/commands/doctor.md", "file"],
+  ["kilo.jsonc", "file"], [".kilo/agents/jefe-proyecto.md", "file"], [".kilo/agents/arquitecto.md", "file"],
+  [".kilo/agents/contenido-seo.md", "file"], [".kilo/agents/disenador-ui-ux.md", "file"],
+  [".kilo/agents/desarrollador.md", "file"], [".kilo/agents/maquetador-frontend.md", "file"], [".kilo/agents/revisor.md", "file"],
+  ...["nuevo-proyecto", "cn-estado", "cn-actualizar", "diseno", "contenido", "revision", "entrega", "diagnostico", "depurar", "desplegar-pruebas", "preparar-despliegue", "punto-control", "plan", "commit"].map((name) => [`.kilo/commands/${name}.md`, "file"]),
+];
+const LEGACY_CANONICAL_PATHS = [
+  "PROJECT.md", "REQUIREMENTS.md", "STATE.md", "DECISIONS.md", "ARTIFACTS.md",
+  "project-resources", "project-artifacts", "product", ".cn-pilot/CORE.md",
+  ".cn-pilot/CHANGELOG.md", ".cn-pilot/MANIFEST.md", ".cn-pilot/docs",
+  ".cn-pilot/profiles", ".cn-pilot/templates", ".kilo/agents/dev-lead.md",
+  ".kilo/commands/new-project.md",
+];
+const LEGACY_REFERENCE_ALLOWLIST = new Set([
+  ".cn-pilot/CAMBIOS.md", ".cn-pilot/documentacion/ACTUALIZACIONES.md",
+  ".cn-pilot/update/updater.mjs", ".cn-pilot/update/updater.test.mjs",
+  ".cn-pilot/update/manifest.json", ".cn-pilot/qa/core-check.mjs", ".cn-pilot/qa/core-check.test.mjs",
+]);
+const LEGACY_REFERENCE_PATTERNS = [
+  /\bPROJECT\.md\b/, /\bREQUIREMENTS\.md\b/, /\bSTATE\.md\b/, /\bDECISIONS\.md\b/, /\bARTIFACTS\.md\b/,
+  /(?:^|[\/`])project-resources(?:\/|[`\s]|$)/, /(?:^|[\/`])project-artifacts(?:\/|[`\s]|$)/,
+  /(?:^|[\/`])product\//, /\.cn-pilot\/(?:CORE|CHANGELOG|MANIFEST)\.md/,
+  /\.cn-pilot\/(?:docs|profiles|templates)(?:\/|[`\s]|$)/,
+  /(?:^|[\s`])\/(?:new-project|cn-status|cn-update|doctor|review|handoff|design|content|debug|deploy-staging|pre-deploy|checkpoint)(?:\b|`)/,
 ];
 const REVIEWER_DENY = ["bash", "websearch", "webfetch", "skill", "task", "agent_manager", "background_process", "write", "edit", "apply_patch"];
 const SENSITIVE_PATHS = [".env", ".env.*", "**/.env", "**/.env.*", "secrets/**", ".kilocode/mcp.json", "**/.kilocode/mcp.json"];
@@ -44,6 +65,30 @@ function readText(root, relativePath) {
   if (!item.stats.isFile()) return { kind: "not-file", code: "NOT_FILE", text: null };
   try { return { kind: "ok", text: fs.readFileSync(item.path, "utf8") }; }
   catch (error) { return { kind: "unreadable", code: error?.code ?? "IO_ERROR", text: null }; }
+}
+
+function checkLegacyReferences(root) {
+  const findings = []; const pending = [""];
+  const textExtensions = new Set([".md", ".mjs", ".js", ".json", ".jsonc", ".yaml", ".yml", ".txt", ".csv"]);
+  while (pending.length) {
+    const directory = pending.pop();
+    let entries;
+    try { entries = fs.readdirSync(path.join(root, directory), { withFileTypes: true }); }
+    catch { continue; }
+    for (const entry of entries) {
+      const relative = [directory, entry.name].filter(Boolean).join("/");
+      if (entry.isSymbolicLink()) continue;
+      if (entry.isDirectory()) {
+        if (entry.name === ".git" || entry.name === "node_modules" || relative === ".kilo/worktrees" || relative === ".cn-pilot/runtime") continue;
+        pending.push(relative); continue;
+      }
+      if (!entry.isFile() || !textExtensions.has(path.extname(entry.name).toLowerCase()) || LEGACY_REFERENCE_ALLOWLIST.has(relative)) continue;
+      let text;
+      try { text = fs.readFileSync(path.join(root, relative), "utf8"); } catch { continue; }
+      if (LEGACY_REFERENCE_PATTERNS.some((pattern) => pattern.test(text))) findings.push(relative);
+    }
+  }
+  return findings.sort();
 }
 
 function listDirectory(root, relativePath) {
@@ -151,7 +196,7 @@ function checkAgents(root) {
   const names = new Set(listing.files.map((file) => path.posix.basename(file, ".md")));
   const problems = listing.problems.slice();
   const symlinks = listing.symlinks.slice();
-  for (const required of ["dev-lead", "reviewer"]) if (!names.has(required)) problems.push({ agent: required, code: "REQUIRED_AGENT_MISSING" });
+  for (const required of ["jefe-proyecto", "revisor"]) if (!names.has(required)) problems.push({ agent: required, code: "REQUIRED_AGENT_MISSING" });
   for (const file of listing.files) {
     const relative = file;
     const result = readMetadata(root, relative);
@@ -191,10 +236,10 @@ function checkCommands(root, agentNames) {
 }
 
 function checkReviewerPermissions(root) {
-  const result = readMetadata(root, ".kilo/agents/reviewer.md");
+  const result = readMetadata(root, ".kilo/agents/revisor.md");
   if (!result.ok) return [result.error];
   const permission = result.fields.permission;
-  if (!permission || typeof permission !== "object") return [{ path: ".kilo/agents/reviewer.md", field: "permission", code: "MISSING_PERMISSION_MAP" }];
+  if (!permission || typeof permission !== "object") return [{ path: ".kilo/agents/revisor.md", field: "permission", code: "MISSING_PERMISSION_MAP" }];
   const problems = [];
   const readMap = permission.read;
   if (!(readMap === "allow" || readMap?.["*"] === "allow")) problems.push({ field: "read", code: "CRITICAL_PERMISSION_MISSING" });
@@ -208,11 +253,11 @@ function checkReviewerPermissions(root) {
 }
 
 function checkDevLeadPermissions(root, agentNames) {
-  const result = readMetadata(root, ".kilo/agents/dev-lead.md");
+  const result = readMetadata(root, ".kilo/agents/jefe-proyecto.md");
   if (!result.ok) return { targets: [], routingProblems: [result.error], securityProblems: [result.error] };
   const permission = result.fields.permission;
   if (!permission || typeof permission !== "object") {
-    const problem = { path: ".kilo/agents/dev-lead.md", field: "permission", code: "MISSING_PERMISSION_MAP" };
+    const problem = { path: ".kilo/agents/jefe-proyecto.md", field: "permission", code: "MISSING_PERMISSION_MAP" };
     return { targets: [], routingProblems: [problem], securityProblems: [problem] };
   }
   const task = permission.task;
@@ -257,7 +302,7 @@ function manifestRules(text) {
     ["agents", /^\s*-\s*(\d+)\s+agentes?\s+en\s+`([^`]+)`/i, ".kilo/agents", (root) => listFiles(root, ".kilo/agents", { extension: ".md" })],
     ["skills", /^\s*-\s*(\d+)\s+skills\s*\([^)]*\.kilo\/skills\/\*\/SKILL\.md[^)]*\)/i, ".kilo/skills", (root) => ({ count: listDirectories(root, ".kilo/skills").directories.length })],
     ["commands", /^\s*-\s*(\d+)\s+comandos?\s+en\s+`([^`]+)`/i, ".kilo/commands", (root) => listFiles(root, ".kilo/commands", { extension: ".md" })],
-    ["profiles", /^\s*-\s*(\d+)\s+perfil(?:es)?\s+en\s+`([^`]+)`/i, ".cn-pilot/profiles", (root) => listFiles(root, ".cn-pilot/profiles", { extension: ".md" })],
+    ["profiles", /^\s*-\s*(\d+)\s+perfil(?:es)?\s+en\s+`([^`]+)`/i, ".cn-pilot/perfiles", (root) => listFiles(root, ".cn-pilot/perfiles", { extension: ".md" })],
     ["technicalSeoReferences", /^\s*-\s*(\d+)\s+documentos? de referencia bajo\s+`([^`]+)`/i, ".kilo/skills/technical-seo/references", (root) => listFiles(root, ".kilo/skills/technical-seo/references", { extension: ".md", recursive: true })],
   ];
   for (let lineIndex = 0; lineIndex < lines.length; lineIndex += 1) {
@@ -272,8 +317,8 @@ function manifestRules(text) {
     const templateMatch = line.match(/^\s*-\s*(\d+)\s+archivos? de plantilla en la raíz de\s+`([^`]+)`\s+y\s+(\d+)\s+archivos? en total bajo\s+`([^`]+)`/i);
     if (templateMatch) {
       recognized.add(lineIndex);
-      declarations.push({ id: "templates.root", expected: Number(templateMatch[1]), declaredPath: templateMatch[2].replace(/[\\/]+$/, ""), canonicalPath: ".cn-pilot/templates", actual: (root) => listFiles(root, ".cn-pilot/templates"), line: lineIndex + 1 });
-      declarations.push({ id: "templates.total", expected: Number(templateMatch[3]), declaredPath: templateMatch[4].replace(/[\\/]+$/, ""), canonicalPath: ".cn-pilot/templates", actual: (root) => listFiles(root, ".cn-pilot/templates", { recursive: true }), line: lineIndex + 1 });
+      declarations.push({ id: "templates.root", expected: Number(templateMatch[1]), declaredPath: templateMatch[2].replace(/[\\/]+$/, ""), canonicalPath: ".cn-pilot/plantillas", actual: (root) => listFiles(root, ".cn-pilot/plantillas"), line: lineIndex + 1 });
+      declarations.push({ id: "templates.total", expected: Number(templateMatch[3]), declaredPath: templateMatch[4].replace(/[\\/]+$/, ""), canonicalPath: ".cn-pilot/plantillas", actual: (root) => listFiles(root, ".cn-pilot/plantillas", { recursive: true }), line: lineIndex + 1 });
     }
   }
   const unknownNumericLines = lines.map((line, index) => ({ line, index })).filter(({ line, index }) => /^\s*-\s*\d+\b/.test(line) && !recognized.has(index)).map(({ index }) => index + 1);
@@ -281,7 +326,7 @@ function manifestRules(text) {
 }
 
 function checkManifest(root) {
-  const file = readText(root, ".cn-pilot/MANIFEST.md");
+  const file = readText(root, ".cn-pilot/MANIFIESTO.md");
   if (file.kind !== "ok") return { status: "FAIL", details: { code: file.code ?? file.kind } };
   const parsed = manifestRules(file.text);
   const mismatches = [];
@@ -312,7 +357,7 @@ function checkDistributionManifest(root) {
 
 function readVersion(root) {
   const local = readText(root, ".cn-pilot-version");
-  const core = readText(root, ".cn-pilot/CORE.md");
+  const core = readText(root, ".cn-pilot/NUCLEO.md");
   const version = local.kind === "ok" ? local.text.trim() : null;
   const declared = core.kind === "ok" ? [...core.text.matchAll(/^\s*\*\*Versi[oó]n:\*\*\s*`([^`]+)`\s*$/gim)].map((match) => match[1].trim()) : [];
   const unique = [...new Set(declared)];
@@ -347,9 +392,14 @@ export function runCoreChecks({ rootDir = DEFAULT_ROOT } = {}) {
   const invalidPaths = requiredResults.filter((item) => !item.valid).map(({ path: relativePath, expected, code }) => ({ path: relativePath, expected, code }));
   add("core.paths", invalidPaths.length ? "FAIL" : "PASS", { required: requiredResults.length, missingOrInvalid: invalidPaths });
 
-  const scaffold = inspectPath(root, "project-resources/README.md");
+  const legacyPaths = LEGACY_CANONICAL_PATHS.filter((relativePath) => inspectPath(root, relativePath).kind === "ok");
+  add("core.legacyPaths", legacyPaths.length ? "FAIL" : "PASS", { paths: legacyPaths });
+  const legacyReferences = checkLegacyReferences(root);
+  add("core.legacyReferences", legacyReferences.length ? "FAIL" : "PASS", { files: legacyReferences });
+
+  const scaffold = inspectPath(root, "recursos/README.md");
   add("core.optionalScaffold", scaffold.kind === "ok" && scaffold.stats.isFile() ? "PASS" : "WARN", {
-    path: "project-resources/README.md",
+    path: "recursos/README.md",
     note: "Expected input scaffold; not required to run Core",
     code: scaffold.kind === "ok" ? undefined : scaffold.code ?? scaffold.kind,
   });
@@ -369,10 +419,10 @@ export function runCoreChecks({ rootDir = DEFAULT_ROOT } = {}) {
   add("permissions.reviewer", reviewerProblems.length ? "FAIL" : "PASS", { problems: reviewerProblems });
   add("security.devLead", devLead.securityProblems.length ? "FAIL" : "PASS", { problems: devLead.securityProblems });
 
-  const profiles = listFiles(root, ".cn-pilot/profiles", { extension: ".md" });
+  const profiles = listFiles(root, ".cn-pilot/perfiles", { extension: ".md" });
   add("profiles.inventory", profiles.problems.length ? "FAIL" : profiles.symlinks.length ? "WARN" : "PASS", { count: profiles.count, symbolicLinks: profiles.symlinks, problems: profiles.problems });
-  const templateRoot = listFiles(root, ".cn-pilot/templates");
-  const templateTotal = listFiles(root, ".cn-pilot/templates", { recursive: true });
+  const templateRoot = listFiles(root, ".cn-pilot/plantillas");
+  const templateTotal = listFiles(root, ".cn-pilot/plantillas", { recursive: true });
   const templateProblems = [...templateRoot.problems, ...templateTotal.problems];
   const templateSymlinks = [...templateRoot.symlinks, ...templateTotal.symlinks];
   add("templates.inventory", templateProblems.length ? "FAIL" : templateSymlinks.length ? "WARN" : "PASS", { rootFiles: templateRoot.count, totalFiles: templateTotal.count, problems: templateProblems, symbolicLinks: templateSymlinks });

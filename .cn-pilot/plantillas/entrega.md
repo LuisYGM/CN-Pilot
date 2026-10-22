@@ -1,0 +1,39 @@
+# Documentación de entrega del proyecto
+
+Completar solo las secciones aplicables al punto de entrega acordado.
+
+## Resumen del proyecto
+## Fidelidad alcanzada
+Referencia estructural / Propuesta visual / Referencia final de implementación
+
+## Elementos provisionales y validaciones pendientes
+## Adaptaciones entre diseño e implementación
+## Mapa de artefactos
+Referencia: `ARTEFACTOS.md`
+
+## Alcance cubierto por el repositorio
+## Punto de entrega
+## Destino por entregable
+## Stack
+## Repositorio
+## Control de versiones (si aplica)
+## Fuentes de verdad
+## Entornos
+## Arquitectura
+## Dependencias
+## Motion e interacción material (BF-049, si aplica)
+- Intent, states/sequences aprobados y referencias/fidelity:
+- Responsive y reduced-motion:
+- Capability Product elegida/justificada y razón; integración/lifecycle/cleanup:
+- QA de interaction, accessibility, runtime y performance:
+## Convención responsive o breakpoints vigentes
+## Continuación manual o mediante integración/MCP
+## Despliegue
+## Copias de seguridad
+## Mantenimiento
+## Riesgos conocidos
+## Trabajo pendiente
+## Trabajo fuera de alcance
+## Propiedad de accesos
+
+Listar accesos que deben conservarse, nunca contraseñas o tokens.
