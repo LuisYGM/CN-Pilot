@@ -1,7 +1,6 @@
 ---
 description: Implementa frontend, HTML, CSS, JavaScript, responsive, componentes y builders como Bricks o Elementor. Úsalo para maquetación, UI y ajustes visuales.
 mode: subagent
-steps: 45
 permission:
   read:
     "*": allow

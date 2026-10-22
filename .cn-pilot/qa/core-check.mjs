@@ -40,6 +40,7 @@ const LEGACY_REFERENCE_PATTERNS = [
 const REVIEWER_DENY = ["bash", "websearch", "webfetch", "skill", "task", "agent_manager", "background_process", "write", "edit", "apply_patch"];
 const SENSITIVE_PATHS = [".env", ".env.*", "**/.env", "**/.env.*", "secrets/**", ".kilocode/mcp.json", "**/.kilocode/mcp.json"];
 const DESTRUCTIVE_GIT = ["git push --force*", "git push -f*", "git reset --hard*", "git clean*"];
+const CN_PILOT_AGENTS = ["arquitecto", "contenido-seo", "desarrollador", "disenador-ui-ux", "jefe-proyecto", "maquetador-frontend", "revisor"];
 
 function safeText(value) { return String(value).replace(/[\r\n\t]/g, " "); }
 
@@ -138,6 +139,7 @@ function parseScalar(value) {
   if (stripped === "true") return true;
   if (stripped === "false") return false;
   if (stripped === "null" || stripped === "~") return null;
+  if (/^-?(?:0|[1-9]\d*)(?:\.\d+)?$/.test(stripped)) return Number(stripped);
   if (stripped.startsWith('"') && stripped.endsWith('"')) {
     try { return JSON.parse(stripped); } catch { return stripped.slice(1, -1); }
   }
@@ -196,6 +198,9 @@ function checkAgents(root) {
   const names = new Set(listing.files.map((file) => path.posix.basename(file, ".md")));
   const problems = listing.problems.slice();
   const symlinks = listing.symlinks.slice();
+  const unexpected = [...names].filter((name) => !CN_PILOT_AGENTS.includes(name));
+  const missing = CN_PILOT_AGENTS.filter((name) => !names.has(name));
+  if (unexpected.length || missing.length) problems.push({ code: "ACTIVE_AGENT_INVENTORY_MISMATCH", expected: CN_PILOT_AGENTS, missing, unexpected });
   for (const required of ["jefe-proyecto", "revisor"]) if (!names.has(required)) problems.push({ agent: required, code: "REQUIRED_AGENT_MISSING" });
   for (const file of listing.files) {
     const relative = file;
@@ -205,6 +210,17 @@ function checkAgents(root) {
     if (!new Set(["primary", "subagent", "all"]).has(result.fields.mode)) problems.push({ path: relative, field: "mode", code: "INVALID_REQUIRED_FIELD" });
   }
   return { count: listing.count + symlinks.length, names, problems, symlinks };
+}
+
+function checkAgentStepCaps(root) {
+  const findings = [];
+  for (const name of CN_PILOT_AGENTS) {
+    const relative = `.kilo/agents/${name}.md`;
+    const result = readMetadata(root, relative);
+    if (!result.ok) continue; // agents.frontmatter reports the malformed/missing source separately.
+    if (typeof result.fields.steps === "number") findings.push({ path: relative, code: "EXPLICIT_AGENT_STEP_CAP" });
+  }
+  return findings;
 }
 
 function checkSkills(root) {
@@ -406,6 +422,8 @@ export function runCoreChecks({ rootDir = DEFAULT_ROOT } = {}) {
 
   const agentInventory = checkAgents(root);
   add("agents.frontmatter", agentInventory.problems.length ? "FAIL" : agentInventory.symlinks.length ? "WARN" : "PASS", { count: agentInventory.count, problems: agentInventory.problems, uninspectedSymlinks: agentInventory.symlinks });
+  const stepCaps = checkAgentStepCaps(root);
+  add("agents.noStepCaps", stepCaps.length ? "FAIL" : "PASS", { inspected: CN_PILOT_AGENTS.length, findings: stepCaps, reason: "Los agentes activos deben terminar por outcome/gates/bloqueo real, no por un límite numérico artificial de steps." });
   const skills = checkSkills(root);
   add("skills.frontmatter", skills.problems.length ? "FAIL" : skills.symlinks.length ? "WARN" : "PASS", { count: skills.count, problems: skills.problems, uninspectedSymlinks: skills.symlinks });
   const commands = checkCommands(root, agentInventory.names);
@@ -451,6 +469,7 @@ export function runCoreChecks({ rootDir = DEFAULT_ROOT } = {}) {
 const LABELS = new Map([
   ["core.version", "Version"], ["core.paths", "Core paths"], ["core.optionalScaffold", "Input scaffold"],
   ["agents.frontmatter", "Agents"], ["skills.frontmatter", "Skills"], ["commands.frontmatter", "Commands"],
+  ["agents.noStepCaps", "Agent step caps"],
   ["routing.commands", "Command routing"], ["routing.devLead", "Dev Lead routes"], ["permissions.reviewer", "Reviewer permissions"],
   ["security.devLead", "Dev Lead safety"], ["profiles.inventory", "Profiles"], ["templates.inventory", "Templates"],
   ["references.technicalSeo", "Technical SEO refs"], ["runtime.gitignore", "Runtime isolation"], ["manifest.inventory", "MANIFEST"],

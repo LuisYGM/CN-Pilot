@@ -1,7 +1,6 @@
 ---
 description: Crea o revisa contenido de páginas, blogs, sitemap, metadata, intención de búsqueda, CTAs y enlazado interno. Úsalo cuando el proyecto necesite contenido o SEO antes o durante diseño/desarrollo.
 mode: subagent
-steps: 30
 permission:
   read:
     "*": allow

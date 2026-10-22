@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "cnPilotVersion": "2.0.0",
+  "cnPilotVersion": "2.1.0",
   "sourceRepository": "https://github.com/LuisYGM/cn-pilot.git",
   "stableBranch": "main",
   "sourceCommit": null,
@@ -11,11 +11,11 @@
   "managedFiles": [
     {
       "path": ".cn-pilot-version",
-      "sha256": "c28fcca53637bc88e124af1725df13cb98c69dedefd62fb3cdbe1cdb6b760624"
+      "sha256": "c89b87c262e9d5ffd20e73aac74a1772adcc9f5a21682cc33adcf5086e5fef5c"
     },
     {
       "path": ".cn-pilot/CAMBIOS.md",
-      "sha256": "78d9125d1f1d2ff8562973dd6866831de5f9b438559c8156f9cb525cb97d3db6"
+      "sha256": "0b5ebcff7229fd8c1c97698364c022a1c53ff718e6da5f19aa72cd2118bf52ca"
     },
     {
       "path": ".cn-pilot/MANIFIESTO.md",
@@ -23,7 +23,7 @@
     },
     {
       "path": ".cn-pilot/NUCLEO.md",
-      "sha256": "d6e6ed3bbf58318d1defb527103b2ea6aa95bb36a6dda0546ada257d7de82854"
+      "sha256": "81061c4e528ad016a1c5730c99b5dcc4c69577737739d822b28e692734f91d77"
     },
     {
       "path": ".cn-pilot/config/responsive.json",
@@ -175,11 +175,11 @@
     },
     {
       "path": ".cn-pilot/qa/core-check.mjs",
-      "sha256": "07093d067a1371014aaddb8fb549c3d58735c218502188477edc0c0837544789"
+      "sha256": "6d1df3735b6142dbd5f667b2c883e0abfcb9fc80692abc64653cb5dfb454bbf8"
     },
     {
       "path": ".cn-pilot/qa/core-check.test.mjs",
-      "sha256": "e13d4c31f051ca42d0a4ce5b3eecfbd8ffbf8280c56bc7f50b5abd8d208425df"
+      "sha256": "ae7ae5ac52701758ea8469c2cbf91573c6cb117b55bdf4005d5c4935e69d5cd7"
     },
     {
       "path": ".cn-pilot/update/updater.mjs",
@@ -191,31 +191,31 @@
     },
     {
       "path": ".kilo/agents/arquitecto.md",
-      "sha256": "ca41be6d49f86fb56b7e536083f203fb1328ae9513141acd320e058a9d760c54"
+      "sha256": "5aed8e3a70c628c06fa5ed224a40b4d4486fdd6a1ecfcaaf260eee8606d1d765"
     },
     {
       "path": ".kilo/agents/contenido-seo.md",
-      "sha256": "b45400ac02e72211bdc25a233048f9ad9f414892c97e98e658fe97a94d3a03e7"
+      "sha256": "b661f0d384c42b5f61ccfaa55c47a97a9bf21fc2754321d4a022ed7d4d5126a3"
     },
     {
       "path": ".kilo/agents/desarrollador.md",
-      "sha256": "f7c9c1f41d8f492138bf5ed5d562300224d2bf09991c0c1acad610380016762b"
+      "sha256": "1ac859f12ac078b8c64dee0b4854f86f990f0f0ecc29d25ae8f683bb02323bc0"
     },
     {
       "path": ".kilo/agents/disenador-ui-ux.md",
-      "sha256": "cdd80788c88ee9c41919286b5946fd99e0099b55f82eb10d491aa4fa4dadee90"
+      "sha256": "8802b043f77cd452ff7232f5ba6feefd54249e8153fa85af2a3732e35462319c"
     },
     {
       "path": ".kilo/agents/jefe-proyecto.md",
-      "sha256": "d7c453a8545ed0255cab77963d065a60d3f1d6461cfdb564d78e896592755d8f"
+      "sha256": "051f3eb46c20586e2c07ced58c1e2e97bd9d1147c49f9fff8e282354c3c130a1"
     },
     {
       "path": ".kilo/agents/maquetador-frontend.md",
-      "sha256": "770c133961724b6eabe0a1a21321ede486cf70cddb385190eb8a0199354e8a71"
+      "sha256": "793ba5a8e41dd9a68e5a93784c2897ded0e4ab462374a35746a28d9566dfcbed"
     },
     {
       "path": ".kilo/agents/revisor.md",
-      "sha256": "4b86f19c2b89066300bd280b5b64cc70f4d2863df9e8e9e4022d9d21434d8761"
+      "sha256": "d71f16199153c07401838882de41779bdc822934d70ce15a8abd74e01d7eac5e"
     },
     {
       "path": ".kilo/commands/cn-actualizar.md",
@@ -450,126 +450,8 @@
       "sha256": "4cb725edc0e61603a56700f8f3ee2203210ea8c29b626a79590d354ccb5a9531"
     }
   ],
-  "addedFiles": [
-    ".cn-pilot/CAMBIOS.md",
-    ".cn-pilot/MANIFIESTO.md",
-    ".cn-pilot/NUCLEO.md",
-    ".cn-pilot/documentacion/ACTUALIZACIONES.md",
-    ".cn-pilot/documentacion/CICLO-DE-VIDA.md",
-    ".cn-pilot/documentacion/CONFIGURACION-KILO.md",
-    ".cn-pilot/documentacion/CONFIGURACION.md",
-    ".cn-pilot/documentacion/EMPIEZA-AQUI.md",
-    ".cn-pilot/documentacion/ESTRATEGIA-DE-MODELOS.md",
-    ".cn-pilot/documentacion/FLUJO-DE-EQUIPO.md",
-    ".cn-pilot/documentacion/FLUJO-GIT.md",
-    ".cn-pilot/documentacion/INTERACCION-HUMANA.md",
-    ".cn-pilot/documentacion/SEGURIDAD.md",
-    ".cn-pilot/documentacion/SOLUCION-DE-PROBLEMAS.md",
-    ".cn-pilot/perfiles/landing.md",
-    ".cn-pilot/perfiles/mantenimiento.md",
-    ".cn-pilot/perfiles/plugin-wordpress.md",
-    ".cn-pilot/perfiles/sitio-contenido.md",
-    ".cn-pilot/perfiles/sitio-wordpress.md",
-    ".cn-pilot/perfiles/web-personalizada.md",
-    ".cn-pilot/perfiles/woocommerce.md",
-    ".cn-pilot/plantillas/adr.md",
-    ".cn-pilot/plantillas/articulo-blog.md",
-    ".cn-pilot/plantillas/contenido-pagina.md",
-    ".cn-pilot/plantillas/entrega.md",
-    ".cn-pilot/plantillas/especificacion-funcionalidad.md",
-    ".cn-pilot/plantillas/estrategia/brief-estrategico.md",
-    ".cn-pilot/plantillas/estrategia/mapa-palabras-clave.csv",
-    ".cn-pilot/plantillas/estrategia/mapa-redirecciones.csv",
-    ".cn-pilot/plantillas/estrategia/mapa-urls.csv",
-    ".cn-pilot/plantillas/estrategia/plan-contenidos.md",
-    ".cn-pilot/plantillas/estrategia/sitemap.md",
-    ".cn-pilot/plantillas/estrategia/urls-actuales.csv",
-    ".cn-pilot/plantillas/informe-revision.md",
-    ".cn-pilot/plantillas/manifiesto-despliegue.md",
-    ".cn-pilot/plantillas/pagina-diseno.md",
-    ".cn-pilot/plantillas/referencias.md",
-    ".cn-pilot/plantillas/seo/cobertura-auditoria-seo.csv",
-    ".cn-pilot/plantillas/seo/informe-auditoria-seo.md",
-    ".kilo/agents/arquitecto.md",
-    ".kilo/agents/contenido-seo.md",
-    ".kilo/agents/desarrollador.md",
-    ".kilo/agents/disenador-ui-ux.md",
-    ".kilo/agents/jefe-proyecto.md",
-    ".kilo/agents/maquetador-frontend.md",
-    ".kilo/agents/revisor.md",
-    ".kilo/commands/cn-actualizar.md",
-    ".kilo/commands/cn-estado.md",
-    ".kilo/commands/contenido.md",
-    ".kilo/commands/depurar.md",
-    ".kilo/commands/desplegar-pruebas.md",
-    ".kilo/commands/diagnostico.md",
-    ".kilo/commands/diseno.md",
-    ".kilo/commands/entrega.md",
-    ".kilo/commands/nuevo-proyecto.md",
-    ".kilo/commands/preparar-despliegue.md",
-    ".kilo/commands/punto-control.md",
-    ".kilo/commands/revision.md"
-  ],
-  "removedFiles": [
-    ".cn-pilot/CHANGELOG.md",
-    ".cn-pilot/CORE.md",
-    ".cn-pilot/MANIFEST.md",
-    ".cn-pilot/docs/CONFIGURATION.md",
-    ".cn-pilot/docs/GIT-WORKFLOW.md",
-    ".cn-pilot/docs/HUMAN-INTERACTION.md",
-    ".cn-pilot/docs/KILO-SETUP.md",
-    ".cn-pilot/docs/LIFECYCLE.md",
-    ".cn-pilot/docs/MODEL-STRATEGY.md",
-    ".cn-pilot/docs/SECURITY.md",
-    ".cn-pilot/docs/START-HERE.md",
-    ".cn-pilot/docs/TEAM-WORKFLOW.md",
-    ".cn-pilot/docs/TROUBLESHOOTING.md",
-    ".cn-pilot/docs/UPDATES.md",
-    ".cn-pilot/profiles/content-site.md",
-    ".cn-pilot/profiles/custom-web.md",
-    ".cn-pilot/profiles/landing-page.md",
-    ".cn-pilot/profiles/maintenance.md",
-    ".cn-pilot/profiles/woocommerce.md",
-    ".cn-pilot/profiles/wordpress-plugin.md",
-    ".cn-pilot/profiles/wordpress-site.md",
-    ".cn-pilot/templates/adr.md",
-    ".cn-pilot/templates/blog-post.md",
-    ".cn-pilot/templates/deploy-manifest.md",
-    ".cn-pilot/templates/design-page.md",
-    ".cn-pilot/templates/feature-spec.md",
-    ".cn-pilot/templates/handoff.md",
-    ".cn-pilot/templates/page-content.md",
-    ".cn-pilot/templates/references.md",
-    ".cn-pilot/templates/review-report.md",
-    ".cn-pilot/templates/seo/seo-audit-coverage.csv",
-    ".cn-pilot/templates/seo/seo-audit-report.md",
-    ".cn-pilot/templates/strategy/content-plan.md",
-    ".cn-pilot/templates/strategy/current-urls.csv",
-    ".cn-pilot/templates/strategy/keyword-map.csv",
-    ".cn-pilot/templates/strategy/redirect-map.csv",
-    ".cn-pilot/templates/strategy/sitemap.md",
-    ".cn-pilot/templates/strategy/strategy-brief.md",
-    ".cn-pilot/templates/strategy/url-map.csv",
-    ".kilo/agents/architect.md",
-    ".kilo/agents/content-seo.md",
-    ".kilo/agents/dev-lead.md",
-    ".kilo/agents/developer.md",
-    ".kilo/agents/frontend-builder.md",
-    ".kilo/agents/reviewer.md",
-    ".kilo/agents/ui-ux-designer.md",
-    ".kilo/commands/checkpoint.md",
-    ".kilo/commands/cn-status.md",
-    ".kilo/commands/cn-update.md",
-    ".kilo/commands/content.md",
-    ".kilo/commands/debug.md",
-    ".kilo/commands/deploy-staging.md",
-    ".kilo/commands/design.md",
-    ".kilo/commands/doctor.md",
-    ".kilo/commands/handoff.md",
-    ".kilo/commands/new-project.md",
-    ".kilo/commands/pre-deploy.md",
-    ".kilo/commands/review.md"
-  ],
+  "addedFiles": [],
+  "removedFiles": [],
   "migrations": [
     {
       "id": "cn-pilot-1x-to-2x-foundation",

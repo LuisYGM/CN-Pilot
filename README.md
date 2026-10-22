@@ -1,6 +1,6 @@
 # CN Pilot
 
-**CN Pilot 2.0.0 · Base Spanish-first para proyectos web con agentes de IA.**
+**CN Pilot 2.1.0 · Base Spanish-first para proyectos web con agentes de IA.**
 
 Kilo Code nativo · agnóstico al proveedor/modelo dentro de Kilo
 

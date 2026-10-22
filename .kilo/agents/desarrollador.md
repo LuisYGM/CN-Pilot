@@ -1,7 +1,6 @@
 ---
 description: Implementa lógica, PHP, WordPress, WooCommerce, APIs, webhooks, backend, datos e integraciones. Úsalo para features técnicas, bugs funcionales y desarrollo no puramente visual.
 mode: subagent
-steps: 50
 permission:
   read:
     "*": allow

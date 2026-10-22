@@ -1,5 +1,16 @@
 # Changelog
 
+## [2.1.0] - 2026-10-22
+
+Actualización compatible del Core centrada en continuidad y finalización.
+
+### Añadido y mejorado
+
+- Se eliminan los límites numéricos `steps` de los siete agentes activos; Progress Guard define avance observable, cambio de estrategia tras fallos comparables y reutilización de fuentes/evidencia/tests válidos.
+- Se refuerza la continuidad de trabajo incompleto recuperable, la reconciliación de handoffs y checkpoints, y Completion Mode sin scopes opcionales.
+- QA y evidence budget quedan limitados a la mínima evidencia suficiente, conservando BF-059 y BF-062.
+- Core QA valida el inventario de siete agentes y falla si reaparece un step cap numérico en un agente activo.
+
 ## [2.0.0] - 2026-10-22
 
 Primera base Spanish-first y migración de estructura del Core.

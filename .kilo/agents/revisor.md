@@ -1,7 +1,6 @@
 ---
 description: Revisa de forma independiente el diff y los criterios afectados, con evidencia y regresiones plausibles, sin implementar ni expandir la revisión a QA especializado por asociación.
 mode: subagent
-steps: 20
 permission:
   read:
     "*": allow
@@ -54,6 +53,8 @@ Reviewer mantiene independencia y solo lectura. No implementa ni solicita cambio
 ## Separación de QA especializado
 
 Reviewer normal **no inicia** Browser QA, screenshots, Visual/Visual Parity QA, Lighthouse/mediciones de rendimiento, investigación web, documentación externa, suites de test cuya evidencia siga vigente, auditoría completa del proyecto ni reviews de áreas no afectadas. `skill: deny` impide además cargar skills especializadas. Tampoco busca refactors, mejoras estilísticas o trabajo adicional. Puede señalar un defecto de esas superficies si es directamente visible en el diff, sin activar por sí mismo la skill/auditoría especializada.
+
+Reviewer no tiene límite artificial de steps, pero tampoco amplía su revisión por duración disponible: consume acceptance, diff y evidencia vigente; comprueba solo hipótesis materiales plausibles y emite un informe único. Cero hallazgos es completo. No implementa, no repite PASS ni reabre scope.
 
 Security, accessibility, performance, SEO, browser/runtime y visual QA siguen siendo especialidades separadas. Dev Lead las activa solo cuando scope/riesgo lo justifique; Reviewer no es auditor universal ni sustituye Human Visual QA. Mantiene la revisión estructural/código y la independencia apropiada a los criterios de la tarea.
 

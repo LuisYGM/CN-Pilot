@@ -1,7 +1,6 @@
 ---
 description: Define UX/UI, layouts, jerarquía, componentes, responsive, design system y especificaciones visuales implementables. Úsalo antes de maquetar cuando haya decisiones visuales relevantes.
 mode: subagent
-steps: 30
 permission:
   read:
     "*": allow

@@ -98,8 +98,8 @@ function createFixture(t) {
   put("DECISIONES.md", "# Decisions fixture\n");
   put("ARTEFACTOS.md", "# Artifacts fixture\n");
   put("AGENTS.md", "# Minimal test kernel\n");
-  put(".cn-pilot-version", "2.0.0\n");
-  put(".cn-pilot/NUCLEO.md", "**Versión:** `2.0.0`\n");
+  put(".cn-pilot-version", "2.1.0\n");
+  put(".cn-pilot/NUCLEO.md", "**Versión:** `2.1.0`\n");
   put(".cn-pilot/MANIFIESTO.md", manifest);
   put(".cn-pilot/config/responsive.json", "{}\n");
   put(".cn-pilot/documentacion/.keep");
@@ -112,7 +112,7 @@ function createFixture(t) {
   put(".cn-pilot/update/updater.test.mjs", "// updater test fixture\n");
   put(".cn-pilot/update/manifest.json", `${JSON.stringify({
     schemaVersion: 1,
-    cnPilotVersion: "2.0.0",
+    cnPilotVersion: "2.1.0",
     sourceRepository: "https://github.com/LuisYGM/cn-pilot.git",
     stableBranch: "main",
     sourceCommit: null,
@@ -165,7 +165,7 @@ test("known-good minimal fixture passes deterministic invariants", (t) => {
   const report = runCoreChecks({ rootDir: fixture.root });
   assert.equal(report.status, "PASS", JSON.stringify(report.findings));
   assert.deepEqual(runCoreChecks({ rootDir: fixture.root }), report, "same read-only snapshot yields the same report");
-  assert.equal(report.version, "2.0.0");
+  assert.equal(report.version, "2.1.0");
   assert.equal(getCheck(report, "agents.frontmatter").details.count, 7);
   assert.equal(getCheck(report, "skills.frontmatter").details.count, 2);
   assert.equal(getCheck(report, "commands.frontmatter").details.count, 14);
@@ -186,6 +186,23 @@ test("invalid SemVer fails the version check", (t) => {
   const report = runCoreChecks({ rootDir: fixture.root });
   assert.equal(getCheck(report, "core.version").status, "FAIL");
   assert.equal(report.status, "FAIL");
+});
+
+test("numeric steps in an active CN Pilot agent fails the explicit cap guard", (t) => {
+  const fixture = createFixture(t);
+  const agent = ".kilo/agents/desarrollador.md";
+  fixture.put(agent, "---\ndescription: Agente de fixture\nmode: subagent\nsteps: 25\n---\n# Active agent\n");
+  const check = getCheck(runCoreChecks({ rootDir: fixture.root }), "agents.noStepCaps");
+  assert.equal(check.status, "FAIL");
+  assert.deepEqual(check.details.findings, [{ path: agent, code: "EXPLICIT_AGENT_STEP_CAP" }]);
+  assert.match(check.details.reason, /outcome\/gates\/bloqueo real/);
+});
+
+test("step-cap history outside active agents does not trigger the guard", (t) => {
+  const fixture = createFixture(t);
+  fixture.put(".cn-pilot/CAMBIOS.md", "Historical sample: steps: 25\n");
+  fixture.put(".cn-pilot/qa/fixtures/agent-example.md", "steps: 25\n");
+  assert.equal(getCheck(runCoreChecks({ rootDir: fixture.root }), "agents.noStepCaps").status, "PASS");
 });
 
 test("legacy canonical paths are rejected in a clean 2.0 installation", (t) => {
@@ -325,6 +342,19 @@ test("Dev Lead checkpoint writer matches updater's minimum recovery contract", (
   assert.match(devLead, /schemaVersion: 1.*status.*objective.*nextAction/s);
   assert.match(recovery, /reader conserva además `BLOCKED` para compatibilidad/);
   assert.match(recovery, /`COMPLETED` se elimina al cerrar todos los gates/);
+});
+
+test("Progress Guard preserves recoverable work and bounded evidence without treating step caps as completion", () => {
+  const core = fs.readFileSync(new URL("../NUCLEO.md", import.meta.url), "utf8");
+  const devLead = fs.readFileSync(new URL("../../.kilo/agents/jefe-proyecto.md", import.meta.url), "utf8");
+  const guard = core.slice(core.indexOf("#### Progress Guard"), core.indexOf("### No-op / Silent Closure"));
+
+  for (const contract of ["primer fallo", "Segundo fallo comparable", "STOP VERIFYING THAT SURFACE", "INCOMPLETE + RECOVERABLE", "BLOCKED_HUMAN", "BLOCKED_EXTERNAL", "Completion Mode", "BF-062", "continuidad"])
+    assert.ok(guard.includes(contract), `Progress Guard keeps ${contract}`);
+  assert.match(devLead, /La respuesta de un especialista que deja trabajo incompleto es un handoff/);
+  assert.match(devLead, /Si acceptance sigue pendiente y el trabajo es recuperable.*continúa/s);
+  assert.match(guard, /no crea mecanismos automáticos de resume/);
+  assert.match(core, /una tercera iteración solo atiende un blocker material demostrable/i);
 });
 
 test("update commands require deterministic filesystem discovery and preserve silent closure", () => {

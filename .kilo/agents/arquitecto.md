@@ -1,7 +1,6 @@
 ---
 description: Diseña arquitectura y planes técnicos para cambios estructurales, integraciones complejas, migraciones, nuevos plugins o proyectos grandes. No es necesario para ajustes pequeños.
 mode: subagent
-steps: 30
 permission:
   read:
     "*": allow
