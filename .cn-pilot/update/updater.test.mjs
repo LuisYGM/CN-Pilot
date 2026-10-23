@@ -281,12 +281,60 @@ test("2.8.0 to 2.8.1 updates managed docs while preserving Project Context, READ
   assert.equal(plan.installedVersion, "2.8.0");
   assert.equal(plan.latestVersion, "2.8.1");
   assert.equal(plan.conflicts.length, 0);
-  assert.ok(plan.actions.every(({ path: item }) => item.startsWith(".cn-pilot/") || item === ".cn-pilot-version"));
+  assert.ok(plan.actions.every(({ path: item }) => item.startsWith(".cn-pilot/") || item.startsWith(".kilo/") || item === ".cn-pilot-version"));
   applyPlan(target.root, source.root, plan, latest);
   for (const [item, value] of Object.entries(protectedValues)) assert.equal(fs.readFileSync(path.join(target.root, item), "utf8"), value, `${item} remains untouched`);
   assert.equal(fs.readFileSync(path.join(target.root, ".cn-pilot/documentacion/EMPIEZA-AQUI.md"), "utf8"), "onboarding 2.8.1\n");
   assert.equal(fs.readFileSync(path.join(target.root, ".cn-pilot/NUCLEO.md"), "utf8"), newNucleo, "updater updates managed Core documentation");
   assert.equal(JSON.parse(fs.readFileSync(path.join(target.root, ".cn-pilot/update/manifest.json"), "utf8")).cnPilotVersion, "2.8.1");
+});
+
+test("2.8.1 to 2.8.2 applies the approved-conversion contract without normalizing Project Product", (t) => {
+  const target = fixture(t); const source = fixture(t);
+  const protectedPaths = [
+    "PROYECTO.md",
+    "REQUISITOS.md",
+    "ESTADO.md",
+    "DECISIONES.md",
+    "ARTEFACTOS.md",
+    "producto/index.html",
+    "producto/assets/site.css",
+    "artefactos/diseno/approved.html",
+    "recursos/source.html",
+  ];
+  const protectedValues = Object.fromEntries(protectedPaths.map((item) => [item, `Aprobado y existente, no convertir: ${item}\n`]));
+  for (const [item, value] of Object.entries(protectedValues)) target.put(target.root, item, value);
+  const oldCore = "**Versión:** `2.8.1`\n";
+  const newCore = "**Versión:** `2.8.2`\n";
+  const oldArchitecture = "Approved design remains authoritative; implementation not yet normalized\n";
+  const newArchitecture = "Approved design permits technical normalization without redesign\n";
+  target.put(target.root, ".cn-pilot-version", "2.8.1\n");
+  target.put(target.root, ".cn-pilot/NUCLEO.md", oldCore);
+  target.put(target.root, ".kilo/skills/frontend-architecture/SKILL.md", oldArchitecture);
+  const installed = manifest("2.8.1", [
+    entry(".cn-pilot-version", "2.8.1\n"),
+    entry(".cn-pilot/NUCLEO.md", oldCore),
+    entry(".kilo/skills/frontend-architecture/SKILL.md", oldArchitecture),
+  ]);
+  source.put(source.root, ".cn-pilot-version", "2.8.2\n");
+  source.put(source.root, ".cn-pilot/NUCLEO.md", newCore);
+  source.put(source.root, ".kilo/skills/frontend-architecture/SKILL.md", newArchitecture);
+  const latest = manifest("2.8.2", [
+    entry(".cn-pilot-version", "2.8.2\n"),
+    entry(".cn-pilot/NUCLEO.md", newCore),
+    entry(".kilo/skills/frontend-architecture/SKILL.md", newArchitecture),
+  ]);
+  source.put(source.root, ".cn-pilot/update/manifest.json", JSON.stringify(latest, null, 2));
+
+  const plan = planUpdate(target.root, installed, latest);
+  assert.equal(plan.installedVersion, "2.8.1");
+  assert.equal(plan.latestVersion, "2.8.2");
+  assert.equal(plan.conflicts.length, 0);
+  assert.ok(plan.actions.every(({ path: item }) => item.startsWith(".cn-pilot/") || item.startsWith(".kilo/") || item === ".cn-pilot-version"));
+  applyPlan(target.root, source.root, plan, latest);
+  for (const [item, value] of Object.entries(protectedValues)) assert.equal(fs.readFileSync(path.join(target.root, item), "utf8"), value, `${item} remains unchanged`);
+  assert.equal(fs.readFileSync(path.join(target.root, ".kilo/skills/frontend-architecture/SKILL.md"), "utf8"), newArchitecture);
+  assert.equal(fs.readFileSync(path.join(target.root, ".cn-pilot/NUCLEO.md"), "utf8"), newCore);
 });
 
 test("1.3.1 baseline detects the 1.4.0 MINOR distribution and added capability", (t) => {

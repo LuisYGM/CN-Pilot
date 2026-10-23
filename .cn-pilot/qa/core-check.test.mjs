@@ -461,7 +461,7 @@ test("BF-069 Frontend Architecture/Fidelity and Composition Diversity contracts 
     ["U consolidation is scoped, not a general refactor", architecture, "No es permiso para refactor general"],
     ["U consolidated styles receive only focal retest", architecture, "Reprueba solo superficies afectadas"],
     ["V Parallel page work stabilizes shared sources", core, "Estabiliza interfaces y decisiones compartidas antes de dividir"],
-    ["W responsive keeps Existing breakpoints", responsive, "los breakpoints implementados son source of truth"],
+    ["W responsive keeps Existing breakpoints", responsive, "Existing conserva los breakpoints implementados como source of truth"],
     ["W greenfield responsive uses its source config", responsive, "usa `.cn-pilot/config/responsive.json`"],
     ["X exact section/container/column DOM is not mandatory", contract, "no es un árbol DOM obligatorio"],
     ["X this is conceptual architecture, not literal DOM recipe", architecture, "no una jerarquía DOM o un set de clases obligatorio"],
@@ -523,6 +523,72 @@ test("BF-069 spacing, CSS source quality and consolidation remain balanced", () 
   assert.match(architecture, /third-party\/builders, utility systems deliberados o helpers de accesibilidad/i);
   assert.match(architecture, /patch piles[\s\S]{0,180}revisa la causa y consolida/i);
   assert.match(architecture, /stale media\/crop\/responsive rules[\s\S]{0,300}sin cambiar apariencia ni behavior aprobados/i);
+});
+
+test("BF-071 approved visual sources permit technical normalization without implicit redesign", () => {
+  const core = fs.readFileSync(new URL("../NUCLEO.md", import.meta.url), "utf8");
+  const start = core.indexOf("### Conversión de frontend visualmente aprobado (BF-071)");
+  const end = core.indexOf("Los wrappers auxiliares", start);
+  assert.ok(start >= 0 && end > start, "BF-071 conversion invariant is bounded in Core");
+  const contract = core.slice(start, end);
+  assert.ok(contract.includes("esa autoridad no congela el DOM ni la arquitectura CSS/JS"));
+  assert.ok(contract.includes("la opción recomendada es normalizar técnicamente"));
+  assert.ok(contract.includes("rediseño material requiere scope/aprobación separados"));
+  for (const phrase of ["optimizar", "refactorizar", "profesionalizar", "pasar a wordpress"]) assert.ok(contract.toLowerCase().includes(phrase), `${phrase} does not silently expand visual authority`);
+});
+
+test("approved frontend conversion infers faithful, optimized and authorized visual scope without a wizard", () => {
+  const read = (relative) => fs.readFileSync(new URL(`../../${relative}`, import.meta.url), "utf8");
+  const architecture = read(".kilo/skills/frontend-architecture/SKILL.md");
+  const projectLead = read(".kilo/agents/jefe-proyecto.md");
+  const frontend = read(".kilo/agents/maquetador-frontend.md");
+  const scenarios = [
+    ["approved source preserves output while allowing internals to change", architecture, "no el código literal", "no congela DOM, class names ni organización técnica"],
+    ["optimized conversion is the default recommended mode", architecture, "recomienda internamente una conversión optimizada", "conserve materialmente apariencia"],
+    ["faithful conversion honors explicit structure constraints", architecture, "Si la persona pide conservar estructura/clases", "usa conversión fiel"],
+    ["material visual changes require explicit authorization", architecture, "Mejoras visuales", "requieren scope/autorización explícitos"],
+    ["the modes remain internal rather than a user form", architecture, "no un selector/wizard para la persona"],
+    ["source authority is inspected before a single material question", architecture, "inspecciónalo primero", "pregunta solo si falta esa decisión material"],
+    ["Jefe routes a confirmed approved conversion without asking redundant approval", projectLead, "Si está Approved y se pide implementarlo sin cambio visual, recomienda conversión técnica optimizada por defecto", "No preguntes si ya se autorizó la conversión"],
+    ["frontend owner avoids design change from generic optimization/refactor wording", frontend, "los cambios visuales requieren autorización expresa", "no autorizan rediseñar"],
+  ];
+  for (const [scenario, source, ...phrases] of scenarios) assert.ok(phrases.every((phrase) => source.includes(phrase)), `${scenario}: policy is present`);
+});
+
+test("Technical Normalization preserves approved values while extracting only real shared roles", () => {
+  const architecture = fs.readFileSync(new URL("../../.kilo/skills/frontend-architecture/SKILL.md", import.meta.url), "utf8");
+  const parity = fs.readFileSync(new URL("../../.kilo/skills/visual-parity-review/SKILL.md", import.meta.url), "utf8");
+  const scenarios = [
+    ["normalization inspects the authorized source/target scope", /pasada técnica focalizada sobre el scope fuente\/target/i],
+    ["semantic roles extract reusable shared tokens from original approved values", /tokens globales solo para roles\/foundations compartidos[\s\S]{0,180}valores aprobados originales/i],
+    ["page/section-specific naming is avoided only for shared roles", /Nombres semánticos deben describir la función reutilizable, no una página\/sección/i],
+    ["numeric coincidence alone does not merge different roles", /misma cifra CSS no implica mismo token/i],
+    ["local and component-only values remain valid", /Valores locales\/component-only siguen siendo válidos/i],
+    ["token extraction does not require retroactive UI Kit work", /La extracción técnica de tokens dentro de Product no obliga[\s\S]{0,120}crear un UI Kit retroactivo/i],
+    ["components require a real shared pattern", /cuando exista un patrón real compartido/i],
+    ["shared foundations remain distinct from page composition", /Mantén separados shared foundations\/primitives de composición propia de página/i],
+    ["CSS and JS organization follow existing stack without rigid files/build", /no existe árbol de archivos, metodología CSS, archivo por página ni bundle universal obligatorio/i],
+    ["page-specific assets are loaded only when useful", /añade únicamente estilos\/scripts específicos útiles/i],
+    ["dead code is removed only with evidence", /Limpia dead code\/reglas con evidencia/i],
+    ["technical parity does not claim visual parity", /Parity compara output\/behavior aprobado, no la calidad interna del código/i],
+  ];
+  for (const [scenario, pattern] of scenarios) assert.ok(pattern.test(`${architecture}\n${parity}`), `${scenario}: invariant is present`);
+  assert.match(parity, /una normalización limpia tampoco demuestra por sí sola parity/i);
+});
+
+test("approved breakpoints and WordPress conversion follow their actual sources of truth", () => {
+  const responsive = fs.readFileSync(new URL("../../.kilo/skills/frontend-responsive/SKILL.md", import.meta.url), "utf8");
+  const theme = fs.readFileSync(new URL("../../.kilo/skills/wordpress-theme-development/SKILL.md", import.meta.url), "utf8");
+  const maquetador = fs.readFileSync(new URL("../../.kilo/agents/maquetador-frontend.md", import.meta.url), "utf8");
+  assert.match(responsive, /fuente HTML\/frontend designada Approved también conserva sus puntos de cambio/i);
+  assert.match(responsive, /Greenfield sin sistema responsive aprobado[\s\S]{0,100}`\.cn-pilot\/config\/responsive\.json`/i);
+  assert.match(responsive, /Approved, los puntos de cambio efectivos del source prevalecen/i);
+  assert.match(responsive, /No los sustituyas salvo cambio visual autorizado/i);
+  assert.match(theme, /Cuando Product transforma un frontend Approved[\s\S]{0,240}template parts, assets y enqueue nativos/i);
+  assert.match(theme, /Conserva literalmente estático lo que se aprobó como estático/i);
+  assert.match(theme, /la conversión HTML no implica volver todo dinámico[\s\S]{0,180}fields\/CPT\/ACF/i);
+  assert.match(maquetador, /no asumas que hay que conservar exactamente DOM, clases o código/i);
+  assert.match(theme, /no implica volver todo dinámico/i);
 });
 
 test("BF-070 WordPress Product Contract preserves Greenfield and Existing boundaries", () => {
@@ -849,7 +915,7 @@ test("performance-review measures the causal layer and avoids universal score/bu
 test("responsive and motion modernize browser options without replacing existing authority", () => {
   const responsive = fs.readFileSync(new URL("../../.kilo/skills/frontend-responsive/SKILL.md", import.meta.url), "utf8");
   const motion = fs.readFileSync(new URL("../../.kilo/skills/motion-interaction/SKILL.md", import.meta.url), "utf8");
-  assert.match(responsive, /Para viewport\/media queries compartidas[\s\S]{0,160}`\.cn-pilot\/config\/responsive\.json`/);
+  assert.match(responsive, /Greenfield sin breakpoints\/fuente aprobados[\s\S]{0,140}`\.cn-pilot\/config\/responsive\.json`/);
   assert.match(responsive, /container queries cuando un componente reutilizable[\s\S]{0,180}no por el viewport/i);
   assert.match(responsive, /breakpoint content-driven excepcional[\s\S]{0,180}escala global divergente/i);
   assert.match(responsive, /fluidez\/layout intrínsecos sin breakpoint/i);

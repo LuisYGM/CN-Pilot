@@ -1,6 +1,6 @@
 # Núcleo de CN Pilot — Especificación 2.0
 
-**Versión:** `2.8.1`
+**Versión:** `2.8.2`
 
 Documento de referencia para mantenedores de CN Pilot. Una persona nueva debe empezar por [`documentacion/EMPIEZA-AQUI.md`](documentacion/EMPIEZA-AQUI.md); no necesita leer esta especificación para trabajar.
 
@@ -471,6 +471,10 @@ Section / región semántica y visual
 - Contenido/widgets usan los elementos nativos apropiados. `.column` o equivalente es una herramienta opcional de layout, no un wrapper que deba existir en todo DOM.
 
 Una Section utiliza normalmente un Container; Containers hermanos solo si hay regiones independientes con sistemas distintos. No crees un wrapper por cada heading, párrafo o CTA. Full-bleed, sticky, overlapping, grids, galleries o layout interactivo pueden extender la base cuando la composición lo necesite; la gramática no es un árbol DOM obligatorio ni una cuota de clases.
+
+### Conversión de frontend visualmente aprobado (BF-071)
+
+Una referencia HTML/frontend aprobada gobierna el resultado visual, responsive, media e interacción de su scope; esa autoridad no congela el DOM ni la arquitectura CSS/JS. Cuando se autoriza su paso a Product, la opción recomendada es normalizar técnicamente dentro del stack destino y conservar equivalencia visual/comportamental. La persona puede pedir fidelidad estructural o autorizar mejoras visuales; rediseño material requiere scope/aprobación separados. “Optimizar”, “refactorizar”, “profesionalizar” o “pasar a WordPress” no autorizan por sí solos cambiar la apariencia ni el comportamiento. Esto no activa una conversión automática de Existing ni altera la aprobación de diseño/derechos/alcance.
 
 Los wrappers auxiliares, incluidos `Div`, son válidos únicamente cuando tienen una función justificable: agrupar widgets, alinear elementos, crear un micro-layout, resolver responsive interno, interacción o una unidad visual interna. No se persiguen métricas artificiales de cero wrappers ni se aceptan wrappers por defecto.
 

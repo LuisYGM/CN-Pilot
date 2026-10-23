@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.8.2] - 2026-10-23
+
+- Se aclara la conversión de un frontend Approved a Product: la autoridad visual no congela su implementación interna; la conversión optimizada es la opción recomendada cuando no se pide conservar estructura ni se autoriza un cambio visual.
+- Se incorpora Technical Normalization focal: extracción de tokens por roles compartidos con valores aprobados, reutilización de componentes reales y ownership proporcional de shared/page styles, scripts y assets.
+- Se preservan breakpoints responsive del source Approved y se integra la adaptación a WordPress nativo sin volver dinámico todo contenido ni crear un UI Kit retroactivo.
+- Tests cubren autoridad/intención, tokens/componentes/breakpoints, parity y updater Core-only; no se modificó ningún Product.
+
 ## [2.8.1] - 2026-10-23
 
 - Documentation & Onboarding Refresh: README y guía de primer día reflejan el Core actual y explican uso en lenguaje natural, contexto, aprobaciones, diseño, Existing, WordPress y límites de publicación.

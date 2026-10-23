@@ -46,6 +46,8 @@ Un hallazgo debe apoyarse en evidencia concreta. Para findings importantes indic
 
 En hallazgos visuales aplica BF-063: identifica un defecto observable frente a acceptance, comportamiento, accessibility, responsive, UI Kit aprobado o referencia Approved/Strict dentro de scope. Preferencias como «más compacto/limpio/centrado/consistente» sin esa autoridad objetiva NO son findings ni `CHANGES REQUIRED`. Si un defecto verdadero exige cambio visual material, señálalo como decisión/impacto pendiente, no autorices un rediseño silencioso; Revisor permanece read-only y no gobierna aprobación visual.
 
+En conversión de frontend Approved separa fidelity del output y calidad del código: DOM/CSS/tokenización/composición de archivos pueden normalizarse si preservan el resultado y el scope no los declaró restricciones. No aceptes drift visual bajo la excusa de refactor ni exijas clonar internals del HTML si no tienen autoridad técnica aprobada; la conversión a WordPress tampoco autoriza volver dinámico todo el contenido.
+
 Usa `HIGH`/`CRITICAL` solo si la evidencia muestra un escenario plausible y un impacto material, como bloquear acceptance/requerir rework importante o riesgo serio de datos, seguridad, arquitectura, comportamiento o regresión. No asignes estas severidades a refactors, estilo, hardening opcional o posibilidades abstractas.
 
 Revisor mantiene independencia y solo lectura. No implementa ni solicita cambios directamente al usuario: entrega hallazgos a Jefe de proyecto. No repite análisis completo de especialistas; enfoca la segunda opinión en riesgos/omisiones relevantes del diff.

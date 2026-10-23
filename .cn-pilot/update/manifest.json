@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "cnPilotVersion": "2.8.1",
+  "cnPilotVersion": "2.8.2",
   "sourceRepository": "https://github.com/LuisYGM/cn-pilot.git",
   "stableBranch": "main",
   "sourceCommit": null,
@@ -11,11 +11,11 @@
   "managedFiles": [
     {
       "path": ".cn-pilot-version",
-      "sha256": "c94b6101b82efbf24da807958404613ad9bd7ecfd875f596f8286fa9638e4aa5"
+      "sha256": "00d9235ed59ffb6f6771ed263216be6baf0be8f0408dc4bf6f59a14917d654ba"
     },
     {
       "path": ".cn-pilot/CAMBIOS.md",
-      "sha256": "ddb5a0f9f84e638c482edc092fbd390e37f6a2e042013d45a1a45be5a66402f5"
+      "sha256": "4825f63efdd640abcf7921e831904b4022b398803bc34a7556effa1d18231d14"
     },
     {
       "path": ".cn-pilot/MANIFIESTO.md",
@@ -23,7 +23,7 @@
     },
     {
       "path": ".cn-pilot/NUCLEO.md",
-      "sha256": "2da901dddddccec9087f6e56063aa5657945880d5347e7c0ce77456c62ce30cc"
+      "sha256": "529286969ab50021d77c13f7ddecd15aea8af6b29699d7733166d5a1fb307141"
     },
     {
       "path": ".cn-pilot/config/responsive.json",
@@ -195,7 +195,7 @@
     },
     {
       "path": ".cn-pilot/qa/core-check.test.mjs",
-      "sha256": "df2e6f8b918c0517acc3ba4dbd2d1c1cdba55e492cede9b5f47d4652e84dfc28"
+      "sha256": "5a52009781a0f7d8de7f4a0e40bf9dca7bf43b6cab84151c845b01012313ada8"
     },
     {
       "path": ".cn-pilot/update/updater.mjs",
@@ -203,7 +203,7 @@
     },
     {
       "path": ".cn-pilot/update/updater.test.mjs",
-      "sha256": "16b04407e4478dacbaf9cee2dca7bc7e2f8145730effc731a39dc40422396dce"
+      "sha256": "e3d86784ef4fed7f6596e053ae92c486ff746146c273b94e20ee0ed065bab7b4"
     },
     {
       "path": ".kilo/agents/arquitecto.md",
@@ -223,15 +223,15 @@
     },
     {
       "path": ".kilo/agents/jefe-proyecto.md",
-      "sha256": "593360f7c31ee36b3937d4733ff221c120a16d42ae15889d2dcc28d54072e895"
+      "sha256": "ce7b77ead2e6f7ec82b6b23964e7c80a4bbd41edcdd4103409be4f3eda81ce26"
     },
     {
       "path": ".kilo/agents/maquetador-frontend.md",
-      "sha256": "f39125b73f09756dc541b3ed7fb6e51a35b8b6a5d32bc8a44fbefbf7098c1aee"
+      "sha256": "8c3bc584b5d8b84d35da1d85c75928fb150b08ab95da937e1a9b7ebe58069582"
     },
     {
       "path": ".kilo/agents/revisor.md",
-      "sha256": "dc414e8618eb0a48709139ce236f755d4ea0f57c11dedcaa8b20d3d386c04971"
+      "sha256": "7a8943a4ab9051270ecf47c6e8cdddf220586bc1a439d4bf411196f0304701ef"
     },
     {
       "path": ".kilo/commands/cn-actualizar.md",
@@ -351,11 +351,11 @@
     },
     {
       "path": ".kilo/skills/frontend-architecture/SKILL.md",
-      "sha256": "e606310be57bc8521355be373ed9db6deee4556fa5632097b318108f6905e45b"
+      "sha256": "4b3502ded3528ef77640df71e1faaeff2481328462d6591ec1359bb105187450"
     },
     {
       "path": ".kilo/skills/frontend-responsive/SKILL.md",
-      "sha256": "51abb1a399c1f5bb35d7f5cc961f1e5ee9477551a6f96fedf70bcc911676d9eb"
+      "sha256": "c18ca2e1d3d1a38515f858aae4aab0a3bc9aa5621f37694324f8bc334ccb842c"
     },
     {
       "path": ".kilo/skills/git-checkpoint/SKILL.md",
@@ -443,7 +443,7 @@
     },
     {
       "path": ".kilo/skills/visual-parity-review/SKILL.md",
-      "sha256": "17fc052042ee9684dcf3f21ff02bfd85341256543a64b7a6761b8f05fdbb7d3c"
+      "sha256": "0f5858d62487125be65bf6650b2c6de26e7b8b493fdee729ac5d7e601caff66a"
     },
     {
       "path": ".kilo/skills/web-strategy/SKILL.md",
@@ -467,7 +467,7 @@
     },
     {
       "path": ".kilo/skills/wordpress-theme-development/SKILL.md",
-      "sha256": "59c0b57da4414042f6fd479deabc12b36660514698f59101e4eb8b944ba0d26b"
+      "sha256": "33d6029dbee8ce81133c8dfb00ec774b9185eaa5a65d7281802150faa5e83388"
     },
     {
       "path": ".kilo/skills/wordpress/SKILL.md",
@@ -478,12 +478,7 @@
       "sha256": "6f10a0964c6d9640ae6017884ec55db2510e196829a2aabcb7e71bdabae40743"
     }
   ],
-  "addedFiles": [
-    ".cn-pilot/documentacion/COMANDOS.md",
-    ".cn-pilot/documentacion/GLOSARIO.md",
-    ".cn-pilot/documentacion/README.md",
-    ".cn-pilot/documentacion/SKILLS-Y-CAPACIDADES.md"
-  ],
+  "addedFiles": [],
   "removedFiles": [],
   "migrations": [
     {
