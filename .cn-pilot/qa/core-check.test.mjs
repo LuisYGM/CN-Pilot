@@ -1160,3 +1160,29 @@ test("BF-072 contractual UX defaults preserve scope, authority, and accessible i
   assert.match(accessibility, /Header persistente[\s\S]*?anchors[\s\S]*?:focus-visible[\s\S]*?reduced motion/i);
   assert.match(reviewer, /Header desaparece al scroll[\s\S]*?anchors[\s\S]*?layout shift[\s\S]*?disabled/i);
 });
+
+test("Implementation-first QA uses source gate, minimal evidence, grouped fixes, and valid PASS reuse", () => {
+  const read = (file) => fs.readFileSync(new URL(`../../${file}`, import.meta.url), "utf8");
+  const core = read(".cn-pilot/NUCLEO.md");
+  const architecture = read(".kilo/skills/frontend-architecture/SKILL.md");
+  const responsive = read(".kilo/skills/frontend-responsive/SKILL.md");
+  const webapp = read(".kilo/skills/webapp-testing/SKILL.md");
+  const parity = read(".kilo/skills/visual-parity-review/SKILL.md");
+  const strategy = read(".kilo/skills/testing-strategy/SKILL.md");
+  const frontend = read(".kilo/agents/maquetador-frontend.md");
+  const projectLead = read(".kilo/agents/jefe-proyecto.md");
+  const reviewer = read(".kilo/agents/revisor.md");
+  assert.match(core, /Implementation first[\s\S]*?source-only[\s\S]*?defectos determinísticos[\s\S]*?no usa Browser[\s\S]*?check disponible más barato/i);
+  assert.match(architecture, /Implementation Quality Gate[\s\S]*?archivos\/regiones recién escritos o cambiados[\s\S]*?box-sizing: border-box[\s\S]*?width: 100%[\s\S]*?minmax\(0,[\s\S]*?min-width: 0[\s\S]*?100vw[\s\S]*?heights fijas[\s\S]*?dead CSS\/JS[\s\S]*?no Browser/i);
+  assert.match(architecture, /Approved\/Strict preserva fidelidad[\s\S]*?Existing aplica guardrails solo a código nuevo\/modificado/i);
+  assert.match(responsive, /viewport representativo de \*\*360px de ancho\*\*[\s\S]*?no breakpoint ni única garantía/i);
+  assert.match(responsive, /Browser\/resizing\/computed layout[\s\S]*?sin capturas guardadas/i);
+  assert.match(webapp, /screenshots por defecto: son evidencia, no logging[\s\S]*?captura responde una pregunta[\s\S]*?360px/i);
+  assert.match(webapp, /Completa la inspección Round 1 y agrupa findings antes de editar[\s\S]*?no screenshot después de cada fix/i);
+  assert.match(parity, /solo viewports\/estados designados por reference\/scope[\s\S]*?no inventes resoluciones[\s\S]*?no hagas sweep/i);
+  assert.match(strategy, /Implementation Quality Gate[\s\S]*?un viewport de 360px[\s\S]*?no reinicies QA omnibus/i);
+  assert.match(frontend, /no abras Browser tras cada sección[\s\S]*?un solo viewport de 360px/i);
+  assert.match(frontend, /agrupa fixes compatibles en un batch[\s\S]*?ROUND 2 revisa solo fixes/i);
+  assert.match(projectLead, /source-only antes de Browser[\s\S]*?no actives un paquete omnibus[\s\S]*?conserva PASS no invalidado/i);
+  assert.match(reviewer, /defectos determinísticos visibles en source[\s\S]*?capture logging[\s\S]*?no exijas Browser/i);
+});

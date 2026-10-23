@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.8.4] - 2026-10-23
+
+- Se incorpora Implementation Quality Gate breve y source-only antes de Browser para corregir defectos determinísticos sobre el código tocado, sin relectura amplia, refactor o tooling nuevo.
+- Responsive QA limita evidencia al mínimo: mobile genérico usa un viewport representativo de 360px; screenshots responden preguntas materiales, fixes se agrupan y ROUND 2 es focal.
+- Se refuerzan agrupación de construcción, source-first debugging, PASS reuse y QA routing por trigger; Browser confirma render/runtime/parity sin convertirse en loop ni QA omnibus.
+- Core QA y updater protegen el contrato y la actualización no modifica Product ni Project Context.
+
 ## [2.8.3] - 2026-10-23
 
 - BF-072 establece Header persistente (sticky preferido) para nuevas interfaces web/rediseños en scope, con navegación primaria equivalente en Application UI y protección de contenido, anchors y mobile.

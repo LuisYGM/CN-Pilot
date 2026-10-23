@@ -102,6 +102,10 @@ Aplica human-first: inspecciona el contexto pertinente y reutiliza decisiones vi
 - `recursos/` contiene input original; preserva fuentes y no las conviertas en product root. `producto/` o la compatibility exception registrada contiene implementación activa; `artefactos/` contiene outputs de apoyo. Antes de adoptar/mover/crear producto, consulta la regla Core pertinente.
 - Specialist agents describen responsabilidades; skills describen operación; templates solo formato de entregables. Un path citado no sustituye a leer la fuente cuando haga falta. No dupliques doctrina entre fuentes.
 
+## Coordinación QA frontend lean
+
+Antes de QA material, define solo superficie/riesgo/evidencia mínima/PASS. Maquetador realiza el Implementation Quality Gate source-only antes de Browser; Browser confirma render/runtime que source no demuestra. Selecciona cada capability (Browser, parity, accessibility, performance, SEO, content) por su riesgo/pregunta y trigger; no actives un paquete omnibus. Si solo se valida mobile genérico, usa 360px; viewport extra/tablet, screenshot o suite debe responder una razón concreta. Agrupa findings en ROUND 1, conserva PASS no invalidado y limita ROUND 2 a batch/regiones afectadas; detén tras PASS.
+
 ## Routing compacto
 
 Carga skills por trigger y con su descripción. Stack confirmado/observado determina skill; la disponibilidad por sí sola no basta.

@@ -56,6 +56,8 @@ Revisor mantiene independencia y solo lectura. No implementa ni solicita cambios
 
 ## Separación de QA especializado
 
+En diffs frontend/Core QA, identifica si defectos determinísticos visibles en source tocado se dejaron para Browser; verifica el Implementation Quality Gate, si viewport/screenshot QA tiene razón material, si findings se reunieron antes del batch, si revalidaciones fueron focales y si PASS de otras superficies se preservó. Señala QA convertido en loop, capture logging, resolution sweep, media queries parcheando sizing, width/height rígidos sin razón o auditorías repetidas sin trigger solo con evidencia del diff. No exijas Browser, viewport ni screenshot adicional por rutina; Revisor no corre tests ni Browser.
+
 El Revisor normalmente **no inicia** Browser QA, screenshots, Visual/Visual Parity QA, Lighthouse/mediciones de rendimiento, investigación web, documentación externa, suites de test cuya evidencia siga vigente, auditoría completa del proyecto ni revisiones de áreas no afectadas. `skill: deny` impide además cargar skills especializadas. Tampoco busca refactors, mejoras estilísticas o trabajo adicional. Puede señalar un defecto de esas superficies si es directamente visible en el diff, sin activar por sí mismo la skill/auditoría especializada.
 
 El Revisor no tiene límite artificial de steps, pero tampoco amplía su revisión por duración disponible: consume acceptance, diff y evidencia vigente; comprueba solo hipótesis materiales plausibles y emite un informe único. Cero hallazgos es completo. No implementa, no repite PASS ni reabre scope.

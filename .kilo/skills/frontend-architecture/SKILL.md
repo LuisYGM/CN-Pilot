@@ -84,4 +84,16 @@ Cuando una implementación material ya alcanza fidelity suficiente y antes del c
 
 ## Verificación proporcional y fast paths
 
+### Implementation Quality Gate (source-only, previo a Browser)
+
+Antes de Browser QA material, revisa solo archivos/regiones recién escritos o cambiados; construye con estas restricciones desde el inicio y corrige aquí defectos determinísticos. Comprueba brevemente si:
+
+- sizing usa `box-sizing: border-box` donde corresponda; elementos que deben adaptarse tienen constraints fluidos/intrinsic sizing en vez de widths rígidos sin razón (no todo requiere `width: 100%`); Containers pueden llenar el parent y limitarse/centrarse según diseño;
+- Grid/Flex permiten shrink donde hace falta (`minmax(0, …)`, `min-width: 0` solo cuando aplique); texto/nav/CTA pueden envolver y no tienen `nowrap` riesgoso;
+- `100vw` dentro de gutters no crea overflow accidental; heights fijas no cortan contenido variable; spacing/base fluida no delega a breakpoints un bug de sizing;
+- media representacional usa sizing responsive y ratio/dimensiones/object-fit que preservan diseño sin deformar; imports/assets apuntan a recursos existentes;
+- markup/estados/semántica, CSS contradictorio/duplicado y dead CSS/JS introducido por la tarea no tienen defectos obvios.
+
+Es un gate breve, no otra fase o auditoría: scope tocado únicamente; no Browser, screenshot, Lighthouse, suite global, reporte largo ni refactor secundario. Width/height explícitos, `100vw`, `white-space: nowrap`, breakpoints, `min-width: 0` y `minmax(0, 1fr)` son decisiones contextuales, no prohibiciones/snippets obligatorios. Approved/Strict preserva fidelidad; Existing aplica guardrails solo a código nuevo/modificado, no refactoriza historia fuera de scope. Luego ejecuta syntax/build/lint/source check existente más barato antes de Browser.
+
 Consulta `frontend-responsive` cuando el scope modifique responsive y `accessibility-review` cuando la interacción/accesibilidad se vea afectada. QA comprueba el árbol real, semántica, responsabilidades Section/Container/Column/Block, naming/source de estilos, wrappers justificados, Grid/Flex por intención, responsividad relevante, y fidelity a la Flagship en scope. No exige una suite de browser, benchmark, viewport matrix ni migración completa cuando el cambio no los necesita.
