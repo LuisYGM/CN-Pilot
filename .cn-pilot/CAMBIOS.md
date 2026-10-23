@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.8.5] - 2026-10-23
+
+- Jefe de proyecto transmite invariantes Core/Quality Floors aplicables y acceptance observable a cada owner material; autonomía técnica no permite downgrade silencioso, y omisiones recuperables vuelven al mismo owner.
+- Public Web Greenfield/material abierta incorpora Motion Experience Floor: hero choreography, scroll progression material, section-specific behavior, microinteracciones y moment memorable, demostrado en Concept Studies/Flagship.
+- La intención precede a tecnología; se conserva el fast path de CSS/native cuando alcanza y GSAP/dependencies en Product autorizado cuando la fidelidad del intent lo requiere. Sin autorización duplicada para costo técnico reversible; licencias/costos/privacy/riesgo extraordinario mantienen sus gates.
+- Opt-out estático explícito, Approved/Strict, Existing, Application UI, Design-only/Product y Lean QA preservan sus límites. Core/updater QA protegen regresiones sin tocar Product, Context ni gh-pages.
+
 ## [2.8.4] - 2026-10-23
 
 - Se incorpora Implementation Quality Gate breve y source-only antes de Browser para corregir defectos determinísticos sobre el código tocado, sin relectura amplia, refactor o tooling nuevo.

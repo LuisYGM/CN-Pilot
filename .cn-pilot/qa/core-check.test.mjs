@@ -343,8 +343,8 @@ test("Visual Pipeline 2.0 covers the public-web divergence, synthesis, flagship 
     ["L human approval gates Product", pipeline, "Human Visual Approval → Product implementation si está en scope"],
     ["M Designer does not implement Product before approval", designer, "no edites Product antes de la aprobación visual del Flagship"],
     ["N screenshots are not primary evidence", creative, "sin matrices screenshot"],
-    ["N studies demonstrate mobile transformation proportionally", creative, "mobile demuestra cómo se adapta hero y una región compleja"],
-    ["O user assets retain priority/provenance", creative, "Reutiliza assets PROVIDED/EXISTING cuando correspondan"],
+    ["N studies demonstrate motion and mobile transformation proportionally", creative, "desktop orienta composición y motion; mobile demuestra adaptación de Hero"],
+    ["O user assets retain priority/provenance", creative, "Reutiliza assets PROVIDED/EXISTING"],
     ["O Visual Synthesis resolves a mix", creative, "la **Visual Synthesis** convierte esos elementos en una gramática única y coherente"],
     ["P parallel studies are alternatives, not merges", creative, "la síntesis seleccionada es una unidad nueva, no una integración automática de ramas"],
   ];
@@ -374,7 +374,7 @@ test("Visual Pipeline sequence does not construct the UI Kit before creative exp
   const flagship = creative.indexOf("una sola Flagship de página completa");
   assert.ok(coverage >= 0 && studies > coverage, "reference coverage precedes studies");
   assert.ok(review > studies && derivedKit > review && flagship > derivedKit, "review/mix and synthesis precede kit and flagship");
-  assert.ok(creative.slice(studies, review).includes("No generes UI Kits/component libraries para cada alternativa"));
+  assert.ok(creative.slice(studies, review).includes("No generes Kits/component libraries para cada alternativa"));
 });
 
 test("BF-068 Public Web Visual Quality Floor covers requirements A-S", () => {
@@ -395,12 +395,12 @@ test("BF-068 Public Web Visual Quality Floor covers requirements A-S", () => {
     ["B real representative Footer", kit, "Footer"],
     ["B Footer does not invent business facts", kit, "No inventes contacto, horarios, redes"],
     ["C Application UI fast path", floor, "no se impone a Application UI"],
-    ["D default public-web Motion System", floor, "Motion forma parte del diseño de public web nuevo por defecto"],
+    ["D default public-web Motion System", floor, "una experiencia dinámica e interactiva es obligatoria"],
     ["D the UI Kit presents Motion System specimens", kit, "**Motion System:**"],
-    ["E explicit static-motion preference", floor, "petición explícita de experiencia estática"],
-    ["F page/Hero entrance", motion, "entrada de página/hero"],
-    ["G scroll progression when content supports it", motion, "scroll progression/reveals cuando el recorrido y el contenido lo aprovechen"],
-    ["G generic fade-up is not the brand language", motion, "ni copies `fade-up + stagger` como idioma de marca"],
+    ["E static requires scoped exception", floor, "experiencia dinámica e interactiva es obligatoria salvo opt-out explícito"],
+    ["F Hero choreography", floor, "hero/page choreography diseñada"],
+    ["G material post-Hero scroll progression", floor, "progresión scroll-linked material en la página principal"],
+    ["G repeated generic fades do not pass", floor, "Un sistema consistente solo de `opacity/translateY/stagger` repetido"],
     ["H reduced motion", motion, "`prefers-reduced-motion`"],
     ["I client media has priority", media, "Inspecciona lo existente antes de proponer sustitución"],
     ["J no empty high-fidelity slots", media, "no se deja como caja gris"],
@@ -416,9 +416,9 @@ test("BF-068 Public Web Visual Quality Floor covers requirements A-S", () => {
     ["O artwork SVG remains permitted", kit, "custom SVG sigue permitido para artwork"],
     ["P Quality Floor permits a deliberately sober direction", media, "Sobriedad deliberada es un resultado válido"],
     ["P anti-template swap test is present", creative, "si cambian logo/copy/fotos, ¿la propuesta se vendería casi intacta a otro sector?"],
-    ["Q real evidence is required for motion", motion, "Flagship muestra el comportamiento en ejecución si motion no fue desactivado"],
+    ["Q Flagship executes motion", motion, "Flagship lo ejecuta salvo excepción"],
     ["R Revisor verifies objective criteria only", reviewer, "comprueba de forma read-only el Visual Quality Floor objetivo BF-068"],
-    ["S Designer owns the public-web floor", designer, "verifica el Quality Floor BF-068"],
+    ["S Designer owns the public-web floor", designer, "verifica el Quality Floor BF-068 proporcionalmente"],
   ];
   for (const [scenario, source, required] of scenarios) assert.ok(source.includes(required), `${scenario}: contract is present`);
 });
@@ -1185,4 +1185,54 @@ test("Implementation-first QA uses source gate, minimal evidence, grouped fixes,
   assert.match(frontend, /agrupa fixes compatibles en un batch[\s\S]*?ROUND 2 revisa solo fixes/i);
   assert.match(projectLead, /source-only antes de Browser[\s\S]*?no actives un paquete omnibus[\s\S]*?conserva PASS no invalidado/i);
   assert.match(reviewer, /defectos determinísticos visibles en source[\s\S]*?capture logging[\s\S]*?no exijas Browser/i);
+});
+
+test("Project Lead owns task-specific mandatory constraints and specialists cannot downgrade outcomes", () => {
+  const read = (file) => fs.readFileSync(new URL(`../../${file}`, import.meta.url), "utf8");
+  const core = read(".cn-pilot/NUCLEO.md");
+  const lead = read(".kilo/agents/jefe-proyecto.md");
+  const reviewer = read(".kilo/agents/revisor.md");
+  const governance = core.slice(core.indexOf("### Gobierno del outcome y handoff por owner"), core.indexOf("## Permisos"));
+  assert.match(governance, /Jefe de proyecto es accountable del outcome[\s\S]*?invariantes Core[\s\S]*?handoff compacto/i);
+  assert.match(governance, /El especialista controla el método[\s\S]*?no puede degradar el outcome en silencio[\s\S]*?antes de variar/i);
+  assert.match(governance, /`COMPLETED` no sustituye reconciliación[\s\S]*?vuelve al mismo owner[\s\S]*?Revisor es segunda opinión read-only/i);
+  assert.match(governance, /`Decide tú`[\s\S]*?no autoriza saltar el Quality Floor[\s\S]*?opt-out explícito prevalece/i);
+  assert.match(lead, /Antes de delegar define compactamente goal\/scope\/owner\/source of truth, invariantes Core aplicables, acceptance observable, gates y evidencia mínima/i);
+  assert.match(lead, /Método es del especialista; mandatory defaults\/outcome no son opcionales[\s\S]*?omisión recuperable vuelve al mismo owner/i);
+  assert.match(reviewer, /no sustituye el gate primario de Jefe/i);
+});
+
+test("Open public-web motion floor is executable, intent-first, and preserves authority exceptions", () => {
+  const read = (file) => fs.readFileSync(new URL(`../../${file}`, import.meta.url), "utf8");
+  const core = read(".cn-pilot/NUCLEO.md");
+  const creative = read(".kilo/skills/creative-web-experience/SKILL.md");
+  const motion = read(".kilo/skills/motion-interaction/SKILL.md");
+  const kit = read(".kilo/skills/ui-kit-construction/SKILL.md");
+  const composition = read(".kilo/skills/page-composition/SKILL.md");
+  const designer = read(".kilo/agents/disenador-ui-ux.md");
+  const frontend = read(".kilo/agents/maquetador-frontend.md");
+  const reviewer = read(".kilo/agents/revisor.md");
+  const floorStart = core.indexOf("### Visual Quality Floor de Public Web (BF-068)");
+  const floorEnd = core.indexOf("## Arquitectura frontend y fidelidad (BF-069)", floorStart);
+  const floor = core.slice(floorStart, floorEnd);
+  assert.match(floor, /experiencia dinámica e interactiva es obligatoria[\s\S]*?opt-out explícito[\s\S]*?authority Approved\/Strict incompatible/i);
+  assert.match(floor, /hero\/page choreography[\s\S]*?progresión scroll-linked material[\s\S]*?secciones principales[\s\S]*?microinteractions[\s\S]*?momento memorable/i);
+  assert.match(floor, /después del Hero[\s\S]*?propuesta minimalista también puede cumplir/i);
+  assert.match(floor, /no se impone a Application UI, Existing localized, referencias Approved\/Strict[\s\S]*?Application UI mantiene su fast path/i);
+  assert.match(floor, /opt-out humano limita exactamente el behavior\/scope[\s\S]*?sin scroll effects[\s\S]*?No uses GSAP[\s\S]*?tecnología, no elimina la experiencia/i);
+  assert.match(creative, /Cada Concept Study de dirección pública demuestra motion intent observable[\s\S]*?nota de “planned animation” no cuenta/i);
+  assert.match(creative, /STATIC|NONE\/static solo es válido por opt-out explícito[\s\S]*?constraint material/i);
+  assert.match(creative, /opt-out se aplica exactamente al behavior\/scope pedido[\s\S]*?no GSAP.*limita technology, no experience/i);
+  assert.match(motion, /smallest capable tool that faithfully implements the already-defined experience/i);
+  assert.match(motion, /progresión scroll-linked material que continúa después del Hero[\s\S]*?behavior diferenciado[\s\S]*?memorable moment/i);
+  assert.match(motion, /GSAP:[\s\S]*?Ningún trigger obliga a GSAP/i);
+  assert.match(motion, /dependencia reversible de implementación[\s\S]*?licencia no aceptada/i);
+  assert.match(motion, /opt-out del usuario se aplica solo a los behavior\/scope expresados[\s\S]*?No GSAP[\s\S]*?no la experiencia/i);
+  assert.match(motion, /Nunca añadas dependency\/CDN\/script\/node_modules a template CN Pilot/i);
+  assert.match(motion, /No uses screenshots como evidencia de motion/i);
+  assert.match(kit, /Motion System.*hero choreography.*progresión scroll\/section behavior.*reduced-motion intent/s);
+  assert.match(composition, /section’s motion role[\s\S]*?progresión scroll-linked material posterior al Hero/i);
+  assert.match(designer, /motion no es opcional[\s\S]*?demostrable|motion profesional es acceptance obligatorio/i);
+  assert.match(frontend, /no los elimines\/sustituyas por fade simple[\s\S]*?informa a Jefe de proyecto antes de degradar/i);
+  assert.match(reviewer, /scroll progression posterior al Hero[\s\S]*?memorable concept-linked moment[\s\S]*?no sustituye el gate primario de Jefe/i);
 });

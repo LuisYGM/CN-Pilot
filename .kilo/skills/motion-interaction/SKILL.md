@@ -5,11 +5,11 @@ description: Seleccionar, implementar y verificar motion e interacciones fronten
 
 # motion-interaction
 
-Opera BF-049 en una tarea frontend concreta. **Use the smallest capable tool**: native first, specialized when justified, install on demand, remove when no longer needed. Que GSAP o una librería esté disponible no es razón suficiente para adoptarla.
+Opera BF-049 en una tarea frontend concreta. **Use the smallest capable tool that faithfully implements the already-defined experience**: native first si basta, specialized cuando el intent lo requiera, install on demand dentro del Product autorizado, remove cuando ya no se necesite. No rebajes choreography/scroll/behavior aprobados para evitar una dependency. Que GSAP o una librería esté disponible no es razón suficiente para adoptarla.
 
 ## Activación y selección
 
-Actívala cuando motion/interaction sea parte material de la intención visual o comportamiento, supere una interacción nativa rutinaria, use timelines/scroll coordinado, presente lifecycle/performance/accessibility risk o requiera capability especializada. Para hover, focus, toggle o transición simple, CSS/HTML existente normalmente basta.
+En una implementación material de Public Web abierta, la motion del BF-068 es parte del acceptance aunque la persona no diga «anima»; activa esta skill si el intent aprobado requiere choreography/scroll/interaction no trivial o lifecycle/performance/accessibility riesgo. Para microinteracción o transición trivial usa CSS/HTML existente sin cargar esta skill por asociación.
 
 1. Define el intent antes del tooling: elemento, propósito, trigger, lifecycle, estados/secuencia, character/timing, scope, responsive, reduced-motion y comportamiento sin JS cuando sea razonable. Para public web Greenfield/material, `creative-web-experience` considera motion direction por default; aquí se decide implementación, no se reabre ambición.
 2. Inspecciona stack, motion system actual, arquitectura Existing, references BF-048 y autoridad/fidelity de motion. Conserva un sistema Existing que funcione; no migres para preferir GSAP. Una referencia Approved/Strict rige su scope; una imagen estática no autoriza inventar motion y presentarlo como parte de la referencia. Declara cualquier motion nuevo como inferred/proposed.
@@ -17,15 +17,17 @@ Actívala cuando motion/interaction sea parte material de la intención visual o
 
 ## Personality e intención visual
 
-Deriva, si está abierta, personality de brand signals: sobriedad, energía, precisión, editorialidad, organicidad, lujo, tecnología, juego o ritmo. Traduce a motion character/tokens (easing, tempo/duration family, distance, scale, stagger, overshoot/bounce, sequencing, scroll coupling) sin presets ni valores universales. Cadena: **brand signals → motion character → tokens → capability técnica**.
+Deriva, si está abierta, personality de brand signals: sobriedad, energía, precisión, editorialidad, organicidad, lujo, tecnología, juego o ritmo. Traduce a motion character/tokens (easing, tempo/duration family, distance, scale, stagger, overshoot/bounce, sequencing, scroll coupling) sin presets ni valores universales. Cadena: **brand signals → motion character → tokens → capability técnica**. Para Public Web abierta esta personalidad y el motion floor son obligatorios; intensidad sutil/minimal no equivale a `NONE`.
 
-Dirección y nivel de motion se consideran explícitamente en public web aunque la decisión sea NONE/mínima/sutil. **Signature Motion** solo cuando identidad, memoria y viabilidad lo justifican; puede rimar sutilmente en otros momentos, sin cuota/repetición constante. Jerarquiza intensidad HIGH/MEDIUM/LOW/NONE como modelo mental: evita el mismo `opacity + translateY + stagger` en todo. Conserva **calm zones** en forms, pricing/checkout, comparación, lectura densa, decisiones críticas y legal/compliance: feedback/entrada sutil es válido; evita movimiento continuo competitivo. `creative-web-experience` define intent/gate; esta skill decide implementación.
+Motion character se decide en la dirección pública; `NONE/static` solo por opt-out explícito, Approved/Strict incompatible o constraint material confirmado y resuelto por Jefe. **Signature/memorable motion moment** se requiere en la Flagship abierta: specific al concepto y reconocible, no necesariamente espectacular ni una cuota de efectos. Evita el mismo `opacity + translateY + stagger` como lenguaje completo. Conserva **calm zones** en forms, pricing/checkout, comparación, lectura densa, decisiones críticas y legal/compliance: el resto de la página no queda por ello estático. `creative-web-experience` define intent/gate; esta skill implementa fielmente.
+
+Un opt-out del usuario se aplica solo a los behavior/scope expresados: static/sin animación, únicamente microinteracciones o sin scroll motion tienen alcances distintos; no persuadas ni amplíes la preferencia. “No GSAP” restringe el mecanismo, no la experiencia: usa capability alternativa capaz o escala incompatibilidad real a Jefe.
 
 ## Public Web Motion System (BF-068)
 
-Para public web Greenfield/rediseño material, Motion System forma parte del lenguaje de la dirección desde el inicio, aunque el sistema final sea sutil; una petición explícita de experiencia estática prevalece. El baseline contempla una entrada de página/hero, scroll progression/reveals cuando el recorrido y el contenido lo aprovechen, microinteracciones/transiciones de controles y estados, adaptación a mobile, calm zones y `prefers-reduced-motion`. No significa que todos los elementos se animen ni que se añada una engine.
+Para public web Greenfield/rediseño material con dirección abierta, Motion System forma parte obligatoria del language desde Concept; `static/NONE` solo por opt-out explícito, authority incompatible o constraint material resuelto por Jefe. La Flagship ejecuta hero/page choreography intencional, al menos una progresión scroll-linked material que continúa después del Hero, behavior diferenciado para las secciones principales, microinteracciones y un memorable moment ligado al concepto. No aceptes fades genéricos repetidos ni motion solo en Hero. Busca deliberadamente cómo contar con el contenido/layout; “cuando el contenido lo permita” no elimina la obligación. No todo se anima ni existe una quota de efectos.
 
-El UI Kit define el carácter/intent (personalidad, timing/easing, momentos principales, calm zones y reducción); Flagship muestra el comportamiento en ejecución si motion no fue desactivado. Usa CSS/Web APIs cuando basten; selecciona capability especializada solo cuando el intent exceda la solución nativa y esté dentro de scope. No uses screenshots estáticos como evidencia de motion ni copies `fade-up + stagger` como idioma de marca. El resto de esta skill gobierna implementación, lifecycle y QA real.
+El UI Kit define el carácter/intent, timing/easing family, states, section/scroll behavior principal, calm zones y reduced-motion strategy; Flagship lo ejecuta salvo excepción. Primero define experiencia, luego escoge la herramienta menor capaz de implementarla fielmente. CSS/native son correctos si bastan; GSAP/otra capability se usa si intent complejo (timeline/pin/scrub/multi-stage/kinetic/SVG/media) lo requiere. No uses screenshots como evidencia de motion ni copies `fade-up + stagger` como idioma de marca. Esta skill gobierna implementación, lifecycle y QA real.
 
 ## Motion ladder
 
@@ -41,7 +43,7 @@ Con GSAP, organiza las fases relacionadas en una timeline con nombres/labels sol
 
 ## Integración GSAP version-sensitive
 
-Antes de una integración real, detecta stack, package manager, versión/configuración, loading pattern y si GSAP ya existe. Revisa la documentación oficial vigente y la compatibilidad pertinente; no uses snippets antiguos de memoria ni fijes versión/package/API en Core. Instala GSAP y plugins únicamente en el Product/Design fixture que los necesite, conserva manifest/lockfile nativos, registra/importa solo plugins usados y sigue code-splitting/tree-shaking del proyecto. No añadas dependency, CDN, script o `node_modules` al template CN Pilot.
+Antes de una integración real, detecta stack, package manager, versión/configuración, loading pattern y si GSAP ya existe. Revisa documentación oficial vigente cuando los detalles version-sensitive sean materiales; no fijes versión/package/API en Core. Si el intent aprobado requiere dependency, instalarla técnicamente en el Product autorizado es decisión normal del owner: no pidas autorización duplicada por una dependencia reversible de implementación. Escala costo/licencia no aceptada, tracking/privacy, servicio externo o riesgo extraordinario. Instala GSAP/plugins solo en el Product/Design fixture scopeado, conserva manifest/lockfile, importa plugins usados y sigue code-splitting/tree-shaking. Nunca añadas dependency/CDN/script/node_modules a template CN Pilot.
 
 - Static HTML/CSS/JS: carga local/deployada en el entry point adecuado, con inicialización idempotente y cleanup de listeners/instances; un CDN no es la ruta por default.
 - Vite/webpack/build moderno: package/import normal en ese Product, sin añadir herramientas de build que no necesite.
@@ -72,7 +74,7 @@ Smooth scroll es una capability distinta de animar algo en scroll; mantiene scro
 
 ## Design → Product y QA
 
-Motion System solo entra en UI Kit si materialmente define la dirección; expón los specimens necesarios (character, duration/easing, reveal, hover, transition/scroll y reduced-motion según necesidad), no una galería artificial. El prototipo de diseño puede usar el engine necesario para demostrar la interacción esencial y sigue bajo `artefactos/diseno/`, no `producto/`. La entrega registra intent, trigger/states, secuencia aprobada, reference ID/authority/fidelity/scope, responsive/reduced-motion y capability seleccionada cuando sea material. Producto traduce al stack y arquitectura vigentes.
+Para Public Web abierta, Motion System forma parte del UI Kit incluso si su expresión es precisa/sutil: expón specimens proporcionales de character, timing/easing, choreography, scroll/section behavior, interaction, mobile y reduced-motion; no una galería artificial. El prototipo puede usar el engine necesario bajo `artefactos/diseno/`, no `producto/`. La entrega registra intent, trigger/states, secuencia aprobada, reference authority/fidelity/scope, responsive/reduced-motion y capability cuando sea material. Product traduce fielmente al stack.
 
 QA focalizado para el behavior implementado:
 

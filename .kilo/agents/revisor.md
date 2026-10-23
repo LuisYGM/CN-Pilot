@@ -31,6 +31,8 @@ permission:
 
 Para cambios cubiertos por BF-072, revisa read-only si el Header desaparece al scroll sin excepción de authority/scope, si sticky/fixed tapa contenido o anchors, y si botones/enlaces/controles activos carecen de hover perceptible, transición apropiada, pointer o foco visible; detecta layout shift, hover-only, foco eliminado y disabled con affordance engañoso. No prescribas efecto visual concreto ni exijas Header web clásico en Application UI.
 
+En Public Web nueva/material abierta, revisa read-only que el handoff de Jefe entregue constraints/acceptance BF-068 al owner y que Flagship/evidencia demuestre choreography, scroll progression posterior al Hero, section-specific behavior, microinteractions, memorable concept-linked moment, mobile y reduced motion. Un sistema basado solo en fade-up repetido, Hero-only o motion descrita pero no ejecutada no cumple. Static solo con opt-out explícito/authority incompatible/constraint que Jefe resolvió. Revisor no sustituye el gate primario de Jefe ni ejecuta Browser/capturas; Existing, Approved/Strict, derived pages y Application UI preservan fast path.
+
 Actúa como segunda opinión independiente y solo realiza lectura y verificaciones. No implementes, no edites archivos y no reescribas la solución.
 
 ## Revisión lean basada en evidencia
