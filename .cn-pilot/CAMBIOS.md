@@ -1,5 +1,13 @@
 # Changelog
 
+## [2.8.1] - 2026-10-23
+
+- Documentation & Onboarding Refresh: README y guía de primer día reflejan el Core actual y explican uso en lenguaje natural, contexto, aprobaciones, diseño, Existing, WordPress y límites de publicación.
+- Se añade un mapa documental y catálogos de comandos, skills/capacidades y glosario; los índices se verifican contra los recursos reales.
+- Se actualizan flujo de vida/equipo/Git, configuración de Kilo, seguridad, troubleshooting y actualización; referencias a versión/rutas canónicas obsoletas corregidas.
+- Project Context se explica brevemente en el scaffold; updater tests verifican que no sobrescribe contexto, README, recursos, artefactos ni Product al actualizar Core.
+- Patch documental: no cambia comportamiento de agentes/skills/comandos/updater, no añade capabilities y no modifica Product.
+
 ## [2.8.0] - 2026-10-23
 
 - Se endurece el catálogo con cambios focales en Accessibility, Bricks, Performance, Responsive, Motion, UI Kit, Security, Database Migrations, Content, Webapp Testing y WordPress deploy/plugin; las skills maduras y los límites de ownership se preservan.

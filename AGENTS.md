@@ -11,10 +11,10 @@ Estas reglas son el **kernel compartido** de CN Pilot. El contrato completo de u
 ## Contexto y fuentes
 
 - Clasifica el trabajo como `DIRECT`, `TASK` o `STRUCTURAL` y evalúa el riesgo por separado.
-- Inspecciona la implementación/fuente de verdad antes de cambiarla. Lee Project Context, contratos y documentación **por relevancia**; no cargues todos los archivos, `CORE.md` entero ni todas las skills por rutina. Una ruta/enlace mencionado no demuestra que su contenido se haya leído. No releas contexto conocido e intacto.
+- Inspecciona la implementación/fuente de verdad antes de cambiarla. Lee Project Context, contratos y documentación **por relevancia**; no cargues `.cn-pilot/NUCLEO.md` entero ni todas las skills por rutina. Una ruta/enlace mencionado no demuestra que su contenido se haya leído. No releas contexto conocido e intacto.
 - Respeta ownership: `recursos/` contiene material original; `artefactos/` contiene entregables de apoyo; `producto/` es el container canónico de implementación activa salvo excepción Existing documentada. No edites/muevas inputs ni crees carpetas de producto/output por convención sin scope autorizado. Consulta el contrato Core pertinente antes de resolver rutas o límites de adopción.
 - `README.md` es presentación/navegación, no memoria duplicada. Actualízalo solo si cambia materialmente propósito, stack, estructura verificada, comandos permanentes o enlaces; conserva contenido manual y no lo reescribas por un cambio trivial.
-- `CORE.md` conserva contratos transversales; la fuente especializada contiene la operación; el agent contiene responsabilidades del rol; un template define la forma del entregable. Resume o enlaza esa doctrina, no mantengas una copia que pueda divergir.
+- `.cn-pilot/NUCLEO.md` conserva contratos transversales; la fuente especializada contiene la operación; el agent contiene responsabilidades del rol; un template define la forma del entregable. Resume o enlaza esa doctrina, no mantengas una copia que pueda divergir.
 - Project Context raíz es single-writer de Jefe de proyecto; specialists devuelven deltas materiales y conservan ownership de sus outputs de dominio. Antes de escribir algo potencialmente stale/shared, refresca la fuente actual; si falla un patch, reread + un retry focalizado como máximo y luego para/escalade. Aplica el procedimiento compacto Core BF-062.
 
 ## Seguridad y autorización

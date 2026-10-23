@@ -1,74 +1,48 @@
 # Ciclo de vida del proyecto
 
-Fases disponibles:
+CN Pilot adapta el trabajo al objetivo actual: no es una cascada de fases que toda tarea deba completar. El [primer día](EMPIEZA-AQUI.md) explica cómo iniciar una conversación; esta página describe cómo puede avanzar el trabajo.
 
-1. Discovery
-2. Requirements
-3. Architecture
-4. Content
-5. Design
-6. Frontend/Prototype
-7. Development
-8. Handoff
-9. CMS Integration
-10. QA
-11. Staging
-12. Acceptance
-13. Deployment
-14. Maintenance
+## Tres escalas de trabajo
 
-No todos los proyectos pasan por todas. Cada flujo empieza y termina donde lo determine el alcance del repositorio.
+- **DIRECT:** petición concreta y de bajo riesgo, como cambiar una etiqueta o corregir un estilo localizado. Inspeccionar la fuente, hacer el cambio mínimo, verificarlo y cerrar.
+- **TASK:** resultado funcional o editorial acotado con varias dependencias. Acordar comportamiento/acceptance que falte, implementar y probar las superficies afectadas.
+- **STRUCTURAL:** cambio material de arquitectura, datos, seguridad o un proyecto completo. Acordar acceptance y dependencias, trabajar por unidades, checkpoints, pruebas y revisión independiente cuando el riesgo lo justifique.
 
-En cualquier fase se conserva la misma interfaz human-first: lenguaje natural, inspección antes de preguntar y preguntas progresivas solo ante vacíos materiales. Onboarding no intenta decidir todo el trabajo futuro. Consulta [Interacción humana y contexto progresivo](INTERACCION-HUMANA.md) como guía transversal.
+La escala no depende solo del tamaño del diff. Un cambio corto en permisos, pagos o producción puede requerir un proceso más profundo.
 
-## Destinos en proyectos greenfield
+## Recorrido adaptable
 
-- Recursos originales proporcionados → `recursos/` (no modificar ni publicar por defecto).
-- Outputs auxiliares del proceso —contenido, diseño, arquitectura, especificaciones, ADRs y auditorías— → `artefactos/`, on-demand, separado del runtime.
-- Implementación/runtime → `producto/`, con la estructura nativa del stack, para Greenfield y Existing importado al workspace.
-- Project Context y controles → archivos canónicos en raíz.
+Según el objetivo, el trabajo puede incluir contexto y discovery, requisitos, arquitectura, contenido, diseño, frontend/prototipo, desarrollo, QA, handoff, integración CMS, deployment y mantenimiento. Ninguna lista sustituye el scope real. Una etapa se añade solo si ayuda a decidir o entregar el resultado actual.
 
-Registrar estos destinos no crea carpetas. `artefactos/` y `producto/` se materializan solo cuando comienza el trabajo correspondiente. Existing importado conserva su layout interno bajo `producto/`; si la fuente está en `recursos/codigo-original/`, es solo original/input y una tarea explícita prepara una copia activa. Existing repository adoptado con contratos operativos puede documentar el root real como `Existing compatibility exception`, preservándolo sin migración automática. Código top-level de workspace CN Pilot sin esos contratos queda `Pending normalization/migration`, no se convierte por defecto en product root.
+Un bug conocido suele ir a diagnóstico → fix → retest. Una app puede necesitar entender flujo/estados antes de diseñar; no recibe automáticamente el recorrido de marketing web. Un diseño aprobado se implementa sin rediseño; una solicitud solo de diseño puede terminar en artefactos y handoff.
 
-Una adopción/migración autorizada a `producto/` no termina hasta comprobar que la implementación esté en el root activo correcto; se preservó su estructura; entry points, imports, assets y referencias relevantes funcionan; `PROYECTO.md` refleja la ubicación (y `ARTEFACTOS.md` incluye el producto si es significativo); la source location anterior ya no se necesita para runtime/edición; y no quedan referencias obsoletas. Nunca elimines directorios no vacíos/desconocidos ni originales de `recursos/`; resuelve explícitamente cualquier residuo necesario o no clasificado antes de declarar completa la adopción.
+## Diseño para web pública
 
-## Flujo parcial y puntos de entrega
+Para una web Greenfield o un rediseño visual material con dirección abierta, CN Pilot puede inspeccionar referencias, identidad, contenido y medios; explorar conceptos; revisar la dirección con la persona; sintetizarla en UI Kit y Flagship; y pedir aprobación visual antes de implementar si desarrollo está en scope. Es una colaboración, no una secuencia obligatoria para toda página.
 
-`Content → Design → Frontend/Prototype → Handoff → CMS Integration → Deployment`
+Un **UI Kit** define el sistema visual compartido; no es la Home. La **Flagship** es una página de diseño de alta fidelidad que guía las páginas derivadas. Los artefactos de diseño viven separados del runtime de producto. Una referencia Approved/Strict o el sistema vigente de un Existing puede permitir fast path y evitar repetir exploración.
 
-Todas las etapas son opcionales. La plataforma objetivo no determina el punto final: WordPress + Bricks puede terminar en HTML y handoff manual o incluir implementación mediante MCP. Un proyecto custom puede terminar en HTML/CSS/JS y un plugin WordPress puede desarrollarse localmente para instalación posterior.
+## Dónde se guardan los resultados
 
-Dentro de un proyecto, cada entregable puede tener un destino diferente. Por ejemplo, páginas corporativas pueden terminar en diseño/HTML para maquetación manual, artículos en contenido local para publicación mediante MCP y un plugin custom en desarrollo local completo.
+- Inputs originales: `recursos/`.
+- Diseño, contenido y otros outputs auxiliares: `artefactos/`, cuando existen entregables.
+- Implementación activa: `producto/` si corresponde al layout Greenfield/importado. Existing operativo puede preservar su root por compatibilidad documentada.
+- Memoria durable y decisiones: Project Context raíz; cada archivo mantiene su propósito.
 
-## Sistema existente
+Registrar una ubicación no crea una carpeta. No se adopta, mueve ni publica material original por inferencia.
 
-Empieza por inspeccionar la implementación vigente y sus fuentes de verdad. Omite discovery, arquitectura, UI/UX, frontend o cualquier otra fase que no aporte valor a la tarea concreta.
+## Prototipo y producción
 
-## Proyecto completo
-`Discovery → Requirements → Architecture → Content → Design → Development → QA → Staging → Acceptance → Production → Maintenance`
+Un prototipo puede usar estados locales o datos simulados para validar interacción; no equivale a backend, persistencia, autenticación, pagos o integraciones reales. La funcionalidad productiva se implementa solo si el scope la incluye y el stack está confirmado. Las pruebas dependen de qué comportamiento real exista.
 
-## Páginas públicas visualmente importantes
+## QA, checkpoints y cierre
 
-Para public web Greenfield o rediseño material con dirección abierta, adapta el recorrido según el material existente:
+Las pruebas/revisiones cubren criterios y riesgos afectados; no se corre una batería universal. En cambios visuales aprobados se compara fidelidad sin rediseñar para justificar desviaciones. Las páginas nuevas pueden requerir revisión visual humana; una corrección técnica puntual no reabre una aprobación visual que no afectó.
 
-`Creative Input/Reference Coverage → Concept Studies reales (2–3) → Human Creative Review → Visual Synthesis → UI Kit derivado → Flagship high-fidelity → Human Visual Approval → Product implementation si está en scope → páginas derivadas`
+Las tareas largas pueden guardar un checkpoint local de recuperación. Progress Guard guía a avanzar hacia acceptance: si aparece un error se diagnostica; repetir el mismo fallo no cuenta como progreso y exige cambiar hipótesis/estrategia. No hay un máximo artificial de pasos ni una promesa de trabajo offline. Al completar la unidad verificada, se entrega el resultado y estado siguiente; Git puede añadir un commit local.
 
-Los Concept Studies y el Flagship de diseño son artefactos ejecutables HTML/CSS/JS en `artefactos/diseno/`, no screenshots ni Product runtime. Flagship se aprueba antes de implementar o multiplicar páginas. Si se solicitó solo diseño, conserva los artefactos y entrega handoff. Si desarrollo ya estaba en scope, continúa tras la aprobación sin volver a preguntar; publishing/deployment conserva su autorización independiente.
+## Existing y mantenimiento
 
-Approved/Strict, Existing con sistema vigente, aplicaciones (`application-ui`), microcambios y páginas derivadas mantienen sus fast paths: no repitas divergence ni estrategia genérica. Una preview de navegador sigue siendo artefacto de diseño cuando esa era la entrega. Sin referencia visual aprobada no se exige Visual Parity QA; si falta representación visual fiable se informa que Technical QA está completo y Visual QA queda pendiente.
+En un proyecto existente, inspecciona la implementación y sus fuentes reales; evita repetir discovery ya vigente y conserva todo lo que esté fuera del scope. La migración de raíz, framework, theme, datos o deployment es material y necesita evaluación/decisión apropiada. Mantenimiento sigue síntoma/evidencia → owner técnico → cambio autorizado → verificación y recuperación proporcional.
 
-## Límite funcional del prototipo
-
-Un `High-Fidelity Prototype` valida principalmente visual, responsive, estados e interacción UX; no implica una implementación completa de producción. Por defecto, HTML/CSS/JS puede usar estados locales, mock data, validación simulada y comportamiento ligero, mientras integraciones, persistencia, backend, APIs, autenticación, pagos, servicios externos y notificaciones se difieren a la implementación final.
-
-Si una interacción es esencial para validar UX, puede incluir lógica local determinista. Una petición explícita de funcionalidad real autoriza implementarla dentro del scope. El handoff conserva diseño, estados, interacción, responsive y UX, pero la plataforma final decide la implementación productiva sin reutilizar infraestructura provisional por defecto.
-
-Cuando exista un plugin SEO activo y sus capabilities estén disponibles, añade al flujo SEO: inspección actual → metadata autorizada → análisis real del plugin → corrección de checks relevantes → reanálisis → reporte de checks pendientes. No se modifica copy aprobado ni se fuerzan puntuaciones a costa de UX o naturalidad.
-
-## Mantenimiento
-`Current state → risk / evidence → specialist diagnosis as needed → authorized change or recovery → affected-surface verification → current state / next action`
-
-Es proporcional: un microcambio localizado conocido sigue `DIRECT`; incidents, planned maintenance, cambios materiales de producción y recovery coordinan entorno, evidencia, autorización y recuperación con `maintenance-operations`. Baseline read-only, deploy y specialist reviews siguen sus capabilities propias; no se ejecutan por rutina.
-
-## Funcionalidad estructural
-`Requirements → Architecture → Feature branch si se justifica → Implementation → Tests → Independent review → Checkpoint → Staging`
+Para colaboración, Git o despliegue consulta [flujo de equipo](FLUJO-DE-EQUIPO.md), [flujo de Git](FLUJO-GIT.md) y [deployment](CONFIGURACION.md#deployment-mediante-github-actions). La publicación externa conserva autorización propia.

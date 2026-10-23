@@ -966,3 +966,110 @@ test("testing-strategy keeps one BF-057 full-stack section with prior behavior",
   assert.match(strategy, /conserva evidencia vigente/i);
   assert.match(strategy, /No impongas slice overhead a un sitio estático/i);
 });
+
+test("human documentation matches Core version, entry points, commands and Kilo-native scope", () => {
+  const root = new URL("../../", import.meta.url);
+  const read = (relative) => fs.readFileSync(new URL(relative, root), "utf8");
+  const readme = read("README.md");
+  const version = read(".cn-pilot-version").trim();
+  const intro = read(".cn-pilot/documentacion/EMPIEZA-AQUI.md");
+  const docs = read(".cn-pilot/documentacion/README.md");
+  const guide = read(".cn-pilot/documentacion/COMANDOS.md");
+  const commands = new Set(fs.readdirSync(new URL(".kilo/commands/", root)).filter((name) => name.endsWith(".md")).map((name) => `/${name.slice(0, -3)}`));
+  const commandLinks = [...guide.matchAll(/`(\/[a-z0-9-]+)`/g)].map((match) => match[1]);
+
+  assert.match(readme, new RegExp(`CN Pilot ${version.replaceAll(".", "\\.")}`));
+  assert.match(readme, /\[Empieza aquí\]\(\.cn-pilot\/documentacion\/EMPIEZA-AQUI\.md\)/);
+  assert.match(readme, /nativo de Kilo Code/i);
+  assert.match(readme, /no necesitas programar, diseñar prompts técnicos/i);
+  assert.match(readme, /no hace push, publica ni modifica producción por defecto/i);
+  assert.doesNotMatch(readme, /multi-agent portability|universal multi-agent/i);
+  assert.match(readme, /producto\/wp-content\//);
+  assert.match(readme, /No.*WordPress Core/i);
+  assert.match(readme, /instrumentación de analytics se crea cuando existe un objetivo de medición/i);
+  assert.match(readme, /Project Context/);
+  assert.match(intro, /Decide tú/);
+  assert.match(intro, /Pending/);
+  assert.match(intro, /no hace falta memorizar comandos/i);
+  assert.match(intro, /no se ejecutan por defecto|no.*push|no.*deploy/i);
+  assert.match(docs, /COMANDOS\.md/);
+  assert.match(docs, /SKILLS-Y-CAPACIDADES\.md/);
+  assert.match(docs, /GLOSARIO\.md/);
+  assert.equal(commandLinks.length, commands.size, "every current command has one catalog entry");
+  assert.deepEqual([...new Set(commandLinks)].sort(), [...commands].sort(), "command catalog exactly matches the command filesystem");
+});
+
+test("documentation catalog inventories the actual agents and skills without requiring manual selection", () => {
+  const root = new URL("../../", import.meta.url);
+  const catalog = fs.readFileSync(new URL("../../.cn-pilot/documentacion/SKILLS-Y-CAPACIDADES.md", import.meta.url), "utf8");
+  const agentGuide = fs.readFileSync(new URL("../../README.md", import.meta.url), "utf8");
+  const actualSkills = fs.readdirSync(new URL("../../.kilo/skills/", import.meta.url)).filter((name) => fs.existsSync(new URL(`../../.kilo/skills/${name}/SKILL.md`, import.meta.url))).sort();
+  const listedSkills = [...catalog.matchAll(/^\| `([a-z0-9-]+)` \|/gm)].map((match) => match[1]).sort();
+  const actualAgents = fs.readdirSync(new URL("../../.kilo/agents/", import.meta.url)).filter((name) => name.endsWith(".md"));
+  const listedAgents = [...agentGuide.matchAll(/^\| (Jefe de proyecto|Arquitecto|Contenido \/ SEO|Diseñador UI\/UX|Desarrollador|Maquetador frontend|Revisor) \|/gm)].map((match) => match[1]).sort();
+  const agentLabels = ["Jefe de proyecto", "Arquitecto", "Contenido / SEO", "Diseñador UI/UX", "Desarrollador", "Maquetador frontend", "Revisor"].sort();
+  assert.deepEqual(listedSkills, actualSkills, "skill catalog has no omissions or invented skills");
+  assert.equal(actualAgents.length, 7, "agent catalog remains at seven");
+  assert.deepEqual(listedAgents, agentLabels, "README describes the seven real agents with human-facing names");
+  assert.ok(catalog.includes("No tienes que elegir") && catalog.includes("bajo demanda"), "skills stay discoverable without becoming a user selection chore");
+});
+
+test("documentation navigation links resolve to existing files and headings", () => {
+  const root = new URL("../../", import.meta.url);
+  const sources = [
+    "README.md",
+    ".cn-pilot/documentacion/README.md",
+    ".cn-pilot/documentacion/COMANDOS.md",
+    ".cn-pilot/documentacion/SKILLS-Y-CAPACIDADES.md",
+    ".cn-pilot/documentacion/GLOSARIO.md",
+    ".cn-pilot/documentacion/EMPIEZA-AQUI.md",
+    ".cn-pilot/documentacion/CONFIGURACION-KILO.md",
+    ".cn-pilot/documentacion/CONFIGURACION.md",
+    ".cn-pilot/documentacion/ESTRATEGIA-DE-MODELOS.md",
+    ".cn-pilot/documentacion/CICLO-DE-VIDA.md",
+    ".cn-pilot/documentacion/FLUJO-DE-EQUIPO.md",
+    ".cn-pilot/documentacion/FLUJO-GIT.md",
+    ".cn-pilot/documentacion/INTERACCION-HUMANA.md",
+    ".cn-pilot/documentacion/SEGURIDAD.md",
+    ".cn-pilot/documentacion/ACTUALIZACIONES.md",
+    ".cn-pilot/documentacion/SOLUCION-DE-PROBLEMAS.md",
+  ];
+  for (const source of sources) {
+    const content = fs.readFileSync(new URL(`../../${source}`, import.meta.url), "utf8");
+    const links = [...content.matchAll(/\[[^\]]*\]\(([^)]+)\)/g)].map((match) => match[1]);
+    for (const link of links) {
+      if (/^(?:[a-z]+:|mailto:|#)/i.test(link)) continue;
+      const [target, anchor] = link.split("#", 2);
+      const resolved = new URL(target, new URL(`../../${source}`, import.meta.url));
+      assert.equal(resolved.protocol, "file:", `${source}: only local file links are checked here`);
+      assert.equal(fs.existsSync(resolved), true, `${source}: linked file exists: ${target}`);
+      if (anchor) {
+        const linkedContent = fs.readFileSync(resolved, "utf8");
+        const headings = [...linkedContent.matchAll(/^#{1,6}\s+(.+?)\s*#*$/gm)].map((match) => match[1].toLowerCase().replace(/[^\p{L}\p{N}\s-]/gu, "").trim().replace(/\s+/g, "-").replace(/-+/g, "-"));
+        assert.ok(headings.includes(decodeURIComponent(anchor).toLowerCase()), `${source}: linked heading exists: ${link}`);
+      }
+    }
+  }
+  assert.ok(sources.length > 0);
+});
+
+test("human Project Context scaffolds explain ownership without updating real projects", () => {
+  const readme = fs.readFileSync(new URL("../../README.md", import.meta.url), "utf8");
+  const project = fs.readFileSync(new URL("../../PROYECTO.md", import.meta.url), "utf8");
+  const requirements = fs.readFileSync(new URL("../../REQUISITOS.md", import.meta.url), "utf8");
+  const state = fs.readFileSync(new URL("../../ESTADO.md", import.meta.url), "utf8");
+  const decisions = fs.readFileSync(new URL("../../DECISIONES.md", import.meta.url), "utf8");
+  const artifacts = fs.readFileSync(new URL("../../ARTEFACTOS.md", import.meta.url), "utf8");
+  const contextStart = readme.indexOf("## Dónde va cada cosa");
+  const contextEnd = readme.indexOf("## Agentes", contextStart);
+  const summary = readme.slice(contextStart, contextEnd);
+  assert.ok(contextStart >= 0 && contextEnd > contextStart);
+  for (const file of ["PROYECTO.md", "REQUISITOS.md", "ESTADO.md", "DECISIONES.md", "ARTEFACTOS.md"]) assert.ok(summary.includes(file), `${file} has an onboarding explanation`);
+  assert.match(project, /facts|hechos estables|Identidad/i);
+  assert.match(project, /no hace falta definir el público/i);
+  assert.match(requirements, /Criterios de aceptación/);
+  assert.match(state, /Estado operativo resumido/);
+  assert.match(state, /Ninguna tarea activa|Ninguna/);
+  assert.match(decisions, /Fuente de decisiones de proyecto aprobadas\/materiales/);
+  assert.match(artifacts, /No convertir este archivo en un changelog/);
+});

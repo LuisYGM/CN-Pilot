@@ -12,7 +12,7 @@ Inventario de CN Pilot Core. No sustituye `../ARTEFACTOS.md`, que registra entre
 - 9 archivos de plantilla en la raíz de `.cn-pilot/plantillas/` y 18 archivos en total bajo `.cn-pilot/plantillas/` (incluye subdirectorios)
 - QA ejecutable read-only y on-demand del Core en `.cn-pilot/qa/` (Node built-in; sin dependencias npm)
 - Core portable en `.cn-pilot/` (config, documentación, perfiles y plantillas)
-- documentación operativa bajo `.cn-pilot/documentacion/`
+- documentación para usuarios y referencia avanzada bajo `.cn-pilot/documentacion/` (mapa, onboarding, comandos, catálogo de skills y glosario incluidos)
 - updater versionado en `.cn-pilot/update/` (manifest SHA-256 reproducible; runtime y temporales excluidos)
 - registro base de artefactos del proyecto
 - configuración responsive versionada en `.cn-pilot/config/`

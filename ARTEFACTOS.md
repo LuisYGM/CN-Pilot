@@ -1,6 +1,6 @@
 # Artefactos del proyecto
 
-> Este archivo registra los artefactos creados específicamente para este proyecto.
+> Índice breve de entregables significativos de este proyecto; no es inventario de todos los archivos. Jefe de proyecto lo actualiza cuando un entregable aparece, se mueve o cambia materialmente de estado/propósito.
 > La infraestructura de CN Pilot Core se documenta en [`.cn-pilot/MANIFIESTO.md`](.cn-pilot/MANIFIESTO.md).
 
 Forma parte del contexto operativo y no se registra a sí mismo como artefacto. Tampoco incluye normalmente `PROYECTO.md`, `REQUISITOS.md`, `ESTADO.md`, `DECISIONES.md` ni archivos internos irrelevantes.

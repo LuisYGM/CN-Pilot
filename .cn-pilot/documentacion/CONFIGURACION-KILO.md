@@ -1,23 +1,19 @@
 # Configuración de Kilo Code
 
-## Requisitos
-- VS Code
-- Kilo Code
-- Git (opcional)
-- GitHub Desktop (opcional, si se utiliza Git/GitHub)
-- herramientas del stack del proyecto
+## Para empezar
+
+- Instala/abre VS Code y Kilo Code en el equipo donde trabajarás.
+- Abre en VS Code la carpeta del repositorio CN Pilot o del proyecto que lo contiene.
+- Git es opcional; instálalo si necesitas historial, commits o worktrees.
+- No necesitas instalar WordPress, Bricks, Node, MCP u otras herramientas hasta que el proyecto y su scope las requieran.
+
+Si Kilo solicita un agente, elige `jefe-proyecto`. Comprueba que aparecen los siete agentes y empieza con `/nuevo-proyecto` o describe directamente la tarea cuando el proyecto ya está inicializado. [Empieza aquí](EMPIEZA-AQUI.md) cubre el recorrido de usuario.
 
 ## Configuración personal de proveedor y modelos
 
 El CN Pilot no fija proveedor, modelo ni nivel de razonamiento en `kilo.jsonc`, agentes o skills. Cada desarrollador elige su configuración desde Kilo; dos personas pueden usar distintos proveedores/modelos con el mismo workflow y responsabilidades.
 
-En Kilo Code:
-
-1. Abre **Settings**.
-2. Entra en **Providers**.
-3. Selecciona cualquier proveedor compatible.
-4. Completa la autenticación mediante el mecanismo seguro ofrecido por Kilo y el proveedor.
-5. Verifica que los modelos elegidos estén disponibles.
+Configura proveedor, autenticación y modelo en la superficie personal que ofrezca la versión instalada de Kilo (interfaz Settings o configuración local/global soportada). Los nombres y ubicación de menús pueden variar entre versiones; usa las instrucciones vigentes de Kilo en lugar de copiar una ruta de UI antigua. Completa autenticación en Kilo/proveedor y comprueba disponibilidad del modelo elegido.
 
 Si lo necesitas, ajusta en Kilo Settings, configuración local o global el modelo principal, pequeño, de subagentes o de compactación, los overrides y el esfuerzo de razonamiento. Elige según disponibilidad, coste, calidad, preferencia, acceso y necesidades del proyecto; no hay valores recomendados por CN Pilot. Consulta [Configuración de IA en Kilo](ESTRATEGIA-DE-MODELOS.md).
 
@@ -40,9 +36,9 @@ Ubicación: `.kilo/skills/<name>/SKILL.md`.
 
 Si modificas skills durante una sesión, usa `/reload` o inicia otra.
 
-## Verificar workflows
+## Comandos y Agent Manager
 
-Ubicación: `.kilo/commands/`.
+Los shortcuts se encuentran en `.kilo/commands/`; son opcionales. La lista humana está en [Comandos](COMANDOS.md).
 
 Primera acción recomendada: `/nuevo-proyecto`.
 
@@ -52,10 +48,14 @@ El recorrido completo del primer día está en [Empieza aquí](EMPIEZA-AQUI.md).
 
 MCP es opcional y el template no incluye una configuración activa ni un archivo de ejemplo. Si el proyecto solicita una integración, Jefe de proyecto descubre el servidor/capabilities reales y prepara solo las instrucciones y campos no secretos de la configuración local correspondiente. Configúrala mediante una superficie local soportada por Kilo; no pegues ni envíes secretos al agente. Si el runtime usa `.kilocode/mcp.json`, esa configuración queda ignorada por Git y protegida contra lectura/edición de agentes. `kilo.jsonc` contiene la configuración compartible general de Kilo/CN Pilot, no servidores ni credenciales. Antes de escribir sobre un sistema real, Jefe de proyecto descubre las capabilities/tools expuestas y ejecuta exactamente el flujo `Discovery → Read-only → Plan → Write autorizado → Verification` descrito en [Configuración de CN Pilot](CONFIGURACION.md#mcp-opcional).
 
-## Seguridad
+Agent Manager y worktrees son opcionales. Solo se usan cuando existen unidades escritoras independientes y aportan valor; no cambies configuración para habilitarlos por rutina. La ejecución en serie funciona sin ellos.
+
+## Seguridad y límites
 
 - No pegues API keys en archivos del repositorio ni en el template de ejemplo.
 - No versiones la configuración personal de modelos.
 - No subas `.env`.
 - Revisa prompts de permisos.
 - Push y deploy quedan bajo control humano.
+
+La configuración global/modelo local no se clona ni se comparte con el proyecto. MCP solo se configura ante una integración real; una tool conectada no equivale a permiso para modificar un servicio.

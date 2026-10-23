@@ -1,6 +1,10 @@
 # Flujo de trabajo de Git
 
-Este workflow aplica únicamente cuando el proyecto utiliza Git. Una carpeta sin Git puede completar el resto de flujos sin inicializarlo ni quedar bloqueada.
+Git ayuda a conservar historial y colaborar, pero no es requisito para usar CN Pilot. Sin Git, se trabaja y verifica por archivos; no se inicializa un repositorio por inferencia. El flujo individual recomendado cuando ya hay Git es:
+
+`main → trabajar → verificar → commit local → push manual cuando corresponda`
+
+Commit local y push son acciones distintas. Un commit puede formar parte del cierre verificado; **push no es automático**. Branch, PR, tag o GitHub Release se usan cuando aportan un motivo concreto.
 
 ## Principios
 
@@ -21,6 +25,15 @@ main → trabajar → verificar → commit local → push manual cuando correspo
 ```
 
 Las ramas son opcionales y no se crean ni recomiendan por defecto. Úsalas cuando exista una razón concreta: trabajo simultáneo, cambios grandes o de alto riesgo que requieran aislamiento, experimentos descartables, Pull Requests, desarrollo paralelo o una solicitud explícita.
+
+El commit debe agrupar una unidad lógica completa/verificada; revisa el diff y stagea solo archivos de esa unidad. Usa Conventional Commits con prefijo técnico y descripción en español, por ejemplo:
+
+```text
+docs: actualizar guía de inicio
+fix: corregir envío duplicado del formulario
+```
+
+No uses `reset --hard`, `clean`, `stash` ni acciones destructivas como atajo para resolver cambios manuales.
 
 ## Paralelismo con worktrees
 

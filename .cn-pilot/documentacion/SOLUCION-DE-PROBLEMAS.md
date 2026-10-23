@@ -1,6 +1,36 @@
-# Troubleshooting
+# Solución de problemas
 
-Problemas operativos frecuentes de CN Pilot. Para la primera puesta en marcha, empieza por [Empieza aquí](EMPIEZA-AQUI.md).
+Empieza por el síntoma que observas; no cambies configuración, borres estado ni repitas una escritura a ciegas. Para el primer uso, vuelve a [Empieza aquí](EMPIEZA-AQUI.md). Para diagnosticar un bug del producto puedes decirlo directamente o usar `/depurar`.
+
+## Kilo no muestra los agentes de CN Pilot
+
+**Comprueba:** que abriste la carpeta correcta en VS Code, que Kilo Code está activo y que el workspace contiene `.kilo/agents/`. Selecciona `jefe-proyecto` si el selector de Kilo pide un agente; para cambios locales recientes de agent config/skills puede hacer falta recargar Kilo o iniciar una sesión nueva.
+
+**No hagas:** copiar agents a otro runtime ni ampliar permisos para hacerlos aparecer. Kilo Code es el runtime nativo; la lectura manual de archivos en otra herramienta no equivale a integración.
+
+## `/nuevo-proyecto` no aparece o no se reconoce
+
+Comprueba workspace y `.kilo/commands/nuevo-proyecto.md`, y que Kilo abrió la carpeta CN Pilot en lugar de una subcarpeta. Recarga la configuración si acabas de cambiar archivos. También puedes describir el objetivo en lenguaje natural a Jefe de proyecto: el comando es un atajo opcional.
+
+## No se activa una skill que esperaba
+
+No selecciones manualmente una skill salvo que tu flujo de Kilo te lo pida. Describe el resultado y el stack confirmado; el agente activa procedimientos bajo demanda. Si la tarea es pequeña, condicional o no requiere esa especialidad, puede ser correcto que no se active. Para saber qué cubre cada una consulta [Skills y capacidades](SKILLS-Y-CAPACIDADES.md).
+
+## CN Pilot hace demasiadas preguntas
+
+Comprueba primero si los datos ya están en Project Context, código o `recursos/`. Puedes contestar «no lo sé», «Pending» o «Decide tú» para decisiones profesionales y reversibles. Las preguntas sobre hechos, negocio, privacidad, producción o una dirección visual material pueden necesitar respuesta humana; no es necesario completar todas las incógnitas antes de avanzar.
+
+## Parece que se interrumpió y no continúa
+
+Comprueba si Kilo sigue ejecutando la sesión y si hay una pregunta o permiso pendiente en la interfaz. Los checkpoints solo ayudan a recuperar una tarea larga cuando el runtime se interrumpe; no implican que CN Pilot siga trabajando sin sesión. Reabre el workspace/sesión y resume el objetivo pendiente. No borres `active-task.json` ni worktrees/cambios dirty por rutina; Jefe de proyecto los inspecciona al recuperar.
+
+## La web existente tiene una estructura de carpetas diferente
+
+Puede ser una `Existing compatibility exception` si hosting, document root, CI/CD, imports o deployment dependen de esas rutas. CN Pilot debe preservarlas y registrar la razón observada. No muevas la implementación a `producto/` para normalizarla sin tarea explícita y evaluación de impacto.
+
+## Quiero iniciar o reparar un WordPress nuevo/existente
+
+Para Greenfield, el source propio se organiza conceptualmente en `producto/wp-content/`; eso no crea la carpeta ni instala WordPress automáticamente. En Existing se conserva el layout real. Di qué quieres cambiar: no necesitas escoger Classic/Block, `inc/` ni archivos específicos. Consulta [el contrato WordPress](../NUCLEO.md#wordpress-product-contract-y-arquitectura-de-themes-bf-070).
 
 ## Git no está inicializado
 

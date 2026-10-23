@@ -1,6 +1,8 @@
 # Decisiones
 
-Registra únicamente decisiones aprobadas o suficientemente establecidas que no deban reconsiderarse sin motivo. Las recomendaciones provisionales permanecen en la documentación de arquitectura hasta resolver las incógnitas bloqueantes.
+> Fuente de decisiones de proyecto aprobadas/materiales que deban seguir vigentes. No registra cada decisión técnica reversible, tareas ni changelog. Jefe de proyecto persiste aquí los acuerdos que no deben reabrirse sin motivo.
+
+Las recomendaciones provisionales permanecen en la documentación de arquitectura hasta resolver las incógnitas bloqueantes.
 
 ## Plantilla
 

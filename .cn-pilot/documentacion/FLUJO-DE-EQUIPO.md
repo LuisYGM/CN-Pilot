@@ -1,24 +1,22 @@
-# Flujo de trabajo del equipo
+# Flujo de equipo
 
-El onboarding individual está en [Empieza aquí](EMPIEZA-AQUI.md). Este documento cubre únicamente continuidad y colaboración del equipo.
+Jefe de proyecto es el coordinador y contacto humano normal. Lee lo que ya existe, conserva las decisiones vigentes, propone especialistas según el trabajo y reúne el resultado. No necesitas repartir tareas entre agentes.
 
-## Proyecto compartido
+Los especialistas trabajan con procedimientos bajo demanda. Desarrollo conserva el ownership de backend, APIs, datos y lógica; Maquetador frontend implementa la presentación aprobada; Diseñador define decisiones visuales cuando aplican; Contenido / SEO trabaja copy e intención; Arquitecto entra si hay una decisión estructural; Revisor realiza una revisión final de solo lectura cuando el riesgo/alcance la justifican.
 
-Si el proyecto usa Git, haz Pull y comprueba la rama. En todos los casos, revisa `PROYECTO.md`, `ESTADO.md`, `DECISIONES.md`, `REQUISITOS.md` y `ARTEFACTOS.md` según la tarea antes de modificar archivos.
+## Serial por defecto, paralelo con aislamiento
 
-## Trabajo en funcionalidades
+La forma normal es una unidad de trabajo cada vez. Jefe de proyecto puede paralelizar solo si hay unidades realmente independientes, superficies separadas y beneficio de integración claro. En ese caso:
 
-Para trabajo individual y secuencial, usa normalmente:
+- estabiliza primero contratos y archivos compartidos;
+- limita writers simultáneos y aísla sus cambios con worktrees cuando Git/Kilo lo permite;
+- los readers/reviewers no cambian los archivos;
+- integra una unidad cada vez, verifica y conserva cualquier checkout con cambios no integrados.
 
-`main → implementación → verificación → commit local → push manual cuando corresponda`
+Si no existe esa capacidad o no aporta valor, continúa en serie. Agent Manager/worktrees son detalles de coordinación interna, no un requisito para usar CN Pilot. [Flujo Git](FLUJO-GIT.md) explica cómo se relacionan branches, worktrees y push manual.
 
-Las ramas son opcionales. Para features estructurales o trabajo compartido:
+## Revisión y cierre
 
-- Con Git, cuando la colaboración o el riesgo lo justifique: branch → implementación → checkpoint → push manual → Pull Request → review → merge.
-- Sin Git: implementación → verificación de archivos → entrega local; no se inicializa Git automáticamente.
+Revisor inspecciona diff, criterios y pruebas proporcionadas sin implementar. Diseño visual subjetivo permanece bajo aprobación humana; QA técnico verifica riesgos observables. El trabajo puede cerrar con código, contenido, diseño o handoff. Commit local puede ser parte del cierre Git; push, PR, merge, tag, release y deployment no son implícitos.
 
-Tags y GitHub Releases son opcionales y se reservan para hitos, entregas públicas o versiones que el usuario quiera congelar y documentar especialmente.
-
-## Mejoras del CN Pilot
-
-Una mejora general descubierta en un proyecto debe aplicarse y probarse en el repositorio maestro del CN Pilot. El maintainer la incorpora a una release y actualiza versión/`CHANGELOG.md` cuando corresponda; los proyectos existentes no se actualizan silenciosamente.
+Para colaboración del mismo repositorio revisa los hechos actuales antes de escribir. No se obliga a un pull/branch ni se habilita auto-merge por usar CN Pilot.

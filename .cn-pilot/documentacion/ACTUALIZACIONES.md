@@ -32,11 +32,19 @@ El plan compara `local` vs baseline instalada vs hashes de `main`. Se actualiza 
 
 Tras el plan seguro se verifican hashes de cada fuente; se instalan solo los paths administrados, se actualizan versión y manifest, y Core QA debe dar `PASS` antes de stage/commit. El commit añade únicamente paths de la actualización. Un fallo deja cambios/evidencia para inspección, sin commit falso ni rollback destructivo automático. Un fallo post-commit se reporta como tal sin alterar el commit. Push no se ejecuta.
 
-## Migración mayor 1.x → 2.0
+## Proyectos antiguos 1.x → 2.x
+
+Un proyecto creado con CN Pilot 1.5.4 u otra versión 1.x puede actualizar el Core con `/cn-estado` para revisar el plan y `/cn-actualizar` para ejecutarlo. La actualización instala archivos gestionados de CN Pilot; no equivale a migrar su Product, datos ni Project Context.
+
+La transición 1.x→2.0 introdujo la estructura actual y registró migraciones versionadas. `/cn-estado` muestra el plan antes de mover rutas de Context/containers 1.x→2.0; no lo aplica. Si ese plan incluye una migración, ciérrala o acuerda cómo recuperar la tarea actual, confirma que el preview protege los datos y aprueba explícitamente antes de aplicar. No hagas renames/copias manuales para evitar el preflight. Una instalación 1.x que no puede clasificarse como limpia requiere revisar personalizaciones con cuidado.
+
+También es válido iniciar un piloto limpio desde una copia nueva del template y trasladar selectivamente contexto y recursos confirmados. No existe una opción universalmente mejor: proyecto activo puede actualizarse preservando personalizaciones; evaluación aislada puede favorecer el piloto limpio. No mezcles ramas/rutas sin comparar el plan.
+
+## Detalle de migración mayor 1.x → 2.0
 
 El update gestionado instala primero el Core 2.0 y mantiene separado el contenido project-owned. `status` muestra el plan de rutas del proyecto y sus colisiones; no mueve datos. Tras cerrar cualquier tarea activa y obtener autorización explícita para la migración, el owner ejecuta `node .cn-pilot/update/updater.mjs migrate --target <Git-root>` para volver a previsualizar. Sin `--approve-migration` no hay escrituras. La aplicación requiere branch nombrada, tracked working tree limpio, active-task cerrado y ausencia de colisiones.
 
-El plan cubre contexto raíz y containers 1.x → 2.0. Si solo existe la ruta antigua, se renombra sin copiar ni alterar su árbol; si ambas existen y su contenido no coincide, bloquea. Si son equivalentes, elimina únicamente el origen tras comprobar igualdad completa. Paths untracked se trasladan preservando contenido pero no se stagean ni incluyen en el commit; solo se incluyen rutas antes rastreadas. Symlinks y rutas inseguras bloquean. La migración ejecuta Core QA antes del commit local. Un `Existing compatibility exception` detectado en `PROJECT.md` omite `product/`; el root operativo no se reorganiza. Tras finalizar, las rutas legacy ya no aparecen como pendientes en status.
+El plan cubre contexto raíz y containers 1.x → 2.0. Si solo existe la ruta antigua, se renombra sin copiar ni alterar su árbol; si ambas existen y su contenido no coincide, bloquea. Si son equivalentes, elimina únicamente el origen tras comprobar igualdad completa. Paths untracked se trasladan preservando contenido pero no se stagean ni incluyen en el commit; solo se incluyen rutas antes rastreadas. Symlinks y rutas inseguras bloquean. La migración ejecuta Core QA antes del commit local. Una `Existing compatibility exception` registrada en `PROYECTO.md` conserva el root operativo y omite el movimiento de `producto/`. Tras finalizar, las rutas legacy ya no aparecen como pendientes en status.
 
 Las rutas managed CN Pilot se actualizan por el manifest; los datos project-owned nunca se tratan como archivos managed a eliminar/agregar. Legacy bootstrap continúa siendo un flujo distinto, sin baseline, y no ejecuta esta migración automáticamente.
 
@@ -74,7 +82,7 @@ El manifest reserva `migrations`. V1 publica una lista vacía y bloquea cualquie
 
 ## Regeneración de distribución por maintainer
 
-Solo al preparar un release compatible después de inspeccionar/revisar el cambio, bump `.cn-pilot-version` y la versión canónica en `CORE.md`, stagea los paths Core previstos para que aparezcan en `git ls-files`, y ejecuta:
+Para mantenedores que preparan una distribución compatible, inspecciona/revisa el cambio, actualiza `.cn-pilot-version` y la versión del header en `.cn-pilot/NUCLEO.md`, stagea los paths Core previstos para que aparezcan en `git ls-files`, y ejecuta:
 
 ```sh
 node .cn-pilot/update/updater.mjs manifest

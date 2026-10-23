@@ -1,6 +1,6 @@
-# Configuración del CN Pilot
+# Configuración de CN Pilot
 
-Fuente de verdad para las capas de configuración compartible, responsive, MCP, deployment opcional y secretos locales. La separación de responsabilidades sobre IA se documenta en [Configuración de IA en Kilo](ESTRATEGIA-DE-MODELOS.md).
+Referencia técnica para configuración compartible, responsive, Kilo/MCP, deployment opcional, secretos y variables de entorno. Si necesitas abrir el workspace/configurar Kilo como usuario, empieza por [Configuración de Kilo](CONFIGURACION-KILO.md). La selección de modelos se explica en [Estrategia de modelos](ESTRATEGIA-DE-MODELOS.md).
 
 ## Capas de configuración
 

@@ -1,6 +1,6 @@
 # Estado actual
 
-> Mantener breve y orientado a decisiones próximas; Git conserva el historial.
+> Estado operativo resumido: qué ocurre ahora, bloqueos reales y siguiente paso útil. No es diario ni changelog; Git conserva el historial. Jefe de proyecto lo mantiene solo ante cambios materiales.
 
 ## Situación
 Contexto del proyecto aún sin inicializar.

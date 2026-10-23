@@ -250,6 +250,45 @@ test("2.7.0 to 2.8.0 updates Core skills without Product or analytics instrument
   assert.equal(fs.existsSync(path.join(target.root, "producto/analytics/")), false);
 });
 
+test("2.8.0 to 2.8.1 updates managed docs while preserving Project Context, README and Product", (t) => {
+  const target = fixture(t); const source = fixture(t);
+  const protectedPaths = ["PROYECTO.md", "REQUISITOS.md", "ESTADO.md", "DECISIONES.md", "ARTEFACTOS.md", "README.md", "producto/index.html", "recursos/brief.md", "artefactos/diseno/nota.md"];
+  const protectedValues = Object.fromEntries(protectedPaths.map((item) => [item, `Proyecto existente protegido: ${item}\n`]));
+  for (const [item, value] of Object.entries(protectedValues)) target.put(target.root, item, value);
+  const oldNucleo = "**Versión:** `2.8.0`\n";
+  const newNucleo = "**Versión:** `2.8.1`\n";
+  target.put(target.root, ".cn-pilot-version", "2.8.0\n");
+  target.put(target.root, ".cn-pilot/NUCLEO.md", oldNucleo);
+  target.put(target.root, ".cn-pilot/documentacion/EMPIEZA-AQUI.md", "onboarding 2.8.0\n");
+  const installed = manifest("2.8.0", [
+    entry(".cn-pilot-version", "2.8.0\n"),
+    entry(".cn-pilot/NUCLEO.md", oldNucleo),
+    entry(".cn-pilot/documentacion/EMPIEZA-AQUI.md", "onboarding 2.8.0\n"),
+  ]);
+  source.put(source.root, ".cn-pilot-version", "2.8.1\n");
+  source.put(source.root, ".cn-pilot/NUCLEO.md", newNucleo);
+  source.put(source.root, ".cn-pilot/documentacion/EMPIEZA-AQUI.md", "onboarding 2.8.1\n");
+  source.put(source.root, ".cn-pilot/documentacion/README.md", "documentation index 2.8.1\n");
+  const latest = manifest("2.8.1", [
+    entry(".cn-pilot-version", "2.8.1\n"),
+    entry(".cn-pilot/NUCLEO.md", newNucleo),
+    entry(".cn-pilot/documentacion/EMPIEZA-AQUI.md", "onboarding 2.8.1\n"),
+    entry(".cn-pilot/documentacion/README.md", "documentation index 2.8.1\n"),
+  ], { addedFiles: [".cn-pilot/documentacion/README.md"] });
+  source.put(source.root, ".cn-pilot/update/manifest.json", JSON.stringify(latest, null, 2));
+
+  const plan = planUpdate(target.root, installed, latest);
+  assert.equal(plan.installedVersion, "2.8.0");
+  assert.equal(plan.latestVersion, "2.8.1");
+  assert.equal(plan.conflicts.length, 0);
+  assert.ok(plan.actions.every(({ path: item }) => item.startsWith(".cn-pilot/") || item === ".cn-pilot-version"));
+  applyPlan(target.root, source.root, plan, latest);
+  for (const [item, value] of Object.entries(protectedValues)) assert.equal(fs.readFileSync(path.join(target.root, item), "utf8"), value, `${item} remains untouched`);
+  assert.equal(fs.readFileSync(path.join(target.root, ".cn-pilot/documentacion/EMPIEZA-AQUI.md"), "utf8"), "onboarding 2.8.1\n");
+  assert.equal(fs.readFileSync(path.join(target.root, ".cn-pilot/NUCLEO.md"), "utf8"), newNucleo, "updater updates managed Core documentation");
+  assert.equal(JSON.parse(fs.readFileSync(path.join(target.root, ".cn-pilot/update/manifest.json"), "utf8")).cnPilotVersion, "2.8.1");
+});
+
 test("1.3.1 baseline detects the 1.4.0 MINOR distribution and added capability", (t) => {
   const { root, put } = fixture(t);
   const oldCore = "Core 1.3.1\n";
