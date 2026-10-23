@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "cnPilotVersion": "2.6.0",
+  "cnPilotVersion": "2.6.1",
   "sourceRepository": "https://github.com/LuisYGM/cn-pilot.git",
   "stableBranch": "main",
   "sourceCommit": null,
@@ -11,11 +11,11 @@
   "managedFiles": [
     {
       "path": ".cn-pilot-version",
-      "sha256": "6693435eadb673dda297a0652d241e293e361200bc40db949cf2501d18dd01ee"
+      "sha256": "a3fbebb0fe4c012038eceff3148b1602c7da8942fcfe1d563c1de6d377558ae5"
     },
     {
       "path": ".cn-pilot/CAMBIOS.md",
-      "sha256": "c8c4ea9661c8e1de1b924a8e71af06289d82158a43635725b54367a7e1568521"
+      "sha256": "018105772524c9c82779181f7b530daa9646fd241baf0deea9620140e4bc704d"
     },
     {
       "path": ".cn-pilot/MANIFIESTO.md",
@@ -23,7 +23,7 @@
     },
     {
       "path": ".cn-pilot/NUCLEO.md",
-      "sha256": "c962bbb2dfb86b311fa7c94f2203da9f804037986cbf7de9f74919cf028a677c"
+      "sha256": "34b4f5db378081433bd216881d7417ff28744efab3561ddfb06d5910a4d00519"
     },
     {
       "path": ".cn-pilot/config/responsive.json",
@@ -179,7 +179,7 @@
     },
     {
       "path": ".cn-pilot/qa/core-check.test.mjs",
-      "sha256": "cb587357fd776f46d40745d3d7631c48b8e20ddeb20caccfca6ec42cdefbafbb"
+      "sha256": "765742985f2a5ddc2eaf7e843111107ec52349b830d7a95efe30f4cb355e6c71"
     },
     {
       "path": ".cn-pilot/update/updater.mjs",
@@ -187,7 +187,7 @@
     },
     {
       "path": ".cn-pilot/update/updater.test.mjs",
-      "sha256": "d780e0de9a08b6718ef465360a3e37da3ac362d429473e8f3c5bf2fc988bacd4"
+      "sha256": "2387257ba6c3db343236d886be046e0cd346c9fe8575341a6c1d93605c3f8765"
     },
     {
       "path": ".kilo/agents/arquitecto.md",
@@ -211,7 +211,7 @@
     },
     {
       "path": ".kilo/agents/maquetador-frontend.md",
-      "sha256": "73ec4b0552c1af4ca81569afe12ee83a4c939b23be6cda74a83c22bd2ad109b3"
+      "sha256": "d5a78aa2541391d430573e5103f853f9add1dd207b974a403945e206c3567265"
     },
     {
       "path": ".kilo/agents/revisor.md",
@@ -331,11 +331,11 @@
     },
     {
       "path": ".kilo/skills/frontend-architecture/SKILL.md",
-      "sha256": "73d0438508f049f3d25ff98104182d23c65b32c88aefc586565b9c2daa4a132c"
+      "sha256": "e606310be57bc8521355be373ed9db6deee4556fa5632097b318108f6905e45b"
     },
     {
       "path": ".kilo/skills/frontend-responsive/SKILL.md",
-      "sha256": "c8cac8c485e74d29088854834af5727b1d37a160ef8ec6c3f37846ff1eeb0266"
+      "sha256": "39a323b2ab00c8915ca761bf35a5f0fd779d97d29721e955e377ffcc70d91176"
     },
     {
       "path": ".kilo/skills/git-checkpoint/SKILL.md",
@@ -423,7 +423,7 @@
     },
     {
       "path": ".kilo/skills/visual-parity-review/SKILL.md",
-      "sha256": "740b920c4861d6e213d09d9269c1547e678e8ab6f85b6afc4202f551576507e6"
+      "sha256": "17fc052042ee9684dcf3f21ff02bfd85341256543a64b7a6761b8f05fdbb7d3c"
     },
     {
       "path": ".kilo/skills/web-strategy/SKILL.md",
@@ -454,9 +454,7 @@
       "sha256": "cc0c78d0a3c820aa4170b8d65a7cbf188af92b10df0e9459355a48c4551abb7a"
     }
   ],
-  "addedFiles": [
-    ".kilo/skills/frontend-architecture/SKILL.md"
-  ],
+  "addedFiles": [],
   "removedFiles": [],
   "migrations": [
     {

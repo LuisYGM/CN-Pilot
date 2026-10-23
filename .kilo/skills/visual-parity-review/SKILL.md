@@ -24,7 +24,7 @@ En APPROVED IMPLEMENTATION compara el primer candidato completo con la fuente ap
    - spacing horizontal/vertical y ritmo visual;
    - tipografía: familia disponible, tamaño, peso, line-height y letter-spacing;
    - colores, backgrounds, borders y radii;
-   - imágenes, aspect ratio, object-fit y prominencia;
+   - media aprobada (asset, crop/framing, aspect ratio, object-fit/position, overlay, placement, source responsive y prominencia);
    - botones, métricas/números, alineaciones y jerarquía;
    - responsive: orden, colapso, legibilidad, relaciones y comportamiento.
 5. Agrupa hallazgos relacionados y clasifica cada diferencia como `equivalent`, `minor difference` o `visible difference remaining`. No produzcas scores numéricos artificiales.

@@ -98,8 +98,8 @@ function createFixture(t) {
   put("DECISIONES.md", "# Decisions fixture\n");
   put("ARTEFACTOS.md", "# Artifacts fixture\n");
   put("AGENTS.md", "# Minimal test kernel\n");
-  put(".cn-pilot-version", "2.6.0\n");
-  put(".cn-pilot/NUCLEO.md", "**Versión:** `2.6.0`\n\nLas superficies propias de CN Pilot destinadas a personas usan español por defecto, incluidos los nombres visibles de roles, documentos, comandos y estructuras.\n");
+  put(".cn-pilot-version", "2.6.1\n");
+  put(".cn-pilot/NUCLEO.md", "**Versión:** `2.6.1`\n\nLas superficies propias de CN Pilot destinadas a personas usan español por defecto, incluidos los nombres visibles de roles, documentos, comandos y estructuras.\n");
   put(".cn-pilot/MANIFIESTO.md", manifest);
   put(".cn-pilot/config/responsive.json", "{}\n");
   put(".cn-pilot/documentacion/.keep");
@@ -112,7 +112,7 @@ function createFixture(t) {
   put(".cn-pilot/update/updater.test.mjs", "// updater test fixture\n");
   put(".cn-pilot/update/manifest.json", `${JSON.stringify({
     schemaVersion: 1,
-    cnPilotVersion: "2.6.0",
+    cnPilotVersion: "2.6.1",
     sourceRepository: "https://github.com/LuisYGM/cn-pilot.git",
     stableBranch: "main",
     sourceCommit: null,
@@ -172,7 +172,7 @@ test("known-good minimal fixture passes deterministic invariants", (t) => {
   const report = runCoreChecks({ rootDir: fixture.root });
   assert.equal(report.status, "PASS", JSON.stringify(report.findings));
   assert.deepEqual(runCoreChecks({ rootDir: fixture.root }), report, "same read-only snapshot yields the same report");
-  assert.equal(report.version, "2.6.0");
+  assert.equal(report.version, "2.6.1");
   assert.equal(getCheck(report, "agents.frontmatter").details.count, 7);
   assert.equal(getCheck(report, "skills.frontmatter").details.count, 2);
   assert.equal(getCheck(report, "commands.frontmatter").details.count, 14);
@@ -228,7 +228,7 @@ test("Spanish-first doctrine is required and generic technical wording is not tr
   fixture.put(".kilo/skills/technical-seo/references/audit.md", "Cita externa de ejemplo: Developer.\n");
   assert.equal(getCheck(runCoreChecks({ rootDir: fixture.root }), "language.spanishFirst").status, "PASS");
 
-  fixture.put(".cn-pilot/NUCLEO.md", "**Versión:** `2.6.0`\n\nLa estructura técnica permanece en inglés: archivos, carpetas, agentes.\n");
+  fixture.put(".cn-pilot/NUCLEO.md", "**Versión:** `2.6.1`\n\nLa estructura técnica permanece en inglés: archivos, carpetas, agentes.\n");
   const check = getCheck(runCoreChecks({ rootDir: fixture.root }), "language.spanishFirst");
   assert.equal(check.status, "FAIL");
   assert.ok(check.details.findings.some((finding) => finding.code === "SPANISH_FIRST_DOCTRINE_MISSING_OR_CONTRADICTORY"));
@@ -274,6 +274,9 @@ test("BF-062 supports controlled parallel modes, keeps single-writer isolation a
     ["C no same-file writers", policy, "No asignes el mismo archivo ni superficie lógica a writers diferentes"],
     ["C lockfiles/config remain shared surfaces", policy, "`package.json`/lockfiles"],
     ["D stabilize shared contracts", policy, "Estabiliza interfaces y decisiones compartidas antes de dividir"],
+    ["D shared CSS/tokens/global styles are a single-writer surface", policy, "CSS/tokens y lockfiles como una sola superficie exclusiva"],
+    ["D shared system changes stay serial while derived pages can consume stable sources in parallel", core, "páginas derivadas independientes que solo la consumen"],
+    ["D a derived page needing a shared-system change reports and serializes the dependency", core, "Si una página necesita cambiar el sistema compartido, reporta la dependencia y serializa/reasigna"],
     ["D unresolved shared contracts stay serial", policy, "contrato compartido abierto"],
     ["E safe read-only parallel", policy, "PARALLEL READ-ONLY"],
     ["F native worktree isolation", policy, "PARALLEL WORKTREES"],
@@ -442,11 +445,11 @@ test("BF-069 Frontend Architecture/Fidelity and Composition Diversity contracts 
     ["H page-specific CSS consumes the shared source", architecture, "los estilos específicos de página consumen esa fuente"],
     ["I editable CSS source stays readable", architecture, "CSS fuente legible, indentado"],
     ["J generated output does not replace source", architecture, "La minificación, si existe, es output del pipeline existente"],
-    ["K this phase does not enforce image-first markup", architecture, "**no** define un contrato global de `<img>/<picture>`"],
+    ["K representational media defaults to a semantic image", architecture, "prefiere `<img>`/`<picture>`"],
     ["L native semantics and heading order are retained", architecture, "Mantén la jerarquía de headings por estructura del documento"],
     ["M fidelity follows approved Flagship/system", architecture, "La Flagship/UI Kit visualmente aprobado"],
     ["N Existing and Approved/Strict fast paths remain", architecture, "Existing conserva source architecture"],
-    ["N approved Greenfield fast path still applies frontend architecture", frontendAgent, "aplica el contrato 2.6 de `frontend-architecture` también durante el fast path aprobado"],
+    ["N approved Greenfield fast path still applies frontend architecture", frontendAgent, "aplica el contrato de `frontend-architecture` también durante el fast path aprobado"],
     ["O Application UI does not inherit marketing layout", architecture, "Application UI sigue su shell/datos/roles propios"],
     ["P page composition remains content-driven", page, "qué forma lo comunica mejor"],
     ["Q varied modules are options, not checklist", architecture, "Patrones disponibles (no checklist)"],
@@ -466,6 +469,60 @@ test("BF-069 Frontend Architecture/Fidelity and Composition Diversity contracts 
   for (const [scenario, source, required] of scenarios) assert.ok(source.includes(required), `${scenario}: contract is present`);
   assert.doesNotMatch(architecture, /max-width\s*:\s*1400px/i, "architecture must not fix a universal container width");
   assert.doesNotMatch(architecture, /`system\.css` es obligatorio/i, "the shared stylesheet name remains stack-native");
+});
+
+test("BF-069 Frontend Media Strategy preserves semantics, performance, fidelity and fast paths", () => {
+  const read = (relative) => fs.readFileSync(new URL(`../../${relative}`, import.meta.url), "utf8");
+  const core = read(".cn-pilot/NUCLEO.md");
+  const coreStart = core.indexOf("## Arquitectura frontend y fidelidad (BF-069)");
+  const coreEnd = core.indexOf("## Flujo visual de alta fidelidad", coreStart);
+  const mediaContract = core.slice(coreStart, coreEnd);
+  const architecture = read(".kilo/skills/frontend-architecture/SKILL.md");
+  const responsive = read(".kilo/skills/frontend-responsive/SKILL.md");
+  const frontendAgent = read(".kilo/agents/maquetador-frontend.md");
+  const parity = read(".kilo/skills/visual-parity-review/SKILL.md");
+  const media = `${mediaContract}\n${architecture}\n${responsive}\n${frontendAgent}\n${parity}`;
+
+  const scenarios = [
+    ["representational media defaults to semantic image", /media representacional[\s\S]{0,180}prefiere `<img>`/i],
+    ["CSS backgrounds remain valid for real decoration", /background-image` sigue siendo válido/i],
+    ["background-like content may remain a real positioned image", /imagen representacional[\s\S]{0,160}elemento real/i],
+    ["picture is conditional on art direction or source selection", /`<picture>` cuando aporte art direction/i],
+    ["responsive image sources are considered when useful", /`srcset`, `sizes`/i],
+    ["responsive image variants and paths are not invented", /ni inventes variantes\/rutas/i],
+    ["critical/LCP media is not lazy-loaded indiscriminately", /LCP[\s\S]{0,100}no debe[\s\S]{0,100}lazy/i],
+    ["below-the-fold lazy loading remains available", /below-the-fold es válido/i],
+    ["known dimensions reserve layout space", /`width`\/`height`, `aspect-ratio`[\s\S]{0,120}layout shift/i],
+    ["informative and decorative alt have distinct handling", /(?:informativas llevan|informativa requiere) alt contextual[\s\S]{0,140}decorativas como `<img>` (?:usan|llevan|usa) `alt=""`/i],
+    ["alt text is not keyword stuffing", /No uses alt como relleno SEO/i],
+    ["approved media treatment is preserved", /Preserva asset, crop, framing, ratio, overlay, placement, art direction/i],
+    ["Existing does not receive mass media migration", /Existing conserva su arquitectura y convenciones[\s\S]{0,120}no migra backgrounds en masa/i],
+    ["Approved/Strict authority includes material markup treatment", /APPROVED\/STRICT la autoridad de la referencia prevalece/i],
+    ["Application UI does not inherit marketing art direction", /Application UI aplica semántica\/performance razonable sin imponer art direction de marketing/i],
+    ["approved parity checks media asset and responsive source", /media aprobada \(asset, crop\/framing[\s\S]{0,100}source responsive/i],
+  ];
+  for (const [scenario, pattern] of scenarios) assert.ok(pattern.test(media), `${scenario}: policy is present`);
+  const activePolicy = `${mediaContract}\n${architecture}\n${frontendAgent}`;
+  assert.equal(/no (?:fija|define) (?:una regla universal )?`?<img>`?[\s\S]{0,100}(?:futuro|convenciones actuales del stack)/i.test(activePolicy), false, "the incorrect deferred image policy is removed");
+  assert.equal(/Frontend (?:Media|Fidelity)(?: 2\.0)? futuros?/i.test(activePolicy), false, "Frontend Media is no longer described as future work");
+});
+
+test("BF-069 spacing, CSS source quality and consolidation remain balanced", () => {
+  const core = fs.readFileSync(new URL("../NUCLEO.md", import.meta.url), "utf8");
+  const architecture = fs.readFileSync(new URL("../../.kilo/skills/frontend-architecture/SKILL.md", import.meta.url), "utf8");
+  const contractStart = core.indexOf("## Arquitectura frontend y fidelidad (BF-069)");
+  const contractEnd = core.indexOf("## Flujo visual de alta fidelidad", contractStart);
+  const contract = core.slice(contractStart, contractEnd);
+
+  assert.match(contract, /`Section`[\s\S]{0,100}spacing exterior/);
+  assert.match(contract, /`Container` define el ancho útil[\s\S]{0,100}no un max-width universal/);
+  assert.match(contract, /`gap` es el mecanismo normal\/preferido para spacing interno repetible/i);
+  assert.match(contract, /Margins siguen siendo válidos[\s\S]{0,120}spacing contextual/);
+  assert.match(architecture, /CSS fuente legible[\s\S]{0,180}no source manual/);
+  assert.match(architecture, /`!important` es excepcional[\s\S]{0,180}no está prohibido universalmente/i);
+  assert.match(architecture, /third-party\/builders, utility systems deliberados o helpers de accesibilidad/i);
+  assert.match(architecture, /patch piles[\s\S]{0,180}revisa la causa y consolida/i);
+  assert.match(architecture, /stale media\/crop\/responsive rules[\s\S]{0,300}sin cambiar apariencia ni behavior aprobados/i);
 });
 
 test("/nuevo-proyecto es progresivo, lee antes de preguntar y no es un wizard", () => {

@@ -1,5 +1,15 @@
 # Changelog
 
+## [2.6.1] - 2026-10-23
+
+Corrección compatible del alcance incompleto de Frontend Architecture/Fidelity 2.0.
+
+- Se incorpora Frontend Media Strategy: media representacional prefiere `<img>`/`<picture>` o primitive semántico equivalente; `background-image` sigue disponible para decoración y fondos genuinos.
+- Se precisan responsive images, loading para Hero/LCP, layout stability, alt y preservación de media/crops aprobados sin migración automática de Existing.
+- Column/Block favorece `gap` para spacing interno repetible cuando Grid/Flex lo permitan, sin convertirlo en dogma; Section y Container conservan sus responsabilidades.
+- Se refuerzan tests de `!important` excepcional, consolidación de patch piles, CSS legible y Safe Parallelism para el sistema CSS compartido.
+- Actualización normal del Core: sin migración de Project Context, conversión de backgrounds ni cambios en `producto/wp-content/**`.
+
 ## [2.6.0] - 2026-10-23
 
 - Se formaliza Frontend Architecture/Fidelity 2.0 con gramática adaptable, sistema compartido/styles por página y respeto a la autoridad visual.

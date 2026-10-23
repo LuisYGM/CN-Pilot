@@ -126,6 +126,44 @@ test("1.3.0 baseline detects the 1.3.1 PATCH distribution as available", (t) => 
   assert.equal(plan.conflicts.length, 0);
 });
 
+test("2.6.0 to 2.6.1 is a managed Core patch without Product migration", (t) => {
+  const target = fixture(t); const source = fixture(t);
+  const oldCore = "Frontend contract 2.6.0\n";
+  const newCore = "Frontend media contract 2.6.1\n";
+  const oldImageSkill = "image-first deferred\n";
+  const newImageSkill = "representational media strategy\n";
+  const projectPage = "client-owned product remains untouched\n";
+  target.put(target.root, ".cn-pilot-version", "2.6.0\n");
+  target.put(target.root, ".cn-pilot/NUCLEO.md", oldCore);
+  target.put(target.root, ".kilo/skills/frontend-architecture/SKILL.md", oldImageSkill);
+  target.put(target.root, "producto/index.html", projectPage);
+  const installed = manifest("2.6.0", [
+    entry(".cn-pilot-version", "2.6.0\n"),
+    entry(".cn-pilot/NUCLEO.md", oldCore),
+    entry(".kilo/skills/frontend-architecture/SKILL.md", oldImageSkill),
+  ]);
+  source.put(source.root, ".cn-pilot-version", "2.6.1\n");
+  source.put(source.root, ".cn-pilot/NUCLEO.md", newCore);
+  source.put(source.root, ".kilo/skills/frontend-architecture/SKILL.md", newImageSkill);
+  const latest = manifest("2.6.1", [
+    entry(".cn-pilot-version", "2.6.1\n"),
+    entry(".cn-pilot/NUCLEO.md", newCore),
+    entry(".kilo/skills/frontend-architecture/SKILL.md", newImageSkill),
+  ]);
+
+  const plan = planUpdate(target.root, installed, latest);
+  assert.equal(plan.installedVersion, "2.6.0");
+  assert.equal(plan.latestVersion, "2.6.1");
+  assert.equal(plan.conflicts.length, 0);
+  assert.deepEqual(plan.actions.map((action) => action.path), [
+    ".cn-pilot-version",
+    ".cn-pilot/NUCLEO.md",
+    ".kilo/skills/frontend-architecture/SKILL.md",
+  ]);
+  assert.ok(plan.actions.every(({ path: item }) => !item.startsWith("producto/")));
+  assert.equal(fs.readFileSync(path.join(target.root, "producto/index.html"), "utf8"), projectPage);
+});
+
 test("1.3.1 baseline detects the 1.4.0 MINOR distribution and added capability", (t) => {
   const { root, put } = fixture(t);
   const oldCore = "Core 1.3.1\n";
