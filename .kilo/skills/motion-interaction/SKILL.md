@@ -21,6 +21,12 @@ Deriva, si está abierta, personality de brand signals: sobriedad, energía, pre
 
 Dirección y nivel de motion se consideran explícitamente en public web aunque la decisión sea NONE/mínima/sutil. **Signature Motion** solo cuando identidad, memoria y viabilidad lo justifican; puede rimar sutilmente en otros momentos, sin cuota/repetición constante. Jerarquiza intensidad HIGH/MEDIUM/LOW/NONE como modelo mental: evita el mismo `opacity + translateY + stagger` en todo. Conserva **calm zones** en forms, pricing/checkout, comparación, lectura densa, decisiones críticas y legal/compliance: feedback/entrada sutil es válido; evita movimiento continuo competitivo. `creative-web-experience` define intent/gate; esta skill decide implementación.
 
+## Public Web Motion System (BF-068)
+
+Para public web Greenfield/rediseño material, Motion System forma parte del lenguaje de la dirección desde el inicio, aunque el sistema final sea sutil; una petición explícita de experiencia estática prevalece. El baseline contempla una entrada de página/hero, scroll progression/reveals cuando el recorrido y el contenido lo aprovechen, microinteracciones/transiciones de controles y estados, adaptación a mobile, calm zones y `prefers-reduced-motion`. No significa que todos los elementos se animen ni que se añada una engine.
+
+El UI Kit define el carácter/intent (personalidad, timing/easing, momentos principales, calm zones y reducción); Flagship muestra el comportamiento en ejecución si motion no fue desactivado. Usa CSS/Web APIs cuando basten; selecciona capability especializada solo cuando el intent exceda la solución nativa y esté dentro de scope. No uses screenshots estáticos como evidencia de motion ni copies `fade-up + stagger` como idioma de marca. El resto de esta skill gobierna implementación, lifecycle y QA real.
+
 ## Motion ladder
 
 - **CSS:** hover/focus, opacity/transforms, transiciones simples, state changes, reveals pequeños y keyframes. No agregues JavaScript si CSS resuelve el caso claramente. Mantén un estado visible por defecto cuando sea esencial.

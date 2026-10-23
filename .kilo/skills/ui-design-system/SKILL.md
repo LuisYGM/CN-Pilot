@@ -17,6 +17,8 @@ No conviertas una landing sencilla en una librería empresarial.
 
 BF-046 conserva el UI Kit como autoridad/foundation y sus checks actuales. En public web Greenfield/rediseño material con dirección abierta, BF-066 decide el orden: no construyas el Kit para descubrir el lenguaje visual; consume la Visual Synthesis y deriva entonces foundations/Kit antes de una Flagship. El Kit se revisa internamente y se aprueba junto con Flagship en el gate visual final de ese pipeline. Application UI, Kit standalone solicitado, Approved/Strict y Existing system-first conservan su orden/gates propios y fast paths; no se ejecuta Visual Pipeline público sin su trigger. `ui-kit-construction` rige la construcción técnica cuando su trigger aplica; esta skill conserva la autoridad de sistema. No generes componentes de dominio hipotéticos ni framework universal. Ningún approval amplía scope ni publica.
 
+En el scope Public Web, combina la gramática/brand signals aprobados con el floor BF-068 del Header/Mobile Header/Footer, tratamiento de media, motion intent e icon family, sin convertirlos en presets ni modificar sus derechos/autoridad. La construcción técnica de specimens, motion y assets sigue en sus skills owner.
+
 ### Construcción del UI Kit
 
 Los detalles de foundations, tokenización, specimens, primitives, estados e implementación visual pertenecen exclusivamente a `ui-kit-construction`. No copies su checklist aquí. Usa un Kit pequeño, neutral y no-domain-specific; sus decisiones se derivan del sistema visual, no se vuelven una Home ni un template universal.

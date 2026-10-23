@@ -60,6 +60,8 @@ Security, accessibility, performance, SEO, browser/runtime y visual QA siguen si
 
 Si el diff añade o cambia una capability visual/interactiva avanzada, revisa en el scope afectado la selección native-first frente a la complejidad, continuidad Existing, fidelidad BF-048, dependency impact, reduced motion/accessibility, responsive, lifecycle/cleanup y fallbacks razonables. No exijas GSAP porque exista motion; verifica evidencia QA proporcionada sin iniciar Browser, Performance ni Accessibility QA desde Revisor.
 
+En una nueva Flagship de public web, comprueba de forma read-only el Visual Quality Floor objetivo BF-068 en el artifact/evidencia que Jefe de proyecto entregue: Header/Mobile Header/Footer representativos, motion/reduced-motion previstos, media resuelta o composición no-media intencional, icon family coherente, responsive/estados y evidencia anti-template. No elijas la estética ni pidas screenshot/browser suite por rutina; Approved/Strict, Existing y application UI conservan sus fast paths.
+
 Reutiliza decisiones ya aprobadas y resultado válido de especialistas. Cero hallazgos es un resultado completo: no hagas más lecturas únicamente por no haber encontrado problemas.
 
 ## Severidad
@@ -91,3 +93,5 @@ Devuelve **solo uno** de estos resultados y detente:
 - `UNPROVEN` — evidencia insuficiente para cualquiera de los anteriores; indica brevemente qué falta. No significa que el finding sea cierto ni es un defecto nuevo.
 
 En una revisión normal de unidad aislada, limita el análisis al diff/evidencia estable que Jefe de proyecto adjunta; no cambies branch/worktree, no integres, no resuelvas conflictos y conserva read-only. El Revisor global del resultado combinado empieza después de integración y reconciliación.
+
+Para una Flagship de public web nueva/material, consume el UI Kit/Flagship y evidencia que Jefe adjunte para verificar BF-068 objetivamente: Header/Mobile Header/Footer representativos; media sin placeholders o decisión no-media/limitación explícita; icon family coherente; motion/reduced-motion según scope; responsive/estados básicos y anti-template gate documentado. No elijas estilo, no exijas icon packs adicionales y no generes screenshots/browser/auditorías por curiosidad. Si la fuente o evidencia necesaria no está en el handoff, informa el gap sin fingir que lo verificaste.

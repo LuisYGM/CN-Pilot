@@ -98,8 +98,8 @@ function createFixture(t) {
   put("DECISIONES.md", "# Decisions fixture\n");
   put("ARTEFACTOS.md", "# Artifacts fixture\n");
   put("AGENTS.md", "# Minimal test kernel\n");
-  put(".cn-pilot-version", "2.4.0\n");
-  put(".cn-pilot/NUCLEO.md", "**Versión:** `2.4.0`\n\nLas superficies propias de CN Pilot destinadas a personas usan español por defecto, incluidos los nombres visibles de roles, documentos, comandos y estructuras.\n");
+  put(".cn-pilot-version", "2.5.0\n");
+  put(".cn-pilot/NUCLEO.md", "**Versión:** `2.5.0`\n\nLas superficies propias de CN Pilot destinadas a personas usan español por defecto, incluidos los nombres visibles de roles, documentos, comandos y estructuras.\n");
   put(".cn-pilot/MANIFIESTO.md", manifest);
   put(".cn-pilot/config/responsive.json", "{}\n");
   put(".cn-pilot/documentacion/.keep");
@@ -112,7 +112,7 @@ function createFixture(t) {
   put(".cn-pilot/update/updater.test.mjs", "// updater test fixture\n");
   put(".cn-pilot/update/manifest.json", `${JSON.stringify({
     schemaVersion: 1,
-    cnPilotVersion: "2.4.0",
+    cnPilotVersion: "2.5.0",
     sourceRepository: "https://github.com/LuisYGM/cn-pilot.git",
     stableBranch: "main",
     sourceCommit: null,
@@ -172,7 +172,7 @@ test("known-good minimal fixture passes deterministic invariants", (t) => {
   const report = runCoreChecks({ rootDir: fixture.root });
   assert.equal(report.status, "PASS", JSON.stringify(report.findings));
   assert.deepEqual(runCoreChecks({ rootDir: fixture.root }), report, "same read-only snapshot yields the same report");
-  assert.equal(report.version, "2.4.0");
+  assert.equal(report.version, "2.5.0");
   assert.equal(getCheck(report, "agents.frontmatter").details.count, 7);
   assert.equal(getCheck(report, "skills.frontmatter").details.count, 2);
   assert.equal(getCheck(report, "commands.frontmatter").details.count, 14);
@@ -228,7 +228,7 @@ test("Spanish-first doctrine is required and generic technical wording is not tr
   fixture.put(".kilo/skills/technical-seo/references/audit.md", "Cita externa de ejemplo: Developer.\n");
   assert.equal(getCheck(runCoreChecks({ rootDir: fixture.root }), "language.spanishFirst").status, "PASS");
 
-  fixture.put(".cn-pilot/NUCLEO.md", "**Versión:** `2.4.0`\n\nLa estructura técnica permanece en inglés: archivos, carpetas, agentes.\n");
+  fixture.put(".cn-pilot/NUCLEO.md", "**Versión:** `2.5.0`\n\nLa estructura técnica permanece en inglés: archivos, carpetas, agentes.\n");
   const check = getCheck(runCoreChecks({ rootDir: fixture.root }), "language.spanishFirst");
   assert.equal(check.status, "FAIL");
   assert.ok(check.details.findings.some((finding) => finding.code === "SPANISH_FIRST_DOCTRINE_MISSING_OR_CONTRADICTORY"));
@@ -332,6 +332,7 @@ test("Visual Pipeline 2.0 covers the public-web divergence, synthesis, flagship 
     ["F a rejected set requires new directional evidence", creative, "no regeneres variantes idénticas ni repitas research sin evidencia nueva"],
     ["G kit is derived after synthesis", creative, "Solo después de Visual Synthesis activa"],
     ["H Approved and Strict fast paths", pipeline, "La ruta **Approved/Strict** no genera Concept Studies artificiales"],
+    ["H BF-068 quality floor remains active under BF-066", pipeline, "BF-068 gobierna UI Kit/Motion/media/iconografía y Quality Floor"],
     ["I app UI bypasses public-web concepts", pipeline, "No se activa por app/dashboard (`application-ui`)"],
     ["J Existing and derived pages bypass repeated divergence", pipeline, "Existing localized, página derivada de sistema aprobado"],
     ["K one Flagship is a complete page, not a study", creative, "una sola Flagship de página completa"],
@@ -371,6 +372,52 @@ test("Visual Pipeline sequence does not construct the UI Kit before creative exp
   assert.ok(coverage >= 0 && studies > coverage, "reference coverage precedes studies");
   assert.ok(review > studies && derivedKit > review && flagship > derivedKit, "review/mix and synthesis precede kit and flagship");
   assert.ok(creative.slice(studies, review).includes("No generes UI Kits/component libraries para cada alternativa"));
+});
+
+test("BF-068 Public Web Visual Quality Floor covers requirements A-S", () => {
+  const read = (relative) => fs.readFileSync(new URL(`../../${relative}`, import.meta.url), "utf8");
+  const core = fs.readFileSync(new URL("../NUCLEO.md", import.meta.url), "utf8");
+  const kit = read(".kilo/skills/ui-kit-construction/SKILL.md");
+  const motion = read(".kilo/skills/motion-interaction/SKILL.md");
+  const media = read(".kilo/skills/visual-art-direction/SKILL.md");
+  const creative = read(".kilo/skills/creative-web-experience/SKILL.md");
+  const designer = read(".kilo/agents/disenador-ui-ux.md");
+  const reviewer = read(".kilo/agents/revisor.md");
+  const floorStart = core.indexOf("### Visual Quality Floor de Public Web (BF-068)");
+  const floorEnd = core.indexOf("\n## Convenciones estructurales de maquetación", floorStart);
+  assert.ok(floorStart >= 0 && floorEnd > floorStart, "the Quality Floor is scoped to public web and distinct from the visual pipeline");
+  const floor = core.slice(floorStart, floorEnd);
+  const scenarios = [
+    ["A Header and Mobile Header specimens", kit, "Header + Mobile Header"],
+    ["B real representative Footer", kit, "Footer"],
+    ["B Footer does not invent business facts", kit, "No inventes contacto, horarios, redes"],
+    ["C Application UI fast path", floor, "no se impone a Application UI"],
+    ["D default public-web Motion System", floor, "Motion forma parte del diseño de public web nuevo por defecto"],
+    ["D the UI Kit presents Motion System specimens", kit, "**Motion System:**"],
+    ["E explicit static-motion preference", floor, "petición explícita de experiencia estática"],
+    ["F page/Hero entrance", motion, "entrada de página/hero"],
+    ["G scroll progression when content supports it", motion, "scroll progression/reveals cuando el recorrido y el contenido lo aprovechen"],
+    ["G generic fade-up is not the brand language", motion, "ni copies `fade-up + stagger` como idioma de marca"],
+    ["H reduced motion", motion, "`prefers-reduced-motion`"],
+    ["I client media has priority", media, "Inspecciona lo existente antes de proponer sustitución"],
+    ["J no empty high-fidelity slots", media, "no se deja como caja gris"],
+    ["J material unresolved media is not final", media, "declara que esa parte aún no puede considerarse final"],
+    ["K intentional no-photo direction is valid", media, "Un «sin fotografía» intencional es una solución, no un placeholder"],
+    ["L stock is not represented as project reality", media, "No infieras que una foto externa corresponde"],
+    ["M asset research returns concrete candidates when chosen", media, "produce candidatos concretos"],
+    ["N Lucide default functional icon family", kit, "Lucide es el default general"],
+    ["N one primary icon family", kit, "una sola familia primaria de iconos funcionales"],
+    ["N no mixing packs", kit, "No mezcles packs"],
+    ["O Phosphor is an expressive alternative", kit, "Phosphor puede aportar expresividad"],
+    ["O Simple Icons are brand-only and do not grant trademark rights", media, "CC0 no elimina trademark"],
+    ["O artwork SVG remains permitted", kit, "custom SVG sigue permitido para artwork"],
+    ["P Quality Floor permits a deliberately sober direction", media, "Sobriedad deliberada es un resultado válido"],
+    ["P anti-template swap test is present", creative, "si cambian logo/copy/fotos, ¿la propuesta se vendería casi intacta a otro sector?"],
+    ["Q real evidence is required for motion", motion, "Flagship muestra el comportamiento en ejecución si motion no fue desactivado"],
+    ["R Revisor verifies objective criteria only", reviewer, "comprueba de forma read-only el Visual Quality Floor objetivo BF-068"],
+    ["S Designer owns the public-web floor", designer, "verifica el Quality Floor BF-068"],
+  ];
+  for (const [scenario, source, required] of scenarios) assert.ok(source.includes(required), `${scenario}: contract is present`);
 });
 
 test("/nuevo-proyecto es progresivo, lee antes de preguntar y no es un wizard", () => {

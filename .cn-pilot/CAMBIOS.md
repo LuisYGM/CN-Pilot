@@ -1,5 +1,10 @@
 # Changelog
 
+## [2.5.0] - 2026-10-22
+
+- UI Kit público incorpora Header/Mobile Header, Footer, Motion System, media, iconografía funcional y specimens proporcionales.
+- Se formalizan motion/responsive/reduced-motion, No Empty Media Slots, resolución/provenance de assets, icon library-first y Visual Quality Floor con fast paths intactos.
+
 ## [2.4.0] - 2026-10-22
 
 - Visual Pipeline 2.0 añade Reference Coverage, Concept Studies visuales reales, Human Creative Review con selección/mezcla y Visual Synthesis antes del UI Kit derivado.
