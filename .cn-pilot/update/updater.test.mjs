@@ -207,6 +207,49 @@ test("2.6.1 to 2.7.0 is a normal Core update without WordPress Product scaffold 
   assert.equal(fs.existsSync(path.join(target.root, "producto/wp-content/themes/new-theme")), false);
 });
 
+test("2.7.0 to 2.8.0 updates Core skills without Product or analytics instrumentation", (t) => {
+  const target = fixture(t); const source = fixture(t);
+  const oldCore = "CN Pilot 2.7.0\n";
+  const newCore = "CN Pilot 2.8.0 Skill Hardening\n";
+  const oldBricks = "Bricks skill 2.7.0\n";
+  const newBricks = "Bricks skill capability-aware\n";
+  const analyticsSkill = "Analytics capability instructions only\n";
+  const productTheme = "Existing analytics event source remains unchanged\n";
+  target.put(target.root, ".cn-pilot-version", "2.7.0\n");
+  target.put(target.root, ".cn-pilot/NUCLEO.md", oldCore);
+  target.put(target.root, ".kilo/skills/bricks/SKILL.md", oldBricks);
+  target.put(target.root, "producto/wp-content/themes/existing/analytics.js", productTheme);
+  const installed = manifest("2.7.0", [
+    entry(".cn-pilot-version", "2.7.0\n"),
+    entry(".cn-pilot/NUCLEO.md", oldCore),
+    entry(".kilo/skills/bricks/SKILL.md", oldBricks),
+  ]);
+  source.put(source.root, ".cn-pilot-version", "2.8.0\n");
+  source.put(source.root, ".cn-pilot/NUCLEO.md", newCore);
+  source.put(source.root, ".kilo/skills/bricks/SKILL.md", newBricks);
+  source.put(source.root, ".kilo/skills/analytics-instrumentation/SKILL.md", analyticsSkill);
+  const latest = manifest("2.8.0", [
+    entry(".cn-pilot-version", "2.8.0\n"),
+    entry(".cn-pilot/NUCLEO.md", newCore),
+    entry(".kilo/skills/bricks/SKILL.md", newBricks),
+    entry(".kilo/skills/analytics-instrumentation/SKILL.md", analyticsSkill),
+  ], { addedFiles: [".kilo/skills/analytics-instrumentation/SKILL.md"] });
+
+  const plan = planUpdate(target.root, installed, latest);
+  assert.equal(plan.installedVersion, "2.7.0");
+  assert.equal(plan.latestVersion, "2.8.0");
+  assert.equal(plan.conflicts.length, 0);
+  assert.deepEqual(plan.actions.map((action) => action.path).sort(), [
+    ".cn-pilot-version",
+    ".cn-pilot/NUCLEO.md",
+    ".kilo/skills/analytics-instrumentation/SKILL.md",
+    ".kilo/skills/bricks/SKILL.md",
+  ].sort());
+  assert.ok(plan.actions.every(({ path: item }) => !item.startsWith("producto/")));
+  assert.equal(fs.readFileSync(path.join(target.root, "producto/wp-content/themes/existing/analytics.js"), "utf8"), productTheme);
+  assert.equal(fs.existsSync(path.join(target.root, "producto/analytics/")), false);
+});
+
 test("1.3.1 baseline detects the 1.4.0 MINOR distribution and added capability", (t) => {
   const { root, put } = fixture(t);
   const oldCore = "Core 1.3.1\n";

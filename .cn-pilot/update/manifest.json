@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "cnPilotVersion": "2.7.0",
+  "cnPilotVersion": "2.8.0",
   "sourceRepository": "https://github.com/LuisYGM/cn-pilot.git",
   "stableBranch": "main",
   "sourceCommit": null,
@@ -11,19 +11,19 @@
   "managedFiles": [
     {
       "path": ".cn-pilot-version",
-      "sha256": "362148d7721ad4a1bb64981ff8d604ef7f4d22267ea8845042f54f90940f24fd"
+      "sha256": "dceb827995520dae388b7283c5bc7847ef58a16e8013318c3bb436feeb5dc51e"
     },
     {
       "path": ".cn-pilot/CAMBIOS.md",
-      "sha256": "0f37a7dac31f6bafb519c4c3210ec642a8c0eb0cce5abf7e6ff12852058a378d"
+      "sha256": "62042a4db33f752c000349c598f57c1b388cc1bed917a6e4c0aa1dd4267838a2"
     },
     {
       "path": ".cn-pilot/MANIFIESTO.md",
-      "sha256": "0ba22a3c294314940d338ee8403b473b0eb578ec9534cc7c3b10615f1d610a1b"
+      "sha256": "4bd204303d58e93c3931ef57c995647a016c425fa1aca59b062c8fd0f965643f"
     },
     {
       "path": ".cn-pilot/NUCLEO.md",
-      "sha256": "4e2311c1f19c33309215ed541eb40c9d0d1b772ddaf353dd17fc2c9d6433f770"
+      "sha256": "e6075b6d57943f55123971f690a5d03f03df47f05ad8b550eef17ed18ddeadf3"
     },
     {
       "path": ".cn-pilot/config/responsive.json",
@@ -179,7 +179,7 @@
     },
     {
       "path": ".cn-pilot/qa/core-check.test.mjs",
-      "sha256": "5a414a9db0cf09a165119b6766cf3f53af5a9296a064d2224993295de1fddcde"
+      "sha256": "3eaf72fbb1bd8df1d5e271d2a8a845a2775f248d78d86a440e02afcfd8a4644f"
     },
     {
       "path": ".cn-pilot/update/updater.mjs",
@@ -187,7 +187,7 @@
     },
     {
       "path": ".cn-pilot/update/updater.test.mjs",
-      "sha256": "3a27f3c3495b540a34b6407ea7461e8fa00ee903e140a34fbbe0da117911df3c"
+      "sha256": "84a5eee2905a0b97b25b8b692d8131b0f119249a4622b8433e737c40292a8b29"
     },
     {
       "path": ".kilo/agents/arquitecto.md",
@@ -199,7 +199,7 @@
     },
     {
       "path": ".kilo/agents/desarrollador.md",
-      "sha256": "8046e3993d5eeec88e85cc413184ed2c5f91ad85932d4b5919782386296a61fb"
+      "sha256": "ed9fc9a0f615c1583f045ab2bcfae783fd312bf2ea2103b5ff9601d7f138b131"
     },
     {
       "path": ".kilo/agents/disenador-ui-ux.md",
@@ -207,11 +207,11 @@
     },
     {
       "path": ".kilo/agents/jefe-proyecto.md",
-      "sha256": "6e44f84cf88ac4c5067d897afeee618f9af196c9d9ab73e88952acf5152f0c88"
+      "sha256": "593360f7c31ee36b3937d4733ff221c120a16d42ae15889d2dcc28d54072e895"
     },
     {
       "path": ".kilo/agents/maquetador-frontend.md",
-      "sha256": "d1a200d01f3fce16d61e181a31d2a994a42fb0f6bba7e9fbf35725c358743a5c"
+      "sha256": "f39125b73f09756dc541b3ed7fb6e51a35b8b6a5d32bc8a44fbefbf7098c1aee"
     },
     {
       "path": ".kilo/agents/revisor.md",
@@ -275,7 +275,11 @@
     },
     {
       "path": ".kilo/skills/accessibility-review/SKILL.md",
-      "sha256": "e2490885dab8a87c34e7c617a71c6ee73580961da860e2f85330a37aeb98881d"
+      "sha256": "02b15b894a03228d5c0070e56486cbb9e653b2893814e2d64b5b924f2d77c4f1"
+    },
+    {
+      "path": ".kilo/skills/analytics-instrumentation/SKILL.md",
+      "sha256": "6d298f2bbff37c2790e276997bb708eeda079b3e174cae67964ec915255a9dde"
     },
     {
       "path": ".kilo/skills/api-integration/SKILL.md",
@@ -295,15 +299,15 @@
     },
     {
       "path": ".kilo/skills/bricks/SKILL.md",
-      "sha256": "25c3324432dcbdb68720796a0eeec690bfc91baff5a4fc7f2e30de773bea085a"
+      "sha256": "a96b041b0b3cfcd063b9c2b72c7404af4b7277ccf68726927e740fd1fbee80e9"
     },
     {
       "path": ".kilo/skills/content-blog-seo/SKILL.md",
-      "sha256": "eace83ae0278df4f4c3af2a9e6f0dd5e0afd7b8e61700bed2d21204f105ad67b"
+      "sha256": "ea3f5866613db6b54b94bc342d970d540e787ecefb3989f04c51b72de5a79fb8"
     },
     {
       "path": ".kilo/skills/content-page/SKILL.md",
-      "sha256": "8b4181848b032967af420f833d1da12549510edff6648faf925785901cf0d8a7"
+      "sha256": "c1aedb05988ec997a21bb29642ca29a72bd4302235fe76babbae984352730dbd"
     },
     {
       "path": ".kilo/skills/creative-web-experience/SKILL.md",
@@ -311,11 +315,11 @@
     },
     {
       "path": ".kilo/skills/database-migrations/SKILL.md",
-      "sha256": "4e8e9c4875abd1d5342d3f42a942570fa4f6ed0fca3c1735128aef1ca335e2fd"
+      "sha256": "a7b14941b992b681ab3192764ccaf6201a4e320833a5deef9eb77d77feeee3f7"
     },
     {
       "path": ".kilo/skills/deploy-wordpress/SKILL.md",
-      "sha256": "524f5072b8be4e24ca0970b38012da2d029b0052733c17799136951ede952de6"
+      "sha256": "6dcdc3cc3eca5e0ad53dc458dcf53b23243ee96aff98381f929561f29ffb96d6"
     },
     {
       "path": ".kilo/skills/elementor/SKILL.md",
@@ -335,7 +339,7 @@
     },
     {
       "path": ".kilo/skills/frontend-responsive/SKILL.md",
-      "sha256": "39a323b2ab00c8915ca761bf35a5f0fd779d97d29721e955e377ffcc70d91176"
+      "sha256": "51abb1a399c1f5bb35d7f5cc961f1e5ee9477551a6f96fedf70bcc911676d9eb"
     },
     {
       "path": ".kilo/skills/git-checkpoint/SKILL.md",
@@ -347,7 +351,7 @@
     },
     {
       "path": ".kilo/skills/motion-interaction/SKILL.md",
-      "sha256": "01b479396c360985d2a4c55b718f3415508b42999bc0f1a8a5b10359e87dc4c6"
+      "sha256": "ab6501b9bcfda7f2a632e0f48038c3e7f2e4bcdaba53d0fd27bdce2f080cb45e"
     },
     {
       "path": ".kilo/skills/page-composition/SKILL.md",
@@ -355,7 +359,7 @@
     },
     {
       "path": ".kilo/skills/performance-review/SKILL.md",
-      "sha256": "e92314ab88646ed8af54da5fff1b43ec1b99294a9c0e8dfcc34da2ab3f2f2294"
+      "sha256": "6a16bdd7c5479d31b306b16ea38de0bbbded4c2abb9b0adf8db40e978484c4d5"
     },
     {
       "path": ".kilo/skills/product-discovery/SKILL.md",
@@ -367,7 +371,7 @@
     },
     {
       "path": ".kilo/skills/security-review/SKILL.md",
-      "sha256": "b5bc0bb7078dd06d317bdb914fdbac91caed8ead46dc33a4f7f17b996a6c46ad"
+      "sha256": "79f4326d517f3b7380f0ef844924b0c1b23906b8fadbdcc2abd75944399f59f0"
     },
     {
       "path": ".kilo/skills/source-grounded-development/SKILL.md",
@@ -407,7 +411,7 @@
     },
     {
       "path": ".kilo/skills/testing-strategy/SKILL.md",
-      "sha256": "60c6a24f580eee590bf245034809f1151499fd4f4e28e70742fce56688217b84"
+      "sha256": "ba25e5457cd92b6838f4181daeca6dab657b9c5daa58d057d69f5346ecd73adb"
     },
     {
       "path": ".kilo/skills/ui-design-system/SKILL.md",
@@ -415,7 +419,7 @@
     },
     {
       "path": ".kilo/skills/ui-kit-construction/SKILL.md",
-      "sha256": "183fd4c77fde41d6f534462fa281a7b7f363ba518cb83cb64d492d58548e4d09"
+      "sha256": "b3d0fa6ac80068b1f79a74e40ac05be1f03643628be269bbea3442b50a38b173"
     },
     {
       "path": ".kilo/skills/visual-art-direction/SKILL.md",
@@ -431,7 +435,7 @@
     },
     {
       "path": ".kilo/skills/webapp-testing/SKILL.md",
-      "sha256": "cc354f009a3eb316decfc60812d4e3e237d02b7b034f4f0f6a48ed8c5896ec6a"
+      "sha256": "e073c6f0384854ef218d66e56cf180e3b3f0c141cf3f8cc30f87d44dc8fa7146"
     },
     {
       "path": ".kilo/skills/woocommerce/SKILL.md",
@@ -443,7 +447,7 @@
     },
     {
       "path": ".kilo/skills/wordpress-plugin/SKILL.md",
-      "sha256": "cd5944b8e053878ea99f3f44287ff1b06965821789ebba1edb9ea47d4dc58a25"
+      "sha256": "b8dd66086352f9244df6c253b2a2cacf815ec1dbb36f5bc931ab4767258790d4"
     },
     {
       "path": ".kilo/skills/wordpress-theme-development/SKILL.md",
@@ -459,7 +463,7 @@
     }
   ],
   "addedFiles": [
-    ".kilo/skills/wordpress-theme-development/SKILL.md"
+    ".kilo/skills/analytics-instrumentation/SKILL.md"
   ],
   "removedFiles": [],
   "migrations": [

@@ -11,6 +11,12 @@ Activa esta skill solo para un despliegue WordPress dentro del alcance y con mé
 
 Pregunta para cada intervención: **qué se publica, dónde, por qué canal, qué superficies persistentes toca, cómo se demuestra el éxito y qué puede recuperarse**. Distingue archivos, base de datos, uploads, options, post/meta content, builder data, configuración de plugins, caché/CDN y estado de integraciones externas. Un deploy de archivos no equivale a sincronización de datos; restaurar archivos no revierte DB, options o recursos del builder. La sincronización de desarrollo o un watcher tampoco equivalen a deployment ni autorizan publicar en producción.
 
+## Product source WordPress 2.7
+
+En Greenfield administrado por CN Pilot, el source autorizado de theme/plugin proviene de `producto/wp-content/themes/<slug>/` y `producto/wp-content/plugins/<slug>/`; incluye `mu-plugins/<archivo>` solo si existe un MU-plugin real. No despliegues WordPress Core, `.cn-pilot/`, `.kilo/`, Project Context, `recursos/` o `artefactos/` por inferencia. Uploads/media de runtime, DB y configuración son superficies distintas y no se sincronizan automáticamente. Product source no es la instalación completa.
+
+Si `Existing compatibility exception` documenta root/destino distinto, conserva método y paths operativos; no muevas un theme/plugin solo para ajustarlo al layout Greenfield. Añade a allowlist únicamente el source/path que el deploy actual consume. Esta extensión no crea un método, ni autoriza publicación.
+
 ## Preflight y manifiesto
 
 1. Identifica destino/entorno y autorización efectiva, unidad y propietario de cada recurso, método disponible y riesgos de datos vivos. Si existe Git, inspecciona rama, estado y checkpoint para rastrear qué fuente se publicará; un commit o push no son deploy y BF-017 sigue `main → work → verify → local commit → manual push`. Sin Git, verifica fuentes directamente.

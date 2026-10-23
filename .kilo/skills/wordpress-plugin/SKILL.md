@@ -9,6 +9,8 @@ description: Diseñar, crear o ampliar plugins WordPress mantenibles. Úsala par
 
 Úsala para crear o mantener **plugins propios** cuando el stack aprobado requiere lógica permanente; no crees un plugin vacío ni dupliques funcionalidades del Core o de plugins existentes. Reutiliza `wordpress` para estado real, canal seguro y verificación de recursos. Define qué código, settings, tablas, datos, hooks y tareas son propiedad del plugin y cuáles pertenecen a WordPress, a otro plugin o al sitio; evita cambios colaterales sobre configuración compartida.
 
+En un WordPress Greenfield cuya fuente CN Pilot administra, el plugin propio real vive bajo `producto/wp-content/plugins/<plugin-slug>/`; no crees ese directorio ni un plugin scaffold hasta que una feature aprobada lo requiera. Existing conserva root/path/CI/deploy y arquitectura vigentes; no migres un plugin por convención. No versiona WordPress Core ni uploads de producción por ubicar el source del plugin.
+
 ## Diseño y lifecycle
 
 1. Comprueba instalación/versiones, dependencias y compatibilidad requerida (WordPress, PHP y plugins relevantes). Delimita funcionalidades, entradas, permisos, datos persistidos y criterios de aceptación antes de elegir una arquitectura proporcional. Usa bootstrap claro y prefijos/namespaces; separa admin/frontend solo cuando ayude. Carga assets únicamente donde se usan y documenta hooks públicos si se ofrece extensibilidad.

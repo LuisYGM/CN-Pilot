@@ -45,13 +45,13 @@ Esto conserva `1rem = 16px`; no se permite `14px`, `62.5%` ni otra técnica que 
 
 Roles específicos menores a 16px sí se permiten con intención semántica/visual (eyebrow, caption, metadata, helper/legal text, badge, anotación técnica o label compacto justificado). No uses texto menor como body general, para hacer caber layout ni porque la fuente se perciba grande. La familia, sector, framework y estilo no alteran el estándar root/body.
 
-### Tokens de font-size: fluidos obligatorios
+### Tokens de font-size: fluidez según intención
 
-Todo token nuevo de tamaño tipográfico definido en el Kit usa `clamp()`; incluye display, headings, body y variantes globales presentes (body-large/small, labels, buttons, eyebrow, caption, metadata u otros). No dejes definiciones finales en `rem`, `px` fijo u otra forma sin clamp. Usa rango/fluidez proporcionados al rol y MIN < MAX. Evita clamps cosméticos constantes como `clamp(16px, 16px, 16px)`.
+Prefiere `clamp()` cuando el tamaño debe escalar con viewport/layout: en especial display, headings y roles de texto que la dirección visual haga fluidos. No es obligatorio para todo token tipográfico. Un valor fijo puede ser correcto si su intención permanece constante (p. ej. labels/control internals o un rol compacto aprobado). Conserva body/root legibles y no reduzcas el texto base para hacer caber layout. Si usas `clamp()`, aplica el contrato de endpoints en px de abajo y `MIN < MAX` con fluidez real; no uses clamps cosméticos constantes como `clamp(16px, 16px, 16px)`.
 
-### Tokens de spacing: fluidos obligatorios
+### Tokens de spacing: fluidez según escala
 
-Todo token reusable nuevo de espacio del Kit usa `clamp()` con progresión fluida real y endpoints distintos; incluye escala, gap, padding, section spacing, gutters, stack/cluster, grid y equivalentes. No dejes tokens finales de spacing en `rem`, `px` fijo u otra forma sin clamp. Deriva rangos de escala y propósito; no impongas una escala universal ni hagas variaciones agresivas solo para cumplir el contrato.
+Prefiere spacing fluido cuando el valor crece/decrece con viewport o composición, particularmente section spacing, layout gutters y macro gaps. No exijas `clamp()` para cada token reusable. Los valores fijos son adecuados para spacing interno de controls, icon gaps, separación junto a borders u otros valores de componente/dimensiones cuya intención sea constante. Deriva escala y propósito; no cambies tokens Existing/Approved ni inventes fluidez cosmética para completar una regla. Si usas `clamp()`, sus endpoints siguen el contrato de px y `MIN < MAX`.
 
 ### Contrato global de clamp
 
@@ -83,15 +83,7 @@ Muestra los estados que correspondan por control: default, hover, focus, active,
 
 ### Focus de campos
 
-En input, textarea, select y controles equivalentes con borde:
-
-- default usa el borde normal;
-- focus/focus-visible mantiene exactamente border-width, dimensions, radius y padding; cambia el borde a primary;
-- no agrega outline/halo/box-shadow grueso ni causa layout shift;
-- error y success conservan su prioridad/color y el mensaje visible aunque el campo tenga foco;
-- disabled conserva su apariencia.
-
-El cambio de borde debe hacer el foco perceptible; permite/fortalece indicación nativa en forced-colors/high-contrast cuando se requiera. Este contrato no se extiende a botones/enlaces, que conservan sus propios indicadores apropiados.
+En input, textarea, select y controles equivalentes, diseña un foco perceptible, contrastante y coherente con el sistema; no dependas de un cambio de color tenue. Borde, outline, box-shadow/ring o su combinación son soluciones válidas si el indicador es visible, no provoca layout shift innecesario y funciona con forced-colors/high-contrast. No elimines `outline` sin un reemplazo igual o más perceptible. Error/success conservan su prioridad y mensaje; disabled conserva su estado. Aplica la misma intención de foco a botones, enlaces y controles interactivos con su patrón apropiado. Esto define usabilidad, no una estética universal.
 
 ### Accordion: interacción y motion
 
@@ -109,14 +101,14 @@ Antes de Human Visual Approval, inspecciona las fuentes reales del Kit. Haz un �
 
 1. **Root:** existe `html { font-size: 100%; }`; no hay override que cambie la equivalencia `1rem = 16px`.
 2. **Body:** body/base usa token real con mínimo de 16px; sub-16px solo en roles explícitos.
-3. **Typography tokens:** cada nuevo font-size token está definido con `clamp()`; min/max px, MIN < MAX y fluidez no cosmética.
-4. **Spacing tokens:** cada nuevo spacing token reusable está definido con `clamp()`; min/max px, MIN < MAX y fluidez real.
+3. **Typography tokens:** los roles que deben escalar con viewport/layout muestran fluidez real; valores fijos tienen intención contextual. Si usan `clamp()`, min/max px, MIN < MAX.
+4. **Spacing tokens:** scale/section/gutters y macro spacing son fluidos cuando la composición lo pide; tokens internos pueden ser fijos si la intención es constante. Si usan `clamp()`, min/max px, MIN < MAX.
 5. **Labels:** cada token mostrado coincide exactamente con identifier/value declarado.
 6. **Accordion:** apertura y cierre transicionan suavemente alrededor de 280–400ms/equivalente; sin bounce/overshoot; reduced-motion conserva estado/contenido.
-7. **Form fields:** focus mantiene border-width/dimensiones, usa primary, sin halo grueso; error/success/disabled tienen prioridad.
+7. **Focus:** campo/control tiene indicador perceptible y contraste suficiente sin layout shift; outline, border, ring o shadow se eligen por el sistema. No se elimina el indicador nativo sin reemplazo equivalente; forced-colors, error/success/disabled mantienen estados distinguibles.
 8. **Font:** las fuentes/weights del specimen están realmente cargados con fallback deliberado.
 9. **Responsive:** Kit/specimens reflow y no tienen overflow material en viewports representativos.
 
-Si cualquier punto falla, corrige antes de aprobación. Existing conserva tokens previos no tocados; todo token nuevo de una extensión sigue esta skill salvo excepción Approved/Strict material y explícita.
+Si un criterio aplicable falla, corrige antes de aprobación. Existing conserva tokens/focus previos no tocados; toda extensión deriva decisiones de fluidez/foco del Kit y scope actual salvo authority Approved/Strict.
 
 No se incluye un checker automático universal: la clasificación de tokens/roles y la correspondencia identifier↔specimen dependen del markup/CSS de cada Kit y una regex general produciría falsos positivos; este check determinista se hace contra las fuentes en el punto de construcción. No añadas framework de lint, dependencia, browser harness ni suite pesada por esta pauta.

@@ -19,3 +19,9 @@ Actívala ante cambios de esquema, transformación de datos, migración de estad
 6. **Verifica datos y aplicación:** según cambio, contrasta counts, constraints, relaciones, muestras, valores transformados, invariantes e integridad, y compatibilidad del código lector/escritor. Un exit code cero no demuestra consistencia. Registra versión aplicada, resultado, cobertura de verificación y limitaciones durables.
 
 Si afecta datos personales, auth, permisos, pagos, secretos u otra superficie sensible, enruta también a `security-review` por BF-023; no dupliques su checklist aquí. Documenta plan/resultado en un artefacto solo si es entregable, durable o necesario para recuperación posterior.
+
+## Compatibilidad expand/contract y backfills
+
+Cuando lectores/writers de varias versiones puedan coexistir durante un deploy (p. ej. rolling/zero-downtime), evalúa la secuencia **expand → desplegar código compatible → backfill/verify → switch → contract**. Aplica solo los pasos que el cambio necesita; una migración offline, pequeña y versionada puede ser más simple, sin fase artificial de compatibilidad. Durante overlap, la versión anterior y nueva deben tolerar el schema/estado compartido.
+
+Para backfill con volumen o fallos parciales relevantes, considera batches, marker/cursor de resume, idempotency, carga/locks, observability y forward recovery. No añadas un framework ni batching por ceremonia; mide/estima scale y verifica reconciliación final antes de contract.

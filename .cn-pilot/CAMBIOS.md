@@ -1,5 +1,13 @@
 # Changelog
 
+## [2.8.0] - 2026-10-23
+
+- Se endurece el catálogo con cambios focales en Accessibility, Bricks, Performance, Responsive, Motion, UI Kit, Security, Database Migrations, Content, Webapp Testing y WordPress deploy/plugin; las skills maduras y los límites de ownership se preservan.
+- Se corrigen reglas demasiado absolutas: foco admite indicadores perceptibles distintos, `clamp()` es contextual y responsive contempla container queries sin sustituir la escala viewport Greenfield.
+- Se consolida BF-057 en una sola sección, mejora debugging routing natural y se integra WordPress Product Contract 2.7 en deploy/plugins sin migrar Product.
+- Se añade `analytics-instrumentation` para medición técnica con owner Desarrollador, event contract, consentimiento/PII, deduplicación y QA por destino. La auditoría no encontró otra skill con ownership de instrumentation.
+- El inventario aumenta en una skill (40); no se añaden agentes ni comandos. Actualización del Core sin cambiar tags, properties de analytics, breakpoints, builders ni integraciones de proyectos existentes.
+
 ## [2.7.0] - 2026-10-23
 
 - Se formaliza el WordPress Product Contract: el source Greenfield administrado por CN Pilot reside bajo `producto/wp-content/`; Core y uploads quedan fuera por defecto, y Existing conserva su root/hosting/CI sin migración automática.

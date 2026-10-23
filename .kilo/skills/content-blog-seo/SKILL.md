@@ -25,3 +25,5 @@ Usa intención y topic ownership aprobados cuando existan; consulta CONTENT-PLAN
 Comprueba calidad y vigencia de fuentes, valor editorial, claims, enlaces internos pertinentes y posible solapamiento con páginas propietarias del tema. Compartir términos no demuestra canibalización: reporta intención/propósito competidor o evidencia de señales/ranking antes de proponer reposicionar o consolidar. No reabre Strategy ni fusiona copy aprobado automáticamente.
 
 Considera actualización y responsable editorial cuando el tema lo requiera, sin cadencia fija. No impone recuento de palabras ni densidad de keyword para completar un checklist.
+
+Si el artículo depende de investigación externa, prefiere fuentes primarias/autoritativas para sus claims materiales, conserva atribución y trazabilidad proporcional y verifica fecha/publication/update context cuando la actualidad importe. Distingue contenido evergreen de datos, políticas o capacidades que cambian; no presentes una inferencia como consensus ni conviertas cada post en paper académico o aparato de citas.

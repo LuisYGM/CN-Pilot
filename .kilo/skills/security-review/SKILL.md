@@ -46,6 +46,8 @@ Para uploads revisa MIME/type y extensión, tamaño, nombre, path traversal, ove
 
 En APIs revisa auth, authorization, rate limiting cuando el riesgo lo justifique, validación, filtrado de respuestas, errores, CORS, paginación/abuso, campos sensibles, retries y secretos. En webhooks revisa firmas, secretos compartidos, timestamp/replay, fuente cuando sea viable, idempotency, entregas duplicadas, retries y logs redactados.
 
+Si el servidor consume una URL entregada o influida por usuario, evalúa SSRF en esa ruta concreta: esquema/host permitido, destinos privados/internos, redirects y resolución/validación DNS con riesgo de rebinding según el stack; no activa por enlaces o fetch normales del browser. Si se agregan dependencias, considera provenance, maintenance, lockfile, scope, install scripts y riesgo de supply chain proporcional al cambio; no exige scanner universal.
+
 Nunca pongas API keys, tokens, passwords, application passwords, private keys o credenciales en Git, frontend, logs, screenshots o documentación. Prefiere environment/config secret stores y ejemplos redactados. Si detectas un secreto expuesto, reporta también necesidad de revoke, rotate y replace; eliminarlo del archivo no basta.
 
 ## WordPress y WooCommerce
@@ -60,7 +62,9 @@ Un endpoint REST custom sin `permission_callback` adecuada es un finding relevan
 
 Si el scope es deploy/production, revisa según stack debug/verbose errors, source maps o backups expuestos, directory listing, HTTPS, cookies, headers, admin exposure y servicios innecesarios. No impongas headers incompatibles sin entender la aplicación.
 
-Revisa dependencias abandonadas o vulnerables solo con evidencia, duplicación y update posture sin recomendar `update everything` automáticamente. Diferencia error user-facing de diagnóstico interno: no filtres stack traces, tokens, headers de autorización, pagos, PII ni detalles internos innecesarios, pero conserva evidencia segura para diagnóstico.
+Revisa dependencias abandonadas o vulnerables solo con evidencia, duplicación y update posture sin recomendar `update everything` automáticamente. Para software/data integrity, según origen y flujo, considera artefactos no confiables/no verificados, fuente de update, estado serializado, integridad build/deploy y trust de eventos/webhooks. Revisa fail-open/error conditions cuando una auth, timeout, malformed input o caída de dependencia pueda abrir acceso, saltar un control o crear una fallback insegura; la falla debe degradar según el diseño, no dar permiso accidentalmente. En flujos de negocio expuestos, considera abuso plausible como redemption repetido, manipulación de precio, bypass de workflow, replay, race o abuso de cuota cuando corresponda.
+
+Diferencia error user-facing de diagnóstico interno: no filtres stack traces, tokens, headers de autorización, pagos, PII ni detalles internos innecesarios, pero conserva evidencia segura para diagnóstico. Estas categorías se activan por superficie y riesgo; no forman un checklist OWASP universal para todo cambio.
 
 ## MCP y fallbacks
 

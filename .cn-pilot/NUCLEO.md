@@ -1,6 +1,6 @@
 # Núcleo de CN Pilot — Especificación 2.0
 
-**Versión:** `2.7.0`
+**Versión:** `2.8.0`
 
 Documento de referencia para mantenedores de CN Pilot. Una persona nueva debe empezar por [`documentacion/EMPIEZA-AQUI.md`](documentacion/EMPIEZA-AQUI.md); no necesita leer esta especificación para trabajar.
 

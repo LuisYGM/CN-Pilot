@@ -98,8 +98,8 @@ function createFixture(t) {
   put("DECISIONES.md", "# Decisions fixture\n");
   put("ARTEFACTOS.md", "# Artifacts fixture\n");
   put("AGENTS.md", "# Minimal test kernel\n");
-  put(".cn-pilot-version", "2.7.0\n");
-  put(".cn-pilot/NUCLEO.md", "**Versión:** `2.7.0`\n\nLas superficies propias de CN Pilot destinadas a personas usan español por defecto, incluidos los nombres visibles de roles, documentos, comandos y estructuras.\n");
+  put(".cn-pilot-version", "2.8.0\n");
+  put(".cn-pilot/NUCLEO.md", "**Versión:** `2.8.0`\n\nLas superficies propias de CN Pilot destinadas a personas usan español por defecto, incluidos los nombres visibles de roles, documentos, comandos y estructuras.\n");
   put(".cn-pilot/MANIFIESTO.md", manifest);
   put(".cn-pilot/config/responsive.json", "{}\n");
   put(".cn-pilot/documentacion/.keep");
@@ -112,7 +112,7 @@ function createFixture(t) {
   put(".cn-pilot/update/updater.test.mjs", "// updater test fixture\n");
   put(".cn-pilot/update/manifest.json", `${JSON.stringify({
     schemaVersion: 1,
-    cnPilotVersion: "2.7.0",
+    cnPilotVersion: "2.8.0",
     sourceRepository: "https://github.com/LuisYGM/cn-pilot.git",
     stableBranch: "main",
     sourceCommit: null,
@@ -172,7 +172,7 @@ test("known-good minimal fixture passes deterministic invariants", (t) => {
   const report = runCoreChecks({ rootDir: fixture.root });
   assert.equal(report.status, "PASS", JSON.stringify(report.findings));
   assert.deepEqual(runCoreChecks({ rootDir: fixture.root }), report, "same read-only snapshot yields the same report");
-  assert.equal(report.version, "2.7.0");
+  assert.equal(report.version, "2.8.0");
   assert.equal(getCheck(report, "agents.frontmatter").details.count, 7);
   assert.equal(getCheck(report, "skills.frontmatter").details.count, 2);
   assert.equal(getCheck(report, "commands.frontmatter").details.count, 14);
@@ -228,7 +228,7 @@ test("Spanish-first doctrine is required and generic technical wording is not tr
   fixture.put(".kilo/skills/technical-seo/references/audit.md", "Cita externa de ejemplo: Developer.\n");
   assert.equal(getCheck(runCoreChecks({ rootDir: fixture.root }), "language.spanishFirst").status, "PASS");
 
-  fixture.put(".cn-pilot/NUCLEO.md", "**Versión:** `2.7.0`\n\nLa estructura técnica permanece en inglés: archivos, carpetas, agentes.\n");
+  fixture.put(".cn-pilot/NUCLEO.md", "**Versión:** `2.8.0`\n\nLa estructura técnica permanece en inglés: archivos, carpetas, agentes.\n");
   const check = getCheck(runCoreChecks({ rootDir: fixture.root }), "language.spanishFirst");
   assert.equal(check.status, "FAIL");
   assert.ok(check.details.findings.some((finding) => finding.code === "SPANISH_FIRST_DOCTRINE_MISSING_OR_CONTRADICTORY"));
@@ -795,4 +795,174 @@ test("visual cleanup removes obsolete restrictions without weakening creative or
     assert.equal(fs.existsSync(new URL(`../../.kilo/skills/${skill}/SKILL.md`, import.meta.url)), true, `${skill} remains active`);
   }
   assert.equal(fs.existsSync(new URL("../../.kilo/skills/ui-design-system/ATTRIBUTION.md", import.meta.url)), false);
+});
+
+test("accessibility-review applies relevant WCAG 2.2 criteria without universal checklist claims", () => {
+  const skill = fs.readFileSync(new URL("../../.kilo/skills/accessibility-review/SKILL.md", import.meta.url), "utf8");
+  const scenarios = [
+    ["WCAG 2.2 AA remains a practical reference", /WCAG 2\.2 AA como referencia práctica/i],
+    ["Focus Not Obscured accounts for sticky and overlay UI", /foco no totalmente ocultado por sticky headers, banners, overlays o dialogs[\s\S]{0,80}Focus Not Obscured/i],
+    ["Redundant Entry is conditional on multi-step flow", /Redundant Entry[\s\S]{0,40}en procesos multi-step/i],
+    ["Accessible Authentication avoids unnecessary cognitive puzzles", /Accessible Authentication[\s\S]{0,200}puzzles\/pruebas cognitivas innecesarios/i],
+    ["drag alternatives, input purpose, errors and reflow are covered", /alternativas de pointer para acciones de arrastre[\s\S]{0,220}propósito\/autocomplete de inputs[\s\S]{0,180}orientación\/reflow/i],
+    ["scope and risk select criteria and evidence", /scope\/risk → criterios aplicables → evidencia proporcional/i],
+    ["automated scans do not establish conformance", /automated scan != accessibility conformance/],
+  ];
+  for (const [scenario, pattern] of scenarios) assert.ok(pattern.test(skill), `${scenario}: policy is present`);
+});
+
+test("Bricks routes to available modern capabilities without a builder-wide recipe", () => {
+  const skill = fs.readFileSync(new URL("../../.kilo/skills/bricks/SKILL.md", import.meta.url), "utf8");
+  const invariants = [
+    ["Bricks and add-on versions/capabilities are confirmed only when relevant", "versión Bricks y add-ons si importan"],
+    ["properties are deliberate component APIs", "Properties exponen decisiones configurables intencionales"],
+    ["variants and slots express real variations and content", "variants nombran variaciones/estados reales", "slots permiten contenido flexible"],
+    ["query context and empty states are considered", "fuente/query owner real", "pagination", "empty state", "nested-query behavior", "Query System/Global Query"],
+    ["native interactions can handle simple behavior without business logic", "Las Bricks Interactions nativas", "no las uses para business logic"],
+    ["global classes and variables remain a shared source", "Classes, variables, Components, global styles y breakpoints son un sistema compartido"],
+    ["editable source and component propagation are verified", "fuente editable", "component propagation", "editor state"],
+  ];
+  for (const [scenario, ...phrases] of invariants) assert.ok(phrases.every((phrase) => skill.includes(phrase)), `${scenario}: invariant is present`);
+  assert.ok(skill.includes("source/component") && skill.includes("instance") && skill.includes("local override"), "components distinguish source, instances and overrides");
+  assert.match(skill, /inspecciona alcance y efecto antes de editar/i);
+  assert.match(skill, /usa `source-grounded-development` con fuente oficial cuando la documentación vigente pueda cambiar la implementación/i);
+  assert.match(skill, /viewports mínimos[\s\S]{0,100}no son una matriz obligatoria/i);
+  assert.doesNotMatch(skill, /verifica desktop, tablet y móvil\./i, "Bricks QA does not mandate three viewports per change");
+});
+
+test("performance-review measures the causal layer and avoids universal score/budget targets", () => {
+  const skill = fs.readFileSync(new URL("../../.kilo/skills/performance-review/SKILL.md", import.meta.url), "utf8");
+  const scenarios = [
+    ["field and lab evidence remain distinct", /datos de campo[\s\S]{0,160}laboratorio/i],
+    ["browser/network, main thread and rendering are separate diagnostic layers", /Browser\/network[\s\S]{0,260}Main thread\/JS[\s\S]{0,260}Rendering/i],
+    ["LCP is decomposed into response/discovery/download/render", /TTFB\/response,[\s\S]{0,160}render delay/i],
+    ["INP and CLS causes remain causal rather than recipe-based", /input delay,[\s\S]{0,100}presentación[\s\S]{0,100}CLS/i],
+    ["server/backend causes are included when applicable", /Server\/backend[\s\S]{0,240}external HTTP latency/i],
+    ["evidence follows comparable measure-hypothesis-change cycle", /medir → localizar la categoría dominante → hipótesis falsable → cambio mínimo → repetir medición comparable/i],
+    ["no universal tool or budget is required", /No exijas herramientas, score ni budget universal/i],
+    ["WordPress specialization stays conditional", /Activa esta sección solo cuando el stack confirmado sea WordPress\/WooCommerce/i],
+  ];
+  for (const [scenario, pattern] of scenarios) assert.ok(pattern.test(skill), `${scenario}: policy is present`);
+  assert.match(skill, /no persigas 100\/100/i);
+});
+
+test("responsive and motion modernize browser options without replacing existing authority", () => {
+  const responsive = fs.readFileSync(new URL("../../.kilo/skills/frontend-responsive/SKILL.md", import.meta.url), "utf8");
+  const motion = fs.readFileSync(new URL("../../.kilo/skills/motion-interaction/SKILL.md", import.meta.url), "utf8");
+  assert.match(responsive, /Para viewport\/media queries compartidas[\s\S]{0,160}`\.cn-pilot\/config\/responsive\.json`/);
+  assert.match(responsive, /container queries cuando un componente reutilizable[\s\S]{0,180}no por el viewport/i);
+  assert.match(responsive, /breakpoint content-driven excepcional[\s\S]{0,180}escala global divergente/i);
+  assert.match(responsive, /fluidez\/layout intrínsecos sin breakpoint/i);
+  assert.match(motion, /View Transitions API[\s\S]{0,220}no la añadas[\s\S]{0,120}universal/i);
+  assert.match(motion, /CSS Scroll-Driven Animations[\s\S]{0,260}No reemplaza automáticamente GSAP/i);
+  assert.match(motion, /consulta `source-grounded-development` con fuente primaria/i);
+});
+
+test("UI Kit focus and clamp rules are contextual while base readability remains intact", () => {
+  const kit = fs.readFileSync(new URL("../../.kilo/skills/ui-kit-construction/SKILL.md", import.meta.url), "utf8");
+  assert.match(kit, /html \{\s*font-size: 100%;/);
+  assert.match(kit, /texto base usa token real[\s\S]{0,100}mínimo de 16px/i);
+  assert.match(kit, /Prefiere `clamp\(\)` cuando el tamaño debe escalar/i);
+  assert.match(kit, /No es obligatorio para todo token tipográfico/i);
+  assert.match(kit, /Prefiere spacing fluido cuando el valor crece\/decrece/i);
+  assert.match(kit, /No exijas `clamp\(\)` para cada token reusable/i);
+  assert.match(kit, /Si usas `clamp\(\)`, sus endpoints siguen el contrato de px/i);
+  assert.match(kit, /Borde, outline, box-shadow\/ring o su combinación son soluciones válidas/i);
+  assert.match(kit, /No elimines `outline` sin un reemplazo igual o más perceptible/i);
+  assert.match(kit, /forced-colors\/high-contrast/i);
+  assert.doesNotMatch(kit, /Todo token nuevo de tamaño tipográfico definido en el Kit usa `clamp\(\)`/i);
+  assert.doesNotMatch(kit, /no agrega outline\/halo\/box-shadow grueso/i);
+});
+
+test("security and database guidance cover conditional risk and compatible migrations", () => {
+  const security = fs.readFileSync(new URL("../../.kilo/skills/security-review/SKILL.md", import.meta.url), "utf8");
+  const database = fs.readFileSync(new URL("../../.kilo/skills/database-migrations/SKILL.md", import.meta.url), "utf8");
+  assert.match(security, /Si el servidor consume una URL entregada o influida por usuario, evalúa SSRF/i);
+  assert.match(security, /destinos privados\/internos, redirects y resolución\/validación DNS/i);
+  assert.match(security, /provenance, maintenance, lockfile, scope, install scripts y riesgo de supply chain/i);
+  assert.match(security, /artefactos no confiables\/no verificados[\s\S]{0,180}trust de eventos\/webhooks/i);
+  assert.match(security, /fail-open\/error conditions/i);
+  assert.match(security, /redemption repetido, manipulación de precio, bypass de workflow/i);
+  assert.match(security, /no forman un checklist OWASP universal/i);
+  assert.match(database, /Cuando lectores\/writers de varias versiones puedan coexistir[\s\S]{0,260}expand → desplegar código compatible → backfill\/verify → switch → contract/i);
+  assert.match(database, /una migración offline, pequeña y versionada puede ser más simple/i);
+  assert.match(database, /batches, marker\/cursor de resume, idempotency/i);
+});
+
+test("content page/blog and browser testing add evidence only for relevant use cases", () => {
+  const blog = fs.readFileSync(new URL("../../.kilo/skills/content-blog-seo/SKILL.md", import.meta.url), "utf8");
+  const page = fs.readFileSync(new URL("../../.kilo/skills/content-page/SKILL.md", import.meta.url), "utf8");
+  const browser = fs.readFileSync(new URL("../../.kilo/skills/webapp-testing/SKILL.md", import.meta.url), "utf8");
+  assert.match(blog, /fuentes primarias\/autoritativas[\s\S]{0,180}fecha\/publication\/update context/i);
+  assert.match(blog, /Distingue contenido evergreen[\s\S]{0,160}consensus/i);
+  assert.match(page, /Cuando conversión\/confianza lo requiera[\s\S]{0,200}objeciones\/fricción[\s\S]{0,180}proof\/trust confirmado/i);
+  assert.match(page, /No inventes testimonials, cifras[\s\S]{0,200}risk reversal/i);
+  assert.match(browser, /Cuando el flujo existente tenga sesión\/roles[\s\S]{0,180}URL directa no autorizada/i);
+  assert.match(browser, /fixtures determinísticas seguras[\s\S]{0,120}no tomes datos productivos/i);
+  assert.match(browser, /Network slow\/timeout[\s\S]{0,200}no todos por rutina/i);
+  assert.match(browser, /Si comportamiento depende del tiempo[\s\S]{0,180}no inventes fake-timer infrastructure/i);
+});
+
+test("WordPress deploy/plugin skills inherit Product Contract 2.7 without migrating Existing", () => {
+  const deploy = fs.readFileSync(new URL("../../.kilo/skills/deploy-wordpress/SKILL.md", import.meta.url), "utf8");
+  const plugin = fs.readFileSync(new URL("../../.kilo/skills/wordpress-plugin/SKILL.md", import.meta.url), "utf8");
+  assert.match(deploy, /`producto\/wp-content\/themes\/<slug>\/`[\s\S]{0,160}`producto\/wp-content\/plugins\/<slug>\/`/);
+  assert.match(deploy, /No despliegues WordPress Core[\s\S]{0,180}uploads\/media de runtime/i);
+  assert.match(deploy, /Existing compatibility exception[\s\S]{0,180}no muevas un theme\/plugin/i);
+  assert.match(plugin, /`producto\/wp-content\/plugins\/<plugin-slug>\/`/);
+  assert.match(plugin, /no crees ese directorio ni un plugin scaffold/i);
+  assert.match(plugin, /Existing conserva root\/path\/CI\/deploy/i);
+});
+
+test("analytics instrumentation has a distinct owner, useful events and privacy-aware verification", () => {
+  const skill = fs.readFileSync(new URL("../../.kilo/skills/analytics-instrumentation/SKILL.md", import.meta.url), "utf8");
+  const description = skill.match(/^description: (.+)$/m)?.[1] ?? "";
+  assert.match(skill, /^name: analytics-instrumentation$/m);
+  assert.ok(description.length > 50, "analytics capability has a bounded technical description");
+  const scenarios = [
+    ["Developer owns technical instrumentation", /Desarrollador es owner técnico/i],
+    ["measurement starts from a business question/outcome", /business question\/outcome → event → trigger → parameters → destination → verification/i],
+    ["events are semantic and not click explosion", /Nombres como `lead_submitted`[\s\S]{0,240}Evita `click_1`/i],
+    ["SPA tracking avoids duplicate pageviews", /SPA\/client routing verifica route\/history changes[\s\S]{0,180}pageviews duplicados/i],
+    ["form conversion depends on confirmed success, not a button click", /Una conversión usa éxito confirmado por backend\/CRM[\s\S]{0,120}no un click/i],
+    ["ecommerce measurement coordinates WooCommerce and deduplicates", /Si WooCommerce\/ecommerce está en scope, coordina `woocommerce`[\s\S]{0,260}deduplication/i],
+    ["consent and PII are guarded", /Respeta mecanismo y configuración de consentimiento existentes/i],
+    ["sensitive personal data is prohibited", /nunca envíes passwords, tokens, payment data[\s\S]{0,120}PII/i],
+    ["destination receipt is distinguished from dataLayer emission", /Un evento visible en dataLayer\/console demuestra emisión[\s\S]{0,180}no recepción/i],
+    ["server-side tracking is not a default", /No agregues server-side tracking[\s\S]{0,140}por moda/i],
+    ["volatile vendor APIs require primary source grounding", /usa `source-grounded-development` con documentación primaria/i],
+    ["Existing taxonomies/integrations are preserved", /preserva la taxonomía\/integración Existing/i],
+  ];
+  for (const [scenario, pattern] of scenarios) assert.ok(pattern.test(skill), `${scenario}: policy is present`);
+  assert.ok(skill.includes("Actívala cuando el trabajo incluya implementación o debugging de event tracking"), "analytics has a technical implementation trigger");
+  assert.ok(skill.includes("No por la mera presencia de analytics en un proyecto, por cualquier CTA o porque se hable de objetivos/KPIs"), "analytics excludes incidental website, CTA and KPI mentions");
+});
+
+test("systematic debugging and analytics have natural-language routes without inflating agents", () => {
+  const lead = fs.readFileSync(new URL("../../.kilo/agents/jefe-proyecto.md", import.meta.url), "utf8");
+  const developer = fs.readFileSync(new URL("../../.kilo/agents/desarrollador.md", import.meta.url), "utf8");
+  const frontend = fs.readFileSync(new URL("../../.kilo/agents/maquetador-frontend.md", import.meta.url), "utf8");
+  const content = fs.readFileSync(new URL("../../.kilo/agents/contenido-seo.md", import.meta.url), "utf8");
+  assert.match(lead, /Síntoma real de bug, regresión[\s\S]{0,180}`systematic-debugging` antes de editar/i);
+  assert.match(lead, /No la actives por feature request, refactor o pregunta conceptual/i);
+  assert.match(lead, /Analytics\/event measurement con implementación[\s\S]{0,120}`analytics-instrumentation`/i);
+  assert.match(developer, /Ante un bug\/regresión\/fallo de integración[\s\S]{0,180}`systematic-debugging`/i);
+  assert.match(developer, /analytics\/event measurement[\s\S]{0,120}`analytics-instrumentation`/i);
+  assert.match(frontend, /Ante bug\/regresión o síntoma frontend inesperado[\s\S]{0,140}`systematic-debugging`/i);
+  assert.match(frontend, /coordina el trigger\/contract de `analytics-instrumentation` con Desarrollador/i);
+  assert.match(content, /estratega de contenidos/);
+  assert.doesNotMatch(content, /analytics-instrumentation/, "Contenido/SEO does not become the technical instrumentation owner");
+  const agents = fs.readdirSync(new URL("../../.kilo/agents/", import.meta.url)).filter((file) => file.endsWith(".md"));
+  assert.equal(agents.length, 7, "routing hardening does not add agents");
+});
+
+test("testing-strategy keeps one BF-057 full-stack section with prior behavior", () => {
+  const strategy = fs.readFileSync(new URL("../../.kilo/skills/testing-strategy/SKILL.md", import.meta.url), "utf8");
+  const headings = strategy.match(/^#{2,3} .*BF-057.*$/gm) ?? [];
+  assert.equal(headings.length, 1, "BF-057 full-stack guidance is consolidated once");
+  assert.match(strategy, /alinea primero la interfaz mínima/i);
+  assert.match(strategy, /vertical slice/i);
+  assert.match(strategy, /check existente más barato/i);
+  assert.match(strategy, /conserva evidencia vigente/i);
+  assert.match(strategy, /No impongas slice overhead a un sitio estático/i);
 });
