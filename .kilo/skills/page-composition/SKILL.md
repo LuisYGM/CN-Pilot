@@ -29,11 +29,17 @@ No uses por default `hero → split text/image → three cards → section → C
 
 Detecta y resuelve dentro de scope: composición intercambiable al cambiar copy/logo, todo centrado por comodidad, repetición de cards, headings grandes sin jerarquía, full-bleed sin contenido que lo amerite, whitespace vacío, densidad accidental o copy que gobierna mal el alto visual. No prohíbas cards, simetría, centrado, split layouts ni simplicidad; exige intención.
 
+## Creatividad de módulos
+
+Para cada grupo de contenido con peso real, decide qué forma lo comunica mejor en esta Flagship; no preguntes primero qué card component reutilizar. El repertorio incluye (solo si aplica): gallery/masonry, slider/carousel, rail de productos, grid de logos, tabs/accordion, timeline, before-after, comparison, interactive map/diagram, feature switcher, stats integradas, collage, media flotante, secciones tipográficas y secuencias sticky/horizontales. Cards y texto+imagen siguen siendo opciones válidas cuando resuelven el contenido. No añadas módulos, interacciones ni asimetría por cumplir una lista, y no conviertas diversidad en caos: conserva la gramática aprobada del sistema.
+
 ## Transformación responsive
 
 Diseña tres estados conceptuales cuando el layout lo requiera: desktop → tablet → mobile. Mobile no es solo apilar desktop: prioriza orden/énfasis, reflow de grid, alineación, crop, solapes, ritmo y controles. Reordena o simplifica solo manteniendo contenido, journey y jerarquía; no escondas información necesaria. Deriva breakpoints de configuración/Existing y no añadas overrides si composición fluida ya resuelve.
 
 ## Check y stop
+
+Cuando Greenfield/material rebuild implique traducir una Flagship aprobada a Product, el handoff no define el DOM final: Maquetador usa `frontend-architecture` para ownership Section/container/Block, sistema shared y estilos por página sin imponer wrappers. Conserva en runtime la variedad de ritmo, modules y transforms responsive de la composición aprobada; no reduzcas, por implementación cómoda, un slider/sticky/story/full-bleed a un patrón universal. Fast paths/derivadas sin cambios materiales no repiten ese contrato.
 
 Antes de aprobar: prioridad visual clara; secuencia sigue el journey; estructura nace del copy/contenido; variación de ritmo intencional; assets aportan función; silueta reconoce el proyecto; mobile conserva jerarquía; no queda una sección genérica mejorable con assets/recursos disponibles. Si la respuesta es suficiente, detente: no abras loop de microajustes. Devuelve a Maquetador frontend la silueta, orden, anchos/relaciones clave, placement de media, variaciones responsive y constraints de la referencia en un handoff compacto, sin documento aparte salvo que sea un artefacto requerido.
 

@@ -5,7 +5,7 @@ description: Implementar o revisar responsive, CSS Grid/Flexbox, tipografía flu
 
 # frontend-responsive
 
-1. Determina si el proyecto es nuevo o existente. En proyectos existentes, los breakpoints implementados son source of truth; no los reemplaces salvo solicitud o migración aprobada.
+1. Determina si el proyecto es nuevo o existente. En proyectos existentes, los breakpoints implementados son source of truth; no los reemplaces salvo solicitud o migración aprobada. En Greenfield, usa `.cn-pilot/config/responsive.json` como fuente de verdad en lugar de hardcodear otra lista divergente.
 2. Para proyectos nuevos, lee `.cn-pilot/config/responsive.json` como fuente de verdad. No dupliques sus valores en otra configuración sin necesidad.
 3. Construye la mayor parte del diseño en Base, sin media query, con estrategia `fluid-first`. Elige por intención: CSS Grid distribuye múltiples unidades en layouts bidimensionales; Flexbox resuelve flujos lineales sencillos. No cambies a Grid solo para cumplir una convención.
 4. Cuando CN use `clamp()` para fluidez, expresa sus límites mínimo y máximo en px (`clamp(20px, 3vw, 30px)` o `clamp(20px, calc(...), 30px)`). El valor fluido no tiene que ser `vw`; no todo necesita `clamp()`. `rem`, `em`, `%`, `vh`, `svh`, `dvh`, `ch` y `fr` siguen permitidos fuera de esos límites. Existing/Strict preserva su convención aprobada salvo migración explícita.

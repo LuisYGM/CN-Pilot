@@ -98,8 +98,8 @@ function createFixture(t) {
   put("DECISIONES.md", "# Decisions fixture\n");
   put("ARTEFACTOS.md", "# Artifacts fixture\n");
   put("AGENTS.md", "# Minimal test kernel\n");
-  put(".cn-pilot-version", "2.5.0\n");
-  put(".cn-pilot/NUCLEO.md", "**Versión:** `2.5.0`\n\nLas superficies propias de CN Pilot destinadas a personas usan español por defecto, incluidos los nombres visibles de roles, documentos, comandos y estructuras.\n");
+  put(".cn-pilot-version", "2.6.0\n");
+  put(".cn-pilot/NUCLEO.md", "**Versión:** `2.6.0`\n\nLas superficies propias de CN Pilot destinadas a personas usan español por defecto, incluidos los nombres visibles de roles, documentos, comandos y estructuras.\n");
   put(".cn-pilot/MANIFIESTO.md", manifest);
   put(".cn-pilot/config/responsive.json", "{}\n");
   put(".cn-pilot/documentacion/.keep");
@@ -112,7 +112,7 @@ function createFixture(t) {
   put(".cn-pilot/update/updater.test.mjs", "// updater test fixture\n");
   put(".cn-pilot/update/manifest.json", `${JSON.stringify({
     schemaVersion: 1,
-    cnPilotVersion: "2.5.0",
+    cnPilotVersion: "2.6.0",
     sourceRepository: "https://github.com/LuisYGM/cn-pilot.git",
     stableBranch: "main",
     sourceCommit: null,
@@ -172,7 +172,7 @@ test("known-good minimal fixture passes deterministic invariants", (t) => {
   const report = runCoreChecks({ rootDir: fixture.root });
   assert.equal(report.status, "PASS", JSON.stringify(report.findings));
   assert.deepEqual(runCoreChecks({ rootDir: fixture.root }), report, "same read-only snapshot yields the same report");
-  assert.equal(report.version, "2.5.0");
+  assert.equal(report.version, "2.6.0");
   assert.equal(getCheck(report, "agents.frontmatter").details.count, 7);
   assert.equal(getCheck(report, "skills.frontmatter").details.count, 2);
   assert.equal(getCheck(report, "commands.frontmatter").details.count, 14);
@@ -228,7 +228,7 @@ test("Spanish-first doctrine is required and generic technical wording is not tr
   fixture.put(".kilo/skills/technical-seo/references/audit.md", "Cita externa de ejemplo: Developer.\n");
   assert.equal(getCheck(runCoreChecks({ rootDir: fixture.root }), "language.spanishFirst").status, "PASS");
 
-  fixture.put(".cn-pilot/NUCLEO.md", "**Versión:** `2.5.0`\n\nLa estructura técnica permanece en inglés: archivos, carpetas, agentes.\n");
+  fixture.put(".cn-pilot/NUCLEO.md", "**Versión:** `2.6.0`\n\nLa estructura técnica permanece en inglés: archivos, carpetas, agentes.\n");
   const check = getCheck(runCoreChecks({ rootDir: fixture.root }), "language.spanishFirst");
   assert.equal(check.status, "FAIL");
   assert.ok(check.details.findings.some((finding) => finding.code === "SPANISH_FIRST_DOCTRINE_MISSING_OR_CONTRADICTORY"));
@@ -317,7 +317,7 @@ test("Visual Pipeline 2.0 covers the public-web divergence, synthesis, flagship 
   const creative = read(".kilo/skills/creative-web-experience/SKILL.md");
   const designer = read(".kilo/agents/disenador-ui-ux.md");
   const pipelineStart = core.indexOf("### Visual Pipeline 2.0 / Creative Web Experience (BF-066)");
-  const pipelineEnd = core.indexOf("\n## Convenciones estructurales de maquetación", pipelineStart);
+  const pipelineEnd = core.indexOf("\n### Visual Quality Floor de Public Web (BF-068)", pipelineStart);
   assert.ok(pipelineStart >= 0 && pipelineEnd > pipelineStart, "canonical pipeline is scoped in Core");
   const pipeline = core.slice(pipelineStart, pipelineEnd);
   const scenarios = [
@@ -352,7 +352,7 @@ test("Visual Pipeline sequence does not construct the UI Kit before creative exp
   const core = fs.readFileSync(new URL("../NUCLEO.md", import.meta.url), "utf8");
   const creative = fs.readFileSync(new URL("../../.kilo/skills/creative-web-experience/SKILL.md", import.meta.url), "utf8");
   const coreStart = core.indexOf("### Visual Pipeline 2.0 / Creative Web Experience (BF-066)");
-  const coreEnd = core.indexOf("\n## Convenciones estructurales de maquetación", coreStart);
+  const coreEnd = core.indexOf("\n### Visual Quality Floor de Public Web (BF-068)", coreStart);
   const policy = core.slice(coreStart, coreEnd);
   const routeStart = policy.indexOf("Flujo canónico cuando aplica:");
   const route = policy.slice(routeStart);
@@ -384,7 +384,7 @@ test("BF-068 Public Web Visual Quality Floor covers requirements A-S", () => {
   const designer = read(".kilo/agents/disenador-ui-ux.md");
   const reviewer = read(".kilo/agents/revisor.md");
   const floorStart = core.indexOf("### Visual Quality Floor de Public Web (BF-068)");
-  const floorEnd = core.indexOf("\n## Convenciones estructurales de maquetación", floorStart);
+  const floorEnd = core.indexOf("\n## Arquitectura frontend y fidelidad (BF-069)", floorStart);
   assert.ok(floorStart >= 0 && floorEnd > floorStart, "the Quality Floor is scoped to public web and distinct from the visual pipeline");
   const floor = core.slice(floorStart, floorEnd);
   const scenarios = [
@@ -418,6 +418,54 @@ test("BF-068 Public Web Visual Quality Floor covers requirements A-S", () => {
     ["S Designer owns the public-web floor", designer, "verifica el Quality Floor BF-068"],
   ];
   for (const [scenario, source, required] of scenarios) assert.ok(source.includes(required), `${scenario}: contract is present`);
+});
+
+test("BF-069 Frontend Architecture/Fidelity and Composition Diversity contracts A-X", () => {
+  const read = (relative) => fs.readFileSync(new URL(`../../${relative}`, import.meta.url), "utf8");
+  const core = fs.readFileSync(new URL("../NUCLEO.md", import.meta.url), "utf8");
+  const start = core.indexOf("## Arquitectura frontend y fidelidad (BF-069)");
+  const end = core.indexOf("## Flujo visual de alta fidelidad", start);
+  assert.ok(start >= 0 && end > start, "Core's BF-069 source is present and bounded");
+  const contract = core.slice(start, end);
+  const architecture = read(".kilo/skills/frontend-architecture/SKILL.md");
+  const page = read(".kilo/skills/page-composition/SKILL.md");
+  const responsive = read(".kilo/skills/frontend-responsive/SKILL.md");
+  const frontendAgent = read(".kilo/agents/maquetador-frontend.md");
+  const scenarios = [
+    ["A adaptable base grammar", contract, "Section / región semántica y visual\n→ Container / ancho útil\n  → Column o layout block"],
+    ["B column and extra wrappers are optional", architecture, "una `column`/`block` relaciona"],
+    ["C complex composition may extend the base", architecture, "full-bleed, sticky, overlap"],
+    ["D no fixed global container width", contract, "no un max-width universal"],
+    ["E Section and Container have different responsibilities", contract, "fondo/spacing exterior propio"],
+    ["F columns/blocks own local grouping", architecture, "contenido, media y acciones con Grid/Flex según el layout"],
+    ["G shared styles use the native stack", architecture, "no se exige llamarla `system.css`"],
+    ["H page-specific CSS consumes the shared source", architecture, "los estilos específicos de página consumen esa fuente"],
+    ["I editable CSS source stays readable", architecture, "CSS fuente legible, indentado"],
+    ["J generated output does not replace source", architecture, "La minificación, si existe, es output del pipeline existente"],
+    ["K this phase does not enforce image-first markup", architecture, "**no** define un contrato global de `<img>/<picture>`"],
+    ["L native semantics and heading order are retained", architecture, "Mantén la jerarquía de headings por estructura del documento"],
+    ["M fidelity follows approved Flagship/system", architecture, "La Flagship/UI Kit visualmente aprobado"],
+    ["N Existing and Approved/Strict fast paths remain", architecture, "Existing conserva source architecture"],
+    ["N approved Greenfield fast path still applies frontend architecture", frontendAgent, "aplica el contrato 2.6 de `frontend-architecture` también durante el fast path aprobado"],
+    ["O Application UI does not inherit marketing layout", architecture, "Application UI sigue su shell/datos/roles propios"],
+    ["P page composition remains content-driven", page, "qué forma lo comunica mejor"],
+    ["Q varied modules are options, not checklist", architecture, "Patrones disponibles (no checklist)"],
+    ["Q two-column layouts remain valid when content warrants", architecture, "split y cards sirven cuando son claros"],
+    ["Q no required carousel/tabs/accordion inventory", architecture, "No añadas sliders/tabs/accordions"],
+    ["R CSS named system file is not mandatory", contract, "no la nombres `system.css` por obligación"],
+    ["S material design drift is escalated", architecture, "escala a Jefe de proyecto para resolver la dependencia/approval"],
+    ["T consolidation preserves approved output", architecture, "sin cambiar apariencia ni behavior aprobados"],
+    ["U consolidation is scoped, not a general refactor", architecture, "No es permiso para refactor general"],
+    ["U consolidated styles receive only focal retest", architecture, "Reprueba solo superficies afectadas"],
+    ["V Parallel page work stabilizes shared sources", core, "Estabiliza interfaces y decisiones compartidas antes de dividir"],
+    ["W responsive keeps Existing breakpoints", responsive, "los breakpoints implementados son source of truth"],
+    ["W greenfield responsive uses its source config", responsive, "usa `.cn-pilot/config/responsive.json`"],
+    ["X exact section/container/column DOM is not mandatory", contract, "no es un árbol DOM obligatorio"],
+    ["X this is conceptual architecture, not literal DOM recipe", architecture, "no una jerarquía DOM o un set de clases obligatorio"],
+  ];
+  for (const [scenario, source, required] of scenarios) assert.ok(source.includes(required), `${scenario}: contract is present`);
+  assert.doesNotMatch(architecture, /max-width\s*:\s*1400px/i, "architecture must not fix a universal container width");
+  assert.doesNotMatch(architecture, /`system\.css` es obligatorio/i, "the shared stylesheet name remains stack-native");
 });
 
 test("/nuevo-proyecto es progresivo, lee antes de preguntar y no es un wizard", () => {

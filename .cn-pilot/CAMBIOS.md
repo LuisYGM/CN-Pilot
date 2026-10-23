@@ -1,5 +1,11 @@
 # Changelog
 
+## [2.6.0] - 2026-10-23
+
+- Se formaliza Frontend Architecture/Fidelity 2.0 con gramática adaptable, sistema compartido/styles por página y respeto a la autoridad visual.
+- Compositional Diversity, estructura semántica y Visual Consolidation Pass mejoran mantenibilidad sin imponer framework/DOM ni refactor en Existing.
+- Responsive y representación de imágenes siguen las convenciones vigentes del stack; no se adelanta un contrato WordPress.
+
 ## [2.5.0] - 2026-10-22
 
 - UI Kit público incorpora Header/Mobile Header, Footer, Motion System, media, iconografía funcional y specimens proporcionales.

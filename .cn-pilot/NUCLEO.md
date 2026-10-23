@@ -1,6 +1,6 @@
 # Núcleo de CN Pilot — Especificación 2.0
 
-**Versión:** `2.5.0`
+**Versión:** `2.6.0`
 
 Documento de referencia para mantenedores de CN Pilot. Una persona nueva debe empezar por [`documentacion/EMPIEZA-AQUI.md`](documentacion/EMPIEZA-AQUI.md); no necesita leer esta especificación para trabajar.
 
@@ -100,7 +100,7 @@ Los nombres de archivo de `.cn-pilot/perfiles/` están en español; los valores 
 - **Contenido / SEO (`contenido-seo`):** sitemap, copy, blog, metadata e intención.
 - **Diseñador UI/UX (`disenador-ui-ux`):** layouts, componentes, responsive y sistema visual.
 - **Desarrollador (`desarrollador`):** backend, PHP, WordPress, WooCommerce, APIs y datos.
-- **Maquetador frontend (`maquetador-frontend`):** HTML/CSS/JS, responsive, Bricks y Elementor.
+- **Maquetador frontend (`maquetador-frontend`):** HTML/CSS/JS, arquitectura/fidelidad y builders; usa `frontend-architecture` en Greenfield/restructuras y `frontend-responsive` cuando responsive aplique.
 - **Revisor (`revisor`):** revisión independiente.
 
 ## Permisos
@@ -442,35 +442,39 @@ Aplica a UI Kit/Flagship de public web Greenfield o rediseño material; no se im
 
 Este floor pertenece a Designer/creative-web-experience y se instancia en `ui-kit-construction`, `motion-interaction` y `visual-art-direction` solo según trigger. No adelanta contrato de HTML/CSS/Product, `system.css`, `<img>/<picture>`, Frontend Fidelity 2.0 ni WordPress `wp-content`.
 
-## Convenciones estructurales de maquetación
+## Arquitectura frontend y fidelidad (BF-069)
 
 La validez técnica no equivale a calidad de implementación. Las interfaces deben conservar una estructura nativa, semántica, editable y mantenible en el stack de destino, además de renderizar correctamente.
 
 La convención general es conceptual y no obliga a añadir wrappers innecesarios:
 
 ```text
-Section / región semántica
-→ Container de layout
-  → Block / unidad lógica o celda
-    → Contenido
+Section / región semántica y visual
+→ Container / ancho útil
+  → Column o layout block
+    → Contenido, widgets o acciones
 ```
 
-- `Section` agrupa una región visual o conceptual.
-- `Container` es la capa principal de layout. Usa CSS Grid cuando deba distribuir múltiples unidades en una composición bidimensional y Flex cuando el contenido siga un flujo lineal sencillo; la intención del layout prevalece sobre un sistema obligatorio.
-- `Block` representa una celda del grid, una unidad lógica o una agrupación con sentido propio. Los widgets y elementos finales viven normalmente directamente dentro del Block.
-- El contenido puede ser un widget, elemento HTML, media, texto, acción u otro elemento nativo del destino.
+- `Section` agrupa una región visual o conceptual, normalmente con un fondo/spacing exterior propio.
+- `Container` define el ancho útil y centrado según tokens/configuración del proyecto, no un max-width universal (p. ej., no hardcodear 1400px).
+- `Column` o layout `Block` agrupa unidades con significado. Usa CSS Grid para relaciones bidimensionales y Flex para flujos lineales sencillos; la intención de layout, no la convención, decide.
+- Contenido/widgets usan los elementos nativos apropiados. `.column` o equivalente es una herramienta opcional de layout, no un wrapper que deba existir en todo DOM.
 
-Una Section utiliza un solo Container por defecto. Solo se añaden Containers hermanos cuando existen regiones de layout independientes que requieren grids o sistemas de layout diferentes; no se crea un Container por cada heading, párrafo, fuente o CTA si forman parte de la misma composición. Grid distribuye múltiples unidades de layout; Flex resuelve flujos lineales sencillos y no debe sustituirse por Grid solo para cumplir una convención.
+Una Section utiliza normalmente un Container; Containers hermanos solo si hay regiones independientes con sistemas distintos. No crees un wrapper por cada heading, párrafo o CTA. Full-bleed, sticky, overlapping, grids, galleries o layout interactivo pueden extender la base cuando la composición lo necesite; la gramática no es un árbol DOM obligatorio ni una cuota de clases.
 
 Los wrappers auxiliares, incluidos `Div`, son válidos únicamente cuando tienen una función justificable: agrupar widgets, alinear elementos, crear un micro-layout, resolver responsive interno, interacción o una unidad visual interna. No se persiguen métricas artificiales de cero wrappers ni se aceptan wrappers por defecto.
 
-En HTML y custom themes se aplica el mismo principio aprovechando `section`, `article`, `header`, `nav`, `aside` y otros elementos semánticos apropiados. Se evitan `div soup`, selectores dependientes de profundidad accidental y conversiones masivas que sacrifiquen editabilidad o mantenibilidad.
+En Greenfield con CSS propio, mantén una fuente compartida nativa del stack para tokens/base/primitives reutilizables y estilos de página que la consumen; no la nombres `system.css` por obligación ni repliques globals en cada página. El CSS fuente de trabajo es legible y ordenado; archivos minificados son build output, no fuente manual. Selectores dependen de intención/clases, no de profundidad accidental; `!important` es excepcional y no sustituye corregir cascade. Existing/frameworks/builders conservan su organización si es coherente.
+
+En HTML/custom themes usa `header`, `nav`, `main`, `section`, `article`, `aside`, `footer`, `figure`, listas, `form`, `button` y `a` según significado. La jerarquía de headings sigue el documento, no el tamaño CSS; `button` representa acciones y `a` navegación. Prefiere semántica nativa y evita `div soup`, selectores de profundidad accidental o conversiones masivas que sacrifiquen editabilidad. Este contrato no fija una regla universal `<img>/<picture>` vs background; media markup y carga siguen el stack/contrato existente.
 
 En builders visuales, antes de implementar se descubren y respetan los elementos nativos, jerarquía recomendada, responsive, design system y convenciones existentes. La apariencia visual por sí sola no valida la implementación: cuando una referencia HTML/CSS no puede convertirse conservando estructura, estilos, responsive y editabilidad, se prefiere una reconstrucción nativa e incremental.
 
 El QA estructural valida también el árbol de elementos, semántica, responsabilidad de Containers, uso lógico de Blocks, wrappers justificados, sistema de layout, editabilidad, mantenibilidad y convenciones del proyecto. Cuando una integración expone schemas, se consultan antes de usar settings desconocidos (`schema-first`). Las interfaces complejas mediante MCP/API se construyen preferentemente como `crear → releer → verificar → continuar`; tras cualquier fallo, timeout o reconexión se relee primero el recurso para determinar qué persistió y continuar desde el último estado válido, sin repetir escrituras a ciegas.
 
 La fuente única también aplica fuera del CSS cuando valores con significado compartido se repiten en JS/TS/PHP u otro lenguaje: centraliza configuración, estados, límites, durations o endpoints compartidos mediante constants/config/enums/helpers propios del stack si eso evita divergencia real. No conviertas cada literal en abstraction: valores triviales (`0`, `1`, string vacío) y valores locales de una sola función se quedan locales salvo semántica/contrato real.
+
+La diversidad de módulos pertenece a `page-composition`/Design; la arquitectura la soporta, no la prescribe. Card grids, two-columns, sliders, tabs, accordions, galleries o layouts tipográficos son opciones según contenido/Flagship, no requisitos. Preserva lo aprobado en Product; no conviertas una página rica en una fórmula genérica ni una guía de Frontend en un catálogo de efectos.
 
 ## Flujo visual de alta fidelidad
 
