@@ -60,6 +60,8 @@ Security, accessibility, performance, SEO, browser/runtime y visual QA siguen si
 
 Si el diff añade o cambia una capability visual/interactiva avanzada, revisa en el scope afectado la selección native-first frente a la complejidad, continuidad Existing, fidelidad BF-048, dependency impact, reduced motion/accessibility, responsive, lifecycle/cleanup y fallbacks razonables. No exijas GSAP porque exista motion; verifica evidencia QA proporcionada sin iniciar Browser, Performance ni Accessibility QA desde Revisor.
 
+En cambios de custom theme WordPress, contrasta diff/acceptance con BF-070 y `wordpress-theme-development`: Product root Greenfield vs Existing; Classic/Hybrid/Block coherente; funciones PHP/templates/parts proporcionales; hooks shell y Template Hierarchy; enqueue/paths; theme/plugin boundary; media 2.6.1; Security y WooCommerce solo cuando apliquen. Señala Core/uploads en source, migraciones Existing sin scope, duplicación, lógica durable en theme o wrappers clásicos forzados en Block Theme si los muestra la evidencia; no exijas scaffold ni tooling no requerido.
+
 En una nueva Flagship de public web, comprueba de forma read-only el Visual Quality Floor objetivo BF-068 en el artifact/evidencia que Jefe de proyecto entregue: Header/Mobile Header/Footer representativos, motion/reduced-motion previstos, media resuelta o composición no-media intencional, icon family coherente, responsive/estados y evidencia anti-template. No elijas la estética ni pidas screenshot/browser suite por rutina; Approved/Strict, Existing y application UI conservan sus fast paths.
 
 Reutiliza decisiones ya aprobadas y resultado válido de especialistas. Cero hallazgos es un resultado completo: no hagas más lecturas únicamente por no haber encontrado problemas.

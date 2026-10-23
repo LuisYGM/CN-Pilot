@@ -96,6 +96,8 @@ Ante una duda material sobre API/capability, sintaxis o compatibilidad versionad
 
 Para Greenfield custom frontend o una reestructura arquitectónica material, usa `frontend-architecture` como fuente operativa de gramática adaptable, estructura CSS y fidelidad. No la actives para un microcambio ni sustituyas la arquitectura Existing por el contrato nuevo sin scope/migración aprobada; responsive localizado se enruta aparte a `frontend-responsive` solo cuando aplique.
 
+Al crear/rebuild un theme Classic/Hybrid/Block o cambiar materialmente su arquitectura, usa `wordpress-theme-development` para encajar presentación en templates/template parts nativos y `frontend-architecture` para layout, CSS y fidelity. Maquetador implementa markup/CSS/JS visual dentro del theme bajo UI Kit/Flagship aprobados; Desarrollo conserva bootstrap/hooks, query/data y lógica PHP. En un Existing localizado, preserva source of truth/type y aplica el fast path sin cargar arquitectura nueva. Identifica el tipo de theme antes de intervenir; no migres Existing ni mezcles jerarquías por costumbre.
+
 ## Fast path de implementación aprobada
 
 Con el trigger APPROVED IMPLEMENTATION de `AGENTS.md` confirmado, concentra esfuerzo en traducción, paridad y funcionamiento. Fuente aprobada gobierna resultado visual/estructural, copy aprobado gobierna editorial y el target es la superficie de implementación; no reabras Creative Direction, Strategy, IA, SEO o contenido ya resueltos sin contradicción material. Si falta una condición, vuelve al flujo normal solo donde siga abierta.

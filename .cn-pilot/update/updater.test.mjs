@@ -164,6 +164,49 @@ test("2.6.0 to 2.6.1 is a managed Core patch without Product migration", (t) => 
   assert.equal(fs.readFileSync(path.join(target.root, "producto/index.html"), "utf8"), projectPage);
 });
 
+test("2.6.1 to 2.7.0 is a normal Core update without WordPress Product scaffold or migration", (t) => {
+  const target = fixture(t); const source = fixture(t);
+  const oldCore = "CN Pilot 2.6.1\n";
+  const newCore = "CN Pilot 2.7.0 WordPress Product Contract\n";
+  const oldWordPress = "WordPress runtime/API guidance 2.6.1\n";
+  const newWordPress = "WordPress runtime/API guidance 2.7.0\n";
+  const themeSkill = "Custom theme architecture\n";
+  const legacyTheme = "Existing theme path and content are user-owned\n";
+  target.put(target.root, ".cn-pilot-version", "2.6.1\n");
+  target.put(target.root, ".cn-pilot/NUCLEO.md", oldCore);
+  target.put(target.root, ".kilo/skills/wordpress/SKILL.md", oldWordPress);
+  target.put(target.root, "producto/wp-content/themes/existing/style.css", legacyTheme);
+  const installed = manifest("2.6.1", [
+    entry(".cn-pilot-version", "2.6.1\n"),
+    entry(".cn-pilot/NUCLEO.md", oldCore),
+    entry(".kilo/skills/wordpress/SKILL.md", oldWordPress),
+  ]);
+  source.put(source.root, ".cn-pilot-version", "2.7.0\n");
+  source.put(source.root, ".cn-pilot/NUCLEO.md", newCore);
+  source.put(source.root, ".kilo/skills/wordpress/SKILL.md", newWordPress);
+  source.put(source.root, ".kilo/skills/wordpress-theme-development/SKILL.md", themeSkill);
+  const latest = manifest("2.7.0", [
+    entry(".cn-pilot-version", "2.7.0\n"),
+    entry(".cn-pilot/NUCLEO.md", newCore),
+    entry(".kilo/skills/wordpress/SKILL.md", newWordPress),
+    entry(".kilo/skills/wordpress-theme-development/SKILL.md", themeSkill),
+  ], { addedFiles: [".kilo/skills/wordpress-theme-development/SKILL.md"] });
+
+  const plan = planUpdate(target.root, installed, latest);
+  assert.equal(plan.installedVersion, "2.6.1");
+  assert.equal(plan.latestVersion, "2.7.0");
+  assert.equal(plan.conflicts.length, 0);
+  assert.deepEqual(plan.actions.map((action) => action.path).sort(), [
+    ".cn-pilot-version",
+    ".cn-pilot/NUCLEO.md",
+    ".kilo/skills/wordpress-theme-development/SKILL.md",
+    ".kilo/skills/wordpress/SKILL.md",
+  ].sort());
+  assert.ok(plan.actions.every(({ path: item }) => !item.startsWith("producto/")));
+  assert.equal(fs.readFileSync(path.join(target.root, "producto/wp-content/themes/existing/style.css"), "utf8"), legacyTheme);
+  assert.equal(fs.existsSync(path.join(target.root, "producto/wp-content/themes/new-theme")), false);
+});
+
 test("1.3.1 baseline detects the 1.4.0 MINOR distribution and added capability", (t) => {
   const { root, put } = fixture(t);
   const oldCore = "Core 1.3.1\n";

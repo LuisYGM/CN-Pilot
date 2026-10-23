@@ -1,5 +1,13 @@
 # Changelog
 
+## [2.7.0] - 2026-10-23
+
+- Se formaliza el WordPress Product Contract: el source Greenfield administrado por CN Pilot reside bajo `producto/wp-content/`; Core y uploads quedan fuera por defecto, y Existing conserva su root/hosting/CI sin migración automática.
+- Se incorpora Professional Custom Theme Architecture con distinción explícita Classic/Hybrid/Block, WordPress Template Hierarchy, shell Header/Footer y sus hooks, template parts y `functions.php` bootstrap proporcional.
+- Se documentan `inc/`, setup/enqueue/assets nativos, paths portables, uso coordinado de `theme.json`, media responsive 2.6.1 y límites theme/plugin.
+- Se refuerzan ownership de datos/lógica, seguridad, accesibilidad, rendimiento, compatibilidad con child themes y WooCommerce condicional; no se exige scaffolding, Composer/Node/build ni estructura vacía.
+- Se añaden tests contractuales y de updater 2.6.1→2.7.0; la actualización no crea `producto/wp-content/`, no mueve Existing ni modifica Product.
+
 ## [2.6.1] - 2026-10-23
 
 Corrección compatible del alcance incompleto de Frontend Architecture/Fidelity 2.0.

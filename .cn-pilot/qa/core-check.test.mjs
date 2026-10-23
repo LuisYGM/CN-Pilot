@@ -98,8 +98,8 @@ function createFixture(t) {
   put("DECISIONES.md", "# Decisions fixture\n");
   put("ARTEFACTOS.md", "# Artifacts fixture\n");
   put("AGENTS.md", "# Minimal test kernel\n");
-  put(".cn-pilot-version", "2.6.1\n");
-  put(".cn-pilot/NUCLEO.md", "**Versión:** `2.6.1`\n\nLas superficies propias de CN Pilot destinadas a personas usan español por defecto, incluidos los nombres visibles de roles, documentos, comandos y estructuras.\n");
+  put(".cn-pilot-version", "2.7.0\n");
+  put(".cn-pilot/NUCLEO.md", "**Versión:** `2.7.0`\n\nLas superficies propias de CN Pilot destinadas a personas usan español por defecto, incluidos los nombres visibles de roles, documentos, comandos y estructuras.\n");
   put(".cn-pilot/MANIFIESTO.md", manifest);
   put(".cn-pilot/config/responsive.json", "{}\n");
   put(".cn-pilot/documentacion/.keep");
@@ -112,7 +112,7 @@ function createFixture(t) {
   put(".cn-pilot/update/updater.test.mjs", "// updater test fixture\n");
   put(".cn-pilot/update/manifest.json", `${JSON.stringify({
     schemaVersion: 1,
-    cnPilotVersion: "2.6.1",
+    cnPilotVersion: "2.7.0",
     sourceRepository: "https://github.com/LuisYGM/cn-pilot.git",
     stableBranch: "main",
     sourceCommit: null,
@@ -172,7 +172,7 @@ test("known-good minimal fixture passes deterministic invariants", (t) => {
   const report = runCoreChecks({ rootDir: fixture.root });
   assert.equal(report.status, "PASS", JSON.stringify(report.findings));
   assert.deepEqual(runCoreChecks({ rootDir: fixture.root }), report, "same read-only snapshot yields the same report");
-  assert.equal(report.version, "2.6.1");
+  assert.equal(report.version, "2.7.0");
   assert.equal(getCheck(report, "agents.frontmatter").details.count, 7);
   assert.equal(getCheck(report, "skills.frontmatter").details.count, 2);
   assert.equal(getCheck(report, "commands.frontmatter").details.count, 14);
@@ -228,7 +228,7 @@ test("Spanish-first doctrine is required and generic technical wording is not tr
   fixture.put(".kilo/skills/technical-seo/references/audit.md", "Cita externa de ejemplo: Developer.\n");
   assert.equal(getCheck(runCoreChecks({ rootDir: fixture.root }), "language.spanishFirst").status, "PASS");
 
-  fixture.put(".cn-pilot/NUCLEO.md", "**Versión:** `2.6.1`\n\nLa estructura técnica permanece en inglés: archivos, carpetas, agentes.\n");
+  fixture.put(".cn-pilot/NUCLEO.md", "**Versión:** `2.7.0`\n\nLa estructura técnica permanece en inglés: archivos, carpetas, agentes.\n");
   const check = getCheck(runCoreChecks({ rootDir: fixture.root }), "language.spanishFirst");
   assert.equal(check.status, "FAIL");
   assert.ok(check.details.findings.some((finding) => finding.code === "SPANISH_FIRST_DOCTRINE_MISSING_OR_CONTRADICTORY"));
@@ -523,6 +523,62 @@ test("BF-069 spacing, CSS source quality and consolidation remain balanced", () 
   assert.match(architecture, /third-party\/builders, utility systems deliberados o helpers de accesibilidad/i);
   assert.match(architecture, /patch piles[\s\S]{0,180}revisa la causa y consolida/i);
   assert.match(architecture, /stale media\/crop\/responsive rules[\s\S]{0,300}sin cambiar apariencia ni behavior aprobados/i);
+});
+
+test("BF-070 WordPress Product Contract preserves Greenfield and Existing boundaries", () => {
+  const core = fs.readFileSync(new URL("../NUCLEO.md", import.meta.url), "utf8");
+  const start = core.indexOf("## WordPress Product Contract y arquitectura de themes (BF-070)");
+  const end = core.indexOf("## Convención de idioma", start);
+  assert.ok(start >= 0 && end > start, "BF-070 Core source is present and bounded");
+  const contract = core.slice(start, end);
+  const scenarios = [
+    ["Greenfield source has native wp-content roots", /WordPress Greenfield[\s\S]{0,180}producto\/wp-content\/[\s\S]{0,120}themes\//i],
+    ["mu-plugins are conditional, not scaffolded", /`mu-plugins\/` cuando haya necesidad/i],
+    ["WordPress Core is not part of source", /No versiona WordPress Core[\s\S]{0,100}`wp-admin\/`, `wp-includes\//i],
+    ["production uploads, cache and secrets are excluded by default", /uploads de producción,[\s\S]{0,100}secretos/i],
+    ["Existing paths and hosting contracts are preserved", /Existing operativo\/adopted preserva su product root[\s\S]{0,180}CI\/deploy/i],
+    ["Existing theme changes require explicit scope and approval", /Mover\/reorganizar un sitio WordPress requiere una tarea explícita/i],
+    ["Classic, Block and intentional Hybrid architectures are distinct", /\*\*Classic\*\*[\s\S]{0,100}PHP y Template Hierarchy[\s\S]{0,100}\*\*Block\*\*[\s\S]{0,150}sin exigir `header\.php`\/`footer\.php`[\s\S]{0,100}\*\*Hybrid\*\*/i],
+    ["theme/plugin boundary and durable functionality are explicit", /El theme presenta contenido; funcionalidad durable[\s\S]{0,100}plugin o capa apropiada/i],
+    ["CPT ownership is not assumed by the theme", /CPT\/taxonomías no se registran automáticamente dentro del theme/i],
+    ["2.6.1 Frontend/Media contracts remain the visual authority", /preservan BF-069 y Frontend Media Strategy 2\.6\.1/i],
+  ];
+  for (const [scenario, pattern] of scenarios) assert.ok(pattern.test(contract), `${scenario}: invariant is present`);
+});
+
+test("wordpress-theme-development specifies proportional native theme architecture", () => {
+  const theme = fs.readFileSync(new URL("../../.kilo/skills/wordpress-theme-development/SKILL.md", import.meta.url), "utf8");
+  const wordpress = fs.readFileSync(new URL("../../.kilo/skills/wordpress/SKILL.md", import.meta.url), "utf8");
+  const scenarios = [
+    ["dedicated scope preserves WordPress API ownership", /`wordpress` sigue gobernando APIs Core[\s\S]{0,100}esta skill gobierna la organización del theme/i],
+    ["Classic theme uses PHP hierarchy", /Classic:[\s\S]{0,100}PHP templates y WordPress Template Hierarchy/i],
+    ["Block theme uses native files without Classic wrappers", /Block:[\s\S]{0,180}no requiere `header\.php`\/`footer\.php`/i],
+    ["Hybrid theme is deliberate", /Hybrid:[\s\S]{0,160}no mezcla accidental/i],
+    ["theme files are examples, not an empty scaffold", /No crees directorios vacíos[\s\S]{0,180}WooCommerce folders/i],
+    ["style.css carries required WordPress metadata without mandatory all-in-one CSS", /header de metadata de WordPress; no tiene que contener todo el CSS/i],
+    ["functions.php bootstraps rather than accumulating the whole product", /`functions\.php` es un bootstrap\/orquestador conciso[\s\S]{0,240}business logic/i],
+    ["inc, namespaces, build and dependencies stay proportional", /Usa `inc\/` cuando[\s\S]{0,300}Composer\/Node\/build/i],
+    ["theme setup uses lifecycle and real capabilities", /`after_setup_theme`[\s\S]{0,260}solo capabilities realmente implementadas/i],
+    ["Classic shell retains integration hooks", /`wp_head\(\)`[\s\S]{0,180}`body_class\(\)`[\s\S]{0,100}`wp_body_open\(\)`/i],
+    ["Classic footer retains wp_footer", /`footer\.php`[\s\S]{0,180}`wp_footer\(\)` antes de `<\/body>`/i],
+    ["Hierarchy differentiates front-page and posts index", /`front-page\.php` \(portada\) de `home\.php` \(posts index\/blog\)/i],
+    ["Hierarchy covers custom post and taxonomy templates without scaffolding all of them", /`single-\{post_type\}\.php`[\s\S]{0,220}taxonomy\/category\/tag[\s\S]{0,100}solo para comportamiento\/layout requerido/i],
+    ["template parts are real units and use the native loader", /`get_template_part\(\)`[\s\S]{0,180}markup/i],
+    ["main and secondary query behavior is safe", /`pre_get_posts`[\s\S]{0,100}no uses `query_posts\(\)`[\s\S]{0,180}restaura estado global/i],
+    ["assets use the native enqueue lifecycle and portable paths", /`wp_enqueue_scripts`[\s\S]{0,120}`wp_enqueue_style\(\)`\/`wp_enqueue_script\(\)`[\s\S]{0,220}no hardcodees `\/wp-content\/themes/i],
+    ["theme.json is optional for Classic/Hybrid but native to Block", /`theme\.json` es opcional en Classic\/Hybrid[\s\S]{0,200}Block Theme lo usa/i],
+    ["WordPress native attachment output preserves responsive media", /`wp_get_attachment_image\(\)`[\s\S]{0,100}`srcset`\/sizes/i],
+    ["security separates escaping, validation and capabilities", /Escape late por contexto[\s\S]{0,180}capabilities\/autorización/i],
+    ["accessibility and performance preserve approved behavior", /Conserva landmarks[\s\S]{0,200}reduced motion/i],
+    ["WooCommerce is conditional and template overrides are minimal", /WooCommerce solo se activa[\s\S]{0,180}copia únicamente overrides/i],
+    ["missing WooCommerce does not create shop code", /Si WooCommerce falta, no crees archivos\/integraciones shop/i],
+    ["shared theme surfaces serialize before derived page work", /single-writer mientras cambian[\s\S]{0,240}páginas\/templates derivados/i],
+    ["Existing child themes and conventions are not automatically migrated", /Child themes, builders y conventions Existing se preservan[\s\S]{0,180}no migres Theme type/i],
+    ["no build or runtime tooling is imposed on every theme", /No exijas Browser QA[\s\S]{0,180}PHPUnit\/Node a todo theme/i],
+  ];
+  for (const [scenario, pattern] of scenarios) assert.ok(pattern.test(theme), `${scenario}: policy is present`);
+  assert.ok(/Theme nuevo\/rebuild o cambio estructural[\s\S]{0,160}`wordpress-theme-development`/.test(wordpress), "generic WordPress routing points to the theme architecture owner");
+  assert.doesNotMatch(theme, /Composer, Node(?:\.js)? o Vite son obligatorios|Composer\/Node\/build[^.]{0,50}son requisito universal/i, "theme tooling remains optional");
 });
 
 test("/nuevo-proyecto es progresivo, lee antes de preguntar y no es un wizard", () => {
