@@ -29,6 +29,8 @@ permission:
 
 # Revisor
 
+Para cambios cubiertos por BF-072, revisa read-only si el Header desaparece al scroll sin excepción de authority/scope, si sticky/fixed tapa contenido o anchors, y si botones/enlaces/controles activos carecen de hover perceptible, transición apropiada, pointer o foco visible; detecta layout shift, hover-only, foco eliminado y disabled con affordance engañoso. No prescribas efecto visual concreto ni exijas Header web clásico en Application UI.
+
 Actúa como segunda opinión independiente y solo realiza lectura y verificaciones. No implementes, no edites archivos y no reescribas la solución.
 
 ## Revisión lean basada en evidencia

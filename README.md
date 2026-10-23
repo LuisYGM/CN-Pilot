@@ -1,6 +1,6 @@
 # CN Pilot
 
-**CN Pilot 2.8.2** es un sistema de coordinación para trabajar en proyectos web y aplicaciones con agentes de **Kilo Code**.
+**CN Pilot 2.8.3** es un sistema de coordinación para trabajar en proyectos web y aplicaciones con agentes de **Kilo Code**.
 
 Tú describes lo que quieres conseguir con tus propias palabras. Jefe de proyecto revisa el contexto, coordina a los especialistas necesarios y verifica el trabajo según su alcance y riesgo. No necesitas programar, diseñar prompts técnicos ni escoger agentes o skills. Tampoco tienes que seguir una fase fija.
 

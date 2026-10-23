@@ -337,6 +337,35 @@ test("2.8.1 to 2.8.2 applies the approved-conversion contract without normalizin
   assert.equal(fs.readFileSync(path.join(target.root, ".cn-pilot/NUCLEO.md"), "utf8"), newCore);
 });
 
+test("2.8.2 to 2.8.3 distributes UX defaults without modifying Existing Product", (t) => {
+  const target = fixture(t); const source = fixture(t);
+  const protectedPaths = ["PROYECTO.md", "REQUISITOS.md", "ESTADO.md", "DECISIONES.md", "ARTEFACTOS.md", "producto/index.html", "producto/assets/site.css", "recursos/source.html"];
+  const protectedValues = Object.fromEntries(protectedPaths.map((item) => [item, `Existing intacto: ${item}\n`]));
+  for (const [item, value] of Object.entries(protectedValues)) target.put(target.root, item, value);
+  const oldCore = "**Versión:** `2.8.2`\n";
+  const newCore = "**Versión:** `2.8.3`\n";
+  const oldSkill = "Existing product behavior remains unchanged\n";
+  const newSkill = "New work uses sticky navigation and interactive feedback defaults\n";
+  target.put(target.root, ".cn-pilot-version", "2.8.2\n");
+  target.put(target.root, ".cn-pilot/NUCLEO.md", oldCore);
+  target.put(target.root, ".kilo/skills/frontend-architecture/SKILL.md", oldSkill);
+  const installed = manifest("2.8.2", [entry(".cn-pilot-version", "2.8.2\n"), entry(".cn-pilot/NUCLEO.md", oldCore), entry(".kilo/skills/frontend-architecture/SKILL.md", oldSkill)]);
+  source.put(source.root, ".cn-pilot-version", "2.8.3\n");
+  source.put(source.root, ".cn-pilot/NUCLEO.md", newCore);
+  source.put(source.root, ".kilo/skills/frontend-architecture/SKILL.md", newSkill);
+  const latest = manifest("2.8.3", [entry(".cn-pilot-version", "2.8.3\n"), entry(".cn-pilot/NUCLEO.md", newCore), entry(".kilo/skills/frontend-architecture/SKILL.md", newSkill)]);
+  source.put(source.root, ".cn-pilot/update/manifest.json", JSON.stringify(latest, null, 2));
+  const plan = planUpdate(target.root, installed, latest);
+  assert.equal(plan.installedVersion, "2.8.2");
+  assert.equal(plan.latestVersion, "2.8.3");
+  assert.equal(plan.conflicts.length, 0);
+  assert.ok(plan.actions.every(({ path: item }) => item.startsWith(".cn-pilot/") || item.startsWith(".kilo/") || item === ".cn-pilot-version"));
+  applyPlan(target.root, source.root, plan, latest);
+  for (const [item, value] of Object.entries(protectedValues)) assert.equal(fs.readFileSync(path.join(target.root, item), "utf8"), value, `${item} remains unchanged`);
+  assert.equal(fs.readFileSync(path.join(target.root, ".cn-pilot-version"), "utf8"), "2.8.3\n");
+  assert.equal(fs.readFileSync(path.join(target.root, ".kilo/skills/frontend-architecture/SKILL.md"), "utf8"), newSkill);
+});
+
 test("1.3.1 baseline detects the 1.4.0 MINOR distribution and added capability", (t) => {
   const { root, put } = fixture(t);
   const oldCore = "Core 1.3.1\n";

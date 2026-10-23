@@ -1,6 +1,6 @@
 # Núcleo de CN Pilot — Especificación 2.0
 
-**Versión:** `2.8.2`
+**Versión:** `2.8.3`
 
 Documento de referencia para mantenedores de CN Pilot. Una persona nueva debe empezar por [`documentacion/EMPIEZA-AQUI.md`](documentacion/EMPIEZA-AQUI.md); no necesita leer esta especificación para trabajar.
 
@@ -323,6 +323,14 @@ Se considera suficiente cuando están claros el objetivo de ahora, lo que existe
 En greenfield, `artefactos/contenido/` puede actuar como fuente editorial versionada para voz de marca, sitemap, metadata y enlazado. Las páginas se guardan en `artefactos/contenido/paginas/`, los artículos en `artefactos/contenido/blog/` y packs opcionales en `artefactos/contenido/estrategia/`. Crea las carpetas solo cuando exista su primer artefacto. `producto/contenido/` pertenece al stack/producto. En existentes conserva las fuentes vigentes. No usar Lorem Ipsum si existe contenido real o puede prepararse.
 
 ## Diseño
+
+### Defaults globales de navegación e interacción (BF-072)
+
+En nuevas interfaces web y rediseños donde CN Pilot gobierna la implementación visual, el Header principal (incluido Mobile Header) permanece visible durante el scroll; `position: sticky; top: 0` es la opción preferida cuando basta, y `fixed` requiere una necesidad visual/técnica real. Debe conservar legibilidad, stacking y contenido/anchors sin solapamiento ni CLS evitable; el detalle técnico, excepciones Existing y QA responsive pertenecen a `frontend-architecture` y `frontend-responsive`. En Application UI aplica el principio a la navegación primaria equivalente (shell, toolbar o sidebar), no fuerces un Header clásico.
+
+Todo control realmente interactivo comunica su affordance: pointer en estado activo, hover perceptible con transición apropiada y foco de teclado perceptible. No añadas pointer/hover de acción a controles disabled ni a contenido no interactivo; no exijas una estética/efecto universal ni `transition: all`. Touch debe ser usable sin hover y el movimiento respeta reduced motion. El detalle de estados vive en UI Kit; implementación/reduced motion en frontend y motion; criterios a11y en accessibility-review.
+
+Existing fuera del scope conserva su implementación; Header tocado/rediseño material sí aplica el default. Approved/Strict prevalece en su scope: no adaptar unilateralmente una referencia explícitamente no persistente y señala el conflicto material. Estas reglas gobiernan trabajo futuro o cambios explícitamente en scope; una actualización del Core no modifica Product existente.
 
 En greenfield, `artefactos/diseno/` contiene sistemas visuales, componentes, especificaciones y enlaces/IDs de Figma; un UI Kit web compartido puede vivir en `artefactos/diseno/ui-kit/index.html` con fuentes comunes bajo `artefactos/diseno/ui-kit/shared/`; páginas/prototipos se guardan en `artefactos/diseno/paginas/`, referencias en `artefactos/diseno/referencias/` y assets auxiliares creados para diseño en `artefactos/diseno/recursos/{imagenes,ilustraciones,iconos}/`, creando solo las carpetas necesarias. Las páginas importan/reutilizan las fuentes compartidas; no dupliques allí assets existentes ni edites originales de `recursos/`. No confundas diseño con producto implementado en `producto/`; `producto/diseno/` y sus assets pertenecen al stack. En Existing conserva sus rutas/fuentes vigentes.
 

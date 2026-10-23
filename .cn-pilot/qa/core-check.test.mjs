@@ -1139,3 +1139,24 @@ test("human Project Context scaffolds explain ownership without updating real pr
   assert.match(decisions, /Fuente de decisiones de proyecto aprobadas\/materiales/);
   assert.match(artifacts, /No convertir este archivo en un changelog/);
 });
+
+test("BF-072 contractual UX defaults preserve scope, authority, and accessible interaction", () => {
+  const read = (file) => fs.readFileSync(new URL(`../../${file}`, import.meta.url), "utf8");
+  const core = read(".cn-pilot/NUCLEO.md");
+  const architecture = read(".kilo/skills/frontend-architecture/SKILL.md");
+  const kit = read(".kilo/skills/ui-kit-construction/SKILL.md");
+  const responsive = read(".kilo/skills/frontend-responsive/SKILL.md");
+  const motion = read(".kilo/skills/motion-interaction/SKILL.md");
+  const accessibility = read(".kilo/skills/accessibility-review/SKILL.md");
+  const reviewer = read(".kilo/agents/revisor.md");
+  assert.match(core, /Header principal[\s\S]*?permanece visible durante el scroll[\s\S]*?position: sticky; top: 0[\s\S]*?Application UI/i);
+  assert.match(core, /Existing fuera del scope conserva[\s\S]*?Approved\/Strict prevalece[\s\S]*?actualización del Core no modifica Product/i);
+  assert.match(architecture, /sticky[\s\S]*?fixed[\s\S]*?scroll-padding-top[\s\S]*?CLS[\s\S]*?Application UI/i);
+  assert.match(architecture, /cursor: pointer[\s\S]*?hover perceptible[\s\S]*?:focus-visible[\s\S]*?transition: all[\s\S]*?layout shift[\s\S]*?Disabled/i);
+  assert.match(responsive, /permanece visible durante scroll también en mobile[\s\S]*?menú móvil[\s\S]*?anchors/i);
+  assert.match(kit, /Header\/Mobile Header[\s\S]*?navegación persistente/i);
+  assert.match(kit, /cursor: pointer[\s\S]*?disabled/i);
+  assert.match(motion, /transición CSS breve[\s\S]*?touch[\s\S]*?prefers-reduced-motion/i);
+  assert.match(accessibility, /Header persistente[\s\S]*?anchors[\s\S]*?:focus-visible[\s\S]*?reduced motion/i);
+  assert.match(reviewer, /Header desaparece al scroll[\s\S]*?anchors[\s\S]*?layout shift[\s\S]*?disabled/i);
+});

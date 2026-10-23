@@ -78,6 +78,8 @@ Para public web Greenfield/material redesign con dirección abierta, activa `cre
 
 ## Considera
 
+En public web nueva/rediseño donde CN gobierna la implementación visual, incorpora desde Concept/Flagship un Header y Mobile Header persistentes (specimen estático permitido si declara ese contrato) y estados interactivos perceptibles de hover/foco coherentes con el sistema. No impongas un efecto/estética universal; Approved/Strict conserva authority y Existing localizado conserva scope.
+
 - jerarquía;
 - navegación;
 - layouts;

@@ -70,6 +70,8 @@ permission:
 
 # Maquetador frontend
 
+Aplica BF-072: en nuevas public webs/rediseños bajo authority visual CN, Header y Mobile Header permanecen visibles al scroll, preferentemente `sticky` si basta; atiende z-index, contenido/anchors/offsets, responsive y evita CLS/overlap. En Application UI conserva la navegación primaria persistente equivalente. Todo control realmente clicable tiene pointer activo, hover visible y transición CSS apropiada sin layout shift, además de `:focus-visible`; disabled no finge acción y touch no depende de hover. Existing fuera de scope no se modifica automáticamente y Approved/Strict prevalece. Builders usan settings nativos disponibles antes que CSS custom mínimo.
+
 Prioriza:
 
 1. fidelidad al diseño;

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "cnPilotVersion": "2.8.2",
+  "cnPilotVersion": "2.8.3",
   "sourceRepository": "https://github.com/LuisYGM/cn-pilot.git",
   "stableBranch": "main",
   "sourceCommit": null,
@@ -11,11 +11,11 @@
   "managedFiles": [
     {
       "path": ".cn-pilot-version",
-      "sha256": "00d9235ed59ffb6f6771ed263216be6baf0be8f0408dc4bf6f59a14917d654ba"
+      "sha256": "e3fdbc5ab5230a7343de5d2ee3c2df4892f7f30e5fdef2f9654e4a3ac29cd987"
     },
     {
       "path": ".cn-pilot/CAMBIOS.md",
-      "sha256": "4825f63efdd640abcf7921e831904b4022b398803bc34a7556effa1d18231d14"
+      "sha256": "d7089f0c267c38f206a6439aec49bf7ba6a6fa22f1688cf3e18d9e5b2b738bcd"
     },
     {
       "path": ".cn-pilot/MANIFIESTO.md",
@@ -23,7 +23,7 @@
     },
     {
       "path": ".cn-pilot/NUCLEO.md",
-      "sha256": "529286969ab50021d77c13f7ddecd15aea8af6b29699d7733166d5a1fb307141"
+      "sha256": "869ca63c4e6911d0158eb37aa3f9371464d4c3ccf4b34601b64d58aba6ff5b9f"
     },
     {
       "path": ".cn-pilot/config/responsive.json",
@@ -195,7 +195,7 @@
     },
     {
       "path": ".cn-pilot/qa/core-check.test.mjs",
-      "sha256": "5a52009781a0f7d8de7f4a0e40bf9dca7bf43b6cab84151c845b01012313ada8"
+      "sha256": "0e1530bcefd2477f96ce8cbe348de62c4d389cfa02d10cdf21067ec01ccbc84b"
     },
     {
       "path": ".cn-pilot/update/updater.mjs",
@@ -203,7 +203,7 @@
     },
     {
       "path": ".cn-pilot/update/updater.test.mjs",
-      "sha256": "e3d86784ef4fed7f6596e053ae92c486ff746146c273b94e20ee0ed065bab7b4"
+      "sha256": "a58dc687fb3e166f9fb3aeddb669217b85b6317b7f0b948d952c80f7c5783142"
     },
     {
       "path": ".kilo/agents/arquitecto.md",
@@ -219,7 +219,7 @@
     },
     {
       "path": ".kilo/agents/disenador-ui-ux.md",
-      "sha256": "5b6dba24163e7708563368803a4cefadfd1566f9c63bf80aab8c53590fdd9ba2"
+      "sha256": "3f31ca3632e5cec6396391e83acb036575884988d35342cdb3864d8cbc40d925"
     },
     {
       "path": ".kilo/agents/jefe-proyecto.md",
@@ -227,11 +227,11 @@
     },
     {
       "path": ".kilo/agents/maquetador-frontend.md",
-      "sha256": "8c3bc584b5d8b84d35da1d85c75928fb150b08ab95da937e1a9b7ebe58069582"
+      "sha256": "f8d32ccc392a05ed8b173fdfe47d343a420ec118be26490af8187f38818c38c0"
     },
     {
       "path": ".kilo/agents/revisor.md",
-      "sha256": "7a8943a4ab9051270ecf47c6e8cdddf220586bc1a439d4bf411196f0304701ef"
+      "sha256": "073e41d5a3352db7d0e2c73a52d2953531c1021bc8995aedbbba5e77493a4eec"
     },
     {
       "path": ".kilo/commands/cn-actualizar.md",
@@ -291,7 +291,7 @@
     },
     {
       "path": ".kilo/skills/accessibility-review/SKILL.md",
-      "sha256": "02b15b894a03228d5c0070e56486cbb9e653b2893814e2d64b5b924f2d77c4f1"
+      "sha256": "e02df7d0bb616dcf7f3312badf088769731ce1e0633bb8f507d7a8afdf60ca55"
     },
     {
       "path": ".kilo/skills/analytics-instrumentation/SKILL.md",
@@ -351,11 +351,11 @@
     },
     {
       "path": ".kilo/skills/frontend-architecture/SKILL.md",
-      "sha256": "4b3502ded3528ef77640df71e1faaeff2481328462d6591ec1359bb105187450"
+      "sha256": "81a3370ccd87cf80f0d0b62b9e8bd045bf6da9d2fea16d2387413af09b380118"
     },
     {
       "path": ".kilo/skills/frontend-responsive/SKILL.md",
-      "sha256": "c18ca2e1d3d1a38515f858aae4aab0a3bc9aa5621f37694324f8bc334ccb842c"
+      "sha256": "4a978d8c968b9af64850a40a59a6342b5255c1f65167040cc8b8c94b27cb060f"
     },
     {
       "path": ".kilo/skills/git-checkpoint/SKILL.md",
@@ -367,7 +367,7 @@
     },
     {
       "path": ".kilo/skills/motion-interaction/SKILL.md",
-      "sha256": "ab6501b9bcfda7f2a632e0f48038c3e7f2e4bcdaba53d0fd27bdce2f080cb45e"
+      "sha256": "1a001ecbb25cbc3a3f2ff961b18c186780180e4920c690a36da5546dfd9a7576"
     },
     {
       "path": ".kilo/skills/page-composition/SKILL.md",
@@ -435,7 +435,7 @@
     },
     {
       "path": ".kilo/skills/ui-kit-construction/SKILL.md",
-      "sha256": "b3d0fa6ac80068b1f79a74e40ac05be1f03643628be269bbea3442b50a38b173"
+      "sha256": "751ba5812d0799f8252fdcbfda648b875fb8f5f68dfd82361ffad2c42792e6a5"
     },
     {
       "path": ".kilo/skills/visual-art-direction/SKILL.md",

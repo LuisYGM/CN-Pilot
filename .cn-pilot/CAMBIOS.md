@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.8.3] - 2026-10-23
+
+- BF-072 establece Header persistente (sticky preferido) para nuevas interfaces web/rediseños en scope, con navegación primaria equivalente en Application UI y protección de contenido, anchors y mobile.
+- Los controles interactivos requieren affordance perceptible, hover con transición apropiada, pointer activo y `:focus-visible`; disabled, touch y reduced motion conservan comportamiento accesible.
+- Existing fuera de scope no se modifica y Approved/Strict mantiene autoridad. Core QA/updater cubren el contrato y la actualización no toca Product, Project Context ni recursos existentes.
+- Sin nuevas skills, agentes ni comandos.
+
 ## [2.8.2] - 2026-10-23
 
 - Se aclara la conversión de un frontend Approved a Product: la autoridad visual no congela su implementación interna; la conversión optimizada es la opción recomendada cuando no se pide conservar estructura ni se autoriza un cambio visual.
