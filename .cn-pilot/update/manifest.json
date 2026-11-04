@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "cnPilotVersion": "2.8.5",
+  "cnPilotVersion": "2.8.6",
   "sourceRepository": "https://github.com/LuisYGM/cn-pilot.git",
   "stableBranch": "main",
   "sourceCommit": null,
@@ -11,11 +11,11 @@
   "managedFiles": [
     {
       "path": ".cn-pilot-version",
-      "sha256": "df1848d4e64f7bf7bd7152564493394949f7115de17ff677725d3eac8e2329b5"
+      "sha256": "fdda59a9689048afd4a1885e7df48f5bd1eda96e6e8f4daba9bdafb0433d8bce"
     },
     {
       "path": ".cn-pilot/CAMBIOS.md",
-      "sha256": "62bd1f5d231d4cfbd08b574281fd76bc5548454fbde71bf0e98755951bf3806f"
+      "sha256": "2abeca49c6812efbea6b20526f4a6c072f99e809dd5e9e0757063a6583686dc9"
     },
     {
       "path": ".cn-pilot/MANIFIESTO.md",
@@ -23,7 +23,7 @@
     },
     {
       "path": ".cn-pilot/NUCLEO.md",
-      "sha256": "f30faaacd9de3612e9938f04ee9e4de3a81153f91827f24af76bd2de2f8e80f9"
+      "sha256": "f1f9faffed15c7ea42a9cd5b9e8a940c7c674588dbd000ed3c9f750ecdd94ff3"
     },
     {
       "path": ".cn-pilot/config/responsive.json",
@@ -167,7 +167,7 @@
     },
     {
       "path": ".cn-pilot/plantillas/informe-revision.md",
-      "sha256": "5a2e74e7b8a9c279e0e5c58c3e1c9ec95b51e07ff15c88326c3ceb118167388d"
+      "sha256": "8bf5bd7f92af035e2d1fd607b40d20bad0832a40db57e874b109e1203eb1ea51"
     },
     {
       "path": ".cn-pilot/plantillas/manifiesto-despliegue.md",
@@ -191,11 +191,11 @@
     },
     {
       "path": ".cn-pilot/qa/core-check.mjs",
-      "sha256": "0bad36df13a4cfa9a3a52b4ac8313907eef86c3f7bbb677f7f95ce42e6b262aa"
+      "sha256": "bdc31513324b79db3fcdeb449daa3c1af4fc546d52968641ee382a63e19be93d"
     },
     {
       "path": ".cn-pilot/qa/core-check.test.mjs",
-      "sha256": "d86dee7f0064f55d7e077d4195fdf199085c8b41e01285812e712527c2b6e035"
+      "sha256": "e5a6b4df2a145c9c9db572ff37f2651a5fb96e39758423aef44029e18e08d5d6"
     },
     {
       "path": ".cn-pilot/update/updater.mjs",
@@ -203,7 +203,7 @@
     },
     {
       "path": ".cn-pilot/update/updater.test.mjs",
-      "sha256": "bd5442905e37f11c7854944e74d35c0db0691b0a4400c0f4ace8ad910b2af0a1"
+      "sha256": "3cb446bec4a252ee3d23f1fd7f7d413465fc45b900340a959a92c100f308b935"
     },
     {
       "path": ".kilo/agents/arquitecto.md",

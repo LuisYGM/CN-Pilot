@@ -11,6 +11,7 @@ const REQUIRED_PATHS = [
   ["AGENTS.md", "file"], [".cn-pilot/NUCLEO.md", "file"], [".cn-pilot/MANIFIESTO.md", "file"],
   [".cn-pilot/config/responsive.json", "file"], [".cn-pilot/documentacion", "directory"],
   [".cn-pilot/perfiles", "directory"], [".cn-pilot/plantillas", "directory"],
+  [".cn-pilot/plantillas/informe-revision.md", "file"],
   [".cn-pilot/qa/core-check.mjs", "file"], [".cn-pilot/qa/core-check.test.mjs", "file"],
   [".cn-pilot/update/updater.mjs", "file"], [".cn-pilot/update/updater.test.mjs", "file"], [".cn-pilot/update/manifest.json", "file"],
   ["kilo.jsonc", "file"], [".kilo/agents/jefe-proyecto.md", "file"], [".kilo/agents/arquitecto.md", "file"],
@@ -41,6 +42,8 @@ const REVIEWER_DENY = ["bash", "websearch", "webfetch", "skill", "task", "agent_
 const SENSITIVE_PATHS = [".env", ".env.*", "**/.env", "**/.env.*", "secrets/**", ".kilocode/mcp.json", "**/.kilocode/mcp.json"];
 const DESTRUCTIVE_GIT = ["git push --force*", "git push -f*", "git reset --hard*", "git clean*"];
 const CN_PILOT_AGENTS = ["arquitecto", "contenido-seo", "desarrollador", "disenador-ui-ux", "jefe-proyecto", "maquetador-frontend", "revisor"];
+const REVIEW_OUTCOMES = ["APPROVED", "APPROVED WITH NOTES", "CHANGES REQUIRED", "BLOCKED"];
+const CANONICAL_REPOSITORY = "https://github.com/luisygm/cn-pilot";
 const LEGACY_ROLE_NAME = /\b(?:Dev Lead|Architect|Reviewer|Developer|Frontend\s*\/\s*Builder|Frontend\s+Builder|Content\s*\/\s*SEO|Content SEO(?: agent)?|UI\/UX Designer)\b/g;
 const ACTIVE_LANGUAGE_ROOTS = [
   ".cn-pilot/documentacion", ".cn-pilot/perfiles", ".cn-pilot/plantillas",
@@ -436,6 +439,115 @@ function readVersion(root) {
   return { status, version, details: { path: ".cn-pilot-version", version, canonical, semver: SEMVER.test(version ?? "") } };
 }
 
+function hasCanonicalOrigin(root) {
+  const config = readText(root, ".git/config");
+  if (config.kind !== "ok") return false;
+  let inOrigin = false;
+  let originUrl = null;
+  for (const line of config.text.split(/\r\n|\n|\r/)) {
+    const section = line.match(/^\s*\[remote\s+"([^"]+)"\]\s*$/i);
+    if (section) { inOrigin = section[1].toLowerCase() === "origin"; continue; }
+    if (inOrigin) {
+      const url = line.match(/^\s*url\s*=\s*(\S+)\s*$/i);
+      if (url) { originUrl = url[1]; break; }
+    }
+  }
+  const normalized = String(originUrl ?? "")
+    .replace(/^git@github\.com:/i, "https://github.com/")
+    .replace(/^ssh:\/\/git@github\.com\//i, "https://github.com/")
+    .replace(/\.git$/i, "")
+    .replace(/\/$/, "")
+    .toLowerCase();
+  return normalized === CANONICAL_REPOSITORY;
+}
+
+function canonicalProjectContext(root, projectText) {
+  const manifest = readText(root, ".cn-pilot/update/manifest.json");
+  const readme = readText(root, "README.md");
+  if (manifest.kind !== "ok" || readme.kind !== "ok" || !hasCanonicalOrigin(root)) return false;
+  let metadata;
+  try { metadata = JSON.parse(manifest.text); } catch { return false; }
+  if (!metadata || typeof metadata !== "object" || Array.isArray(metadata)) return false;
+  const sourceRepository = typeof metadata.sourceRepository === "string" ? metadata.sourceRepository.replace(/\.git$/i, "").toLowerCase() : "";
+  const firstHeading = readme.text.split(/\r\n|\n|\r/).find((line) => /^#\s/.test(line.trim()))?.trim();
+  const projectNames = [...projectText.matchAll(/^\s*-\s*\*\*Nombre:\*\*\s*(.*?)\s*$/gim)].map((match) => match[1].trim());
+  const projectRepositories = [...projectText.matchAll(/^\s*-\s*\*\*Repositorio o carpeta:\*\*\s*(.*?)\s*$/gim)].map((match) => match[1].trim());
+  const coreIdentity = projectNames.length === 1 && ["pending", "cn pilot", "cn pilot core"].includes(projectNames[0].toLowerCase());
+  const repositoryIdentity = projectRepositories.length === 1 && ["pending", CANONICAL_REPOSITORY, `${CANONICAL_REPOSITORY}.git`].includes(projectRepositories[0].toLowerCase());
+  return sourceRepository === CANONICAL_REPOSITORY
+    && firstHeading === "# CN Pilot"
+    && /https:\/\/github\.com\/LuisYGM\/cn-pilot\b/i.test(readme.text)
+    && coreIdentity
+    && repositoryIdentity;
+}
+
+function checkProjectContextVersion(root, coreVersion) {
+  const project = readText(root, "PROYECTO.md");
+  if (project.kind !== "ok") return { status: "FAIL", details: { path: "PROYECTO.md", checked: true, code: project.code ?? project.kind } };
+  if (!canonicalProjectContext(root, project.text)) {
+    return { status: "PASS", details: { path: "PROYECTO.md", checked: false, reason: "Project Context is project-owned; version cross-check requires the canonical Core origin and identity." } };
+  }
+  const declared = [...project.text.matchAll(/^\s*-\s*\*\*Versión de CN Pilot Core:\*\*\s*(\S+)\s*$/gim)].map((match) => match[1].trim());
+  const unique = [...new Set(declared)];
+  const contextVersion = unique.length === 1 ? unique[0] : null;
+  const matches = coreVersion.status === "PASS" && contextVersion === coreVersion.version;
+  const semver = SEMVER.test(contextVersion ?? "");
+  return {
+    status: matches && semver ? "PASS" : "FAIL",
+    details: {
+      path: "PROYECTO.md",
+      checked: true,
+      coreVersion: coreVersion.version,
+      contextVersion,
+      declarations: declared.length,
+      semver,
+      code: matches && semver ? undefined : "CORE_PROJECT_VERSION_MISMATCH",
+    },
+  };
+}
+
+function parseOutcomeDeclaration(text) {
+  if (!text) return [];
+  return text.split(/\s*(?:\/|\||,|\bo\b)\s*/i)
+    .map((item) => item.trim().replace(/^[`*\s]+|[`*.,;\s]+$/g, "").toUpperCase())
+    .filter(Boolean);
+}
+
+function checkReviewOutcomes(root) {
+  const command = readText(root, ".kilo/commands/revision.md");
+  const template = readText(root, ".cn-pilot/plantillas/informe-revision.md");
+  if (command.kind !== "ok" || template.kind !== "ok") {
+    return { status: "FAIL", details: { code: "REVIEW_OUTCOME_SOURCE_UNAVAILABLE", command: command.code ?? command.kind, template: template.code ?? template.kind } };
+  }
+  const finalLine = command.text.split(/\r\n|\n|\r/).find((line) => /\bFinaliza con\b/i.test(line));
+  const commandDeclaration = finalLine?.match(/\bFinaliza con\s+(.+?)\s+y detente\b/i)?.[1];
+  const commandOutcomes = parseOutcomeDeclaration(commandDeclaration);
+  const lines = template.text.split(/\r\n|\n|\r/);
+  const heading = lines.findIndex((line) => /^##\s+Resultado\s*$/i.test(line.trim()));
+  const nextHeading = heading < 0 ? -1 : lines.findIndex((line, index) => index > heading && /^##\s/.test(line.trim()));
+  const section = heading < 0 ? [] : lines.slice(heading + 1, nextHeading < 0 ? undefined : nextHeading);
+  const templateDeclaration = section.find((line) => line.trim())?.trim().replace(/^[-*]\s*/, "");
+  const templateOutcomes = parseOutcomeDeclaration(templateDeclaration);
+  const expected = [...REVIEW_OUTCOMES].sort();
+  const commandSet = [...new Set(commandOutcomes)].sort();
+  const templateSet = [...new Set(templateOutcomes)].sort();
+  const matchesExpected = (actual) => actual.length === expected.length && actual.every((item, index) => item === expected[index]);
+  return {
+    status: heading >= 0 && matchesExpected(commandSet) && matchesExpected(templateSet) ? "PASS" : "FAIL",
+    details: {
+      command: ".kilo/commands/revision.md",
+      template: ".cn-pilot/plantillas/informe-revision.md",
+      expected,
+      commandOutcomes: commandSet,
+      templateOutcomes: templateSet,
+      missingFromCommand: expected.filter((item) => !commandSet.includes(item)),
+      missingFromTemplate: expected.filter((item) => !templateSet.includes(item)),
+      unexpectedInCommand: commandSet.filter((item) => !expected.includes(item)),
+      unexpectedInTemplate: templateSet.filter((item) => !expected.includes(item)),
+    },
+  };
+}
+
 export function runCoreChecks({ rootDir = DEFAULT_ROOT } = {}) {
   let root;
   try {
@@ -451,6 +563,10 @@ export function runCoreChecks({ rootDir = DEFAULT_ROOT } = {}) {
   const add = (id, status, details = {}) => addCheck(checks, id, status, details);
   const version = readVersion(root);
   add("core.version", version.status, version.details);
+  const projectVersion = checkProjectContextVersion(root, version);
+  add("core.projectContextVersion", projectVersion.status, projectVersion.details);
+  const reviewOutcomes = checkReviewOutcomes(root);
+  add("review.outcomes", reviewOutcomes.status, reviewOutcomes.details);
 
   const requiredResults = REQUIRED_PATHS.map(([relativePath, kind]) => {
     const item = inspectPath(root, relativePath);
@@ -521,7 +637,8 @@ export function runCoreChecks({ rootDir = DEFAULT_ROOT } = {}) {
 }
 
 const LABELS = new Map([
-  ["core.version", "Version"], ["core.paths", "Core paths"], ["core.optionalScaffold", "Input scaffold"],
+  ["core.version", "Version"], ["core.projectContextVersion", "Project context version"], ["review.outcomes", "Review outcomes"],
+  ["core.paths", "Core paths"], ["core.optionalScaffold", "Input scaffold"],
   ["agents.frontmatter", "Agents"], ["skills.frontmatter", "Skills"], ["commands.frontmatter", "Commands"],
   ["agents.noStepCaps", "Agent step caps"],
   ["language.spanishFirst", "Spanish-first role terminology"],
@@ -542,6 +659,7 @@ function humanOutput(report) {
     if (check.id === "routing.devLead") suffix = `${details.allowedTargets?.length ?? 0} task targets`;
     if (check.id === "manifest.inventory") suffix = `${details.declarationsChecked ?? 0} declarations`;
     if (check.id === "core.version") suffix = details.version ?? "";
+    if (check.id === "core.projectContextVersion" && details.checked === false) suffix = "project-owned; cross-check skipped";
     if (check.id === "runtime.gitignore") suffix = details.expectedRule ?? "";
     lines.push(`${(LABELS.get(check.id) ?? check.id).padEnd(27, ".")} ${check.status}${suffix ? ` (${suffix})` : ""}`);
   }

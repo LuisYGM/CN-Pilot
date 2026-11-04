@@ -89,7 +89,7 @@ function createFixture(t) {
     "- 1 documento de referencia bajo `.kilo/skills/technical-seo/references/` (no es una skill adicional)",
     "- 14 comandos en `.kilo/commands/`",
     "- 1 perfil en `.cn-pilot/perfiles/`",
-    "- 1 archivo de plantilla en la raíz de `.cn-pilot/plantillas/` y 2 archivos en total bajo `.cn-pilot/plantillas/` (incluye subdirectorios)",
+    "- 2 archivos de plantilla en la raíz de `.cn-pilot/plantillas/` y 3 archivos en total bajo `.cn-pilot/plantillas/` (incluye subdirectorios)",
   ].join("\n") + "\n";
 
   put("PROYECTO.md", "# Project fixture\n");
@@ -143,6 +143,8 @@ function createFixture(t) {
   for (const command of ["nuevo-proyecto", "cn-estado", "cn-actualizar", "diseno", "contenido", "revision", "entrega", "diagnostico", "depurar", "desplegar-pruebas", "preparar-despliegue", "punto-control", "plan", "commit"]) {
     put(`.kilo/commands/${command}.md`, `---\ndescription: Comando ${command}\nagent: jefe-proyecto\n---\n# ${command}\n`);
   }
+  put(".kilo/commands/revision.md", "---\ndescription: Comando de revisión\nagent: jefe-proyecto\n---\n# Revisión\n\nFinaliza con APPROVED, APPROVED WITH NOTES, CHANGES REQUIRED o BLOCKED y detente.\n");
+  put(".cn-pilot/plantillas/informe-revision.md", "# Informe de revisión\n\n## Resultado\nAPPROVED / APPROVED WITH NOTES / CHANGES REQUIRED / BLOCKED\n");
   return { root, put };
 }
 
@@ -176,8 +178,79 @@ test("known-good minimal fixture passes deterministic invariants", (t) => {
   assert.equal(getCheck(report, "agents.frontmatter").details.count, 7);
   assert.equal(getCheck(report, "skills.frontmatter").details.count, 2);
   assert.equal(getCheck(report, "commands.frontmatter").details.count, 14);
-  assert.equal(getCheck(report, "templates.inventory").details.rootFiles, 1);
-  assert.equal(getCheck(report, "templates.inventory").details.totalFiles, 2);
+  assert.equal(getCheck(report, "templates.inventory").details.rootFiles, 2);
+  assert.equal(getCheck(report, "templates.inventory").details.totalFiles, 3);
+});
+
+test("Core Project Context version is checked only for the canonical distribution, not derived projects", (t) => {
+  const canonical = createFixture(t);
+  canonical.put(".git/config", '[remote "origin"]\n\turl = https://github.com/LuisYGM/CN-Pilot.git\n');
+  canonical.put("README.md", "# CN Pilot\n\n[Repositorio](https://github.com/LuisYGM/cn-pilot)\n");
+  canonical.put("PROYECTO.md", [
+    "# Proyecto",
+    "- **Nombre:** Pending",
+    "- **Repositorio o carpeta:** Pending",
+    "- **Versión de CN Pilot Core:** 2.8.0",
+  ].join("\n") + "\n");
+  let report = runCoreChecks({ rootDir: canonical.root });
+  let check = getCheck(report, "core.projectContextVersion");
+  assert.equal(check.status, "PASS");
+  assert.equal(check.details.checked, true);
+  assert.equal(check.details.contextVersion, "2.8.0");
+
+  canonical.put("PROYECTO.md", "# Proyecto\n- **Nombre:** Pending\n- **Repositorio o carpeta:** Pending\n- **Versión de CN Pilot Core:** 2.7.9\n");
+  report = runCoreChecks({ rootDir: canonical.root });
+  check = getCheck(report, "core.projectContextVersion");
+  assert.equal(check.status, "FAIL");
+  assert.equal(check.details.code, "CORE_PROJECT_VERSION_MISMATCH");
+
+  const derived = createFixture(t);
+  derived.put(".git/config", '[remote "origin"]\n\turl = https://github.com/example/TailorDoc.git\n');
+  derived.put("README.md", "# CN Pilot\n\n[Repositorio](https://github.com/LuisYGM/cn-pilot)\n");
+  derived.put("PROYECTO.md", "# Proyecto\n- **Nombre:** Pending\n- **Repositorio o carpeta:** Pending\n- **Versión de CN Pilot Core:** 2.7.9\n");
+  report = runCoreChecks({ rootDir: derived.root });
+  check = getCheck(report, "core.projectContextVersion");
+  assert.equal(check.status, "PASS");
+  assert.equal(check.details.checked, false);
+  assert.equal(report.status, "PASS", JSON.stringify(report.findings));
+});
+
+test("revision command and report template expose the same complete outcome set", (t) => {
+  const fixture = createFixture(t);
+  const expected = ["APPROVED", "APPROVED WITH NOTES", "BLOCKED", "CHANGES REQUIRED"];
+  let check = getCheck(runCoreChecks({ rootDir: fixture.root }), "review.outcomes");
+  assert.equal(check.status, "PASS");
+  assert.deepEqual(check.details.commandOutcomes, expected);
+  assert.deepEqual(check.details.templateOutcomes, expected);
+
+  fixture.put(".cn-pilot/plantillas/informe-revision.md", "# Review\n\n## Resultado\nAPPROVED / APPROVED WITH NOTES / CHANGES REQUIRED\n");
+  check = getCheck(runCoreChecks({ rootDir: fixture.root }), "review.outcomes");
+  assert.equal(check.status, "FAIL");
+  assert.deepEqual(check.details.missingFromTemplate, ["BLOCKED"]);
+
+  fixture.put(".kilo/commands/revision.md", "---\ndescription: Review\nagent: jefe-proyecto\n---\n# Review\nFinaliza con APPROVED, APPROVED WITH NOTES o CHANGES REQUIRED y detente.\n");
+  check = getCheck(runCoreChecks({ rootDir: fixture.root }), "review.outcomes");
+  assert.equal(check.status, "FAIL");
+  assert.deepEqual(check.details.missingFromCommand, ["BLOCKED"]);
+});
+
+test("upstream GitHub Actions workflow is restricted, compatible, and runs the local QA commands", (t) => {
+  const workflowPath = new URL("../../.github/workflows/core-qa.yml", import.meta.url);
+  if (!fs.existsSync(workflowPath)) {
+    t.skip("The upstream-only workflow is intentionally outside the updater's managed roots.");
+    return;
+  }
+  const workflow = fs.readFileSync(workflowPath, "utf8");
+  assert.doesNotMatch(workflow, /\t/, "YAML indentation uses spaces");
+  assert.match(workflow, /^name: Core QA$/m);
+  assert.match(workflow, /^on:\r?\n  push:\r?\n    branches:\r?\n      - main\r?\n  pull_request:\r?\n    branches:\r?\n      - main$/m);
+  assert.match(workflow, /^permissions:\r?\n  contents: read$/m);
+  assert.doesNotMatch(workflow, /:\s*write\b/i, "workflow has no write permissions");
+  assert.match(workflow, /uses: actions\/checkout@v4/);
+  assert.match(workflow, /uses: actions\/setup-node@v4/);
+  assert.match(workflow, /node-version:\s*22\b/);
+  assert.match(workflow, /run: node \.cn-pilot\/qa\/core-check\.mjs/);
+  assert.match(workflow, /run: node --test \.cn-pilot\/qa\/core-check\.test\.mjs \.cn-pilot\/update\/updater\.test\.mjs/);
 });
 
 test("Core QA leaves the input fixture unchanged", (t) => {

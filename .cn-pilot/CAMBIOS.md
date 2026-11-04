@@ -1,5 +1,11 @@
 # Changelog
 
+## [2.8.6] - 2026-11-04
+
+- Sincroniza la versión Core de este Project Context con la distribución y valida esa referencia solo para la identidad canónica Core, preservando versiones de proyectos derivados.
+- Unifica los cuatro resultados de revisión entre comando y plantilla, incluido `BLOCKED`, con comprobación contractual en Core QA.
+- Añade CI GitHub Actions para Core QA y los tests Core/updater en push a `main` y pull requests hacia `main`, con `contents: read` y Node 22.
+
 ## [2.8.5] - 2026-10-23
 
 - Jefe de proyecto transmite invariantes Core/Quality Floors aplicables y acceptance observable a cada owner material; autonomía técnica no permite downgrade silencioso, y omisiones recuperables vuelven al mismo owner.

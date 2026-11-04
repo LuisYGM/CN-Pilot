@@ -1,0 +1,26 @@
+name: Core QA
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  core-qa:
+    name: Core QA and tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Run Core QA
+        run: node .cn-pilot/qa/core-check.mjs
+      - name: Test Core and updater
+        run: node --test .cn-pilot/qa/core-check.test.mjs .cn-pilot/update/updater.test.mjs
