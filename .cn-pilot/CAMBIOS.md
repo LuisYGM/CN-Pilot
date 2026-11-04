@@ -1,5 +1,11 @@
 # Changelog
 
+## [2.8.7] - 2026-11-04
+
+- Separa la detección real de Kilo de la evaluación de compatibilidad e inyecta un probe controlado en las pruebas del CLI del updater.
+- Las pruebas cubren Kilo compatible, incompatible y ausente/desconocido sin depender del binario instalado en el runner.
+- El CLI real conserva `kilo --version` y sigue bloqueando la actualización ante Kilo ausente, desconocido o por debajo del mínimo.
+
 ## [2.8.6] - 2026-11-04
 
 - Sincroniza la versión Core de este Project Context con la distribución y valida esa referencia solo para la identidad canónica Core, preservando versiones de proyectos derivados.

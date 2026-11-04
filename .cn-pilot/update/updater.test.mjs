@@ -25,8 +25,17 @@ import {
   verifyManifestFiles,
   verifyManifestMetadata,
   verifyTrackedManifest,
-  runCli,
+  runCli as runUpdaterCli,
 } from "./updater.mjs";
+
+const TEST_KILO_VERSION = "7.8.8";
+
+function runCli(argv, options = {}) {
+  return runUpdaterCli(argv, {
+    ...options,
+    kiloVersionProbe: options.kiloVersionProbe ?? (() => TEST_KILO_VERSION),
+  });
+}
 
 function fixture(t) {
   const root = fs.mkdtempSync(path.join(os.tmpdir(), "cn-update-test-"));
@@ -463,6 +472,43 @@ test("2.8.5 to 2.8.6 updates Core contracts while preserving existing Project Co
   for (const [item, value] of Object.entries(protectedValues)) assert.equal(fs.readFileSync(path.join(target.root, item), "utf8"), value, `${item} remains unchanged`);
   assert.equal(fs.readFileSync(path.join(target.root, ".cn-pilot-version"), "utf8"), "2.8.6\n");
   assert.equal(fs.readFileSync(path.join(target.root, ".cn-pilot/plantillas/informe-revision.md"), "utf8"), newTemplate);
+});
+
+test("2.8.6 to 2.8.7 delivers testable Kilo probing without changing Project Context, Product or workflows", (t) => {
+  const target = fixture(t); const source = fixture(t);
+  const protectedPaths = ["PROYECTO.md", "README.md", "producto/site.css", "producto/index.html", "recursos/source.html", "gh-pages/index.html", ".github/workflows/core-qa.yml"];
+  const protectedValues = Object.fromEntries(protectedPaths.map((item) => [item, item === "PROYECTO.md" ? "- **Versión de CN Pilot Core:** 2.8.2\n" : `Preservar sin cambios: ${item}\n`]));
+  for (const [item, value] of Object.entries(protectedValues)) target.put(target.root, item, value);
+  const oldCore = "**Versión:** `2.8.6`\n";
+  const newCore = "**Versión:** `2.8.7`\n";
+  const oldUpdater = "function checkCompatibility(manifest) { return probeKilo(); }\n";
+  const newUpdater = "function checkCompatibility(manifest, { kiloVersionProbe = detectKiloVersion } = {}) { return probeKilo(kiloVersionProbe); }\n";
+  target.put(target.root, ".cn-pilot-version", "2.8.6\n");
+  target.put(target.root, ".cn-pilot/NUCLEO.md", oldCore);
+  target.put(target.root, ".cn-pilot/update/updater.mjs", oldUpdater);
+  target.put(target.root, ".cn-pilot/update/updater.test.mjs", "Kilo probe untested\n");
+  const installed = manifest("2.8.6", [
+    entry(".cn-pilot-version", "2.8.6\n"), entry(".cn-pilot/NUCLEO.md", oldCore),
+    entry(".cn-pilot/update/updater.mjs", oldUpdater), entry(".cn-pilot/update/updater.test.mjs", "Kilo probe untested\n"),
+  ]);
+  source.put(source.root, ".cn-pilot-version", "2.8.7\n");
+  source.put(source.root, ".cn-pilot/NUCLEO.md", newCore);
+  source.put(source.root, ".cn-pilot/update/updater.mjs", newUpdater);
+  source.put(source.root, ".cn-pilot/update/updater.test.mjs", "Compatible/incompatible/unknown Kilo probes tested\n");
+  const latest = manifest("2.8.7", [
+    entry(".cn-pilot-version", "2.8.7\n"), entry(".cn-pilot/NUCLEO.md", newCore),
+    entry(".cn-pilot/update/updater.mjs", newUpdater), entry(".cn-pilot/update/updater.test.mjs", "Compatible/incompatible/unknown Kilo probes tested\n"),
+  ]);
+  source.put(source.root, ".cn-pilot/update/manifest.json", JSON.stringify(latest, null, 2));
+  const plan = planUpdate(target.root, installed, latest);
+  assert.equal(plan.installedVersion, "2.8.6");
+  assert.equal(plan.latestVersion, "2.8.7");
+  assert.equal(plan.conflicts.length, 0);
+  assert.ok(plan.actions.every(({ path: item }) => item.startsWith(".cn-pilot/") || item === ".cn-pilot-version"));
+  applyPlan(target.root, source.root, plan, latest);
+  for (const [item, value] of Object.entries(protectedValues)) assert.equal(fs.readFileSync(path.join(target.root, item), "utf8"), value, `${item} remains unchanged`);
+  assert.equal(fs.readFileSync(path.join(target.root, ".cn-pilot-version"), "utf8"), "2.8.7\n");
+  assert.equal(fs.readFileSync(path.join(target.root, ".cn-pilot/update/updater.mjs"), "utf8"), newUpdater);
 });
 
 test("1.3.1 baseline detects the 1.4.0 MINOR distribution and added capability", (t) => {
@@ -1089,6 +1135,68 @@ test("status with same version is read-only and does not create a remote", async
   assert.match(stdout, /Active task: INVALID/);
   assert.match(stdout, /Active task reason: missing required field "status"/);
   assert.equal(execFileSync("git", ["status", "--porcelain"], { cwd: target.root, encoding: "utf8" }), before);
+});
+
+test("Kilo version probe is deterministic in tests while unknown/incompatible runtimes still block updates", async (t) => {
+  const target = fixture(t); const source = fixture(t);
+  const sourceCore = "source core\n"; const oldCore = "baseline core\n"; const updater = "fixture updater\n";
+  const managedPaths = [".cn-pilot-version", ".cn-pilot/CORE.md", ".cn-pilot/update/updater.mjs"];
+  source.put(source.root, ".cn-pilot-version", "1.4.0\n");
+  source.put(source.root, ".cn-pilot/CORE.md", sourceCore);
+  source.put(source.root, ".cn-pilot/update/updater.mjs", updater);
+  const latest = manifest("1.4.0", [
+    entry(".cn-pilot-version", "1.4.0\n"), entry(".cn-pilot/CORE.md", sourceCore), entry(".cn-pilot/update/updater.mjs", updater),
+  ]);
+  writeManifestFile(source.root, latest);
+  initRepo(source.root, [...managedPaths, MANIFEST_PATH]);
+  execFileSync("git", ["remote", "add", "origin", "https://github.com/LuisYGM/cn-pilot.git"], { cwd: source.root });
+
+  target.put(target.root, ".cn-pilot-version", "1.3.0\n");
+  target.put(target.root, ".cn-pilot/CORE.md", oldCore);
+  target.put(target.root, ".cn-pilot/update/updater.mjs", updater);
+  const installed = manifest("1.3.0", [
+    entry(".cn-pilot-version", "1.3.0\n"), entry(".cn-pilot/CORE.md", oldCore), entry(".cn-pilot/update/updater.mjs", updater),
+  ]);
+  writeManifestFile(target.root, installed);
+  target.put(target.root, ".gitignore", "/.cn-pilot/runtime/\n");
+  initRepo(target.root, [...managedPaths, MANIFEST_PATH, ".gitignore"]);
+
+  const statusWith = async (kiloVersionProbe) => {
+    let stdout = ""; let stderr = "";
+    const code = await runCli(["status", "--target", target.root, "--source-dir", source.root], {
+      stdout: { write: (value) => { stdout += value; } },
+      stderr: { write: (value) => { stderr += value; } },
+      kiloVersionProbe,
+    });
+    assert.equal(code, 0, stderr);
+    return stdout;
+  };
+
+  const compatibleStatus = await statusWith(() => "7.8.8");
+  assert.match(compatibleStatus, /Kilo PASS/);
+  assert.match(compatibleStatus, /Ready to update\./);
+
+  const incompatibleStatus = await statusWith(() => "7.8.7");
+  assert.match(incompatibleStatus, /Kilo BLOCK\/UNKNOWN/);
+  assert.doesNotMatch(incompatibleStatus, /Ready to update\./);
+
+  const unknownStatus = await statusWith(() => null);
+  assert.match(unknownStatus, /Kilo BLOCK\/UNKNOWN/);
+  assert.doesNotMatch(unknownStatus, /Ready to update\./);
+
+  const before = execFileSync("git", ["status", "--porcelain"], { cwd: target.root, encoding: "utf8" });
+  for (const kiloVersionProbe of [() => "7.8.7", () => null]) {
+    let stderr = "";
+    const code = await runCli(["update", "--target", target.root, "--source-dir", source.root], {
+      stdout: { write() {} },
+      stderr: { write: (value) => { stderr += value; } },
+      kiloVersionProbe,
+    });
+    assert.equal(code, 1);
+    assert.match(stderr, /INCOMPATIBLE_RUNTIME/);
+    assert.equal(fs.readFileSync(path.join(target.root, ".cn-pilot/CORE.md"), "utf8"), oldCore, "incompatible/unknown Kilo never writes Core files");
+    assert.equal(execFileSync("git", ["status", "--porcelain"], { cwd: target.root, encoding: "utf8" }), before);
+  }
 });
 
 test("end-to-end local source → plan → apply → Core QA → versioned commit", async (t) => {
