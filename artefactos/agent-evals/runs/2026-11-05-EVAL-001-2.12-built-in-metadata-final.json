@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "runId": "2026-11-05-EVAL-001-core-2.12-builtin-metadata-final",
+  "evalId": "EVAL-001",
+  "startedAt": "2026-11-05T23:10:11.856Z",
+  "finishedAt": "2026-11-05T23:10:51.326Z",
+  "durationSource": "Kilo event start/final timestamps; 39,470 ms including one Maquetador task.",
+  "sourceCommit": "1f0e8b96c03c57d900af63993e740dd4d1fbc476",
+  "coreVersion": "2.12.0",
+  "kiloVersion": "7.8.8",
+  "model": {"primary":null,"owner":{"provider":"openai","id":"gpt-6-luna","variant":"medium","source":"Kilo task metadata"}},
+  "configurationFingerprint": "96ea89c964766d39969369f3758b0c9c5236229617346b0467c7c0fe71b5915b",
+  "configurationScope": "Candidate project scaffold; tracked config state captured; user-global model/provider config not hashed.",
+  "scenarioFingerprint": "a585e7a93c2d4d69628666f273f66588747422b2583a6dce7c0f1955e9c01fe6",
+  "sourceConfigState": "M  .cn-pilot-version\nM  .cn-pilot/NUCLEO.md\nMM .kilo/agents/jefe-proyecto.md\nM  .kilo/agents/maquetador-frontend.md",
+  "workspaceFingerprint": "e914a21a1a778b5e5cd6e3e178f3a4c85401a59cdabd91017d50115565f970ac",
+  "baselineCommit": "3bd3de2b0cac72ba49d15867181b2d34d2be5f17",
+  "sessionID": "ses_e5200c05effeOud65lfgprhqbf",
+  "request": "En producto/index.html, cambia únicamente el texto visible del enlace CTA de ‘Learn more’ a ‘Ver servicios’. Conserva href, clases, estructura y cualquier otro contenido. Es un cambio localizado; verifica el resultado afectado y detente.",
+  "followUps": [],
+  "result": "PASS",
+  "criteria": [
+    {"id":"A1","result":"PASS","evidence":"CTA cambió únicamente a ‘Ver servicios’; href=/services.html, clase cta, estructura y resto del documento intactos."},
+    {"id":"A2","result":"PASS","evidence":"El diff final es una línea de producto/index.html, sin archivos extra."},
+    {"id":"A3","result":"PASS","evidence":"Jefe pasó un único task al Maquetador; este releyó el target y paró. Sin plan/documentos/checkpoint ni Bash diff no autorizado."}
+  ],
+  "evidence": [
+    {"type":"checkpoint-state","command":"Test-Path -LiteralPath '.cn-pilot/runtime/active-task.json'","output":"False","permission":"Exact read-only Bash allow; no prompt."},
+    {"type":"handoff","parentSession":"ses_e5200c05effeOud65lfgprhqbf","ownerSession":"ses_e52006ecaffeMrYqIK7mqrd9zo","owner":"maquetador-frontend","model":"openai/gpt-6-luna","tools":"Maquetador read -> apply_patch -> read; one task, no Bash."},
+    {"type":"diff","path":"producto/index.html","sha256":"001148FDEBA7440E0BBF07BA7ECC4E29D67FAE6E92FC6D92A6A7A7288256411D","excerpt":"- <a class=\"cta\" href=\"/services.html\">Learn more</a>\n+ <a class=\"cta\" href=\"/services.html\">Ver servicios</a>"},
+    {"type":"git-after","branch":"main","status":"M producto/index.html","remote":null}
+  ],
+  "defects": [],
+  "humanInterventions": [],
+  "durationMs": 39470,
+  "tokenUsage": {"input":null,"output":null,"total":null,"source":"Per-step/cache counters only; no verified session aggregate."},
+  "limitations": ["Primary Jefe model not exposed by the session events; Maquetador model/variant was exposed." ]
+}

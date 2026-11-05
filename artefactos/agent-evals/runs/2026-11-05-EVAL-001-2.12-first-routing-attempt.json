@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "runId": "2026-11-05-EVAL-001-core-2.12-routing-row-only",
+  "evalId": "EVAL-001",
+  "startedAt": "2026-11-05T21:39:04.105Z",
+  "finishedAt": "2026-11-05T21:39:13.334Z",
+  "durationSource": "Kilo event timestamps; 9,229 ms.",
+  "sourceCommit": "1f0e8b96c03c57d900af63993e740dd4d1fbc476",
+  "coreVersion": "2.12.0",
+  "kiloVersion": "7.8.8",
+  "model": null,
+  "configurationFingerprint": "6cd8dfdbac1032023e5a851e60f0ee429b9465dde63accc1ef14296fa551856a",
+  "configurationScope": "Candidate project scaffold; tracked prompt edits below are fingerprinted; user-global provider/model config not hashed.",
+  "scenarioFingerprint": "a585e7a93c2d4d69628666f273f66588747422b2583a6dce7c0f1955e9c01fe6",
+  "sourceConfigState": "M  .cn-pilot-version\nM  .cn-pilot/NUCLEO.md\nM  .kilo/agents/jefe-proyecto.md",
+  "workspaceFingerprint": "3099069f9c9063d7b445e963ee42f6d23343c21ef8048483e7a82d997a7daa71",
+  "baselineCommit": "0fe44f9650fa49116cf0513b8091e2db746a0863",
+  "sessionID": "ses_e52596f88ffeL9IIQ4s6KzfvgV",
+  "request": "En producto/index.html, cambia únicamente el texto visible del enlace CTA de ‘Learn more’ a ‘Ver servicios’. Conserva href, clases, estructura y cualquier otro contenido. Es un cambio localizado; verifica el resultado afectado y detente.",
+  "followUps": [],
+  "result": "FAIL",
+  "criteria": [
+    {"id":"A1","result":"FAIL","evidence":"Kilo auto-rechazó apply_patch de Jefe sobre producto/index.html; el CTA permaneció en Learn more."},
+    {"id":"A2","result":"PASS","evidence":"El scratch no tuvo cambios ni archivos fuera del alcance."},
+    {"id":"A3","result":"FAIL","evidence":"Jefe leyó el target y trató de editarlo directamente en vez de invocar task para Maquetador."},
+    {"id":"A4","result":"PASS","evidence":"No creó planes, documentación ni checkpoints."}
+  ],
+  "evidence": [
+    {"type":"kilo-event","sessionID":"ses_e52596f88ffeL9IIQ4s6KzfvgV","excerpt":"Kilo requested edit(producto/index.html) via apply_patch; CLI auto-rejected; no task delegation observed."},
+    {"type":"git-after","branch":"main","status":"clean","diff":"empty","remote":null},
+    {"type":"fixture-hash","path":"producto/index.html","sha256":"99BA6A6AD60EF6F9FB7AD3FC5F74C0CD7E8F41B102FA45DCA2364A7ECBFEC1A3"}
+  ],
+  "defects": ["Routing table-level clarification did not stop Jefe from directly attempting a Product edit; ownership exception needed to be prominent in its top-level coordination rule."],
+  "humanInterventions": [],
+  "durationMs": 9229,
+  "tokenUsage": {"input":null,"output":null,"total":null,"source":"No verified session aggregate."},
+  "limitations": ["Headless Kilo auto-rejected the Product edit; the failure is also a routing failure because no Maquetador task was attempted." ]
+}

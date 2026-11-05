@@ -5,7 +5,7 @@
   "purpose": "Evaluaciones conductuales de agentes Kilo; no sustituye Core QA, tests deterministas ni evaluación humana.",
   "modelPolicy": "Usar el modelo default real de Kilo; registrar el modelo reportado por la sesión y no forzar uno para comparar esta línea base.",
   "recordFields": [
-    "runId", "evalId", "startedAt", "finishedAt", "durationSource", "workspaceFingerprint", "scenarioFingerprint", "request", "followUps", "coreVersion",
+    "runId", "evalId", "startedAt", "finishedAt", "durationSource", "workspaceFingerprint", "scenarioFingerprint", "sourceConfigState", "request", "followUps", "coreVersion",
     "kiloVersion", "model", "configurationFingerprint", "result", "criteria",
     "evidence", "defects", "humanInterventions", "durationMs", "tokenUsage", "limitations"
   ],

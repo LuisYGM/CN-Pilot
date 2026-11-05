@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "cnPilotVersion": "2.11.0",
+  "cnPilotVersion": "2.12.0",
   "sourceRepository": "https://github.com/LuisYGM/cn-pilot.git",
   "stableBranch": "main",
   "sourceCommit": null,
@@ -11,11 +11,11 @@
   "managedFiles": [
     {
       "path": ".cn-pilot-version",
-      "sha256": "f526f5e7f214e4916c51e16a61fb1be5d530d67e44c65d86db25b8416463b10c"
+      "sha256": "140288f526a0978bcba7f2f8d2c2585faf05ce088087b54c161050d6366eab4b"
     },
     {
       "path": ".cn-pilot/CAMBIOS.md",
-      "sha256": "2cf7ee8355c6cebdfef4ef073a7c166fe8c0150036db0085bb0d3b7b424d560c"
+      "sha256": "4f96b435ccd6259b78483f4eff673daaf536a8807ce98680f025ea9f2301a396"
     },
     {
       "path": ".cn-pilot/MANIFIESTO.md",
@@ -23,11 +23,11 @@
     },
     {
       "path": ".cn-pilot/NUCLEO.md",
-      "sha256": "ee3f05c3518745143fb11da4db4fe77f18799fa45c7159f89fc5054251340d1d"
+      "sha256": "c3d73b185eb68269ff80ec876a96177db73a7f55ba192f82a9ec208ef11db277"
     },
     {
       "path": ".cn-pilot/agent-evals/README.md",
-      "sha256": "44fd57cfff014724bcaf24f1c17319090b1104a90417936aeef11d61068bd5a6"
+      "sha256": "7d491e4a7a5421351705f029f0669d35d70e08b7fb34fd1a8c7b6db529a7c4c3"
     },
     {
       "path": ".cn-pilot/agent-evals/fixtures/EVAL-001/producto/index.html",
@@ -67,7 +67,7 @@
     },
     {
       "path": ".cn-pilot/agent-evals/fixtures/EVAL-004/working/active-task.json.fixture",
-      "sha256": "7c5990446a96968d6be82af959fccab49a604b80ee817324b4fb49e5d78386dd"
+      "sha256": "55c11941af71eb5ee6581b573a6437767251e92e61d2fffecae5726b2be6a6fa"
     },
     {
       "path": ".cn-pilot/agent-evals/fixtures/EVAL-004/working/producto/cart-view.mjs",
@@ -107,15 +107,15 @@
     },
     {
       "path": ".cn-pilot/agent-evals/prepare.mjs",
-      "sha256": "1d2ca1c2e58dd0f201b33a51d7df07e33d58d8c18d1b97943d226b2f40c3edc5"
+      "sha256": "be2de359ac419bc006c052dc46116d852a7b3116bb4541fcede6cd1d7f8a3f85"
     },
     {
       "path": ".cn-pilot/agent-evals/run-record.template.json",
-      "sha256": "3381c09b2ab548a3252f7dbb15a2faaf41119ba8e91f9c2f712550427c81d4f3"
+      "sha256": "f5b99090b3f220ae1c9e68ce66b6d4335ee53257519c48c64a0ecef78356b1b2"
     },
     {
       "path": ".cn-pilot/agent-evals/scenarios.json",
-      "sha256": "e4754b37ee75a296a07a6e9b10509e4578f4e20b5d727bc8567456e0101d13b8"
+      "sha256": "31ceb00229db70c473745688e67d21a23a7042dec3c95d04e26dd535934c96c2"
     },
     {
       "path": ".cn-pilot/config/responsive.json",
@@ -287,7 +287,7 @@
     },
     {
       "path": ".cn-pilot/qa/core-check.test.mjs",
-      "sha256": "0e6b8b29d6a62cd1a546b38b47adeab8f40725d958ac82d14ee3e34cc1e4854a"
+      "sha256": "cd8be4383b737d1d17ddd4d60cde21662c803e15854b74c5a7256b480ea232b2"
     },
     {
       "path": ".cn-pilot/update/updater.mjs",
@@ -315,11 +315,11 @@
     },
     {
       "path": ".kilo/agents/jefe-proyecto.md",
-      "sha256": "4c6a4f66724ff476733929bf5536d0ef8cfc569e836b9ccae265c58913c8bb0d"
+      "sha256": "caaccf56613e9b587c3cc5c2ce1a7eda3cdb854f075fc4b5ed94005b32eb93e6"
     },
     {
       "path": ".kilo/agents/maquetador-frontend.md",
-      "sha256": "5bb881978e0e3996acba924e53c02ba82305fbd1b5e25b679f53ca0549ea0daf"
+      "sha256": "572b9cbd803a358e1b6c2b9d54a28cac26bf17c3d7ab068f1b6717d34ce51170"
     },
     {
       "path": ".kilo/agents/revisor.md",
@@ -570,31 +570,7 @@
       "sha256": "837f9f263d7881d2755a43d57e3ee788a92695b98534d7a22d66382ea914ef09"
     }
   ],
-  "addedFiles": [
-    ".cn-pilot/agent-evals/README.md",
-    ".cn-pilot/agent-evals/fixtures/EVAL-001/producto/index.html",
-    ".cn-pilot/agent-evals/fixtures/EVAL-002/producto/catalog.html",
-    ".cn-pilot/agent-evals/fixtures/EVAL-002/producto/requisitos.txt",
-    ".cn-pilot/agent-evals/fixtures/EVAL-003/artefactos/funcionalidad.md",
-    ".cn-pilot/agent-evals/fixtures/EVAL-003/producto/catalog.mjs",
-    ".cn-pilot/agent-evals/fixtures/EVAL-003/producto/catalog.test.mjs",
-    ".cn-pilot/agent-evals/fixtures/EVAL-004/baseline/producto/cart-view.mjs",
-    ".cn-pilot/agent-evals/fixtures/EVAL-004/baseline/producto/format-price.mjs",
-    ".cn-pilot/agent-evals/fixtures/EVAL-004/baseline/tests/format-price.test.mjs",
-    ".cn-pilot/agent-evals/fixtures/EVAL-004/working/active-task.json.fixture",
-    ".cn-pilot/agent-evals/fixtures/EVAL-004/working/producto/cart-view.mjs",
-    ".cn-pilot/agent-evals/fixtures/EVAL-004/working/producto/format-price.mjs",
-    ".cn-pilot/agent-evals/fixtures/EVAL-005/evidence/first-failure.txt",
-    ".cn-pilot/agent-evals/fixtures/EVAL-005/src/discount.mjs",
-    ".cn-pilot/agent-evals/fixtures/EVAL-005/tests/discount.test.mjs",
-    ".cn-pilot/agent-evals/fixtures/EVAL-006/baseline/producto/discount.mjs",
-    ".cn-pilot/agent-evals/fixtures/EVAL-006/working/producto/discount.mjs",
-    ".cn-pilot/agent-evals/fixtures/EVAL-006/working/requirements.md",
-    ".cn-pilot/agent-evals/fixtures/EVAL-006/working/tests/discount.test.mjs",
-    ".cn-pilot/agent-evals/prepare.mjs",
-    ".cn-pilot/agent-evals/run-record.template.json",
-    ".cn-pilot/agent-evals/scenarios.json"
-  ],
+  "addedFiles": [],
   "removedFiles": [],
   "migrations": [
     {

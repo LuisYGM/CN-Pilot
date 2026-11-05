@@ -6,7 +6,7 @@
   "modifiedPaths": ["producto/format-price.mjs", "producto/cart-view.mjs"],
   "gates": [
     {"name":"format price", "status":"COMPLETE", "evidence":"producto/format-price.mjs formats to two decimals"},
-    {"name":"targeted test", "status":"PASS", "command":"node --test tests/format-price.test.mjs", "scope":["producto/format-price.mjs", "tests/format-price.test.mjs"], "note":"Run after the last edit to format-price.mjs; no later change to those paths."},
+    {"name":"targeted test", "status":"PASS", "command":"node --test tests/format-price.test.mjs", "scope":["producto/format-price.mjs", "tests/format-price.test.mjs"], "evidencePath":".cn-pilot/runtime/eval-setup.json", "note":"Run after the last edit to format-price.mjs; no later change to those paths."},
     {"name":"preserve local cart label", "status":"COMPLETE", "evidence":"Keep the intentional uncommitted label change in producto/cart-view.mjs"}
   ]
 }

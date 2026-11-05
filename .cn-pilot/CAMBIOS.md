@@ -1,5 +1,11 @@
 # Changelog
 
+## [2.12.0] - 2026-11-05
+
+- DIRECT conserva ownership: cambios HTML/CSS/JS de Product se delegan a Maquetador con handoff mínimo, sin exigir documentación/planning.
+- Recovery ya no interpreta un `glob` miss en el checkpoint ignorado como ausencia; distingue ausente, regular, symlink y desconocido con probes read-only exactos.
+- Agent Eval prep puede fingerprintar un candidato tracked antes del commit. Jefe recibe solo permiso Bash exacto para consultar el path canónico/atributos; no se amplían edición Product ni shell general y no se ejecuta código del proyecto como probe.
+
 ## [2.11.0] - 2026-11-05
 
 - Añade escenarios Agent Evals JSON y fixtures sintéticos para DIRECT, TASK, STRUCTURAL, recovery, Progress Guard y handoff a Revisor.

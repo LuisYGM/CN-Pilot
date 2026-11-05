@@ -9,6 +9,7 @@ const SCRIPT_DIR = path.dirname(fileURLToPath(import.meta.url));
 const REPO_ROOT = path.resolve(SCRIPT_DIR, "../..");
 const CORE_FILES = ["AGENTS.md", ".gitignore", "kilo.jsonc", ".cn-pilot-version", ".cn-pilot/NUCLEO.md"];
 const CORE_CONFIG_PATHS = [...CORE_FILES, ".kilo/agents", ".kilo/commands", ".kilo/skills"];
+const CORE_CONFIG_DIRECTORIES = [".kilo/agents/", ".kilo/commands/", ".kilo/skills/"];
 
 function isInside(parent, child) {
   const relative = path.relative(parent, child);
@@ -112,15 +113,28 @@ function scaffoldWorkspace(workspace) {
   }
 }
 
-function assertCoreSourceStable() {
+export function validateCoreSourceState(statusOutput, allowDirtyCore = false) {
+  const lines = statusOutput.split(/\r?\n/).filter(Boolean);
+  if (!lines.length) return "clean";
+  if (!allowDirtyCore) throw new Error("Core prompts/config are dirty; pass --allow-dirty-core only to measure this candidate snapshot.");
+
+  for (const line of lines) {
+    const state = line.slice(0, 2);
+    const relative = line.slice(3).replace(/^"|"$/g, "");
+    const allowedPath = CORE_FILES.includes(relative) || CORE_CONFIG_DIRECTORIES.some((prefix) => relative.startsWith(prefix));
+    if (!allowedPath || ![" M", "M ", "MM"].includes(state)) {
+      throw new Error(`Dirty candidate contains unsupported source state: ${line}`);
+    }
+  }
+  return lines.join("\n");
+}
+
+function assertCoreSourceStable(allowDirtyCore) {
   const branch = run("git", ["-C", REPO_ROOT, "branch", "--show-current"], REPO_ROOT);
   if (branch.status !== 0 || branch.stdout.trim() !== "main") throw new Error("Prepare Agent Evals only from the real main checkout.");
-  const diff = run("git", ["-C", REPO_ROOT, "diff", "--quiet", "HEAD", "--", ...CORE_CONFIG_PATHS], REPO_ROOT);
-  if (diff.status !== 0) throw new Error("Core prompts/config are dirty; do not evaluate an unrecorded configuration snapshot.");
-  const staged = run("git", ["-C", REPO_ROOT, "diff", "--cached", "--quiet", "HEAD", "--", ...CORE_CONFIG_PATHS], REPO_ROOT);
-  if (staged.status !== 0) throw new Error("Core prompts/config have staged changes; prepare from a known snapshot first.");
   const status = run("git", ["-C", REPO_ROOT, "status", "--porcelain", "--", ...CORE_CONFIG_PATHS], REPO_ROOT);
-  if (status.status !== 0 || status.stdout.trim()) throw new Error("Core prompt/config has untracked or staged state; refuse ambiguous evaluation provenance.");
+  if (status.status !== 0) throw new Error("Cannot inspect Core prompt/config source status.");
+  return validateCoreSourceState(status.stdout, allowDirtyCore);
 }
 
 function setupFixture(scenario, workspace) {
@@ -167,8 +181,8 @@ function setupFixture(scenario, workspace) {
   return { baselineCommit, setupTest };
 }
 
-export function prepareEval(evalId, targetPath) {
-  assertCoreSourceStable();
+export function prepareEval(evalId, targetPath, { allowDirtyCore = false } = {}) {
+  const sourceConfigState = assertCoreSourceStable(allowDirtyCore);
   const target = validateWorkspaceTarget(targetPath);
   const suitePath = path.join(SCRIPT_DIR, "scenarios.json");
   const suite = JSON.parse(fs.readFileSync(suitePath, "utf8"));
@@ -187,6 +201,7 @@ export function prepareEval(evalId, targetPath) {
       preparedAt: new Date().toISOString(),
       coreVersion: fs.readFileSync(path.join(target, ".cn-pilot-version"), "utf8").trim(),
       sourceCommit: run("git", ["-C", REPO_ROOT, "rev-parse", "HEAD"], REPO_ROOT).stdout.trim(),
+      sourceConfigState,
       kiloVersion: kilo.status === 0 ? kilo.stdout.trim() : null,
       model: null,
       scenarioFingerprint: fingerprintScenario(scenario),
@@ -210,8 +225,9 @@ export function prepareEval(evalId, targetPath) {
 
 if (process.argv[1] && import.meta.url === pathToFileURL(path.resolve(process.argv[1])).href) {
   try {
-    const [, , evalId, targetPath] = process.argv;
-    const result = prepareEval(evalId, targetPath);
+    const [, , evalId, targetPath, ...flags] = process.argv;
+    if (flags.some((flag) => flag !== "--allow-dirty-core")) throw new Error("Unknown option; accepted: --allow-dirty-core");
+    const result = prepareEval(evalId, targetPath, { allowDirtyCore: flags.includes("--allow-dirty-core") });
     process.stdout.write(`${JSON.stringify(result, null, 2)}\n`);
   } catch (error) {
     process.stderr.write(`Agent Evals preparation failed: ${error.message}\n`);

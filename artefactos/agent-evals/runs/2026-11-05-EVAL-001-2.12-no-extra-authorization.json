@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "runId": "2026-11-05-EVAL-001-core-2.12-owned-direct-node-probe-experiment",
+  "evalId": "EVAL-001",
+  "startedAt": "2026-11-05T22:20:32.708Z",
+  "finishedAt": "2026-11-05T22:21:01.584Z",
+  "durationSource": "Kilo event start/final timestamps; 28,876 ms end-to-end, one owner subtask included.",
+  "sourceCommit": "1f0e8b96c03c57d900af63993e740dd4d1fbc476",
+  "coreVersion": "2.12.0",
+  "kiloVersion": "7.8.8",
+  "model": {"primary":null,"owner":{"provider":"openai","id":"gpt-6-luna","source":"Kilo task metadata"}},
+  "configurationFingerprint": "ac427ae8a6620991a32e3419ef008ca8454254ec5999ace3f473cf0c3b3a37ea",
+  "configurationScope": "Candidate project scaffold; tracked config state/fingerprint captured; user-global model/provider config not hashed.",
+  "scenarioFingerprint": "a585e7a93c2d4d69628666f273f66588747422b2583a6dce7c0f1955e9c01fe6",
+  "sourceConfigState": "M  .cn-pilot-version\nM  .cn-pilot/NUCLEO.md\nA  .cn-pilot/qa/checkpoint-probe.mjs\nMM .kilo/agents/jefe-proyecto.md\nM  .kilo/agents/maquetador-frontend.md",
+  "workspaceFingerprint": "5bf8bec18bef43f226e1399ab67b0c3526564d06fccc2915fd295c61e0a79f7b",
+  "baselineCommit": "798116d378d7c4c02702d3bbc068ea1dd5ee2f6d",
+  "sessionID": "ses_e5233726effefJC6TB3FZe77P4",
+  "request": "En producto/index.html, cambia únicamente el texto visible del enlace CTA de ‘Learn more’ a ‘Ver servicios’. Conserva href, clases, estructura y cualquier otro contenido. Es un cambio localizado; verifica el resultado afectado y detente.",
+  "followUps": [],
+  "result": "PASS",
+  "criteria": [
+    {"id":"A1","result":"PASS","evidence":"Maquetador modificó únicamente el texto del CTA; href=/services.html, class=cta, estructura y resto del contenido permanecieron intactos."},
+    {"id":"A2","result":"PASS","evidence":"Diff scratch de un solo archivo y una sola línea."},
+    {"id":"A3","result":"PASS","evidence":"Jefe hizo un solo task a Maquetador como owner. La tarea fue read/edit/readback; no hubo Bash, documentación, planning, checkpoint ni handoff adicional."}
+  ],
+  "evidence": [
+    {"type":"initial-state-probe","command":"node .cn-pilot/qa/checkpoint-probe.mjs","output":"{\"exists\":false,\"status\":\"none\",\"blocked\":false,\"valid\":null,\"requiresReview\":false}","exitCode":0},
+    {"type":"kilo-task","parentSession":"ses_e5233726effefJC6TB3FZe77P4","ownerSession":"ses_e52333abaffeBrHUpw4FA6xDfH","owner":"maquetador-frontend","model":"openai/gpt-6-luna","tools":"read -> apply_patch -> read; no Bash/permission requests"},
+    {"type":"actual-diff","path":"producto/index.html","sha256":"001148FDEBA7440E0BBF07BA7ECC4E29D67FAE6E92FC6D92A6A7A7288256411D","excerpt":"- <a class=\"cta\" href=\"/services.html\">Learn more</a>\n+ <a class=\"cta\" href=\"/services.html\">Ver servicios</a>"},
+    {"type":"git-after","branch":"main","status":"M producto/index.html","remote":null}
+  ],
+  "defects": [],
+  "humanInterventions": [],
+  "durationMs": 28876,
+  "tokenUsage": {"input":null,"output":null,"total":null,"source":"Kilo emitted per-step/cache counts, no verified total."},
+  "limitations": ["This successful run used the interim read-only Node checkpoint probe, later replaced by non-executable built-in path probes; the delivered Test-Path/Get-Item configuration is measured separately. Primary model not observable. Kilo telemetry bridge logged a TypeError but task result/session completed."]
+}

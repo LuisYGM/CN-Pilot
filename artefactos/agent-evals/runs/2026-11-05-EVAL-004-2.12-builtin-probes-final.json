@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "runId": "2026-11-05-EVAL-004-core-2.12-exact-stat-completion",
+  "evalId": "EVAL-004",
+  "startedAt": "2026-11-05T23:17:58.814Z",
+  "finishedAt": "2026-11-05T23:18:15.135Z",
+  "durationSource": "Kilo event start/final timestamps; 16,321 ms.",
+  "sourceCommit": "1f0e8b96c03c57d900af63993e740dd4d1fbc476",
+  "coreVersion": "2.12.0",
+  "kiloVersion": "7.8.8",
+  "model": null,
+  "configurationFingerprint": "9cf69460b2e5207fc23deee2e6889ba3dbac1eae58575e031bf298e66eccea96",
+  "configurationScope": "Candidate project scaffold; tracked prompt/config status captured; user-global model/provider config not hashed.",
+  "scenarioFingerprint": "f6db108a4de410dbbf6a6eb20f61c9a363fdc92932f5d3c29e7dbefb9e31baeb",
+  "sourceConfigState": "M  .cn-pilot-version\nM  .cn-pilot/NUCLEO.md\nMM .kilo/agents/jefe-proyecto.md\nM  .kilo/agents/maquetador-frontend.md",
+  "workspaceFingerprint": "f90946e2385120cd6d55ce2816b450b44ed0290ee8d0625b8402a008fd3d4b7f",
+  "baselineCommit": "65a75ef97e460140211d6bca19a362e1f8da4b53",
+  "sessionID": "ses_e51fedc5fffekZYs0V5RANgjuR",
+  "request": "Continúa la tarea interrumpida usando el checkpoint. Conserva todos los cambios locales. Reconcilia Git/diff, aceptación y PASS que indica el checkpoint; completa solo el siguiente paso pendiente y elimina el checkpoint si todos los gates están satisfechos. No hagas commit.",
+  "followUps": [],
+  "result": "PASS",
+  "criteria": [
+    {"id":"A1","result":"PASS","evidence":"Test-Path confirmó el checkpoint ignorado; atributos dieron Archive (archivo regular). SHA256 de format-price.mjs y cart-view.mjs coinciden con las versiones preservadas."},
+    {"id":"A2","result":"PASS","evidence":"Jefe leyó el checkpoint, ejecutó git status y git diff por separado y recuperó únicamente el siguiente paso de cierre."},
+    {"id":"A3","result":"PASS","evidence":"Leyó eval-setup.json, reutilizó el PASS 1/1 del test focal y no ejecutó tests en la sesión Kilo."},
+    {"id":"A4","result":"PASS","evidence":"Eliminó únicamente active-task.json con apply_patch Delete File después de todos los gates; no commit ni cambios adicionales."}
+  ],
+  "evidence": [
+    {"type":"initial-stat","command":"Test-Path -LiteralPath '.cn-pilot/runtime/active-task.json'","output":"True","permission":"Exact read-only allow; no prompt."},
+    {"type":"file-attributes","command":"Get-Item -LiteralPath '.cn-pilot/runtime/active-task.json' -Force | Select-Object -ExpandProperty Attributes","output":"Archive","permission":"Kilo matched the exact Select-Object segment allow; no composite/wildcard Bash grant was used and no content was emitted."},
+    {"type":"git-before-after","branch":"main","baselineCommit":"65a75ef97e460140211d6bca19a362e1f8da4b53","status":"M producto/cart-view.mjs; M producto/format-price.mjs","diffStable":true,"remote":null},
+    {"type":"test-evidence","command":"node --test tests/format-price.test.mjs","exitCode":0,"pass":1,"fail":0,"ranBy":"prepare.mjs before agent session; Kilo agent read evidence instead of re-running."},
+    {"type":"checkpoint-cleanup","tool":"apply_patch Delete File .cn-pilot/runtime/active-task.json","result":"success","finalExists":false},
+    {"type":"repeated-scratch-check","sessionID":"ses_e51f8f9d0ffe7vAaXtwHFdNKly","result":"PASS","note":"Second scratch with the same candidate and request was executed after the first PASS; no changed hypothesis or config, so not counted as an independent behavioral replicate. Kilo again resolved the metadata pipeline through the exact Select-Object rule."}
+  ],
+  "defects": [],
+  "humanInterventions": [],
+  "durationMs": 16321,
+  "tokenUsage": {"input":null,"output":null,"total":null,"source":"Kilo event counters were per step/cache; no verified session aggregate."},
+  "limitations": ["Kilo 7.8.8 headless execution succeeded without interaction; behavior of interactive IDE approval UI was not separately simulated. The follow-up scratch was a redundant confirmation, not a new signal or statistical sample. The source later dropped an unused composite pipeline allowance; the exact segment permission evidenced here remains, so the PASS is valid." ]
+}

@@ -12,6 +12,7 @@
   "configurationFingerprint": "57f2b765e3e89cb4e327fcbaecea5440e72d87467815038f0fccb5538f69f6b2",
   "configurationScope": "Project Kilo scaffold only; user-global provider/model configuration not copied or fingerprinted.",
   "scenarioFingerprint": "f6db108a4de410dbbf6a6eb20f61c9a363fdc92932f5d3c29e7dbefb9e31baeb",
+  "sourceConfigState": "clean",
   "workspaceFingerprint": "2d2a1fe0750e5fd78b17ebf950f0fa5973706ec374b1b78b03d9ac6086c56667",
   "sessionID": "ses_e529dccaeffeDVJ1c7qiSyoPHm",
   "request": "Continúa la tarea interrumpida usando el checkpoint. Conserva todos los cambios locales. Reconcilia Git/diff, aceptación y PASS que indica el checkpoint; completa solo el siguiente paso pendiente y elimina el checkpoint si todos los gates están satisfechos. No hagas commit.",

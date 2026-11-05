@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "runId": "2026-11-05-EVAL-004-probe-dependency-scratch-miss",
+  "evalId": "EVAL-004",
+  "startedAt": null,
+  "finishedAt": null,
+  "durationSource": "Event interval not reliably captured in the persisted output; durationMs remains null.",
+  "sourceCommit": "1f0e8b96c03c57d900af63993e740dd4d1fbc476",
+  "coreVersion": "2.12.0",
+  "kiloVersion": "7.8.8",
+  "model": null,
+  "configurationFingerprint": "f517c5282c72e8d7112ac908c2dd37549b1655310db198505527e3e7be5e6eb2",
+  "configurationScope": "Candidate scaffold before adding updater.mjs to its allowlisted copied source; user-global config not hashed.",
+  "scenarioFingerprint": "f6db108a4de410dbbf6a6eb20f61c9a363fdc92932f5d3c29e7dbefb9e31baeb",
+  "sourceConfigState": "M  .cn-pilot-version\nM  .cn-pilot/NUCLEO.md\nA  .cn-pilot/qa/checkpoint-probe.mjs\nM  .kilo/agents/jefe-proyecto.md\nM  .kilo/agents/maquetador-frontend.md",
+  "workspaceFingerprint": "2864dd397f118799822f7206e1d3a70bcb3a5312015af3cc787ebc0284c5d682",
+  "baselineCommit": "91b9ee9852da65bdcc5854277bef17d0e3384211",
+  "sessionID": "ses_e523e346fffe5zMZOi6UAn5601",
+  "request": "Continúa la tarea interrumpida usando el checkpoint. Conserva todos los cambios locales. Reconcilia Git/diff, aceptación y PASS que indica el checkpoint; completa solo el siguiente paso pendiente y elimina el checkpoint si todos los gates están satisfechos. No hagas commit.",
+  "followUps": [],
+  "result": "INCONCLUSIVE",
+  "criteria": [
+    {"id":"A1","result":"PASS","evidence":"Jefe encontró/leyó checkpoint por ruta exacta y mantuvo ambos edits."},
+    {"id":"A2","result":"PASS","evidence":"Git status/diff del scratch se obtuvo antes del bloqueo."},
+    {"id":"A3","result":"INCONCLUSIVE","evidence":"Jefe pidió rerun de node --test pese a checkpoint PASS, pero headless auto-rechazó la herramienta; no se ejecutó un segundo test."},
+    {"id":"A4","result":"INCONCLUSIVE","evidence":"El proceso se bloqueó antes de limpiar el checkpoint."}
+  ],
+  "evidence": [
+    {"type":"setup-test","command":"node --test tests/format-price.test.mjs","exitCode":0,"pass":1,"fail":0,"outputRecorded":true,"testEvidencePath":".cn-pilot/runtime/eval-setup.json"},
+    {"type":"kilo-event","sessionID":"ses_e523e346fffe5zMZOi6UAn5601","excerpt":"The copied checkpoint-probe.mjs could not resolve .cn-pilot/update/updater.mjs; Kilo then performed glob/read/Git checks and its additional node --test request was auto-rejected."},
+    {"type":"workspace-after","branch":"main","modifiedPaths":["producto/cart-view.mjs","producto/format-price.mjs"],"checkpointExists":true,"remote":null}
+  ],
+  "defects": ["The scratch scaffold initially copied checkpoint-probe.mjs without its updater.mjs dependency; the fixture copier was corrected to allowlist and copy updater.mjs. The agent also did not consume the saved test output before asking to rerun the test; the following successful run used that evidence."],
+  "humanInterventions": [],
+  "durationMs": null,
+  "tokenUsage": {"input":null,"output":null,"total":null,"source":"No reliable session aggregate captured."},
+  "limitations": ["INCONCLUSIVE includes both the scratch dependency defect and Kilo CLI auto-rejection; the workspace was preserved and a fresh run passed after setup was corrected."]
+}

@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "runId": "2026-11-05-EVAL-004-core-2.12-diff-permission-block",
+  "evalId": "EVAL-004",
+  "startedAt": "2026-11-05T21:44:04.370Z",
+  "finishedAt": "2026-11-05T21:44:10.676Z",
+  "durationSource": "Kilo event timestamps; 6,306 ms.",
+  "sourceCommit": "1f0e8b96c03c57d900af63993e740dd4d1fbc476",
+  "coreVersion": "2.12.0",
+  "kiloVersion": "7.8.8",
+  "model": null,
+  "configurationFingerprint": "fed901ebd1f53f4c752ac91ffecbaeae4066551e75a6d61eaeede115ca2a8f85",
+  "configurationScope": "Candidate project scaffold; user-global provider/model config not hashed.",
+  "scenarioFingerprint": "f6db108a4de410dbbf6a6eb20f61c9a363fdc92932f5d3c29e7dbefb9e31baeb",
+  "sourceConfigState": "M  .cn-pilot-version\nM  .cn-pilot/NUCLEO.md\nMM .kilo/agents/jefe-proyecto.md",
+  "workspaceFingerprint": "ec381e12ac8c07f1cb5042f9d257636a2f81a32caa4611850286cdd7a5220289",
+  "baselineCommit": "6bec805a2be670eeceaf1b8e0fbd516b5a98c048",
+  "sessionID": "ses_e5254d846ffejNhueWSbyHO9Xk",
+  "request": "Continúa la tarea interrumpida usando el checkpoint. Conserva todos los cambios locales. Reconcilia Git/diff, aceptación y PASS que indica el checkpoint; completa solo el siguiente paso pendiente y elimina el checkpoint si todos los gates están satisfechos. No hagas commit.",
+  "followUps": [],
+  "result": "INCONCLUSIVE",
+  "criteria": [
+    {"id":"A1","result":"PASS","evidence":"El agente leyó la ruta canónica exacta y consumió el checkpoint; cambios siguen presentes."},
+    {"id":"A2","result":"INCONCLUSIVE","evidence":"La recuperación no pudo reconciliar status/diff porque solicitó `git status --short`, que quedó fuera del patrón Bash permitido y se auto-rechazó."},
+    {"id":"A3","result":"PASS","evidence":"No volvió a ejecutar el test focal PASS."},
+    {"id":"A4","result":"INCONCLUSIVE","evidence":"No eliminó el checkpoint tras no poder completar la verificación de Git."}
+  ],
+  "evidence": [
+    {"type":"kilo-events","sessionID":"ses_e5254d846ffejNhueWSbyHO9Xk","sequence":"glob miss -> exact read checkpoint -> bash git status --short auto-rejected"},
+    {"type":"fixture-state-after","branch":"main","status":"M producto/cart-view.mjs; M producto/format-price.mjs","checkpointExists":true,"remote":null},
+    {"type":"setup-test","command":"node --test tests/format-price.test.mjs","exitCode":0,"pass":1,"fail":0,"reused":true}
+  ],
+  "defects": ["El Jefe añadió flags al comando Git read-only y activó un ask innecesario en CLI headless aunque `git status` estaba permitido."],
+  "humanInterventions": [],
+  "durationMs": 6306,
+  "tokenUsage": {"input":null,"output":null,"total":null,"source":"Sin agregado verificable."},
+  "limitations": ["La ejecución quedó INCONCLUSIVE por la superficie headless; el checkpoint y los edits se conservaron, no se usó --auto." ]
+}

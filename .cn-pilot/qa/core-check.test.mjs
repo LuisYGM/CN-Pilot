@@ -6,7 +6,7 @@ import path from "node:path";
 import { test } from "node:test";
 import { fileURLToPath } from "node:url";
 import { runCli, runCoreChecks } from "./core-check.mjs";
-import { validateWorkspaceTarget } from "../agent-evals/prepare.mjs";
+import { validateCoreSourceState, validateWorkspaceTarget } from "../agent-evals/prepare.mjs";
 
 function readCoreFile(relativePath) {
   return fs.readFileSync(new URL(`../../${relativePath}`, import.meta.url), "utf8");
@@ -327,7 +327,7 @@ test("Guided Project Journey contains the required behavioral scenarios A-K", ()
     ["H SaaS no recibe SEO de marketing por defecto", command, "no un sitemap de marketing o SEO por defecto"],
     ["I recovery desde checkpoint", command, "Si hay un checkpoint activo, aplica recovery primero"],
     ["J Pending no material", command, "«Pending» si el dato no bloquea el próximo trabajo útil"],
-    ["K checkpoint + tarea distinta", lead, "para un encargo nuevo distinto pregunta brevemente si se continúa o se deja en pausa"],
+    ["K checkpoint + tarea distinta", lead, "Para un encargo nuevo distinto, pregunta brevemente si se continúa o se deja en pausa"],
     ["Next best step tras milestone", command, "dónde está el proyecto y cuál es el siguiente mejor paso"],
   ];
   for (const [scenario, source, required] of scenarios) assert.ok(source.includes(required), `${scenario}: guidance is present`);
@@ -946,6 +946,11 @@ test("installed Kilo resolves representative profiles across the seven static se
   const jefe = profiles["jefe-proyecto"];
   assert.equal(resolveKiloPermission(jefe, "edit", "PROYECTO.md"), "allow");
   assert.equal(resolveKiloPermission(jefe, "edit", ".cn-pilot/NUCLEO.md"), "allow");
+  assert.equal(resolveKiloPermission(jefe, "edit", ".cn-pilot/runtime/active-task.json"), "allow");
+  assert.equal(resolveKiloPermission(jefe, "bash", "Test-Path -LiteralPath '.cn-pilot/runtime/active-task.json'"), "allow");
+  assert.equal(resolveKiloPermission(jefe, "bash", "Get-Item -LiteralPath '.cn-pilot/runtime/active-task.json' -Force"), "allow");
+  assert.equal(resolveKiloPermission(jefe, "bash", "Select-Object -ExpandProperty Attributes"), "allow");
+  assert.equal(resolveKiloPermission(jefe, "bash", "Get-ChildItem"), "ask");
   assert.equal(resolveKiloPermission(jefe, "edit", "kilo.jsonc"), "ask");
   assert.equal(resolveKiloPermission(jefe, "lsp", "workspace/file.php"), "allow");
   assert.equal(resolveKiloPermission(jefe, "mcp_unreviewed_write", "remote/resource"), "deny");
@@ -1129,6 +1134,47 @@ test("Agent Eval workspace preflight only accepts new paths under OS temp and ne
   }
 });
 
+test("Agent Eval candidate preparation fingerprints only tracked Core prompt modifications", () => {
+  assert.equal(validateCoreSourceState("", false), "clean");
+  const candidate = "M  AGENTS.md\nMM .kilo/agents/jefe-proyecto.md";
+  assert.equal(validateCoreSourceState(candidate, true), candidate);
+  assert.throws(() => validateCoreSourceState(candidate, false), /pass --allow-dirty-core/);
+  assert.throws(() => validateCoreSourceState("D  .kilo/agents/jefe-proyecto.md", true), /unsupported source state/);
+  assert.throws(() => validateCoreSourceState("?? .kilo/agents/new-agent.md", true), /unsupported source state/);
+});
+
+test("DIRECT frontend retains its owner and ignored checkpoints are not reported absent", () => {
+  const lead = readCoreFile(".kilo/agents/jefe-proyecto.md");
+  const frontend = readCoreFile(".kilo/agents/maquetador-frontend.md");
+  const core = readCoreFile(".cn-pilot/NUCLEO.md");
+  const bashPermissions = lead.slice(lead.indexOf("  bash:"), lead.indexOf("\n---"));
+  const editPermissions = lead.slice(lead.indexOf("  edit:"), lead.indexOf("  bash:"));
+  assert.match(lead, /nunca uses el fast path DIRECT para saltarte al owner[\s\S]*?delega un único handoff breve a Maquetador antes de editar[\s\S]*?no intentes `edit`\/`apply_patch` Product tú/i);
+  assert.match(lead, /Cambiar HTML\/markup, CSS, JS o Product visual se delega a `maquetador-frontend` incluso en un DIRECT de una línea[\s\S]*?ni permite a Jefe escribir Product/i);
+  assert.match(frontend, /Para un DIRECT localizado de un solo archivo, relee el target exacto[\s\S]*?no invoques Bash `git diff -- <path>`/i);
+  assert.match(core, /Clasificar DIRECT no cambia el ownership de la superficie/i);
+  assert.match(lead, /Test-Path -LiteralPath '\.cn-pilot\/runtime\/active-task\.json'/i);
+  assert.match(lead, /Get-Item -LiteralPath '\.cn-pilot\/runtime\/active-task\.json' -Force \| Select-Object -ExpandProperty Attributes/i);
+  assert.match(core, /PowerShell `Test-Path -LiteralPath '\.cn-pilot\/runtime\/active-task\.json'`/i);
+  assert.match(lead, /Verifica Git con `git status` y luego `git diff`, por separado y sin flags, ambos allowlisted/i);
+  assert.match(core, /no encontrar `.cn-pilot\/runtime\/active-task.json` no confirma su ausencia/i);
+  assert.match(bashPermissions, /"Test-Path -LiteralPath '\.cn-pilot\/runtime\/active-task\.json'": allow/);
+  assert.match(bashPermissions, /"Get-Item -LiteralPath '\.cn-pilot\/runtime\/active-task\.json' -Force": allow/);
+  assert.match(bashPermissions, /"Select-Object -ExpandProperty Attributes": allow/);
+  assert.match(bashPermissions, /"test -e \.cn-pilot\/runtime\/active-task\.json": allow/);
+  assert.match(bashPermissions, /"test -L \.cn-pilot\/runtime\/active-task\.json": allow/);
+  assert.match(bashPermissions, /"test -f \.cn-pilot\/runtime\/active-task\.json": allow/);
+  assert.match(bashPermissions, /"\*": ask/);
+  assert.match(editPermissions, /"\*": ask/);
+  assert.doesNotMatch(editPermissions, /"producto\/\*\*"\s*:\s*allow/i);
+  assert.match(editPermissions, /"\.cn-pilot\/\*\*": allow/);
+  assert.match(lead, /Cuando el checkpoint cite un PASS[\s\S]*?no repitas tests solo por precaución/i);
+  assert.match(lead, /elimina solo `.cn-pilot\/runtime\/active-task\.json` con `apply_patch` \(`Delete File`\)/i);
+  assert.match(core, /Un PASS checkpoint se reutiliza cuando registra comando\/scope vigente[\s\S]*?No repitas tests al cerrar únicamente por precaución/i);
+  const checkpoint = JSON.parse(readCoreFile(".cn-pilot/agent-evals/fixtures/EVAL-004/working/active-task.json.fixture"));
+  assert.equal(checkpoint.gates.find(({ name }) => name === "targeted test").evidencePath, ".cn-pilot/runtime/eval-setup.json");
+});
+
 test("Agent Eval run records preserve structured outcomes without inventing measurements", () => {
   const runs = fileURLToPath(new URL("../../artefactos/agent-evals/runs/", import.meta.url));
   if (!fs.existsSync(runs)) return;
@@ -1136,7 +1182,7 @@ test("Agent Eval run records preserve structured outcomes without inventing meas
   for (const filename of files) {
     const record = JSON.parse(fs.readFileSync(path.join(runs, filename), "utf8"));
     assert.equal(record.schemaVersion, 1, filename);
-    for (const field of ["runId", "evalId", "startedAt", "finishedAt", "durationSource", "sourceCommit", "coreVersion", "kiloVersion", "configurationFingerprint", "configurationScope", "scenarioFingerprint", "workspaceFingerprint", "request", "followUps", "criteria", "evidence", "defects", "humanInterventions", "durationMs", "tokenUsage", "limitations"])
+    for (const field of ["runId", "evalId", "startedAt", "finishedAt", "durationSource", "sourceCommit", "coreVersion", "kiloVersion", "configurationFingerprint", "configurationScope", "scenarioFingerprint", "sourceConfigState", "workspaceFingerprint", "request", "followUps", "criteria", "evidence", "defects", "humanInterventions", "durationMs", "tokenUsage", "limitations"])
       assert.ok(Object.hasOwn(record, field), `${filename} includes ${field}`);
     assert.ok(["PASS", "FAIL", "INCONCLUSIVE"].includes(record.result), `${filename} result is explicit`);
     assert.ok(record.criteria.every(({ result }) => ["PASS", "FAIL", "INCONCLUSIVE"].includes(result)), `${filename} criteria carry explicit outcomes`);
