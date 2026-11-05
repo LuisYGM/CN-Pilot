@@ -2,25 +2,58 @@
 description: Revisa de forma independiente el diff y los criterios afectados, con evidencia y regresiones plausibles, sin implementar ni expandir la revisión a QA especializado por asociación.
 mode: subagent
 permission:
+  "*": deny
   read:
     "*": allow
     ".env": deny
     ".env.*": deny
     "**/.env": deny
     "**/.env.*": deny
+    "**/.netrc": deny
+    "**/.aws/credentials": deny
+    "**/.docker/config.json": deny
+    "**/credentials.json": deny
+    "**/service-account.json": deny
+    "**/id_rsa": deny
+    "**/id_ed25519": deny
+    "**/id_ecdsa": deny
+    "**/id_dsa": deny
+    "**/*.p12": deny
+    "**/*.pfx": deny
+    "**/*.jks": deny
+    ".kilocode/mcp.json": deny
+    "**/.kilocode/mcp.json": deny
+    ".kilo/mcp.json": deny
+    "**/.kilo/mcp.json": deny
+    "kilo.json": deny
+    "kilo.jsonc": deny
+    "**/kilo.json": deny
+    "**/kilo.jsonc": deny
+    ".kilo/kilo.json": deny
+    ".kilo/kilo.jsonc": deny
+    ".kilocode/kilo.json": deny
+    ".kilocode/kilo.jsonc": deny
+    ".npmrc": deny
+    "**/.npmrc": deny
+    ".pypirc": deny
+    "**/.pypirc": deny
+    "**/*.pem": deny
+    "**/*.key": deny
+    "**/.kube/config": deny
+    "**/kubeconfig": deny
     ".env.example": allow
     "**/.env.example": allow
     "secrets/**": deny
-    ".kilocode/mcp.json": deny
-    "**/.kilocode/mcp.json": deny
+    "**/secrets/**": deny
   glob: allow
-  grep: allow
+  grep: deny
   skill: deny
   websearch: deny
   webfetch: deny
   task: deny
   agent_manager: deny
   background_process: deny
+  external_directory: deny
   apply_patch: deny
   write: deny
   edit: deny
@@ -94,7 +127,7 @@ Devuelve un único informe final conciso, priorizado y accionable. Para cada hal
 
 Actívalo solo por solicitud explícita de Jefe de proyecto en un task nuevo/contexto fresco para un finding concreto potencialmente bloqueante; no reutilices la sesión que lo produjo. Jefe de proyecto adjunta finding, severidad, archivo/área, escenario e impacto alegados, fragmento pertinente del diff, acceptance criteria, verificaciones vigentes y evidencia focal adicional. El handoff es neutral y no te dirige a confirmarlo.
 
-Parte de la hipótesis de que el finding puede ser falso e intenta refutarlo con la evidencia suministrada. Usa `read`/`glob`/`grep` únicamente si una hipótesis concreta lo exige. No uses Bash/web/skills, no re-revises el cambio completo, no busques otros findings, no amplíes scope y no implementes. No hay `BLOCKED` en este modo: si la evidencia no permite confirmar ni refutar, informa `UNPROVEN`.
+Parte de la hipótesis de que el finding puede ser falso e intenta refutarlo con la evidencia suministrada. Usa `read`/`glob` sobre paths adjuntos/concretos; `grep` no está permitido porque su autorización Kilo se hace sobre el patrón de búsqueda, no el path, y puede eludir la ACL de lectura. No uses Bash/web/skills, no re-revises el cambio completo, no busques otros findings, no amplíes scope y no implementes. No hay `BLOCKED` en este modo: si la evidencia no permite confirmar ni refutar, informa `UNPROVEN`.
 
 Devuelve **solo uno** de estos resultados y detente:
 

@@ -1,9 +1,48 @@
 import assert from "node:assert/strict";
+import { spawnSync } from "node:child_process";
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 import { test } from "node:test";
 import { runCli, runCoreChecks } from "./core-check.mjs";
+
+function readCoreFile(relativePath) {
+  return fs.readFileSync(new URL(`../../${relativePath}`, import.meta.url), "utf8");
+}
+
+function runKiloForPermissionTest(args) {
+  if (process.platform === "win32") {
+    const command = args.map((value) => `'${String(value).replace(/'/g, "''")}'`).join(" ");
+    return spawnSync("powershell.exe", ["-NoLogo", "-NoProfile", "-NonInteractive", "-Command", `kilo ${command}`], {
+      encoding: "utf8", windowsHide: true, timeout: 30_000, maxBuffer: 4 * 1024 * 1024,
+    });
+  }
+  return spawnSync("kilo", args, { encoding: "utf8", timeout: 30_000, maxBuffer: 4 * 1024 * 1024 });
+}
+
+function parseKiloDebugAgent(agentName) {
+  const result = runKiloForPermissionTest(["debug", "agent", agentName]);
+  assert.equal(result.error, undefined, `Kilo debug agent ${agentName} must start`);
+  assert.equal(result.status, 0, `Kilo debug agent ${agentName} must succeed`);
+  const start = result.stdout.indexOf("{"); const end = result.stdout.lastIndexOf("}");
+  assert.ok(start >= 0 && end > start, `Kilo debug agent ${agentName} returns JSON`);
+  return JSON.parse(result.stdout.slice(start, end + 1));
+}
+
+function kiloPatternMatches(pattern, target) {
+  const normalized = String(pattern).replace(/\\/g, "/");
+  const escaped = normalized.split("*").map((part) => part.replace(/[.+?^${}()|[\]\\]/g, "\\$&")).join(".*");
+  return new RegExp(`^${escaped}$`, process.platform === "win32" ? "i" : "").test(String(target).replace(/\\/g, "/"));
+}
+
+function resolveKiloPermission(agent, permission, target) {
+  let action = null;
+  for (const rule of agent.permission ?? []) {
+    if (rule.permission !== "*" && rule.permission !== permission) continue;
+    if (kiloPatternMatches(rule.pattern ?? "*", target)) action = rule.action;
+  }
+  return action;
+}
 
 function createFixture(t) {
   const root = fs.mkdtempSync(path.join(os.tmpdir(), "cn-pilot-core-qa-"));
@@ -14,74 +53,6 @@ function createFixture(t) {
     fs.writeFileSync(target, content, "utf8");
     return target;
   };
-
-  const devLead = [
-    "---",
-    "description: Coordinador de fixture",
-    "mode: primary",
-    "permission:",
-    "  read:",
-    '    "*": allow',
-    '    ".env": deny',
-    '    ".env.*": deny',
-    '    "**/.env": deny',
-    '    "**/.env.*": deny',
-    '    "secrets/**": deny',
-    '    ".kilocode/mcp.json": deny',
-    '    "**/.kilocode/mcp.json": deny',
-    "  task:",
-    '    "*": deny',
-    '    "revisor": allow',
-    "  edit:",
-    '    "*": ask',
-    '    ".env": deny',
-    '    ".env.*": deny',
-    '    "**/.env": deny',
-    '    "**/.env.*": deny',
-    '    "secrets/**": deny',
-    '    ".kilocode/mcp.json": deny',
-    '    "**/.kilocode/mcp.json": deny',
-    '    ".env.example": allow',
-    "  bash:",
-    '    "*": ask',
-    '    "git push*": ask',
-    '    "git push --force*": deny',
-    '    "git push -f*": deny',
-    '    "git reset --hard*": deny',
-    '    "git clean*": deny',
-    "---",
-    "# Jefe de proyecto",
-  ].join("\n") + "\n";
-
-  const reviewer = [
-    "---",
-    "description: Revisión de fixture",
-    "mode: subagent",
-    "permission:",
-    "  read:",
-    '    "*": allow',
-    '    ".env": deny',
-    '    ".env.*": deny',
-    '    "**/.env": deny',
-    '    "**/.env.*": deny',
-    '    "secrets/**": deny',
-    '    ".kilocode/mcp.json": deny',
-    '    "**/.kilocode/mcp.json": deny',
-    "  glob: allow",
-    "  grep: allow",
-    "  bash: deny",
-    "  websearch: deny",
-    "  webfetch: deny",
-    "  skill: deny",
-    "  task: deny",
-    "  agent_manager: deny",
-    "  background_process: deny",
-    "  write: deny",
-    "  edit: deny",
-    "  apply_patch: deny",
-    "---",
-    "# Revisor",
-  ].join("\n") + "\n";
 
   const manifest = [
     "- 7 agentes en `.kilo/agents/`",
@@ -123,19 +94,12 @@ function createFixture(t) {
     migrations: [],
   })}\n`);
   put("recursos/README.md", "# Input scaffold\n");
-  put("kilo.jsonc", "{}\n");
+  put("kilo.jsonc", readCoreFile("kilo.jsonc"));
   put(".gitignore", "/.cn-pilot/runtime/\n");
-  put(".kilo/agents/jefe-proyecto.md", devLead);
-  put(".kilo/agents/revisor.md", reviewer);
-  const fixtureHeadings = {
-    arquitecto: "Arquitecto",
-    "contenido-seo": "Contenido / SEO",
-    "disenador-ui-ux": "Diseñador UI/UX",
-    desarrollador: "Desarrollador",
-    "maquetador-frontend": "Maquetador frontend",
-  };
-  for (const [agent, heading] of Object.entries(fixtureHeadings)) {
-    put(`.kilo/agents/${agent}.md`, `---\ndescription: Agente de fixture\nmode: subagent\n---\n# ${heading}\n`);
+  put(".kilo/agents/jefe-proyecto.md", readCoreFile(".kilo/agents/jefe-proyecto.md"));
+  put(".kilo/agents/revisor.md", readCoreFile(".kilo/agents/revisor.md"));
+  for (const agent of ["arquitecto", "contenido-seo", "disenador-ui-ux", "desarrollador", "maquetador-frontend"]) {
+    put(`.kilo/agents/${agent}.md`, readCoreFile(`.kilo/agents/${agent}.md`));
   }
   put(".kilo/skills/sample/SKILL.md", "---\nname: sample\ndescription: Skill de fixture\n---\n# Sample\n");
   put(".kilo/skills/technical-seo/SKILL.md", "---\nname: technical-seo\ndescription: Skill SEO de fixture\n---\n# SEO\n");
@@ -797,6 +761,145 @@ test("Reviewer background-process capability remains denied", (t) => {
   fixture.put(file, source.replace("background_process: deny", "background_process: allow"));
   const report = runCoreChecks({ rootDir: fixture.root });
   assert.equal(getCheck(report, "permissions.reviewer").status, "FAIL");
+});
+
+test("security profiles deny sensitive routes, protect root config, and preserve normal Product writing", (t) => {
+  const fixture = createFixture(t);
+  const report = runCoreChecks({ rootDir: fixture.root });
+  assert.equal(getCheck(report, "security.agentPermissions").status, "PASS");
+  assert.equal(getCheck(report, "security.agentPermissions").details.agentsChecked, 7);
+  assert.equal(getCheck(report, "security.kiloPermissionDefaults").details.checked, false, "derived fixture does not enforce Core-owned Kilo config");
+  const developer = fs.readFileSync(path.join(fixture.root, ".kilo/agents/desarrollador.md"), "utf8");
+  assert.match(developer, /edit:\n\s+"\*": allow/);
+  assert.match(developer, /"kilo.jsonc": deny/);
+  assert.match(developer, /"\.env.example": allow/);
+
+  fixture.put(".kilo/agents/desarrollador.md", developer.replace('"**/.aws/credentials": deny', '"**/.aws/credentials": ask'));
+  assert.equal(getCheck(runCoreChecks({ rootDir: fixture.root }), "security.agentPermissions").status, "FAIL", "a secret-file read exception is caught");
+});
+
+test("safe .env.example exceptions cannot override a later secrets-directory denial", (t) => {
+  const fixture = createFixture(t);
+  const file = ".kilo/agents/desarrollador.md";
+  const source = fs.readFileSync(path.join(fixture.root, file), "utf8");
+  const reordered = source.replace('"**/.env.example": allow\n    "secrets/**": deny', '"secrets/**": deny\n    "**/.env.example": allow');
+  assert.notEqual(reordered, source, "fixture changed the ordered exception");
+  fixture.put(file, reordered);
+  const report = runCoreChecks({ rootDir: fixture.root });
+  assert.equal(getCheck(report, "security.agentPermissions").status, "FAIL");
+  assert.ok(getCheck(report, "security.agentPermissions").details.problems.some((problem) => problem.code === "SECRET_DIRECTORY_PRECEDENCE_INVALID"));
+});
+
+test("Revisor unknown tools and search bypasses remain denied", (t) => {
+  const fixture = createFixture(t);
+  const file = ".kilo/agents/revisor.md";
+  const source = fs.readFileSync(path.join(fixture.root, file), "utf8");
+  fixture.put(file, source.replace('  "*": deny', '  "*": ask').replace("  grep: deny", "  grep: allow"));
+  const report = runCoreChecks({ rootDir: fixture.root });
+  assert.equal(getCheck(report, "permissions.reviewer").status, "FAIL");
+  assert.equal(getCheck(report, "security.agentPermissions").status, "FAIL");
+});
+
+test("MCP tools require an explicit reviewed capability instead of inheriting permission for unrelated tools", (t) => {
+  const fixture = createFixture(t);
+  const file = ".kilo/agents/desarrollador.md";
+  const source = fs.readFileSync(path.join(fixture.root, file), "utf8");
+  fixture.put(file, source.replace("  grep: allow", "  mcp_server_write: allow\n  grep: allow"));
+  const report = runCoreChecks({ rootDir: fixture.root });
+  assert.equal(getCheck(report, "security.agentPermissions").status, "FAIL");
+  assert.ok(getCheck(report, "security.agentPermissions").details.problems.some((problem) => problem.code === "UNREVIEWED_TOOL_PERMISSION"));
+});
+
+test("an agent cannot add an unreviewed MCP/tool permission", (t) => {
+  const fixture = createFixture(t);
+  const file = ".kilo/agents/desarrollador.md";
+  const source = fs.readFileSync(path.join(fixture.root, file), "utf8");
+  fixture.put(file, source.replace("  grep: allow", "  github_create_pull_request: allow\n  grep: allow"));
+  const report = runCoreChecks({ rootDir: fixture.root });
+  assert.equal(getCheck(report, "security.agentPermissions").status, "FAIL");
+  assert.ok(getCheck(report, "security.agentPermissions").details.problems.some((problem) => problem.code === "UNREVIEWED_TOOL_PERMISSION"));
+});
+
+test("Kilo root config fails closed on unknown tools only in the canonical Core repository", (t) => {
+  const canonical = createFixture(t);
+  canonical.put(".git/config", '[remote "origin"]\n\turl = https://github.com/LuisYGM/CN-Pilot.git\n');
+  canonical.put("README.md", "# CN Pilot\n\n[Repositorio](https://github.com/LuisYGM/cn-pilot)\n");
+  canonical.put("PROYECTO.md", "# Proyecto\n- **Nombre:** Pending\n- **Repositorio o carpeta:** Pending\n- **Versión de CN Pilot Core:** 2.8.0\n");
+  let check = getCheck(runCoreChecks({ rootDir: canonical.root }), "security.kiloPermissionDefaults");
+  assert.equal(check.status, "PASS");
+  assert.equal(check.details.checked, true);
+
+  const safeConfig = fs.readFileSync(path.join(canonical.root, "kilo.jsonc"), "utf8");
+  const unsafe = safeConfig.replace('"*": "deny"', '"*": "allow"');
+  canonical.put("kilo.jsonc", unsafe);
+  check = getCheck(runCoreChecks({ rootDir: canonical.root }), "security.kiloPermissionDefaults");
+  assert.equal(check.status, "FAIL");
+  assert.equal(check.details.problems[0].code, "UNKNOWN_TOOL_DEFAULT_NOT_DENIED");
+
+  canonical.put("kilo.jsonc", safeConfig.replace('"permission": {', '"mcp": { "unreviewed": { "type": "local", "command": ["unsafe-server"] } },\n  "permission": {'));
+  check = getCheck(runCoreChecks({ rootDir: canonical.root }), "security.kiloPermissionDefaults");
+  assert.equal(check.status, "FAIL");
+  assert.ok(check.details.problems.some((problem) => problem.code === "MCP_SERVER_ADDED_OUTSIDE_REVIEW"));
+
+  const derived = createFixture(t);
+  derived.put(".git/config", '[remote "origin"]\n\turl = https://github.com/customer/site.git\n');
+  derived.put("README.md", "# Sitio del cliente\n");
+  derived.put("PROYECTO.md", "# Proyecto\n- **Nombre:** Sitio cliente\n- **Repositorio o carpeta:** https://github.com/customer/site\n- **Versión de CN Pilot Core:** 2.8.0\n");
+  derived.put("kilo.jsonc", '{"permission":{"*":"allow"}}\n');
+  check = getCheck(runCoreChecks({ rootDir: derived.root }), "security.kiloPermissionDefaults");
+  assert.equal(check.status, "PASS");
+  assert.equal(check.details.checked, false);
+});
+
+test("installed Kilo resolves representative profiles across the seven static security baselines", (t) => {
+  const version = runKiloForPermissionTest(["--version"]);
+  if (version.error || version.status !== 0 || !/\d+\.\d+\.\d+/.test(version.stdout + version.stderr)) {
+    t.skip("Kilo is not installed in this runner; static permission invariants still run in Core QA.");
+    return;
+  }
+  const installedVersion = (version.stdout + version.stderr).match(/\d+\.\d+\.\d+/)[0];
+  const parts = installedVersion.split(".").map(Number);
+  assert.ok(parts[0] > 7 || (parts[0] === 7 && (parts[1] > 8 || (parts[1] === 8 && parts[2] >= 8))), `Kilo ${installedVersion} must meet the Core minimum 7.8.8`);
+  const config = runKiloForPermissionTest(["config", "check"]);
+  assert.equal(config.status, 0, `Kilo ${installedVersion} validates the active permission config`);
+
+  const profiles = Object.fromEntries(["jefe-proyecto", "desarrollador", "maquetador-frontend", "revisor"].map((name) => [name, parseKiloDebugAgent(name)]));
+  for (const [name, profile] of Object.entries(profiles)) {
+    const defaults = profile.permission.filter((rule) => rule.permission === "*");
+    assert.equal(defaults.at(-1)?.action, "deny", `${name} blocks unreviewed tools/MCP after inherited user settings`);
+    assert.equal(resolveKiloPermission(profile, "read", ".env"), "deny", `${name} blocks direct .env reads`);
+    assert.equal(resolveKiloPermission(profile, "read", ".env.example"), "allow", `${name} preserves a root template`);
+    assert.equal(resolveKiloPermission(profile, "read", "secrets/.env.example"), "deny", `${name} does not let example exceptions override secret directories`);
+    assert.equal(resolveKiloPermission(profile, "read", "nested/.env.local"), "deny", `${name} blocks nested env variants`);
+    assert.equal(resolveKiloPermission(profile, "read", "nested/.kilo/mcp.json"), "deny", `${name} blocks local MCP secret files`);
+    assert.equal(resolveKiloPermission(profile, "edit", "secrets/.env.example"), "deny", `${name} blocks secret-directory edits`);
+  }
+
+  const jefe = profiles["jefe-proyecto"];
+  assert.equal(resolveKiloPermission(jefe, "edit", "PROYECTO.md"), "allow");
+  assert.equal(resolveKiloPermission(jefe, "edit", ".cn-pilot/NUCLEO.md"), "allow");
+  assert.equal(resolveKiloPermission(jefe, "edit", "kilo.jsonc"), "ask");
+  assert.equal(resolveKiloPermission(jefe, "lsp", "workspace/file.php"), "allow");
+  assert.equal(resolveKiloPermission(jefe, "mcp_unreviewed_write", "remote/resource"), "deny");
+  const developer = profiles.desarrollador;
+  assert.equal(resolveKiloPermission(developer, "edit", ".cn-pilot/NUCLEO.md"), "deny");
+  assert.equal(resolveKiloPermission(developer, "edit", "kilo.jsonc"), "deny");
+  assert.equal(resolveKiloPermission(developer, "edit", "producto/src/index.php"), "allow");
+  assert.equal(resolveKiloPermission(developer, "lsp", "producto/src/index.php"), "allow");
+  assert.equal(resolveKiloPermission(developer, "mcp_unreviewed_write", "remote/resource"), "deny");
+  assert.equal(profiles["maquetador-frontend"].tools.write, true);
+  assert.equal(profiles["maquetador-frontend"].tools.apply_patch, true);
+  assert.equal(profiles["desarrollador"].tools.bash, true);
+
+  const revisor = profiles.revisor;
+  for (const tool of ["write", "apply_patch", "bash", "grep", "task", "agent_manager", "background_process", "webfetch", "websearch", "skill"]) {
+    assert.equal(revisor.tools[tool], false, `Revisor ${tool} is disabled by resolved Kilo permissions`);
+  }
+  assert.equal(revisor.tools.read, true);
+  assert.equal(revisor.tools.glob, true);
+  assert.equal(resolveKiloPermission(revisor, "edit", "PROYECTO.md"), "deny");
+  assert.equal(resolveKiloPermission(revisor, "external_directory", "C:/Users/secret"), "deny");
+  assert.equal(resolveKiloPermission(revisor, "mcp_unreviewed_write", "remote/resource"), "deny");
 });
 
 test("a missing SKILL.md is detected", (t) => {

@@ -2,22 +2,75 @@
 description: Agente principal del proyecto. Clasifica peticiones, evalúa riesgo, coordina subagentes, selecciona skills, mantiene el estado y crea commits locales en español cuando corresponde.
 mode: primary
 permission:
+  "*": deny
   read:
     "*": allow
     ".env": deny
     ".env.*": deny
     "**/.env": deny
     "**/.env.*": deny
+    "**/.netrc": deny
+    "**/.aws/credentials": deny
+    "**/.docker/config.json": deny
+    "**/credentials.json": deny
+    "**/service-account.json": deny
+    "**/id_rsa": deny
+    "**/id_ed25519": deny
+    "**/id_ecdsa": deny
+    "**/id_dsa": deny
+    "**/*.p12": deny
+    "**/*.pfx": deny
+    "**/*.jks": deny
+    ".kilocode/mcp.json": deny
+    "**/.kilocode/mcp.json": deny
+    ".kilo/mcp.json": deny
+    "**/.kilo/mcp.json": deny
+    "kilo.json": ask
+    "kilo.jsonc": ask
+    "**/kilo.json": ask
+    "**/kilo.jsonc": ask
+    ".kilo/kilo.json": ask
+    ".kilo/kilo.jsonc": ask
+    ".kilocode/kilo.json": ask
+    ".kilocode/kilo.jsonc": ask
+    ".npmrc": deny
+    "**/.npmrc": deny
+    ".pypirc": deny
+    "**/.pypirc": deny
+    "**/*.pem": ask
+    "**/*.key": ask
+    "**/.kube/config": ask
+    "**/kubeconfig": ask
     ".env.example": allow
     "**/.env.example": allow
     "secrets/**": deny
-    ".kilocode/mcp.json": deny
-    "**/.kilocode/mcp.json": deny
+    "**/secrets/**": deny
   glob: allow
   grep: allow
+  lsp: allow
   skill: allow
   websearch: allow
   webfetch: allow
+  write: allow
+  apply_patch: allow
+  question: allow
+  todoread: allow
+  todowrite: allow
+  board_read: allow
+  board_post: allow
+  goal: allow
+  goal_report: allow
+  schedule_wakeup: allow
+  cancel_wakeup: allow
+  cron_create: allow
+  cron_list: allow
+  cron_delete: allow
+  agent_manager_models: allow
+  chart: allow
+  open_plan: allow
+  kilo_local_recall: ask
+  external_directory: ask
+  agent_manager: ask
   background_process: ask
   task:
     "*": deny
@@ -29,13 +82,6 @@ permission:
     "revisor": allow
   edit:
     "*": ask
-    ".env": deny
-    ".env.*": deny
-    "**/.env": deny
-    "**/.env.*": deny
-    "secrets/**": deny
-    ".kilocode/mcp.json": deny
-    "**/.kilocode/mcp.json": deny
     "PROYECTO.md": allow
     "ESTADO.md": allow
     "DECISIONES.md": allow
@@ -46,8 +92,46 @@ permission:
     "artefactos/**": allow
     ".cn-pilot/**": allow
     "recursos/referencias/REFERENCES.md": allow
+    "kilo.json": ask
+    "kilo.jsonc": ask
+    "**/kilo.json": ask
+    "**/kilo.jsonc": ask
+    ".kilo/kilo.json": ask
+    ".kilo/kilo.jsonc": ask
+    ".kilocode/kilo.json": ask
+    ".kilocode/kilo.jsonc": ask
+    ".env": deny
+    ".env.*": deny
+    "**/.env": deny
+    "**/.env.*": deny
+    "**/.netrc": deny
+    "**/.aws/credentials": deny
+    "**/.docker/config.json": deny
+    "**/credentials.json": deny
+    "**/service-account.json": deny
+    "**/id_rsa": deny
+    "**/id_ed25519": deny
+    "**/id_ecdsa": deny
+    "**/id_dsa": deny
+    "**/*.p12": deny
+    "**/*.pfx": deny
+    "**/*.jks": deny
+    ".kilocode/mcp.json": deny
+    "**/.kilocode/mcp.json": deny
+    ".kilo/mcp.json": deny
+    "**/.kilo/mcp.json": deny
+    ".npmrc": deny
+    "**/.npmrc": deny
+    ".pypirc": deny
+    "**/.pypirc": deny
+    "**/*.pem": ask
+    "**/*.key": ask
+    "**/.kube/config": ask
+    "**/kubeconfig": ask
     ".env.example": allow
     "**/.env.example": allow
+    "secrets/**": deny
+    "**/secrets/**": deny
   bash:
     "*": ask
     "git push*": ask

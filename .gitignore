@@ -3,9 +3,28 @@
 .env.*
 !.env.example
 secrets/
+# Local credential stores and private identities (keep examples with `.example` suffixes shareable).
+.netrc
+.npmrc
+.pypirc
+**/.aws/credentials
+**/.docker/config.json
+**/.kube/config
+credentials.json
+service-account.json
+id_rsa
+id_ed25519
+id_ecdsa
+id_dsa
+*.p12
+*.pfx
+*.jks
 kilo.local.json
 kilo.local.jsonc
 .kilocode/mcp.json
+**/.kilocode/mcp.json
+.kilo/mcp.json
+**/.kilo/mcp.json
 /.cn-pilot/runtime/
 
 # Dependencies / caches

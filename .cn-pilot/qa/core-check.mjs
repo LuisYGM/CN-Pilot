@@ -38,8 +38,28 @@ const LEGACY_REFERENCE_PATTERNS = [
   /\.cn-pilot\/(?:docs|profiles|templates)(?:\/|[`\s]|$)/,
   /(?:^|[\s`])\/(?:new-project|cn-status|cn-update|doctor|review|handoff|design|content|debug|deploy-staging|pre-deploy|checkpoint)(?:\b|`)/,
 ];
-const REVIEWER_DENY = ["bash", "websearch", "webfetch", "skill", "task", "agent_manager", "background_process", "write", "edit", "apply_patch"];
-const SENSITIVE_PATHS = [".env", ".env.*", "**/.env", "**/.env.*", "secrets/**", ".kilocode/mcp.json", "**/.kilocode/mcp.json"];
+const REVIEWER_DENY = ["*", "bash", "websearch", "webfetch", "skill", "task", "agent_manager", "background_process", "write", "edit", "apply_patch", "grep", "external_directory"];
+const SENSITIVE_PATHS = [
+  ".env", ".env.*", "**/.env", "**/.env.*",
+  "secrets/**", "**/secrets/**",
+  ".npmrc", "**/.npmrc", ".pypirc", "**/.pypirc",
+  ".kilocode/mcp.json", "**/.kilocode/mcp.json", ".kilo/mcp.json", "**/.kilo/mcp.json",
+  "**/.netrc", "**/.aws/credentials", "**/.docker/config.json", "**/credentials.json", "**/service-account.json",
+  "**/id_rsa", "**/id_ed25519", "**/id_ecdsa", "**/id_dsa", "**/*.p12", "**/*.pfx", "**/*.jks",
+];
+const KILO_CONFIG_PATHS = ["kilo.json", "kilo.jsonc", "**/kilo.json", "**/kilo.jsonc", ".kilo/kilo.json", ".kilo/kilo.jsonc", ".kilocode/kilo.json", ".kilocode/kilo.jsonc"];
+const SENSITIVE_APPROVAL_PATHS = ["**/*.pem", "**/*.key", "**/.kube/config", "**/kubeconfig"];
+const PROJECT_CONTEXT_PATHS = ["PROYECTO.md", "REQUISITOS.md", "ESTADO.md", "DECISIONES.md", "ARTEFACTOS.md", "README.md"];
+const PROFILE_TOOL_KEYS = new Map([
+  ["jefe-proyecto", ["*", "read", "glob", "grep", "skill", "websearch", "webfetch", "lsp", "write", "apply_patch", "question", "todoread", "todowrite", "board_read", "board_post", "goal", "goal_report", "schedule_wakeup", "cancel_wakeup", "cron_create", "cron_list", "cron_delete", "agent_manager_models", "chart", "open_plan", "kilo_local_recall", "external_directory", "agent_manager", "background_process", "task", "edit", "bash"]],
+  ["arquitecto", ["*", "read", "glob", "grep", "lsp", "board_read", "board_post", "external_directory", "skill", "websearch", "webfetch", "task", "agent_manager", "background_process", "write", "apply_patch", "edit", "bash"]],
+  ["contenido-seo", ["*", "read", "glob", "grep", "lsp", "board_read", "board_post", "external_directory", "skill", "websearch", "webfetch", "task", "agent_manager", "background_process", "write", "apply_patch", "edit", "bash"]],
+  ["disenador-ui-ux", ["*", "read", "glob", "grep", "lsp", "board_read", "board_post", "external_directory", "skill", "websearch", "webfetch", "task", "agent_manager", "background_process", "write", "apply_patch", "edit", "bash"]],
+  ["desarrollador", ["*", "read", "glob", "grep", "lsp", "board_read", "board_post", "external_directory", "skill", "websearch", "webfetch", "task", "agent_manager", "background_process", "write", "apply_patch", "edit", "bash"]],
+  ["maquetador-frontend", ["*", "read", "glob", "grep", "lsp", "board_read", "board_post", "external_directory", "skill", "websearch", "webfetch", "task", "agent_manager", "background_process", "write", "apply_patch", "edit", "bash"]],
+  ["revisor", ["*", "read", "glob", "grep", "skill", "websearch", "webfetch", "task", "agent_manager", "background_process", "write", "edit", "apply_patch", "bash", "external_directory"]],
+]);
+const ROOT_KILO_TOOL_KEYS = new Set(["*", "glob", "grep", "lsp", "question", "todoread", "todowrite", "board_read", "board_post", "agent_manager", "external_directory"]);
 const DESTRUCTIVE_GIT = ["git push --force*", "git push -f*", "git reset --hard*", "git clean*"];
 const CN_PILOT_AGENTS = ["arquitecto", "contenido-seo", "desarrollador", "disenador-ui-ux", "jefe-proyecto", "maquetador-frontend", "revisor"];
 const REVIEW_OUTCOMES = ["APPROVED", "APPROVED WITH NOTES", "CHANGES REQUIRED", "BLOCKED"];
@@ -314,12 +334,17 @@ function checkReviewerPermissions(root) {
   const problems = [];
   const readMap = permission.read;
   if (!(readMap === "allow" || readMap?.["*"] === "allow")) problems.push({ field: "read", code: "CRITICAL_PERMISSION_MISSING" });
-  for (const capability of ["glob", "grep"]) if (permission[capability] !== "allow") problems.push({ field: capability, code: "CRITICAL_PERMISSION_MISSING" });
+  if (permission.glob !== "allow") problems.push({ field: "glob", code: "CRITICAL_PERMISSION_MISSING" });
   for (const capability of REVIEWER_DENY) if (permission[capability] !== "deny") problems.push({ field: capability, expected: "deny", code: "PROTECTED_PERMISSION_NOT_DENIED" });
   for (const pattern of SENSITIVE_PATHS) if (readMap?.[pattern] !== "deny") problems.push({ field: `read.${pattern}`, expected: "deny", code: "SENSITIVE_READ_NOT_DENIED" });
   const readKeys = readMap && typeof readMap === "object" ? Object.keys(readMap) : [];
   const fallback = readKeys.indexOf("*");
   for (const pattern of SENSITIVE_PATHS) if (readKeys.indexOf(pattern) < fallback || readKeys.indexOf(pattern) < 0) problems.push({ field: `read.${pattern}`, code: "SECURITY_RULE_ORDER_INVALID" });
+  for (const pattern of KILO_CONFIG_PATHS) if (readMap?.[pattern] !== "deny") problems.push({ field: `read.${pattern}`, expected: "deny", code: "REVIEWER_CONFIG_READ_NOT_DENIED" });
+  for (const pattern of SENSITIVE_APPROVAL_PATHS) if (readMap?.[pattern] !== "deny") problems.push({ field: `read.${pattern}`, expected: "deny", code: "REVIEWER_CREDENTIAL_READ_NOT_DENIED" });
+  if (readMap?.[".env.example"] !== "allow" || readMap?.["**/.env.example"] !== "allow") problems.push({ field: "read.env.example", code: "SAFE_EXAMPLE_NOT_ALLOWED" });
+  const exampleIndex = Math.max(readKeys.indexOf(".env.example"), readKeys.indexOf("**/.env.example"));
+  if (readKeys.indexOf("**/secrets/**") < exampleIndex) problems.push({ field: "read.secrets/**", code: "SECRET_DIRECTORY_PRECEDENCE_INVALID" });
   return problems;
 }
 
@@ -350,9 +375,12 @@ function checkDevLeadPermissions(root, agentNames) {
       if (rules?.[pattern] !== "deny") securityProblems.push({ field: `${tool}.${pattern}`, code: "SENSITIVE_PATH_NOT_DENIED" });
       if (index < 0 || index < fallbackIndex) securityProblems.push({ field: `${tool}.${pattern}`, code: "SECURITY_RULE_ORDER_INVALID" });
     }
+    for (const pattern of KILO_CONFIG_PATHS) if (rules?.[pattern] !== "ask") securityProblems.push({ field: `${tool}.${pattern}`, code: "KILO_CONFIG_GATE_MISSING" });
+    for (const pattern of SENSITIVE_APPROVAL_PATHS) if (rules?.[pattern] !== "ask") securityProblems.push({ field: `${tool}.${pattern}`, code: "CREDENTIAL_GATE_MISSING" });
     const denyEnvIndex = keys.indexOf(".env.*");
-    const exampleIndex = keys.indexOf(".env.example");
+    const exampleIndex = Math.max(keys.indexOf(".env.example"), keys.indexOf("**/.env.example"));
     if (rules?.[".env.example"] === "allow" && (denyEnvIndex < 0 || exampleIndex < denyEnvIndex)) securityProblems.push({ field: `${tool}.env.example`, code: "SECURITY_RULE_ORDER_INVALID" });
+    if (keys.indexOf("**/secrets/**") < exampleIndex) securityProblems.push({ field: `${tool}.secrets/**`, code: "SECRET_DIRECTORY_PRECEDENCE_INVALID" });
   }
   const bash = permission.bash;
   const bashKeys = bash && typeof bash === "object" ? Object.keys(bash) : [];
@@ -363,6 +391,199 @@ function checkDevLeadPermissions(root, agentNames) {
     if (index < 0 || index < fallbackIndex) securityProblems.push({ field: `bash.${pattern}`, code: "SECURITY_RULE_ORDER_INVALID" });
   }
   return { targets: Object.entries(task ?? {}).filter(([name, action]) => name !== "*" && action === "allow").map(([name]) => name).sort(), routingProblems, securityProblems };
+}
+
+function checkAgentPermissionProfiles(root) {
+  const problems = [];
+  const owners = new Map([
+    ["arquitecto", { editFallback: "ask", writable: true }],
+    ["contenido-seo", { editFallback: "ask", writable: true }],
+    ["disenador-ui-ux", { editFallback: "ask", writable: true }],
+    ["desarrollador", { editFallback: "allow", writable: true }],
+    ["maquetador-frontend", { editFallback: "allow", writable: true }],
+    ["jefe-proyecto", { editFallback: "ask", writable: true }],
+    ["revisor", { editFallback: "deny", writable: false }],
+  ]);
+  const action = (map, pattern) => typeof map === "string" ? map : map?.[pattern];
+  const keys = (map) => map && typeof map === "object" ? Object.keys(map) : [];
+  const isAfterFallback = (map, pattern) => keys(map).indexOf(pattern) > keys(map).indexOf("*");
+
+  for (const [agent, profile] of owners) {
+    const relative = `.kilo/agents/${agent}.md`;
+    const metadata = readMetadata(root, relative);
+    if (!metadata.ok) { problems.push(metadata.error); continue; }
+    const permission = metadata.fields.permission;
+    if (!permission || typeof permission !== "object") { problems.push({ path: relative, code: "MISSING_PERMISSION_MAP" }); continue; }
+    if (permission["*"] !== "deny") problems.push({ path: relative, field: "permission.*", expected: "deny", code: "UNKNOWN_TOOL_DEFAULT_NOT_DENIED" });
+    if (Object.keys(permission).indexOf("*") !== 0) problems.push({ path: relative, field: "permission.*", code: "TOOL_FALLBACK_ORDER_INVALID" });
+    const knownTools = new Set(PROFILE_TOOL_KEYS.get(agent) ?? []);
+    for (const tool of Object.keys(permission)) if (!knownTools.has(tool)) problems.push({ path: relative, field: tool, code: "UNREVIEWED_TOOL_PERMISSION" });
+
+    const readRules = permission.read;
+    if (action(readRules, "*") !== "allow") problems.push({ path: relative, field: "read.*", expected: "allow", code: "READ_FALLBACK_NOT_ALLOWED" });
+    for (const sensitivePath of SENSITIVE_PATHS) {
+      if (action(readRules, sensitivePath) !== "deny") problems.push({ path: relative, field: `read.${sensitivePath}`, expected: "deny", code: "SENSITIVE_READ_NOT_DENIED" });
+      if (!isAfterFallback(readRules, sensitivePath)) problems.push({ path: relative, field: `read.${sensitivePath}`, code: "SECURITY_RULE_ORDER_INVALID" });
+    }
+    for (const configPath of KILO_CONFIG_PATHS) {
+      const expected = agent === "jefe-proyecto" ? "ask" : "deny";
+      if (action(readRules, configPath) !== expected) problems.push({ path: relative, field: `read.${configPath}`, expected, code: "KILO_CONFIG_READ_POLICY_INVALID" });
+      if (!isAfterFallback(readRules, configPath)) problems.push({ path: relative, field: `read.${configPath}`, code: "SECURITY_RULE_ORDER_INVALID" });
+    }
+    for (const credentialPath of SENSITIVE_APPROVAL_PATHS) {
+      const expected = agent === "revisor" ? "deny" : "ask";
+      if (action(readRules, credentialPath) !== expected) problems.push({ path: relative, field: `read.${credentialPath}`, expected, code: "AMBIGUOUS_CREDENTIAL_READ_POLICY_INVALID" });
+      if (!isAfterFallback(readRules, credentialPath)) problems.push({ path: relative, field: `read.${credentialPath}`, code: "SECURITY_RULE_ORDER_INVALID" });
+    }
+    const externalDirectoryExpected = agent === "jefe-proyecto" ? "ask" : "deny";
+    if (permission.external_directory !== externalDirectoryExpected) problems.push({ path: relative, field: "external_directory", expected: externalDirectoryExpected, code: "EXTERNAL_DIRECTORY_POLICY_INVALID" });
+    if (action(readRules, ".env.example") !== "allow" || action(readRules, "**/.env.example") !== "allow") {
+      problems.push({ path: relative, field: "read.env.example", expected: "allow", code: "SAFE_EXAMPLE_NOT_ALLOWED" });
+    }
+    const readKeys = keys(readRules);
+    const exampleIndex = Math.max(readKeys.indexOf(".env.example"), readKeys.indexOf("**/.env.example"));
+    const envDenyIndex = Math.max(readKeys.indexOf(".env.*"), readKeys.indexOf("**/.env.*"));
+    if (exampleIndex < envDenyIndex) problems.push({ path: relative, field: "read.env.example", code: "ENV_EXAMPLE_PRECEDENCE_INVALID" });
+    if (Math.min(readKeys.indexOf("secrets/**"), readKeys.indexOf("**/secrets/**")) < exampleIndex) problems.push({ path: relative, field: "read.secrets/**", code: "SECRET_DIRECTORY_PRECEDENCE_INVALID" });
+
+    const editRules = permission.edit;
+    if (!profile.writable) {
+      if (editRules !== "deny") problems.push({ path: relative, field: "edit", expected: "deny", code: "REVIEWER_MUTATION_NOT_DENIED" });
+      for (const capability of ["write", "apply_patch", "bash", "agent_manager", "background_process"]) if (permission[capability] !== "deny") problems.push({ path: relative, field: capability, expected: "deny", code: "REVIEWER_MUTATION_NOT_DENIED" });
+      for (const capability of REVIEWER_DENY) if (capability !== "*" && permission[capability] !== "deny") problems.push({ path: relative, field: capability, expected: "deny", code: "REVIEWER_CAPABILITY_NOT_DENIED" });
+      if (permission.grep !== "deny" || permission.external_directory !== "deny") problems.push({ path: relative, field: "grep/external_directory", expected: "deny", code: "REVIEWER_READ_BOUNDARY_NOT_DENIED" });
+    } else {
+      if (action(editRules, "*") !== profile.editFallback) problems.push({ path: relative, field: "edit.*", expected: profile.editFallback, code: "EDIT_FALLBACK_CHANGED" });
+      for (const capability of ["write", "apply_patch"]) if (permission[capability] !== "allow") problems.push({ path: relative, field: capability, expected: "allow", code: "EDIT_TOOL_CAPABILITY_DISABLED" });
+      for (const sensitivePath of SENSITIVE_PATHS) {
+        if (action(editRules, sensitivePath) !== "deny") problems.push({ path: relative, field: `edit.${sensitivePath}`, expected: "deny", code: "SENSITIVE_EDIT_NOT_DENIED" });
+        if (!isAfterFallback(editRules, sensitivePath)) problems.push({ path: relative, field: `edit.${sensitivePath}`, code: "SECURITY_RULE_ORDER_INVALID" });
+      }
+      for (const configPath of KILO_CONFIG_PATHS) {
+        const expected = agent === "jefe-proyecto" ? "ask" : "deny";
+        if (action(editRules, configPath) !== expected) problems.push({ path: relative, field: `edit.${configPath}`, expected, code: "KILO_CONFIG_EDIT_POLICY_INVALID" });
+        if (!isAfterFallback(editRules, configPath)) problems.push({ path: relative, field: `edit.${configPath}`, code: "SECURITY_RULE_ORDER_INVALID" });
+      }
+      for (const credentialPath of SENSITIVE_APPROVAL_PATHS) {
+        const expected = agent === "revisor" ? "deny" : "ask";
+        if (action(editRules, credentialPath) !== expected) problems.push({ path: relative, field: `edit.${credentialPath}`, expected, code: "AMBIGUOUS_CREDENTIAL_EDIT_POLICY_INVALID" });
+        if (!isAfterFallback(editRules, credentialPath)) problems.push({ path: relative, field: `edit.${credentialPath}`, code: "SECURITY_RULE_ORDER_INVALID" });
+      }
+      if (action(editRules, ".env.example") !== "allow" || action(editRules, "**/.env.example") !== "allow") {
+        problems.push({ path: relative, field: "edit.env.example", expected: "allow", code: "SAFE_EXAMPLE_NOT_ALLOWED" });
+      }
+      const editKeys = keys(editRules);
+      const editExampleIndex = Math.max(editKeys.indexOf(".env.example"), editKeys.indexOf("**/.env.example"));
+      const editEnvDenyIndex = Math.max(editKeys.indexOf(".env.*"), editKeys.indexOf("**/.env.*"));
+      if (editExampleIndex < editEnvDenyIndex) problems.push({ path: relative, field: "edit.env.example", code: "ENV_EXAMPLE_PRECEDENCE_INVALID" });
+      if (Math.min(editKeys.indexOf("secrets/**"), editKeys.indexOf("**/secrets/**")) < editExampleIndex) problems.push({ path: relative, field: "edit.secrets/**", code: "SECRET_DIRECTORY_PRECEDENCE_INVALID" });
+    }
+
+    if (agent !== "jefe-proyecto" && profile.writable) {
+      const protectedPaths = [".cn-pilot/**", ".kilo/**", ".cn-pilot-version", "AGENTS.md", ...PROJECT_CONTEXT_PATHS, "kilo.json", "kilo.jsonc"];
+      for (const protectedPath of protectedPaths) if (action(editRules, protectedPath) !== "deny") problems.push({ path: relative, field: `edit.${protectedPath}`, expected: "deny", code: "CORE_OWNERSHIP_NOT_DENIED" });
+    }
+
+    if (agent !== "revisor") {
+      for (const capability of ["glob", "grep", "skill", "lsp", "board_read", "board_post"]) {
+        if (permission[capability] !== "allow") problems.push({ path: relative, field: capability, expected: "allow", code: "COMMON_WORKFLOW_CAPABILITY_CHANGED" });
+      }
+    }
+    if (["desarrollador", "maquetador-frontend"].includes(agent) && permission.edit?.["*"] !== "allow") {
+      problems.push({ path: relative, field: "edit.*", expected: "allow", code: "PRODUCT_EDIT_AUTONOMY_REDUCED" });
+    }
+  }
+  return problems;
+}
+
+function findJsoncObject(source, key, fromIndex = 0) {
+  const lineKey = new RegExp(`^\\s*"${key}"\\s*:\\s*\\{`, "gm");
+  lineKey.lastIndex = fromIndex;
+  const match = lineKey.exec(source);
+  if (!match) return null;
+  const open = source.indexOf("{", match.index);
+  let depth = 0;
+  let string = false;
+  let escape = false;
+  let lineComment = false;
+  let blockComment = false;
+  for (let i = open; i < source.length; i += 1) {
+    const current = source[i];
+    const next = source[i + 1];
+    if (lineComment) { if (current === "\n") lineComment = false; continue; }
+    if (blockComment) { if (current === "*" && next === "/") { blockComment = false; i += 1; } continue; }
+    if (string) {
+      if (escape) escape = false;
+      else if (current === "\\") escape = true;
+      else if (current === '"') string = false;
+      continue;
+    }
+    if (current === '"') { string = true; continue; }
+    if (current === "/" && next === "/") { lineComment = true; i += 1; continue; }
+    if (current === "/" && next === "*") { blockComment = true; i += 1; continue; }
+    if (current === "{") depth += 1;
+    else if (current === "}" && --depth === 0) return source.slice(open + 1, i);
+  }
+  return null;
+}
+
+function parseJsoncStringRules(source) {
+  const lines = String(source ?? "").split(/\r\n|\n|\r/);
+  const entries = lines.map((line) => {
+    const match = line.match(/^(\s*)"((?:\\.|[^"\\])*)"\s*:\s*"((?:\\.|[^"\\])*)"\s*,?\s*(?:\/\/.*)?$/);
+    return match ? { indent: match[1].length, key: match[2], action: match[3] } : null;
+  }).filter(Boolean);
+  const indent = entries.length ? Math.min(...entries.map((entry) => entry.indent)) : null;
+  return entries.filter((entry) => entry.indent === indent);
+}
+
+function checkKiloPermissionDefaults(root) {
+  const project = readText(root, "PROYECTO.md");
+  if (project.kind !== "ok" || !canonicalProjectContext(root, project.text)) {
+    return { status: "PASS", details: { checked: false, reason: "Project Kilo configuration is user-owned outside the canonical distribution." } };
+  }
+  const file = readText(root, "kilo.jsonc");
+  if (file.kind !== "ok") return { status: "FAIL", details: { checked: true, code: file.code ?? file.kind } };
+  const permissionBlock = findJsoncObject(file.text, "permission");
+  const readBlock = permissionBlock && findJsoncObject(permissionBlock, "read");
+  const editBlock = permissionBlock && findJsoncObject(permissionBlock, "edit");
+  const read = parseJsoncStringRules(readBlock);
+  const edit = parseJsoncStringRules(editBlock);
+  const topLevel = parseJsoncStringRules(permissionBlock);
+  const action = (rules, pattern) => rules.filter((entry) => entry.key === pattern).at(-1)?.action;
+  const index = (rules, pattern) => rules.findIndex((entry) => entry.key === pattern);
+  const problems = [];
+  if (action(topLevel, "*") !== "deny") problems.push({ field: "permission.*", expected: "deny", code: "UNKNOWN_TOOL_DEFAULT_NOT_DENIED" });
+  if (topLevel.findIndex((entry) => entry.key === "*") !== 0) problems.push({ field: "permission.*", code: "ROOT_TOOL_FALLBACK_ORDER_INVALID" });
+  for (const entry of topLevel) if (!ROOT_KILO_TOOL_KEYS.has(entry.key)) problems.push({ field: entry.key, code: "UNREVIEWED_ROOT_TOOL_PERMISSION" });
+  if (findJsoncObject(file.text, "mcp")) problems.push({ field: "mcp", code: "MCP_SERVER_ADDED_OUTSIDE_REVIEW" });
+  for (const [tool, rules] of [["read", read], ["edit", edit]]) {
+    if (action(rules, "*") !== "allow") problems.push({ field: `${tool}.*`, expected: "allow", code: "CORE_FILE_TOOL_FALLBACK_CHANGED" });
+    for (const pattern of SENSITIVE_PATHS) {
+      if (action(rules, pattern) !== "deny" || index(rules, pattern) < index(rules, "*")) problems.push({ field: `${tool}.${pattern}`, code: "CORE_SENSITIVE_PATH_RULE_INVALID" });
+    }
+    if (action(rules, ".env.example") !== "allow" || action(rules, "**/.env.example") !== "allow") problems.push({ field: `${tool}.env.example`, code: "SAFE_EXAMPLE_NOT_ALLOWED" });
+    const exampleIndex = Math.max(index(rules, ".env.example"), index(rules, "**/.env.example"));
+    const envDenyIndex = Math.max(index(rules, ".env.*"), index(rules, "**/.env.*"));
+    if (exampleIndex < envDenyIndex) problems.push({ field: `${tool}.env.example`, code: "ENV_EXAMPLE_PRECEDENCE_INVALID" });
+    if (Math.min(index(rules, "secrets/**"), index(rules, "**/secrets/**")) < exampleIndex) problems.push({ field: `${tool}.secrets/**`, code: "SECRET_DIRECTORY_PRECEDENCE_INVALID" });
+    for (const pattern of KILO_CONFIG_PATHS) {
+      if (action(rules, pattern) !== "ask") problems.push({ field: `${tool}.${pattern}`, expected: "ask", code: "KILO_CONFIG_GATE_MISSING" });
+      if (index(rules, pattern) <= index(rules, "*")) problems.push({ field: `${tool}.${pattern}`, code: "KILO_CONFIG_RULE_ORDER_INVALID" });
+    }
+    for (const pattern of SENSITIVE_APPROVAL_PATHS) {
+      if (action(rules, pattern) !== "ask") problems.push({ field: `${tool}.${pattern}`, expected: "ask", code: "CREDENTIAL_GATE_MISSING" });
+      if (index(rules, pattern) <= index(rules, "*")) problems.push({ field: `${tool}.${pattern}`, code: "CREDENTIAL_RULE_ORDER_INVALID" });
+    }
+  }
+  for (const [tool, expected] of [["glob", "allow"], ["grep", "allow"], ["lsp", "allow"], ["question", "allow"], ["todoread", "allow"], ["todowrite", "allow"], ["board_read", "allow"], ["board_post", "allow"], ["agent_manager", "ask"], ["external_directory", "ask"]]) {
+    if (action(topLevel, tool) !== expected) problems.push({ field: tool, expected, code: "KILO_CAPABILITY_DEFAULT_CHANGED" });
+  }
+  const bashBlock = permissionBlock && findJsoncObject(permissionBlock, "bash");
+  const bash = parseJsoncStringRules(bashBlock);
+  if (action(bash, "*") !== "ask") problems.push({ field: "bash.*", expected: "ask", code: "SHELL_FALLBACK_NOT_APPROVAL_GATED" });
+  for (const pattern of DESTRUCTIVE_GIT) if (action(bash, pattern) !== "deny") problems.push({ field: `bash.${pattern}`, expected: "deny", code: "DESTRUCTIVE_COMMAND_NOT_DENIED" });
+  return { status: problems.length ? "FAIL" : "PASS", details: { checked: true, problems, unknownTools: "deny", pathPatternPrecedence: "Kilo 7.8.8 last match wins" } };
 }
 
 function manifestRules(text) {
@@ -606,7 +827,10 @@ export function runCoreChecks({ rootDir = DEFAULT_ROOT } = {}) {
   const reviewerProblems = checkReviewerPermissions(root);
   add("permissions.reviewer", reviewerProblems.length ? "FAIL" : "PASS", { problems: reviewerProblems });
   add("security.devLead", devLead.securityProblems.length ? "FAIL" : "PASS", { problems: devLead.securityProblems });
-
+  const agentPermissions = checkAgentPermissionProfiles(root);
+  add("security.agentPermissions", agentPermissions.length ? "FAIL" : "PASS", { agentsChecked: CN_PILOT_AGENTS.length, problems: agentPermissions, guarantee: "static declarations only; resolved Kilo runtime is checked separately" });
+  const kiloPermissionDefaults = checkKiloPermissionDefaults(root);
+  add("security.kiloPermissionDefaults", kiloPermissionDefaults.status, kiloPermissionDefaults.details);
   const profiles = listFiles(root, ".cn-pilot/perfiles", { extension: ".md" });
   add("profiles.inventory", profiles.problems.length ? "FAIL" : profiles.symlinks.length ? "WARN" : "PASS", { count: profiles.count, symbolicLinks: profiles.symlinks, problems: profiles.problems });
   const templateRoot = listFiles(root, ".cn-pilot/plantillas");
@@ -643,7 +867,8 @@ const LABELS = new Map([
   ["agents.noStepCaps", "Agent step caps"],
   ["language.spanishFirst", "Spanish-first role terminology"],
   ["routing.commands", "Command routing"], ["routing.devLead", "Rutas de Jefe de proyecto"], ["permissions.reviewer", "Permisos de Revisor"],
-  ["security.devLead", "Seguridad de Jefe de proyecto"], ["profiles.inventory", "Profiles"], ["templates.inventory", "Templates"],
+  ["security.devLead", "Seguridad de Jefe de proyecto"], ["security.agentPermissions", "Permisos por owner"], ["security.kiloPermissionDefaults", "Defaults Kilo"],
+  ["profiles.inventory", "Profiles"], ["templates.inventory", "Templates"],
   ["references.technicalSeo", "Technical SEO refs"], ["runtime.gitignore", "Runtime isolation"], ["manifest.inventory", "MANIFEST"],
   ["distribution.manifest", "Distribution manifest"],
 ]);

@@ -511,6 +511,50 @@ test("2.8.6 to 2.8.7 delivers testable Kilo probing without changing Project Con
   assert.equal(fs.readFileSync(path.join(target.root, ".cn-pilot/update/updater.mjs"), "utf8"), newUpdater);
 });
 
+test("2.8.7 to 2.8.8 updates permission policy files but preserves derived context, Kilo-local config and Product", (t) => {
+  const target = fixture(t); const source = fixture(t);
+  const protectedPaths = [
+    "PROYECTO.md", "REQUISITOS.md", "ESTADO.md", "DECISIONES.md", "ARTEFACTOS.md", "README.md",
+    "kilo.jsonc", ".gitignore", "producto/index.php", "producto/site.css", "recursos/source.html",
+    ".github/workflows/release.yml", "gh-pages/index.html",
+  ];
+  const protectedValues = Object.fromEntries(protectedPaths.map((item) => [item,
+    item === "PROYECTO.md" ? "- **Versión de CN Pilot Core:** 2.8.2\n" : `Local intacto: ${item}\n`]));
+  for (const [item, value] of Object.entries(protectedValues)) target.put(target.root, item, value);
+  const oldCore = "**Versión:** `2.8.7`\n";
+  const newCore = "**Versión:** `2.8.8`\n";
+  const oldAgent = "read all files; writes unrestricted\n";
+  const newAgent = "Deny unknown tools; restrict direct secret paths; preserve safe example patterns\n";
+  const oldSecurity = "Kilo 7.8.7 static baseline\n";
+  const newSecurity = "Kilo 7.8.8 direct-path ACLs; shell/MCP/host-runtime limitations documented\n";
+  target.put(target.root, ".cn-pilot-version", "2.8.7\n");
+  target.put(target.root, ".cn-pilot/NUCLEO.md", oldCore);
+  target.put(target.root, ".kilo/agents/revisor.md", oldAgent);
+  target.put(target.root, ".cn-pilot/documentacion/SEGURIDAD.md", oldSecurity);
+  const installed = manifest("2.8.7", [
+    entry(".cn-pilot-version", "2.8.7\n"), entry(".cn-pilot/NUCLEO.md", oldCore),
+    entry(".kilo/agents/revisor.md", oldAgent), entry(".cn-pilot/documentacion/SEGURIDAD.md", oldSecurity),
+  ]);
+  source.put(source.root, ".cn-pilot-version", "2.8.8\n");
+  source.put(source.root, ".cn-pilot/NUCLEO.md", newCore);
+  source.put(source.root, ".kilo/agents/revisor.md", newAgent);
+  source.put(source.root, ".cn-pilot/documentacion/SEGURIDAD.md", newSecurity);
+  const latest = manifest("2.8.8", [
+    entry(".cn-pilot-version", "2.8.8\n"), entry(".cn-pilot/NUCLEO.md", newCore),
+    entry(".kilo/agents/revisor.md", newAgent), entry(".cn-pilot/documentacion/SEGURIDAD.md", newSecurity),
+  ]);
+  source.put(source.root, ".cn-pilot/update/manifest.json", JSON.stringify(latest, null, 2));
+  const plan = planUpdate(target.root, installed, latest);
+  assert.equal(plan.installedVersion, "2.8.7");
+  assert.equal(plan.latestVersion, "2.8.8");
+  assert.equal(plan.conflicts.length, 0);
+  assert.ok(plan.actions.every(({ path: item }) => item.startsWith(".cn-pilot/") || item.startsWith(".kilo/") || item === ".cn-pilot-version"));
+  applyPlan(target.root, source.root, plan, latest);
+  for (const [item, value] of Object.entries(protectedValues)) assert.equal(fs.readFileSync(path.join(target.root, item), "utf8"), value, `${item} remains unchanged`);
+  assert.equal(fs.readFileSync(path.join(target.root, ".cn-pilot-version"), "utf8"), "2.8.8\n");
+  assert.equal(fs.readFileSync(path.join(target.root, ".kilo/agents/revisor.md"), "utf8"), newAgent);
+});
+
 test("1.3.1 baseline detects the 1.4.0 MINOR distribution and added capability", (t) => {
   const { root, put } = fixture(t);
   const oldCore = "Core 1.3.1\n";

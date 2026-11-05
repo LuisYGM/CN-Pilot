@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "cnPilotVersion": "2.8.7",
+  "cnPilotVersion": "2.8.8",
   "sourceRepository": "https://github.com/LuisYGM/cn-pilot.git",
   "stableBranch": "main",
   "sourceCommit": null,
@@ -11,11 +11,11 @@
   "managedFiles": [
     {
       "path": ".cn-pilot-version",
-      "sha256": "f48da3d32b75f2a1f076aeb96afbffb54ee311bb42e7ff5952e818b275a60368"
+      "sha256": "910dddb9d3a817481b7522554ec2cfd5fa0b45133cd8222911fa6d9afba54e6b"
     },
     {
       "path": ".cn-pilot/CAMBIOS.md",
-      "sha256": "9200ab9e628700605e13ae59a508a39ffc9e024d175fe382a3600e7dba3c270e"
+      "sha256": "fece99178f50b567d239dd0ee6484a918e82ba398e4b60bf5297401102c6c169"
     },
     {
       "path": ".cn-pilot/MANIFIESTO.md",
@@ -23,7 +23,7 @@
     },
     {
       "path": ".cn-pilot/NUCLEO.md",
-      "sha256": "2cfcdea0d51bfc775af3da2e644c57786930d89ef332196993a1143478914b9a"
+      "sha256": "7959c5764aac010836a858ab7449a5b80b9721571a7650971d0c78c14920f964"
     },
     {
       "path": ".cn-pilot/config/responsive.json",
@@ -79,7 +79,7 @@
     },
     {
       "path": ".cn-pilot/documentacion/SEGURIDAD.md",
-      "sha256": "74970b20881b377e2add35248266f054656a421be089fe8fc9148b5574ac6d91"
+      "sha256": "a44c14a48de410d9ffbba48c0814552bac6278cd6bf36f238f958faf2bd6cef7"
     },
     {
       "path": ".cn-pilot/documentacion/SKILLS-Y-CAPACIDADES.md",
@@ -191,11 +191,11 @@
     },
     {
       "path": ".cn-pilot/qa/core-check.mjs",
-      "sha256": "bdc31513324b79db3fcdeb449daa3c1af4fc546d52968641ee382a63e19be93d"
+      "sha256": "833808331d94441e3a222e750e00df4cf0017b266d1343e7b98b25b94f99b398"
     },
     {
       "path": ".cn-pilot/qa/core-check.test.mjs",
-      "sha256": "e5a6b4df2a145c9c9db572ff37f2651a5fb96e39758423aef44029e18e08d5d6"
+      "sha256": "a19a0bad0613657df7973db234d7b55aef89619abbd20dfc7af1d30e403ef0c2"
     },
     {
       "path": ".cn-pilot/update/updater.mjs",
@@ -203,35 +203,35 @@
     },
     {
       "path": ".cn-pilot/update/updater.test.mjs",
-      "sha256": "81c0396dcd2f6d12675c1b16d3c3fa027c33922d0cc99dd7129dee18642d6b3e"
+      "sha256": "e5e1ed91a814bb486ebccb3e0ac0239f3976c7b74509e8bcfbe21fca115a621e"
     },
     {
       "path": ".kilo/agents/arquitecto.md",
-      "sha256": "c6347aba32d9e8cf5488e4ebc0d348ab213a5b93d7f5b84e39fda169e6258c41"
+      "sha256": "f6dfb38ecf85a0937f085244806149ca00227d4f8df30937c80cdb110d84c548"
     },
     {
       "path": ".kilo/agents/contenido-seo.md",
-      "sha256": "c8f45542043bdcdb9ef81aac6d7d7ec956fd5f58173f935c27663ec8cafa92e5"
+      "sha256": "a934eb8c8ec214dba4eb966881aaecba6d7559dc161ff49871054942adfffc70"
     },
     {
       "path": ".kilo/agents/desarrollador.md",
-      "sha256": "ed9fc9a0f615c1583f045ab2bcfae783fd312bf2ea2103b5ff9601d7f138b131"
+      "sha256": "3eb8f4b47c1659226ab36f7e28d99bb8586f57c5273f59dfb49f3f1cea467ae8"
     },
     {
       "path": ".kilo/agents/disenador-ui-ux.md",
-      "sha256": "48bb9f20d94e3c7e0ed4c856454c59896bdc912ee25e2280014861fecfa7d737"
+      "sha256": "dd1f4afb40353fcc68a553b40a16b63cf5eed08d705674a6e47cd1bc785658d2"
     },
     {
       "path": ".kilo/agents/jefe-proyecto.md",
-      "sha256": "4623a7a21d1c3c06f1a286347ccaeee9fe0d0674c52cec5f0ffceda622f2efb7"
+      "sha256": "d26e79fabf80c53a41158b067e92ded3f1f01689de318c7afbd9272858b5738f"
     },
     {
       "path": ".kilo/agents/maquetador-frontend.md",
-      "sha256": "811ba2d420086ff1b5dd162def91b2c21cb217278c942c3e2ab1b5999aca6a38"
+      "sha256": "5bb881978e0e3996acba924e53c02ba82305fbd1b5e25b679f53ca0549ea0daf"
     },
     {
       "path": ".kilo/agents/revisor.md",
-      "sha256": "2d34fc83075d93d8655e25718bd6106aaa83256ceef9492e60c4dbd0abdb4dd4"
+      "sha256": "38b43297d97d4b1e80c6f846a034ec27156ea5bad54ed964c8bd46eb9237cc33"
     },
     {
       "path": ".kilo/commands/cn-actualizar.md",

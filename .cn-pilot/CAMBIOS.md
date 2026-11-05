@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.8.8] - 2026-11-05
+
+- Kilo 7.8.8 aplica default-deny a tools no listadas; los perfiles conservan capacidades explícitas por rol y Revisor no hereda herramientas MCP/externas ni búsqueda por grep.
+- Se amplían las ACL de lectura/escritura para credenciales, secretos anidados y configuración MCP/Kilo; `.env.example` sigue permitido fuera de directorios sensibles.
+- Se documentan los límites reales de `grep`, shell, procesos, MCP, Auto-Approve y sandbox Windows; las reglas no se describen como aislamiento del sistema operativo.
+- Core QA verifica políticas estáticas, precedence de excepciones y rutas owner-only; si Kilo está instalado, una prueba de runtime revisa las reglas resueltas. Sin nuevos agentes, skills, comandos ni dependencias.
+
 ## [2.8.7] - 2026-11-04
 
 - Separa la detección real de Kilo de la evaluación de compatibilidad e inyecta un probe controlado en las pruebas del CLI del updater.

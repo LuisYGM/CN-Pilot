@@ -2,36 +2,103 @@
 description: Define UX/UI, layouts, jerarquía, componentes, responsive, design system y especificaciones visuales implementables. Úsalo antes de maquetar cuando haya decisiones visuales relevantes.
 mode: subagent
 permission:
+  "*": deny
   read:
     "*": allow
     ".env": deny
     ".env.*": deny
     "**/.env": deny
     "**/.env.*": deny
+    "**/.netrc": deny
+    "**/.aws/credentials": deny
+    "**/.docker/config.json": deny
+    "**/credentials.json": deny
+    "**/service-account.json": deny
+    "**/id_rsa": deny
+    "**/id_ed25519": deny
+    "**/id_ecdsa": deny
+    "**/id_dsa": deny
+    "**/*.p12": deny
+    "**/*.pfx": deny
+    "**/*.jks": deny
+    ".kilocode/mcp.json": deny
+    "**/.kilocode/mcp.json": deny
+    ".kilo/mcp.json": deny
+    "**/.kilo/mcp.json": deny
+    "kilo.json": deny
+    "kilo.jsonc": deny
+    "**/kilo.json": deny
+    "**/kilo.jsonc": deny
+    ".kilo/kilo.json": deny
+    ".kilo/kilo.jsonc": deny
+    ".kilocode/kilo.json": deny
+    ".kilocode/kilo.jsonc": deny
+    ".npmrc": deny
+    "**/.npmrc": deny
+    ".pypirc": deny
+    "**/.pypirc": deny
+    "**/*.pem": ask
+    "**/*.key": ask
+    "**/.kube/config": ask
+    "**/kubeconfig": ask
     ".env.example": allow
     "**/.env.example": allow
     "secrets/**": deny
-    ".kilocode/mcp.json": deny
-    "**/.kilocode/mcp.json": deny
+    "**/secrets/**": deny
   glob: allow
   grep: allow
+  lsp: allow
+  board_read: allow
+  board_post: allow
+  external_directory: deny
   skill: allow
   websearch: allow
   webfetch: allow
   task: deny
   agent_manager: deny
   background_process: ask
-  write: ask
-  apply_patch: ask
+  write: allow
+  apply_patch: allow
   edit:
     "*": ask
     ".env": deny
     ".env.*": deny
     "**/.env": deny
     "**/.env.*": deny
-    "secrets/**": deny
+    "**/.netrc": deny
+    "**/.aws/credentials": deny
+    "**/.docker/config.json": deny
+    "**/credentials.json": deny
+    "**/service-account.json": deny
+    "**/id_rsa": deny
+    "**/id_ed25519": deny
+    "**/id_ecdsa": deny
+    "**/id_dsa": deny
+    "**/*.p12": deny
+    "**/*.pfx": deny
+    "**/*.jks": deny
     ".kilocode/mcp.json": deny
     "**/.kilocode/mcp.json": deny
+    ".kilo/mcp.json": deny
+    "**/.kilo/mcp.json": deny
+    "kilo.json": deny
+    "kilo.jsonc": deny
+    "**/kilo.json": deny
+    "**/kilo.jsonc": deny
+    ".kilo/kilo.json": deny
+    ".kilo/kilo.jsonc": deny
+    ".kilocode/kilo.json": deny
+    ".kilocode/kilo.jsonc": deny
+    ".npmrc": deny
+    "**/.npmrc": deny
+    ".pypirc": deny
+    "**/.pypirc": deny
+    "**/*.pem": ask
+    "**/*.key": ask
+    "**/.kube/config": ask
+    "**/kubeconfig": ask
+    ".env.example": allow
+    "**/.env.example": allow
     ".kilo/**": deny
     "AGENTS.md": deny
     ".cn-pilot-version": deny
@@ -44,6 +111,8 @@ permission:
     "DECISIONES.md": deny
     "ARTEFACTOS.md": deny
     "README.md": deny
+    "secrets/**": deny
+    "**/secrets/**": deny
   bash:
     "*": ask
     "git status": allow

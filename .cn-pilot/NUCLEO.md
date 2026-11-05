@@ -1,6 +1,6 @@
 # Núcleo de CN Pilot — Especificación 2.0
 
-**Versión:** `2.8.7`
+**Versión:** `2.8.8`
 
 Documento de referencia para mantenedores de CN Pilot. Una persona nueva debe empezar por [`documentacion/EMPIEZA-AQUI.md`](documentacion/EMPIEZA-AQUI.md); no necesita leer esta especificación para trabajar.
 
@@ -121,7 +121,7 @@ El especialista controla el método y las decisiones técnicas internas dentro d
 
 ## Permisos
 
-En Kilo 7.8.1, las reglas por patrón verificadas aplican la última coincidencia: el fallback va antes de las excepciones. Tras editar permisos se comprueba su resolución en el runtime instalado, sin asumir que otras versiones o tools usan idéntica semántica. Cada agente tiene `allow` en su área habitual, `ask` fuera cuando una edición puede ser legítima y `deny` para secretos, Core del CN Pilot que no le corresponde y operaciones peligrosas. Revisor permanece en lectura y verificación.
+Para Kilo 7.8.8 la última regla coincidente prevalece entre global, proyecto y agente; se verifica la resolución con la versión instalada antes de cerrar un cambio de permisos. El fallback Core para tools no listadas es `deny`; los perfiles habilitan solo las capacidades propias de cada owner y Revisor permite únicamente lectura acotada. Deniega paths sensibles/Core explícitamente y coloca excepciones de plantillas antes de la denegación final de carpetas secretas. Jefe puede pedir acceso externo con gate; especialistas y Revisor lo tienen denegado. Kilo 7.8.8 implementa sus tools nativas `write`/`apply_patch` mediante permiso `edit` con el path de cada archivo, pero `grep` autoriza por search pattern y no aplica la ACL de `read`; no simules un bloqueo por path que esa tool no puede garantizar. Las APIs de filesystem/shell inyectadas por el host son una frontera distinta y dependen de su propia autorización. `ask` es aprobación humana, no deny, y Auto-Approve puede aceptarla. En Windows Kilo no dispone de sandbox OS, por lo que shell/procesos/MCP no quedan aislados por workspace; no presentes patrones como aislamiento del sistema.
 
 ## Niveles de trabajo
 
@@ -250,7 +250,7 @@ Antes de crear worktrees, reconcilia `git status`, branch y HEAD de la base. No 
 
 La independencia no se decide solo por nombres o archivos: valora imports y APIs, `package.json`/lockfiles, config/router, schema/migrations, generated files, CSS/tokens, backend/frontend, datos, WordPress hooks/themes compartidos, CI/deploy y recursos externos (ports, cache, DB, containers, emulator). Estabiliza interfaces y decisiones compartidas antes de dividir; contenido puede ir en paralelo con implementación solo cuando page intent/contrato está suficientemente definido y la entrega es independiente. Diseño visual material no se implementa en paralelo antes del gate/aprobación vigente. Trata config global, archivos de arranque, `.env.example`, schema, CSS/tokens y lockfiles como una sola superficie exclusiva salvo aislamiento demostrado. No asignes el mismo archivo ni superficie lógica a writers diferentes. Si una unidad descubre dependencia fuera de su ownership, se detiene en ese cambio y reporta el gap a Jefe de proyecto; Jefe de proyecto serializa, reasigna scope o espera, no permite que el worker edite otra unidad.
 
-Worktree isolation no da ownership de Project Context ni del Core. Especialistas no escriben `PROYECTO.md`, `REQUISITOS.md`, `ESTADO.md`, `DECISIONES.md`, `ARTEFACTOS.md`, `README.md`, `.cn-pilot/**`, `.kilo/**`, `.cn-pilot-version` ni `AGENTS.md`; informan hechos/propuestas/evidencia al Jefe de proyecto. Jefe de proyecto reconcilia una sola vez tras las unidades.
+Worktree isolation no da ownership de Project Context ni del Core. Especialistas no escriben `PROYECTO.md`, `REQUISITOS.md`, `ESTADO.md`, `DECISIONES.md`, `ARTEFACTOS.md`, `README.md`, `.cn-pilot/**`, `.kilo/**`, `kilo.json`/`kilo.jsonc`, `.cn-pilot-version` ni `AGENTS.md`; informan hechos/propuestas/evidencia al Jefe de proyecto. Jefe de proyecto reconcilia una sola vez tras las unidades.
 
 No fuerces un commit base ni commits parciales solo para paralelizar. Una unidad puede recibir commit local solo después de estar completa/verificada y si su permiso/flujo ya lo permite; no amplíes permisos al worker. El commit no integra ni autoriza push; si el worker no puede commitear, conserva su worktree y Jefe de proyecto elige Apply local o integración local autorizada. El handoff identifica resultado, scope/paths, contratos, tests, limitaciones, branch/worktree/session reales y hash si existe; no transcript ni logs voluminosos.
 
