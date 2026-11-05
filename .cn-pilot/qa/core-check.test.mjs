@@ -4,7 +4,9 @@ import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 import { test } from "node:test";
+import { fileURLToPath } from "node:url";
 import { runCli, runCoreChecks } from "./core-check.mjs";
+import { validateWorkspaceTarget } from "../agent-evals/prepare.mjs";
 
 function readCoreFile(relativePath) {
   return fs.readFileSync(new URL(`../../${relativePath}`, import.meta.url), "utf8");
@@ -1059,6 +1061,89 @@ test("Progress Guard preserves recoverable work and bounded evidence without tre
   assert.match(devLead, /Si acceptance sigue pendiente y el trabajo es recuperable.*continúa/s);
   assert.match(core, /No implementes un loop por strings\/texto\/exit code ambiguo/);
   assert.match(core, /una tercera iteración solo atiende un blocker material demostrable/i);
+});
+
+test("Agent Eval scenario registry is complete, safe, and distinct from behavioral results", () => {
+  const suite = JSON.parse(readCoreFile(".cn-pilot/agent-evals/scenarios.json"));
+  const expectedIds = ["EVAL-001", "EVAL-002", "EVAL-003", "EVAL-004", "EVAL-005", "EVAL-006"];
+  assert.equal(suite.schemaVersion, 1);
+  assert.deepEqual(suite.scenarios.map(({ id }) => id), expectedIds);
+  assert.deepEqual(suite.resultValues, ["PASS", "FAIL", "INCONCLUSIVE"]);
+  assert.match(suite.modelPolicy, /default real de Kilo/);
+
+  for (const scenario of suite.scenarios) {
+    assert.ok(scenario.title && scenario.request && scenario.agent, `${scenario.id} describes a real request/agent`);
+    assert.ok(scenario.acceptance.length > 0, `${scenario.id} has observable criteria`);
+    assert.ok(scenario.evidence.length > 0, `${scenario.id} names evidence`);
+    assert.ok(["git-baseline", "git-baseline-plus-working"].includes(scenario.workspaceMode), `${scenario.id} has an isolated Git workspace`);
+    assert.equal(scenario.agent, "jefe-proyecto", `${scenario.id} launches a real primary agent`);
+    if (scenario.expectedOwner) assert.notEqual(scenario.expectedOwner, scenario.agent, `${scenario.id} records the subagent owner separately from the launch agent`);
+    const evalRoot = fileURLToPath(new URL("../agent-evals/", import.meta.url));
+    const fixtureRoot = path.join(evalRoot, "fixtures");
+    const fixture = path.resolve(evalRoot, scenario.fixture);
+    const fixtureRelative = path.relative(fixtureRoot, fixture);
+    assert.ok(fixtureRelative !== ".." && !fixtureRelative.startsWith(`..${path.sep}`) && !path.isAbsolute(fixtureRelative), `${scenario.id} fixture stays in the fixture root`);
+    assert.ok(fs.existsSync(fixture), `${scenario.id} fixture exists`);
+    if (scenario.setupTest) {
+      assert.ok([0, 1].includes(scenario.setupTest.expectExit));
+      assert.ok(!path.isAbsolute(scenario.setupTest.recordPath) && !scenario.setupTest.recordPath.split(/[\\/]/).includes(".."));
+    }
+  }
+
+  const recordTemplate = JSON.parse(readCoreFile(".cn-pilot/agent-evals/run-record.template.json"));
+  for (const field of suite.recordFields) assert.ok(Object.hasOwn(recordTemplate, field), `record template includes ${field}`);
+  assert.equal(recordTemplate.result, "INCONCLUSIVE", "a prepared/unreviewed run must not start as PASS");
+  assert.equal(recordTemplate.durationMs, null, "unknown duration is not reported as zero");
+  assert.equal(recordTemplate.tokenUsage.total, null, "unobserved token usage is not invented");
+
+  const fixtureRoot = fileURLToPath(new URL("../agent-evals/fixtures/", import.meta.url));
+  const sensitiveName = /(^|\/)(\.env($|\.)|\.npmrc$|\.pypirc$|credentials(\.json)?$|service-account\.json$|id_(rsa|ed25519|ecdsa|dsa)$)/i;
+  const walk = (directory) => {
+    for (const item of fs.readdirSync(directory, { withFileTypes: true })) {
+      const absolute = path.join(directory, item.name);
+      const relative = path.relative(fixtureRoot, absolute).split(path.sep).join("/");
+      assert.doesNotMatch(relative, sensitiveName);
+      assert.equal(item.isSymbolicLink(), false, `fixture symlink forbidden: ${relative}`);
+      if (item.isDirectory()) walk(absolute);
+      else assert.doesNotMatch(fs.readFileSync(absolute, "utf8"), /-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----|sk-[A-Za-z0-9]{24,}/);
+    }
+  };
+  walk(fixtureRoot);
+  assert.ok(suite.scenarios.every(({ id }) => expectedIds.includes(id)));
+  assert.match(readCoreFile(".cn-pilot/agent-evals/README.md"), /No uses `--auto`/);
+});
+
+test("Agent Eval workspace preflight only accepts new paths under OS temp and never overwrites", () => {
+  const parent = fs.mkdtempSync(path.join(os.tmpdir(), "cn-pilot-eval-preflight-"));
+  const repo = path.join(parent, "checkout");
+  fs.mkdirSync(repo);
+  try {
+    const valid = path.join(parent, "new-workspace");
+    assert.equal(validateWorkspaceTarget(valid, { repoRoot: repo, tempRoot: parent }), valid);
+    assert.throws(() => validateWorkspaceTarget(path.join(repo, "workspace"), { repoRoot: repo, tempRoot: parent }), /inside the CN Pilot checkout/);
+    assert.throws(() => validateWorkspaceTarget(path.join(os.tmpdir(), "outside-parent", "workspace"), { repoRoot: repo, tempRoot: parent }), /children of the OS temp directory/);
+    fs.mkdirSync(valid);
+    assert.throws(() => validateWorkspaceTarget(valid, { repoRoot: repo, tempRoot: parent }), /already exists/);
+  } finally {
+    fs.rmSync(parent, { recursive: true, force: true });
+  }
+});
+
+test("Agent Eval run records preserve structured outcomes without inventing measurements", () => {
+  const runs = fileURLToPath(new URL("../../artefactos/agent-evals/runs/", import.meta.url));
+  if (!fs.existsSync(runs)) return;
+  const files = fs.readdirSync(runs).filter((name) => name.endsWith(".json"));
+  for (const filename of files) {
+    const record = JSON.parse(fs.readFileSync(path.join(runs, filename), "utf8"));
+    assert.equal(record.schemaVersion, 1, filename);
+    for (const field of ["runId", "evalId", "startedAt", "finishedAt", "durationSource", "sourceCommit", "coreVersion", "kiloVersion", "configurationFingerprint", "configurationScope", "scenarioFingerprint", "workspaceFingerprint", "request", "followUps", "criteria", "evidence", "defects", "humanInterventions", "durationMs", "tokenUsage", "limitations"])
+      assert.ok(Object.hasOwn(record, field), `${filename} includes ${field}`);
+    assert.ok(["PASS", "FAIL", "INCONCLUSIVE"].includes(record.result), `${filename} result is explicit`);
+    assert.ok(record.criteria.every(({ result }) => ["PASS", "FAIL", "INCONCLUSIVE"].includes(result)), `${filename} criteria carry explicit outcomes`);
+    if (record.durationMs === null) assert.equal(record.tokenUsage.total, null, `${filename} must not imply measurements when unmeasured`);
+    if (record.tokenUsage.total === null) assert.ok(record.tokenUsage.source, `${filename} explains unavailable token aggregation`);
+    assert.doesNotMatch(JSON.stringify(record), /C:\\\\Users\\\\[^\\\\]+\\\\AppData\\\\Local\\\\Temp/i, `${filename} does not disclose a personal scratch path`);
+  }
 });
 
 test("update commands require deterministic filesystem discovery and preserve silent closure", () => {

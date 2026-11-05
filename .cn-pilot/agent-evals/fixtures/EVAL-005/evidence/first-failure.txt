@@ -1,0 +1,1 @@
+This file is populated by the preparation step from the real first `node --test` exit and output. It is not a simulated test result.

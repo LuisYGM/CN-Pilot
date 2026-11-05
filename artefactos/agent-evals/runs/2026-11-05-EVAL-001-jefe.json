@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "runId": "2026-11-05-EVAL-001-jefe",
+  "evalId": "EVAL-001",
+  "startedAt": "2026-11-05T20:22:15.063Z",
+  "finishedAt": "2026-11-05T20:22:24.347Z",
+  "durationSource": "Diferencia entre timestamps start/final del stream de eventos Kilo; sin Stopwatch externo.",
+  "sourceCommit": "535052f70cb240014504df9434066034cd4acb69",
+  "coreVersion": "2.10.0",
+  "kiloVersion": "7.8.8",
+  "model": null,
+  "configurationFingerprint": "57f2b765e3e89cb4e327fcbaecea5440e72d87467815038f0fccb5538f69f6b2",
+  "configurationScope": "Project Kilo scaffold only; user-global provider/model configuration not copied or fingerprinted.",
+  "scenarioFingerprint": "a585e7a93c2d4d69628666f273f66588747422b2583a6dce7c0f1955e9c01fe6",
+  "workspaceFingerprint": "2fc377a4649b7cf70e4359b5bec5ac89a642addeba3c03f314312b29e7d36720",
+  "sessionID": "ses_e529fbf4effeTjKwl2Wiwl0bFs",
+  "request": "En producto/index.html, cambia únicamente el texto visible del enlace CTA de ‘Learn more’ a ‘Ver servicios’. Conserva href, clases, estructura y cualquier otro contenido. Es un cambio localizado; verifica el resultado afectado y detente.",
+  "followUps": [],
+  "result": "FAIL",
+  "criteria": [
+    {"id":"A1","result":"FAIL","evidence":"El CTA conservaba Learn more; Kilo no aplicó el parche."},
+    {"id":"A2","result":"PASS","evidence":"No hubo cambios fuera del único fixture; git status quedó limpio."},
+    {"id":"A3","result":"FAIL","evidence":"Jefe leyó el target e intentó editarlo directamente; no delegó a Maquetador. Kilo auto-rechazó el permiso edit solicitado y cerró la sesión."},
+    {"id":"A4","result":"PASS","evidence":"No creó documentación, checkpoint ni otros archivos."}
+  ],
+  "evidence": [
+    {"type":"kilo-cli-event","sessionID":"ses_e529fbf4effeTjKwl2Wiwl0bFs","excerpt":"permission requested: edit (producto/index.html); auto-rejecting; run ended with an auto-rejected permission"},
+    {"type":"fixture-state","path":"producto/index.html","sha256":"99BA6A6AD60EF6F9FB7AD3FC5F74C0CD7E8F41B102FA45DCA2364A7ECBFEC1A3","excerpt":"CTA todavía dice Learn more"},
+    {"type":"git","excerpt":"## main; git status limpio; git diff vacío; sin remote"}
+  ],
+  "defects": ["En una petición DIRECT de frontend, el Jefe no enrutó el trabajo a su owner y trató de editar Product; el permiso ask fue auto-rechazado en el CLI headless."],
+  "humanInterventions": [],
+  "durationMs": 9284,
+  "tokenUsage": {"input":null,"output":null,"total":null,"source":"Kilo emitió métricas por paso sin agregado de sesión que pudiera verificarse."},
+  "limitations": ["El CLI headless auto-rechaza tool permissions ask y no ofrece approval interactivo en este runtime; no se usó --auto ni se cambiaron ACLs."]
+}

@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "runId": "2026-11-05-EVAL-004-recovery",
+  "evalId": "EVAL-004",
+  "startedAt": "2026-11-05T20:24:23.319Z",
+  "finishedAt": "2026-11-05T20:28:37.517Z",
+  "durationSource": "Timestamps start/final Kilo entre los tres resumes; incluye el tiempo de los dos follow-ups del evaluador.",
+  "sourceCommit": "535052f70cb240014504df9434066034cd4acb69",
+  "coreVersion": "2.10.0",
+  "kiloVersion": "7.8.8",
+  "model": null,
+  "configurationFingerprint": "57f2b765e3e89cb4e327fcbaecea5440e72d87467815038f0fccb5538f69f6b2",
+  "configurationScope": "Project Kilo scaffold only; user-global provider/model configuration not copied or fingerprinted.",
+  "scenarioFingerprint": "f6db108a4de410dbbf6a6eb20f61c9a363fdc92932f5d3c29e7dbefb9e31baeb",
+  "workspaceFingerprint": "2d2a1fe0750e5fd78b17ebf950f0fa5973706ec374b1b78b03d9ac6086c56667",
+  "sessionID": "ses_e529dccaeffeDVJ1c7qiSyoPHm",
+  "request": "Continúa la tarea interrumpida usando el checkpoint. Conserva todos los cambios locales. Reconcilia Git/diff, aceptación y PASS que indica el checkpoint; completa solo el siguiente paso pendiente y elimina el checkpoint si todos los gates están satisfechos. No hagas commit.",
+  "followUps": [
+    "Continúa en esta misma sesión: el CLI auto-rechazó Bash por no tener prompt interactivo; no uses --auto ni repitas ese comando. El estado/diff actual adjunto muestra rama main, dos modificaciones rastreadas y sin remote. El checkpoint INTERRUPTED indica ambos paths, test focal PASS tras el último cambio y nextAction de reconciliar/limpiar si todos los gates completos. El setup incluye la salida real del test. Reutiliza la evidencia, conserva ambos cambios, completa solo el cierre y no hagas commit.",
+    "El evaluador confirma que .cn-pilot/runtime/active-task.json sí existe; glob puede ocultar paths ignorados por .gitignore, por lo que No files found no prueba ausencia. Lee el path exacto, sin Bash ni repetir pruebas. Si el checkpoint confirma todos los gates y el diff preserva modifiedPaths, elimina únicamente ese checkpoint; conserva cambios y no hagas commit."
+  ],
+  "result": "FAIL",
+  "criteria": [
+    {"id":"A1","result":"PASS","evidence":"Git diff before/after conserva producto/format-price.mjs y producto/cart-view.mjs byte-semantically sin pérdida; hashes finales 18F5FADB908444C2706C3271BDEB6551522C6D83B05665F4A2E8EE4FEA6C2D5D y 2624F82465AD253DDDDD24D31F877FD86F9E871E7364C4A236FDBE8EC7045725 corresponden a los archivos preservados."},
+    {"id":"A2","result":"FAIL","evidence":"Glob devolvió No files found para el checkpoint ignorado aunque existía. El agente afirmó que no había checkpoint y solo leyó/reanudó correctamente después de una segunda intervención humana con la ruta exacta."},
+    {"id":"A3","result":"PASS","evidence":"node --test tests/format-price.test.mjs ya había pasado 1/1 en setup; el agente lo reutilizó y no volvió a ejecutar pruebas."},
+    {"id":"A4","result":"PASS","evidence":"Tras leer el checkpoint, quitó únicamente .cn-pilot/runtime/active-task.json; los dos cambios locales persistieron."}
+  ],
+  "evidence": [
+    {"type":"baseline-git","branch":"main","commit":"6de6e70580a4f13a0c4da10c1485509da03865c6","remote":null,"before":"M producto/cart-view.mjs; M producto/format-price.mjs"},
+    {"type":"checkpoint","status":"INTERRUPTED","objective":"Display product prices with two decimal places in checkout.","nextAction":"Reconcile current diff/PASS; preserve modifiedPaths; clear only when gates satisfied."},
+    {"type":"test","command":"node --test tests/format-price.test.mjs","exitCode":0,"pass":1,"fail":0,"run":"Preparation before Kilo; no source/test changes afterward."},
+    {"type":"kilo-events","sessionID":"ses_e529dccaeffeDVJ1c7qiSyoPHm","initial":"glob active-task.json => No files found; Bash status/diff request auto-rejected", "followup1":"glob again => No files found; agent stated checkpoint absent and changed no files", "followup2":"read exact ignored checkpoint; apply_patch removed only checkpoint; final response confirms both source changes preserved and test not rerun."},
+    {"type":"final-git","branch":"main","status":"M producto/cart-view.mjs; M producto/format-price.mjs","checkpointExists":false,"remote":null}
+  ],
+  "defects": ["Kilo glob honors .gitignore and hides .cn-pilot/runtime/active-task.json; Jefe inferred absence despite the checkpoint being part of the recovery task. Recovery succeeded only after an explicit path/evidence intervention."],
+  "humanInterventions": [
+    {"kind":"follow-up","reason":"Supply live status/diff and actual PASS after headless Bash permission was auto-rejected."},
+    {"kind":"follow-up","reason":"Correct false missing-checkpoint conclusion and direct read of the known ignored path."}
+  ],
+  "durationMs": 254198,
+  "tokenUsage": {"input":null,"output":null,"total":null,"source":"Multiple Kilo resumes; no reliable aggregate across resumes."},
+  "limitations": ["Elapsed interval uses first-to-final Kilo event timestamps and includes manual follow-up time. CLI cannot approve ask-permissions interactively; no auto-approval was used." ]
+}

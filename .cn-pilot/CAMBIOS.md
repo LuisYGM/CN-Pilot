@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.11.0] - 2026-11-05
+
+- Añade escenarios Agent Evals JSON y fixtures sintéticos para DIRECT, TASK, STRUCTURAL, recovery, Progress Guard y handoff a Revisor.
+- Prepara workspaces scratch solo bajo temp, copia un scaffold Kilo allowlisted, usa repositorios `main` sin remote cuando corresponde, rechaza sobrescrituras y conserva cualquier ejecución fallida.
+- Ejecuta pilotos Kilo reales: EVAL-001/004 revelaron problemas de routing, headless permissions y glob de checkpoint ignorado; EVAL-006 demostró handoff con diff/tests y permitió al Revisor hallar un defecto real de redondeo en el fixture.
+- Core tests validan estructura/aislamiento/metadatos, sin afirmar que las aserciones estáticas demuestren comportamiento real.
+
 ## [2.10.0] - 2026-11-05
 
 - Las delegaciones materiales entregan objetivo, scope, restricciones y evidencia que el owner necesita; `/revision` comprueba que el diff real (no solo su ruta) esté adjunto antes de llamar a Revisor.

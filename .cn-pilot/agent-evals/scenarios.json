@@ -1,0 +1,133 @@
+{
+  "schemaVersion": 1,
+  "suite": "cn-pilot-agent-evals",
+  "suiteAddedInCoreVersion": "2.11.0",
+  "purpose": "Evaluaciones conductuales de agentes Kilo; no sustituye Core QA, tests deterministas ni evaluación humana.",
+  "modelPolicy": "Usar el modelo default real de Kilo; registrar el modelo reportado por la sesión y no forzar uno para comparar esta línea base.",
+  "recordFields": [
+    "runId", "evalId", "startedAt", "finishedAt", "durationSource", "workspaceFingerprint", "scenarioFingerprint", "request", "followUps", "coreVersion",
+    "kiloVersion", "model", "configurationFingerprint", "result", "criteria",
+    "evidence", "defects", "humanInterventions", "durationMs", "tokenUsage", "limitations"
+  ],
+  "resultValues": ["PASS", "FAIL", "INCONCLUSIVE"],
+  "scenarios": [
+    {
+      "id": "EVAL-001",
+      "mode": "DIRECT",
+      "title": "Cambio localizado de etiqueta en página existente",
+      "agent": "jefe-proyecto",
+      "expectedOwner": "maquetador-frontend",
+      "fixture": "fixtures/EVAL-001",
+      "workspaceMode": "git-baseline",
+      "baseline": "fixtures/EVAL-001",
+      "request": "En producto/index.html, cambia únicamente el texto visible del enlace CTA de ‘Learn more’ a ‘Ver servicios’. Conserva href, clases, estructura y cualquier otro contenido. Es un cambio localizado; verifica el resultado afectado y detente.",
+      "acceptance": [
+        {"id": "A1", "observable": "El enlace muestra ‘Ver servicios’ y conserva href y clases."},
+        {"id": "A2", "observable": "No cambia contenido, estructura ni archivos no relacionados."},
+        {"id": "A3", "observable": "Delega solo en Maquetador como owner apropiado; no agrega plan, documentación, checkpoint ni agentes innecesarios."}
+      ],
+      "evidence": ["Diff del workspace contra fixture inicial", "Lectura del elemento CTA y paths modificados", "Transcripción de sesión Kilo"],
+      "safety": "Solo fixture sintético; no copiar recursos ni sitios reales."
+    },
+    {
+      "id": "EVAL-002",
+      "mode": "TASK",
+      "title": "Filtros de catálogo con estado accesible",
+      "agent": "jefe-proyecto",
+      "expectedOwner": "desarrollador",
+      "fixture": "fixtures/EVAL-002",
+      "workspaceMode": "git-baseline",
+      "baseline": "fixtures/EVAL-002",
+      "request": "Implementa en producto/catalog.html el filtro ya definido en requisitos.txt. Conserva diseño y dependencias actuales. Verifica los criterios indicados; no agregues filtros ni cambies páginas ajenas.",
+      "acceptance": [
+        {"id": "A1", "observable": "La consulta filtra títulos sin distinguir mayúsculas/minúsculas."},
+        {"id": "A2", "observable": "Se muestra un mensaje de vacío cuando no hay resultados y vuelve a desaparecer al limpiar la consulta."},
+        {"id": "A3", "observable": "El estado y número de resultados permanecen accesibles y se actualizan correctamente."},
+        {"id": "A4", "observable": "Prueba focal pasa y no hay cambios fuera de producto/catalog.html y su script."}
+      ],
+      "evidence": ["Diff y lista de paths", "Comando/prueba focal y salida", "Inspección DOM/estado o evidencia browser si está disponible"],
+      "safety": "No instalar dependencias ni servicios; datos de catálogo ficticios."
+    },
+    {
+      "id": "EVAL-003",
+      "mode": "STRUCTURAL",
+      "title": "Catálogo con búsqueda, filtros y paginación",
+      "agent": "jefe-proyecto",
+      "fixture": "fixtures/EVAL-003",
+      "workspaceMode": "git-baseline",
+      "baseline": "fixtures/EVAL-003",
+      "request": "Implementa la funcionalidad completa descrita en artefactos/funcionalidad.md en este fixture. Decide una especificación/plan compacto proporcional, conserva una única fuente de requisitos y relaciona los requisitos con implementación y evidencia. No introduzcas dependencias ni amplíes el alcance.",
+      "acceptance": [
+        {"id": "A1", "observable": "Cada requisito incluido tiene resultado identificable."},
+        {"id": "A2", "observable": "Búsqueda, filtro y paginación funcionan combinados y el estado vacío es correcto."},
+        {"id": "A3", "observable": "Cada criterio tiene unidad y evidencia adecuada; bloqueados y fuera de alcance están diferenciados."},
+        {"id": "A4", "observable": "Pruebas pertinentes pasan; no quedan unidades esenciales pendientes ni decisiones provisionales asumidas como aprobadas."}
+      ],
+      "evidence": ["Plan/spec generado y diff", "Matriz/enlaces requisito-criterio-unidad-evidencia conservados en una única fuente", "Salida de pruebas y revisión final"],
+      "safety": "App estática sin backend ni datos personales."
+    },
+    {
+      "id": "EVAL-004",
+      "mode": "RECOVERY",
+      "title": "Reanudar checkpoint con cambios locales y PASS vigente",
+      "agent": "jefe-proyecto",
+      "fixture": "fixtures/EVAL-004",
+      "setup": "Crear un repositorio temporal main desde baseline; aplicar el directorio working, mantener sin commit ambos cambios rastreados y copiar checkpoint a .cn-pilot/runtime/active-task.json. Registrar PASS previo del test focal. No tocar el checkout CN Pilot.",
+      "workspaceMode": "git-baseline-plus-working",
+      "baseline": "fixtures/EVAL-004/baseline",
+      "working": "fixtures/EVAL-004/working",
+      "checkpointFixture": "fixtures/EVAL-004/working/active-task.json.fixture",
+      "setupTest": {"command": ["--test", "tests/format-price.test.mjs"], "expectExit": 0, "recordPath": ".cn-pilot/runtime/eval-setup.json"},
+      "request": "Continúa la tarea interrumpida usando el checkpoint. Conserva todos los cambios locales. Reconcilia Git/diff, aceptación y PASS que indica el checkpoint; completa solo el siguiente paso pendiente y elimina el checkpoint si todos los gates están satisfechos. No hagas commit.",
+      "acceptance": [
+        {"id": "A1", "observable": "Los dos cambios locales de código permanecen intactos."},
+        {"id": "A2", "observable": "El objetivo, status, diff y checkpoint determinan el siguiente paso; no reinicia planificación."},
+        {"id": "A3", "observable": "El PASS focal se reutiliza si su superficie no cambió después de ejecutarse."},
+        {"id": "A4", "observable": "El checkpoint se conserva si hay gates pendientes o se elimina solo al cierre verificado."}
+      ],
+      "evidence": ["Git status/diff previo y posterior", "Salida Kilo/session export", "Checkpoint antes/después", "Prueba focal previa con paths cubiertos"],
+      "safety": "Repositorio efímero sin remotos; no copiar credenciales ni usar ramas/worktrees de producción."
+    },
+    {
+      "id": "EVAL-005",
+      "mode": "PROGRESS_GUARD",
+      "title": "Diagnóstico tras fallo repetible sin nueva evidencia",
+      "agent": "jefe-proyecto",
+      "expectedOwner": "desarrollador",
+      "fixture": "fixtures/EVAL-005",
+      "workspaceMode": "git-baseline",
+      "baseline": "fixtures/EVAL-005",
+      "setupTest": {"command": ["--test", "tests/discount.test.mjs"], "expectExit": 1, "recordPath": "evidence/first-failure.txt"},
+      "request": "El test de precio descontado falló una vez con la salida reproducida en evidence/first-failure.txt. Diagnostica primero la causa en el código. No vuelvas a ejecutar el mismo comando sin cambiar el estado o formular una hipótesis nueva; corrige solo el cálculo y verifica el test pertinente.",
+      "acceptance": [
+        {"id": "A1", "observable": "Identifica la discrepancia entre porcentaje y fracción a partir de evidencia."},
+        {"id": "A2", "observable": "No repite el mismo fallo/comando sin acción o hipótesis nueva."},
+        {"id": "A3", "observable": "Corrige únicamente el cálculo in-scope y el test focal pasa."},
+        {"id": "A4", "observable": "Reporta causa, cambio, verificación y limitaciones sin declarar progreso por llamadas."}
+      ],
+      "evidence": ["Transcripción/orden de herramientas", "Diff", "Primera salida y nueva salida del test focal"],
+      "safety": "Código matemático sintético, offline; sin shell destructivo ni dependencias externas."
+    },
+    {
+      "id": "EVAL-006",
+      "mode": "HANDOFF_REVISOR",
+      "title": "Revisión read-only de cambio real con diff y tests",
+      "agent": "jefe-proyecto",
+      "fixture": "fixtures/EVAL-006",
+      "setup": "Crear un repositorio temporal main desde baseline; copiar candidato sobre el árbol de trabajo sin commit; ejecutar la prueba focal sobre ese candidato y guardar salida real en .cn-pilot/runtime/eval-setup.json. El diff debe ser real y no alterar el Core.",
+      "workspaceMode": "git-baseline-plus-working",
+      "baseline": "fixtures/EVAL-006/baseline",
+      "working": "fixtures/EVAL-006/working",
+      "setupTest": {"command": ["--test", "tests/discount.test.mjs"], "expectExit": 0, "recordPath": ".cn-pilot/runtime/eval-setup.json"},
+      "request": "Revisa el cambio de precio en este workspace conforme a requirements.md. Usa el resultado de tests ya guardado si sigue vigente, entrega el diff, paths, acceptance y evidencia a Revisor mediante /revision. No cambies archivos, permisos ni vuelvas a correr pruebas sin que el diff invalide el PASS.",
+      "acceptance": [
+        {"id": "A1", "observable": "La revisión delegada recibe diff utilizable en el cuerpo, paths afectados, criterios, PASS vigente y límites."},
+        {"id": "A2", "observable": "Revisor conserva solo lectura; no se le exige recuperar diff por shell ni se modifican archivos."},
+        {"id": "A3", "observable": "No se repite la prueba PASS mientras su código/test permanecen iguales."},
+        {"id": "A4", "observable": "El informe relaciona hallazgo/riesgo con acceptance y no amplía la auditoría."}
+      ],
+      "evidence": ["Diff entregado al subagente (transcripción)", "Paths y acceptance", "Salida/hashes del test PASS", "Transcripción de revisión y diff final sin cambios"],
+      "safety": "El Revisor no modifica; workspace temporal no tiene remotos ni credenciales."
+    }
+  ]
+}

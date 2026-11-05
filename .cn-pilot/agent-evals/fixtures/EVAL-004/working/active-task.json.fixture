@@ -1,0 +1,12 @@
+{
+  "schemaVersion": 1,
+  "status": "INTERRUPTED",
+  "objective": "Display product prices with two decimal places in checkout.",
+  "nextAction": "Reconcile the current diff against acceptance and the recorded targeted-test PASS. Preserve both edited source files; clear this checkpoint only if all gates are satisfied. Do not commit.",
+  "modifiedPaths": ["producto/format-price.mjs", "producto/cart-view.mjs"],
+  "gates": [
+    {"name":"format price", "status":"COMPLETE", "evidence":"producto/format-price.mjs formats to two decimals"},
+    {"name":"targeted test", "status":"PASS", "command":"node --test tests/format-price.test.mjs", "scope":["producto/format-price.mjs", "tests/format-price.test.mjs"], "note":"Run after the last edit to format-price.mjs; no later change to those paths."},
+    {"name":"preserve local cart label", "status":"COMPLETE", "evidence":"Keep the intentional uncommitted label change in producto/cart-view.mjs"}
+  ]
+}

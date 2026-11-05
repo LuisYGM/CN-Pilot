@@ -1,0 +1,6 @@
+Implement one text-search filter for the existing catalog.
+- Match product text case-insensitively as the query is typed.
+- Keep the result count synchronized with visible products.
+- Show/hide #empty-message when the result set is empty/nonempty.
+- Do not add categories, pagination, styles, libraries, or other pages.
+- Keep the input label and result status accessible.
