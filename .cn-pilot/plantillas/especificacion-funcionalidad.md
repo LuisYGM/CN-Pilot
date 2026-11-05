@@ -34,6 +34,12 @@
 - AC1:
 - AC2:
 
+## Trazabilidad de implementación (opcional; para STRUCTURAL cuando reduzca ambigüedad)
+| Requisito | Criterio(s) | Unidad / owner | Evidencia de verificación | Estado |
+|---|---|---|---|---|
+
+> Usa IDs estables solo si ayudan a referenciar. Evidencia automatizada, manual, visual o especializada según el resultado. Al cierre, cada criterio incluido debe tener evidencia suficiente o estado BLOCKED con causa/gate; los pendientes OUT OF SCOPE requieren justificación y no son defectos incompletos. Elimina la tabla si no aporta valor.
+
 ## Arquitectura y enfoque
 
 ### Hechos confirmados
@@ -68,3 +74,5 @@
 
 ## Estado
 Proposed / Approved / In progress / Done
+
+> Antes de `Done`, reconcilia los requisitos incluidos, criterios y unidades esenciales con resultados/evidencias. No basta compilar. Conserva decisiones provisionales y no marques como aprobadas; separa explícitamente pendientes fuera de alcance. No reescribas specs históricas por esta estructura opcional.

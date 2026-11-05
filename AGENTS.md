@@ -26,7 +26,7 @@ Estas reglas son el **kernel compartido** de CN Pilot. El contrato completo de u
 ## Ejecución y terminado
 
 - Preserva comportamiento y trabajo manual existente; elige un owner y carga solo las capacidades que necesita. Para una skill, usa su description para decidir si aplica y carga su cuerpo on-demand; la disponibilidad no justifica usarla.
-- Verifica el criterio afectado con evidencia proporcional antes de cerrar. `DIRECT` requiere comprobación focal; `TASK` prueba el comportamiento y sus regresiones relevantes; `STRUCTURAL` requiere plan, acceptance, gates, retests y Revisor independiente. No declares pruebas que no ejecutaste y detente al cumplir la Definition of Done.
+- Verifica el criterio afectado con evidencia proporcional antes de cerrar. `DIRECT` requiere comprobación focal y no documentos/IDs; `TASK` define acceptance y pruebas del comportamiento afectado cuando aporten valor; `STRUCTURAL` requiere plan, acceptance, gates, reconciliación de requisitos/unidades/evidencias, retests y Revisor independiente. El riesgo puede elevar rigor aunque el diff sea pequeño. No declares pruebas que no ejecutaste y detente al cumplir la Definition of Done.
 - Para trabajo largo/reanudable aplica BF-047 desde el inicio: checkpoint y gates compactos, recovery focalizada y cleanup de recursos propios; no repitas checks aún válidos.
 
 ## Git

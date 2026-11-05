@@ -10,6 +10,8 @@ CN Pilot adapta el trabajo al objetivo actual: no es una cascada de fases que to
 
 La escala no depende solo del tamaño del diff. Un cambio corto en permisos, pagos o producción puede requerir un proceso más profundo.
 
+La profundidad documental también es proporcional: DIRECT no crea spec/matriz; TASK explicita acceptance y prueba del comportamiento cuando aporte valor; STRUCTURAL conserva una especificación durable cuando sirva a decisiones, handoffs o implementación. Para STRUCTURAL puede bastar un documento que reúna alcance, criterios, plan y evidencia; IDs/matrices/separación de tareas son opcionales si no reducen ambigüedad. El contrato de cierre y trazabilidad está en [NUCLEO](../NUCLEO.md#especificación-y-convergencia-adaptables); no se migran specs históricos.
+
 ## Recorrido adaptable
 
 Según el objetivo, el trabajo puede incluir contexto y discovery, requisitos, arquitectura, contenido, diseño, frontend/prototipo, desarrollo, QA, handoff, integración CMS, deployment y mantenimiento. Ninguna lista sustituye el scope real. Una etapa se añade solo si ayuda a decidir o entregar el resultado actual.

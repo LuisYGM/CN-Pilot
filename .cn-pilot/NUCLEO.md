@@ -1,6 +1,6 @@
 # Núcleo de CN Pilot — Especificación 2.0
 
-**Versión:** `2.8.8`
+**Versión:** `2.9.0`
 
 Documento de referencia para mantenedores de CN Pilot. Una persona nueva debe empezar por [`documentacion/EMPIEZA-AQUI.md`](documentacion/EMPIEZA-AQUI.md); no necesita leer esta especificación para trabajar.
 
@@ -143,6 +143,15 @@ Cambio importante, de arquitectura o riesgo alto.
 `requisitos → decisión arquitectónica si existe → plan compacto + gates/checkpoint inicial → implementación por batches → tests dirigidos y fixes → Revisor si aplica → checks finales/cleanup → commit local → Done`
 
 La fase de planificación produce un artefacto persistido cuando la especificación, arquitectura, plan o criterios vayan a utilizarse posteriormente. «No escribir código todavía» no impide persistir documentación; solo una instrucción explícita de no modificar la carpeta del proyecto evita escribirla. En greenfield, especificaciones funcionales van en `artefactos/documentacion/funcionalidades/`, arquitectura transversal en `artefactos/documentacion/arquitectura/`, ADRs formales en `artefactos/documentacion/adr/`, auditorías durables en `artefactos/documentacion/auditorias/` y decisiones aprobadas ligeras en `DECISIONES.md`. Crea `artefactos/` y subcarpetas solo cuando exista el primer artefacto real; `producto/documentacion/` pertenece a documentación interna del producto. En existentes preserva los destinos vigentes. Una planificación completa y verificada crea su commit local si Git existe; sin Git queda guardada localmente.
+
+#### Especificación y convergencia adaptables
+
+- **DIRECT** conserva el fast path: no exige spec, IDs, matriz ni plan formal. El riesgo/impacto real puede elevar verificaciones y gates sin cambiar la escala por tamaño de diff.
+- **TASK** acuerda acceptance observable y evidencia proporcional cuando comportamiento, dependencias o riesgo lo necesitan; se conserva en el handoff/artefacto ya vigente. No crea documentos ni IDs solo por tener varios pasos.
+- **STRUCTURAL** deja una especificación durable cuando guíe implementación posterior, cambio sea grande/riesgoso o más de un owner/batch necesite contrato compartido. Jefe de proyecto consolida decisiones y alcance una vez, en una única fuente canónica; no duplica requisitos entre spec, plan, tasks ni Project Context. Identificadores estables `REQ-nnn`, `AC-nnn`, `TASK-nnn`, `TEST-nnn` son opcionales y se usan cuando facilitan referenciar sin ambigüedad. En la misma spec basta un plan/checklist compacto; separar plan/tareas solo si complejidad, paralelismo o mantenimiento lo justifica.
+- Si se usa trazabilidad, cada requisito incluido se relaciona con uno o más criterios; cada criterio con una unidad de implementación o una razón explícita de no implementación; y cada criterio con evidencia adecuada y estado (`VERIFIED`, `BLOCKED` con causa/gate, `OUT OF SCOPE` con justificación, o pendiente/incompleto). Evidencia puede ser test automatizado, inspección de código/diff, resultado runtime, revisión visual, comprobación manual o informe especializado: no fuerces tests automatizados donde no sean la medida correcta. No declares `Done` si queda criterio incluido sin evidencia suficiente, unidad esencial pendiente o decisión provisional material asumida como aprobada. Un resultado compilable por sí solo no acredita aceptación.
+- Antes del cierre STRUCTURAL, Jefe de proyecto reconcilia el alcance vigente contra outputs/diff: requisitos cubiertos; acceptance verificado o bloqueado; unidades esenciales cerradas; pruebas/regresiones pertinentes; decisiones provisionales aún visibles; pendientes fuera de scope diferenciados de defectos. Conserva decisiones/spec aprobadas y su estado: no reabras/replanifiques sin cambio de fuente, contradicción, dependencia nueva, evidencia que invalida el supuesto o petición explícita.
+- El template de funcionalidad ofrece esta estructura como ayuda condicional, no como formulario obligatorio. Specs históricas sin esta trazabilidad siguen siendo válidas; no se migran retroactivamente.
 
 ### Completion-Driven Execution & Recovery (BF-047)
 

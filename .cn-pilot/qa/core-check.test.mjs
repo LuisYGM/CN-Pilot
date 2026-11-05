@@ -351,6 +351,39 @@ test("BF-047 keeps legacy serial checkpoints valid with optional parallel recove
   assert.match(parallelRecovery, /worktreeID.*worktreePath.*branch.*baseBranch.*baseHEAD.*sessionID.*resultCommit/s);
 });
 
+test("adaptive SDD contracts preserve DIRECT speed and require structural convergence evidence", () => {
+  const read = (relative) => fs.readFileSync(new URL(`../../${relative}`, import.meta.url), "utf8");
+  const core = read(".cn-pilot/NUCLEO.md");
+  const kernel = read("AGENTS.md");
+  const lifecycle = read(".cn-pilot/documentacion/CICLO-DE-VIDA.md");
+  const template = read(".cn-pilot/plantillas/especificacion-funcionalidad.md");
+  const plan = read(".kilo/commands/plan.md");
+  const architecture = read(".kilo/agents/arquitecto.md");
+  const developer = read(".kilo/agents/desarrollador.md");
+  const lead = read(".kilo/agents/jefe-proyecto.md");
+  const reviewer = read(".kilo/agents/revisor.md");
+  const strategy = read(".kilo/skills/testing-strategy/SKILL.md");
+
+  assert.match(core, /\*\*DIRECT\*\*[\s\S]*?no exige spec, IDs, matriz ni plan formal/i);
+  assert.match(core, /\*\*TASK\*\*[\s\S]*?No crea documentos ni IDs/i);
+  assert.match(core, /### STRUCTURAL[\s\S]*?Identificadores estables `REQ-nnn`, `AC-nnn`, `TASK-nnn`, `TEST-nnn` son opcionales/i);
+  assert.match(core, /requisito incluido[\s\S]*?criterio[\s\S]*?unidad de implementación[\s\S]*?evidencia adecuada/i);
+  assert.match(core, /No declares `Done`[\s\S]*?Un resultado compilable por sí solo no acredita aceptación/i);
+  assert.match(core, /no reabras\/replanifiques sin cambio de fuente[\s\S]*?petición explícita/i);
+  assert.match(kernel, /`DIRECT` requiere comprobación focal y no documentos\/IDs; `TASK` define acceptance[\s\S]*?reconciliación de requisitos\/unidades\/evidencias/i);
+  assert.match(lifecycle, /tres escalas de trabajo/i);
+  assert.match(template, /Trazabilidad de implementación \(opcional; para STRUCTURAL cuando reduzca ambigüedad\)/);
+  assert.match(template, /cada criterio incluido debe tener evidencia suficiente o estado BLOCKED/i);
+  assert.match(plan, /DIRECT mantiene cambio\/verificación focal sin spec, IDs ni artefactos/i);
+  assert.match(plan, /requisitos incluidos → acceptance → unidades esenciales → evidencia\/estado/i);
+  assert.match(architecture, /unidades esenciales y qué criterios demuestran[\s\S]*?no exijas estructura formal para DIRECT\/TASK acotado/i);
+  assert.match(developer, /relaciona los criterios asignados con el resultado implementado y evidencia real[\s\S]*?no como completados/i);
+  assert.match(lead, /reconcilia al cierre requisitos incluidos, criterios, unidades esenciales, evidencia y estados/i);
+  assert.match(reviewer, /requisitos incluidos y criterios relevantes tienen resultado verificable[\s\S]*?OUT OF SCOPE/i);
+  assert.match(strategy, /mapa compacto[\s\S]*?requisitos incluidos → acceptance → unidad\/owner → evidencia adecuada → estado/i);
+  assert.match(strategy, /contrato del Core son estáticas y no demuestran que un agente siga siempre bien el proceso/i);
+});
+
 test("Visual Pipeline 2.0 covers the public-web divergence, synthesis, flagship and fast-path scenarios", () => {
   const read = (relative) => fs.readFileSync(new URL(`../../${relative}`, import.meta.url), "utf8");
   const core = read(".cn-pilot/NUCLEO.md");

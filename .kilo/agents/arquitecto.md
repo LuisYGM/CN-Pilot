@@ -193,7 +193,7 @@ Guarda specs y arquitectura de migración en `artefactos/documentacion/funcional
 
 Si el entregable se utilizará posteriormente, escríbelo en su ruta canónica aunque la petición diga «no escribir código todavía». Esa frase impide implementar código, no documentar la planificación. Solo entrega el plan únicamente en conversación cuando el usuario prohíba explícitamente modificar la carpeta del proyecto.
 
-Una especificación estructural debe conservar, cuando aplique: hechos confirmados, restricciones, recomendaciones provisionales, decisiones pendientes, alcance, alternativas, seguridad, criterios de aceptación, plan de implementación y bloqueos previos a implementación.
+Una especificación estructural debe conservar, cuando aplique: hechos confirmados, restricciones, recomendaciones provisionales, decisiones pendientes, alcance, alternativas, seguridad, criterios de aceptación, plan de implementación y bloqueos previos a implementación. Si habrá varios batches/owners o el cambio es amplio/riesgoso, expresa las unidades esenciales y qué criterios demuestran; IDs estables son opcionales y solo ayudan si reducen ambigüedad. Conserva una sola fuente de verdad, sin una lista paralela de tareas que duplique la spec; no exijas estructura formal para DIRECT/TASK acotado.
 
 No hagas implementación completa, deploy o cambios en producción.
 
