@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "cnPilotVersion": "2.9.0",
+  "cnPilotVersion": "2.10.0",
   "sourceRepository": "https://github.com/LuisYGM/cn-pilot.git",
   "stableBranch": "main",
   "sourceCommit": null,
@@ -11,11 +11,11 @@
   "managedFiles": [
     {
       "path": ".cn-pilot-version",
-      "sha256": "8113ce620372292c25fda221ad5e8adf77dbe71c92c2042f8ca1ec3dfe9c50a1"
+      "sha256": "d2dbab0fd36c72f378865aeea0bb1d7b27e3e1637a4f3b0de0a108ecba8b48e1"
     },
     {
       "path": ".cn-pilot/CAMBIOS.md",
-      "sha256": "fece99178f50b567d239dd0ee6484a918e82ba398e4b60bf5297401102c6c169"
+      "sha256": "d440b5f09d6c7ab8387dd52c8c788851f374c70660aa5b7e0e3fa07f0e2f24a6"
     },
     {
       "path": ".cn-pilot/MANIFIESTO.md",
@@ -23,7 +23,7 @@
     },
     {
       "path": ".cn-pilot/NUCLEO.md",
-      "sha256": "45ca3ce3d85b4c9a3906a834b8bd81a76fb62a3e5ab5f1c20bb828653ad93537"
+      "sha256": "69632b0ce8ea1bb80e7dd4ff03d5050272281c6b83b11ab0b8b227cb8679d669"
     },
     {
       "path": ".cn-pilot/config/responsive.json",
@@ -195,7 +195,7 @@
     },
     {
       "path": ".cn-pilot/qa/core-check.test.mjs",
-      "sha256": "b632f2167b8688b3214b7dfd13b53f2029c8ac9bf5c874a74d755d847cbb0f61"
+      "sha256": "d4a612a4270658f8ead317a1ad212d144207ecac60d7ada9a5a2466346eea69f"
     },
     {
       "path": ".cn-pilot/update/updater.mjs",
@@ -223,7 +223,7 @@
     },
     {
       "path": ".kilo/agents/jefe-proyecto.md",
-      "sha256": "9c76053ffe353f75420662b0309d4559d09cd09939f0a6b6ac2a84bc76e209d6"
+      "sha256": "4c6a4f66724ff476733929bf5536d0ef8cfc569e836b9ccae265c58913c8bb0d"
     },
     {
       "path": ".kilo/agents/maquetador-frontend.md",
@@ -231,7 +231,7 @@
     },
     {
       "path": ".kilo/agents/revisor.md",
-      "sha256": "cdef18ac72eadd27917d37023a1c0f8835e0d54a210237ee6ecf38daf9f6bbeb"
+      "sha256": "402d275e8b186230e20a6057a46874c533f9fd2a903fe068fc9a5b21475aa041"
     },
     {
       "path": ".kilo/commands/cn-actualizar.md",
@@ -287,7 +287,7 @@
     },
     {
       "path": ".kilo/commands/revision.md",
-      "sha256": "59706424964cc6e777e28bd8f6f21a2ed68fb6a96398b9b09e898cdaa5ca3fd7"
+      "sha256": "74699d8ae3c5d1846855716d4fae8f2aa7ad9852c4db816b8a60f07b0696435a"
     },
     {
       "path": ".kilo/skills/accessibility-review/SKILL.md",

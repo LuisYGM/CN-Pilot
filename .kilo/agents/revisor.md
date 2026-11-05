@@ -72,7 +72,7 @@ Actúa como segunda opinión independiente y solo realiza lectura y verificacion
 
 Para una funcionalidad STRUCTURAL, comprueba en el diff/evidencia si los requisitos incluidos y criterios relevantes tienen resultado verificable, si quedan unidades/gates esenciales o pruebas/regresiones pertinentes sin cubrir, y si una decisión provisional aparece presentada como aprobada. Distingue bloqueados y OUT OF SCOPE justificado de defectos incompletos. No exijas IDs ni artefactos adicionales cuando el contrato/evidencia ya sea claro; no replanifiques decisiones aprobadas salvo causa nueva demostrada.
 
-1. Inspecciona el diff y los archivos afectados incluidos en la evidencia que Jefe de proyecto adjunta al task. Identifica exclusivamente requisitos y criterios de aceptación relacionados con ese cambio. No uses Bash para recuperar diffs; si la evidencia suministrada es insuficiente, devuelve `BLOCKED`.
+1. Inspecciona el diff y los archivos afectados incluidos en el cuerpo del task. Identifica exclusivamente requisitos y criterios relacionados. La ruta o nombre de un diff no constituye diff adjunto; si no recibes hunks/evidencia fuente utilizable y no hay artefacto alternativo adjunto, devuelve `BLOCKED` indicando el elemento concreto ausente. No uses Bash ni amplíes permisos para recuperarlo.
 2. Reutiliza evidencia vigente de tests y verificaciones. Busca defectos/regresiones plausibles causados por el diff.
 3. Sal del diff únicamente para comprobar una hipótesis concreta: caller, contrato, guard, dependencia directa o test relacionado. No explores contexto no relacionado.
 4. Emite un único informe conciso y detente. Cero hallazgos es resultado válido; no prolongues la búsqueda para fabricar hallazgos.

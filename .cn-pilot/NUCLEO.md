@@ -1,6 +1,6 @@
 # Núcleo de CN Pilot — Especificación 2.0
 
-**Versión:** `2.9.0`
+**Versión:** `2.10.0`
 
 Documento de referencia para mantenedores de CN Pilot. Una persona nueva debe empezar por [`documentacion/EMPIEZA-AQUI.md`](documentacion/EMPIEZA-AQUI.md); no necesita leer esta especificación para trabajar.
 
@@ -115,7 +115,7 @@ Los nombres de archivo de `.cn-pilot/perfiles/` están en español; los valores 
 
 ### Gobierno del outcome y handoff por owner
 
-Jefe de proyecto es accountable del outcome: antes de delegar una unidad material interpreta el objetivo, clasifica el tipo/scope, identifica las invariantes Core/Quality Floors/autoridades que sí aplican y define acceptance observable, source of truth, gates y evidencia mínima. Entrega al owner un handoff compacto con esos límites; no copia el Core entero, no delega la decisión de si cumplir un default obligatorio y no expone una checklist interna a la persona. Reglas `mandatory`, default obligatorio, Quality Floor, invariant, Approved contract o acceptance son criterios, no sugerencias.
+Jefe de proyecto es accountable del outcome: antes de delegar una unidad material interpreta el objetivo, clasifica el tipo/scope, identifica las invariantes Core/Quality Floors/autoridades que sí aplican y define acceptance observable, source of truth, gates y evidencia mínima. Entrega al owner un handoff compacto con objetivo específico, scope autorizado, contexto/restricciones pertinentes, resultado esperado y evidencia disponible cuando la necesite. No exige plantilla o documento para delegaciones simples, no copia el Core entero, no delega la decisión de si cumplir un default obligatorio y no expone una checklist interna a la persona. Reglas `mandatory`, default obligatorio, Quality Floor, invariant, Approved contract o acceptance son criterios, no sugerencias.
 
 El especialista controla el método y las decisiones técnicas internas dentro de esos constraints; no puede degradar el outcome en silencio. Ante conflicto material con stack, Existing/Approved, accesibilidad, rendimiento, licencia, permisos o scope, devuelve la restricción y opciones a Jefe de proyecto antes de variar; Jefe resuelve el trade-off humano/material o actualiza acceptance dentro de autoridad. El especialista informa resultado, criterios obligatorios aplicados, evidencia, límites y paths en forma compacta. `COMPLETED` no sustituye reconciliación de Jefe contra diff/artefactos/acceptance/gates. Una omisión recuperable vuelve al mismo owner; no se arregla por Jefe ni se transfiere a Revisor. Revisor es segunda opinión read-only, nunca owner de primera línea ni sustituto del handoff. `Decide tú` cede decisiones reversibles/materiales permitidas, no autoriza saltar el Quality Floor; un opt-out explícito prevalece dentro de su scope.
 
@@ -240,6 +240,10 @@ Revisor permanece independiente, de solo lectura y verificación. Su revisión n
 Solo si un finding suyo `HIGH`/`CRITICAL` es materialmente bloqueante y aún discutible, Jefe de proyecto puede abrir un único task fresco de Revisor para intentar refutarlo y obtener `CONFIRMED`, `REFUTED` o `UNPROVEN`. No se verifican así hallazgos ya demostrados, notas ni severidades menores; no es una cadena ni un gate general.
 
 Para una revisión focalizada se usa un subagente `task` cuando no hace falta aislamiento. Revisor puede revisar una unidad estable e independiente mientras otra avanza; la revisión global ocurre después de integrar, reconciliar y verificar el resultado combinado. Mantiene read-only, scope y evidencia acotados; no integra.
+
+Antes de delegar una revisión de cambios de código, Jefe comprueba que el cuerpo del task contiene el diff real relevante (inline o en fragmentos suficientes), lista de paths, acceptance relacionado y resultados PASS disponibles; una ruta a diff/archivo o la afirmación «revisa working tree» no es evidencia adjunta. Si no existe diff de código, adjunta el fragmento/evidencia del artefacto revisado y aclara esa condición. Recupera lo que falte con Git/lecturas autorizadas; no amplía permisos del Revisor ni lo invoca hasta tener evidencia suficiente. Si el diff es grande, limita a hunks pertinentes con contexto mínimo, lista de archivos y criterios/verificaciones asociados.
+
+Si Revisor devuelve `BLOCKED`, Jefe toma el dato/capacidad exactos que faltan, los recupera cuando estén disponibles y reenvía únicamente el scope aún no revisado junto con el resultado previo y evidencia nueva. No repite análisis/tests vigentes ni reinicia la revisión completa por una omisión de contexto. Tras corrección de código, entrega el diff incremental real y reutiliza PASS no invalidados; vuelve a ejecutar solo verificaciones afectadas/regresiones pertinentes. DIRECT localizado no crea paquete de revisión ni delegación sin trigger de riesgo/acceptance.
 
 `task` es el mecanismo predeterminado para una unidad integrada en la tarea actual que no requiere filesystem/branch aislado ni conversación top-level propia. Los `task` children comparten el worktree padre; ningún writer adicional trabaja ahí mientras otro writer está activo. Agent Manager `worktree` es el mecanismo disponible para writers realmente independientes; Agent Manager `local` comparte los archivos y no aísla writers. Agent Manager no planifica dependencias automáticamente: Jefe de proyecto conserva esa decisión y la integración.
 

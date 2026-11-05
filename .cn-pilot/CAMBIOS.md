@@ -1,5 +1,11 @@
 # Changelog
 
+## [2.10.0] - 2026-11-05
+
+- Las delegaciones materiales entregan objetivo, scope, restricciones y evidencia que el owner necesita; `/revision` comprueba que el diff real (no solo su ruta) esté adjunto antes de llamar a Revisor.
+- Si una revisión queda `BLOCKED`, Jefe recupera el elemento faltante y retoma el scope pendiente; preserva PASS vigentes y revalida incrementalmente tras correcciones.
+- Core QA añade contratos estáticos de preflight, recuperación y fast path DIRECT; no se agregan agentes, permisos, herramientas ni checkpoints para tareas simples.
+
 ## [2.8.8] - 2026-11-05
 
 - Kilo 7.8.8 aplica default-deny a tools no listadas; los perfiles conservan capacidades explícitas por rol y Revisor no hereda herramientas MCP/externas ni búsqueda por grep.

@@ -198,6 +198,39 @@ test("revision command and report template expose the same complete outcome set"
   assert.deepEqual(check.details.missingFromCommand, ["BLOCKED"]);
 });
 
+test("review handoff preflight attaches usable evidence, recovers BLOCKED narrowly, and skips DIRECT overhead", () => {
+  const read = (relative) => fs.readFileSync(new URL(`../../${relative}`, import.meta.url), "utf8");
+  const command = read(".kilo/commands/revision.md");
+  const lead = read(".kilo/agents/jefe-proyecto.md");
+  const reviewer = read(".kilo/agents/revisor.md");
+  const core = read(".cn-pilot/NUCLEO.md");
+  const preflight = command.slice(command.indexOf("1. Preflight"), command.indexOf("11. No implementes"));
+
+  // A: real diff + paths + acceptance + available results must be attached in the task body.
+  assert.match(preflight, /diff real relevante[\s\S]*?archivos afectados[\s\S]*?acceptance relacionado[\s\S]*?resultados PASS/i);
+  assert.match(preflight, /realmente incluidos en el cuerpo[\s\S]*?pega el diff\/hunks[\s\S]*?no solo ruta/i);
+  assert.match(reviewer, /ruta o nombre de un diff no constituye diff adjunto/i);
+  assert.match(preflight, /Si no hay diff de código, adjunta fragmento\/evidencia del artefacto/i);
+
+  // B: missing evidence is caught before delegation and recovered by the coordinator if possible.
+  assert.match(preflight, /No invoques Revisor hasta que el preflight sea suficiente/i);
+  assert.match(preflight, /recupéralo mediante Git o lectura directa[\s\S]*?no preguntes a la persona/i);
+  assert.match(lead, /Antes de invocar Revisor[\s\S]*?Paths solos no cuentan como diff adjunto/i);
+
+  // C/D: unblock only the missing piece and retain prior PASS/diff for incremental review.
+  assert.match(preflight, /Reutiliza evidencia.*si objetivo y fuente\/superficies.*no cambiaron/i);
+  assert.match(preflight, /Si Revisor queda BLOCKED[\s\S]*?resuelve solo el hueco indicado[\s\S]*?no reinicies investigación\/tests\/revisión/i);
+  assert.match(preflight, /Tras correcciones adjunta diff incremental real/i);
+  assert.match(core, /Si Revisor devuelve `BLOCKED`[\s\S]*?reenvía únicamente el scope aún no revisado/i);
+
+  // E: DIRECT work does not acquire handoff/review artifacts without a material trigger.
+  assert.match(core, /DIRECT localizado no crea paquete de revisión ni delegación sin trigger/i);
+  assert.match(lead, /Revisor independiente solo en STRUCTURAL o impacto\/riesgo\/aceptance que lo justifique/i);
+
+  // These are static source-contract checks, not an end-to-end Kilo behavior evaluation.
+  assert.match(command, /No invoques Revisor hasta que el preflight sea suficiente/i);
+});
+
 test("upstream GitHub Actions workflow is restricted, compatible, and runs the local QA commands", (t) => {
   const workflowPath = new URL("../../.github/workflows/core-qa.yml", import.meta.url);
   if (!fs.existsSync(workflowPath)) {
@@ -1406,8 +1439,8 @@ test("Project Lead owns task-specific mandatory constraints and specialists cann
   assert.match(governance, /El especialista controla el método[\s\S]*?no puede degradar el outcome en silencio[\s\S]*?antes de variar/i);
   assert.match(governance, /`COMPLETED` no sustituye reconciliación[\s\S]*?vuelve al mismo owner[\s\S]*?Revisor es segunda opinión read-only/i);
   assert.match(governance, /`Decide tú`[\s\S]*?no autoriza saltar el Quality Floor[\s\S]*?opt-out explícito prevalece/i);
-  assert.match(lead, /Antes de delegar define compactamente goal\/scope\/owner\/source of truth, invariantes Core aplicables, acceptance observable, gates y evidencia mínima/i);
-  assert.match(lead, /Método es del especialista; mandatory defaults\/outcome no son opcionales[\s\S]*?omisión recuperable vuelve al mismo owner/i);
+  assert.match(lead, /Antes de delegar, adjunta goal\/scope autorizado\/owner\/source of truth, contexto y restricciones pertinentes, acceptance\/resultado esperado, gates y evidencia disponible/i);
+  assert.match(lead, /método es del especialista, mandatory defaults\/outcome no son opcionales[\s\S]*?omisión recuperable vuelve al mismo owner/i);
   assert.match(reviewer, /no sustituye el gate primario de Jefe/i);
 });
 
