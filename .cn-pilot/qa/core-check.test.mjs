@@ -1622,6 +1622,8 @@ test("Project Lead owns task-specific mandatory constraints and specialists cann
   assert.match(governance, /`COMPLETED` no sustituye reconciliación[\s\S]*?vuelve al mismo owner[\s\S]*?Revisor es segunda opinión read-only/i);
   assert.match(governance, /`Decide tú`[\s\S]*?no autoriza saltar el Quality Floor[\s\S]*?opt-out explícito prevalece/i);
   assert.match(lead, /Antes de delegar, adjunta goal\/scope autorizado\/owner\/source of truth, contexto y restricciones pertinentes, acceptance\/resultado esperado, gates y evidencia disponible/i);
+  assert.match(lead, /mapa compacto sección→composición\/rol visual→asset\/provenance y placement\/crop[\s\S]*sin cuota de imágenes/i);
+  assert.match(lead, /Diseñador revisa el render Browser final contra el handoff[\s\S]*distinto de Browser QA técnico y no sustituye aprobación del usuario/i);
   assert.match(lead, /método es del especialista, mandatory defaults\/outcome no son opcionales[\s\S]*?omisión recuperable vuelve al mismo owner/i);
   assert.match(reviewer, /no sustituye el gate primario de Jefe/i);
 });

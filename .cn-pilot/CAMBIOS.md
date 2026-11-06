@@ -1,5 +1,9 @@
 # Changelog
 
+## [2.15.0] - 2026-11-06
+
+- Coordinación de handoffs creativos con un mapa compacto de composición/media por sección (sin cuotas de assets) y un pase final de Diseñador sobre el render real después de cambios visuales materiales, separado de Browser QA y del approval humano.
+
 ## [2.14.1] - 2026-11-06
 
 - Los estudios de dirección pública comprueban con Browser su diferencia en el render real desktop/mobile antes de Creative Review y demuestran medios materiales del brief, sin exigir screenshots.
