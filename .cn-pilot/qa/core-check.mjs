@@ -51,15 +51,16 @@ const KILO_CONFIG_PATHS = ["kilo.json", "kilo.jsonc", "**/kilo.json", "**/kilo.j
 const SENSITIVE_APPROVAL_PATHS = ["**/*.pem", "**/*.key", "**/.kube/config", "**/kubeconfig"];
 const PROJECT_CONTEXT_PATHS = ["PROYECTO.md", "REQUISITOS.md", "ESTADO.md", "DECISIONES.md", "ARTEFACTOS.md", "README.md"];
 const PROFILE_TOOL_KEYS = new Map([
-  ["jefe-proyecto", ["*", "read", "glob", "grep", "skill", "websearch", "webfetch", "lsp", "write", "apply_patch", "question", "todoread", "todowrite", "board_read", "board_post", "goal", "goal_report", "schedule_wakeup", "cancel_wakeup", "cron_create", "cron_list", "cron_delete", "agent_manager_models", "chart", "open_plan", "kilo_local_recall", "external_directory", "agent_manager", "background_process", "task", "edit", "bash"]],
+  ["jefe-proyecto", ["*", "read", "glob", "grep", "skill", "websearch", "webfetch", "lsp", "write", "apply_patch", "question", "todoread", "todowrite", "board_read", "board_post", "goal", "goal_report", "schedule_wakeup", "cancel_wakeup", "cron_create", "cron_list", "cron_delete", "agent_manager_models", "chart", "open_plan", "kilo_local_recall", "external_directory", "agent_manager", "background_process", "task", "edit", "bash", "kilo-playwright_*"]],
   ["arquitecto", ["*", "read", "glob", "grep", "lsp", "board_read", "board_post", "external_directory", "skill", "websearch", "webfetch", "task", "agent_manager", "background_process", "write", "apply_patch", "edit", "bash"]],
   ["contenido-seo", ["*", "read", "glob", "grep", "lsp", "board_read", "board_post", "external_directory", "skill", "websearch", "webfetch", "task", "agent_manager", "background_process", "write", "apply_patch", "edit", "bash"]],
-  ["disenador-ui-ux", ["*", "read", "glob", "grep", "lsp", "board_read", "board_post", "external_directory", "skill", "websearch", "webfetch", "task", "agent_manager", "background_process", "write", "apply_patch", "edit", "bash"]],
+  ["disenador-ui-ux", ["*", "read", "glob", "grep", "lsp", "board_read", "board_post", "external_directory", "skill", "websearch", "webfetch", "task", "agent_manager", "background_process", "write", "apply_patch", "edit", "bash", "kilo-playwright_*"]],
   ["desarrollador", ["*", "read", "glob", "grep", "lsp", "board_read", "board_post", "external_directory", "skill", "websearch", "webfetch", "task", "agent_manager", "background_process", "write", "apply_patch", "edit", "bash"]],
-  ["maquetador-frontend", ["*", "read", "glob", "grep", "lsp", "board_read", "board_post", "external_directory", "skill", "websearch", "webfetch", "task", "agent_manager", "background_process", "write", "apply_patch", "edit", "bash"]],
+  ["maquetador-frontend", ["*", "read", "glob", "grep", "lsp", "board_read", "board_post", "external_directory", "skill", "websearch", "webfetch", "task", "agent_manager", "background_process", "write", "apply_patch", "edit", "bash", "kilo-playwright_*"]],
   ["revisor", ["*", "read", "glob", "grep", "skill", "websearch", "webfetch", "task", "agent_manager", "background_process", "write", "edit", "apply_patch", "bash", "external_directory"]],
 ]);
-const ROOT_KILO_TOOL_KEYS = new Set(["*", "glob", "grep", "lsp", "question", "todoread", "todowrite", "board_read", "board_post", "agent_manager", "external_directory"]);
+const ROOT_KILO_TOOL_KEYS = new Set(["*", "glob", "grep", "lsp", "question", "todoread", "todowrite", "board_read", "board_post", "agent_manager", "external_directory", "kilo-playwright_*"]);
+const KILO_PLAYWRIGHT_AGENTS = new Set(["jefe-proyecto", "disenador-ui-ux", "maquetador-frontend"]);
 const DESTRUCTIVE_GIT = ["git push --force*", "git push -f*", "git reset --hard*", "git clean*"];
 const CN_PILOT_AGENTS = ["arquitecto", "contenido-seo", "desarrollador", "disenador-ui-ux", "jefe-proyecto", "maquetador-frontend", "revisor"];
 const REVIEW_OUTCOMES = ["APPROVED", "APPROVED WITH NOTES", "CHANGES REQUIRED", "BLOCKED"];
@@ -418,6 +419,13 @@ function checkAgentPermissionProfiles(root) {
     if (Object.keys(permission).indexOf("*") !== 0) problems.push({ path: relative, field: "permission.*", code: "TOOL_FALLBACK_ORDER_INVALID" });
     const knownTools = new Set(PROFILE_TOOL_KEYS.get(agent) ?? []);
     for (const tool of Object.keys(permission)) if (!knownTools.has(tool)) problems.push({ path: relative, field: tool, code: "UNREVIEWED_TOOL_PERMISSION" });
+    const browserPermission = "kilo-playwright_*";
+    if (KILO_PLAYWRIGHT_AGENTS.has(agent)) {
+      if (permission[browserPermission] !== "ask") problems.push({ path: relative, field: browserPermission, expected: "ask", code: "BROWSER_MCP_APPROVAL_MISSING" });
+      if (!isAfterFallback(permission, browserPermission)) problems.push({ path: relative, field: browserPermission, code: "BROWSER_MCP_RULE_ORDER_INVALID" });
+    } else if (Object.prototype.hasOwnProperty.call(permission, browserPermission)) {
+      problems.push({ path: relative, field: browserPermission, code: "BROWSER_MCP_OUT_OF_SCOPE" });
+    }
 
     const readRules = permission.read;
     if (action(readRules, "*") !== "allow") problems.push({ path: relative, field: "read.*", expected: "allow", code: "READ_FALLBACK_NOT_ALLOWED" });
@@ -556,6 +564,9 @@ function checkKiloPermissionDefaults(root) {
   if (action(topLevel, "*") !== "deny") problems.push({ field: "permission.*", expected: "deny", code: "UNKNOWN_TOOL_DEFAULT_NOT_DENIED" });
   if (topLevel.findIndex((entry) => entry.key === "*") !== 0) problems.push({ field: "permission.*", code: "ROOT_TOOL_FALLBACK_ORDER_INVALID" });
   for (const entry of topLevel) if (!ROOT_KILO_TOOL_KEYS.has(entry.key)) problems.push({ field: entry.key, code: "UNREVIEWED_ROOT_TOOL_PERMISSION" });
+  const browserPermission = "kilo-playwright_*";
+  if (action(topLevel, browserPermission) !== "ask") problems.push({ field: browserPermission, expected: "ask", code: "BROWSER_MCP_APPROVAL_MISSING" });
+  if (index(topLevel, browserPermission) <= index(topLevel, "*")) problems.push({ field: browserPermission, code: "BROWSER_MCP_RULE_ORDER_INVALID" });
   if (findJsoncObject(file.text, "mcp")) problems.push({ field: "mcp", code: "MCP_SERVER_ADDED_OUTSIDE_REVIEW" });
   for (const [tool, rules] of [["read", read], ["edit", edit]]) {
     if (action(rules, "*") !== "allow") problems.push({ field: `${tool}.*`, expected: "allow", code: "CORE_FILE_TOOL_FALLBACK_CHANGED" });

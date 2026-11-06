@@ -3,6 +3,7 @@ description: Agente principal del proyecto. Clasifica peticiones, evalúa riesgo
 mode: primary
 permission:
   "*": deny
+  "kilo-playwright_*": ask
   read:
     "*": allow
     ".env": deny

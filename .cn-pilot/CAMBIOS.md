@@ -1,5 +1,11 @@
 # Changelog
 
+## [2.13.0] - 2026-11-06
+
+- Habilita el Browser MCP integrado `kilo-playwright_*` con aprobación `ask` para Jefe, Diseñador UI/UX y Maquetador frontend; los demás perfiles conservan `deny`.
+- Mantiene el fallback cerrado, no añade un servidor MCP/paquete y requiere que Browser Automation esté habilitado en Kilo VS Code.
+- Añade tests estáticos y de resolución Kilo para comprobar el scope exclusivo y la precedencia de la excepción.
+
 ## [2.12.2] - 2026-11-06
 
 - Refina el routing de Jefe por responsabilidad semántica, no por extensión: frontend DOM/UI a Maquetador; reglas y cálculos de dominio, datos/backend a Desarrollador incluso en JS/TS.

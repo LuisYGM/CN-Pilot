@@ -40,7 +40,7 @@ function kiloPatternMatches(pattern, target) {
 function resolveKiloPermission(agent, permission, target) {
   let action = null;
   for (const rule of agent.permission ?? []) {
-    if (rule.permission !== "*" && rule.permission !== permission) continue;
+    if (rule.permission !== "*" && !kiloPatternMatches(rule.permission ?? "", permission)) continue;
     if (kiloPatternMatches(rule.pattern ?? "*", target)) action = rule.action;
   }
   return action;
@@ -878,6 +878,40 @@ test("MCP tools require an explicit reviewed capability instead of inheriting pe
   assert.ok(getCheck(report, "security.agentPermissions").details.problems.some((problem) => problem.code === "UNREVIEWED_TOOL_PERMISSION"));
 });
 
+test("integrated Browser MCP is ask-scoped only for Jefe, UI/UX, and Maquetador", (t) => {
+  const fixture = createFixture(t);
+  let report = runCoreChecks({ rootDir: fixture.root });
+  assert.equal(getCheck(report, "security.agentPermissions").status, "PASS");
+  assert.equal(getCheck(report, "security.kiloPermissionDefaults").status, "PASS");
+
+  const jefePath = ".kilo/agents/jefe-proyecto.md";
+  const jefe = fs.readFileSync(path.join(fixture.root, jefePath), "utf8");
+  fixture.put(jefePath, jefe.replace('  "kilo-playwright_*": ask\n', ""));
+  report = runCoreChecks({ rootDir: fixture.root });
+  const missing = getCheck(report, "security.agentPermissions");
+  assert.equal(missing.status, "FAIL");
+  assert.ok(missing.details.problems.some((problem) => problem.code === "BROWSER_MCP_APPROVAL_MISSING"));
+
+  const architectPath = ".kilo/agents/arquitecto.md";
+  const architect = fs.readFileSync(path.join(fixture.root, architectPath), "utf8");
+  fixture.put(architectPath, architect.replace("  grep: allow", '  "kilo-playwright_*": ask\n  grep: allow'));
+  report = runCoreChecks({ rootDir: fixture.root });
+  const outOfScope = getCheck(report, "security.agentPermissions");
+  assert.equal(outOfScope.status, "FAIL");
+  assert.ok(outOfScope.details.problems.some((problem) => problem.code === "BROWSER_MCP_OUT_OF_SCOPE"));
+
+  const canonical = createFixture(t);
+  canonical.put(".git/config", '[remote "origin"]\n\turl = https://github.com/LuisYGM/CN-Pilot.git\n');
+  canonical.put("README.md", "# CN Pilot\n\n[Repositorio](https://github.com/LuisYGM/cn-pilot)\n");
+  canonical.put("PROYECTO.md", "# Proyecto\n- **Nombre:** Pending\n- **Repositorio o carpeta:** Pending\n- **Versión de CN Pilot Core:** 2.8.0\n");
+  const configPath = "kilo.jsonc";
+  const config = fs.readFileSync(path.join(canonical.root, configPath), "utf8");
+  canonical.put(configPath, config.replace('"kilo-playwright_*": "ask"', '"kilo-playwright_*": "allow"'));
+  const rootPermission = getCheck(runCoreChecks({ rootDir: canonical.root }), "security.kiloPermissionDefaults");
+  assert.equal(rootPermission.status, "FAIL");
+  assert.ok(rootPermission.details.problems.some((problem) => problem.code === "BROWSER_MCP_APPROVAL_MISSING"));
+});
+
 test("an agent cannot add an unreviewed MCP/tool permission", (t) => {
   const fixture = createFixture(t);
   const file = ".kilo/agents/desarrollador.md";
@@ -931,7 +965,8 @@ test("installed Kilo resolves representative profiles across the seven static se
   const config = runKiloForPermissionTest(["config", "check"]);
   assert.equal(config.status, 0, `Kilo ${installedVersion} validates the active permission config`);
 
-  const profiles = Object.fromEntries(["jefe-proyecto", "desarrollador", "maquetador-frontend", "revisor"].map((name) => [name, parseKiloDebugAgent(name)]));
+  const agentNames = ["arquitecto", "contenido-seo", "desarrollador", "disenador-ui-ux", "jefe-proyecto", "maquetador-frontend", "revisor"];
+  const profiles = Object.fromEntries(agentNames.map((name) => [name, parseKiloDebugAgent(name)]));
   for (const [name, profile] of Object.entries(profiles)) {
     const defaults = profile.permission.filter((rule) => rule.permission === "*");
     assert.equal(defaults.at(-1)?.action, "deny", `${name} blocks unreviewed tools/MCP after inherited user settings`);
@@ -941,6 +976,8 @@ test("installed Kilo resolves representative profiles across the seven static se
     assert.equal(resolveKiloPermission(profile, "read", "nested/.env.local"), "deny", `${name} blocks nested env variants`);
     assert.equal(resolveKiloPermission(profile, "read", "nested/.kilo/mcp.json"), "deny", `${name} blocks local MCP secret files`);
     assert.equal(resolveKiloPermission(profile, "edit", "secrets/.env.example"), "deny", `${name} blocks secret-directory edits`);
+    const browserPermission = ["jefe-proyecto", "disenador-ui-ux", "maquetador-frontend"].includes(name) ? "ask" : "deny";
+    assert.equal(resolveKiloPermission(profile, "kilo-playwright_browser_navigate", "local/page"), browserPermission, `${name} receives only its scoped Browser MCP permission`);
   }
 
   const jefe = profiles["jefe-proyecto"];

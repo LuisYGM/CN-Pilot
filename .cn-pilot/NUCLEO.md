@@ -1,6 +1,6 @@
 # Núcleo de CN Pilot — Especificación 2.0
 
-**Versión:** `2.12.2`
+**Versión:** `2.13.0`
 
 Documento de referencia para mantenedores de CN Pilot. Una persona nueva debe empezar por [`documentacion/EMPIEZA-AQUI.md`](documentacion/EMPIEZA-AQUI.md); no necesita leer esta especificación para trabajar.
 
@@ -121,7 +121,7 @@ El especialista controla el método y las decisiones técnicas internas dentro d
 
 ## Permisos
 
-Para Kilo 7.8.8 la última regla coincidente prevalece entre global, proyecto y agente; se verifica la resolución con la versión instalada antes de cerrar un cambio de permisos. El fallback Core para tools no listadas es `deny`; los perfiles habilitan solo las capacidades propias de cada owner y Revisor permite únicamente lectura acotada. Deniega paths sensibles/Core explícitamente y coloca excepciones de plantillas antes de la denegación final de carpetas secretas. Jefe puede pedir acceso externo con gate; especialistas y Revisor lo tienen denegado. Kilo 7.8.8 implementa sus tools nativas `write`/`apply_patch` mediante permiso `edit` con el path de cada archivo, pero `grep` autoriza por search pattern y no aplica la ACL de `read`; no simules un bloqueo por path que esa tool no puede garantizar. Las APIs de filesystem/shell inyectadas por el host son una frontera distinta y dependen de su propia autorización. `ask` es aprobación humana, no deny, y Auto-Approve puede aceptarla. En Windows Kilo no dispone de sandbox OS, por lo que shell/procesos/MCP no quedan aislados por workspace; no presentes patrones como aislamiento del sistema.
+Para Kilo 7.8.8 la última regla coincidente prevalece entre global, proyecto y agente; se verifica la resolución con la versión instalada antes de cerrar un cambio de permisos. El fallback Core para tools no listadas es `deny`; los perfiles habilitan solo las capacidades propias de cada owner y Revisor permite únicamente lectura acotada. Deniega paths sensibles/Core explícitamente y coloca excepciones de plantillas antes de la denegación final de carpetas secretas. Jefe puede pedir acceso externo con gate; especialistas y Revisor lo tienen denegado. La excepción `kilo-playwright_*: ask` se limita a Jefe, Diseñador UI/UX y Maquetador frontend; no cambia el fallback ni instala/configura un MCP server. Kilo 7.8.8 implementa sus tools nativas `write`/`apply_patch` mediante permiso `edit` con el path de cada archivo, pero `grep` autoriza por search pattern y no aplica la ACL de `read`; no simules un bloqueo por path que esa tool no puede garantizar. Las APIs de filesystem/shell inyectadas por el host son una frontera distinta y dependen de su propia autorización. `ask` es aprobación humana, no deny, y Auto-Approve puede aceptarla. En Windows Kilo no dispone de sandbox OS, por lo que shell/procesos/MCP no quedan aislados por workspace; no presentes patrones como aislamiento del sistema.
 
 ## Niveles de trabajo
 

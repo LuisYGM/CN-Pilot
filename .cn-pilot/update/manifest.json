@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "cnPilotVersion": "2.12.2",
+  "cnPilotVersion": "2.13.0",
   "sourceRepository": "https://github.com/LuisYGM/cn-pilot.git",
   "stableBranch": "main",
   "sourceCommit": null,
@@ -11,11 +11,11 @@
   "managedFiles": [
     {
       "path": ".cn-pilot-version",
-      "sha256": "2ad2f8620587f8e46ca2561a28d4a217672ba5adf86091db48aa24ca0b9da769"
+      "sha256": "127662056a25294fe93b2d6c4c05c9f6e1556c55a1cfcd02fef79f33b08be2d6"
     },
     {
       "path": ".cn-pilot/CAMBIOS.md",
-      "sha256": "fa7d4b013767bc5798c8d4634eb5030104d907f5669019aa492cc627e251a9d0"
+      "sha256": "5fe76bc7861dfe645a56e8e789486ba3418267f77edaacba1db80272903fc88c"
     },
     {
       "path": ".cn-pilot/MANIFIESTO.md",
@@ -23,7 +23,7 @@
     },
     {
       "path": ".cn-pilot/NUCLEO.md",
-      "sha256": "a60f0e689ad6330774b87117a265554b965495ad921296446c987760958f9097"
+      "sha256": "a439905bd5f32c429981086970b395e175f6e08bdae8feb74ae83c075b2e967c"
     },
     {
       "path": ".cn-pilot/agent-evals/README.md",
@@ -135,7 +135,7 @@
     },
     {
       "path": ".cn-pilot/documentacion/CONFIGURACION-KILO.md",
-      "sha256": "ae8835802ebf5076dddeeba7978936e3cb40e100b61e66d26991fd143fea5eec"
+      "sha256": "21e4df8680e6e80cd1db4350c6d2d1d0aa6a329c5766450fee03f5c4b9d80302"
     },
     {
       "path": ".cn-pilot/documentacion/CONFIGURACION.md",
@@ -283,11 +283,11 @@
     },
     {
       "path": ".cn-pilot/qa/core-check.mjs",
-      "sha256": "833808331d94441e3a222e750e00df4cf0017b266d1343e7b98b25b94f99b398"
+      "sha256": "e4b02a1dcef9ef750f957a17e13e5db04a92ed9a5246e18798d569b6d65c0a8e"
     },
     {
       "path": ".cn-pilot/qa/core-check.test.mjs",
-      "sha256": "ecd1cd6e1fd58bc93c1feff4b53df0182cbe76e6966ca21ed291def6d1ab2401"
+      "sha256": "b7a4b157e27ab0480ed6b09e7bee2f980cad90f4d2cdee1d7b5e1a3a2fb27fbd"
     },
     {
       "path": ".cn-pilot/update/updater.mjs",
@@ -311,15 +311,15 @@
     },
     {
       "path": ".kilo/agents/disenador-ui-ux.md",
-      "sha256": "dd1f4afb40353fcc68a553b40a16b63cf5eed08d705674a6e47cd1bc785658d2"
+      "sha256": "1bd6968d577f761b6a66a579bf32ddff836033a77e1df07b2ed5b8ade71413dc"
     },
     {
       "path": ".kilo/agents/jefe-proyecto.md",
-      "sha256": "dc8828f0b347396f70b5693e69f97a640b2b1d92b70c81b9a7a3c6d813e13fb1"
+      "sha256": "7c6e2ae77b19f46b62e93606083f10c279f58afba11fdb8272571ffbb52547fe"
     },
     {
       "path": ".kilo/agents/maquetador-frontend.md",
-      "sha256": "572b9cbd803a358e1b6c2b9d54a28cac26bf17c3d7ab068f1b6717d34ce51170"
+      "sha256": "795c7afec4ee1be138118d26f108fc34f56dad77a14d222fc3c8ee2985558ba9"
     },
     {
       "path": ".kilo/agents/revisor.md",

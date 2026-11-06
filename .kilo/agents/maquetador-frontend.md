@@ -3,6 +3,7 @@ description: Implementa frontend, HTML, CSS, JavaScript, responsive, componentes
 mode: subagent
 permission:
   "*": deny
+  "kilo-playwright_*": ask
   read:
     "*": allow
     ".env": deny

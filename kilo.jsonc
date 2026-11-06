@@ -6,6 +6,7 @@
   "permission": {
     // Closed by default: new Kilo/MCP tools require an explicit per-tool decision.
     "*": "deny",
+    "kilo-playwright_*": "ask",
     "read": {
       "*": "allow",
       ".env": "deny",

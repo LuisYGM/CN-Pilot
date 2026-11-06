@@ -3,6 +3,7 @@ description: Define UX/UI, layouts, jerarquía, componentes, responsive, design 
 mode: subagent
 permission:
   "*": deny
+  "kilo-playwright_*": ask
   read:
     "*": allow
     ".env": deny
