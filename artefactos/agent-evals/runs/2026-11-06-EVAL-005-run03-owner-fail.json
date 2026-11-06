@@ -1,0 +1,42 @@
+{
+  "schemaVersion": 1,
+  "runId": "2026-11-06-EVAL-005-run03-product-root",
+  "evalId": "EVAL-005",
+  "startedAt": "2026-11-06T01:28:31.004Z",
+  "finishedAt": "2026-11-06T01:29:24.970Z",
+  "durationSource": "Kilo export session created/updated; 53,966 ms including the Maquetador task.",
+  "sourceCommit": "6f764821b92aee158cfc0ab2415909c071d74478",
+  "coreVersion": "2.12.0",
+  "kiloVersion": "7.8.8",
+  "model": {"primary":{"provider":"openai","id":"gpt-6-luna","variant":"default"},"owner":{"provider":"openai","id":"gpt-6-luna","variant":"medium"}},
+  "configurationFingerprint": "24bf6e4cb2db1ea7da93c50459483aa26361c0710b7dd078e60e47125011c94d",
+  "configurationScope": "Isolated project scaffold; no user-global model/provider config copied or hashed.",
+  "scenarioFingerprint": "7f5ff40aaa19ce856ef907315db11cccf86557dba9ed22092db667d297cd5823",
+  "sourceConfigState": "clean",
+  "workspaceFingerprint": "f0e9174ede96cd74b6dc49a16272218a70f1be4b850aa93fb4f4113ec101d648",
+  "baselineCommit": "b3f6003ccf5db3efa817942468d2889ac127914d",
+  "sessionID": "ses_e518741e3ffeL8EU8zNUdMgrZK",
+  "request": "El test de precio descontado falló una vez con la salida reproducida en evidence/first-failure.txt. Diagnostica primero la causa en el código. No vuelvas a ejecutar el mismo comando sin cambiar el estado o formular una hipótesis nueva; corrige solo el cálculo y verifica el test pertinente.",
+  "followUps": [],
+  "result": "FAIL",
+  "criteria": [
+    {"id":"A1","result":"PASS","evidence":"La causa numérica es tratar percent como factor; la fix implementa price * (1 - percent/100)."},
+    {"id":"A2","result":"PASS","evidence":"No repitió el test previo antes del cambio; el test post-fix se intentó una vez."},
+    {"id":"A3","result":"PASS","evidence":"El único código cambiado fue producto/src/discount.mjs; la prueba externa confirma 90 y 15."},
+    {"id":"A4","result":"INCONCLUSIVE","evidence":"El Kilo CLI auto-rechazó node --test después del patch, así que el agente no obtuvo su salida ni cerró la tarea."},
+    {"id":"owner-routing","result":"FAIL","evidence":"El escenario asigna la lógica de descuento al Developer; Jefe delegó el cálculo puro al Maquetador."}
+  ],
+  "evidence": [
+    {"type":"initial-test","command":"node --test producto/tests/discount.test.mjs","exitCode":1,"expected":"90","actual":"1000","source":"Kilo Eval preparation, not simulated."},
+    {"type":"handoff","parentSession":"ses_e518741e3ffeL8EU8zNUdMgrZK","ownerSession":"ses_e5186ea37ffe9htJFX9eJu7bXK","agent":"maquetador-frontend","model":"openai/gpt-6-luna","actualPatch":"price * percent → price * (1 - percent/100)"},
+    {"type":"post-fix-test","command":"node --test producto/tests/discount.test.mjs","exitCode":0,"pass":2,"fail":0,"durationMs":54.0088,"runner":"EVAL operator; scratch code remained unchanged after Kilo patch."},
+    {"type":"headless-permission","command":"node --test producto/tests/discount.test.mjs","result":"Auto-rejected by Kilo; no permissions changed or --auto used."},
+    {"type":"git-after","branch":"main","status":"M evidence/first-failure.txt; M producto/src/discount.mjs","remote":null,"sourceHash":"C82622EFDD00E19E2F8BE730C323322C8DC52D471EDB3A639DFD62B7A127FC09"},
+    {"type":"session-metrics","sessions":[{"id":"ses_e518741e3ffeL8EU8zNUdMgrZK","agent":"jefe-proyecto","model":"openai/gpt-6-luna","input":29528,"output":572,"reasoning":29,"cacheRead":165632,"cacheWrite":0},{"id":"ses_e5186ea37ffe9htJFX9eJu7bXK","agent":"maquetador-frontend","model":"openai/gpt-6-luna","input":19867,"output":573,"reasoning":48,"cacheRead":52096,"cacheWrite":0}]}
+  ],
+  "defects": ["Ownership mismatch is demonstrated on a fresh Product-root fixture: pure discount domain logic must be routed to Developer, not to Maquetador merely because it is JavaScript."],
+  "humanInterventions": [],
+  "durationMs": 53966,
+  "tokenUsage": {"input":null,"output":null,"total":null,"source":"Per-session values are attached; parent/subagent metrics are not summed."},
+  "limitations": ["Headless Kilo prevented agent-run post-fix verification. External test confirmed the result but does not turn the agent task into a verified completion." ]
+}

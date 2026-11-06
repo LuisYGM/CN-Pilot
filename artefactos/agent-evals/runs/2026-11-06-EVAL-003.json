@@ -1,0 +1,42 @@
+{
+  "schemaVersion": 1,
+  "runId": "2026-11-06-EVAL-003-structural-catalog",
+  "evalId": "EVAL-003",
+  "startedAt": "2026-11-06T01:06:33.338Z",
+  "finishedAt": "2026-11-06T01:08:23.619Z",
+  "durationSource": "Kilo export session created/updated; 110,281 ms including the Maquetador task.",
+  "sourceCommit": "6f764821b92aee158cfc0ab2415909c071d74478",
+  "coreVersion": "2.12.0",
+  "kiloVersion": "7.8.8",
+  "model": {"primary":{"provider":"openai","id":"gpt-6-luna","variant":"default"},"owner":{"provider":"openai","id":"gpt-6-luna","variant":"medium"}},
+  "configurationFingerprint": "24bf6e4cb2db1ea7da93c50459483aa26361c0710b7dd078e60e47125011c94d",
+  "configurationScope": "Isolated project scaffold; no user-global model/provider configuration copied or hashed.",
+  "scenarioFingerprint": "2542ecc26a1e70f72f7932da4c248aea819dd4bd0b3f8f234345b27c61ea4c86",
+  "sourceConfigState": "clean",
+  "workspaceFingerprint": "98977db0e8eb363b5baec9f43b1750d2716eab3621f153dcb40cac9e2d40380e",
+  "baselineCommit": "2e4b8f499b2c6cb08859c305d9a8231291be05a8",
+  "sessionID": "ses_e519b5d06ffe7Rx6ViiHS27TKl",
+  "request": "Implementa la funcionalidad completa descrita en artefactos/funcionalidad.md en este fixture. Decide una especificación/plan compacto proporcional, conserva una única fuente de requisitos y relaciona los requisitos con implementación y evidencia. No introduzcas dependencias ni amplíes el alcance.",
+  "followUps": [],
+  "result": "INCONCLUSIVE",
+  "criteria": [
+    {"id":"A1","result":"PASS","evidence":"REQ-001..004 tienen una implementación y resultado de test identificables."},
+    {"id":"A2","result":"PASS","evidence":"Query/categoría AND, pageSize, clamp de página y empty set se implementaron; cinco tests pasan."},
+    {"id":"A3","result":"FAIL","evidence":"La respuesta del task relacionó REQ→símbolo/test, pero la mapping no se integró en `artefactos/funcionalidad.md`; el diff no modificó la spec y el todo de reconciliación quedó in_progress."},
+    {"id":"A4","result":"PASS","evidence":"node --test producto/catalog.test.mjs, ejecutado externamente sobre el scratch, PASS 5/5; sin nuevas dependencias."},
+    {"id":"completion","result":"INCONCLUSIVE","evidence":"El Kilo CLI auto-rechazó el Bash test ask; el proceso terminó antes de Jefe confirmar la traceability y declarar cierre. No se declaró DONE."}
+  ],
+  "evidence": [
+    {"type":"git-after","branch":"main","status":"M producto/catalog.mjs; M producto/catalog.test.mjs","specChanged":false,"remote":null},
+    {"type":"subtask","sessionID":"ses_e519aab6effeXidPj7SCBr03Xu","agent":"maquetador-frontend","model":"openai/gpt-6-luna","excerpt":"REQ-001→normalizedQuery + test BOOK; REQ-002/AC-001→category AND/empty query test; REQ-003→pageSize/clamp test; REQ-004/AC-002→total/pages/empty test. The mapping existed only in the task report, not the durable spec."},
+    {"type":"pending-todo","text":"Verificar evidencia y actualizar trazabilidad requisito-implementación","status":"in_progress at Kilo interruption"},
+    {"type":"test","command":"node --test producto/catalog.test.mjs","exitCode":0,"pass":5,"fail":0,"durationMs":57.9645,"runner":"EVAL operator after Kilo permission rejection"},
+    {"type":"kilo-permission","command":"node --test producto/catalog.test.mjs","result":"Auto-rejected in headless CLI; no --auto."},
+    {"type":"session-metrics","sessions":[{"id":"ses_e519b5d06ffe7Rx6ViiHS27TKl","agent":"jefe-proyecto","model":"openai/gpt-6-luna","input":40551,"output":1145,"reasoning":196,"cacheRead":307840,"cacheWrite":0},{"id":"ses_e519aab6effeXidPj7SCBr03Xu","agent":"maquetador-frontend","model":"openai/gpt-6-luna","input":23100,"output":1620,"reasoning":133,"cacheRead":95872,"cacheWrite":0}]}
+  ],
+  "defects": ["Structural traceability remained transient in the subagent report rather than converging into its canonical spec; the workspace is incomplete despite passing code tests."],
+  "humanInterventions": [],
+  "durationMs": 110281,
+  "tokenUsage": {"input":null,"output":null,"total":null,"source":"Per-session Kilo export metrics are in evidence.sessions; not summed across nested agents."},
+  "limitations": ["Runtime permission prevented the Jefe session from completing QA/reconciliation; this is INCONCLUSIVE for overall SDD behavior and not a PASS." ]
+}

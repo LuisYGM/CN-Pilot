@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "cnPilotVersion": "2.12.0",
+  "cnPilotVersion": "2.12.1",
   "sourceRepository": "https://github.com/LuisYGM/cn-pilot.git",
   "stableBranch": "main",
   "sourceCommit": null,
@@ -11,11 +11,11 @@
   "managedFiles": [
     {
       "path": ".cn-pilot-version",
-      "sha256": "140288f526a0978bcba7f2f8d2c2585faf05ce088087b54c161050d6366eab4b"
+      "sha256": "6d83386e2438a41efc82d6b4018bf4aaa95b0ccc405ba835d779ff08a31bac80"
     },
     {
       "path": ".cn-pilot/CAMBIOS.md",
-      "sha256": "4f96b435ccd6259b78483f4eff673daaf536a8807ce98680f025ea9f2301a396"
+      "sha256": "5b651ddfaf11354486438927709ca06bd19cc6509831d61f2fad3a0cfbbf809c"
     },
     {
       "path": ".cn-pilot/MANIFIESTO.md",
@@ -23,7 +23,7 @@
     },
     {
       "path": ".cn-pilot/NUCLEO.md",
-      "sha256": "c3d73b185eb68269ff80ec876a96177db73a7f55ba192f82a9ec208ef11db277"
+      "sha256": "d642297c64682f28f20a74c3dcd9d6c040be1cdf76f2adf4c978985ee453c4f2"
     },
     {
       "path": ".cn-pilot/agent-evals/README.md",
@@ -82,11 +82,11 @@
       "sha256": "854c2796b19fd1256eeb7e3ef3ebc08f37ac00cdbf2d1f59caaff05e997cb4d7"
     },
     {
-      "path": ".cn-pilot/agent-evals/fixtures/EVAL-005/src/discount.mjs",
+      "path": ".cn-pilot/agent-evals/fixtures/EVAL-005/producto/src/discount.mjs",
       "sha256": "425cb9bc0dcc722c101ef8f62476bf58472554f4a1798c2487d7832780e47a8e"
     },
     {
-      "path": ".cn-pilot/agent-evals/fixtures/EVAL-005/tests/discount.test.mjs",
+      "path": ".cn-pilot/agent-evals/fixtures/EVAL-005/producto/tests/discount.test.mjs",
       "sha256": "27b658fe161c0a88d843b33102b1fa0bc908db3993ffe294cc4de323c232a2b3"
     },
     {
@@ -115,7 +115,7 @@
     },
     {
       "path": ".cn-pilot/agent-evals/scenarios.json",
-      "sha256": "31ceb00229db70c473745688e67d21a23a7042dec3c95d04e26dd535934c96c2"
+      "sha256": "f862aba6f5236ad53da22786df67dc0f7d6866a33bee2c4321c7879bcd3023c4"
     },
     {
       "path": ".cn-pilot/config/responsive.json",
@@ -570,8 +570,14 @@
       "sha256": "837f9f263d7881d2755a43d57e3ee788a92695b98534d7a22d66382ea914ef09"
     }
   ],
-  "addedFiles": [],
-  "removedFiles": [],
+  "addedFiles": [
+    ".cn-pilot/agent-evals/fixtures/EVAL-005/producto/src/discount.mjs",
+    ".cn-pilot/agent-evals/fixtures/EVAL-005/producto/tests/discount.test.mjs"
+  ],
+  "removedFiles": [
+    ".cn-pilot/agent-evals/fixtures/EVAL-005/src/discount.mjs",
+    ".cn-pilot/agent-evals/fixtures/EVAL-005/tests/discount.test.mjs"
+  ],
   "migrations": [
     {
       "id": "cn-pilot-1x-to-2x-foundation",

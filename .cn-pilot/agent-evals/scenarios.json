@@ -97,7 +97,7 @@
       "fixture": "fixtures/EVAL-005",
       "workspaceMode": "git-baseline",
       "baseline": "fixtures/EVAL-005",
-      "setupTest": {"command": ["--test", "tests/discount.test.mjs"], "expectExit": 1, "recordPath": "evidence/first-failure.txt"},
+      "setupTest": {"command": ["--test", "producto/tests/discount.test.mjs"], "expectExit": 1, "recordPath": "evidence/first-failure.txt"},
       "request": "El test de precio descontado falló una vez con la salida reproducida en evidence/first-failure.txt. Diagnostica primero la causa en el código. No vuelvas a ejecutar el mismo comando sin cambiar el estado o formular una hipótesis nueva; corrige solo el cálculo y verifica el test pertinente.",
       "acceptance": [
         {"id": "A1", "observable": "Identifica la discrepancia entre porcentaje y fracción a partir de evidencia."},

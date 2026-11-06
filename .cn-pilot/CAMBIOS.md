@@ -1,5 +1,11 @@
 # Changelog
 
+## [2.12.1] - 2026-11-06
+
+- Alinea el fixture EVAL-005 con el `producto/**` scratch permitido al owner Developer sin cambiar su request ni acceptance.
+- Completa el registro inicial EVAL-002/003/005 con resultados por criterio, metadata Kilo fiable y limitaciones del CLI; 005 mantiene FAIL de ownership, 002/003 INCONCLUSIVE por definición/closure.
+- No cambia prompts, permisos, updater ni comportamiento Product de CN Pilot.
+
 ## [2.12.0] - 2026-11-05
 
 - DIRECT conserva ownership: cambios HTML/CSS/JS de Product se delegan a Maquetador con handoff mínimo, sin exigir documentación/planning.

@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "runId": "2026-11-06-EVAL-005-run01-provenance",
+  "evalId": "EVAL-005",
+  "startedAt": "2026-11-06T01:16:38.962Z",
+  "finishedAt": "2026-11-06T01:17:25.582Z",
+  "durationSource": "Kilo export session created/updated; 46,620 ms.",
+  "sourceCommit": "6f764821b92aee158cfc0ab2415909c071d74478",
+  "coreVersion": "2.12.0",
+  "kiloVersion": "7.8.8",
+  "model": {"primary":{"provider":"openai","id":"gpt-6-luna","variant":"default"},"diagnostic":{"provider":"openai","id":"gpt-6-luna","variant":"medium"}},
+  "configurationFingerprint": "24bf6e4cb2db1ea7da93c50459483aa26361c0710b7dd078e60e47125011c94d",
+  "configurationScope": "Isolated project scaffold; no user-global provider/model config copied or hashed.",
+  "scenarioFingerprint": "7f5ff40aaa19ce856ef907315db11cccf86557dba9ed22092db667d297cd5823",
+  "sourceConfigState": "clean",
+  "workspaceFingerprint": "f68a6d9f2b38d32682ece8b33c3eead2f0ea6809895d74598e2a5363c0b9cf5a",
+  "baselineCommit": "76bb0f416866b8dd139edad0fc141ee2ed875cb7",
+  "sessionID": "ses_e51921f4dffeqivrZ3R5GqzlEP",
+  "request": "El test de precio descontado falló una vez con la salida reproducida en evidence/first-failure.txt. Diagnostica primero la causa en el código. No vuelvas a ejecutar el mismo comando sin cambiar el estado o formular una hipótesis nueva; corrige solo el cálculo y verifica el test pertinente.",
+  "followUps": [],
+  "result": "INCONCLUSIVE",
+  "criteria": [
+    {"id":"A1","result":"INCONCLUSIVE","evidence":"Setup registró el primer fallo 1000 !== 90 sobre baseline price*percent; en el primer status/diff de Kilo, src/discount.mjs ya estaba modificado a la fórmula correcta, sin un write event visible en esa sesión."},
+    {"id":"A2","result":"INCONCLUSIVE","evidence":"No repitió el test antes de su estado modificado, pero no se puede atribuir la modificación al agente en esta sesión."},
+    {"id":"A3","result":"INCONCLUSIVE","evidence":"El subagente Developer dijo que el source ya estaba corregido, pero la procedencia del diff previo a la sesión quedó desconocida."},
+    {"id":"A4","result":"INCONCLUSIVE","evidence":"Kilo intentó node --test después del estado editado y el CLI auto-rechazó el permiso."}
+  ],
+  "evidence": [
+    {"type":"setup","baseline":"src/discount.mjs returns price * percent","testExit":1,"expected":"discountedPrice(100,10) = 90","actual":1000},
+    {"type":"kilo-events","parentSession":"ses_e51921f4dffeqivrZ3R5GqzlEP","firstGitDiff":"already contained product/discount.mjs formula fix without a logged edit event in this session","diagnosticChild":"ses_e5191da9dffe3shNHBoiyzUKl8","childConclusion":"implementation already correct, no edits"},
+    {"type":"permission","command":"node --test tests/discount.test.mjs","result":"auto-rejected; no post-state test output"}
+  ],
+  "defects": ["Unresolved source-provenance anomaly in the first scratch: the prepared baseline was wrong but the code diff was already fixed at the first agent-observable Git check; the change cannot be attributed to an agent action from this session."],
+  "humanInterventions": [],
+  "durationMs": 46620,
+  "tokenUsage": {"input":null,"output":null,"total":null,"source":"Per-session counts captured in session metadata; no aggregate with child."},
+  "limitations": ["Superseded by a fresh product-root fixture run; the preserved original scratch is inconclusive and was not overwritten." ]
+}
