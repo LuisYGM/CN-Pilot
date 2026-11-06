@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "runId": "2026-11-06-EVAL-005-2.12.2-vscode-reported-run",
+  "evalId": "EVAL-005",
+  "startedAt": null,
+  "finishedAt": null,
+  "durationSource": "No se pudo recuperar timestamps de la sesión interactiva Kilo VS Code; duración no medida.",
+  "sourceCommit": "6b62a47ff125168827218e7f231e7e0a65552a16",
+  "coreVersion": "2.12.2",
+  "kiloVersion": "7.8.8",
+  "model": null,
+  "configurationFingerprint": "9155dd789c4d33d564aaf1c68e71e555d953a1e8a08e73d4b3d4159161dd24e5",
+  "configurationScope": "Scaffold del proyecto; configuración global/modelo del usuario no se copió ni fingerprintó.",
+  "scenarioFingerprint": "7f5ff40aaa19ce856ef907315db11cccf86557dba9ed22092db667d297cd5823",
+  "sourceConfigState": " M .cn-pilot-version\n M .cn-pilot/NUCLEO.md\n M .kilo/agents/jefe-proyecto.md",
+  "workspaceFingerprint": "fed95c4beeada454dc1b93c2ba4125292d72fa55834ba4430397c387cb0176d3",
+  "request": "El test de precio descontado falló una vez con la salida reproducida en evidence/first-failure.txt. Diagnostica primero la causa en el código. No vuelvas a ejecutar el mismo comando sin cambiar el estado o formular una hipótesis nueva; corrige solo el cálculo y verifica el test pertinente.",
+  "followUps": [],
+  "sessionID": null,
+  "result": "INCONCLUSIVE",
+  "criteria": [
+    {"id":"A1","result":"INCONCLUSIVE","evidence":"La persona reporta que el agente identificó el error de porcentaje; no hay transcripción accesible para verificar el diagnóstico."},
+    {"id":"A2","result":"INCONCLUSIVE","evidence":"La persona reporta que no repitió el fallo antes del cambio; falta el orden real de herramientas de la sesión."},
+    {"id":"A3","result":"PASS","evidence":"Diff inspeccionado: el único cambio de código es discountedPrice en producto/src/discount.mjs; test post-fix ejecutado por el evaluador: 1 aprobado, 0 fallidos. evidence/first-failure.txt contiene el fallo inicial real del setup."},
+    {"id":"A4","result":"INCONCLUSIVE","evidence":"La persona informa delegación a Desarrollador; no hay handoff/session export accesible para verificar routing ni el informe de cierre del agente."},
+    {"id":"owner-routing","result":"INCONCLUSIVE","evidence":"PASS reportado por la persona, pero sin traza accesible para atribuir la delegación interactiva a Jefe."}
+  ],
+  "evidence": [
+    {"type":"workspace-preparation","path":"%TEMP%/kilo/cn-pilot-eval-005-2.12.2-vscode/.cn-pilot/runtime/eval-setup.json","coreVersion":"2.12.2","kiloVersion":"7.8.8","workspaceFingerprint":"fed95c4beeada454dc1b93c2ba4125292d72fa55834ba4430397c387cb0176d3","scenarioFingerprint":"7f5ff40aaa19ce856ef907315db11cccf86557dba9ed22092db667d297cd5823","configurationFingerprint":"9155dd789c4d33d564aaf1c68e71e555d953a1e8a08e73d4b3d4159161dd24e5","baselineCommit":"ee0c57565c6fb51c294ae86921b1193ceb334eeb"},
+    {"type":"setup-test","command":"node --test producto/tests/discount.test.mjs","exitCode":1,"expectedExit":1,"assertion":"1000 !== 90","source":"scratch eval-setup.json; real preparation output"},
+    {"type":"workspace-diff","files":["evidence/first-failure.txt","producto/src/discount.mjs"],"observedCode":"return price * (1 - percent / 100);","noOtherModifiedPaths":true},
+    {"type":"post-fix-test","command":"node --test producto/tests/discount.test.mjs","exitCode":0,"pass":1,"fail":0,"durationMs":55.1965,"runner":"evaluador en scratch sin modificar archivos"},
+    {"type":"user-report","execution":"Kilo VS Code interactivo; delegó a Desarrollador; no repitió el test inicial antes de corregir"},
+    {"type":"session-lookup","result":"No hay sesiones Agent Manager asignadas ni sessionID/export en el scratch; sesión interactiva no accesible desde esta ejecución."}
+  ],
+  "defects": [],
+  "humanInterventions": [{"kind":"user-reported-summary","details":"Resultados conductuales proporcionados por la persona; no se adjuntó export/transcripción de Kilo."}],
+  "durationMs": null,
+  "tokenUsage": {"input":null,"output":null,"total":null,"source":"No expuestos ni medidos."},
+  "limitations": ["El diff y el test post-fix se verificaron; el routing, diagnóstico y orden de llamadas Kilo permanecen sin verificación independiente por falta de sesión/transcripción." ]
+}

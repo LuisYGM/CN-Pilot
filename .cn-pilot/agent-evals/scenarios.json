@@ -34,7 +34,7 @@
       "mode": "TASK",
       "title": "Filtros de catálogo con estado accesible",
       "agent": "jefe-proyecto",
-      "expectedOwner": "desarrollador",
+      "expectedOwner": "maquetador-frontend",
       "fixture": "fixtures/EVAL-002",
       "workspaceMode": "git-baseline",
       "baseline": "fixtures/EVAL-002",

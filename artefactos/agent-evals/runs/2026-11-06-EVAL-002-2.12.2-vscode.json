@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "runId": "2026-11-06-EVAL-002-2.12.2-vscode-reported-run",
+  "evalId": "EVAL-002",
+  "startedAt": null,
+  "finishedAt": null,
+  "durationSource": "No se pudo recuperar timestamps de la sesión interactiva Kilo VS Code; duración no medida.",
+  "sourceCommit": "6b62a47ff125168827218e7f231e7e0a65552a16",
+  "coreVersion": "2.12.2",
+  "kiloVersion": "7.8.8",
+  "model": null,
+  "configurationFingerprint": "9155dd789c4d33d564aaf1c68e71e555d953a1e8a08e73d4b3d4159161dd24e5",
+  "configurationScope": "Scaffold del proyecto; configuración global/modelo del usuario no se copió ni fingerprintó.",
+  "scenarioFingerprint": "e0dd1ff1e9532a67f32fbe84169b2c285f732b35add412c43892f77b20f8ef09",
+  "sourceConfigState": " M .cn-pilot-version\n M .cn-pilot/NUCLEO.md\n M .kilo/agents/jefe-proyecto.md",
+  "workspaceFingerprint": "267d901d0f08d717de67cb244a73cbb238f2988de032a32d9743ae4cc92749b3",
+  "request": "Implementa en producto/catalog.html el filtro ya definido en requisitos.txt. Conserva diseño y dependencias actuales. Verifica los criterios indicados; no agregues filtros ni cambies páginas ajenas.",
+  "followUps": [],
+  "sessionID": null,
+  "result": "INCONCLUSIVE",
+  "criteria": [
+    {"id":"A1","result":"INCONCLUSIVE","evidence":"El diff inspeccionado usa toLocaleLowerCase e incluye el query en textContent; los casos NOTE/sketch/zzz y la interacción funcional los reporta la persona, sin salida de prueba o captura accesible."},
+    {"id":"A2","result":"INCONCLUSIVE","evidence":"El código actualiza result-count y empty-message; no hay evidencia de runtime accesible para verificar vacío y limpieza."},
+    {"id":"A3","result":"INCONCLUSIVE","evidence":"La persona reporta estado/conteo actualizados; falta evidencia de inspección del DOM runtime para confirmarlo."},
+    {"id":"A4","result":"INCONCLUSIVE","evidence":"El diff confirma que solo producto/catalog.html cambió; no existe test focal ni transcripción accesible que verifique la ejecución de prueba reportada."},
+    {"id":"owner-routing","result":"INCONCLUSIVE","evidence":"La persona reporta delegación al Maquetador; no hay traza/session export disponible para verificarlo."}
+  ],
+  "evidence": [
+    {"type":"workspace-preparation","path":"%TEMP%/kilo/cn-pilot-eval-002-2.12.2-vscode/.cn-pilot/runtime/eval-setup.json","coreVersion":"2.12.2","kiloVersion":"7.8.8","workspaceFingerprint":"267d901d0f08d717de67cb244a73cbb238f2988de032a32d9743ae4cc92749b3","scenarioFingerprint":"e0dd1ff1e9532a67f32fbe84169b2c285f732b35add412c43892f77b20f8ef09","configurationFingerprint":"9155dd789c4d33d564aaf1c68e71e555d953a1e8a08e73d4b3d4159161dd24e5","baselineCommit":"f3a8fdf0af6ac299a8af91c7945c5dd0f03daddd"},
+    {"type":"workspace-diff","files":["producto/catalog.html"],"observed":"Script filtra por query case-insensitive, oculta elementos, actualiza conteo y empty state."},
+    {"type":"user-report","execution":"Kilo VS Code interactivo; owner Maquetador; comprobó consulta vacía, NOTE, sketch y zzz; reportó resultado PASS"},
+    {"type":"session-lookup","result":"No hay sesiones Agent Manager asignadas ni sessionID/export o resultado de test en el scratch; sesión interactiva no accesible desde esta ejecución."}
+  ],
+  "defects": [],
+  "humanInterventions": [{"kind":"user-reported-summary","details":"Resultado y verificaciones funcionales comunicados por la persona; no se adjuntó transcripción, salida de test ni evidencia browser."}],
+  "durationMs": null,
+  "tokenUsage": {"input":null,"output":null,"total":null,"source":"No expuestos ni medidos."},
+  "limitations": ["La inspección confirma el cambio de fuente y su scope; funcionamiento runtime, pruebas reportadas y routing real quedan INCONCLUSIVE sin evidencia accesible de sesión/browser." ]
+}

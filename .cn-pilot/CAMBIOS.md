@@ -1,5 +1,11 @@
 # Changelog
 
+## [2.12.2] - 2026-11-06
+
+- Refina el routing de Jefe por responsabilidad semántica, no por extensión: frontend DOM/UI a Maquetador; reglas y cálculos de dominio, datos/backend a Desarrollador incluso en JS/TS.
+- Corrige expectedOwner de EVAL-002 a Maquetador; mantiene históricos y captura nuevos fingerprints.
+- Añade regresiones estáticas para la frontera de ownership; sin cambios de permisos, updater ni funciones Product.
+
 ## [2.12.1] - 2026-11-06
 
 - Alinea el fixture EVAL-005 con el `producto/**` scratch permitido al owner Developer sin cambiar su request ni acceptance.

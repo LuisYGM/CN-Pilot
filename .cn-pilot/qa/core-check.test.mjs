@@ -947,6 +947,8 @@ test("installed Kilo resolves representative profiles across the seven static se
   assert.equal(resolveKiloPermission(jefe, "edit", "PROYECTO.md"), "allow");
   assert.equal(resolveKiloPermission(jefe, "edit", ".cn-pilot/NUCLEO.md"), "allow");
   assert.equal(resolveKiloPermission(jefe, "edit", ".cn-pilot/runtime/active-task.json"), "allow");
+  assert.equal(resolveKiloPermission(jefe, "edit", "producto/src/discount.mjs"), "deny", "Jefe must route Product writes, never self-implement them");
+  assert.equal(resolveKiloPermission(jefe, "edit", "producto/index.html"), "deny");
   assert.equal(resolveKiloPermission(jefe, "bash", "Test-Path -LiteralPath '.cn-pilot/runtime/active-task.json'"), "allow");
   assert.equal(resolveKiloPermission(jefe, "bash", "Get-Item -LiteralPath '.cn-pilot/runtime/active-task.json' -Force"), "allow");
   assert.equal(resolveKiloPermission(jefe, "bash", "Select-Object -ExpandProperty Attributes"), "allow");
@@ -960,6 +962,8 @@ test("installed Kilo resolves representative profiles across the seven static se
   assert.equal(resolveKiloPermission(developer, "edit", "producto/src/index.php"), "allow");
   assert.equal(resolveKiloPermission(developer, "lsp", "producto/src/index.php"), "allow");
   assert.equal(resolveKiloPermission(developer, "mcp_unreviewed_write", "remote/resource"), "deny");
+  assert.equal(resolveKiloPermission(developer, "edit", "producto/src/discount.mjs"), "allow", "Developer keeps legitimate Product code ownership");
+  assert.equal(resolveKiloPermission(profiles["maquetador-frontend"], "edit", "producto/index.html"), "allow", "Maquetador keeps legitimate UI Product ownership");
   assert.equal(profiles["maquetador-frontend"].tools.write, true);
   assert.equal(profiles["maquetador-frontend"].tools.apply_patch, true);
   assert.equal(profiles["desarrollador"].tools.bash, true);
@@ -1075,6 +1079,8 @@ test("Agent Eval scenario registry is complete, safe, and distinct from behavior
   assert.deepEqual(suite.scenarios.map(({ id }) => id), expectedIds);
   assert.deepEqual(suite.resultValues, ["PASS", "FAIL", "INCONCLUSIVE"]);
   assert.match(suite.modelPolicy, /default real de Kilo/);
+  assert.equal(suite.scenarios.find(({ id }) => id === "EVAL-002").expectedOwner, "maquetador-frontend");
+  assert.equal(suite.scenarios.find(({ id }) => id === "EVAL-005").expectedOwner, "desarrollador");
 
   for (const scenario of suite.scenarios) {
     assert.ok(scenario.title && scenario.request && scenario.agent, `${scenario.id} describes a real request/agent`);
@@ -1149,14 +1155,19 @@ test("DIRECT frontend retains its owner and ignored checkpoints are not reported
   const core = readCoreFile(".cn-pilot/NUCLEO.md");
   const bashPermissions = lead.slice(lead.indexOf("  bash:"), lead.indexOf("\n---"));
   const editPermissions = lead.slice(lead.indexOf("  edit:"), lead.indexOf("  bash:"));
-  assert.match(lead, /nunca uses el fast path DIRECT para saltarte al owner[\s\S]*?delega un único handoff breve a Maquetador antes de editar[\s\S]*?no intentes `edit`\/`apply_patch` Product tú/i);
-  assert.match(lead, /Cambiar HTML\/markup, CSS, JS o Product visual se delega a `maquetador-frontend` incluso en un DIRECT de una línea[\s\S]*?ni permite a Jefe escribir Product/i);
+  assert.match(lead, /owner por el comportamiento implementado, no por lenguaje, extensión, framework o carpeta Product/i);
+  assert.match(lead, /Determina el owner por el comportamiento implementado[\s\S]*?UI\/DOM[\s\S]*?reglas de negocio, cálculos de dominio/i);
+  assert.match(lead, /reglas de negocio, cálculos de dominio, transformaciones de datos, persistencia\/API\/backend son Desarrollador, incluso si están en JS\/TS/i);
+  assert.match(lead, /UI\/DOM\/presentación\/estados visibles\/(?:interacción|interaction)\/responsive es Maquetador/i);
+  assert.match(lead, /En una funcionalidad mixta, divide solo fronteras materiales e independientes/i);
+  assert.match(lead, /Nunca uses el fast path DIRECT para saltarte al owner[\s\S]*?DIRECT reduce planning\/documentación, no cambia ownership/i);
   assert.match(frontend, /Para un DIRECT localizado de un solo archivo, relee el target exacto[\s\S]*?no invoques Bash `git diff -- <path>`/i);
   assert.match(core, /Clasificar DIRECT no cambia el ownership de la superficie/i);
   assert.match(lead, /Test-Path -LiteralPath '\.cn-pilot\/runtime\/active-task\.json'/i);
   assert.match(lead, /Get-Item -LiteralPath '\.cn-pilot\/runtime\/active-task\.json' -Force \| Select-Object -ExpandProperty Attributes/i);
   assert.match(core, /PowerShell `Test-Path -LiteralPath '\.cn-pilot\/runtime\/active-task\.json'`/i);
   assert.match(lead, /Verifica Git con `git status` y luego `git diff`, por separado y sin flags, ambos allowlisted/i);
+  assert.match(lead, /selecciona SOLO los del shell\/OS activo[\s\S]*?no ejecutes los probes POSIX/i);
   assert.match(core, /no encontrar `.cn-pilot\/runtime\/active-task.json` no confirma su ausencia/i);
   assert.match(bashPermissions, /"Test-Path -LiteralPath '\.cn-pilot\/runtime\/active-task\.json'": allow/);
   assert.match(bashPermissions, /"Get-Item -LiteralPath '\.cn-pilot\/runtime\/active-task\.json' -Force": allow/);

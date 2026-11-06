@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "cnPilotVersion": "2.12.1",
+  "cnPilotVersion": "2.12.2",
   "sourceRepository": "https://github.com/LuisYGM/cn-pilot.git",
   "stableBranch": "main",
   "sourceCommit": null,
@@ -11,11 +11,11 @@
   "managedFiles": [
     {
       "path": ".cn-pilot-version",
-      "sha256": "6d83386e2438a41efc82d6b4018bf4aaa95b0ccc405ba835d779ff08a31bac80"
+      "sha256": "2ad2f8620587f8e46ca2561a28d4a217672ba5adf86091db48aa24ca0b9da769"
     },
     {
       "path": ".cn-pilot/CAMBIOS.md",
-      "sha256": "5b651ddfaf11354486438927709ca06bd19cc6509831d61f2fad3a0cfbbf809c"
+      "sha256": "fa7d4b013767bc5798c8d4634eb5030104d907f5669019aa492cc627e251a9d0"
     },
     {
       "path": ".cn-pilot/MANIFIESTO.md",
@@ -23,7 +23,7 @@
     },
     {
       "path": ".cn-pilot/NUCLEO.md",
-      "sha256": "d642297c64682f28f20a74c3dcd9d6c040be1cdf76f2adf4c978985ee453c4f2"
+      "sha256": "a60f0e689ad6330774b87117a265554b965495ad921296446c987760958f9097"
     },
     {
       "path": ".cn-pilot/agent-evals/README.md",
@@ -115,7 +115,7 @@
     },
     {
       "path": ".cn-pilot/agent-evals/scenarios.json",
-      "sha256": "f862aba6f5236ad53da22786df67dc0f7d6866a33bee2c4321c7879bcd3023c4"
+      "sha256": "8f32752f34739c0fc7476ba51b7e4beee51e225bfc2a99897a5272e8121c496f"
     },
     {
       "path": ".cn-pilot/config/responsive.json",
@@ -287,7 +287,7 @@
     },
     {
       "path": ".cn-pilot/qa/core-check.test.mjs",
-      "sha256": "cd8be4383b737d1d17ddd4d60cde21662c803e15854b74c5a7256b480ea232b2"
+      "sha256": "ecd1cd6e1fd58bc93c1feff4b53df0182cbe76e6966ca21ed291def6d1ab2401"
     },
     {
       "path": ".cn-pilot/update/updater.mjs",
@@ -315,7 +315,7 @@
     },
     {
       "path": ".kilo/agents/jefe-proyecto.md",
-      "sha256": "caaccf56613e9b587c3cc5c2ce1a7eda3cdb854f075fc4b5ed94005b32eb93e6"
+      "sha256": "dc8828f0b347396f70b5693e69f97a640b2b1d92b70c81b9a7a3c6d813e13fb1"
     },
     {
       "path": ".kilo/agents/maquetador-frontend.md",
@@ -570,14 +570,8 @@
       "sha256": "837f9f263d7881d2755a43d57e3ee788a92695b98534d7a22d66382ea914ef09"
     }
   ],
-  "addedFiles": [
-    ".cn-pilot/agent-evals/fixtures/EVAL-005/producto/src/discount.mjs",
-    ".cn-pilot/agent-evals/fixtures/EVAL-005/producto/tests/discount.test.mjs"
-  ],
-  "removedFiles": [
-    ".cn-pilot/agent-evals/fixtures/EVAL-005/src/discount.mjs",
-    ".cn-pilot/agent-evals/fixtures/EVAL-005/tests/discount.test.mjs"
-  ],
+  "addedFiles": [],
+  "removedFiles": [],
   "migrations": [
     {
       "id": "cn-pilot-1x-to-2x-foundation",
