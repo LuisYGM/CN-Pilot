@@ -1,5 +1,11 @@
 # Changelog
 
+## [2.14.1] - 2026-11-06
+
+- Los estudios de dirección pública comprueban con Browser su diferencia en el render real desktop/mobile antes de Creative Review y demuestran medios materiales del brief, sin exigir screenshots.
+- El contrato responsive exige inspeccionar transforms/posicionamiento que amplían el lienzo; `overflow-x:hidden/clip` no cuenta como corrección del sizing.
+- QA de primera propuesta visual con candidatos Street Food y Médico Premium preservando las Flagships originales.
+
 ## [2.13.0] - 2026-11-06
 
 - Habilita el Browser MCP integrado `kilo-playwright_*` con aprobación `ask` para Jefe, Diseñador UI/UX y Maquetador frontend; los demás perfiles conservan `deny`.

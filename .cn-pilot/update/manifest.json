@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "cnPilotVersion": "2.13.0",
+  "cnPilotVersion": "2.14.1",
   "sourceRepository": "https://github.com/LuisYGM/cn-pilot.git",
   "stableBranch": "main",
   "sourceCommit": null,
@@ -11,11 +11,11 @@
   "managedFiles": [
     {
       "path": ".cn-pilot-version",
-      "sha256": "127662056a25294fe93b2d6c4c05c9f6e1556c55a1cfcd02fef79f33b08be2d6"
+      "sha256": "164f496efb6f1299fd8994090d7d721f082cb24f5800d3bc6f9480be4333c779"
     },
     {
       "path": ".cn-pilot/CAMBIOS.md",
-      "sha256": "5fe76bc7861dfe645a56e8e789486ba3418267f77edaacba1db80272903fc88c"
+      "sha256": "02abe1097d19c505f705d437bb09872e2d017a5701d0e19aadda6e4c77374866"
     },
     {
       "path": ".cn-pilot/MANIFIESTO.md",
@@ -23,7 +23,7 @@
     },
     {
       "path": ".cn-pilot/NUCLEO.md",
-      "sha256": "a439905bd5f32c429981086970b395e175f6e08bdae8feb74ae83c075b2e967c"
+      "sha256": "508351ff86a49933f0a4d4980ca7451cdc5f0f048602b5dc8d89820661560f91"
     },
     {
       "path": ".cn-pilot/agent-evals/README.md",
@@ -135,7 +135,7 @@
     },
     {
       "path": ".cn-pilot/documentacion/CONFIGURACION-KILO.md",
-      "sha256": "21e4df8680e6e80cd1db4350c6d2d1d0aa6a329c5766450fee03f5c4b9d80302"
+      "sha256": "02faf65af1991638b4a0a344170dfdc24144666f45f1bc284ea9de81a4d2ea21"
     },
     {
       "path": ".cn-pilot/documentacion/CONFIGURACION.md",
@@ -287,7 +287,7 @@
     },
     {
       "path": ".cn-pilot/qa/core-check.test.mjs",
-      "sha256": "b7a4b157e27ab0480ed6b09e7bee2f980cad90f4d2cdee1d7b5e1a3a2fb27fbd"
+      "sha256": "843f64e7b54747f43d6cc252846cec3c7827e8592fe78e4f599b60843e06298f"
     },
     {
       "path": ".cn-pilot/update/updater.mjs",
@@ -447,7 +447,7 @@
     },
     {
       "path": ".kilo/skills/frontend-responsive/SKILL.md",
-      "sha256": "e472ae9a4002e0430782a4b5bb4023e04cef38f76a42af05ef35f553e3639ea6"
+      "sha256": "dac843b1689a959233240979dce31505e4514163744634e0094cbd876fb5cbf9"
     },
     {
       "path": ".kilo/skills/git-checkpoint/SKILL.md",

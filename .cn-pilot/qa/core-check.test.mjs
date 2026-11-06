@@ -431,6 +431,7 @@ test("Visual Pipeline 2.0 covers the public-web divergence, synthesis, flagship 
   const scenarios = [
     ["A public-web open-direction trigger", pipeline, "Aplica solo a public web Greenfield/rediseño visual material con libertad creativa abierta"],
     ["B two or three real studies", creative, "2–3 Concept Studies reales"],
+    ["B material resources are demonstrated in initial studies", pipeline, "Si el brief hace material un recurso visual"],
     ["B concept count remains small", creative, "nunca más de tres por defecto"],
     ["B concepts differ in multiple visual dimensions", creative, "difieren en **varias** decisiones macro"],
     ["C studies are not full Homes or screenshots", creative, "No es moodboard textual, screenshot, UI Kit, Flagship final, Product ni una Home completa"],
@@ -448,6 +449,7 @@ test("Visual Pipeline 2.0 covers the public-web divergence, synthesis, flagship 
     ["L human approval gates Product", pipeline, "Human Visual Approval → Product implementation si está en scope"],
     ["M Designer does not implement Product before approval", designer, "no edites Product antes de la aprobación visual del Flagship"],
     ["N screenshots are not primary evidence", creative, "sin matrices screenshot"],
+    ["N actual rendered studies are compared before Creative Review", pipeline, "Antes de Creative Review, Diseñador compara el render real"],
     ["N studies demonstrate motion and mobile transformation proportionally", creative, "desktop orienta composición y motion; mobile demuestra adaptación de Hero"],
     ["O user assets retain priority/provenance", creative, "Reutiliza assets PROVIDED/EXISTING"],
     ["O Visual Synthesis resolves a mix", creative, "la **Visual Synthesis** convierte esos elementos en una gramática única y coherente"],
@@ -568,6 +570,7 @@ test("BF-069 Frontend Architecture/Fidelity and Composition Diversity contracts 
     ["V Parallel page work stabilizes shared sources", core, "Estabiliza interfaces y decisiones compartidas antes de dividir"],
     ["W responsive keeps Existing breakpoints", responsive, "Existing conserva los breakpoints implementados como source of truth"],
     ["W greenfield responsive uses its source config", responsive, "usa `.cn-pilot/config/responsive.json`"],
+    ["W responsive source review does not mask transform overflow", responsive, "Revisa el efecto combinado de transforms/posicionamiento"],
     ["X exact section/container/column DOM is not mandatory", contract, "no es un árbol DOM obligatorio"],
     ["X this is conceptual architecture, not literal DOM recipe", architecture, "no una jerarquía DOM o un set de clases obligatorio"],
   ];
