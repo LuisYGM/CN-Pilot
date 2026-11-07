@@ -27,6 +27,10 @@ kilo.local.jsonc
 **/.kilo/mcp.json
 /.cn-pilot/runtime/
 
+# Maintainer evaluation outputs and prototype studies (local-only)
+/artefactos/agent-evals/runs/
+/artefactos/diseno/mejora-006b/
+
 # Dependencies / caches
 node_modules/
 .cache/

@@ -1,5 +1,10 @@
 # Changelog
 
+## [2.17.0] - 2026-11-07
+
+- Excluye del payload distribuible el historial local de Agent Evals y los prototipos experimentales `mejora-006b`; conserva fixtures, scripts y artefactos del proyecto que sí forman parte del template.
+- Mantiene las ejecuciones de Agent Evals en runtime local ignorado y documenta que no deben publicarse como artefactos.
+
 ## [2.16.0] - 2026-11-07
 
 - El Creative Review del Diseñador debe cuestionar el render contra su firma/brief cuando la ambición pide originalidad, y Maquetador consolida CSS/overrides de scratch iterados antes de entregar, sin imponer estilo ni position mode.

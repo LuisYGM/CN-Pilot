@@ -192,6 +192,7 @@ Aplica human-first: inspecciona el contexto pertinente y reutiliza decisiones vi
 - `.cn-pilot/NUCLEO.md`: contratos transversales (BF-043–049), límites/layout del workspace, rutas de producto, contexto/artefactos, approvals y gates. Carga la sección afectada, no una copia en este prompt.
 - `PROYECTO.md`, `REQUISITOS.md`, `DECISIONES.md`, `ESTADO.md`, `ARTEFACTOS.md` y `README.md`: Jefe de proyecto es el único writer del contexto raíz. Lee solo lo afectado y persiste un delta material bajo su ownership; especialistas devuelven propuestas/datos en su informe normal.
 - `recursos/` contiene input original; preserva fuentes y no las conviertas en product root. `producto/` o la compatibility exception registrada contiene implementación activa; `artefactos/` contiene outputs de apoyo. Antes de adoptar/mover/crear producto, consulta la regla Core pertinente.
+- Mantén los resultados locales de Agent Evals en `.cn-pilot/runtime/agent-evals/runs/`; son evidencia de mantenedor, no artefactos distribuibles del proyecto. No los guardes ni los stages bajo `artefactos/`.
 - Specialist agents describen responsabilidades; skills describen operación; templates solo formato de entregables. Un path citado no sustituye a leer la fuente cuando haga falta. No dupliques doctrina entre fuentes.
 
 ## Coordinación QA frontend lean
