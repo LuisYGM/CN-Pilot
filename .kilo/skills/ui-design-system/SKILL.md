@@ -9,6 +9,14 @@ Deriva la dirección visual del objetivo, público, posicionamiento, contenido, 
 
 En Greenfield con nueva dirección, define un sistema apropiado al proyecto, sin convertirlo en librería enterprise; en Existing hereda la fuente vigente. Cuando haya que crear foundations/UI Kit o modificar materialmente tokens globales/primitives, usa obligatoriamente `ui-kit-construction` como fuente operativa para el Kit. La decisión visual sigue siendo propia de esta skill.
 
+## Design System como fuente de verdad
+
+El Design System es el sistema visual propio de cada proyecto y la fuente de verdad de sus decisiones: identidad/principios, foundations/tokens, componentes y reglas de uso, solo hasta la profundidad que el proyecto necesite. Deriva los foundations pertinentes (p. ej., color semántico, tipografía/fluidez, spacing/dimensiones, grid/containers, borders/radius/sombras, responsive, iconografía/lenguaje gráfico y motion cuando corresponda); no completes categorías sin una necesidad real ni fijes valores genéricos.
+
+El UI Kit forma parte de ese Design System: es su representación visual, navegable e interactiva, no un segundo catálogo ni una librería universal. Los specimens muestran tokens, componentes, variantes y estados realmente definidos por el sistema y consumen su fuente canónica; ningún identifier/valor compartido debe editarse en dos sistemas independientes. En Design-only, el Kit puede alojar esa fuente activa. Cuando Product exista, los tokens/componentes se expresan en el source nativo del stack y el Kit consume, deriva o verifica esos mismos datos mediante una única dirección de actualización. La traducción entre formatos debe tener un dueño y mapeo explícitos; no impongas generator, formato o ruta universal. Product nunca depende en runtime de `artefactos/`.
+
+El contrato de autoridad y momento visual de BF-066/BF-048 se mantiene intacto: esta fuente no adelanta el Kit a la Visual Synthesis ni reinicia Creative Direction. En Existing, Approved/Strict o páginas derivadas conserva el sistema vigente y solo lo extiende dentro del scope autorizado.
+
 Usa `.cn-pilot/config/responsive.json` en proyectos nuevos y la configuración vigente en proyectos existentes. Los breakpoints no obligan a crear overrides.
 
 No conviertas una landing sencilla en una librería empresarial.

@@ -633,6 +633,44 @@ test("BF-069 spacing, CSS source quality and consolidation remain balanced", () 
   assert.match(architecture, /stale media\/crop\/responsive rules[\s\S]{0,300}sin cambiar apariencia ni behavior aprobados/i);
 });
 
+test("Design System stays project-specific and UI Kit represents the same source across frontend stacks", () => {
+  const read = (relative) => fs.readFileSync(new URL(`../../${relative}`, import.meta.url), "utf8");
+  const core = read(".cn-pilot/NUCLEO.md");
+  const start = core.indexOf("## Arquitectura frontend y fidelidad (BF-069)");
+  const end = core.indexOf("## Flujo visual de alta fidelidad", start);
+  assert.ok(start >= 0 && end > start, "BF-069 bounds the cross-stack frontend contract");
+  const contract = core.slice(start, end);
+  const system = read(".kilo/skills/ui-design-system/SKILL.md");
+  const kit = read(".kilo/skills/ui-kit-construction/SKILL.md");
+  const architecture = read(".kilo/skills/frontend-architecture/SKILL.md");
+  const wordpress = read(".kilo/skills/wordpress-theme-development/SKILL.md");
+  const responsive = read(".kilo/skills/frontend-responsive/SKILL.md");
+  const bricks = read(".kilo/skills/bricks/SKILL.md");
+  const elementor = read(".kilo/skills/elementor/SKILL.md");
+  const scenarios = [
+    ["Design System is canonical and UI Kit is its representation", contract, /Design System específico de cada proyecto es la fuente de verdad; el UI Kit permanece como su representación navegable\/interactiva/i],
+    ["Design System foundations are project-scoped", system, /color semántico, tipografía\/fluidez, spacing\/dimensiones, grid\/containers/i],
+    ["the same tokens/components have one active canonical source", kit, /una segunda fuente de valores|fuente canónica de tokens\/componentes/i],
+    ["Product never depends at runtime on design artifacts", `${system}\n${kit}\n${architecture}`, /Product (?:nunca depende|no puede depender|no depende) en runtime de `artefactos\//i],
+    ["the UI Kit and components are selected only for real needs", kit, /únicamente los componentes y patrones que respondan a contenido, flujos o necesidades reales/i],
+    ["the Kit does not impose card/accordion/form baselines", kit, /No hay cuota universal de button\/card\/accordion\/form\/table/i],
+    ["Tailwind is preferred for custom Greenfield, not Existing/builders", architecture, /Tailwind CSS es la opción preferida por defecto[\s\S]{0,420}Existing conserva su stack\/CSS\/Tailwind versión vigentes; Bricks, Elementor y builders usan su modelo nativo/i],
+    ["Existing Bricks uses its current shared source, not a Tailwind migration", bricks, /Classes, variables, Components, global styles y breakpoints son un sistema compartido[\s\S]{0,120}no copies tokens aprobados como valores locales masivos/i],
+    ["Existing Elementor preserves its builder and globals", elementor, /No migres builder, estructura, globals ni extensiones existentes para seguir una receta/i],
+    ["Tailwind syntax is version-aware and uses a production build", architecture, /Confirma versión y herramienta[\s\S]{0,320}Tailwind v4 usa CSS-first[\s\S]{0,160}v3 y otras versiones tienen configuración diferente/i],
+    ["production avoids CDN and global installs", architecture, /No instales Tailwind globalmente ni uses Play CDN como CSS de producción/i],
+    ["Tailwind class scanning covers static PHP/Blade sources", architecture, /detector de Tailwind lee source como texto y no resuelve concatenación\/interpolación dinámica[\s\S]{0,140}paths `@source` explícitos si PHP\/Blade/i],
+    ["responsive breakpoints retain the canonical config/source", `${architecture}\n${responsive}`, /Existing y Approved conservan los puntos de cambio de su source, sin sumar una escala global divergente/i],
+    ["shadcn is optional, React-scoped and customizable to design tokens", architecture, /`shadcn\/ui` es opcional cuando sus componentes abiertos y editables resuelven necesidades reales[\s\S]{0,180}integra sus variables con los tokens aprobados/i],
+    ["Astro remains native-first with React only for a justified island", architecture, /Astro:[\s\S]{0,240}prioriza `\.astro` y CSS\/components nativos[\s\S]{0,240}una isla React\/shadcn solo se justifica/i],
+    ["Laravel shadcn requires the React frontend", architecture, /Laravel \+ React\/Inertia[\s\S]{0,200}no añadas React para acceder a `shadcn\/ui`/i],
+    ["Vue/Svelte use native components instead of an automatic shadcn port", architecture, /Vue \/ Nuxt y Svelte \/ SvelteKit:[\s\S]{0,220}No presentes `shadcn\/ui` como multistack ni ports automáticamente/i],
+    ["custom PHP/WP scans native templates and has one editor/token authority", `${architecture}\n${wordpress}`, /HTML \/ PHP \/ custom WordPress theme:[\s\S]{0,300}templates HTML\/PHP\/Blade están en las source paths[\s\S]{0,240}una única fuente canónica/i],
+    ["Web Components are justified cross-stack and shadcn is not automatically converted", architecture, /No conviertas ni empaquetes automáticamente shadcn\/ui como Web Components/i],
+  ];
+  for (const [scenario, source, pattern] of scenarios) assert.ok(pattern.test(source), `${scenario}: contract is present`);
+});
+
 test("BF-071 approved visual sources permit technical normalization without implicit redesign", () => {
   const core = fs.readFileSync(new URL("../NUCLEO.md", import.meta.url), "utf8");
   const start = core.indexOf("### Conversión de frontend visualmente aprobado (BF-071)");

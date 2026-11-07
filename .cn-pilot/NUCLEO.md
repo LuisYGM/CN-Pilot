@@ -1,6 +1,6 @@
 # Núcleo de CN Pilot — Especificación 2.0
 
-**Versión:** `2.17.0`
+**Versión:** `2.18.0`
 
 Documento de referencia para mantenedores de CN Pilot. Una persona nueva debe empezar por [`documentacion/EMPIEZA-AQUI.md`](documentacion/EMPIEZA-AQUI.md); no necesita leer esta especificación para trabajar.
 
@@ -512,6 +512,8 @@ Una referencia HTML/frontend aprobada gobierna el resultado visual, responsive, 
 Los wrappers auxiliares, incluidos `Div`, son válidos únicamente cuando tienen una función justificable: agrupar widgets, alinear elementos, crear un micro-layout, resolver responsive interno, interacción o una unidad visual interna. No se persiguen métricas artificiales de cero wrappers ni se aceptan wrappers por defecto.
 
 En Greenfield con CSS propio, mantén una fuente compartida nativa del stack para tokens/base/primitives reutilizables y estilos de página que la consumen; no la nombres `system.css` por obligación ni repliques globals en cada página. Esa fuente, incluidos CSS/tokens/globales compartidos, es una superficie writer única: estabilízala antes del paralelo; después pueden paralelizarse páginas derivadas independientes que solo la consumen. Si una página necesita cambiar el sistema compartido, reporta la dependencia y serializa/reasigna ese cambio bajo BF-062. El CSS fuente de trabajo es legible y ordenado; archivos minificados son build output, no fuente manual. Selectores dependen de intención/clases, no de profundidad accidental; `!important` es excepcional en Greenfield propio, pero no está prohibido cuando resuelve una integración legítima (p. ej. third-party, builder, utility deliberada o helper de accesibilidad); no sustituye corregir una cascade propia contradictoria. Existing/frameworks/builders conservan su organización si es coherente.
+
+El Design System específico de cada proyecto es la fuente de verdad; el UI Kit permanece como su representación navegable/interactiva, no como un sistema paralelo. Product implementa tokens/componentes en el source nativo y no depende de `artefactos/` en runtime; Kit y código mantienen una sola definición editable o una traducción explícita de dirección única. Para Greenfield custom frontend, Tailwind CSS es la opción preferente; `shadcn/ui` es opcional para React cuando sus componentes aporten valor. Astro, Vue, Svelte, HTML/PHP, WordPress y builders respetan su modelo nativo; no se introduce React, Web Components, Tailwind ni migración en Existing/builder solo para uniformidad. La matriz operativa/versionada pertenece a `frontend-architecture`, la autoridad visual a `ui-design-system` y el Kit a `ui-kit-construction`; BF-066 mantiene el orden creativo vigente.
 
 En HTML/custom themes usa `header`, `nav`, `main`, `section`, `article`, `aside`, `footer`, `figure`, listas, `form`, `button` y `a` según significado. La jerarquía de headings sigue el documento, no el tamaño CSS; `button` representa acciones y `a` navegación. Prefiere semántica nativa y evita `div soup`, selectores de profundidad accidental o conversiones masivas que sacrifiquen editabilidad.
 

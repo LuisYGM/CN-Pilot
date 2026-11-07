@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "cnPilotVersion": "2.17.0",
+  "cnPilotVersion": "2.18.0",
   "sourceRepository": "https://github.com/LuisYGM/cn-pilot.git",
   "stableBranch": "main",
   "sourceCommit": null,
@@ -11,11 +11,11 @@
   "managedFiles": [
     {
       "path": ".cn-pilot-version",
-      "sha256": "b7c9900f90f674500897abbc5467c0478cd7a7a7dc2e4e7797a85ae1cebe4ae6"
+      "sha256": "d19ebea47621c7f2b10e9d52ac2d1d253ffd453b2638e7f85068c3cdf51802b4"
     },
     {
       "path": ".cn-pilot/CAMBIOS.md",
-      "sha256": "1d4d4aa93fd1bff91383d91965ef0abaadc8466f404c036d4b0876eec1b4d03b"
+      "sha256": "abfd3f7660b8eeff03bc0e46844bbdd6d3e5f6f63f1f4fbda57f140ff1f84a06"
     },
     {
       "path": ".cn-pilot/MANIFIESTO.md",
@@ -23,7 +23,7 @@
     },
     {
       "path": ".cn-pilot/NUCLEO.md",
-      "sha256": "6b6bf069068b6064ce8e84ccdc9a09f584930921b50116313ee9dfd0497c5b85"
+      "sha256": "9a3dfa3a43bace40573ff27db8a4a943f467d9258273188ce6ee946c0d8554cd"
     },
     {
       "path": ".cn-pilot/agent-evals/README.md",
@@ -287,7 +287,7 @@
     },
     {
       "path": ".cn-pilot/qa/core-check.test.mjs",
-      "sha256": "b9df14baa44dad69c5b41d15bd678272dc8cb4f32a4b2d837485c9c719d011e0"
+      "sha256": "819edac9929395613d7f91c2e0af040f4c4b10151cd1ad0357d984af79e97e0d"
     },
     {
       "path": ".cn-pilot/update/updater.mjs",
@@ -443,7 +443,7 @@
     },
     {
       "path": ".kilo/skills/frontend-architecture/SKILL.md",
-      "sha256": "6722025905ecc5dfb91848acfcaae487916f40b1d3f4a6c4eab990b262125fb9"
+      "sha256": "dafd2edf9f7d8a48ddf9e28ac019aa9a522c1bc5db40b71c2de659bfc8e44ed9"
     },
     {
       "path": ".kilo/skills/frontend-responsive/SKILL.md",
@@ -523,11 +523,11 @@
     },
     {
       "path": ".kilo/skills/ui-design-system/SKILL.md",
-      "sha256": "75669045fbe0eefba4974e956e1043700b4c99ed011d5823058560d6fc8ce429"
+      "sha256": "8671010b04d8794b8b2658de394a44c47d05da557fe107ea6410e4c8bf7d3ec5"
     },
     {
       "path": ".kilo/skills/ui-kit-construction/SKILL.md",
-      "sha256": "03d78cd4261f0d7a804837db823d652081ca7e65f421408467edac09be5eb8a0"
+      "sha256": "b638aeaec6874718682a73435298b02c989f30170185fec7dcf6a36cbf9483a9"
     },
     {
       "path": ".kilo/skills/visual-art-direction/SKILL.md",

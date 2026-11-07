@@ -1,5 +1,11 @@
 # Changelog
 
+## [2.18.0] - 2026-11-07
+
+- Define el Design System de cada proyecto como source of truth y evoluciona el UI Kit a su representación visual/navegable, sin duplicar sistemas ni exigir componentes hipotéticos.
+- Establece Tailwind CSS como preferencia Greenfield frontend custom; limita shadcn/ui a React cuando aporte valor y preserva la implementación nativa del stack, Existing y builders.
+- Añade una guía de integración version-aware, source scanning y build compilado para Tailwind en los stacks cubiertos, sin convertir shadcn en Web Components ni imponer React.
+
 ## [2.17.0] - 2026-11-07
 
 - Excluye del payload distribuible el historial local de Agent Evals y los prototipos experimentales `mejora-006b`; conserva fixtures, scripts y artefactos del proyecto que sí forman parte del template.
