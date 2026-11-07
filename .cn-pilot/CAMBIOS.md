@@ -1,5 +1,9 @@
 # Changelog
 
+## [2.16.0] - 2026-11-07
+
+- El Creative Review del Diseñador debe cuestionar el render contra su firma/brief cuando la ambición pide originalidad, y Maquetador consolida CSS/overrides de scratch iterados antes de entregar, sin imponer estilo ni position mode.
+
 ## [2.15.0] - 2026-11-06
 
 - Coordinación de handoffs creativos con un mapa compacto de composición/media por sección (sin cuotas de assets) y un pase final de Diseñador sobre el render real después de cambios visuales materiales, separado de Browser QA y del approval humano.

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "cnPilotVersion": "2.15.0",
+  "cnPilotVersion": "2.16.0",
   "sourceRepository": "https://github.com/LuisYGM/cn-pilot.git",
   "stableBranch": "main",
   "sourceCommit": null,
@@ -11,11 +11,11 @@
   "managedFiles": [
     {
       "path": ".cn-pilot-version",
-      "sha256": "c90c3058290761eb1f40ef36a2febaa5a8933a3f473d817f6803f6069def3050"
+      "sha256": "6a5953413ab0b83ab7c6c3f080df322580d42cc33524f5857533ca01f3da6312"
     },
     {
       "path": ".cn-pilot/CAMBIOS.md",
-      "sha256": "bb25b1d3366b29cf4f90b8576239134d7ba528ebcf4e2617dada4007b87e88e2"
+      "sha256": "2da878ae8b90f010a9419761abfdbb278a0c5db27c3e5954e9aecf5a0cb2fe50"
     },
     {
       "path": ".cn-pilot/MANIFIESTO.md",
@@ -23,7 +23,7 @@
     },
     {
       "path": ".cn-pilot/NUCLEO.md",
-      "sha256": "9bb68e991ca42d8eafe4e67ce6454b4a7b759850501dd5ceb9d85744e4288ede"
+      "sha256": "f9ecd7b57e1c43336fa606c5bb2796002e2a752eb79b538a925aff24941d1759"
     },
     {
       "path": ".cn-pilot/agent-evals/README.md",
@@ -311,15 +311,15 @@
     },
     {
       "path": ".kilo/agents/disenador-ui-ux.md",
-      "sha256": "1bd6968d577f761b6a66a579bf32ddff836033a77e1df07b2ed5b8ade71413dc"
+      "sha256": "e2c6f9f676ab77b47a1ba6e80037be5aea7ace1a938e3b314372441d5ae3251e"
     },
     {
       "path": ".kilo/agents/jefe-proyecto.md",
-      "sha256": "2f779d451538c93c8f42253a34c0bd7b481a7185b7b68a8ccbb213ccca865210"
+      "sha256": "328cc3405d812ee80619ae85cea52d1df00beab5611615fa9312e9afd98766c6"
     },
     {
       "path": ".kilo/agents/maquetador-frontend.md",
-      "sha256": "795c7afec4ee1be138118d26f108fc34f56dad77a14d222fc3c8ee2985558ba9"
+      "sha256": "007f8724e708a6875680c9cdac79e7f58a105ba27664cf8133faabbd704c9e03"
     },
     {
       "path": ".kilo/agents/revisor.md",
