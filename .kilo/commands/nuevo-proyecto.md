@@ -13,8 +13,8 @@ agent: jefe-proyecto
 - Inspecciona `recursos/` de forma ligera: usa índices/brief/auditorías y detecta solo las familias pertinentes (branding, documentos, fotos, referencias, vídeo, código original o datos). No recorras cientos de archivos ni pidas información que ya aparece allí.
 - Reutiliza datos confirmados de auditorías, branding, sitemap, copy, referencias, assets e implementación; no vuelvas a preguntar lo que esos materiales resuelven salvo contradicción o información material ausente.
 - Identifica si el contexto ya describe el proyecto, qué está implementado, qué debe preservarse, el root real y si se trata de app, web pública, CMS, ecommerce o mantenimiento. Mira el código/manifiestos/configuración existentes solo hasta entender la petición actual; no inicies una auditoría completa por rutina.
-- Examina `README.md` para distinguir presentación genérica del template de documentación manual del producto. Conserva README propio por defecto.
-- Si hay un checkpoint activo, aplica recovery primero. No reinicies onboarding para continuar el mismo trabajo; ante una tarea nueva distinta, sigue el gate existente para continuar o dejar pendiente.
+- Examina `README.md` para distinguir una copia genérica heredada, un README manual/mixto y el README del Core original. No clasifiques solo por `# CN Pilot` ni por la presencia de `.cn-pilot/`.
+- Si existe un checkpoint, sigue la identidad/origen y recovery de BF-047 antes de retomarlo; no importes su contenido o `nextAction` al proyecto nuevo ni lo copies a los documentos. Su ausencia es normal y no justifica crear runtime durante onboarding.
 
 ## Conversa por necesidad, no por formulario
 
@@ -32,6 +32,16 @@ El onboarding queda suficientemente resuelto cuando se entienden el objetivo act
 
 Alcanza esa suficiencia sin una confirmación genérica obligatoria: la invocación de `/nuevo-proyecto` ya solicita orientar/inicializar el proyecto. Persiste únicamente los deltas durables bajo su fuente canónica. Si aparece una decisión humana material, una autorización requerida o un cambio irreversible, pide esa decisión concreta antes de actuar; no uses la confirmación para volver a pedir aprobación de lo ya delegado.
 
+## README del proyecto al inicializar
+
+En la **primera inicialización de una copia derivada**, el README genérico heredado es un residuo del template, no la presentación del proyecto: convertirlo en un README propio forma parte del cierre del onboarding cuando ya hay identidad y objetivo suficientes. Reconócelo por varias señales del contenido estándar de CN Pilot (encabezado, introducción, navegación y secciones del producto) y ausencia de contenido del proyecto; `# CN Pilot` por sí solo no basta. Conserva intactos los README propios o mixtos/manuales. Si la clasificación no es segura, no reemplaces contenido: inspecciona el delta posible y pregunta solo si hace falta para tomar una decisión material.
+
+Protege el repositorio original del Core: considera que es **CN Pilot Core** solo si el `origin` local coincide con `sourceRepository` de `.cn-pilot/update/manifest.json` y el Project Context/README existente también mantiene la identidad canónica del Core (el mismo criterio de identidad que el Core usa para comprobar su Project Context). Un placeholder `Pending` aislado no confirma identidad. Reevalúa tras recibir hechos nuevos: si la persona identifica otro proyecto aunque el remote provenga del Core, la copia es derivada y el README plantilla se convierte según corresponda. No basta con que una copia contenga `.cn-pilot/`, el manifiesto o un README que empiece «CN Pilot». En el Core original conserva la presentación del producto. Si esa identidad no puede determinarse y sobrescribir sería riesgoso, conserva el README y resuelve solo la ambigüedad necesaria.
+
+Para una copia derivada con README heredado, usa únicamente identidad, objetivo, tipo, alcance, tecnología, estructura, comandos y entregables **confirmados** en la petición, Project Context, recursos o implementación. Adapta la composición al proyecto; escribe el nombre/descriptor real, descripción y objetivo, y solo secciones con datos. El primer encabezado corresponde a ese proyecto, no conserva `# CN Pilot` por ser la marca del Core (salvo que «CN Pilot» sea realmente el nombre del proyecto, sin reutilizar su presentación como template). Añade enlaces solo a documentación/archivos existentes. Sin código no hay sección ni comandos de instalación inventados. El README presenta/navega el proyecto; no repite el Core README, un PRD ni todos los archivos de Context. Si no hay un nombre/objetivo fiable, pregunta una sola vez; no inventes claims ni presentes el README genérico como resultado completo.
+
+La operación es idempotente: en un proyecto ya inicializado no regeneres el README. Si el README existente es del proyecto, conserva su estructura y contenido manual; actualiza solo un delta material y seguro cuando esté dentro del scope. Un README generado debe identificarse como el proyecto en ejecuciones posteriores y no volver a coincidir con la presentación genérica del template.
+
 ## Contexto y límites
 
 - `PROYECTO.md`: hechos estables y fuentes de verdad; registra objetivo, público o tipo de partida solo si se conocen y aportan valor. Las clasificaciones internas/root/container se infieren de evidencia, nunca se presentan como campos.
@@ -39,7 +49,7 @@ Alcanza esa suficiencia sin una confirmación genérica obligatoria: la invocaci
 - `DECISIONES.md`: solo decisiones aprobadas importantes; no acumules preferencias rutinarias ni tareas.
 - `ESTADO.md`: una orientación operativa breve; cambia solo ante un hito, bloqueo o siguiente paso que siga siendo relevante.
 - `ARTEFACTOS.md`: entregables reales/significativos, nunca recursos originales ni placeholders.
-- `README.md`: modifica solo el README genérico heredado cuando corresponda a inicialización autorizada; conserva contenido manual propio.
+- `README.md`: aplica la clasificación/idempotencia del apartado anterior; actualiza solo presentación/navegación material, sin convertirlo en diario.
 
 Conserva todas las restricciones existentes de seguridad y layout: no pidas secretos; no configures MCP/deployment/workflows durante onboarding; no copies/desempaquetes `recursos/codigo-original/`; no muevas, adoptes ni edites implementación sin scope y autorización. `producto/` se crea al iniciar implementación/adopción explícita, nunca para completar un formulario. Existing operativo solo mantiene root real con evidencia de dependencia operativa. Código top-level sin esa evidencia queda `Pending normalization/migration`: conserva el source y solicita la autorización aplicable antes de moverlo o modificarlo. No crees carpetas vacías, placeholders ni artefactos estratégicos por rutina.
 
@@ -47,4 +57,6 @@ Si el scope ya autorizado incluye trabajo posterior a la inicialización y no ha
 
 Un hito significativo puede comunicarse brevemente así, sin headings ni jerga obligatorios: qué quedó resuelto, dónde está el proyecto y cuál es el siguiente mejor paso. Mantén la ruta recomendada separada de la elegida por la persona; una recomendación nunca se convierte por sí sola en mandato.
 
-Antes de cerrar, comprueba que no se perdió trabajo manual ni información existente, actualiza solo archivos con delta durable y verifica rutas/consistencia. Si Git existe y se inicializó contexto nuevo, crea un único commit local `chore: inicializar proyecto` para los cambios completos y válidos; los cambios posteriores siguen el workflow normal. Si no existe, trabaja y cierra sin ejecutar `git init`. No hagas push.
+Antes de declarar el onboarding completado, haz una comprobación focal —sin nueva fase/wizard—: Project Context tiene identidad/objetivo estables conocidos; `README.md` presenta ese proyecto, no conserva una plantilla genérica en una copia derivada, y no inventa datos; el README del Core original sigue presentando CN Pilot; `ESTADO.md` refleja la situación real y no afirma que siga sin inicializar; requisitos confirmados, decisiones aprobadas y artefactos existentes están en sus fuentes pertinentes; no se interpretaron placeholders/ejemplos como datos reales; no se perdió contenido manual; no hay contradicciones materiales. Un `README` manual válido puede conservarse intacto. Si algo futuro no bloquea el trabajo útil, déjalo como `Pending`; si falta identidad necesaria para sustituir el README genérico, pregunta o deja ese gate abierto y no declares el cierre completo.
+
+Comprueba que no se crearon carpetas vacías: `artefactos/` sigue siendo on-demand y los checkpoints no van a Project Context. Actualiza solo archivos con delta durable. Si Git existe y se inicializó contexto nuevo, crea un único commit local `chore: inicializar proyecto` para los cambios completos y válidos; los cambios posteriores siguen el workflow normal. Si no existe, trabaja y cierra sin ejecutar `git init`. No hagas push.

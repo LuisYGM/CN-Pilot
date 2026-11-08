@@ -325,7 +325,7 @@ test("Guided Project Journey contains the required behavioral scenarios A-K", ()
     ["G Existing microchange", start, "Un cambio pequeño puede ir directamente a inspección, corrección y prueba"],
     ["H SaaS sin marketing web impuesto", core, "app/SaaS"],
     ["H SaaS no recibe SEO de marketing por defecto", command, "no un sitemap de marketing o SEO por defecto"],
-    ["I recovery desde checkpoint", command, "Si hay un checkpoint activo, aplica recovery primero"],
+    ["I absence is normal and a checkpoint is scope-checked", command, "Su ausencia es normal"],
     ["J Pending no material", command, "«Pending» si el dato no bloquea el próximo trabajo útil"],
     ["K checkpoint + tarea distinta", lead, "Para un encargo nuevo distinto, pregunta brevemente si se continúa o se deja en pausa"],
     ["Next best step tras milestone", command, "dónde está el proyecto y cuál es el siguiente mejor paso"],

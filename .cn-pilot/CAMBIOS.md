@@ -1,5 +1,10 @@
 # Changelog
 
+## [2.23.0] - 2026-11-08
+
+- Completa la inicialización de Project Context con un gate idempotente de README propio para copias derivadas y protección explícita del README del Core/manuscritos.
+- Aclara el manejo de checkpoints runtime ajenos, conservando recovery válida sin importarla como contexto de otro proyecto.
+
 ## [2.22.0] - 2026-11-08
 
 - Mejora el método de dirección creativa con research focalizado por decisión, tesis visual vinculada al proyecto y composición narrativa de página completa.
