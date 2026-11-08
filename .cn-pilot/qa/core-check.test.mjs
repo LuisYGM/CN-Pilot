@@ -443,13 +443,13 @@ test("009A adapts visual ownership, delivery and approval to project context", (
     ["C provisional copy is coherent and non-factual", pipeline, "contenido provisional coherente para evaluar jerarquía y recorrido"],
     ["C no invented commercial proof", pipeline, "ni inventar clientes, resultados, premios, cifras, testimonios o trabajos reales"],
     ["D user assets and authority are inspected first", pipeline, "inspecciona primero el índice/brief/recursos suministrados"],
-    ["D fonts are researched when material", creative, "ejecuta font discovery"],
+    ["D fonts are researched through real copy and role samples", creative, "renderizando el idioma y copy del proyecto"],
     ["D media research precedes dependent composition", pipeline, "medios visuales materiales se seleccionan antes de cerrar las composiciones dependientes"],
-    ["D functional icon family is coherent", media, "una familia funcional principal"],
+    ["D functional icon family is coherent", media, "una sola familia funcional"],
     ["E designer owns visual system", system, "El Diseñador responde por su criterio y entrega"],
     ["E implementation owner translates approved system", pipeline, "Maquetador/Desarrollador los traducen a tokens, variables y componentes del stack"],
-    ["F relevant component states are specified", kit, "muestra solo variantes/tamaños usados o aprobados"],
-    ["G page composition is content-led", page, "Agrupa contenido por propósito/relación y decide jerarquía entre secciones"],
+    ["F relevant component states are specified", kit, "Muestra solo variantes/tamaños usados o aprobados"],
+    ["G page composition starts from section purpose/content", page, "propósito/contenido; protagonista y jerarquía"],
     ["H approved implementation preserves fidelity", frontend, "Maquetador implementa el resultado, no lo rediseña"],
     ["H no automatic aesthetic loops", creative, "no se delega a Jefe, Maquetador, Revisor ni a un ciclo automático de evaluación estética"],
     ["I human makes the aesthetic decision", pipeline, "esta aprobación humana decide aceptar, rechazar o solicitar cambios"],
@@ -508,17 +508,16 @@ test("BF-068 Public Web Visual Quality Floor covers requirements A-S", () => {
     ["K intentional no-photo direction is valid", media, "Un «sin fotografía» intencional es una solución, no un placeholder"],
     ["L stock is not represented as project reality", media, "No infieras que una foto externa corresponde"],
     ["M asset research returns concrete candidates when chosen", media, "produce candidatos concretos"],
-    ["N Lucide default functional icon family", kit, "Lucide es el default general"],
-    ["N one primary icon family", kit, "una sola familia primaria de iconos funcionales"],
+    ["N one contextual functional icon family, no project-wide default", kit, "una sola familia de iconos funcionales elegida según la identidad/UI"],
     ["N no mixing packs", kit, "No mezcles packs"],
-    ["O Phosphor is an expressive alternative", kit, "Phosphor puede aportar expresividad"],
-    ["O Simple Icons are brand-only and do not grant trademark rights", media, "CC0 no elimina trademark"],
-    ["O artwork SVG remains permitted", kit, "custom SVG sigue permitido para artwork"],
+    ["O icon libraries are candidates, not a preset", media, "Lucide, Phosphor, Tabler u otra fuente legítima"],
+    ["O icon license does not grant trademark rights", media, "una licencia permisiva no elimina trademark/uso de marca"],
+    ["O artwork SVG remains permitted", kit, "custom SVG se reserva para artwork/identidad"],
     ["P Quality Floor permits a deliberately sober direction", media, "Sobriedad deliberada es un resultado válido"],
     ["P anti-template swap test is present", creative, "si cambian logo/copy/fotos, ¿la propuesta se vendería casi intacta a otro sector?"],
-    ["Q Flagship executes motion", motion, "Flagship lo ejecuta salvo excepción"],
+    ["Q Flagship demonstrates approved sequences when material", motion, "El prototipo/Flagship demuestra el behavior definido por estado"],
     ["R Revisor verifies objective criteria only", reviewer, "comprueba de forma read-only el Visual Quality Floor objetivo BF-068"],
-    ["S Designer owns the public-web floor", designer, "verifica el Quality Floor BF-068 proporcionalmente"],
+    ["S Core BF-068 remains the single public-web floor", designer, "usa BF-068 como el único contrato del floor Public Web"],
   ];
   for (const [scenario, source, required] of scenarios) assert.ok(source.includes(required), `${scenario}: contract is present`);
 });
@@ -649,8 +648,8 @@ test("Design System stays project-specific and UI Kit represents the same source
     ["Design System foundations are project-scoped", system, /color semántico, tipografía\/fluidez, spacing\/dimensiones, grid\/containers/i],
     ["the same tokens/components have one active canonical source", kit, /una segunda fuente de valores|fuente canónica de tokens\/componentes/i],
     ["Product never depends at runtime on design artifacts", `${system}\n${kit}\n${architecture}`, /Product (?:nunca depende|no puede depender|no depende) en runtime de `artefactos\//i],
-    ["the UI Kit and components are selected only for real needs", kit, /únicamente los componentes y patrones que respondan a contenido, flujos o necesidades reales/i],
-    ["the Kit does not impose card/accordion/form baselines", kit, /No hay cuota universal de button\/card\/accordion\/form\/table/i],
+    ["the UI Kit and components are selected only for real needs", kit, /Incluye únicamente componentes\/patrones que respondan a contenido o flujos reales/i],
+    ["the Kit does not impose card/accordion/form baselines", kit, /no hay cuota de button\/card\/accordion\/form\/table/i],
     ["Tailwind is preferred for custom Greenfield, not Existing/builders", architecture, /Tailwind CSS es la opción preferida por defecto[\s\S]{0,420}Existing conserva su stack\/CSS\/Tailwind versión vigentes; Bricks, Elementor y builders usan su modelo nativo/i],
     ["Existing Bricks uses its current shared source, not a Tailwind migration", bricks, /Classes, variables, Components, global styles y breakpoints son un sistema compartido[\s\S]{0,120}no copies tokens aprobados como valores locales masivos/i],
     ["Existing Elementor preserves its builder and globals", elementor, /No migres builder, estructura, globals ni extensiones existentes para seguir una receta/i],
@@ -1307,14 +1306,14 @@ test("visual direction preserves designer ownership without autonomous aesthetic
   assert.match(core, /La presencia visual puede ser sobria, densa, intensa o maximalista/);
   assert.match(artDirection, /también lo son intensidad, densidad y color fuertes/);
   assert.match(creative, /Default para una \*\*public web\*\* nueva/);
-  assert.match(creative, /QUIET, REFINED, EXPRESSIVE o IMMERSIVE/);
+  assert.match(creative, /Infiere el rango de expresión y protagonismo que sirven al público/);
   assert.match(creative, /Existing conserva `continuity > novelty`/);
   assert.match(creative, /Approved\/Strict mantiene authority BF-048/);
-  assert.match(creative, /El Diseñador es responsable de investigar, decidir y entregar una propuesta completa/);
+  assert.match(creative, /responde por la calidad profesional de su propuesta/);
   assert.match(creative, /no se delega a Jefe, Maquetador, Revisor ni a un ciclo automático de evaluación estética/);
   assert.match(creative, /corrige en un mismo pase cualquier defecto evidente que impida evaluarlo/);
   assert.doesNotMatch(creative, /Creative Refinement Pass|Genericity Risk/);
-  assert.match(composition, /No prohíbas cards, simetría, centrado, split layouts ni simplicidad/);
+  assert.match(composition, /Dos regiones pueden compartir composición si esa continuidad tiene función/);
   assert.match(application, /no páginas de marketing/);
 
   for (const skill of ["creative-web-experience", "page-composition", "visual-art-direction", "motion-interaction", "ui-kit-construction", "visual-parity-review", "application-ui", "accessibility-review", "performance-review", "webapp-testing"]) {
@@ -1686,17 +1685,17 @@ test("Open public-web motion floor is executable, intent-first, and preserves au
   assert.match(floor, /opt-out humano limita exactamente el behavior\/scope[\s\S]*?sin scroll effects[\s\S]*?No uses GSAP[\s\S]*?tecnología, no elimina la experiencia/i);
   assert.match(creative, /Motion material queda diseñado y demostrado en la propuesta correspondiente/i);
   assert.match(creative, /STATIC|NONE\/static solo es válido por opt-out explícito[\s\S]*?constraint material/i);
-  assert.match(creative, /opt-out se aplica exactamente al behavior\/scope pedido[\s\S]*?no GSAP.*limita technology, no experience/i);
+  assert.match(creative, /opt-out se aplica exactamente al behavior\/scope pedido[\s\S]*?no GSAP.*limita tecnología, no experience/i);
   assert.match(motion, /smallest capable tool that faithfully implements the already-defined experience/i);
-  assert.match(motion, /progresión scroll-linked material que continúa después del Hero[\s\S]*?behavior diferenciado[\s\S]*?memorable moment/i);
+  assert.match(motion, /frecuencia\/repetición, urgencia y efecto[\s\S]*?estado inicial → cambio visible → estado final[\s\S]*?reversa\/interrupción/i);
   assert.match(motion, /GSAP:[\s\S]*?Ningún trigger obliga a GSAP/i);
   assert.match(motion, /dependencia reversible de implementación[\s\S]*?licencia no aceptada/i);
   assert.match(motion, /opt-out del usuario se aplica solo a los behavior\/scope expresados[\s\S]*?No GSAP[\s\S]*?no la experiencia/i);
   assert.match(motion, /Nunca añadas dependency\/CDN\/script\/node_modules a template CN Pilot/i);
-  assert.match(motion, /No uses screenshots como evidencia de motion/i);
-  assert.match(kit, /Motion System.*hero choreography.*progresión scroll\/section behavior.*reduced-motion intent/s);
-  assert.match(composition, /section’s motion role[\s\S]*?progresión scroll-linked material posterior al Hero/i);
-  assert.match(designer, /motion como parte del visual fingerprint de public web abierta/i);
+  assert.match(motion, /No uses screenshots como prueba de motion/i);
+  assert.match(kit, /tokens\/convenciones compartidos[\s\S]*?no repitas aquí el floor BF-068/);
+  assert.match(composition, /mapa compacto por región[\s\S]*?relación de continuidad o contraste/);
+  assert.match(designer, /aplica el floor de motion de BF-068: define en la dirección qué relación narrativa\/visual cambia y por qué/i);
   assert.match(frontend, /no los elimines\/sustituyas por fade simple[\s\S]*?informa a Jefe de proyecto antes de degradar/i);
   assert.match(reviewer, /scroll progression posterior al Hero[\s\S]*?memorable concept-linked moment[\s\S]*?no sustituye el gate primario de Jefe/i);
 });

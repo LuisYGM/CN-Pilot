@@ -1,5 +1,10 @@
 # Changelog
 
+## [2.22.0] - 2026-11-08
+
+- Mejora el método de dirección creativa con research focalizado por decisión, tesis visual vinculada al proyecto y composición narrativa de página completa.
+- Refuerza selección y handoff de tipografía, medios, iconografía, componentes, botones y secuencias de motion, manteniendo la separación de diseño/implementación y la aprobación estética humana.
+
 ## [2.21.0] - 2026-11-08
 
 - Consolida la responsabilidad creativa en el Diseñador y sustituye ciclos autónomos de evaluación estética por autocontrol funcional/de recursos y aprobación humana.
