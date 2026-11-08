@@ -419,69 +419,62 @@ test("adaptive SDD contracts preserve DIRECT speed and require structural conver
   assert.match(strategy, /contrato del Core son estáticas y no demuestran que un agente siga siempre bien el proceso/i);
 });
 
-test("Visual Pipeline 2.0 covers the public-web divergence, synthesis, flagship and fast-path scenarios", () => {
+test("009A adapts visual ownership, delivery and approval to project context", () => {
   const read = (relative) => fs.readFileSync(new URL(`../../${relative}`, import.meta.url), "utf8");
   const core = read(".cn-pilot/NUCLEO.md");
   const creative = read(".kilo/skills/creative-web-experience/SKILL.md");
   const designer = read(".kilo/agents/disenador-ui-ux.md");
+  const projectLead = read(".kilo/agents/jefe-proyecto.md");
+  const system = read(".kilo/skills/ui-design-system/SKILL.md");
+  const kit = read(".kilo/skills/ui-kit-construction/SKILL.md");
+  const media = read(".kilo/skills/visual-art-direction/SKILL.md");
+  const page = read(".kilo/skills/page-composition/SKILL.md");
+  const application = read(".kilo/skills/application-ui/SKILL.md");
+  const frontend = read(".kilo/skills/frontend-architecture/SKILL.md");
   const pipelineStart = core.indexOf("### Visual Pipeline 2.0 / Creative Web Experience (BF-066)");
   const pipelineEnd = core.indexOf("\n### Visual Quality Floor de Public Web (BF-068)", pipelineStart);
   assert.ok(pipelineStart >= 0 && pipelineEnd > pipelineStart, "canonical pipeline is scoped in Core");
   const pipeline = core.slice(pipelineStart, pipelineEnd);
   const scenarios = [
-    ["A public-web open-direction trigger", pipeline, "Aplica solo a public web Greenfield/rediseño visual material con libertad creativa abierta"],
-    ["B two or three real studies", creative, "2–3 Concept Studies reales"],
-    ["B material resources are demonstrated in initial studies", pipeline, "Si el brief hace material un recurso visual"],
-    ["B concept count remains small", creative, "nunca más de tres por defecto"],
-    ["B concepts differ in multiple visual dimensions", creative, "difieren en **varias** decisiones macro"],
-    ["C studies are not full Homes or screenshots", creative, "No es moodboard textual, screenshot, UI Kit, Flagship final, Product ni una Home completa"],
-    ["D inspect user references and material families first", pipeline, "inspecciona primero el índice/brief/recursos suministrados"],
-    ["E material URLs must be opened", creative, "abre e inspecciona las relevantes antes de afirmar Reference Coverage completa"],
-    ["F user may choose, mix, reject, or delegate", creative, "elegir un concepto, mezclar piezas, rechazar todos o delegar"],
-    ["F a rejected set requires new directional evidence", creative, "no regeneres variantes idénticas ni repitas research sin evidencia nueva"],
-    ["G kit is derived after synthesis", creative, "Solo después de Visual Synthesis activa"],
-    ["H Approved and Strict fast paths", pipeline, "La ruta **Approved/Strict** no genera Concept Studies artificiales"],
-    ["H BF-068 quality floor remains active under BF-066", pipeline, "BF-068 gobierna UI Kit/Motion/media/iconografía y Quality Floor"],
-    ["I app UI bypasses public-web concepts", pipeline, "No se activa por app/dashboard (`application-ui`)"],
-    ["J Existing and derived pages bypass repeated divergence", pipeline, "Existing localized, página derivada de sistema aprobado"],
-    ["K one Flagship is a complete page, not a study", creative, "una sola Flagship de página completa"],
-    ["K Flagship is not Product runtime", creative, "no es Product runtime"],
-    ["L human approval gates Product", pipeline, "Human Visual Approval → Product implementation si está en scope"],
-    ["M Designer does not implement Product before approval", designer, "no edites Product antes de la aprobación visual del Flagship"],
-    ["N screenshots are not primary evidence", creative, "sin matrices screenshot"],
-    ["N actual rendered studies are compared before Creative Review", pipeline, "Antes de Creative Review, Diseñador compara el render real"],
-    ["N studies demonstrate motion and mobile transformation proportionally", creative, "desktop orienta composición y motion; mobile demuestra adaptación de Hero"],
-    ["O user assets retain priority/provenance", creative, "Reutiliza assets PROVIDED/EXISTING"],
-    ["O Visual Synthesis resolves a mix", creative, "la **Visual Synthesis** convierte esos elementos en una gramática única y coherente"],
-    ["P parallel studies are alternatives, not merges", creative, "la síntesis seleccionada es una unidad nueva, no una integración automática de ramas"],
+    ["A public web direction trigger is scoped", pipeline, "Aplica solo a public web Greenfield/rediseño visual material con libertad creativa abierta"],
+    ["A adaptive route is not universal", pipeline, "No es una secuencia universal"],
+    ["A existing audit/content/decisions are reused", pipeline, "contenido/auditoría/identidad/diseño aprobado existentes se consumen sin repetir decisiones"],
+    ["B approved copy stays authoritative", pipeline, "contenido aprobado gobierna la composición y no se reescribe"],
+    ["C provisional copy is coherent and non-factual", pipeline, "contenido provisional coherente para evaluar jerarquía y recorrido"],
+    ["C no invented commercial proof", pipeline, "ni inventar clientes, resultados, premios, cifras, testimonios o trabajos reales"],
+    ["D user assets and authority are inspected first", pipeline, "inspecciona primero el índice/brief/recursos suministrados"],
+    ["D fonts are researched when material", creative, "ejecuta font discovery"],
+    ["D media research precedes dependent composition", pipeline, "medios visuales materiales se seleccionan antes de cerrar las composiciones dependientes"],
+    ["D functional icon family is coherent", media, "una familia funcional principal"],
+    ["E designer owns visual system", system, "El Diseñador responde por su criterio y entrega"],
+    ["E implementation owner translates approved system", pipeline, "Maquetador/Desarrollador los traducen a tokens, variables y componentes del stack"],
+    ["F relevant component states are specified", kit, "muestra solo variantes/tamaños usados o aprobados"],
+    ["G page composition is content-led", page, "Agrupa contenido por propósito/relación y decide jerarquía entre secciones"],
+    ["H approved implementation preserves fidelity", frontend, "Maquetador implementa el resultado, no lo rediseña"],
+    ["H no automatic aesthetic loops", creative, "no se delega a Jefe, Maquetador, Revisor ni a un ciclo automático de evaluación estética"],
+    ["I human makes the aesthetic decision", pipeline, "esta aprobación humana decide aceptar, rechazar o solicitar cambios"],
+    ["I prototype self-check is functional/resource-focused", pipeline, "autocontrol focal en Browser del funcionamiento/interacciones previstas, carga de recursos y defectos evidentes"],
+    ["I post-approval QA remains technical", core, "QA técnico verifica código, comportamiento, responsive, accesibilidad, rendimiento y fidelidad"],
+    ["J Application UI does not get marketing pipeline", application, "no páginas de marketing"],
+    ["J Existing/Approved keep fast paths", pipeline, "no genera exploración artificial"],
   ];
   for (const [scenario, source, required] of scenarios) assert.ok(source.includes(required), `${scenario}: contract is present`);
+  assert.ok(projectLead.includes("Jefe reconcilia scope, autoridad, handoff y gates humanos, no evalúa gusto"), "project lead coordinates but does not judge creative taste");
+  assert.ok(designer.includes("No hay gate intermedio de Creative Review"), "designer presents one final human approval candidate");
 });
 
-test("Visual Pipeline sequence does not construct the UI Kit before creative exploration", () => {
+test("creative options and synthesis are not mandatory approval phases", () => {
   const core = fs.readFileSync(new URL("../NUCLEO.md", import.meta.url), "utf8");
   const creative = fs.readFileSync(new URL("../../.kilo/skills/creative-web-experience/SKILL.md", import.meta.url), "utf8");
   const coreStart = core.indexOf("### Visual Pipeline 2.0 / Creative Web Experience (BF-066)");
   const coreEnd = core.indexOf("\n### Visual Quality Floor de Public Web (BF-068)", coreStart);
   const policy = core.slice(coreStart, coreEnd);
-  const routeStart = policy.indexOf("Flujo canónico cuando aplica:");
-  const route = policy.slice(routeStart);
-  const routeStages = ["Reference & Asset Coverage", "2–3 Concept Studies reales", "Human Creative Review", "Visual Synthesis", "UI Kit derivado", "Flagship Page", "Human Visual Approval", "Product implementation"];
-  let previousStage = -1;
-  for (const stage of routeStages) {
-    const index = route.indexOf(stage);
-    assert.ok(index > previousStage, `canonical flow orders ${stage}`);
-    previousStage = index;
-  }
-
-  const coverage = creative.indexOf("## Reference & Asset Coverage");
-  const studies = creative.indexOf("## Concept Studies y divergencia visual real");
-  const review = creative.indexOf("## Human Creative Review y Visual Synthesis");
-  const derivedKit = creative.indexOf("Solo después de Visual Synthesis activa `ui-design-system`/`ui-kit-construction`");
-  const flagship = creative.indexOf("una sola Flagship de página completa");
-  assert.ok(coverage >= 0 && studies > coverage, "reference coverage precedes studies");
-  assert.ok(review > studies && derivedKit > review && flagship > derivedKit, "review/mix and synthesis precede kit and flagship");
-  assert.ok(creative.slice(studies, review).includes("No generes Kits/component libraries para cada alternativa"));
+  assert.match(policy, /Flujo orientativo[ -\s\S]*No es una secuencia universal/);
+  assert.match(creative, /solo si la persona solicita comparar direcciones o existe una decisión material genuinamente abierta/);
+  assert.ok(creative.includes("no añadas otra aprobación humana de “Creative Review” antes del paquete final"));
+  assert.match(creative, /si el Diseñador resolvió una sola dirección, no inventes una fase de Synthesis/);
+  assert.doesNotMatch(policy, /Human Creative Review/);
+  assert.doesNotMatch(creative, /Creative Opportunity Question|Creative Refinement Pass|Genericity Risk/);
 });
 
 test("BF-068 Public Web Visual Quality Floor covers requirements A-S", () => {
@@ -1299,7 +1292,7 @@ test("update commands require deterministic filesystem discovery and preserve si
   assert.match(updates, /inválido bloquea.*sin reparar/s);
 });
 
-test("visual cleanup removes obsolete restrictions without weakening creative or technical authority", () => {
+test("visual direction preserves designer ownership without autonomous aesthetic loops", () => {
   const system = fs.readFileSync(new URL("../../.kilo/skills/ui-design-system/SKILL.md", import.meta.url), "utf8");
   const designer = fs.readFileSync(new URL("../../.kilo/agents/disenador-ui-ux.md", import.meta.url), "utf8");
   const core = fs.readFileSync(new URL("../NUCLEO.md", import.meta.url), "utf8");
@@ -1317,9 +1310,10 @@ test("visual cleanup removes obsolete restrictions without weakening creative or
   assert.match(creative, /QUIET, REFINED, EXPRESSIVE o IMMERSIVE/);
   assert.match(creative, /Existing conserva `continuity > novelty`/);
   assert.match(creative, /Approved\/Strict mantiene authority BF-048/);
-  assert.match(creative, /Genericity Risk/);
-  assert.match(creative, /Si este riesgo es material.*Creative Refinement Pass focalizada/s);
-  assert.match(creative, /Synthesis\/Flagship sigue genérica.*continúa el refinamiento específico necesario/s);
+  assert.match(creative, /El Diseñador es responsable de investigar, decidir y entregar una propuesta completa/);
+  assert.match(creative, /no se delega a Jefe, Maquetador, Revisor ni a un ciclo automático de evaluación estética/);
+  assert.match(creative, /corrige en un mismo pase cualquier defecto evidente que impida evaluarlo/);
+  assert.doesNotMatch(creative, /Creative Refinement Pass|Genericity Risk/);
   assert.match(composition, /No prohíbas cards, simetría, centrado, split layouts ni simplicidad/);
   assert.match(application, /no páginas de marketing/);
 
@@ -1666,8 +1660,8 @@ test("Project Lead owns task-specific mandatory constraints and specialists cann
   assert.match(governance, /`COMPLETED` no sustituye reconciliación[\s\S]*?vuelve al mismo owner[\s\S]*?Revisor es segunda opinión read-only/i);
   assert.match(governance, /`Decide tú`[\s\S]*?no autoriza saltar el Quality Floor[\s\S]*?opt-out explícito prevalece/i);
   assert.match(lead, /Antes de delegar, adjunta goal\/scope autorizado\/owner\/source of truth, contexto y restricciones pertinentes, acceptance\/resultado esperado, gates y evidencia disponible/i);
-  assert.match(lead, /mapa compacto sección→composición\/rol visual→asset\/provenance y placement\/crop[\s\S]*sin cuota de imágenes/i);
-  assert.match(lead, /Diseñador revisa el render Browser final contra el handoff[\s\S]*distinto de Browser QA técnico y no sustituye aprobación del usuario/i);
+  assert.match(lead, /source of truth, decisiones materiales concretas[\s\S]*responsive, motion\/reduced-motion/i);
+  assert.match(lead, /Jefe no instituye ciclos creativos\/capturas ni sustituye aprobación humana/i);
   assert.match(lead, /método es del especialista, mandatory defaults\/outcome no son opcionales[\s\S]*?omisión recuperable vuelve al mismo owner/i);
   assert.match(reviewer, /no sustituye el gate primario de Jefe/i);
 });
@@ -1690,7 +1684,7 @@ test("Open public-web motion floor is executable, intent-first, and preserves au
   assert.match(floor, /después del Hero[\s\S]*?propuesta minimalista también puede cumplir/i);
   assert.match(floor, /no se impone a Application UI, Existing localized, referencias Approved\/Strict[\s\S]*?Application UI mantiene su fast path/i);
   assert.match(floor, /opt-out humano limita exactamente el behavior\/scope[\s\S]*?sin scroll effects[\s\S]*?No uses GSAP[\s\S]*?tecnología, no elimina la experiencia/i);
-  assert.match(creative, /Cada Concept Study de dirección pública demuestra motion intent observable[\s\S]*?nota de “planned animation” no cuenta/i);
+  assert.match(creative, /Motion material queda diseñado y demostrado en la propuesta correspondiente/i);
   assert.match(creative, /STATIC|NONE\/static solo es válido por opt-out explícito[\s\S]*?constraint material/i);
   assert.match(creative, /opt-out se aplica exactamente al behavior\/scope pedido[\s\S]*?no GSAP.*limita technology, no experience/i);
   assert.match(motion, /smallest capable tool that faithfully implements the already-defined experience/i);
@@ -1702,7 +1696,7 @@ test("Open public-web motion floor is executable, intent-first, and preserves au
   assert.match(motion, /No uses screenshots como evidencia de motion/i);
   assert.match(kit, /Motion System.*hero choreography.*progresión scroll\/section behavior.*reduced-motion intent/s);
   assert.match(composition, /section’s motion role[\s\S]*?progresión scroll-linked material posterior al Hero/i);
-  assert.match(designer, /motion no es opcional[\s\S]*?demostrable|motion profesional es acceptance obligatorio/i);
+  assert.match(designer, /motion como parte del visual fingerprint de public web abierta/i);
   assert.match(frontend, /no los elimines\/sustituyas por fade simple[\s\S]*?informa a Jefe de proyecto antes de degradar/i);
   assert.match(reviewer, /scroll progression posterior al Hero[\s\S]*?memorable concept-linked moment[\s\S]*?no sustituye el gate primario de Jefe/i);
 });

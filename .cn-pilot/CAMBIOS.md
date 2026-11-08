@@ -1,5 +1,10 @@
 # Changelog
 
+## [2.21.0] - 2026-11-08
+
+- Consolida la responsabilidad creativa en el Diseñador y sustituye ciclos autónomos de evaluación estética por autocontrol funcional/de recursos y aprobación humana.
+- Aclara el flujo adaptativo ante auditorías, contenido aprobado, propuestas con copy provisional y rutas Application UI/Existing/Approved; precisa handoff visual y QA técnico posterior.
+
 ## [2.20.0] - 2026-11-08
 
 - En `page-composition`, quita los números de sección y eyebrows del rol de defaults; exige función semántica/editorial y conserva secuencias y etiquetas Approved/Strict.
