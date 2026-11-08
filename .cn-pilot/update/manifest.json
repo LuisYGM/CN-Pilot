@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "cnPilotVersion": "2.18.0",
+  "cnPilotVersion": "2.19.0",
   "sourceRepository": "https://github.com/LuisYGM/cn-pilot.git",
   "stableBranch": "main",
   "sourceCommit": null,
@@ -11,11 +11,11 @@
   "managedFiles": [
     {
       "path": ".cn-pilot-version",
-      "sha256": "d19ebea47621c7f2b10e9d52ac2d1d253ffd453b2638e7f85068c3cdf51802b4"
+      "sha256": "566544d255dd6a4929a440484ac10b4198eff0309059f18714ac481e43020690"
     },
     {
       "path": ".cn-pilot/CAMBIOS.md",
-      "sha256": "abfd3f7660b8eeff03bc0e46844bbdd6d3e5f6f63f1f4fbda57f140ff1f84a06"
+      "sha256": "1f6e1ff73c314c423e08ac928d8509bf6ed5c3f09a1c968684a437ac135b9558"
     },
     {
       "path": ".cn-pilot/MANIFIESTO.md",
@@ -23,7 +23,7 @@
     },
     {
       "path": ".cn-pilot/NUCLEO.md",
-      "sha256": "9a3dfa3a43bace40573ff27db8a4a943f467d9258273188ce6ee946c0d8554cd"
+      "sha256": "067632cfb0c32731865349192ff0f44f8cfe875fff6ef598712d73672dffa565"
     },
     {
       "path": ".cn-pilot/agent-evals/README.md",
@@ -287,7 +287,7 @@
     },
     {
       "path": ".cn-pilot/qa/core-check.test.mjs",
-      "sha256": "819edac9929395613d7f91c2e0af040f4c4b10151cd1ad0357d984af79e97e0d"
+      "sha256": "f01d0ccd624e5ef4d0601509590ace4d9128fb2a921a2904412b856d759c68fc"
     },
     {
       "path": ".cn-pilot/update/updater.mjs",
@@ -459,7 +459,7 @@
     },
     {
       "path": ".kilo/skills/motion-interaction/SKILL.md",
-      "sha256": "9c5585172b8519b2d4b3483d2713ed64ded17ed836e2540e0b32f3c20f85bbad"
+      "sha256": "7ef565ab3fde3b31bc53693813b08ee84f50f8eaa2d612c119043c0291b0fd77"
     },
     {
       "path": ".kilo/skills/page-composition/SKILL.md",

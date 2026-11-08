@@ -30,6 +30,7 @@ kilo.local.jsonc
 # Maintainer evaluation outputs and prototype studies (local-only)
 /artefactos/agent-evals/runs/
 /artefactos/diseno/mejora-006b/
+/artefactos/diseno/mejora-006c/
 
 # Dependencies / caches
 node_modules/

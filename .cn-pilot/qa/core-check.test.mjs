@@ -1383,6 +1383,8 @@ test("responsive and motion modernize browser options without replacing existing
   assert.match(responsive, /fluidez\/layout intrínsecos sin breakpoint/i);
   assert.match(motion, /View Transitions API[\s\S]{0,220}no la añadas[\s\S]{0,120}universal/i);
   assert.match(motion, /CSS Scroll-Driven Animations[\s\S]{0,260}No reemplaza automáticamente GSAP/i);
+  assert.match(motion, /source\/range deben alcanzar el estado final dentro del extent real de scroll[\s\S]{0,220}max scroll y reverse/i);
+  assert.match(motion, /Usa `@supports` para comprobar todas las propiedades empleadas por la timeline/i);
   assert.match(motion, /consulta `source-grounded-development` con fuente primaria/i);
 });
 

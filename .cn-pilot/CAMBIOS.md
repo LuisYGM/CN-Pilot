@@ -1,5 +1,10 @@
 # Changelog
 
+## [2.19.0] - 2026-11-08
+
+- Refuerza la verificación de CSS Scroll-Driven Animations con feature detection completa y progreso que alcanza el estado final/reverse dentro del scroll real de cada viewport.
+- Excluye del índice el scratch local de la demostración 006C; la experiencia y sus recursos no forman parte del payload de CN Pilot.
+
 ## [2.18.0] - 2026-11-07
 
 - Define el Design System de cada proyecto como source of truth y evoluciona el UI Kit a su representación visual/navegable, sin duplicar sistemas ni exigir componentes hipotéticos.
