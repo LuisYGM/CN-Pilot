@@ -1,5 +1,10 @@
 # Changelog
 
+## [2.20.0] - 2026-11-08
+
+- En `page-composition`, quita los números de sección y eyebrows del rol de defaults; exige función semántica/editorial y conserva secuencias y etiquetas Approved/Strict.
+- Amplía el test Core de composición para distinguir estructura repetitiva sin función de patrones intencionales.
+
 ## [2.19.0] - 2026-11-08
 
 - Refuerza la verificación de CSS Scroll-Driven Animations con feature detection completa y progreso que alcanza el estado final/reverse dentro del scroll real de cada viewport.

@@ -27,6 +27,8 @@ En public web abierto, `creative-web-experience` dirige Concept Studies y Human 
 
 No uses por default `hero → split text/image → three cards → section → CTA`. Antes de aceptar una fórmula, pregunta qué necesidad de contenido o conversión justifica cada sección y si dos regiones consecutivas tienen la misma densidad/composición sin motivo. Una fórmula puede ser correcta si el brief la sustenta.
 
+La numeración de secciones y los eyebrows/antetítulos son recursos opcionales, no scaffolding por posición. No marques 01/02 porque una región sea primera/segunda ni para simular una secuencia que el contenido no contiene; usa números cuando comunican pasos, cronología, ranking, capítulos o un sistema de índices de identidad. Un eyebrow debe aportar categoría, contexto, navegación editorial o una relación útil; no exijas uno por sección. Tampoco repitas la estructura `eyebrow → heading grande → párrafo` como fórmula universal: el heading puede ir solo, con introducción, lateral/superpuesto o integrado en el contenido según la semántica y el layout. La repetición puede ser correcta si la identidad/lectura la necesita. En Approved/Strict o Existing, conserva la numeración y etiquetas explícitas dentro de su authority/scope.
+
 Detecta y resuelve dentro de scope: composición intercambiable al cambiar copy/logo, todo centrado por comodidad, repetición de cards, headings grandes sin jerarquía, full-bleed sin contenido que lo amerite, whitespace vacío, densidad accidental o copy que gobierna mal el alto visual. No prohíbas cards, simetría, centrado, split layouts ni simplicidad; exige intención.
 
 ## Creatividad de módulos
