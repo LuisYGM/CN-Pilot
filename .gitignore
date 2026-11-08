@@ -31,6 +31,7 @@ kilo.local.jsonc
 /artefactos/agent-evals/runs/
 /artefactos/diseno/mejora-006b/
 /artefactos/diseno/mejora-006c/
+/artefactos/diseno/006d-fidelity/
 
 # Dependencies / caches
 node_modules/
