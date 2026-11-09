@@ -5,7 +5,7 @@ description: Definir la estrategia de medios y dirección de imagen para experie
 
 # visual-art-direction
 
-**Owner:** Diseñador UI/UX. Resuelve «¿qué medios expresa esta experiencia y cómo?». `ui-design-system` gobierna marca/tokens; `page-composition` placement y ritmo de página; esta skill decide lenguaje visual de medios y provenance. Maquetador frontend implementa carga/render; no sustituye `performance-review`, `accessibility-review` ni licenciamiento/approval humano.
+**Owner:** Diseñador. Resuelve «¿qué medios expresa esta experiencia y cómo?». `ui-design-system` gobierna marca/tokens; `page-composition` placement y ritmo de página; esta skill decide lenguaje visual de medios y provenance. Desarrollador implementa carga/render con los requisitos acordados; no sustituye `performance-review`, `accessibility-review` ni licenciamiento/approval humano.
 
 ## Source y autoridad de assets
 
@@ -49,7 +49,7 @@ En Greenfield/rediseño, si el candidato acaba siendo casi solo texto, cards y f
 
 ## Producción, responsive y checks
 
-Entrega una referencia que el implementador pueda localizar (path/id/URL autorizada), provenance/licencia/estado, función, tratamiento, crop/ratio significativo por viewport, destino o requerimiento de producción y fallback cuando ayude. Si la fuente no está disponible o no tiene rights verificados, márcala PENDING y di qué decisión depende de ella; no envíes solo una palabra descriptiva como «premium». Usa provided/existing primero cuando encajen; no descargues medios por rutina. Maquetador frontend maneja `srcset`/`sizes`, formato, lazy loading fuera del hero, poster y fallback según necesidad; alt depende de si la imagen informa o es decorativa. Motion y video respetan reduced motion y controls; nunca ocultes información esencial.
+Entrega una referencia que el implementador pueda localizar (path/id/URL autorizada), provenance/licencia/estado, función, tratamiento, crop/ratio significativo por viewport, destino o requerimiento de producción y fallback cuando ayude. Si la fuente no está disponible o no tiene rights verificados, márcala PENDING y di qué decisión depende de ella; no envíes solo una palabra descriptiva como «premium». Usa provided/existing primero cuando encajen; no descargues medios por rutina. Desarrollador maneja `srcset`/`sizes`, formato, lazy loading fuera del hero, poster y fallback según necesidad; alt depende de si la imagen informa o es decorativa. Motion y video respetan reduced motion y controls; nunca ocultes información esencial.
 
 Antes de handoff comprueba: cada recurso tiene fuente/estado claro y función; selección responde al contenido, no a decoración; crop/treatment se coordina con composición; no se alteraron originales/no se atribuyen claims; mobile conserva sujeto/legibilidad; asset pendiente no se maquilla como del proyecto. Para Existing conserva librería, art direction y treatment salvo cambio de scope aprobado. Detente al quedar una decisión implementable; no produzcas plan visual separado por rutina.
 

@@ -1,11 +1,11 @@
 ---
 name: form-experience
-description: Diseñar o implementar la experiencia de un formulario material: selección/orden de fields, validación, estados, recuperación, submit y accesibilidad. Diseñador UI/UX es owner; Maquetador frontend/Desarrollador la consumen para su parte al crear/alterar forms. No activar para un input aislado, copy trivial o prototipo sin flujo de form significativo.
+description: Diseñar o implementar la experiencia de un formulario material: selección/orden de fields, validación, estados, recuperación, submit y accesibilidad. Diseñador es owner de experiencia; Desarrollador implementa el contrato full stack. No activar para un input aislado, copy trivial o prototipo sin flujo de form significativo.
 ---
 
 # form-experience
 
-**Owner de experiencia:** Diseñador UI/UX. Maquetador frontend implementa interacción visual/browser; Desarrollador datos/validación server-side. Una tarea puede ser completada por un solo owner si el scope lo permite; la skill no crea handoffs automáticos. `auth-access-control` gobierna login/auth; `security-review` cubre riesgos de datos reales. BF-059/BF-060 gobiernan focus visual del campo.
+**Owner de experiencia:** Diseñador. Desarrollador implementa las interacciones UI y datos/validación server-side aprobados, manteniendo una sola responsabilidad técnica. Una tarea puede ser completada por un solo owner si el scope lo permite; la skill no crea handoffs automáticos. `auth-access-control` gobierna login/auth; `security-review` cubre riesgos de datos reales. BF-059/BF-060 gobiernan focus visual del campo.
 
 ## Preflight y diseño de campos
 
@@ -31,7 +31,7 @@ Usa labels, semantic inputs, `fieldset/legend` para grupos, instrucciones `descr
 
 ## Handoff y checks
 
-En alcance de diseño, entrega fields/orden/grupos, reglas de required/conditional, copy de helper/error, momentos de validación, estados, submit/recovery y casos móvil. Maquetador frontend/Desarrollador consume solo la parte pertinente.
+En alcance de diseño, entrega fields/orden/grupos, reglas de required/conditional, copy de helper/error, momentos de validación, estados, submit/recovery y casos móvil. Desarrollador consume solo el contrato pertinente para implementar UI y lógica del mismo flujo.
 
 Comprueba: ¿puede eliminarse field? ¿label explica el dato? ¿orden y grouping evitan relectura? ¿errores dejan corregir sin perder valor? ¿server/client rules tienen una autoridad? ¿submit/loading/error/success dan feedback? ¿teclado y mobile input son apropiados? ¿hay duplicación segura ante retry? Detente al cubrir los flujos aceptados; en mocks no simules una producción inexistente.
 

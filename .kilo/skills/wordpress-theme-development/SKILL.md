@@ -7,7 +7,7 @@ description: Crear o mantener materialmente themes WordPress Classic, Hybrid o B
 
 ## Activación y ownership
 
-Actívala para un theme Greenfield, rebuild material o cambio estructural de arquitectura/theme type. `wordpress` sigue gobernando APIs Core, estado/runtime, operaciones e integración; esta skill gobierna la organización del theme. Desarrollador es owner de PHP/bootstrap/hooks/data boundary; Maquetador frontend implementa presentación visual con UI Kit/Flagship aprobados y `frontend-architecture`. No reabre Design ni inicia Product antes del gate BF-066 cuando aplica. No modifiques WordPress Core.
+Actívala para un theme Greenfield, rebuild material o cambio estructural de arquitectura/theme type. `wordpress` sigue gobernando APIs Core, estado/runtime, operaciones e integración; esta skill gobierna la organización del theme. Desarrollador es el único owner técnico del theme: implementa PHP/bootstrap/hooks/data y presentación UI con el UI Kit/Flagship aprobado y `frontend-architecture`, sin handoff frontend/backend. No reabre Design ni inicia Product antes del gate BF-066 cuando aplica. No modifiques WordPress Core.
 
 Antes de intervenir, confirma product root en `PROYECTO.md`, WordPress/PHP version si una API depende de ella, theme/child theme y source of truth, builder, capabilities usadas, hosting/deploy y límites de edición. Existing conserva su arquitectura/path; migración de theme/root/type requiere scope explícito, impacto/compatibilidad y aprobación. No cambies un Existing Classic a Block, ni al revés, por preferencia. Para dudas version-sensitive aplica `source-grounded-development` a documentación oficial y a la versión efectiva.
 

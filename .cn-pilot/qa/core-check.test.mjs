@@ -61,8 +61,8 @@ function createFixture(t) {
   };
 
   const manifest = [
-    "- 7 agentes en `.kilo/agents/`",
-    "- 2 skills (`.kilo/skills/*/SKILL.md`)",
+    "- 6 agentes en `.kilo/agents/`",
+    "- 3 skills (`.kilo/skills/*/SKILL.md`)",
     "- 1 documento de referencia bajo `.kilo/skills/technical-seo/references/` (no es una skill adicional)",
     "- 14 comandos en `.kilo/commands/`",
     "- 1 perfil en `.cn-pilot/perfiles/`",
@@ -104,9 +104,10 @@ function createFixture(t) {
   put(".gitignore", "/.cn-pilot/runtime/\n");
   put(".kilo/agents/jefe-proyecto.md", readCoreFile(".kilo/agents/jefe-proyecto.md"));
   put(".kilo/agents/revisor.md", readCoreFile(".kilo/agents/revisor.md"));
-  for (const agent of ["arquitecto", "contenido-seo", "disenador-ui-ux", "desarrollador", "maquetador-frontend"]) {
+  for (const agent of ["arquitecto", "redactor", "disenador", "desarrollador"]) {
     put(`.kilo/agents/${agent}.md`, readCoreFile(`.kilo/agents/${agent}.md`));
   }
+  put(".kilo/skills/environment-dependency-management/SKILL.md", readCoreFile(".kilo/skills/environment-dependency-management/SKILL.md"));
   put(".kilo/skills/sample/SKILL.md", "---\nname: sample\ndescription: Skill de fixture\n---\n# Sample\n");
   put(".kilo/skills/technical-seo/SKILL.md", "---\nname: technical-seo\ndescription: Skill SEO de fixture\n---\n# SEO\n");
   put(".kilo/skills/technical-seo/references/audit.md", "# Referencia\n");
@@ -145,8 +146,8 @@ test("known-good minimal fixture passes deterministic invariants", (t) => {
   assert.equal(report.status, "PASS", JSON.stringify(report.findings));
   assert.deepEqual(runCoreChecks({ rootDir: fixture.root }), report, "same read-only snapshot yields the same report");
   assert.equal(report.version, "2.8.0");
-  assert.equal(getCheck(report, "agents.frontmatter").details.count, 7);
-  assert.equal(getCheck(report, "skills.frontmatter").details.count, 2);
+   assert.equal(getCheck(report, "agents.frontmatter").details.count, 6);
+   assert.equal(getCheck(report, "skills.frontmatter").details.count, 3);
   assert.equal(getCheck(report, "commands.frontmatter").details.count, 14);
   assert.equal(getCheck(report, "templates.inventory").details.rootFiles, 2);
   assert.equal(getCheck(report, "templates.inventory").details.totalFiles, 3);
@@ -231,7 +232,7 @@ test("review handoff preflight attaches usable evidence, recovers BLOCKED narrow
 
   // E: DIRECT work does not acquire handoff/review artifacts without a material trigger.
   assert.match(core, /DIRECT localizado no crea paquete de revisión ni delegación sin trigger/i);
-  assert.match(lead, /Revisor independiente solo en STRUCTURAL o impacto\/riesgo\/aceptance que lo justifique/i);
+  assert.match(lead, /Revisor independiente solo cuando riesgo\/acceptance lo justifique/i);
 
   // These are static source-contract checks, not an end-to-end Kilo behavior evaluation.
   assert.match(command, /No invoques Revisor hasta que el preflight sea suficiente/i);
@@ -296,6 +297,19 @@ test("legacy CN Pilot role names fail only in active human-facing files", (t) =>
   const check = getCheck(runCoreChecks({ rootDir: fixture.root }), "language.spanishFirst");
   assert.equal(check.status, "FAIL");
   assert.deepEqual(check.details.findings, [{ path: ".kilo/commands/diagnostico.md", code: "LEGACY_ROLE_NAME", value: "Dev Lead" }]);
+});
+
+test("retired agent identifiers are rejected in active routing but allowed in migration guidance", (t) => {
+  const fixture = createFixture(t);
+  fixture.put(".kilo/commands/diagnostico.md", "---\ndescription: Fixture\nagent: jefe-proyecto\n---\nRutea a maquetador-frontend.\n");
+  fixture.put(".cn-pilot/documentacion/CONFIGURACION-KILO.md", "Migración: maquetador-frontend → desarrollador.\n");
+  let check = getCheck(runCoreChecks({ rootDir: fixture.root }), "core.legacyReferences");
+  assert.equal(check.status, "FAIL");
+  assert.deepEqual(check.details.files, [".kilo/commands/diagnostico.md"]);
+
+  fixture.put(".kilo/commands/diagnostico.md", "---\ndescription: Fixture\nagent: jefe-proyecto\n---\nRutea a desarrollador.\n");
+  check = getCheck(runCoreChecks({ rootDir: fixture.root }), "core.legacyReferences");
+  assert.equal(check.status, "PASS", "the documented migration map is not treated as an active route");
 });
 
 test("Spanish-first doctrine is required and generic technical wording is not translated", (t) => {
@@ -427,7 +441,7 @@ test("009A adapts visual ownership, delivery and approval to project context", (
   const read = (relative) => fs.readFileSync(new URL(`../../${relative}`, import.meta.url), "utf8");
   const core = read(".cn-pilot/NUCLEO.md");
   const creative = read(".kilo/skills/creative-web-experience/SKILL.md");
-  const designer = read(".kilo/agents/disenador-ui-ux.md");
+  const designer = read(".kilo/agents/disenador.md");
   const projectLead = read(".kilo/agents/jefe-proyecto.md");
   const system = read(".kilo/skills/ui-design-system/SKILL.md");
   const kit = read(".kilo/skills/ui-kit-construction/SKILL.md");
@@ -451,20 +465,20 @@ test("009A adapts visual ownership, delivery and approval to project context", (
     ["D media research precedes dependent composition", pipeline, "medios visuales materiales se seleccionan antes de cerrar las composiciones dependientes"],
     ["D functional icon family is coherent", media, "una sola familia funcional"],
     ["E designer owns visual system", system, "El Diseñador responde por su criterio y entrega"],
-    ["E implementation owner translates approved system", pipeline, "Maquetador/Desarrollador los traducen a tokens, variables y componentes del stack"],
+    ["E the single Developer translates approved visual system", pipeline, "Desarrollador los traduce a tokens, variables y componentes del stack"],
     ["F relevant component states are specified", kit, "Muestra solo variantes/tamaños usados o aprobados"],
     ["G page composition starts from section purpose/content", page, "propósito/contenido; protagonista y jerarquía"],
-    ["H approved implementation preserves fidelity", frontend, "Maquetador implementa el resultado, no lo rediseña"],
-    ["H no automatic aesthetic loops", creative, "no se delega a Jefe, Maquetador, Revisor ni a un ciclo automático de evaluación estética"],
+    ["H approved implementation preserves fidelity", frontend, "Desarrollador implementa el resultado, no lo rediseña"],
+    ["H no automatic aesthetic loops", creative, "no se delega a Jefe, Desarrollador, Revisor ni a un ciclo automático de evaluación estética"],
     ["I human makes the aesthetic decision", pipeline, "esta aprobación humana decide aceptar, rechazar o solicitar cambios"],
     ["I prototype self-check is functional/resource-focused", pipeline, "autocontrol focal en Browser del funcionamiento/interacciones previstas, carga de recursos y defectos evidentes"],
-    ["I post-approval QA remains technical and owner-specific", core, "Tras aprobación, QA técnico de Maquetador/Revisor verifica sus superficies y evidencia"],
+    ["I post-approval QA remains technical and owner-specific", core, "Tras aprobación, QA técnico de Desarrollador/Revisor verifica sus superficies y evidencia"],
     ["I post-approval QA covers required technical surfaces", core, "código, comportamiento, responsive, accesibilidad, rendimiento y fidelidad"],
     ["J Application UI does not get marketing pipeline", application, "no páginas de marketing"],
     ["J Existing/Approved keep fast paths", pipeline, "no genera exploración artificial"],
   ];
   for (const [scenario, source, required] of scenarios) assert.ok(source.includes(required), `${scenario}: contract is present`);
-  assert.ok(projectLead.includes("Jefe reconcilia scope, autoridad, handoff y gates humanos, no evalúa gusto"), "project lead coordinates but does not judge creative taste");
+  assert.ok(projectLead.includes("Jefe reconcilia scope, autoridad, handoff y gates humanos; no evalúa gusto"), "project lead coordinates but does not judge creative taste");
   assert.ok(designer.includes("No hay gate intermedio de Creative Review"), "designer presents one final human approval candidate");
 });
 
@@ -489,7 +503,7 @@ test("BF-068 Public Web Visual Quality Floor covers requirements A-S", () => {
   const motion = read(".kilo/skills/motion-interaction/SKILL.md");
   const media = read(".kilo/skills/visual-art-direction/SKILL.md");
   const creative = read(".kilo/skills/creative-web-experience/SKILL.md");
-  const designer = read(".kilo/agents/disenador-ui-ux.md");
+  const designer = read(".kilo/agents/disenador.md");
   const reviewer = read(".kilo/agents/revisor.md");
   const floorStart = core.indexOf("### Visual Quality Floor de Public Web (BF-068)");
   const floorEnd = core.indexOf("\n## Arquitectura frontend y fidelidad (BF-069)", floorStart);
@@ -523,7 +537,7 @@ test("BF-068 Public Web Visual Quality Floor covers requirements A-S", () => {
     ["P anti-template swap test is present", creative, "si cambian logo/copy/fotos, ¿la propuesta se vendería casi intacta a otro sector?"],
     ["Q Flagship demonstrates approved sequences when material", motion, "El prototipo/Flagship demuestra el behavior definido por estado"],
     ["R Revisor independently checks the canonical BF-068 contract", reviewer, "aplica read-only la aceptación normativa de `.cn-pilot/NUCLEO.md` → “Visual Quality Floor de Public Web (BF-068)”"],
-    ["S Designer remains the Quality Floor owner", floor, "Diseñador UI/UX es owner del Quality Floor"],
+    ["S Designer remains the Quality Floor owner", floor, "Diseñador es owner del Quality Floor"],
     ["S Core BF-068 remains the single public-web floor", designer, "usa BF-068 como el único contrato del floor Public Web"],
   ];
   for (const [scenario, source, required] of scenarios) assert.ok(source.includes(required), `${scenario}: contract is present`);
@@ -539,7 +553,7 @@ test("BF-069 Frontend Architecture/Fidelity and Composition Diversity contracts 
   const architecture = read(".kilo/skills/frontend-architecture/SKILL.md");
   const page = read(".kilo/skills/page-composition/SKILL.md");
   const responsive = read(".kilo/skills/frontend-responsive/SKILL.md");
-  const frontendAgent = read(".kilo/agents/maquetador-frontend.md");
+  const developerAgent = read(".kilo/agents/desarrollador.md");
   const scenarios = [
     ["A adaptable base grammar", contract, "Section / región semántica y visual\n→ Container / ancho útil\n  → Column o layout block"],
     ["B column and extra wrappers are optional", architecture, "una `column`/`block` relaciona"],
@@ -555,7 +569,7 @@ test("BF-069 Frontend Architecture/Fidelity and Composition Diversity contracts 
     ["L native semantics and heading order are retained", architecture, "Mantén la jerarquía de headings por estructura del documento"],
     ["M fidelity follows approved Flagship/system", architecture, "La Flagship/UI Kit visualmente aprobado"],
     ["N Existing and Approved/Strict fast paths remain", architecture, "Existing conserva source architecture"],
-    ["N approved Greenfield fast path still applies frontend architecture", frontendAgent, "aplica el contrato de `frontend-architecture` también durante el fast path aprobado"],
+    ["N one Developer owns frontend and backend implementation", developerAgent, "No delegates implementación de UI a otro agent"],
     ["O Application UI does not inherit marketing layout", architecture, "Application UI sigue su shell/datos/roles propios"],
     ["P page composition remains content-driven", page, "qué forma lo comunica mejor"],
     ["Section numbers are optional, not decorative position markers", page, "La numeración de secciones y los eyebrows/antetítulos son recursos opcionales"],
@@ -593,9 +607,9 @@ test("BF-069 Frontend Media Strategy preserves semantics, performance, fidelity 
   const mediaContract = core.slice(coreStart, coreEnd);
   const architecture = read(".kilo/skills/frontend-architecture/SKILL.md");
   const responsive = read(".kilo/skills/frontend-responsive/SKILL.md");
-  const frontendAgent = read(".kilo/agents/maquetador-frontend.md");
+  const developerAgent = read(".kilo/agents/desarrollador.md");
   const parity = read(".kilo/skills/visual-parity-review/SKILL.md");
-  const media = `${mediaContract}\n${architecture}\n${responsive}\n${frontendAgent}\n${parity}`;
+  const media = `${mediaContract}\n${architecture}\n${responsive}\n${developerAgent}\n${parity}`;
 
   const scenarios = [
     ["representational media defaults to semantic image", /media representacional[\s\S]{0,180}prefiere `<img>`/i],
@@ -616,7 +630,7 @@ test("BF-069 Frontend Media Strategy preserves semantics, performance, fidelity 
     ["approved parity checks media asset and responsive source", /media aprobada \(asset, crop\/framing[\s\S]{0,100}source responsive/i],
   ];
   for (const [scenario, pattern] of scenarios) assert.ok(pattern.test(media), `${scenario}: policy is present`);
-  const activePolicy = `${mediaContract}\n${architecture}\n${frontendAgent}`;
+  const activePolicy = `${mediaContract}\n${architecture}\n${developerAgent}`;
   assert.equal(/no (?:fija|define) (?:una regla universal )?`?<img>`?[\s\S]{0,100}(?:futuro|convenciones actuales del stack)/i.test(activePolicy), false, "the incorrect deferred image policy is removed");
   assert.equal(/Frontend (?:Media|Fidelity)(?: 2\.0)? futuros?/i.test(activePolicy), false, "Frontend Media is no longer described as future work");
 });
@@ -693,7 +707,7 @@ test("approved frontend conversion infers faithful, optimized and authorized vis
   const read = (relative) => fs.readFileSync(new URL(`../../${relative}`, import.meta.url), "utf8");
   const architecture = read(".kilo/skills/frontend-architecture/SKILL.md");
   const projectLead = read(".kilo/agents/jefe-proyecto.md");
-  const frontend = read(".kilo/agents/maquetador-frontend.md");
+  const developer = read(".kilo/agents/desarrollador.md");
   const scenarios = [
     ["approved source preserves output while allowing internals to change", architecture, "no el código literal", "no congela DOM, class names ni organización técnica"],
     ["optimized conversion is the default recommended mode", architecture, "recomienda internamente una conversión optimizada", "conserve materialmente apariencia"],
@@ -701,8 +715,8 @@ test("approved frontend conversion infers faithful, optimized and authorized vis
     ["material visual changes require explicit authorization", architecture, "Mejoras visuales", "requieren scope/autorización explícitos"],
     ["the modes remain internal rather than a user form", architecture, "no un selector/wizard para la persona"],
     ["source authority is inspected before a single material question", architecture, "inspecciónalo primero", "pregunta solo si falta esa decisión material"],
-    ["Jefe routes a confirmed approved conversion without asking redundant approval", projectLead, "Si está Approved y se pide implementarlo sin cambio visual, recomienda conversión técnica optimizada por defecto", "No preguntes si ya se autorizó la conversión"],
-    ["frontend owner avoids design change from generic optimization/refactor wording", frontend, "los cambios visuales requieren autorización expresa", "no autorizan rediseñar"],
+    ["Jefe routes a confirmed approved conversion without asking redundant approval", projectLead, "Si está Approved y se pide implementarlo sin cambio visual, recomienda conversión técnica optimizada", "No preguntes si ya se autorizó la conversión"],
+    ["Developer avoids design change from generic optimization/refactor wording", developer, "Refactorizar, optimizar o profesionalizar el código no autoriza cambios visuales", "no re-diseñes"],
   ];
   for (const [scenario, source, ...phrases] of scenarios) assert.ok(phrases.every((phrase) => source.includes(phrase)), `${scenario}: policy is present`);
 });
@@ -731,7 +745,7 @@ test("Technical Normalization preserves approved values while extracting only re
 test("approved breakpoints and WordPress conversion follow their actual sources of truth", () => {
   const responsive = fs.readFileSync(new URL("../../.kilo/skills/frontend-responsive/SKILL.md", import.meta.url), "utf8");
   const theme = fs.readFileSync(new URL("../../.kilo/skills/wordpress-theme-development/SKILL.md", import.meta.url), "utf8");
-  const maquetador = fs.readFileSync(new URL("../../.kilo/agents/maquetador-frontend.md", import.meta.url), "utf8");
+  const developer = fs.readFileSync(new URL("../../.kilo/agents/desarrollador.md", import.meta.url), "utf8");
   assert.match(responsive, /fuente HTML\/frontend designada Approved también conserva sus puntos de cambio/i);
   assert.match(responsive, /Greenfield sin sistema responsive aprobado[\s\S]{0,100}`\.cn-pilot\/config\/responsive\.json`/i);
   assert.match(responsive, /Approved, los puntos de cambio efectivos del source prevalecen/i);
@@ -739,7 +753,7 @@ test("approved breakpoints and WordPress conversion follow their actual sources 
   assert.match(theme, /Cuando Product transforma un frontend Approved[\s\S]{0,240}template parts, assets y enqueue nativos/i);
   assert.match(theme, /Conserva literalmente estático lo que se aprobó como estático/i);
   assert.match(theme, /la conversión HTML no implica volver todo dinámico[\s\S]{0,180}fields\/CPT\/ACF/i);
-  assert.match(maquetador, /no asumas que hay que conservar exactamente DOM, clases o código/i);
+  assert.match(developer, /consume el prototipo\/Kit\/copy aprobados como source of truth/i);
   assert.match(theme, /no implica volver todo dinámico/i);
 });
 
@@ -882,7 +896,7 @@ test("security profiles deny sensitive routes, protect root config, and preserve
   const fixture = createFixture(t);
   const report = runCoreChecks({ rootDir: fixture.root });
   assert.equal(getCheck(report, "security.agentPermissions").status, "PASS");
-  assert.equal(getCheck(report, "security.agentPermissions").details.agentsChecked, 7);
+  assert.equal(getCheck(report, "security.agentPermissions").details.agentsChecked, 6);
   assert.equal(getCheck(report, "security.kiloPermissionDefaults").details.checked, false, "derived fixture does not enforce Core-owned Kilo config");
   const developer = normalizeEol(fs.readFileSync(path.join(fixture.root, ".kilo/agents/desarrollador.md"), "utf8"));
   assert.match(developer, /edit:\n\s+"\*": allow/);
@@ -925,7 +939,7 @@ test("MCP tools require an explicit reviewed capability instead of inheriting pe
   assert.ok(getCheck(report, "security.agentPermissions").details.problems.some((problem) => problem.code === "UNREVIEWED_TOOL_PERMISSION"));
 });
 
-test("integrated Browser MCP is ask-scoped only for Jefe, UI/UX, and Maquetador", (t) => {
+test("integrated Browser MCP is ask-scoped only for Jefe, Diseñador, and Desarrollador", (t) => {
   const fixture = createFixture(t);
   let report = runCoreChecks({ rootDir: fixture.root });
   assert.equal(getCheck(report, "security.agentPermissions").status, "PASS");
@@ -1002,7 +1016,7 @@ test("Kilo root config fails closed on unknown tools only in the canonical Core 
   assert.equal(check.details.checked, false);
 });
 
-test("installed Kilo resolves representative profiles across the seven static security baselines", (t) => {
+test("installed Kilo resolves the six static security profiles", (t) => {
   const version = runKiloForPermissionTest(["--version"]);
   if (version.error || version.status !== 0 || !/\d+\.\d+\.\d+/.test(version.stdout + version.stderr)) {
     t.skip("Kilo is not installed in this runner; static permission invariants still run in Core QA.");
@@ -1014,7 +1028,7 @@ test("installed Kilo resolves representative profiles across the seven static se
   const config = runKiloForPermissionTest(["config", "check"]);
   assert.equal(config.status, 0, `Kilo ${installedVersion} validates the active permission config`);
 
-  const agentNames = ["arquitecto", "contenido-seo", "desarrollador", "disenador-ui-ux", "jefe-proyecto", "maquetador-frontend", "revisor"];
+  const agentNames = ["arquitecto", "desarrollador", "disenador", "jefe-proyecto", "redactor", "revisor"];
   const profiles = Object.fromEntries(agentNames.map((name) => [name, parseKiloDebugAgent(name)]));
   for (const [name, profile] of Object.entries(profiles)) {
     const defaults = profile.permission.filter((rule) => rule.permission === "*");
@@ -1025,7 +1039,7 @@ test("installed Kilo resolves representative profiles across the seven static se
     assert.equal(resolveKiloPermission(profile, "read", "nested/.env.local"), "deny", `${name} blocks nested env variants`);
     assert.equal(resolveKiloPermission(profile, "read", "nested/.kilo/mcp.json"), "deny", `${name} blocks local MCP secret files`);
     assert.equal(resolveKiloPermission(profile, "edit", "secrets/.env.example"), "deny", `${name} blocks secret-directory edits`);
-    const browserPermission = ["jefe-proyecto", "disenador-ui-ux", "maquetador-frontend"].includes(name) ? "ask" : "deny";
+    const browserPermission = ["jefe-proyecto", "disenador", "desarrollador"].includes(name) ? "ask" : "deny";
     assert.equal(resolveKiloPermission(profile, "kilo-playwright_browser_navigate", "local/page"), browserPermission, `${name} receives only its scoped Browser MCP permission`);
   }
 
@@ -1049,9 +1063,9 @@ test("installed Kilo resolves representative profiles across the seven static se
   assert.equal(resolveKiloPermission(developer, "lsp", "producto/src/index.php"), "allow");
   assert.equal(resolveKiloPermission(developer, "mcp_unreviewed_write", "remote/resource"), "deny");
   assert.equal(resolveKiloPermission(developer, "edit", "producto/src/discount.mjs"), "allow", "Developer keeps legitimate Product code ownership");
-  assert.equal(resolveKiloPermission(profiles["maquetador-frontend"], "edit", "producto/index.html"), "allow", "Maquetador keeps legitimate UI Product ownership");
-  assert.equal(profiles["maquetador-frontend"].tools.write, true);
-  assert.equal(profiles["maquetador-frontend"].tools.apply_patch, true);
+  assert.equal(resolveKiloPermission(profiles.desarrollador, "edit", "producto/index.html"), "allow", "Developer owns both UI and backend Product implementation");
+  assert.equal(profiles.desarrollador.tools.write, true);
+  assert.equal(profiles.desarrollador.tools.apply_patch, true);
   assert.equal(profiles["desarrollador"].tools.bash, true);
 
   const revisor = profiles.revisor;
@@ -1076,7 +1090,7 @@ test("MANIFEST inventory drift warns and retains non-strict success", (t) => {
   const fixture = createFixture(t);
   const file = ".cn-pilot/MANIFIESTO.md";
   const source = fs.readFileSync(path.join(fixture.root, file), "utf8");
-  fixture.put(file, source.replace("2 skills", "3 skills"));
+  fixture.put(file, source.replace("3 skills", "2 skills"));
   const report = runCoreChecks({ rootDir: fixture.root });
   assert.equal(getCheck(report, "manifest.inventory").status, "WARN");
   assert.equal(report.status, "WARN");
@@ -1165,8 +1179,14 @@ test("Agent Eval scenario registry is complete, safe, and distinct from behavior
   assert.deepEqual(suite.scenarios.map(({ id }) => id), expectedIds);
   assert.deepEqual(suite.resultValues, ["PASS", "FAIL", "INCONCLUSIVE"]);
   assert.match(suite.modelPolicy, /default real de Kilo/);
-  assert.equal(suite.scenarios.find(({ id }) => id === "EVAL-002").expectedOwner, "maquetador-frontend");
-  assert.equal(suite.scenarios.find(({ id }) => id === "EVAL-005").expectedOwner, "desarrollador");
+  for (const id of ["EVAL-001", "EVAL-002", "EVAL-003", "EVAL-005"]) {
+    assert.equal(suite.scenarios.find(({ id: scenarioId }) => scenarioId === id).expectedOwner, "desarrollador", `${id} routes technical implementation to the single full-stack owner`);
+  }
+  assert.equal(suite.scenarios.find(({ id }) => id === "EVAL-006").expectedOwner, "revisor", "review remains assigned to the independent read-only owner");
+  for (const id of ["EVAL-002", "EVAL-003"]) {
+    const scenario = suite.scenarios.find(({ id: scenarioId }) => scenarioId === id);
+    assert.ok(scenario.acceptance.some(({ observable }) => /un solo Desarrollador|único Desarrollador/.test(observable)), `${id} rejects artificial frontend/backend handoffs`);
+  }
 
   for (const scenario of suite.scenarios) {
     assert.ok(scenario.title && scenario.request && scenario.agent, `${scenario.id} describes a real request/agent`);
@@ -1235,19 +1255,22 @@ test("Agent Eval candidate preparation fingerprints only tracked Core prompt mod
   assert.throws(() => validateCoreSourceState("?? .kilo/agents/new-agent.md", true), /unsupported source state/);
 });
 
-test("DIRECT frontend retains its owner and ignored checkpoints are not reported absent", () => {
+test("DIRECT UI/backend keeps one full-stack owner and ignored checkpoints are not reported absent", () => {
   const lead = readCoreFile(".kilo/agents/jefe-proyecto.md");
-  const frontend = readCoreFile(".kilo/agents/maquetador-frontend.md");
+  const developer = readCoreFile(".kilo/agents/desarrollador.md");
   const core = readCoreFile(".cn-pilot/NUCLEO.md");
   const bashPermissions = lead.slice(lead.indexOf("  bash:"), lead.indexOf("\n---"));
   const editPermissions = lead.slice(lead.indexOf("  edit:"), lead.indexOf("  bash:"));
-  assert.match(lead, /owner por el comportamiento implementado, no por lenguaje, extensión, framework o carpeta Product/i);
-  assert.match(lead, /Determina el owner por el comportamiento implementado[\s\S]*?UI\/DOM[\s\S]*?reglas de negocio, cálculos de dominio/i);
-  assert.match(lead, /reglas de negocio, cálculos de dominio, transformaciones de datos, persistencia\/API\/backend son Desarrollador, incluso si están en JS\/TS/i);
-  assert.match(lead, /UI\/DOM\/presentación\/estados visibles\/(?:interacción|interaction)\/responsive es Maquetador/i);
-  assert.match(lead, /En una funcionalidad mixta, divide solo fronteras materiales e independientes/i);
+  assert.match(lead, /Determina el owner por la autoridad decisoria[\s\S]*?Desarrollador para toda implementación técnica/i);
+  assert.match(lead, /tanto UI\/DOM\/presentación\/estados\/responsive como lógica\/datos\/API\/backend/i);
+  assert.match(lead, /En una unidad que cruza frontend\/backend, conserva un solo Desarrollador como owner técnico/i);
+  assert.match(developer, /Tu ownership incluye HTML\/DOM[\s\S]*?backend, APIs, lógica de negocio/i);
+  assert.match(developer, /No delegates implementación de UI a otro agent/i);
+  const routes = lead.slice(lead.indexOf("## Routing compacto"));
+  assert.match(routes, /Implementación técnica full stack[\s\S]*?\| UI\/DOM[\s\S]*?`desarrollador`/i);
+  assert.match(routes, /WordPress custom theme Greenfield[\s\S]*?Desarrollador es el único owner técnico/i);
   assert.match(lead, /Nunca uses el fast path DIRECT para saltarte al owner[\s\S]*?DIRECT reduce planning\/documentación, no cambia ownership/i);
-  assert.match(frontend, /Para un DIRECT localizado de un solo archivo, relee el target exacto[\s\S]*?no invoques Bash `git diff -- <path>`/i);
+  assert.match(developer, /No delegates implementación de UI a otro agent/i);
   assert.match(core, /Clasificar DIRECT no cambia el ownership de la superficie/i);
   assert.match(lead, /Test-Path -LiteralPath '\.cn-pilot\/runtime\/active-task\.json'/i);
   assert.match(lead, /Get-Item -LiteralPath '\.cn-pilot\/runtime\/active-task\.json' -Force \| Select-Object -ExpandProperty Attributes/i);
@@ -1305,7 +1328,7 @@ test("update commands require deterministic filesystem discovery and preserve si
 
 test("visual direction preserves designer ownership without autonomous aesthetic loops", () => {
   const system = fs.readFileSync(new URL("../../.kilo/skills/ui-design-system/SKILL.md", import.meta.url), "utf8");
-  const designer = fs.readFileSync(new URL("../../.kilo/agents/disenador-ui-ux.md", import.meta.url), "utf8");
+  const designer = fs.readFileSync(new URL("../../.kilo/agents/disenador.md", import.meta.url), "utf8");
   const core = fs.readFileSync(new URL("../NUCLEO.md", import.meta.url), "utf8");
   const artDirection = fs.readFileSync(new URL("../../.kilo/skills/visual-art-direction/SKILL.md", import.meta.url), "utf8");
   const creative = fs.readFileSync(new URL("../../.kilo/skills/creative-web-experience/SKILL.md", import.meta.url), "utf8");
@@ -1322,7 +1345,7 @@ test("visual direction preserves designer ownership without autonomous aesthetic
   assert.match(creative, /Existing conserva `continuity > novelty`/);
   assert.match(creative, /Approved\/Strict mantiene authority BF-048/);
   assert.match(creative, /responde por la calidad profesional de su propuesta/);
-  assert.match(creative, /no se delega a Jefe, Maquetador, Revisor ni a un ciclo automático de evaluación estética/);
+  assert.match(creative, /no se delega a Jefe, Desarrollador, Revisor ni a un ciclo automático de evaluación estética/);
   assert.match(creative, /corrige en un mismo pase cualquier defecto evidente que impida evaluarlo/);
   assert.doesNotMatch(creative, /Creative Refinement Pass|Genericity Risk/);
   assert.match(composition, /Dos regiones pueden compartir composición si esa continuidad tiene función/);
@@ -1477,22 +1500,53 @@ test("analytics instrumentation has a distinct owner, useful events and privacy-
   assert.ok(skill.includes("No por la mera presencia de analytics en un proyecto, por cualquier CTA o porque se hable de objetivos/KPIs"), "analytics excludes incidental website, CTA and KPI mentions");
 });
 
-test("systematic debugging and analytics have natural-language routes without inflating agents", () => {
+test("debugging/analytics route to one full-stack Developer and editorial work to Redactor", () => {
   const lead = fs.readFileSync(new URL("../../.kilo/agents/jefe-proyecto.md", import.meta.url), "utf8");
   const developer = fs.readFileSync(new URL("../../.kilo/agents/desarrollador.md", import.meta.url), "utf8");
-  const frontend = fs.readFileSync(new URL("../../.kilo/agents/maquetador-frontend.md", import.meta.url), "utf8");
-  const content = fs.readFileSync(new URL("../../.kilo/agents/contenido-seo.md", import.meta.url), "utf8");
-  assert.match(lead, /Síntoma real de bug, regresión[\s\S]{0,180}`systematic-debugging` antes de editar/i);
+  const redactor = fs.readFileSync(new URL("../../.kilo/agents/redactor.md", import.meta.url), "utf8");
+  assert.match(lead, /Síntoma real de bug, regresión[\s\S]{0,180}`systematic-debugging` antes del fix/i);
   assert.match(lead, /No la actives por feature request, refactor o pregunta conceptual/i);
   assert.match(lead, /Analytics\/event measurement con implementación[\s\S]{0,120}`analytics-instrumentation`/i);
   assert.match(developer, /Ante un bug\/regresión\/fallo de integración[\s\S]{0,180}`systematic-debugging`/i);
+  assert.match(developer, /no crees un handoff artificial entre frontend y backend/i);
   assert.match(developer, /analytics\/event measurement[\s\S]{0,120}`analytics-instrumentation`/i);
-  assert.match(frontend, /Ante bug\/regresión o síntoma frontend inesperado[\s\S]{0,140}`systematic-debugging`/i);
-  assert.match(frontend, /coordina el trigger\/contract de `analytics-instrumentation` con Desarrollador/i);
-  assert.match(content, /estratega de contenidos/);
-  assert.doesNotMatch(content, /analytics-instrumentation/, "Contenido/SEO does not become the technical instrumentation owner");
+  assert.match(redactor, /UX writing|microcopy/i);
+  assert.doesNotMatch(redactor, /analytics-instrumentation/, "Redactor does not become the technical instrumentation owner");
   const agents = fs.readdirSync(new URL("../../.kilo/agents/", import.meta.url)).filter((file) => file.endsWith(".md"));
-  assert.equal(agents.length, 7, "routing hardening does not add agents");
+  assert.equal(agents.length, 6, "the six-agent topology remains exact");
+});
+
+test("six-agent routing covers frontend, backend, WordPress and environment ownership", () => {
+  const read = (relative) => fs.readFileSync(new URL(`../../${relative}`, import.meta.url), "utf8");
+  const lead = read(".kilo/agents/jefe-proyecto.md");
+  const developer = read(".kilo/agents/desarrollador.md");
+  const designer = read(".kilo/agents/disenador.md");
+  const redactor = read(".kilo/agents/redactor.md");
+  const routing = lead.slice(lead.indexOf("## Routing compacto"));
+  const environment = read(".kilo/skills/environment-dependency-management/SKILL.md");
+  const wordpressTheme = read(".kilo/skills/wordpress-theme-development/SKILL.md");
+
+  assert.match(lead, /Diseñador para dirección\/UX\/UI visual, Redactor para estrategia\/editorial\/SEO de contenido y Desarrollador para toda implementación técnica/i);
+  assert.match(lead, /En una unidad que cruza frontend\/backend, conserva un solo Desarrollador como owner técnico/i);
+  assert.match(routing, /Implementación técnica full stack[\s\S]*?UI\/DOM[\s\S]*?backend[\s\S]*?`desarrollador`/i);
+  assert.match(routing, /WordPress custom theme Greenfield[\s\S]*?Desarrollador es el único owner técnico/i);
+  assert.match(routing, /Preparación del entorno\/dependencias[\s\S]*?`environment-dependency-management`/i);
+  assert.match(developer, /React, Astro, Next\.js, PHP, WordPress\/WooCommerce, Laravel, Node\.js, Python, SQL/i);
+  assert.match(developer, /Implementa cambios técnicos full stack: frontend\/UI, responsive, JavaScript\/TypeScript, backend, APIs, datos e integraciones/i);
+  assert.match(developer, /Diseñador conserva autoridad de UX\/dirección visual[\s\S]*?no re-diseñes/i);
+  assert.match(developer, /Design-only no autoriza Product[\s\S]*?consume el prototipo\/Kit\/copy aprobados como source of truth/i);
+  assert.match(designer, /el Diseñador es responsable de la dirección y de entregar su mejor propuesta profesional/i);
+  assert.match(redactor, /UX writing, microcopy, storytelling/i);
+  assert.match(wordpressTheme, /Desarrollador es el único owner técnico/i);
+  assert.match(environment, /lockfile/i);
+  assert.match(environment, /No instales tools globales/i);
+  assert.match(environment, /`ask` es un gate host, no autorización que se pueda eludir/i);
+  assert.match(environment, /no leas\/imprimas `\.npmrc`, `\.pypirc`, secretos ni credenciales/i);
+  assert.match(environment, /Los permisos de lectura de Kilo no sandboxean el subprocess/i);
+  assert.match(environment, /`npm ci` puede reemplazar `node_modules`[\s\S]*?no lo ejecutes/i);
+  assert.match(environment, /Inicializa directamente en el root autorizado[\s\S]*?destino no contiene archivos que puedan sobrescribirse/i);
+  assert.match(environment, /No uses `--force`[\s\S]*?flags que desactiven validaciones/i);
+  assert.match(environment, /scripts\/plugins\/hooks[\s\S]*?detente y solicita el gate específico/i);
 });
 
 test("testing-strategy keeps one BF-057 full-stack section with prior behavior", () => {
@@ -1545,11 +1599,12 @@ test("documentation catalog inventories the actual agents and skills without req
   const actualSkills = fs.readdirSync(new URL("../../.kilo/skills/", import.meta.url)).filter((name) => fs.existsSync(new URL(`../../.kilo/skills/${name}/SKILL.md`, import.meta.url))).sort();
   const listedSkills = [...catalog.matchAll(/^\| `([a-z0-9-]+)` \|/gm)].map((match) => match[1]).sort();
   const actualAgents = fs.readdirSync(new URL("../../.kilo/agents/", import.meta.url)).filter((name) => name.endsWith(".md"));
-  const listedAgents = [...agentGuide.matchAll(/^\| (Jefe de proyecto|Arquitecto|Contenido \/ SEO|Diseñador UI\/UX|Desarrollador|Maquetador frontend|Revisor) \|/gm)].map((match) => match[1]).sort();
-  const agentLabels = ["Jefe de proyecto", "Arquitecto", "Contenido / SEO", "Diseñador UI/UX", "Desarrollador", "Maquetador frontend", "Revisor"].sort();
+  const listedAgents = [...agentGuide.matchAll(/^\| (Jefe de proyecto|Arquitecto|Diseñador|Redactor|Desarrollador|Revisor) \|/gm)].map((match) => match[1]).sort();
+  const agentLabels = ["Jefe de proyecto", "Arquitecto", "Diseñador", "Redactor", "Desarrollador", "Revisor"].sort();
   assert.deepEqual(listedSkills, actualSkills, "skill catalog has no omissions or invented skills");
-  assert.equal(actualAgents.length, 7, "agent catalog remains at seven");
-  assert.deepEqual(listedAgents, agentLabels, "README describes the seven real agents with human-facing names");
+  assert.equal(actualAgents.length, 6, "agent catalog has exactly six custom agents");
+  assert.deepEqual(listedAgents, agentLabels, "README describes the six real agents with human-facing names");
+  assert.ok(listedSkills.includes("environment-dependency-management"), "cross-stack environment management is catalogued");
   assert.ok(catalog.includes("No tienes que elegir") && catalog.includes("bajo demanda"), "skills stay discoverable without becoming a user selection chore");
 });
 
@@ -1642,7 +1697,7 @@ test("Implementation-first QA uses source gate, minimal evidence, grouped fixes,
   const webapp = read(".kilo/skills/webapp-testing/SKILL.md");
   const parity = read(".kilo/skills/visual-parity-review/SKILL.md");
   const strategy = read(".kilo/skills/testing-strategy/SKILL.md");
-  const frontend = read(".kilo/agents/maquetador-frontend.md");
+  const developer = read(".kilo/agents/desarrollador.md");
   const projectLead = read(".kilo/agents/jefe-proyecto.md");
   const reviewer = read(".kilo/agents/revisor.md");
   assert.match(core, /Implementation first[\s\S]*?source-only[\s\S]*?defectos determinísticos[\s\S]*?no usa Browser[\s\S]*?check disponible más barato/i);
@@ -1654,8 +1709,8 @@ test("Implementation-first QA uses source gate, minimal evidence, grouped fixes,
   assert.match(webapp, /Completa la inspección Round 1 y agrupa findings antes de editar[\s\S]*?no screenshot después de cada fix/i);
   assert.match(parity, /solo viewports\/estados designados por reference\/scope[\s\S]*?no inventes resoluciones[\s\S]*?no hagas sweep/i);
   assert.match(strategy, /Implementation Quality Gate[\s\S]*?un viewport de 360px[\s\S]*?no reinicies QA omnibus/i);
-  assert.match(frontend, /no abras Browser tras cada sección[\s\S]*?un solo viewport de 360px/i);
-  assert.match(frontend, /agrupa fixes compatibles en un batch[\s\S]*?ROUND 2 revisa solo fixes/i);
+  assert.match(developer, /No abras Browser\/capturas tras cada sección o fix[\s\S]*?viewports solo responden una pregunta concreta/i);
+  assert.match(developer, /agrupa hallazgos compatibles en una ronda[\s\S]*?retestea solo superficies afectadas/i);
   assert.match(projectLead, /source-only antes de Browser[\s\S]*?no actives un paquete omnibus[\s\S]*?conserva PASS no invalidado/i);
   assert.match(reviewer, /defectos determinísticos visibles en source[\s\S]*?capture logging[\s\S]*?no exijas Browser/i);
 });
@@ -1684,8 +1739,8 @@ test("Open public-web motion floor is executable, intent-first, and preserves au
   const motion = read(".kilo/skills/motion-interaction/SKILL.md");
   const kit = read(".kilo/skills/ui-kit-construction/SKILL.md");
   const composition = read(".kilo/skills/page-composition/SKILL.md");
-  const designer = read(".kilo/agents/disenador-ui-ux.md");
-  const frontend = read(".kilo/agents/maquetador-frontend.md");
+  const designer = read(".kilo/agents/disenador.md");
+  const developer = read(".kilo/agents/desarrollador.md");
   const reviewer = read(".kilo/agents/revisor.md");
   const floorStart = core.indexOf("### Visual Quality Floor de Public Web (BF-068)");
   const floorEnd = core.indexOf("## Arquitectura frontend y fidelidad (BF-069)", floorStart);
@@ -1711,7 +1766,7 @@ test("Open public-web motion floor is executable, intent-first, and preserves au
   assert.match(kit, /tokens\/convenciones compartidos[\s\S]*?no repitas aquí el floor BF-068/);
   assert.match(composition, /mapa compacto por región[\s\S]*?relación de continuidad o contraste/);
   assert.match(designer, /aplica el floor de motion de BF-068: define en la dirección qué relación narrativa\/visual cambia y por qué/i);
-  assert.match(frontend, /no los elimines\/sustituyas por fade simple[\s\S]*?informa a Jefe de proyecto antes de degradar/i);
+  assert.match(developer, /preserva BF-068 y el intent aprobado[\s\S]*?No sustituyas motion por fades genéricos ni inventes efectos/i);
   assert.match(reviewer, /aplica read-only la aceptación normativa de `[\s\S]*?BF-068[\s\S]*?progresión scroll posterior al Hero[\s\S]*?momento memorable/i);
   assert.match(reviewer, /No juzgues gusto ni sustituyas la aprobación humana/i);
   assert.match(floor, /Revisor no sustituye el gate primario ni inicia Browser\/capturas\/auditorías por rutina/i);

@@ -1,6 +1,6 @@
 # Skills y capacidades
 
-Las skills son procedimientos especializados que los agentes de CN Pilot cargan bajo demanda según el objetivo, el stack y el riesgo. **No tienes que elegirlas ni aprender sus nombres.** Esta página solo permite descubrir qué áreas existen; las instrucciones de implementación pertenecen a cada `SKILL.md`.
+Las skills son procedimientos especializados que los agentes de CN Pilot cargan bajo demanda según el objetivo, el stack y el riesgo. **No tienes que elegirlas ni aprender sus nombres.** Esta página solo permite descubrir qué áreas existen; el mapa canónico de activación/ownership está en `.kilo/agents/jefe-proyecto.md` y la operación en cada `SKILL.md`.
 
 ## Dirección, producto y contenido
 
@@ -63,8 +63,9 @@ Las skills son procedimientos especializados que los agentes de CN Pilot cargan 
 | Skill | Área que atiende |
 |---|---|
 | `existing-site-audit` | Baseline read-only cuando un Existing desconocido condiciona el trabajo. |
+| `environment-dependency-management` | Detección/preparación de runtimes y dependencias locales cuando son necesarias y autorizadas. |
 | `maintenance-operations` | Coordinación de incidentes, mantenimiento y recuperación material. |
 | `release-deployment` | Preparación de release/deployment no WordPress. |
 | `git-checkpoint` | Preparación de commit local seguro y acotado. |
 
-Los agentes siguen siendo la entrada práctica. La política de ownership y triggers se mantiene en los prompts y procedimientos del Core; este índice no los reemplaza ni promete que una integración esté instalada.
+Los seis agentes siguen siendo la entrada práctica. La política de ownership y triggers se mantiene en el routing de Jefe y procedimientos del Core; este índice no los reemplaza ni promete que una tecnología, herramienta o integración esté instalada o soportada sin evidencia.

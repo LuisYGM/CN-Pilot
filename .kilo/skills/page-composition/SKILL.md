@@ -5,7 +5,7 @@ description: Diseñar la macrocomposición y secuencia de páginas web visualmen
 
 # page-composition
 
-**Owner:** Diseñador UI/UX. Resuelve «¿cómo se convierte este contenido y sistema visual en una página excepcional?». No decide el design system (`ui-design-system`), no construye foundations (`ui-kit-construction`) ni implementa frontend (`maquetador-frontend`). Usa estrategia/contenido aprobados; no inventa negocio ni cambia su autoridad.
+**Owner:** Diseñador. Resuelve «¿cómo se convierte este contenido y sistema visual en una página excepcional?». No decide el design system (`ui-design-system`), no construye foundations (`ui-kit-construction`) ni implementa Product (Desarrollador). Usa estrategia/contenido aprobados; no inventa negocio ni cambia su autoridad.
 
 ## Preflight
 
@@ -41,8 +41,8 @@ Diseña tres estados conceptuales cuando el layout lo requiera: desktop → tabl
 
 ## Check y stop
 
-Cuando Greenfield/material rebuild implique traducir una Flagship aprobada a Product, el handoff no define el DOM final: Maquetador usa `frontend-architecture` para ownership Section/container/Block, sistema shared y estilos por página sin imponer wrappers. Conserva en runtime la variedad de ritmo, modules y transforms responsive de la composición aprobada; no reduzcas, por implementación cómoda, un slider/sticky/story/full-bleed a un patrón universal. Fast paths/derivadas sin cambios materiales no repiten ese contrato.
+Cuando Greenfield/material rebuild implique traducir una Flagship aprobada a Product, el handoff no define el DOM final: Desarrollador usa `frontend-architecture` para ownership Section/container/Block, sistema shared y estilos por página sin imponer wrappers. Conserva en runtime la variedad de ritmo, modules y transforms responsive de la composición aprobada; no reduzcas, por implementación cómoda, un slider/sticky/story/full-bleed a un patrón universal. Fast paths/derivadas sin cambios materiales no repiten ese contrato.
 
-Durante la composición, contrasta mapa y prototipo contra el journey y el contenido real: que cada región cumpla una función, los cambios de ritmo tengan motivo, los recursos pertenezcan a la escena y mobile mantenga la jerarquía. Es autocontrol del Diseñador dentro del trabajo, no una puntuación, checklist externo ni loop de QA estético. Devuelve a Maquetador la silueta/orden, relaciones espaciales, referencias concretas de media, transformaciones responsive materiales y decisiones abiertas/aprobadas; no adjuntes un documento aparte salvo que sea un artefacto requerido.
+Durante la composición, contrasta mapa y prototipo contra el journey y el contenido real: que cada región cumpla una función, los cambios de ritmo tengan motivo, los recursos pertenezcan a la escena y mobile mantenga la jerarquía. Es autocontrol del Diseñador dentro del trabajo, no una puntuación, checklist externo ni loop de QA estético. Devuelve a Desarrollador la silueta/orden, relaciones espaciales, referencias concretas de media, transformaciones responsive materiales y decisiones abiertas/aprobadas; no adjuntes un documento aparte salvo que sea un artefacto requerido.
 
 **Fallo común:** retocar spacing local sin resolver la monotonía macro, añadir decoración para fingir composición o cambiar copy aprobado para hacer que el layout encaje. Si se requiere una concesión editorial, escálala; no la inventes.

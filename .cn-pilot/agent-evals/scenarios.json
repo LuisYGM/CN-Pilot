@@ -16,7 +16,7 @@
       "mode": "DIRECT",
       "title": "Cambio localizado de etiqueta en página existente",
       "agent": "jefe-proyecto",
-      "expectedOwner": "maquetador-frontend",
+      "expectedOwner": "desarrollador",
       "fixture": "fixtures/EVAL-001",
       "workspaceMode": "git-baseline",
       "baseline": "fixtures/EVAL-001",
@@ -24,7 +24,7 @@
       "acceptance": [
         {"id": "A1", "observable": "El enlace muestra ‘Ver servicios’ y conserva href y clases."},
         {"id": "A2", "observable": "No cambia contenido, estructura ni archivos no relacionados."},
-        {"id": "A3", "observable": "Delega solo en Maquetador como owner apropiado; no agrega plan, documentación, checkpoint ni agentes innecesarios."}
+        {"id": "A3", "observable": "Delega en Desarrollador como único owner técnico de UI; no agrega plan, documentación, checkpoint ni handoff frontend/backend."}
       ],
       "evidence": ["Diff del workspace contra fixture inicial", "Lectura del elemento CTA y paths modificados", "Transcripción de sesión Kilo"],
       "safety": "Solo fixture sintético; no copiar recursos ni sitios reales."
@@ -34,7 +34,7 @@
       "mode": "TASK",
       "title": "Filtros de catálogo con estado accesible",
       "agent": "jefe-proyecto",
-      "expectedOwner": "maquetador-frontend",
+      "expectedOwner": "desarrollador",
       "fixture": "fixtures/EVAL-002",
       "workspaceMode": "git-baseline",
       "baseline": "fixtures/EVAL-002",
@@ -43,7 +43,8 @@
         {"id": "A1", "observable": "La consulta filtra títulos sin distinguir mayúsculas/minúsculas."},
         {"id": "A2", "observable": "Se muestra un mensaje de vacío cuando no hay resultados y vuelve a desaparecer al limpiar la consulta."},
         {"id": "A3", "observable": "El estado y número de resultados permanecen accesibles y se actualizan correctamente."},
-        {"id": "A4", "observable": "Prueba focal pasa y no hay cambios fuera de producto/catalog.html y su script."}
+        {"id": "A4", "observable": "Prueba focal pasa y no hay cambios fuera de producto/catalog.html y su script."},
+        {"id": "A5", "observable": "La interfaz y su estado/filtro permanecen bajo un solo Desarrollador, sin handoff frontend/backend."}
       ],
       "evidence": ["Diff y lista de paths", "Comando/prueba focal y salida", "Inspección DOM/estado o evidencia browser si está disponible"],
       "safety": "No instalar dependencias ni servicios; datos de catálogo ficticios."
@@ -53,6 +54,7 @@
       "mode": "STRUCTURAL",
       "title": "Catálogo con búsqueda, filtros y paginación",
       "agent": "jefe-proyecto",
+      "expectedOwner": "desarrollador",
       "fixture": "fixtures/EVAL-003",
       "workspaceMode": "git-baseline",
       "baseline": "fixtures/EVAL-003",
@@ -61,7 +63,8 @@
         {"id": "A1", "observable": "Cada requisito incluido tiene resultado identificable."},
         {"id": "A2", "observable": "Búsqueda, filtro y paginación funcionan combinados y el estado vacío es correcto."},
         {"id": "A3", "observable": "Cada criterio tiene unidad y evidencia adecuada; bloqueados y fuera de alcance están diferenciados."},
-        {"id": "A4", "observable": "Pruebas pertinentes pasan; no quedan unidades esenciales pendientes ni decisiones provisionales asumidas como aprobadas."}
+        {"id": "A4", "observable": "Pruebas pertinentes pasan; no quedan unidades esenciales pendientes ni decisiones provisionales asumidas como aprobadas."},
+        {"id": "A5", "observable": "Un único Desarrollador implementa UI, estado y lógica técnica; no se delegan subunidades frontend y backend como owners distintos."}
       ],
       "evidence": ["Plan/spec generado y diff", "Matriz/enlaces requisito-criterio-unidad-evidencia conservados en una única fuente", "Salida de pruebas y revisión final"],
       "safety": "App estática sin backend ni datos personales."
@@ -113,6 +116,7 @@
       "mode": "HANDOFF_REVISOR",
       "title": "Revisión read-only de cambio real con diff y tests",
       "agent": "jefe-proyecto",
+      "expectedOwner": "revisor",
       "fixture": "fixtures/EVAL-006",
       "setup": "Crear un repositorio temporal main desde baseline; copiar candidato sobre el árbol de trabajo sin commit; ejecutar la prueba focal sobre ese candidato y guardar salida real en .cn-pilot/runtime/eval-setup.json. El diff debe ser real y no alterar el Core.",
       "workspaceMode": "git-baseline-plus-working",

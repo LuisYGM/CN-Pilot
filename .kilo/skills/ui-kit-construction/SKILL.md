@@ -5,7 +5,7 @@ description: Construir o ampliar materialmente un UI Kit web, sus foundations, t
 
 # ui-kit-construction
 
-Fuente de verdad operativa para crear un UI Kit desde cero y ampliar materialmente uno existente. Diseñador UI/UX carga esta skill siempre que aplica; no depende de que la persona mencione «UI Kit». Se usa junto con `ui-design-system` cuando también se resuelve Creative Direction. No aplica a un color puntual de Product, copy, microcambios frontend que reutilizan un sistema aprobado ni páginas que solo consumen el Kit.
+Fuente de verdad operativa para crear un UI Kit desde cero y ampliar materialmente uno existente. Diseñador carga esta skill siempre que aplica; no depende de que la persona mencione «UI Kit». Se usa junto con `ui-design-system` cuando también se resuelve Creative Direction. No aplica a un color puntual de Product, copy, microcambios frontend que reutilizan un sistema aprobado ni páginas que solo consumen el Kit.
 
 ## Alcance y relación con el sistema visual
 

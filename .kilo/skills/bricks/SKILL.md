@@ -17,7 +17,7 @@ Si una capability o comportamiento de Bricks depende materialmente de versión/a
 
 ## Aplicación focalizada con fuente aprobada
 
-Usa el trigger de `AGENTS.md` y el procedimiento único de `maquetador-frontend`, sin repetirlos como workflow Bricks separado. Preflight identifica target, controles/campos usados, clases/componentes reutilizables, query/pagination y acceso write/preview. Reutiliza schemas ya confirmados salvo cambios de entorno; no consulta controles o rutas de importación que no se usarán.
+Usa el trigger de `AGENTS.md` y el procedimiento de implementación full stack de `desarrollador`, sin repetirlos como workflow Bricks separado. Preflight identifica target, controles/campos usados, clases/componentes reutilizables, query/pagination y acceso write/preview. Reutiliza schemas ya confirmados salvo cambios de entorno; no consulta controles o rutas de importación que no se usarán.
 
 Para un Blog con featured, loop y pager, valida primero el conjunto mínimo: featured conserva su item, el loop cambia con pager y la paginación responde correctamente. Resuelve incompatibilidades antes de construir las secciones completas, con las garantías de escritura vigentes. Una página estática no necesita un spike artificial.
 

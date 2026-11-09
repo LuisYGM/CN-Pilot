@@ -803,7 +803,7 @@ test("I3: optional parallelUnits keep one valid global checkpoint and block upda
   const checkpoint = activeCheckpoint("ACTIVE", {
     parallelUnits: [
       { unit: "api", owner: "desarrollador", scope: ["producto/api/**"], mode: "WRITER", status: "ACTIVE", worktreeID: "test-wt-api", worktreePath: "C:/worktrees/api", branch: "cn/test-api", baseBranch: "main", baseHEAD: "a".repeat(40), sessionID: "ses_test_api", nextAction: "Validar endpoints" },
-      { unit: "copy", owner: "contenido-seo", scope: ["artefactos/contenido/**"], mode: "WRITER", status: "READY_TO_INTEGRATE", worktreeID: "test-wt-copy", worktreePath: "C:/worktrees/copy", branch: "cn/test-copy", baseBranch: "main", baseHEAD: "a".repeat(40), resultCommit: "b".repeat(40), nextAction: "Esperar integración" },
+      { unit: "copy", owner: "redactor", scope: ["artefactos/contenido/**"], mode: "WRITER", status: "READY_TO_INTEGRATE", worktreeID: "test-wt-copy", worktreePath: "C:/worktrees/copy", branch: "cn/test-copy", baseBranch: "main", baseHEAD: "a".repeat(40), resultCommit: "b".repeat(40), nextAction: "Esperar integración" },
     ],
   });
   put(root, ".cn-pilot/runtime/active-task.json", `${JSON.stringify(checkpoint)}\n`);

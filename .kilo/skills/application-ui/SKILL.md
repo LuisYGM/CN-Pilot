@@ -5,7 +5,7 @@ description: Diseñar interfaces de software con shell, navegación, datos, tabl
 
 # application-ui
 
-**Owner:** Diseñador UI/UX. Diseña superficies de software, no páginas de marketing (`page-composition`). Consume comportamiento/actores confirmados de `product-discovery`, sistema visual de `ui-design-system` y, si cambia materialmente, `ui-kit-construction`. Maquetador frontend implementa UI; Desarrollador define behavior/data contract. Carga `form-experience` solo cuando forms sean un flujo material. No inventes funcionalidades para llenar un dashboard.
+**Owner:** Diseñador. Diseña superficies de software, no páginas de marketing (`page-composition`). Consume comportamiento/actores confirmados de `product-discovery`, sistema visual de `ui-design-system` y, si cambia materialmente, `ui-kit-construction`. Desarrollador implementa tanto la UI como el behavior/data contract, sin handoff frontend/backend. Carga `form-experience` solo cuando forms sean un flujo material. No inventes funcionalidades para llenar un dashboard.
 
 ## Descubrimiento y shell
 
@@ -31,6 +31,6 @@ Usa actores/capabilities/ownership definidos por requisitos. La UI refleja accio
 
 ## Checks y handoff
 
-Comprueba: el usuario sabe dónde está; tarea siguiente y acción principal son claras; densidad/columnas se ajustan al uso; filtros/sort/bulk actúan sobre el dataset correcto; empty/error/partial/loading/permission states responden a condiciones verdaderas; móvil conserva lectura y acción; roles en UI corresponden a requisitos; tabla/dialogs se operan con teclado. Devuelve flujos, componentes, jerarquía, estados y restricciones responsive concisamente a Maquetador frontend/Desarrollador sin mini-PRD. Si behavior material falta, informa a Jefe de proyecto; no lo inventes. Detente al cubrir task/risk confirmados.
+Comprueba: el usuario sabe dónde está; tarea siguiente y acción principal son claras; densidad/columnas se ajustan al uso; filtros/sort/bulk actúan sobre el dataset correcto; empty/error/partial/loading/permission states responden a condiciones verdaderas; móvil conserva lectura y acción; roles en UI corresponden a requisitos; tabla/dialogs se operan con teclado. Devuelve flujos, componentes, jerarquía, estados y restricciones responsive concisamente a Desarrollador sin mini-PRD. Si behavior material falta, informa a Jefe de proyecto; no lo inventes. Detente al cubrir task/risk confirmados.
 
 **Failure modes:** cuatro metric cards + chart + activity por receta; una tabla gigante recortada en móvil; disabled sin explicación; gráfica ornamental; mezclar filtros con navegación; añadir role-based UI como sustituto de server policy.

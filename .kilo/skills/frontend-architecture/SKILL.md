@@ -5,7 +5,7 @@ description: Definir e implementar arquitectura semántica y mantenible de HTML/
 
 # Arquitectura frontend adaptable
 
-**Owner:** Maquetador frontend. Define cómo construir y mantener la interfaz; no sustituye Creative Direction, composición, UI Kit ni aprobación visual. Actívala para frontend custom nuevo o una reestructura material. Microcambios y Existing con arquitectura vigente reutilizan su estructura, salvo scope/migración expresos.
+**Owner:** Desarrollador. Define cómo construir y mantener implementación frontend custom; no sustituye Creative Direction, composición, UI Kit ni aprobación visual de Diseñador. Actívala para frontend custom nuevo o una reestructura material. Microcambios y Existing con arquitectura vigente reutilizan su estructura, salvo scope/migración expresos.
 
 ## Gramática conceptual
 
@@ -73,7 +73,7 @@ Preserva asset, crop, framing, ratio, overlay, placement, art direction, video/p
 
 ## Fidelidad de implementación
 
-La Flagship/UI Kit visualmente aprobado y las referencias BF-048 dentro de authority/scope son la fuente de verdad. Maquetador implementa el resultado, no lo rediseña. Puede cambiar Grid/Flex, DOM, class naming o primitives si mantiene materialmente composición, jerarquía, typography, media treatment, interacción, motion, estados, responsive y accesibilidad. Si una limitación técnica exige modificar un aspecto material, devuelve evidencia/opción a Jefe de proyecto/Designer antes de desviarte; no simplifiques collage, sticky, split, story, full-bleed o media por comodidad.
+La Flagship/UI Kit visualmente aprobado y las referencias BF-048 dentro de authority/scope son la fuente de verdad. Desarrollador implementa el resultado, no lo rediseña. Puede cambiar Grid/Flex, DOM, class naming o primitives si mantiene materialmente composición, jerarquía, typography, media treatment, interacción, motion, estados, responsive y accesibilidad. Si una limitación técnica exige modificar un aspecto material, devuelve evidencia/opción a Jefe de proyecto/Diseñador antes de desviarte; no simplifiques collage, sticky, split, story, full-bleed o media por comodidad.
 
 Un blocker técnico material no autoriza drift silencioso: intenta una traducción equivalente y documenta causa/evidencia. Si aun así altera apariencia, comportamiento o responsive aprobado, detén solo la parte afectada y escala a Jefe de proyecto para resolver la dependencia/approval antes de implementar una alternativa material.
 

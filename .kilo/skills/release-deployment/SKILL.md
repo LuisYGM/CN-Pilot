@@ -5,7 +5,7 @@ description: Preparar y coordinar un release/deployment solicitado de una aplica
 
 # release-deployment
 
-**Owner/coordinador:** Jefe de proyecto. Desarrollador/Maquetador frontend preparan build y artifact de su stack; ejecutan cambios solo dentro de ownership y autorización. `deploy-wordpress` es canónica para publicación WordPress y prevalece. `maintenance-operations` coordina riesgo/incidentes vivos, no sustituye método técnico. `database-migrations` gobierna migraciones persistentes. No hay deploy por el hecho de estar publicado o tener acceso.
+**Owner/coordinador:** Jefe de proyecto. Desarrollador prepara build y artifact full stack, y ejecuta cambios solo dentro de ownership y autorización. `deploy-wordpress` es canónica para publicación WordPress y prevalece. `maintenance-operations` coordina riesgo/incidentes vivos, no sustituye método técnico. `database-migrations` gobierna migraciones persistentes. No hay deploy por el hecho de estar publicado o tener acceso.
 
 ## Autorización y clasificación
 

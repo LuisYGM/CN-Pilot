@@ -15,8 +15,9 @@ const REQUIRED_PATHS = [
   [".cn-pilot/qa/core-check.mjs", "file"], [".cn-pilot/qa/core-check.test.mjs", "file"],
   [".cn-pilot/update/updater.mjs", "file"], [".cn-pilot/update/updater.test.mjs", "file"], [".cn-pilot/update/manifest.json", "file"],
   ["kilo.jsonc", "file"], [".kilo/agents/jefe-proyecto.md", "file"], [".kilo/agents/arquitecto.md", "file"],
-  [".kilo/agents/contenido-seo.md", "file"], [".kilo/agents/disenador-ui-ux.md", "file"],
-  [".kilo/agents/desarrollador.md", "file"], [".kilo/agents/maquetador-frontend.md", "file"], [".kilo/agents/revisor.md", "file"],
+  [".kilo/agents/redactor.md", "file"], [".kilo/agents/disenador.md", "file"],
+  [".kilo/agents/desarrollador.md", "file"], [".kilo/agents/revisor.md", "file"],
+  [".kilo/skills/environment-dependency-management/SKILL.md", "file"],
   ...["nuevo-proyecto", "cn-estado", "cn-actualizar", "diseno", "contenido", "revision", "entrega", "diagnostico", "depurar", "desplegar-pruebas", "preparar-despliegue", "punto-control", "plan", "commit"].map((name) => [`.kilo/commands/${name}.md`, "file"]),
 ];
 const LEGACY_CANONICAL_PATHS = [
@@ -24,10 +25,12 @@ const LEGACY_CANONICAL_PATHS = [
   "project-resources", "project-artifacts", "product", ".cn-pilot/CORE.md",
   ".cn-pilot/CHANGELOG.md", ".cn-pilot/MANIFEST.md", ".cn-pilot/docs",
   ".cn-pilot/profiles", ".cn-pilot/templates", ".kilo/agents/dev-lead.md",
+  ".kilo/agents/contenido-seo.md", ".kilo/agents/disenador-ui-ux.md", ".kilo/agents/maquetador-frontend.md",
   ".kilo/commands/new-project.md",
 ];
 const LEGACY_REFERENCE_ALLOWLIST = new Set([
   ".cn-pilot/CAMBIOS.md", ".cn-pilot/documentacion/ACTUALIZACIONES.md",
+  ".cn-pilot/documentacion/CONFIGURACION-KILO.md",
   ".cn-pilot/update/updater.mjs", ".cn-pilot/update/updater.test.mjs",
   ".cn-pilot/update/manifest.json", ".cn-pilot/qa/core-check.mjs", ".cn-pilot/qa/core-check.test.mjs",
 ]);
@@ -36,6 +39,7 @@ const LEGACY_REFERENCE_PATTERNS = [
   /(?:^|[\/`])project-resources(?:\/|[`\s]|$)/, /(?:^|[\/`])project-artifacts(?:\/|[`\s]|$)/,
   /(?:^|[\/`])product\//, /\.cn-pilot\/(?:CORE|CHANGELOG|MANIFEST)\.md/,
   /\.cn-pilot\/(?:docs|profiles|templates)(?:\/|[`\s]|$)/,
+  /\b(?:maquetador-frontend|contenido-seo|disenador-ui-ux)\b/,
   /(?:^|[\s`])\/(?:new-project|cn-status|cn-update|doctor|review|handoff|design|content|debug|deploy-staging|pre-deploy|checkpoint)(?:\b|`)/,
 ];
 const REVIEWER_DENY = ["*", "bash", "websearch", "webfetch", "skill", "task", "agent_manager", "background_process", "write", "edit", "apply_patch", "grep", "external_directory"];
@@ -53,19 +57,18 @@ const PROJECT_CONTEXT_PATHS = ["PROYECTO.md", "REQUISITOS.md", "ESTADO.md", "DEC
 const PROFILE_TOOL_KEYS = new Map([
   ["jefe-proyecto", ["*", "read", "glob", "grep", "skill", "websearch", "webfetch", "lsp", "write", "apply_patch", "question", "todoread", "todowrite", "board_read", "board_post", "goal", "goal_report", "schedule_wakeup", "cancel_wakeup", "cron_create", "cron_list", "cron_delete", "agent_manager_models", "chart", "open_plan", "kilo_local_recall", "external_directory", "agent_manager", "background_process", "task", "edit", "bash", "kilo-playwright_*"]],
   ["arquitecto", ["*", "read", "glob", "grep", "lsp", "board_read", "board_post", "external_directory", "skill", "websearch", "webfetch", "task", "agent_manager", "background_process", "write", "apply_patch", "edit", "bash"]],
-  ["contenido-seo", ["*", "read", "glob", "grep", "lsp", "board_read", "board_post", "external_directory", "skill", "websearch", "webfetch", "task", "agent_manager", "background_process", "write", "apply_patch", "edit", "bash"]],
-  ["disenador-ui-ux", ["*", "read", "glob", "grep", "lsp", "board_read", "board_post", "external_directory", "skill", "websearch", "webfetch", "task", "agent_manager", "background_process", "write", "apply_patch", "edit", "bash", "kilo-playwright_*"]],
-  ["desarrollador", ["*", "read", "glob", "grep", "lsp", "board_read", "board_post", "external_directory", "skill", "websearch", "webfetch", "task", "agent_manager", "background_process", "write", "apply_patch", "edit", "bash"]],
-  ["maquetador-frontend", ["*", "read", "glob", "grep", "lsp", "board_read", "board_post", "external_directory", "skill", "websearch", "webfetch", "task", "agent_manager", "background_process", "write", "apply_patch", "edit", "bash", "kilo-playwright_*"]],
+  ["redactor", ["*", "read", "glob", "grep", "lsp", "board_read", "board_post", "external_directory", "skill", "websearch", "webfetch", "task", "agent_manager", "background_process", "write", "apply_patch", "edit", "bash"]],
+  ["disenador", ["*", "read", "glob", "grep", "lsp", "board_read", "board_post", "external_directory", "skill", "websearch", "webfetch", "task", "agent_manager", "background_process", "write", "apply_patch", "edit", "bash", "kilo-playwright_*"]],
+  ["desarrollador", ["*", "read", "glob", "grep", "lsp", "board_read", "board_post", "external_directory", "skill", "websearch", "webfetch", "task", "agent_manager", "background_process", "write", "apply_patch", "edit", "bash", "kilo-playwright_*"]],
   ["revisor", ["*", "read", "glob", "grep", "skill", "websearch", "webfetch", "task", "agent_manager", "background_process", "write", "edit", "apply_patch", "bash", "external_directory"]],
 ]);
 const ROOT_KILO_TOOL_KEYS = new Set(["*", "glob", "grep", "lsp", "question", "todoread", "todowrite", "board_read", "board_post", "agent_manager", "external_directory", "kilo-playwright_*"]);
-const KILO_PLAYWRIGHT_AGENTS = new Set(["jefe-proyecto", "disenador-ui-ux", "maquetador-frontend"]);
+const KILO_PLAYWRIGHT_AGENTS = new Set(["jefe-proyecto", "disenador", "desarrollador"]);
 const DESTRUCTIVE_GIT = ["git push --force*", "git push -f*", "git reset --hard*", "git clean*"];
-const CN_PILOT_AGENTS = ["arquitecto", "contenido-seo", "desarrollador", "disenador-ui-ux", "jefe-proyecto", "maquetador-frontend", "revisor"];
+const CN_PILOT_AGENTS = ["arquitecto", "desarrollador", "disenador", "jefe-proyecto", "redactor", "revisor"];
 const REVIEW_OUTCOMES = ["APPROVED", "APPROVED WITH NOTES", "CHANGES REQUIRED", "BLOCKED"];
 const CANONICAL_REPOSITORY = "https://github.com/luisygm/cn-pilot";
-const LEGACY_ROLE_NAME = /\b(?:Dev Lead|Architect|Reviewer|Developer|Frontend\s*\/\s*Builder|Frontend\s+Builder|Content\s*\/\s*SEO|Content SEO(?: agent)?|UI\/UX Designer)\b/g;
+const LEGACY_ROLE_NAME = /\b(?:Dev Lead|Architect|Reviewer|Developer|Frontend\s*\/\s*Builder|Frontend\s+Builder|Content\s*\/\s*SEO|Content SEO(?: agent)?|UI\/UX Designer|Maquetador(?: frontend)?|Contenido\s*\/\s*SEO|Diseñador UI\/UX)\b/g;
 const ACTIVE_LANGUAGE_ROOTS = [
   ".cn-pilot/documentacion", ".cn-pilot/perfiles", ".cn-pilot/plantillas",
   ".kilo/agents", ".kilo/commands", ".kilo/skills",
@@ -74,10 +77,9 @@ const PROJECT_CONTEXT_DOCS = ["AGENTS.md", "README.md", "PROYECTO.md", "REQUISIT
 const CN_PILOT_AGENT_HEADINGS = {
   "jefe-proyecto": "Jefe de proyecto",
   "arquitecto": "Arquitecto",
-  "contenido-seo": "Contenido / SEO",
-  "disenador-ui-ux": "Diseñador UI/UX",
+  "redactor": "Redactor",
+  "disenador": "Diseñador",
   "desarrollador": "Desarrollador",
-  "maquetador-frontend": "Maquetador frontend",
   "revisor": "Revisor",
 };
 
@@ -398,10 +400,9 @@ function checkAgentPermissionProfiles(root) {
   const problems = [];
   const owners = new Map([
     ["arquitecto", { editFallback: "ask", writable: true }],
-    ["contenido-seo", { editFallback: "ask", writable: true }],
-    ["disenador-ui-ux", { editFallback: "ask", writable: true }],
+    ["redactor", { editFallback: "ask", writable: true }],
+    ["disenador", { editFallback: "ask", writable: true }],
     ["desarrollador", { editFallback: "allow", writable: true }],
-    ["maquetador-frontend", { editFallback: "allow", writable: true }],
     ["jefe-proyecto", { editFallback: "ask", writable: true }],
     ["revisor", { editFallback: "deny", writable: false }],
   ]);
@@ -497,7 +498,7 @@ function checkAgentPermissionProfiles(root) {
         if (permission[capability] !== "allow") problems.push({ path: relative, field: capability, expected: "allow", code: "COMMON_WORKFLOW_CAPABILITY_CHANGED" });
       }
     }
-    if (["desarrollador", "maquetador-frontend"].includes(agent) && permission.edit?.["*"] !== "allow") {
+    if (agent === "desarrollador" && permission.edit?.["*"] !== "allow") {
       problems.push({ path: relative, field: "edit.*", expected: "allow", code: "PRODUCT_EDIT_AUTONOMY_REDUCED" });
     }
   }

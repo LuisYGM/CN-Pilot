@@ -26,7 +26,7 @@ Actívala para intervenir en un sitio heredado cuando el estado actual, el stack
 
 Selecciona únicamente los agentes y skills necesarios para lo descubierto y el objetivo:
 
-- Cambios de contenido, navegación o URLs: `web-strategy` si hay estrategia abierta, agente `contenido-seo` con `content-page` cuando haga falta copy y `technical-seo` cuando cambie rastreo o indexación.
+- Cambios de contenido, navegación o URLs: `web-strategy` si hay estrategia abierta, agente `redactor` con `content-page` cuando haga falta copy y `technical-seo`/Desarrollador cuando cambie rastreo o indexación.
 - Síntoma de rendimiento medible o solicitud de optimización: `performance-review`; no hagas una auditoría profunda por simple presencia de plugins.
 - Autenticación, endpoint custom, datos sensibles, uploads, pagos u otra superficie relevante: `security-review` según BF-023; un rediseño puramente visual no la activa por defecto.
 - Implementación WordPress realmente afectada: `wordpress` y solo la skill de stack confirmada (`bricks`, `elementor`, `woocommerce` u otra disponible). Un sitio existente no se presume WordPress.

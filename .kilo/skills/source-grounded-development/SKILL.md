@@ -5,7 +5,7 @@ description: Verificar comportamiento externo/versionado mediante fuentes primar
 
 # Source-Grounded Development
 
-Procedimiento condicional para Arquitecto, Desarrollador y Maquetador frontend. No es una fase general de discovery, no crea un owner de investigación y no se activa por rutina. Resuelve una cuestión concreta con la mínima evidencia suficiente.
+Procedimiento condicional para Arquitecto y Desarrollador. No es una fase general de discovery, no crea un owner de investigación y no se activa por rutina. Resuelve una cuestión concreta con la mínima evidencia suficiente.
 
 ## DETECT → QUESTION → SOURCE → APPLY → PROVE → REPORT
 

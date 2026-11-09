@@ -1,8 +1,17 @@
 # Flujo de equipo
 
-Jefe de proyecto es el coordinador y contacto humano normal. Lee lo que ya existe, conserva las decisiones vigentes, propone especialistas según el trabajo y reúne el resultado. No necesitas repartir tareas entre agentes.
+Jefe de proyecto es el coordinador y contacto humano normal. Lee lo que ya existe, conserva decisiones vigentes, propone especialistas por necesidad y reconcilia resultados/gates. No necesitas repartir tareas entre agentes.
 
-Los especialistas trabajan con procedimientos bajo demanda. Desarrollo conserva el ownership de backend, APIs, datos y lógica; Maquetador frontend implementa la presentación aprobada; Diseñador define decisiones visuales cuando aplican; Contenido / SEO trabaja copy e intención; Arquitecto entra si hay una decisión estructural; Revisor realiza una revisión final de solo lectura cuando el riesgo/alcance la justifican.
+| Agente | Ownership y activación |
+|---|---|
+| Jefe de proyecto | Intake, scope/riesgo, contexto, selección de owners/skills, gates humanos, integración y cierre. Es el interlocutor normal. |
+| Arquitecto | Decisiones estructurales/materiales, contratos compartidos y migraciones de impacto; no por cualquier cambio técnico. |
+| Diseñador | UX/UI visual, dirección artística, composición, UI Kit/prototipos, estados e intent de interacción/motion cuando la decisión visual está abierta. Human Visual Approval sigue siendo de la persona. |
+| Redactor | Estrategia editorial, copy comercial/editorial, SEO editorial, storytelling, UX writing y microcopy cuando el contenido/intención requiere resolución. No implementa código ni SEO técnico. |
+| Desarrollador | Único owner de implementación técnica full stack: UI/frontend/responsive/builders y backend/datos/APIs/WordPress; usa el stack existente y recibe inputs aprobados de Diseñador/Redactor. No hay handoff rutinario frontend↔backend. |
+| Revisor | Comprobación independiente read-only con evidencia; no implementa ni reemplaza QA primaria o gates humanos. |
+
+Las skills se cargan por trigger, no en bloque. La tabla detallada de activación y secuencia está en `.kilo/agents/jefe-proyecto.md`; los procedimientos y acceptance viven en cada skill. Handoffs solo ocurren entre autoridades distintas o ante un gate real.
 
 ## Serial por defecto, paralelo con aislamiento
 

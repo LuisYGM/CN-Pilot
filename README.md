@@ -1,6 +1,6 @@
 # CN Pilot
 
-**CN Pilot 2.23.1** es un sistema de coordinación para trabajar en proyectos web y aplicaciones con agentes de **Kilo Code**.
+**CN Pilot 3.0.0** es un sistema de coordinación para trabajar en proyectos web y aplicaciones con agentes de **Kilo Code**.
 
 Tú describes lo que quieres conseguir con tus propias palabras. Jefe de proyecto revisa el contexto, coordina a los especialistas necesarios y verifica el trabajo según su alcance y riesgo. No necesitas programar, diseñar prompts técnicos ni escoger agentes o skills. Tampoco tienes que seguir una fase fija.
 
@@ -32,7 +32,7 @@ CN Pilot trabaja tanto con proyectos nuevos como con sistemas existentes. En un 
 
 Las tareas pequeñas pueden ir directamente a la corrección y su prueba. Un cambio funcional puede requerir descubrimiento, implementación y QA. Para una web pública nueva o un rediseño material con dirección visual abierta, el recorrido puede estudiar referencias y assets, explorar conceptos, sintetizar una dirección, construir un UI Kit y una página Flagship, y pedir aprobación visual antes de implementar. No aplica a cada cambio: un microajuste, una referencia aprobada o una aplicación/dashboard siguen su ruta adecuada. Una aplicación usa diseño de Application UI, no el pipeline de marketing.
 
-Cuando existe un diseño aprobado, Maquetador frontend lo implementa conservando composición y comportamiento; no rediseña para simplificar la maquetación. Prototipo visual e implementación de producto son entregables distintos. Una aprobación de diseño no autoriza deployment.
+Cuando existe un diseño aprobado, Desarrollador lo implementa conservando composición y comportamiento; no rediseña para simplificar la implementación. Prototipo visual e implementación de producto son entregables distintos. Una aprobación de diseño no autoriza deployment.
 
 ## Qué puede resolver
 
@@ -85,19 +85,18 @@ Puedes dejar información no necesaria como pendiente. No hace falta completar t
 
 ## Agentes, skills y comandos
 
-Jefe de proyecto suele ser tu interlocutor. Los otros seis especialistas intervienen cuando el trabajo lo necesita:
+Jefe de proyecto suele ser tu interlocutor. Los otros cinco especialistas intervienen cuando el trabajo lo necesita:
 
 | Agente | Para qué sirve |
 |---|---|
 | Jefe de proyecto | Entiende la petición, coordina contexto, especialistas, autorizaciones y cierre. |
 | Arquitecto | Resuelve decisiones estructurales cuando realmente afectan el sistema. |
-| Contenido / SEO | Trabaja estrategia de contenido, copy y SEO dentro de su alcance. |
-| Diseñador UI/UX | Define experiencia y dirección visual cuando hace falta decidirlas. |
-| Desarrollador | Implementa backend, WordPress, datos, integraciones y lógica. |
-| Maquetador frontend | Implementa HTML/CSS/JS, responsive y builders confirmados. |
+| Redactor | Trabaja estrategia editorial, copy comercial/editorial, UX writing y SEO dentro de su alcance. |
+| Diseñador | Define experiencia, dirección visual, UI Kit y prototipos cuando hace falta decidirlos. |
+| Desarrollador | Implementa todo el código full stack: UI/frontend/responsive, backend, WordPress, datos, APIs e integraciones en el stack existente. |
 | Revisor | Revisión independiente de solo lectura, no implementa cambios. |
 
-Las **40 skills** son procedimientos especializados que se cargan bajo demanda; no tienes que elegirlas. Los **14 comandos** son atajos opcionales. Los más útiles al empezar son `/nuevo-proyecto`, `/cn-estado`, `/cn-actualizar`, `/diseno`, `/contenido`, `/depurar`, `/revision` y `/entrega`. Consulta [la lista completa y cuándo usar cada comando](.cn-pilot/documentacion/COMANDOS.md) y [el catálogo de capacidades](.cn-pilot/documentacion/SKILLS-Y-CAPACIDADES.md).
+Las **41 skills** son procedimientos especializados que se cargan bajo demanda; no tienes que elegirlas. Los **14 comandos** son atajos opcionales. Los más útiles al empezar son `/nuevo-proyecto`, `/cn-estado`, `/cn-actualizar`, `/diseno`, `/contenido`, `/depurar`, `/revision` y `/entrega`. Consulta [la lista completa y cuándo usar cada comando](.cn-pilot/documentacion/COMANDOS.md) y [el catálogo de capacidades](.cn-pilot/documentacion/SKILLS-Y-CAPACIDADES.md).
 
 ## Git, seguridad y publicación
 

@@ -19,12 +19,12 @@ Cuando Jefe de proyecto enrute una oportunidad de enriquecimiento autorizada par
 
 En greenfield guarda la fuente editable en `artefactos/contenido/paginas/`; crea la ruta solo si existe el primer artefacto. En proyectos existentes conserva el destino editorial vigente. Si los permisos lo impiden, reporta el bloqueo y no la reubiques.
 
-Los campos editoriales estructurados (Featured Image, excerpt, categoría, campos y metadata SEO) usan sus canales cuando existan; no se duplican en el body para compensar un template que no los renderiza. Las imágenes inline se eligen por necesidad editorial propia. Si el dato está persistido y falla presentación, deriva el issue a su owner dentro del alcance, no reescribas contenido como workaround.
+Los campos editoriales estructurados (Featured Image, excerpt, categoría, campos y metadata SEO) usan sus canales cuando existan; no se duplican en el body para compensar un template que no los renderiza. Las imágenes inline se eligen por necesidad editorial propia. Si el dato está persistido y falla presentación, deriva el issue a Desarrollador dentro del alcance; no reescribas contenido como workaround.
 
 ## Comprobación editorial/search proporcional
 
 Si existe Strategy aprobada, usa su intención, ownership y plan de contenido sin reabrirlos silenciosamente. Comprueba alineación consulta/necesidad → mensaje → siguiente acción, valor diferencial real (no solo repetir resultados), claims sustentados, utilidad de medios y enlaces internos pertinentes hacia destinos conocidos. Research SERP solo cuando esté disponible y aporte valor; no inventes evidencia ni escribas para bots, densidad de keywords o longitudes universales.
 
-Define revisión/mantenimiento cuando información, oferta o fuentes puedan caducar. Si aparece un conflicto de intención/ownership, entrega evidencia y propuesta a Strategy, no cambia URLs ni copy aprobado fuera de alcance. Las observaciones del journey pueden alimentar un handoff funcional a UI/UX; contenido no impone composición visual.
+Define revisión/mantenimiento cuando información, oferta o fuentes puedan caducar. Si aparece un conflicto de intención/ownership, entrega evidencia y propuesta a Strategy, no cambia URLs ni copy aprobado fuera de alcance. Las observaciones del journey pueden alimentar una decisión de experiencia al Diseñador; el Desarrollador implementa la interfaz aprobada y contenido no impone composición visual.
 
 Cuando conversión/confianza lo requiera, separa propuesta de valor, objeciones/fricción, proof/trust confirmado, CTA y siguiente paso. Reduce riesgo/propón garantía solo si ya existe y está autorizada. No inventes testimonials, cifras, logos, certificaciones, case studies, promises ni risk reversal; identifica el vacío concreto y escribe alrededor de él cuando sea posible. Esto resuelve copy/jerarquía de una página, no reabre `web-strategy` ni decide KPI/medición.

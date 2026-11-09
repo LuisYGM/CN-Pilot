@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.0.0] - 2026-11-09
+
+- Breaking: reduce el modelo de siete agentes a seis y renombra `contenido-seo` → `redactor` y `disenador-ui-ux` → `disenador`; `maquetador-frontend` se integra en el Desarrollador full stack. Prompts, asignaciones y comandos externos que usen los IDs anteriores deben migrarse.
+- Unifica en Desarrollador la implementación frontend/UI y backend sin dividir handoffs; Diseñador conserva dirección visual/UX y Redactor autoría editorial/SEO.
+- Añade `environment-dependency-management` para detectar stacks/lockfiles y preparar dependencias locales dentro de permisos, sin instalaciones globales ni bypass de gates.
+- Actualiza el routing, perfiles de seguridad, documentación, Core QA y expectations de Agent Evals conservando límites de secretos, operaciones y publicación.
+
 ## [2.23.1] - 2026-11-09
 
 - Aclara los entregables visuales para evitar documentación Markdown redundante y consolida BF-068 en un contrato único, preservando sus Quality Floors, excepciones y gates humanos.

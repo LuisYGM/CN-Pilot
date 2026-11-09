@@ -7,7 +7,7 @@
 - Git es opcional; instálalo si necesitas historial, commits o worktrees.
 - No necesitas instalar WordPress, Bricks, Node, MCP u otras herramientas hasta que el proyecto y su scope las requieran.
 
-Si Kilo solicita un agente, elige `jefe-proyecto`. Comprueba que aparecen los siete agentes y empieza con `/nuevo-proyecto` o describe directamente la tarea cuando el proyecto ya está inicializado. [Empieza aquí](EMPIEZA-AQUI.md) cubre el recorrido de usuario.
+Si Kilo solicita un agente, elige `jefe-proyecto`. Comprueba que aparecen los seis agentes del Core y empieza con `/nuevo-proyecto` o describe directamente la tarea cuando el proyecto ya está inicializado. [Empieza aquí](EMPIEZA-AQUI.md) cubre el recorrido de usuario.
 
 ## Configuración personal de proveedor y modelos
 
@@ -24,9 +24,13 @@ La configuración global/personal no se incluye al clonar el repositorio. Puede 
 ## Verificar agentes
 
 Deben estar disponibles:
-`jefe-proyecto`, `arquitecto`, `contenido-seo`, `disenador-ui-ux`, `desarrollador`, `maquetador-frontend`, `revisor`.
+`jefe-proyecto`, `arquitecto`, `disenador`, `redactor`, `desarrollador`, `revisor`.
 
-`jefe-proyecto` es primario; los demás son subagentes.
+`jefe-proyecto` es primario; los otros cinco son subagentes. Kilo descubre agents desde `.kilo/agents/**/*.md`; el stem del filename es el identificador exacto disponible para delegación/selección. Estos nombres renombrados no tienen aliases automáticos; actualiza prompts/scripts locales que los referencien.
+
+### IDs de agente retirados en la migración a CN Pilot 3.0
+
+Las asignaciones externas antiguas requieren estos nuevos IDs: `contenido-seo` → `redactor`, `disenador-ui-ux` → `disenador`, `maquetador-frontend` → `desarrollador`. El scope cambió además del nombre: Desarrollador es ahora el único implementador técnico full stack, y Redactor/Diseñador conservan sus autoridades editoriales y visuales. No añadas alias/archivos duplicados porque Kilo los descubriría como agentes adicionales.
 
 Agent Manager es opcional y no requiere cambiar `kilo.jsonc` ni habilitar auto-approve. Un worktree crea checkout/branch aislados; una sesión Local comparte el mismo checkout. Jefe de proyecto recurre a worktrees solo para unidades independientes y vuelve a ejecución serial si la capacidad no está disponible o autorizada. Configuración de entorno por worktree solo se añade cuando el proyecto ya la necesita y con aislamiento local seguro.
 
@@ -48,7 +52,7 @@ El recorrido completo del primer día está en [Empieza aquí](EMPIEZA-AQUI.md).
 
 MCP es opcional y el template no incluye una configuración activa ni un archivo de ejemplo. Si el proyecto solicita una integración, Jefe de proyecto descubre el servidor/capabilities reales y prepara solo las instrucciones y campos no secretos de la configuración local correspondiente. Configúrala mediante una superficie local soportada por Kilo; no pegues ni envíes secretos al agente. Si el runtime usa `.kilocode/mcp.json`, esa configuración queda ignorada por Git y protegida contra lectura/edición de agentes. `kilo.jsonc` contiene la configuración compartible general de Kilo/CN Pilot, no servidores ni credenciales. Antes de escribir sobre un sistema real, Jefe de proyecto descubre las capabilities/tools expuestas y ejecuta exactamente el flujo `Discovery → Read-only → Plan → Write autorizado → Verification` descrito en [Configuración de CN Pilot](CONFIGURACION.md#mcp-opcional).
 
-El Browser Automation integrado de Kilo es distinto de un servidor MCP agregado manualmente. Para exponer Playwright en VS Code, habilita **Kilo Code Settings → Web Tools → Browser Automation → Enable browser automation**. La regla `kilo-playwright_*: ask` solo habilita requests puntuales en Jefe de proyecto, Diseñador UI/UX y Maquetador frontend; las demás herramientas y roles siguen cerrados. No añadas un servidor `playwright` a `kilo.jsonc` ni concedas permiso general. Esta autorización exige aprobación por tool, prioriza DOM/estado sobre capturas y no instala dependencias. `kilo.jsonc` sigue siendo configuración project-owned excluida del updater: al actualizar un proyecto derivado conserva su contenido manual y añade solo la regla exacta aprobada si se requiere; no reemplaces el archivo completo. Si la herramienta no aparece en una sesión nueva, comprueba su estado en los settings de la extensión y la lista real de tools antes de modificar permisos.
+El Browser Automation integrado de Kilo es distinto de un servidor MCP agregado manualmente. Para exponer Playwright en VS Code, habilita **Kilo Code Settings → Web Tools → Browser Automation → Enable browser automation**. La regla `kilo-playwright_*: ask` habilita requests puntuales en Jefe, Diseñador y Desarrollador cuando el scope lo requiere; los demás roles/herramientas siguen cerrados. No añadas un servidor `playwright` a `kilo.jsonc` ni concedas permiso general. Esta autorización exige aprobación por tool, prioriza DOM/estado sobre capturas y no instala dependencias. `kilo.jsonc` sigue siendo configuración project-owned excluida del updater: al actualizar un proyecto derivado conserva su contenido manual y añade solo la regla exacta aprobada si se requiere; no reemplaces el archivo completo. Si la herramienta no aparece en una sesión nueva, comprueba su estado en los settings de la extensión y la lista real de tools antes de modificar permisos.
 
 Agent Manager y worktrees son opcionales. Solo se usan cuando existen unidades escritoras independientes y aportan valor; no cambies configuración para habilitarlos por rutina. La ejecución en serie funciona sin ellos.
 
