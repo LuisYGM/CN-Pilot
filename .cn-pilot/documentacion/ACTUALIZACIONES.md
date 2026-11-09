@@ -50,27 +50,55 @@ Las rutas managed CN Pilot se actualizan por el manifest; los datos project-owne
 
 ## Legacy bootstrap
 
-Una instalación previa no tiene baseline: su `.cn-pilot-version` no permite distinguir una copia oficial de una personalización. No se reconstruye una historia de snapshots ni se presupone que todos los archivos del número SemVer sean iguales.
+Este procedimiento manual de una sola vez aplica únicamente cuando `/cn-estado` informa `LEGACY` (updater ausente) o `MANIFEST_MISSING` (updater presente, pero sin baseline). Si hay manifest válido, usa `/cn-actualizar`; un manifest inválido/unsafe es un error bloqueante, no motivo para hacer bootstrap. Una instalación sin baseline no permite distinguir una copia oficial de una personalización a partir de `.cn-pilot-version`: no se reconstruye historia ni se presupone que los archivos del mismo SemVer sean iguales.
 
-Para el primer bootstrap, en el root Git del proyecto legacy y solo después de cerrar cualquier tarea activa:
+Para el primer bootstrap, sitúate en el root Git del proyecto legacy y cierra cualquier tarea activa. Estos comandos son iguales en PowerShell, macOS y Linux:
 
-1. Comprueba que `git status --short` no muestre cambios tracked. Conserva untracked resources; no deben colisionar con paths managed que el bootstrap vaya a crear.
-2. Obtén la copia portable del master dentro de runtime ignorado:
+```text
+git status --short
+git branch --show-current
+git rev-parse --verify HEAD
+```
+
+Antes de clonar, confirma que no hay cambios tracked, que `git branch --show-current` devuelve una branch nombrada, que `HEAD` está disponible y que los untracked no colisionan con paths managed. Si algo no se cumple, detente. El updater vuelve a validar branch, HEAD, estado tracked, tarea activa, compatibilidad y colisiones antes de aplicar.
+
+1. Inspecciona `.cn-pilot`, `.cn-pilot/runtime` y `.cn-pilot/runtime/cn-pilot-update-source` sin seguir symlinks/reparse points. `.cn-pilot` debe ser un directorio real; si runtime existe, también debe ser un directorio real; el destino del clone debe estar ausente. Si encuentras un symlink/reparse point, un tipo inesperado, un `ERROR` en el probe o un clone existente, detente e inspecciona el estado: no lo sobrescribas, borres ni clones encima. Probe read-only portable con Node:
 
    ```sh
-   mkdir -p .cn-pilot/runtime
-   git clone --depth 1 --branch main --single-branch --no-tags https://github.com/LuisYGM/cn-pilot.git .cn-pilot/runtime/cn-pilot-update-source
+   node -e "const fs=require('node:fs');for(const p of ['.cn-pilot','.cn-pilot/runtime','.cn-pilot/runtime/cn-pilot-update-source']){try{const s=fs.lstatSync(p);console.log(p+': '+(s.isSymbolicLink()?'SYMLINK':s.isDirectory()?'directory':'NOT_DIRECTORY'))}catch(e){console.log(p+': '+(e.code==='ENOENT'?'missing':'ERROR '+(e.code||e.message)))}}"
    ```
 
-3. Presenta el plan legacy sin escribir:
+2. Si `.cn-pilot/runtime` está ausente, créalo sin `-Force`/`-p`; si ya existe como directorio real, omite este paso:
+
+   ```powershell
+   New-Item -ItemType Directory -Path ".cn-pilot/runtime" | Out-Null
+   ```
 
    ```sh
-   node .cn-pilot/runtime/cn-pilot-update-source/.cn-pilot/update/updater.mjs bootstrap --target . --source-dir .cn-pilot/runtime/cn-pilot-update-source
+   mkdir .cn-pilot/runtime
    ```
 
-   Revisar cada archivo `LEGACY BOOTSTRAP MODE` listado; los contenidos divergentes no se pueden clasificar sin baseline. Si un archivo debe conservar su contenido local, volver a ejecutar con `--preserve <managed-path>` por cada ruta.
-4. Solo tras revisar las sobrescrituras enumeradas, reejecutar incluyendo `--approve-legacy`, `--cleanup-source` y los `--preserve` decididos. El bootstrap verifica compatibilidad, manifest fuente, active task y árbol tracked; protege paths project-owned, hace Core QA y commit local. Los paths tracked antiguos ausentes del upstream se conservan y reportan, no se borran porque no existe baseline. Tras commit exitoso elimina solo el clone temporal designado; ante error de cleanup deja una advertencia y el clone inspeccionable.
-5. Verifica `git status --short`, commit y Core QA. El runtime del proyecto nunca se borra completo ni se modifican active-task/otros temporales.
+3. Obtén la copia shallow de `main` dentro del runtime ignorado. El comando de clone y los siguientes comandos `node` son iguales en PowerShell, macOS y Linux; ejecútalos desde el root Git:
+
+   ```text
+   git clone --depth 1 --branch main --single-branch --no-tags "https://github.com/LuisYGM/cn-pilot.git" ".cn-pilot/runtime/cn-pilot-update-source"
+   ```
+
+4. Presenta el plan legacy sin escribir:
+
+   ```text
+   node ".cn-pilot/runtime/cn-pilot-update-source/.cn-pilot/update/updater.mjs" bootstrap --target "." --source-dir ".cn-pilot/runtime/cn-pilot-update-source"
+   ```
+
+   Revisa cada archivo `LEGACY BOOTSTRAP MODE` listado; sin baseline no se pueden clasificar automáticamente contenidos divergentes. Si una personalización debe conservarse, registra su managed path para `--preserve` al aplicar. Si el plan informa rutas inseguras, colisiones, incompatibilidad o un estado distinto al esperado, detente; no intentes sortear el preflight.
+5. Solo tras revisar el plan y decidir las rutas a preservar, solicita/aplica la autorización humana y vuelve a ejecutar el mismo comando añadiendo `--approve-legacy --cleanup-source` y un `--preserve "<managed-path>"` por cada archivo que deba conservarse. Ejemplo con una ruta:
+
+   ```text
+   node ".cn-pilot/runtime/cn-pilot-update-source/.cn-pilot/update/updater.mjs" bootstrap --target "." --source-dir ".cn-pilot/runtime/cn-pilot-update-source" --approve-legacy --cleanup-source --preserve ".kilo/commands/mi-comando.md"
+   ```
+
+   `--preserve` puede repetirse para archivos managed individuales, salvo `.cn-pilot-version` y el manifest, que no admite preservar. No ejecutes este comando hasta confirmar la autorización; puede sobrescribir los archivos managed revisados y crea un commit local tras Core QA. El bootstrap valida fuente/manifest, compatibilidad, tarea activa, branch, HEAD, estado tracked y colisiones; protege paths project-owned. Los paths tracked antiguos ausentes del upstream se conservan y reportan, no se borran porque no existe baseline. `--cleanup-source` solo acepta el clone designado y lo elimina tras una aplicación/commit correctos; no borres manualmente el runtime ni otros temporales.
+6. Verifica `git status --short`, el commit y el Core QA informado. Ante fallo, conserva e inspecciona el estado/diff; no repitas con aprobación ni elimines la fuente temporal a ciegas.
 
 Si aparece personalización/framework path que no se revisó, no pases `--approve-legacy`. Conserva el plan y resuelve manualmente antes de continuar. El bootstrap legacy es de una vez; después el manifest ofrece detección precisa de modificaciones locales.
 

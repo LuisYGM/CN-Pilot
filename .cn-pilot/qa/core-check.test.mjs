@@ -12,6 +12,10 @@ function readCoreFile(relativePath) {
   return fs.readFileSync(new URL(`../../${relativePath}`, import.meta.url), "utf8");
 }
 
+function normalizeEol(text) {
+  return String(text).replace(/\r\n?/g, "\n");
+}
+
 function runKiloForPermissionTest(args) {
   if (process.platform === "win32") {
     const command = args.map((value) => `'${String(value).replace(/'/g, "''")}'`).join(" ");
@@ -454,7 +458,8 @@ test("009A adapts visual ownership, delivery and approval to project context", (
     ["H no automatic aesthetic loops", creative, "no se delega a Jefe, Maquetador, Revisor ni a un ciclo automático de evaluación estética"],
     ["I human makes the aesthetic decision", pipeline, "esta aprobación humana decide aceptar, rechazar o solicitar cambios"],
     ["I prototype self-check is functional/resource-focused", pipeline, "autocontrol focal en Browser del funcionamiento/interacciones previstas, carga de recursos y defectos evidentes"],
-    ["I post-approval QA remains technical", core, "QA técnico verifica código, comportamiento, responsive, accesibilidad, rendimiento y fidelidad"],
+    ["I post-approval QA remains technical and owner-specific", core, "Tras aprobación, QA técnico de Maquetador/Revisor verifica sus superficies y evidencia"],
+    ["I post-approval QA covers required technical surfaces", core, "código, comportamiento, responsive, accesibilidad, rendimiento y fidelidad"],
     ["J Application UI does not get marketing pipeline", application, "no páginas de marketing"],
     ["J Existing/Approved keep fast paths", pipeline, "no genera exploración artificial"],
   ];
@@ -494,13 +499,14 @@ test("BF-068 Public Web Visual Quality Floor covers requirements A-S", () => {
     ["A Header and Mobile Header specimens", kit, "Header + Mobile Header"],
     ["B real representative Footer", kit, "Footer"],
     ["B Footer does not invent business facts", kit, "No inventes contacto, horarios, redes"],
-    ["C Application UI fast path", floor, "no se impone a Application UI"],
-    ["D default public-web Motion System", floor, "una experiencia dinámica e interactiva es obligatoria"],
+    ["C Application UI and non-marketing scopes retain their fast paths", floor, "No se impone universalmente a Application UI, Existing localized, páginas derivadas de un sistema aprobado ni referencias Approved/Strict"],
+    ["D default public-web Motion System", floor, "Motion obligatorio para Public Web abierta"],
     ["D the UI Kit presents Motion System specimens", kit, "**Motion System:**"],
-    ["E static requires scoped exception", floor, "experiencia dinámica e interactiva es obligatoria salvo opt-out explícito"],
+    ["E exceptions are explicit, scoped, and resolved", floor, "La excepción a un requisito solo aplica dentro del alcance de un opt-out explícito, authority incompatible o constraint material confirmado y resuelto por Jefe"],
     ["F Hero choreography", floor, "hero/page choreography diseñada"],
-    ["G material post-Hero scroll progression", floor, "progresión scroll-linked material en la página principal"],
-    ["G repeated generic fades do not pass", floor, "Un sistema consistente solo de `opacity/translateY/stagger` repetido"],
+    ["G material post-Hero scroll progression", floor, "progresión scroll-linked material posterior al Hero en la página principal"],
+    ["G a generic opacity/translate system alone does not pass", floor, "Un sistema consistente solo de `opacity/translateY/stagger`"],
+    ["G repeated fade-up and stagger alone do not pass", floor, "`fade-up + stagger` repetido no basta"],
     ["H reduced motion", motion, "`prefers-reduced-motion`"],
     ["I client media has priority", media, "Inspecciona lo existente antes de proponer sustitución"],
     ["J no empty high-fidelity slots", media, "no se deja como caja gris"],
@@ -516,7 +522,8 @@ test("BF-068 Public Web Visual Quality Floor covers requirements A-S", () => {
     ["P Quality Floor permits a deliberately sober direction", media, "Sobriedad deliberada es un resultado válido"],
     ["P anti-template swap test is present", creative, "si cambian logo/copy/fotos, ¿la propuesta se vendería casi intacta a otro sector?"],
     ["Q Flagship demonstrates approved sequences when material", motion, "El prototipo/Flagship demuestra el behavior definido por estado"],
-    ["R Revisor verifies objective criteria only", reviewer, "comprueba de forma read-only el Visual Quality Floor objetivo BF-068"],
+    ["R Revisor independently checks the canonical BF-068 contract", reviewer, "aplica read-only la aceptación normativa de `.cn-pilot/NUCLEO.md` → “Visual Quality Floor de Public Web (BF-068)”"],
+    ["S Designer remains the Quality Floor owner", floor, "Diseñador UI/UX es owner del Quality Floor"],
     ["S Core BF-068 remains the single public-web floor", designer, "usa BF-068 como el único contrato del floor Public Web"],
   ];
   for (const [scenario, source, required] of scenarios) assert.ok(source.includes(required), `${scenario}: contract is present`);
@@ -570,7 +577,10 @@ test("BF-069 Frontend Architecture/Fidelity and Composition Diversity contracts 
     ["X exact section/container/column DOM is not mandatory", contract, "no es un árbol DOM obligatorio"],
     ["X this is conceptual architecture, not literal DOM recipe", architecture, "no una jerarquía DOM o un set de clases obligatorio"],
   ];
-  for (const [scenario, source, required] of scenarios) assert.ok(source.includes(required), `${scenario}: contract is present`);
+  assert.equal(normalizeEol("a\nb\r\nc\rd"), "a\nb\nc\nd", "LF, CRLF, and mixed EOL normalize identically");
+  for (const [scenario, source, required] of scenarios) {
+    assert.ok(normalizeEol(source).includes(normalizeEol(required)), `${scenario}: contract is present`);
+  }
   assert.doesNotMatch(architecture, /max-width\s*:\s*1400px/i, "architecture must not fix a universal container width");
   assert.doesNotMatch(architecture, /`system\.css` es obligatorio/i, "the shared stylesheet name remains stack-native");
 });
@@ -874,7 +884,7 @@ test("security profiles deny sensitive routes, protect root config, and preserve
   assert.equal(getCheck(report, "security.agentPermissions").status, "PASS");
   assert.equal(getCheck(report, "security.agentPermissions").details.agentsChecked, 7);
   assert.equal(getCheck(report, "security.kiloPermissionDefaults").details.checked, false, "derived fixture does not enforce Core-owned Kilo config");
-  const developer = fs.readFileSync(path.join(fixture.root, ".kilo/agents/desarrollador.md"), "utf8");
+  const developer = normalizeEol(fs.readFileSync(path.join(fixture.root, ".kilo/agents/desarrollador.md"), "utf8"));
   assert.match(developer, /edit:\n\s+"\*": allow/);
   assert.match(developer, /"kilo.jsonc": deny/);
   assert.match(developer, /"\.env.example": allow/);
@@ -886,7 +896,7 @@ test("security profiles deny sensitive routes, protect root config, and preserve
 test("safe .env.example exceptions cannot override a later secrets-directory denial", (t) => {
   const fixture = createFixture(t);
   const file = ".kilo/agents/desarrollador.md";
-  const source = fs.readFileSync(path.join(fixture.root, file), "utf8");
+  const source = normalizeEol(fs.readFileSync(path.join(fixture.root, file), "utf8"));
   const reordered = source.replace('"**/.env.example": allow\n    "secrets/**": deny', '"secrets/**": deny\n    "**/.env.example": allow');
   assert.notEqual(reordered, source, "fixture changed the ordered exception");
   fixture.put(file, reordered);
@@ -922,15 +932,17 @@ test("integrated Browser MCP is ask-scoped only for Jefe, UI/UX, and Maquetador"
   assert.equal(getCheck(report, "security.kiloPermissionDefaults").status, "PASS");
 
   const jefePath = ".kilo/agents/jefe-proyecto.md";
-  const jefe = fs.readFileSync(path.join(fixture.root, jefePath), "utf8");
-  fixture.put(jefePath, jefe.replace('  "kilo-playwright_*": ask\n', ""));
+  const jefe = normalizeEol(fs.readFileSync(path.join(fixture.root, jefePath), "utf8"));
+  const jefeWithoutApproval = jefe.replace('  "kilo-playwright_*": ask\n', "");
+  assert.notEqual(jefeWithoutApproval, jefe, "fixture removes the Browser approval rule");
+  fixture.put(jefePath, jefeWithoutApproval);
   report = runCoreChecks({ rootDir: fixture.root });
   const missing = getCheck(report, "security.agentPermissions");
   assert.equal(missing.status, "FAIL");
   assert.ok(missing.details.problems.some((problem) => problem.code === "BROWSER_MCP_APPROVAL_MISSING"));
 
   const architectPath = ".kilo/agents/arquitecto.md";
-  const architect = fs.readFileSync(path.join(fixture.root, architectPath), "utf8");
+  const architect = normalizeEol(fs.readFileSync(path.join(fixture.root, architectPath), "utf8"));
   fixture.put(architectPath, architect.replace("  grep: allow", '  "kilo-playwright_*": ask\n  grep: allow'));
   report = runCoreChecks({ rootDir: fixture.root });
   const outOfScope = getCheck(report, "security.agentPermissions");
@@ -1662,7 +1674,7 @@ test("Project Lead owns task-specific mandatory constraints and specialists cann
   assert.match(lead, /source of truth, decisiones materiales concretas[\s\S]*responsive, motion\/reduced-motion/i);
   assert.match(lead, /Jefe no instituye ciclos creativos\/capturas ni sustituye aprobación humana/i);
   assert.match(lead, /método es del especialista, mandatory defaults\/outcome no son opcionales[\s\S]*?omisión recuperable vuelve al mismo owner/i);
-  assert.match(reviewer, /no sustituye el gate primario de Jefe/i);
+  assert.match(reviewer, /No juzgues gusto ni sustituyas la aprobación humana/i);
 });
 
 test("Open public-web motion floor is executable, intent-first, and preserves authority exceptions", () => {
@@ -1678,11 +1690,14 @@ test("Open public-web motion floor is executable, intent-first, and preserves au
   const floorStart = core.indexOf("### Visual Quality Floor de Public Web (BF-068)");
   const floorEnd = core.indexOf("## Arquitectura frontend y fidelidad (BF-069)", floorStart);
   const floor = core.slice(floorStart, floorEnd);
-  assert.match(floor, /experiencia dinámica e interactiva es obligatoria[\s\S]*?opt-out explícito[\s\S]*?authority Approved\/Strict incompatible/i);
-  assert.match(floor, /hero\/page choreography[\s\S]*?progresión scroll-linked material[\s\S]*?secciones principales[\s\S]*?microinteractions[\s\S]*?momento memorable/i);
-  assert.match(floor, /después del Hero[\s\S]*?propuesta minimalista también puede cumplir/i);
-  assert.match(floor, /no se impone a Application UI, Existing localized, referencias Approved\/Strict[\s\S]*?Application UI mantiene su fast path/i);
-  assert.match(floor, /opt-out humano limita exactamente el behavior\/scope[\s\S]*?sin scroll effects[\s\S]*?No uses GSAP[\s\S]*?tecnología, no elimina la experiencia/i);
+  assert.match(floor, /Motion obligatorio para Public Web abierta:[\s\S]*?la Flagship ejecutable demuestra/i);
+  assert.match(floor, /opt-out explícito, authority incompatible o constraint material confirmado y resuelto por Jefe/i);
+  assert.match(floor, /hero\/page choreography diseñada[\s\S]*?progresión scroll-linked material posterior al Hero[\s\S]*?comportamiento elegido por composición\/rol para secciones principales[\s\S]*?microinteracciones[\s\S]*?momento memorable/i);
+  assert.match(floor, /Define calidad mínima, no un estilo obligatorio[\s\S]*?composición sobria\/minimal es válida/i);
+  assert.match(floor, /No hay cuota de efectos, parallax, pins o librerías[\s\S]*?Un sistema consistente solo de `opacity\/translateY\/stagger`/i);
+  assert.match(floor, /No se impone universalmente a Application UI, Existing localized, páginas derivadas de un sistema aprobado ni referencias Approved\/Strict[\s\S]*?Application UI conserva su fast path/i);
+  assert.match(floor, /Responsive conserva el intent con adaptación mobile[\s\S]*?prefers-reduced-motion[\s\S]*?Conserva teclado, foco y scroll nativo/i);
+  assert.match(floor, /un opt-out humano limita exactamente el behavior\/scope[\s\S]*?sin scroll effects[\s\S]*?No uses GSAP[\s\S]*?limita tecnología, no experiencia/i);
   assert.match(creative, /Motion material queda diseñado y demostrado en la propuesta correspondiente/i);
   assert.match(creative, /STATIC|NONE\/static solo es válido por opt-out explícito[\s\S]*?constraint material/i);
   assert.match(creative, /opt-out se aplica exactamente al behavior\/scope pedido[\s\S]*?no GSAP.*limita tecnología, no experience/i);
@@ -1697,5 +1712,7 @@ test("Open public-web motion floor is executable, intent-first, and preserves au
   assert.match(composition, /mapa compacto por región[\s\S]*?relación de continuidad o contraste/);
   assert.match(designer, /aplica el floor de motion de BF-068: define en la dirección qué relación narrativa\/visual cambia y por qué/i);
   assert.match(frontend, /no los elimines\/sustituyas por fade simple[\s\S]*?informa a Jefe de proyecto antes de degradar/i);
-  assert.match(reviewer, /scroll progression posterior al Hero[\s\S]*?memorable concept-linked moment[\s\S]*?no sustituye el gate primario de Jefe/i);
+  assert.match(reviewer, /aplica read-only la aceptación normativa de `[\s\S]*?BF-068[\s\S]*?progresión scroll posterior al Hero[\s\S]*?momento memorable/i);
+  assert.match(reviewer, /No juzgues gusto ni sustituyas la aprobación humana/i);
+  assert.match(floor, /Revisor no sustituye el gate primario ni inicia Browser\/capturas\/auditorías por rutina/i);
 });

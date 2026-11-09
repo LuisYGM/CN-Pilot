@@ -1,5 +1,11 @@
 # Changelog
 
+## [2.23.1] - 2026-11-09
+
+- Aclara los entregables visuales para evitar documentación Markdown redundante y consolida BF-068 en un contrato único, preservando sus Quality Floors, excepciones y gates humanos.
+- Documenta el bootstrap legacy con comandos para PowerShell y POSIX, y elimina reglas `ask` redundantes de `.npmrc` sin cambiar el `deny` efectivo.
+- Estabiliza las regresiones deterministas de BF-068/Revisor y la normalización LF/CRLF de fixtures, manteniendo verificaciones sustantivas.
+
 ## [2.23.0] - 2026-11-08
 
 - Completa la inicialización de Project Context con un gate idempotente de README propio para copias derivadas y protección explícita del README del Core/manuscritos.
