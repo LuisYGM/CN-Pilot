@@ -428,15 +428,86 @@ export function applyPlan(targetRoot, sourceRoot, plan, upstreamInput) {
   return { applied, baselineUpdated: true };
 }
 
+// Exact contract from runCoreChecks: if Core QA adds/removes a gate, update this set and its sync test before post-apply can accept a warning.
+export const POST_APPLY_QA_CHECK_IDS = Object.freeze([
+  "core.version",
+  "core.projectContextVersion",
+  "review.outcomes",
+  "core.paths",
+  "core.legacyPaths",
+  "core.legacyReferences",
+  "core.optionalScaffold",
+  "agents.frontmatter",
+  "agents.noStepCaps",
+  "language.spanishFirst",
+  "skills.frontmatter",
+  "commands.frontmatter",
+  "routing.commands",
+  "routing.devLead",
+  "permissions.reviewer",
+  "security.devLead",
+  "security.agentPermissions",
+  "security.kiloPermissionDefaults",
+  "profiles.inventory",
+  "templates.inventory",
+  "references.technicalSeo",
+  "runtime.gitignore",
+  "manifest.inventory",
+  "distribution.manifest",
+]);
+
+const OPTIONAL_POST_APPLY_WARNING = Object.freeze({
+  id: "core.optionalScaffold",
+  status: "WARN",
+  path: "recursos/README.md",
+  note: "Expected input scaffold; not required to run Core",
+  code: "ENOENT",
+});
+
+export function classifyPostApplyQa(qa, expectedVersion) {
+  if (qa?.schemaVersion !== 1 || typeof expectedVersion !== "string" || qa.version !== expectedVersion
+    || !Array.isArray(qa.checks) || !Array.isArray(qa.findings) || qa.checks.length !== POST_APPLY_QA_CHECK_IDS.length) return null;
+  const checkIds = qa.checks.map((check) => check?.id);
+  const checkSet = new Set(checkIds);
+  if (checkIds.some((id) => typeof id !== "string") || checkSet.size !== POST_APPLY_QA_CHECK_IDS.length
+    || POST_APPLY_QA_CHECK_IDS.some((id) => !checkSet.has(id))) return null;
+  const nonPass = qa.checks.filter((check) => check?.status !== "PASS");
+
+  if (qa.status === "PASS") {
+    return nonPass.length === 0 && qa.findings.length === 0 ? { status: "PASS", summary: "PASS" } : null;
+  }
+
+  if (qa.status !== "WARN" || nonPass.length !== 1 || qa.findings.length !== 1) return null;
+  const check = nonPass[0];
+  const finding = qa.findings[0];
+  if (!check || typeof check !== "object" || !finding || typeof finding !== "object") return null;
+  const details = check.details ?? {};
+  const optionalScaffoldOnly = check.id === OPTIONAL_POST_APPLY_WARNING.id
+    && check.status === OPTIONAL_POST_APPLY_WARNING.status
+    && details.path === OPTIONAL_POST_APPLY_WARNING.path
+    && details.note === OPTIONAL_POST_APPLY_WARNING.note
+    && details.code === OPTIONAL_POST_APPLY_WARNING.code
+    && finding.id === OPTIONAL_POST_APPLY_WARNING.id
+    && finding.status === OPTIONAL_POST_APPLY_WARNING.status
+    && finding.path === OPTIONAL_POST_APPLY_WARNING.path
+    && finding.note === OPTIONAL_POST_APPLY_WARNING.note
+    && finding.code === OPTIONAL_POST_APPLY_WARNING.code;
+
+  return optionalScaffoldOnly
+    ? { status: "WARN", summary: "WARN (accepted non-blocking optional scaffold: recursos/README.md; Core QA remains WARN)" }
+    : null;
+}
+
 export async function applyValidateAndCommit(targetRoot, sourceRoot, plan, upstreamInput, { validate, commit }) {
   const upstream = validateManifest(upstreamInput);
   const applied = applyPlan(targetRoot, sourceRoot, plan, upstream);
   let qa;
   try { qa = await validate(targetRoot); }
   catch (error) { fail("POST_APPLY_QA_FAILED", `Update applied but validation failed; changes remain without commit (${error.code ?? error.message}).`); }
-  if (!qa || qa.status !== "PASS") fail("POST_APPLY_QA_FAILED", `Update applied but validation status is ${qa?.status ?? "unavailable"}; changes remain without commit.`);
+  const postApplyQa = classifyPostApplyQa(qa, upstream.cnPilotVersion);
+  if (!postApplyQa) fail("POST_APPLY_QA_FAILED", `Update applied but validation status is ${qa?.status ?? "unavailable"}; changes remain without commit.`);
   const commitId = await commit({ applied, plan, manifest: upstream });
-  return { applied, qa, commit: commitId };
+  return { applied, qa, postApplyQaStatus: postApplyQa.summary, commit: commitId };
 }
 
 export function commitManagedUpdate(root, actions, version) {
@@ -693,7 +764,7 @@ async function updateExisting(root, sourceRoot, { autoCommit = true, kiloVersion
       return commitManagedUpdate(root, result.applied, source.manifest.cnPilotVersion);
     },
   });
-  if (!autoCommit) return { updated: true, plan, result: finalized.applied, qa: finalized.qa, commit: null };
+  if (!autoCommit) return { updated: true, plan, result: finalized.applied, qa: finalized.qa, postApplyQaStatus: finalized.postApplyQaStatus, commit: null };
   const head = finalized.commit;
   const status = run("git", ["status", "--porcelain=v1", "--untracked-files=all"], root).stdout.split(/\r?\n/).filter(Boolean);
   if (status.some((line) => !line.startsWith("??"))) fail("POST_COMMIT_DIRTY", "Commit created but tracked working tree is not clean; inspect Git status.");
@@ -702,7 +773,7 @@ async function updateExisting(root, sourceRoot, { autoCommit = true, kiloVersion
     `${plan.installedVersion} → ${plan.latestVersion}`,
     `Managed: + ${plan.actions.filter((item) => item.type === "add").length}; ~ ${plan.actions.filter((item) => item.type === "update").length}; - ${plan.actions.filter((item) => item.type === "remove").length}`,
     "Project-owned files changed: 0",
-    "Core QA: PASS",
+    `Core QA: ${finalized.postApplyQaStatus}`,
     `Commit: ${head}`,
     "Push: not performed",
   ].join("\n") + "\n");
@@ -774,8 +845,8 @@ async function runLegacyBootstrap(targetRoot, sourceRoot, { approveLegacy = fals
   const commit = finalized.commit;
   const status = run("git", ["status", "--porcelain=v1", "--untracked-files=all"], root).stdout.split(/\r?\n/).filter(Boolean);
   if (status.some((line) => !line.startsWith("??"))) fail("POST_COMMIT_DIRTY", "Legacy bootstrap commit created but tracked working tree is not clean; inspect Git status.");
-  output.write(`CN Pilot legacy bootstrap complete\n${plan.installedVersion} → ${plan.latestVersion}\nManaged paths changed: ${plan.actions.length}\nCore QA: PASS\nCommit: ${commit}\nPush: not performed\n`);
-  return { applied: true, plan, result: finalized.applied, qa: finalized.qa, commit };
+  output.write(`CN Pilot legacy bootstrap complete\n${plan.installedVersion} → ${plan.latestVersion}\nManaged paths changed: ${plan.actions.length}\nCore QA: ${finalized.postApplyQaStatus}\nCommit: ${commit}\nPush: not performed\n`);
+  return { applied: true, plan, result: finalized.applied, qa: finalized.qa, postApplyQaStatus: finalized.postApplyQaStatus, commit };
 }
 
 function parseArgs(argv) {

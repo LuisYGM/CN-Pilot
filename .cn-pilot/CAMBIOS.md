@@ -1,5 +1,10 @@
 # Changelog
 
+## [3.0.1] - 2026-11-10
+
+- Corrige el gate post-apply compartido por `update` y `bootstrap`: mantiene Core QA `WARN` global y permite commit solo ante el único warning documentado `core.optionalScaffold`/`recursos/README.md` ausente; warnings desconocidos, combinados, FAIL y errores del checker siguen bloqueados.
+- Añade pruebas del inventario completo de checks, del warning opcional, de omisiones de seguridad/manifest, del fallo del checker y del mensaje visible de aceptación.
+
 ## [3.0.0] - 2026-11-09
 
 - Breaking: reduce el modelo de siete agentes a seis y renombra `contenido-seo` → `redactor` y `disenador-ui-ux` → `disenador`; `maquetador-frontend` se integra en el Desarrollador full stack. Prompts, asignaciones y comandos externos que usen los IDs anteriores deben migrarse.

@@ -12,6 +12,7 @@ import {
   applyMajorMigration,
   applyValidateAndCommit,
   buildManifest,
+  classifyPostApplyQa,
   checkActiveTask,
   cleanupBootstrapSource,
   commitManagedUpdate,
@@ -21,12 +22,14 @@ import {
   planLegacyBootstrap,
   planMajorMigration,
   planUpdate,
+  POST_APPLY_QA_CHECK_IDS,
   validateManifest,
   verifyManifestFiles,
   verifyManifestMetadata,
   verifyTrackedManifest,
   runCli as runUpdaterCli,
 } from "./updater.mjs";
+import { runCoreChecks } from "../qa/core-check.mjs";
 
 const TEST_KILO_VERSION = "7.8.8";
 
@@ -63,6 +66,36 @@ function manifest(version, entries, changes = {}) {
     migrations: [],
     ...changes,
   });
+}
+
+function postApplyQaReport(version, overrides = {}) {
+  const checks = POST_APPLY_QA_CHECK_IDS.map((id) => {
+    const override = overrides[id];
+    return { id, status: override?.status ?? "PASS", details: override?.details ?? {} };
+  });
+  const findings = checks.filter((item) => item.status !== "PASS").map(({ id, status, details }) => ({ id, status, ...details }));
+  const status = checks.some((item) => item.status === "FAIL") ? "FAIL" : findings.length ? "WARN" : "PASS";
+  return { schemaVersion: 1, version, status, checks, findings };
+}
+
+async function runPostApplyFixture(t, validate, version = "1.4.0") {
+  const target = fixture(t); const source = fixture(t);
+  const relative = ".cn-pilot/docs/gate-test.md";
+  const content = "safe managed fixture\n";
+  source.put(source.root, ".cn-pilot-version", `${version}\n`);
+  source.put(source.root, relative, content);
+  const upstream = manifest(version, [entry(relative, content)]);
+  const plan = { actions: [{ type: "add", path: relative, sha256: upstream.managedFiles[0].sha256 }], conflicts: [] };
+  let commits = 0;
+  try {
+    const result = await applyValidateAndCommit(target.root, source.root, plan, upstream, {
+      validate: () => validate(version),
+      commit: () => { commits += 1; return "f".repeat(40); },
+    });
+    return { result, error: null, commits, target: target.root };
+  } catch (error) {
+    return { result: null, error, commits, target: target.root };
+  }
 }
 
 function entry(relative, content) { return { path: relative, sha256: hashBytes(Buffer.from(content), relative) }; }
@@ -1058,6 +1091,99 @@ test("L: legacy local customization is unclassified and requires human review", 
   assert.equal(fs.readFileSync(path.join(root, "AGENTS.md"), "utf8"), "customized\n");
 });
 
+test("post-apply acceptance requires the complete Core QA inventory and allows only its exact optional scaffold warning", () => {
+  const coreQa = runCoreChecks();
+  assert.equal(coreQa.status, "PASS");
+  assert.deepEqual(coreQa.checks.map(({ id }) => id), POST_APPLY_QA_CHECK_IDS, "the gate inventory stays in sync with every Core QA check");
+  assert.equal(classifyPostApplyQa(coreQa, coreQa.version).summary, "PASS");
+
+  const optionalDetails = {
+    path: "recursos/README.md",
+    note: "Expected input scaffold; not required to run Core",
+    code: "ENOENT",
+  };
+  const optionalWarning = postApplyQaReport(coreQa.version, {
+    "core.optionalScaffold": { status: "WARN", details: optionalDetails },
+  });
+  assert.equal(optionalWarning.status, "WARN", "Core QA keeps its global WARN state");
+  assert.match(classifyPostApplyQa(optionalWarning, coreQa.version).summary, /^WARN \(accepted non-blocking optional scaffold: recursos\/README\.md/);
+
+  const unknownWarning = postApplyQaReport(coreQa.version, {
+    "security.agentPermissions": { status: "WARN", details: { note: "security profile incomplete" } },
+  });
+  assert.equal(classifyPostApplyQa(unknownWarning, coreQa.version), null, "an unrelated WARN blocks post-apply");
+
+  const optionalPlusBlocking = postApplyQaReport(coreQa.version, {
+    "core.optionalScaffold": { status: "WARN", details: optionalDetails },
+    "security.agentPermissions": { status: "WARN", details: { note: "security profile incomplete" } },
+  });
+  assert.equal(classifyPostApplyQa(optionalPlusBlocking, coreQa.version), null, "an optional warning cannot mask another finding");
+
+  const failure = postApplyQaReport(coreQa.version, {
+    "core.paths": { status: "FAIL", details: { missingOrInvalid: [{ path: "AGENTS.md" }] } },
+  });
+  assert.equal(failure.status, "FAIL");
+  assert.equal(classifyPostApplyQa(failure, coreQa.version), null, "FAIL remains a hard block");
+
+  for (const omittedId of ["security.agentPermissions", "permissions.reviewer", "core.legacyReferences", "manifest.inventory", "distribution.manifest"]) {
+    const incomplete = { ...optionalWarning, checks: optionalWarning.checks.filter(({ id }) => id !== omittedId) };
+    assert.equal(classifyPostApplyQa(incomplete, coreQa.version), null, `omitting ${omittedId} blocks acceptance`);
+  }
+  assert.equal(classifyPostApplyQa(optionalWarning, "3.0.0"), null, "post-apply QA version must match the source manifest");
+  const mismatchedFinding = { ...optionalWarning, findings: [{ ...optionalWarning.findings[0], note: "different cause" }] };
+  assert.equal(classifyPostApplyQa(mismatchedFinding, coreQa.version), null, "the warning finding must match the optional check exactly");
+  const malformedFinding = { ...optionalWarning, findings: [null] };
+  assert.equal(classifyPostApplyQa(malformedFinding, coreQa.version), null, "malformed checker findings fail closed without throwing");
+});
+
+test("post-apply optional scaffold WARN is preserved and commits through the shared update/bootstrap gate", async (t) => {
+  const optionalDetails = {
+    path: "recursos/README.md",
+    note: "Expected input scaffold; not required to run Core",
+    code: "ENOENT",
+  };
+  const outcome = await runPostApplyFixture(t, (version) => postApplyQaReport(version, {
+    "core.optionalScaffold": { status: "WARN", details: optionalDetails },
+  }));
+  assert.equal(outcome.error, null);
+  assert.equal(outcome.commits, 1);
+  assert.equal(outcome.result.qa.status, "WARN", "the global QA state is not rewritten to PASS");
+  assert.equal(outcome.result.postApplyQaStatus, "WARN (accepted non-blocking optional scaffold: recursos/README.md; Core QA remains WARN)");
+  assert.equal(fs.readFileSync(path.join(outcome.target, ".cn-pilot/docs/gate-test.md"), "utf8"), "safe managed fixture\n");
+});
+
+test("unknown WARN, combined warning and FAIL all block post-apply commit", async (t) => {
+  const optionalDetails = {
+    path: "recursos/README.md",
+    note: "Expected input scaffold; not required to run Core",
+    code: "ENOENT",
+  };
+  const rejectedReports = [
+    postApplyQaReport("1.4.0", { "security.agentPermissions": { status: "WARN", details: { note: "security profile incomplete" } } }),
+    postApplyQaReport("1.4.0", {
+      "core.optionalScaffold": { status: "WARN", details: optionalDetails },
+      "security.agentPermissions": { status: "WARN", details: { note: "security profile incomplete" } },
+    }),
+    postApplyQaReport("1.4.0", { "core.paths": { status: "FAIL", details: { missingOrInvalid: [{ path: "AGENTS.md" }] } } }),
+  ];
+
+  for (const qa of rejectedReports) {
+    const outcome = await runPostApplyFixture(t, () => qa);
+    assert.equal(outcome.error?.code, "POST_APPLY_QA_FAILED");
+    assert.equal(outcome.commits, 0);
+    assert.equal(fs.readFileSync(path.join(outcome.target, ".cn-pilot/docs/gate-test.md"), "utf8"), "safe managed fixture\n");
+  }
+});
+
+test("post-apply checker error leaves fixture evidence and never calls commit", async (t) => {
+  const outcome = await runPostApplyFixture(t, () => {
+    throw Object.assign(new Error("checker fixture error"), { code: "CHECKER_FIXTURE_ERROR" });
+  });
+  assert.equal(outcome.error?.code, "POST_APPLY_QA_FAILED");
+  assert.equal(outcome.commits, 0);
+  assert.equal(fs.readFileSync(path.join(outcome.target, ".cn-pilot/docs/gate-test.md"), "utf8"), "safe managed fixture\n");
+});
+
 test("M: post-apply QA failure leaves evidence and does not call commit", async (t) => {
   const { root, put } = fixture(t); const source = fixture(t);
   put(root, ".cn-pilot/docs/a.md", "base\n");
@@ -1067,7 +1193,9 @@ test("M: post-apply QA failure leaves evidence and does not call commit", async 
   const plan = { actions: [{ type: "update", path: ".cn-pilot/docs/a.md", baselineHash: hashBytes(Buffer.from("base\n")), sha256: upstream.managedFiles[0].sha256 }], conflicts: [] };
   let commits = 0;
   await assert.rejects(applyValidateAndCommit(root, source.root, plan, upstream, {
-    validate: () => ({ status: "FAIL" }),
+      validate: () => postApplyQaReport(upstream.cnPilotVersion, {
+        "core.paths": { status: "FAIL", details: { missingOrInvalid: [{ path: "AGENTS.md" }] } },
+      }),
     commit: () => { commits += 1; },
   }), { code: "POST_APPLY_QA_FAILED" });
   assert.equal(commits, 0);
@@ -1088,10 +1216,11 @@ test("successful post-apply QA commits only managed paths and preserves Project 
   const plan = planUpdate(root, oldManifest, next);
   const headBefore = execFileSync("git", ["rev-parse", "HEAD"], { cwd: root, encoding: "utf8" }).trim();
   const done = await applyValidateAndCommit(root, source.root, plan, next, {
-    validate: () => ({ status: "PASS" }),
+    validate: () => postApplyQaReport(next.cnPilotVersion),
     commit: ({ applied }) => commitManagedUpdate(root, applied.applied, next.cnPilotVersion),
   });
   assert.notEqual(done.commit, headBefore);
+  assert.equal(done.postApplyQaStatus, "PASS");
   assert.equal(fs.readFileSync(path.join(root, "README.md"), "utf8"), "project README\n");
   const committed = execFileSync("git", ["diff-tree", "--no-commit-id", "--name-only", "-r", done.commit], { cwd: root, encoding: "utf8" }).trim().split(/\r?\n/).sort();
   assert.deepEqual(committed, [".cn-pilot-version", ".cn-pilot/update/manifest.json", "AGENTS.md"].sort());
@@ -1245,7 +1374,7 @@ test("Kilo version probe is deterministic in tests while unknown/incompatible ru
 
 test("end-to-end local source → plan → apply → Core QA → versioned commit", async (t) => {
   const target = fixture(t); const source = fixture(t);
-  const checker = 'process.stdout.write(JSON.stringify({ status: "PASS" }));\n';
+  const checker = `process.stdout.write(JSON.stringify(${JSON.stringify(postApplyQaReport("1.4.0"))}));\n`;
   const oldAgent = "old framework instructions\n"; const newAgent = "updated framework instructions\n";
   target.put(target.root, ".cn-pilot-version", "1.3.0\n");
   target.put(target.root, "AGENTS.md", oldAgent);
@@ -1281,7 +1410,12 @@ test("end-to-end local source → plan → apply → Core QA → versioned commi
 
 test("legacy bootstrap is plan-only until approval and preserves selected local customizations", async (t) => {
   const target = fixture(t); const source = fixture(t);
-  const checker = 'process.stdout.write(JSON.stringify({ status: "PASS" }));\n';
+  const checker = `process.stdout.write(JSON.stringify(${JSON.stringify(postApplyQaReport("1.4.0", {
+    "core.optionalScaffold": {
+      status: "WARN",
+      details: { path: "recursos/README.md", note: "Expected input scaffold; not required to run Core", code: "ENOENT" },
+    },
+  }))}));\n`;
   source.put(source.root, ".cn-pilot-version", "1.4.0\n");
   source.put(source.root, "AGENTS.md", "official rules\n");
   source.put(source.root, ".cn-pilot/qa/core-check.mjs", checker);
@@ -1308,8 +1442,10 @@ test("legacy bootstrap is plan-only until approval and preserves selected local 
   assert.equal(execFileSync("git", ["rev-parse", "HEAD"], { cwd: target.root, encoding: "utf8" }).trim(), head);
   assert.equal(fs.existsSync(path.join(target.root, MANIFEST_PATH)), false);
 
-  const applyCode = await runCli(["bootstrap", "--approve-legacy", "--preserve", "AGENTS.md", "--target", target.root, "--source-dir", source.root], { stdout: { write() {} }, stderr: { write: (value) => { stderr += value; } } });
+  let bootstrapOutput = "";
+  const applyCode = await runCli(["bootstrap", "--approve-legacy", "--preserve", "AGENTS.md", "--target", target.root, "--source-dir", source.root], { stdout: { write: (value) => { bootstrapOutput += value; } }, stderr: { write: (value) => { stderr += value; } } });
   assert.equal(applyCode, 0, stderr);
+  assert.match(bootstrapOutput, /Core QA: WARN \(accepted non-blocking optional scaffold: recursos\/README\.md; Core QA remains WARN\)/);
   assert.equal(fs.readFileSync(path.join(target.root, ".cn-pilot-version"), "utf8"), "1.4.0\n");
   assert.equal(fs.readFileSync(path.join(target.root, "AGENTS.md"), "utf8"), "legacy customization\n");
   assert.equal(fs.readFileSync(path.join(target.root, "PROJECT.md"), "utf8"), "client context\n");

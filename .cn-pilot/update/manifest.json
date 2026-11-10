@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "cnPilotVersion": "3.0.0",
+  "cnPilotVersion": "3.0.1",
   "sourceRepository": "https://github.com/LuisYGM/cn-pilot.git",
   "stableBranch": "main",
   "sourceCommit": null,
@@ -11,11 +11,11 @@
   "managedFiles": [
     {
       "path": ".cn-pilot-version",
-      "sha256": "2985be8b28d3ade858e8d8fb4bc22f565b1bf6020dff982dce141f7721b9999c"
+      "sha256": "06e3fe4a7a1884d20d81cc7065ca8cfd4c394ec602c4d180ddc39bbd4f7da521"
     },
     {
       "path": ".cn-pilot/CAMBIOS.md",
-      "sha256": "f93cb4ab37191d8f75862cd47fcbaff00415e20b29abd2900dd2b04155da2202"
+      "sha256": "ed744f08746581c286c7aff6022ab32a91e04a50edf2b09a136e9bf88e0e2c3c"
     },
     {
       "path": ".cn-pilot/MANIFIESTO.md",
@@ -23,7 +23,7 @@
     },
     {
       "path": ".cn-pilot/NUCLEO.md",
-      "sha256": "dcbe4b057b0aa1d8829b8af4dba52d941a9a6c521d6b78800e6aa840b30ffaef"
+      "sha256": "0e63c59b4506add045427092c10ab978d9b96a1feea1e9b8a2fce1c13f992bf5"
     },
     {
       "path": ".cn-pilot/agent-evals/README.md",
@@ -123,7 +123,7 @@
     },
     {
       "path": ".cn-pilot/documentacion/ACTUALIZACIONES.md",
-      "sha256": "5c11a952ea98deab916f5cf0b7b961416e7ca5e040e6c579fb85c57252ea864a"
+      "sha256": "b5c15f65f3b95d1c7f9b610c1a034b55c98d6446b5c5f23ad6cae4d3ba18dabc"
     },
     {
       "path": ".cn-pilot/documentacion/CICLO-DE-VIDA.md",
@@ -287,15 +287,15 @@
     },
     {
       "path": ".cn-pilot/qa/core-check.test.mjs",
-      "sha256": "01e3538a8bf06f4507b42cdfd9b7a8322f92c90803ec8e6944be35bca15deb91"
+      "sha256": "2bcb8fe222399433cdd5eaa9063c89215d731105eb0541b63a6df3db85e83c05"
     },
     {
       "path": ".cn-pilot/update/updater.mjs",
-      "sha256": "546522ac2c58ebea51f81ccbe5f997975e845c3d60465092599cc90798ca66b4"
+      "sha256": "9eeb9a296c2958cd19540e67a6e2dbfaadcc652c9944f6f2f10eadc174d7191c"
     },
     {
       "path": ".cn-pilot/update/updater.test.mjs",
-      "sha256": "db30f031dd60ddc2a844a21d79f6424078ff5c82d8637161ec5aa5f4aa62bd51"
+      "sha256": "e5b1b4d0d2a44b75ddada323dfe0fc213cf0b2aedfa564911841e05a89e74752"
     },
     {
       "path": ".kilo/agents/arquitecto.md",
@@ -570,16 +570,8 @@
       "sha256": "837f9f263d7881d2755a43d57e3ee788a92695b98534d7a22d66382ea914ef09"
     }
   ],
-  "addedFiles": [
-    ".kilo/agents/disenador.md",
-    ".kilo/agents/redactor.md",
-    ".kilo/skills/environment-dependency-management/SKILL.md"
-  ],
-  "removedFiles": [
-    ".kilo/agents/contenido-seo.md",
-    ".kilo/agents/disenador-ui-ux.md",
-    ".kilo/agents/maquetador-frontend.md"
-  ],
+  "addedFiles": [],
+  "removedFiles": [],
   "migrations": [
     {
       "id": "cn-pilot-1x-to-2x-foundation",

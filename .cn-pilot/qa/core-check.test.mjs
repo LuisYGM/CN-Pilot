@@ -153,6 +153,27 @@ test("known-good minimal fixture passes deterministic invariants", (t) => {
   assert.equal(getCheck(report, "templates.inventory").details.totalFiles, 3);
 });
 
+test("missing resources README remains exactly the documented optional-scaffold WARN", (t) => {
+  const fixture = createFixture(t);
+  fs.rmSync(path.join(fixture.root, "recursos/README.md"));
+  const report = runCoreChecks({ rootDir: fixture.root });
+  const optional = getCheck(report, "core.optionalScaffold");
+  assert.equal(report.status, "WARN", "the overall Core QA state remains WARN");
+  assert.equal(optional.status, "WARN");
+  assert.deepEqual(optional.details, {
+    path: "recursos/README.md",
+    note: "Expected input scaffold; not required to run Core",
+    code: "ENOENT",
+  });
+  assert.deepEqual(report.findings, [{
+    id: "core.optionalScaffold",
+    status: "WARN",
+    path: "recursos/README.md",
+    note: "Expected input scaffold; not required to run Core",
+    code: "ENOENT",
+  }]);
+});
+
 test("Core Project Context version is checked only for the canonical distribution, not derived projects", (t) => {
   const canonical = createFixture(t);
   canonical.put(".git/config", '[remote "origin"]\n\turl = https://github.com/LuisYGM/CN-Pilot.git\n');
