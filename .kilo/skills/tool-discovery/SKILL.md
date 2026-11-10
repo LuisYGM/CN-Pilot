@@ -38,7 +38,7 @@ Compara solo alternativas plausibles por idoneidad/calidad, formatos nativos y e
 
 Selecciona una opción suficiente y explica el trade-off material. Usa recursos y herramientas autorizados existentes si son adecuados. Antes de producir verifica formato y una operación representativa en fixture si hay riesgo de incompatibilidad; antes de entregar inspecciona el archivo/resultado real, apertura/exportación cuando esté disponible, editabilidad requerida y límites. Un archivo creado o comando exitoso no prueba calidad profesional.
 
-Activa solo la skill/interfaz necesaria, con los permisos efectivos del owner y gates vigentes. Setup de dependencias usa `environment-dependency-management`; integración real `api-integration`; configuración MCP/Kilo `kilo-config`. No cambies permisos, instales, conectes cuentas, compres, publiques ni transmitas datos a servicios externos sin autorización aplicable. No registres credenciales. No recurras a otro agente o herramienta para eludir una denegación.
+Activa solo la skill/interfaz necesaria, con los permisos efectivos del owner y gates vigentes. Setup de dependencias usa `environment-dependency-management`; integración real `api-integration`. Para configurar MCP/Kilo, consulta `.cn-pilot/documentacion/CONFIGURACION-KILO.md` (“Configuración MCP por proyecto”) y `.cn-pilot/documentacion/CONFIGURACION.md` (“MCP opcional”); sigue el procedimiento local soportado sin guardar secretos. No cambies permisos, instales, conectes cuentas, compres, publiques ni transmitas datos a servicios externos sin autorización aplicable. No registres credenciales. No recurras a otro agente o herramienta para eludir una denegación.
 
 ## 5. Capacidad ausente y entrega honesta
 

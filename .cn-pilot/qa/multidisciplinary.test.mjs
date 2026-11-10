@@ -11,6 +11,12 @@ import { buildManifest, listTrackedManagedFiles, planUpdate, verifyManifestFiles
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../..");
 const read = (relative) => fs.readFileSync(path.join(root, relative), "utf8").replace(/\r\n/g, "\n");
 const requireContracts = (text, patterns) => patterns.forEach((pattern) => assert.match(text, pattern));
+const ADDED_IN_3_1_0 = [
+  ".cn-pilot/agent-evals/multidisciplinary.json",
+  ".cn-pilot/agent-evals/prepare-multidisciplinary.mjs",
+  ".cn-pilot/qa/multidisciplinary.test.mjs",
+  ".kilo/skills/tool-discovery/SKILL.md",
+];
 
 test("BF-074/075: proyecto abierto, fuentes únicas y descubrimiento real", () => {
   const core = read(".cn-pilot/NUCLEO.md");
@@ -27,13 +33,13 @@ test("discovery: controles positivos y negativos del contrato, no de conducta", 
   for (const pattern of required) assert.throws(() => requireContracts("Herramienta documentada = instalada; generar SVG siempre.", [pattern]));
 });
 
-test("seis agentes, siete perfiles y 41 skills previas conservados; ACL intactas", () => {
+test("checkout 3.1.x contiene seis agentes, siete perfiles y 42 skills; ACL intactas", () => {
   const agents = ["arquitecto", "desarrollador", "disenador", "jefe-proyecto", "redactor", "revisor"];
   assert.equal(fs.readdirSync(path.join(root, ".kilo/agents")).filter((name) => name.endsWith(".md")).length, 6);
   assert.equal(fs.readdirSync(path.join(root, ".cn-pilot/perfiles")).length, 7);
-  const baselineSkills = execFileSync("git", ["ls-tree", "-r", "--name-only", "HEAD", "--", ".kilo/skills"], { cwd: root, encoding: "utf8" }).trim().split(/\r?\n/).filter((name) => name.endsWith("/SKILL.md"));
-  assert.ok(baselineSkills.length >= 41);
-  for (const relative of baselineSkills) assert.ok(fs.existsSync(path.join(root, relative)), relative);
+  const checkoutSkills = execFileSync("git", ["ls-tree", "-r", "--name-only", "HEAD", "--", ".kilo/skills"], { cwd: root, encoding: "utf8" }).trim().split(/\r?\n/).filter((name) => name.endsWith("/SKILL.md"));
+  assert.equal(checkoutSkills.length, 42);
+  for (const relative of checkoutSkills) assert.ok(fs.existsSync(path.join(root, relative)), relative);
   for (const agent of agents) {
     const relative = `.kilo/agents/${agent}.md`;
     const current = read(relative);
@@ -77,41 +83,59 @@ test("cuatro fixtures aislados se preparan sin Git, outputs anticipados ni conta
   } finally { fs.rmSync(parent, { recursive: true, force: true }); }
 });
 
-test("minor aditiva: updater planifica nuevas capacidades sin migrar contexto/producto", () => {
+test("3.0.2 → 3.1.0: updater detecta las cuatro incorporaciones sin tocar contexto/producto", () => {
   const parent = fs.mkdtempSync(path.join(os.tmpdir(), "cn-pilot-multi-update-"));
   try {
-    const before = JSON.parse(execFileSync("git", ["show", "HEAD:.cn-pilot/update/manifest.json"], { cwd: root, encoding: "utf8" }));
-    const files = [...before.managedFiles.map(({ path: name }) => name), ".kilo/skills/tool-discovery/SKILL.md", ".cn-pilot/qa/multidisciplinary.test.mjs", ".cn-pilot/agent-evals/multidisciplinary.json", ".cn-pilot/agent-evals/prepare-multidisciplinary.mjs"];
-    // Fixture usa los bytes actuales y una minor sintética; no modifica la versión del Core.
-    for (const name of new Set(files)) {
-      fs.mkdirSync(path.dirname(path.join(parent, name)), { recursive: true });
-      fs.copyFileSync(path.join(root, name), path.join(parent, name));
+    const source = path.join(parent, "source");
+    const baselineRoot = path.join(parent, "baseline");
+    const installed = path.join(parent, "installed");
+    fs.mkdirSync(source);
+    fs.mkdirSync(baselineRoot);
+    fs.mkdirSync(installed);
+    const candidatePaths = [".cn-pilot-version", ...ADDED_IN_3_1_0];
+    fs.writeFileSync(path.join(source, ".cn-pilot-version"), "3.1.0\n");
+    fs.writeFileSync(path.join(baselineRoot, ".cn-pilot-version"), "3.0.2\n");
+    fs.writeFileSync(path.join(installed, ".cn-pilot-version"), "3.0.2\n");
+    for (const relative of ADDED_IN_3_1_0) {
+      const destination = path.join(source, relative);
+      fs.mkdirSync(path.dirname(destination), { recursive: true });
+      fs.copyFileSync(path.join(root, relative), destination);
     }
-    fs.writeFileSync(path.join(parent, ".cn-pilot-version"), "3.1.0\n");
-    const after = buildManifest(parent, { files, previousManifest: before });
-    const cleanTarget = path.join(parent, "clean-target");
-    fs.mkdirSync(cleanTarget);
-    for (const { path: name } of before.managedFiles) {
-      fs.mkdirSync(path.dirname(path.join(cleanTarget, name)), { recursive: true });
-      fs.copyFileSync(path.join(parent, name), path.join(cleanTarget, name));
-    }
-    const plan = planUpdate(cleanTarget, before, after);
-    assert.ok(after.addedFiles.includes(".kilo/skills/tool-discovery/SKILL.md") || before.managedFiles.some(({ path: name }) => name === ".kilo/skills/tool-discovery/SKILL.md"));
-    assert.equal(after.removedFiles.length, 0);
+
+    const projectContext = "# Contexto sintético que el updater debe preservar\n";
+    const product = "<!doctype html><title>Existing product intacto</title>\n";
+    fs.writeFileSync(path.join(installed, "PROYECTO.md"), projectContext);
+    fs.mkdirSync(path.join(installed, "producto"));
+    fs.writeFileSync(path.join(installed, "producto/index.html"), product);
+
+    // This explicit 3.0.2 inventory is generated in the temp fixture; it does
+    // not depend on HEAD, a parent commit, or fetched Git history.
+    const baseline = buildManifest(baselineRoot, { files: [".cn-pilot-version"] });
+    const next = buildManifest(source, { files: candidatePaths, previousManifest: baseline });
+    const plan = planUpdate(installed, baseline, next);
+    const addedActions = plan.actions.filter((action) => action.type === "add").map(({ path: name }) => name);
+
+    assert.equal(next.cnPilotVersion, "3.1.0");
+    assert.deepEqual(next.addedFiles, ADDED_IN_3_1_0);
+    assert.deepEqual(addedActions, ADDED_IN_3_1_0);
+    assert.ok(addedActions.includes(".kilo/skills/tool-discovery/SKILL.md"));
+    assert.ok(plan.actions.some((action) => action.path === ".cn-pilot-version" && action.type === "update"));
     assert.equal(plan.conflicts.length, 0);
-    assert.ok(plan.actions.some((action) => action.type === "add" && action.path === ".kilo/skills/tool-discovery/SKILL.md"));
-    assert.equal(after.migrations.some((migration) => migration.to === "3.1.0"), false);
-    assert.equal(after.managedFiles.some(({ path: name }) => /^(PROYECTO|REQUISITOS|ESTADO|DECISIONES|ARTEFACTOS)\.md$/.test(name)), false);
+    assert.deepEqual(next.migrations, baseline.migrations);
+    const projectOrProduct = /^(PROYECTO|REQUISITOS|ESTADO|DECISIONES|ARTEFACTOS)\.md$|^producto(?:\/|$)/;
+    assert.equal(next.managedFiles.some(({ path: name }) => projectOrProduct.test(name)), false);
+    assert.equal(plan.actions.some(({ path: name }) => projectOrProduct.test(name)), false);
+    assert.equal(fs.readFileSync(path.join(installed, "PROYECTO.md"), "utf8"), projectContext);
+    assert.equal(fs.readFileSync(path.join(installed, "producto/index.html"), "utf8"), product);
   } finally { fs.rmSync(parent, { recursive: true, force: true }); }
 });
 
-test("3.1.0 manifest hashes match the candidate payload and inventory", () => {
+test("3.1.1 manifest hashes match the candidate payload and inventory", () => {
   const manifest = JSON.parse(read(".cn-pilot/update/manifest.json"));
-  const additions = [".cn-pilot/agent-evals/multidisciplinary.json", ".cn-pilot/agent-evals/prepare-multidisciplinary.mjs", ".cn-pilot/qa/multidisciplinary.test.mjs", ".kilo/skills/tool-discovery/SKILL.md"];
-  const generated = buildManifest(root, { files: [...listTrackedManagedFiles(root), ...additions], previousManifest: manifest });
-  assert.equal(manifest.cnPilotVersion, "3.1.0");
+  const generated = buildManifest(root, { files: listTrackedManagedFiles(root) });
+  assert.equal(manifest.cnPilotVersion, "3.1.1");
   assert.deepEqual(generated.managedFiles, manifest.managedFiles);
-  assert.deepEqual(manifest.addedFiles, additions.slice().sort());
+  assert.deepEqual(manifest.addedFiles, []);
   assert.deepEqual(manifest.removedFiles, []);
   assert.equal(verifyManifestFiles(root, manifest).verified, manifest.managedFiles.length);
 });

@@ -23,4 +23,4 @@ jobs:
       - name: Run Core QA
         run: node .cn-pilot/qa/core-check.mjs
       - name: Test Core and updater
-        run: node --test .cn-pilot/qa/core-check.test.mjs .cn-pilot/update/updater.test.mjs
+        run: node --test .cn-pilot/qa/core-check.test.mjs .cn-pilot/update/updater.test.mjs .cn-pilot/qa/multidisciplinary.test.mjs

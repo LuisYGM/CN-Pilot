@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "cnPilotVersion": "3.1.0",
+  "cnPilotVersion": "3.1.1",
   "sourceRepository": "https://github.com/LuisYGM/cn-pilot.git",
   "stableBranch": "main",
   "sourceCommit": null,
@@ -11,11 +11,11 @@
   "managedFiles": [
     {
       "path": ".cn-pilot-version",
-      "sha256": "b2f44d3b6e29f8b1b73ea4735f006affc4d198e1fd9c7d50e736159b1ef636c6"
+      "sha256": "6dc3b2dc3139b7d421b6fc26a7f853389a9b035ea4f2e9047b9516050dd6ac73"
     },
     {
       "path": ".cn-pilot/CAMBIOS.md",
-      "sha256": "9ddb360d68026aab26e36dbdec5a73b3f3f8bc0c37125b671633ff4b28564f97"
+      "sha256": "0fe6766bc43d4ce39d9ac5423fc5364c7aca9a4410b0100ac2e6a966f9c97120"
     },
     {
       "path": ".cn-pilot/MANIFIESTO.md",
@@ -23,7 +23,7 @@
     },
     {
       "path": ".cn-pilot/NUCLEO.md",
-      "sha256": "7fd234c04c13d31b4d117e71249e9f7a6d634a91f77644211332bf49835edc14"
+      "sha256": "73403ac6873de414ecb0d875450846bdd776c4b7d01f9e8d5836bda7a1226d2b"
     },
     {
       "path": ".cn-pilot/agent-evals/README.md",
@@ -295,11 +295,11 @@
     },
     {
       "path": ".cn-pilot/qa/core-check.test.mjs",
-      "sha256": "4669ede1719de199549ae78f9ab063fae85573f7e9b7fb5df0591b589fe86738"
+      "sha256": "f1c285f8f21b4f5d6c872c57f18f1b69211a6b7612d19b70a7dd382f96a3b89f"
     },
     {
       "path": ".cn-pilot/qa/multidisciplinary.test.mjs",
-      "sha256": "3428a9ebd055cd73780be8a453d2b4265b849878b9a5a9a695f7a48f6c7af785"
+      "sha256": "614e653f5b18ad71500b94112180f338643f21a37a38089486f1655eb0c02f50"
     },
     {
       "path": ".cn-pilot/update/updater.mjs",
@@ -535,7 +535,7 @@
     },
     {
       "path": ".kilo/skills/tool-discovery/SKILL.md",
-      "sha256": "1be0d1ade19b5be0b38a28b3735393a61dcafc35f6df42750a56877752f8b55b"
+      "sha256": "28adbd5728cb49e6f418f6bdc3046ff1f3182011162bb6aceb95e49aa803f291"
     },
     {
       "path": ".kilo/skills/ui-design-system/SKILL.md",
@@ -586,12 +586,7 @@
       "sha256": "5a5d6b39f82dcbe68e7e33294399162d6126a908cc5504369984c98a2f3e95a6"
     }
   ],
-  "addedFiles": [
-    ".cn-pilot/agent-evals/multidisciplinary.json",
-    ".cn-pilot/agent-evals/prepare-multidisciplinary.mjs",
-    ".cn-pilot/qa/multidisciplinary.test.mjs",
-    ".kilo/skills/tool-discovery/SKILL.md"
-  ],
+  "addedFiles": [],
   "removedFiles": [],
   "migrations": [
     {

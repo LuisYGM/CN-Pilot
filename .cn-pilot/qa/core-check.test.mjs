@@ -275,7 +275,7 @@ test("upstream GitHub Actions workflow is restricted, compatible, and runs the l
   assert.match(workflow, /uses: actions\/setup-node@v4/);
   assert.match(workflow, /node-version:\s*22\b/);
   assert.match(workflow, /run: node \.cn-pilot\/qa\/core-check\.mjs/);
-  assert.match(workflow, /run: node --test \.cn-pilot\/qa\/core-check\.test\.mjs \.cn-pilot\/update\/updater\.test\.mjs/);
+  assert.match(workflow, /run: node --test \.cn-pilot\/qa\/core-check\.test\.mjs \.cn-pilot\/update\/updater\.test\.mjs \.cn-pilot\/qa\/multidisciplinary\.test\.mjs/);
 });
 
 test("Core QA leaves the input fixture unchanged", (t) => {

@@ -1,5 +1,11 @@
 # Changelog
 
+## [3.1.1] - 2026-11-10
+
+- Añade la suite multidisciplinaria al workflow Core QA de GitHub Actions.
+- Sustituye el baseline updater dependiente de `HEAD` por un fixture sintético estable 3.0.2→3.1.0; comprueba las cuatro incorporaciones y preserva Project Context/Product.
+- Reemplaza la referencia inexistente `kilo-config` por la documentación vigente de configuración MCP/Kilo.
+
 ## [3.1.0] - 2026-11-10
 
 - Generaliza CN Pilot como framework de producción multidisciplinaria con proyectos de identidad compartida y entregables independientes, conservando formato nativo y single-writer de contexto sin migrar proyectos existentes.
