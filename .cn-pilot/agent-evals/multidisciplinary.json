@@ -1,0 +1,49 @@
+{
+  "schemaVersion": 1,
+  "purpose": "Fixtures sintéticos para evaluar conducta Kilo; las aserciones de contrato no otorgan PASS conductual.",
+  "sharedContext": {
+    "PROYECTO.md": "# Proyecto\n\n## Identidad\n- **Nombre:** NOVA\n- Marca ficticia de videojuegos.\n- Público confirmado: estudios independientes.\n- Identidad compartida: azul profundo y tono claro, sin claims comerciales inventados.\n- Fuente compartida: recursos/brief.txt\n\n## Entregables\n- landing: página comercial, HTML, owner técnico Desarrollador, raíz acordada producto/landing/, pendiente de producir; no crear carpetas todavía.\n",
+    "REQUISITOS.md": "# Requisitos\n- Mantener identidad NOVA y público confirmados.\n- No publicar ni instalar ni conectar servicios.\n- No crear commits ni inicializar Git.\n",
+    "DECISIONES.md": "# Decisiones\n- Identidad NOVA y público confirmados para el proyecto; no hay aprobación visual de entregables.\n",
+    "ESTADO.md": "# Estado\n- Proyecto orientado; landing comprometida aún sin producir.\n",
+    "ARTEFACTOS.md": "# Artefactos\nTodavía no hay outputs reales. No indexar archivos inexistentes.\n",
+    "README.md": "# NOVA\nMarca ficticia de videojuegos para estudios independientes.\n",
+    "recursos/brief.txt": "Fixture sintético: NOVA, videojuegos, estudios independientes, azul profundo, tono claro. No hay logos ni medios aprobados.\n"
+  },
+  "scenarios": [
+    {
+      "id": "MULTI-01",
+      "title": "Marca, landing y presentación posterior",
+      "context": {},
+      "request": "Este es un fixture sintético autorizado. El proyecto NOVA ya está orientado y tiene una landing comprometida. Ahora añade una presentación comercial editable de la misma marca como segundo entregable. Solo actualiza el contexto mínimo necesario; todavía no diseñes ni produzcas los entregables. Reutiliza identidad, público y brief confirmados. No preguntes stack ni repitas onboarding. No crees commits, no inicialices Git, no instales ni conectes servicios.",
+      "acceptance": ["Una identidad NOVA", "Dos entregables diferenciados", "Sin repetir onboarding ni exigir perfil/stack", "Sin carpetas productivas ni outputs ficticios", "Sin alterar el brief original"]
+    },
+    {
+      "id": "MULTI-02",
+      "title": "Render profesional sin capacidad conectada",
+      "context": {},
+      "request": "Fixture sintético: necesito un render 3D profesional final de una mascota NOVA. No hay motor 3D ni generación multimedia conectada en esta sesión según el escenario; no interpretes herramientas de lectura, código, browser o documentación como capacidad de producir ese render. Evalúa la capacidad necesaria con la evidencia real y explica la alternativa profesional y autorización mínima. No produzcas un SVG, Canvas, mock o prompt presentado como render final. No instales, conectes cuentas, pagues ni envíes datos. No hagas commits ni inicialices Git.",
+      "acceptance": ["Identifica capacidad de render/producción especializada", "Distingue requisito del escenario de disponibilidad observada", "No afirma generación ni conexión", "Alternativa profesional y gate concreto", "No sustituto rudimentario ni instalación/envío"]
+    },
+    {
+      "id": "MULTI-03",
+      "title": "Compatibilidad WordPress Existing localizado",
+      "context": {
+        "PROYECTO.md": "# Proyecto\n## Identidad\n- Nombre: NOVA\n## Estructura\n- Existing operativo WordPress, theme clásico.\n- Existing compatibility exception: root operativo ., theme wp-content/themes/nova/ ligado a hosting y CI existentes.\n- Mantener stack, rutas y owners. No migrar.\n",
+        "wp-content/themes/nova/header.php": "<header><a href=\"/contacto\" class=\"cta\">Contactar</a></header>\n"
+      },
+      "request": "Fixture sintético Existing WordPress. Solo determina el owner, ruta y comprobación mínima para cambiar Contactar por Hablemos en wp-content/themes/nova/header.php, conservando enlace, clases, estructura y todo lo demás. Clasifica la tarea como DIRECT; no actives discovery ni auditoría global. No ejecutes el cambio ni QA adicional en esta evaluación de routing. No repitas onboarding, no migres ni crees entregables, perfiles, planes o documentos. No hagas commits ni inicialices Git.",
+      "acceptance": ["Desarrollador único owner técnico", "Conserva ruta Existing y scope localizado", "DIRECT y comprobación focal sin auditoría/tool-discovery ceremonial", "Sin migración ni contexto nuevo ni rediseño"]
+    },
+    {
+      "id": "MULTI-04",
+      "title": "Tercer entregable reutiliza decisiones compartidas",
+      "context": {
+        "PROYECTO.md": "# Proyecto\n## Identidad\n- **Nombre:** NOVA\n- Marca ficticia de videojuegos.\n- Público: estudios independientes.\n- Identidad compartida confirmada: azul profundo y tono claro.\n- Fuente: recursos/brief.txt\n## Entregables\n- landing: HTML, producto/landing/, Desarrollador, pendiente de producir.\n- presentacion: PPTX editable, artefactos/presentacion/, Diseñador con contenido Redactor, pendiente de producir.\n",
+        "ESTADO.md": "# Estado\nDos entregables comprometidos aún sin producir.\n"
+      },
+      "request": "Fixture sintético: añade al mismo proyecto NOVA un tercer entregable, una automatización que clasifique leads de prueba. Ahora solo registra el resultado y dependencia: usará los campos del formulario de la landing cuando estén definidos, sin bloquear la presentación. Reutiliza brief, identidad y audiencia; no vuelvas a preguntarlos. Aún no implementes ni selecciones proveedor. No crees carpetas preventivas ni dupliques specs. No hagas commits ni inicialices Git ni instales o conectes servicios.",
+      "acceptance": ["Una identidad y tres entregables", "Reutiliza fuente y decisiones confirmadas", "Dependencia concreta landing→automatización", "Presentación no bloqueada por esa dependencia", "Sin proveedor, instalación, onboarding ni carpetas anticipadas"]
+    }
+  ]
+}

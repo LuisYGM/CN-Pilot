@@ -1,6 +1,6 @@
 # CN Pilot
 
-**CN Pilot 3.0.2** es un sistema de coordinación para trabajar en proyectos web y aplicaciones con agentes de **Kilo Code**.
+**CN Pilot 3.1.0** es un sistema extensible de coordinación y producción profesional multidisciplinaria con agentes de **Kilo Code**. Un proyecto puede ser una marca, empresa, producto o iniciativa y reunir distintos entregables, no necesariamente una web, aplicación o repositorio de código.
 
 Tú describes lo que quieres conseguir con tus propias palabras. Jefe de proyecto revisa el contexto, coordina a los especialistas necesarios y verifica el trabajo según su alcance y riesgo. No necesitas programar, diseñar prompts técnicos ni escoger agentes o skills. Tampoco tienes que seguir una fase fija.
 
@@ -19,6 +19,8 @@ Necesitas VS Code, Kilo Code y una copia de CN Pilot en la carpeta de trabajo. G
 
    > Quiero crear una web WordPress para un restaurante. Tengo logo, fotos y referencias dentro de recursos.
 
+   > Estoy creando una marca de videojuegos. Primero necesito una landing y después una presentación comercial.
+
    > Este proyecto ya existe. Quiero rediseñar únicamente la Home sin cambiar el resto del sitio.
 
 5. Jefe de proyecto inspecciona primero el material y el proyecto existente. Responde solo las preguntas materiales que falten; puedes decir «no lo sé», «Pending» o «Decide tú» para decisiones profesionales y reversibles.
@@ -36,13 +38,21 @@ Cuando existe un diseño aprobado, Desarrollador lo implementa conservando compo
 
 ## Qué puede resolver
 
-- **Estrategia y contenido:** orientar proyectos nuevos/existentes, definir necesidades del producto o web, redactar páginas y artículos, y trabajar SEO cuando corresponde.
-- **Diseño:** explorar direcciones visuales, crear UI Kits y páginas, resolver medios y movimiento, o diseñar interfaces de aplicación.
-- **Desarrollo:** implementar frontend responsive, APIs, autenticación, automatización y cambios de datos cuando están dentro del alcance.
+El mismo proyecto puede reunir sitios y aplicaciones, identidad y recursos visuales, presentaciones y documentos editables, automatizaciones, audio/video, proyectos 3D, videojuegos, análisis y otros resultados. Son posibilidades abiertas, **no una promesa de tener instaladas todas las herramientas de producción**. CN Pilot conserva identidad, recursos y decisiones comunes y distingue requisitos, dependencias y aprobaciones por entregable. Pedir otro formato no reinicia el proyecto ni exige otro onboarding.
+
+- **Estrategia y contenido:** orientar objetivos pertinentes y producir narrativa, investigación, guiones, documentos, copy y otros formatos publicables; web/SEO cuando corresponde.
+- **Diseño y arte:** definir dirección visual y producir recursos, identidad, ilustración, presentaciones y experiencias cuando la capacidad profesional adecuada está disponible.
+- **Soluciones técnicas:** implementar software, APIs, automatización, integración, datos y aplicaciones cuando las necesita el entregable; no traducir cualquier disciplina a código.
 - **WordPress:** trabajar con custom themes y plugins, modelos de contenido, WooCommerce, Bricks o Elementor cuando el proyecto ya los usa o lo requiere.
 - **Calidad y operación:** probar comportamiento, revisar accesibilidad, rendimiento o seguridad ante un scope/síntoma real, depurar bugs, instrumentar analytics cuando se solicita y preparar mantenimiento o deployment autorizado.
 
 El stack, las herramientas disponibles y el alcance real determinan qué se hace. CN Pilot no instala builders, proveedores de analytics, paquetes o MCP por defecto.
+
+### Herramientas adecuadas, disponibilidad real
+
+Antes de una producción especializada, comprueba las funciones realmente expuestas por la sesión y el entorno. Distingue una herramienta utilizable de una candidata documentada, instalada pero sin conexión/autorización, pendiente de instalación, cuenta/licencia/pago o no verificada. El mecanismo admite MCP, API, CLI, SDK, software de escritorio/local, servicios y futuras interfaces, sin catálogo cerrado ni proveedor predeterminado.
+
+La elección responde al resultado, formato editable, calidad, compatibilidad, mantenimiento, privacidad y coste; no intenta resolverlo todo mediante código. Si falta una capacidad imprescindible, explica qué se necesita y propone una alternativa profesional sin fingir ejecución ni entregar un sustituto rudimentario como obra final. Instalar, conectar cuentas, comprar o transmitir datos a servicios externos conserva su autorización propia.
 
 ## WordPress
 
@@ -65,8 +75,8 @@ Una decisión de negocio, claim, precio, política, uso de producción o cambio 
 | Ubicación | Para qué sirve |
 |---|---|
 | `recursos/` | Material original recibido, como briefs, imágenes o referencias; se preserva como input. |
-| `artefactos/` | Entregables de apoyo como contenido, diseño, especificaciones y documentación. |
-| `producto/` | Implementación activa cuando el layout del proyecto la ubica allí. |
+| `artefactos/` | Outputs, exportaciones, entregables autónomos y apoyo como contenido, diseño o documentación. |
+| `producto/` | Fuentes de producción activas y editables, con estructura nativa por entregable; incluye software cuando corresponde. |
 | `PROYECTO.md`, `REQUISITOS.md`, `ESTADO.md`, `DECISIONES.md`, `ARTEFACTOS.md` | Contexto e índice del proyecto; Jefe de proyecto los mantiene cuando cambia algo durable. |
 | `.cn-pilot/` | Core, configuración, documentación y herramientas de CN Pilot. |
 | `.kilo/` | Agentes, skills y comandos que Kilo utiliza en el workspace. |
@@ -75,13 +85,15 @@ No necesitas crear ni ordenar manualmente estas carpetas para empezar. Las ubica
 
 ### Project Context
 
-- `PROYECTO.md`: hechos estables del proyecto, stack, estructura y fuentes de verdad.
+- `PROYECTO.md`: identidad y hechos estables compartidos, entregables comprometidos, formatos, raíces/destinos, dependencias y fuentes de verdad; stack solo cuando corresponde.
 - `REQUISITOS.md`: alcance y criterios de aceptación vigentes, sin exigir un PRD largo.
 - `ESTADO.md`: situación actual y siguiente decisión útil; no es un diario.
 - `DECISIONES.md`: decisiones importantes aprobadas, no cada detalle técnico.
 - `ARTEFACTOS.md`: índice de entregables significativos, no inventario de todos los archivos.
 
 Puedes dejar información no necesaria como pendiente. No hace falta completar todo el contexto antes de trabajar.
+
+Un único entregable Existing conserva su contexto y rutas sin migración. Los siete perfiles web actuales siguen disponibles como especialización opcional por tarea/entregable, no como clasificación obligatoria de todo proyecto. No se crean carpetas, un documento por tarea ni un tablero paralelo para admitir varios resultados.
 
 ## Agentes, skills y comandos
 
@@ -90,13 +102,13 @@ Jefe de proyecto suele ser tu interlocutor. Los otros cinco especialistas interv
 | Agente | Para qué sirve |
 |---|---|
 | Jefe de proyecto | Entiende la petición, coordina contexto, especialistas, autorizaciones y cierre. |
-| Arquitecto | Resuelve decisiones estructurales cuando realmente afectan el sistema. |
-| Redactor | Trabaja estrategia editorial, copy comercial/editorial, UX writing y SEO dentro de su alcance. |
-| Diseñador | Define experiencia, dirección visual, UI Kit y prototipos cuando hace falta decidirlos. |
-| Desarrollador | Implementa todo el código full stack: UI/frontend/responsive, backend, WordPress, datos, APIs e integraciones en el stack existente. |
+| Arquitecto | Resuelve decisiones estructurales, integración, compatibilidad y herramientas cuando son materiales, sin imponer software a otros medios. |
+| Redactor | Estrategia editorial, investigación, narrativa y comunicación publicable adaptada al medio; SEO solo cuando corresponde. |
+| Diseñador | Dirección visual, experiencia y producción artística dentro de capacidades verificadas; conserva revisión visual humana. |
+| Desarrollador | Implementación técnica, software full stack, APIs, SDK, CLI e integraciones/automatización cuando el resultado las necesita. |
 | Revisor | Revisión independiente de solo lectura, no implementa cambios. |
 
-Las **41 skills** son procedimientos especializados que se cargan bajo demanda; no tienes que elegirlas. Los **14 comandos** son atajos opcionales. Los más útiles al empezar son `/nuevo-proyecto`, `/cn-estado`, `/cn-actualizar`, `/diseno`, `/contenido`, `/depurar`, `/revision` y `/entrega`. Consulta [la lista completa y cuándo usar cada comando](.cn-pilot/documentacion/COMANDOS.md) y [el catálogo de capacidades](.cn-pilot/documentacion/SKILLS-Y-CAPACIDADES.md).
+Las **42 skills** son procedimientos especializados que se cargan bajo demanda; no tienes que elegirlas. Los **14 comandos** son atajos opcionales. Los más útiles al empezar son `/nuevo-proyecto`, `/cn-estado`, `/cn-actualizar`, `/diseno`, `/contenido`, `/depurar`, `/revision` y `/entrega`. Consulta [la lista completa y cuándo usar cada comando](.cn-pilot/documentacion/COMANDOS.md) y [el catálogo de capacidades](.cn-pilot/documentacion/SKILLS-Y-CAPACIDADES.md).
 
 ## Git, seguridad y publicación
 

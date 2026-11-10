@@ -1,12 +1,12 @@
 # Núcleo de CN Pilot — Especificación 2.0
 
-**Versión:** `3.0.2`
+**Versión:** `3.1.0`
 
 Documento de referencia para mantenedores de CN Pilot. Una persona nueva debe empezar por [`documentacion/EMPIEZA-AQUI.md`](documentacion/EMPIEZA-AQUI.md); no necesita leer esta especificación para trabajar.
 
 ## Objetivo
 
-Sistema portable y versionado para desarrollar proyectos web con agentes de IA sin depender de una única máquina, persona o proyecto. Debe servir tanto para mantenimiento pequeño como para proyectos grandes desde cero.
+Sistema portable y versionado de coordinación y producción profesional multidisciplinaria con agentes de IA, sin depender de una única máquina, persona, disciplina o proveedor. Un proyecto puede representar una empresa, marca, producto, iniciativa o trabajo; no exige web, aplicación ni repositorio de código. Debe servir tanto para una tarea pequeña como para varios entregables relacionados o independientes.
 
 ## Principio local-first y modo de entrega
 
@@ -28,7 +28,7 @@ Los MCPs y workflows de deployment no se activan ni distribuyen por defecto. Ant
 - **Contexto del proyecto:** `README.md`, memoria operativa (`PROYECTO.md`, `REQUISITOS.md`, `ESTADO.md`, `DECISIONES.md`) y el índice raíz `ARTEFACTOS.md`.
 - **Recursos del proyecto:** materiales originales recibidos bajo `recursos/`; son entradas de referencia, no producción ni outputs.
 - **Artefactos del proyecto:** resultados auxiliares reales bajo `artefactos/` en greenfield; container y subcarpetas on-demand, creados solo al aparecer el primer artefacto, sin README-placeholder ni `.gitkeep`.
-- **Producto:** implementación/runtime activo administrado en el workspace bajo `producto/` para Greenfield y Existing importado; el stack define el layout interno nativo, separado de artefactos auxiliares. Solo un Existing repository operativo adoptado puede conservar un product root real fuera del container como excepción documentada.
+- **Producto:** fuentes de producción activas, editables y proyectos nativos de los entregables administrados bajo `producto/` por defecto; incluye implementación/runtime de software y fuentes de otras disciplinas. Cada herramienta/formato define su estructura nativa, sin scaffold web universal. Se preservan ubicaciones existentes o dependencias materiales documentadas según el contrato de rutas.
 
 ## Contrato de payload del template
 
@@ -51,7 +51,9 @@ La relación entre una obra concreta y código/texto protegido depende de su con
 
 ## Repository root y product boundary
 
-La raíz del repositorio CN Pilot no es el root de producto canónico ni el destino habitual de outputs generados. En workspaces Greenfield y Existing importados, la implementación activa vive bajo `producto/`; outputs auxiliares bajo `artefactos/`; inputs recibidos bajo `recursos/`. Los containers pueden no existir: `/nuevo-proyecto` registra ubicaciones canónicas pero nunca los crea por sí solo. `producto/` se crea al iniciar implementación/adopción explícita y `artefactos/` al producir el primer artefacto. El stack decide la estructura nativa dentro de `producto/`, sin wrapper universal. No coloques código productivo, prototipos, documentos de arquitectura/specs/auditorías, copy, design systems ni reportes en repo root por rutina.
+**Alcance de este contrato:** las reglas de código, runtime, entry points, imports, build y `Pending normalization/migration` de los párrafos siguientes se aplican a entregables de software. No convierten un documento, audio, ilustración, render o proyecto nativo en una aplicación. Para entregables no software usa `producto/` para fuentes de producción editables y `artefactos/` para exportaciones, propuestas y outputs de apoyo, solo cuando existan; un documento editable autónomo puede ser el propio entregable bajo `artefactos/`, sin copia ni wrapper en `producto/`. Conserva una ubicación nativa existente y regístrala en `PROYECTO.md` con su razón: no requiere demostrar hosting/CI ni moverla para ajustarla a software. Ubicaciones externas se referencian sin secretos y exigen acceso autorizado; no prometen portabilidad local. Una ruta registrada nunca concede permiso de escritura. Con varios entregables, añade subraíces solo para separaciones reales; no envuelvas ni migres un único entregable o sus rutas existentes por rutina.
+
+La raíz del repositorio CN Pilot no es el destino preventivo de outputs. Inputs recibidos → `recursos/`; outputs auxiliares y entregables autónomos → `artefactos/`; fuentes editables de producción cuando el formato lo requiere → `producto/`; contexto y control → raíz. Para software Greenfield/importado, la implementación/runtime vive bajo `producto/` salvo Existing operativo con excepción documentada. Los containers pueden no existir: `/nuevo-proyecto` registra ubicaciones pertinentes pero nunca las crea por sí solo. `producto/` se crea al iniciar una fuente de producción/adopción explícita; `artefactos/` al producir el primer output. Cada formato nativo conserva su estructura sin wrapper universal. No coloques código, prototipos, specs, copy, design systems ni reportes en repo root por rutina.
 
 La raíz queda destinada principalmente a infraestructura técnica requerida, contexto del proyecto, `recursos/` y, solo cuando existan, `artefactos/` y `producto/`. Para greenfield, `contenido/`, `diseno/` y `documentacion/` de proyecto pertenecen bajo `artefactos/`; igual para outputs auxiliares de Existing importado. Esos mismos nombres dentro de `producto/` pertenecen a la estructura nativa del producto y no colisionan. Existing importado al workspace se organiza con su producto activo bajo `producto/`, sin capa `legacy-site/` salvo significado técnico real. Existing repository adoptado preserva el root operativo como excepción solo con evidencia material de contratos externos; registra modo, root de producto real y razón en `PROYECTO.md`. Código o carpetas source top-level fuera de `producto/` —p. ej. `legacy-site/`— sin esa evidencia quedan `Pending normalization/migration`: no los eleves a excepción por comodidad ni comiences implementación allí hasta resolverlo de forma segura. No muevas ninguna estructura durante onboarding.
 
@@ -77,8 +79,9 @@ Las superficies propias de CN Pilot destinadas a personas usan español por defe
 
 ```text
 PROJECT
-→ PROFILE
-→ CAPABILITIES
+→ DELIVERABLE / SHARED TASK
+→ OPTIONAL PROFILE
+→ REQUIRED CAPABILITIES / VERIFIED TOOLS
 → TASK CLASSIFICATION
 → RISK
 → AGENT
@@ -100,7 +103,7 @@ PROJECT
 - `maintenance`
 - `content-site`
 
-El perfil define contexto y capacidades disponibles; no obliga a ejecutar todo el flujo.
+Los siete perfiles son compatibilidad especializada opcional, aplicable al entregable/tarea pertinente, no una clasificación obligatoria del proyecto. Un proyecto puede no tener perfil o reunir varios. El perfil orienta contexto y capacidades requeridas; no acredita herramientas disponibles ni obliga a ejecutar todo el flujo.
 Los nombres de archivo de `.cn-pilot/perfiles/` están en español; los valores de perfil de la lista y sus encabezados internos son identificadores técnicos estables en inglés. No los derives del nombre del archivo ni los traduzcas en una futura alteración de estructura.
 
 ## Agentes
@@ -123,6 +126,20 @@ El especialista controla el método y las decisiones técnicas internas dentro d
 Arquitecto, Redactor, Diseñador y Desarrollador entregan por defecto el mejor resultado profesional razonable para el objetivo, la escala, el contexto y el stack confirmados. Una solicitud breve no reduce el nivel de criterio ni justifica una salida genérica, parcial o de plantilla. La proporcionalidad limita complejidad, alcance y trabajo accesorio; no rebaja la calidad de lo que sí está en alcance. Decide autónomamente los detalles reversibles propios de cada owner y entrega propuestas/materiales completos y utilizables. No inventes hechos, autoridad, contenido, comportamiento, assets ni dependencias para aparentar completitud; escala solo los gaps materiales.
 
 La calidad visual, editorial y técnica se resuelve en su owner y en los contratos/skills pertinentes; no se delega a Jefe ni a Revisor la autoría estética o editorial. Las propuestas que requieran una decisión humana se presentan a la persona según el gate ya vigente; este estándar no añade fases, rondas ni gates estéticos automatizados. Resuelve lo aplicable en una entrega profesional, manteniendo intactos los fast paths Approved/Strict, Existing y de cambios localizados.
+
+### Proyecto universal y entregables (BF-074)
+
+Un proyecto conserva identidad, objetivos, fuentes, recursos, restricciones y decisiones comunes; cada entregable puede tener propósito, formato, tecnología, raíz, owner, acceptance, dependencias, estado y aprobaciones propios. Las disciplinas y formatos son abiertos, no perfiles adicionales obligatorios. Antes de una solicitud posterior distingue modificación de un entregable, nuevo entregable del mismo proyecto, tarea transversal o proyecto independiente. Reutiliza el contexto pertinente; no repitas `/nuevo-proyecto` por un cambio de formato. Pregunta solo si la identidad/alcance entre proyectos es materialmente ambiguo.
+
+Jefe es single-writer del contexto compartido. `PROYECTO.md` conserva identidad y el registro mínimo de entregables comprometidos cuando necesiten distinguirse, con referencia estable/nombre, resultado/formato, raíz o destino real, owner y dependencias materiales. No exige IDs ni filas para una tarea trivial; un proyecto single-deliverable existente sigue siendo válido sin migración. `REQUISITOS.md` guarda acceptance y alcance compartidos o por entregable; una spec separada solo por complejidad material. `DECISIONES.md` conserva decisiones/aprobaciones durables con su scope; `ESTADO.md` resume únicamente bloqueos y próximo trabajo útil por entregable cuando difieran. `ARTEFACTOS.md` indexa outputs reales y su lifecycle individual; no registra planes vacíos ni duplica specs. Mientras no exista output, un estado material puede vivir en `ESTADO.md`; al existir, referencia el índice en vez de mantener dos estados paralelos. Una aprobación de un entregable no aprueba los demás ni autoriza publicación. Las dependencias nombran el resultado y su condición de disponibilidad/aprobación, no bloquean trabajo independiente. No crees un tablero, documento por tarea ni carpetas anticipadas.
+
+### Descubrimiento y selección profesional de capacidades (BF-075)
+
+Antes de comprometer una producción especializada, el owner traduce el resultado/formato/edición/calidad esperados a capacidades y comprueba las herramientas realmente expuestas por el runtime y el entorno pertinente. Activa `tool-discovery` ante capacidad especializada incierta, herramienta ausente o elección material; no ante un microcambio con herramienta vigente verificada. Una skill es un procedimiento, un perfil orienta y una configuración es intención: ninguno demuestra instalación, conexión, acceso ni ejecución en la sesión actual. Usa evidencia de disponibilidad y autorización separadas; una denegación no se sortea mediante otro agente, shell, API o herramienta.
+
+El mecanismo es abierto a MCP, API, CLI, SDK/librería, software local/de escritorio, servicios y futuras interfaces, sin catálogo cerrado ni proveedores por defecto. Distingue disponible/utilizable, presente sin conexión/autorización, requiere instalación, requiere cuenta/licencia/pago y no disponible/no verificada, con evidencia y límites. Selecciona por idoneidad, calidad, formato editable, compatibilidad, mantenimiento, privacidad y coste; no por familiaridad con un lenguaje. No conviertas cualquier resultado en código ni presentes sustitutos rudimentarios como producción profesional cuando la capacidad especializada es imprescindible. Si falta, explica el requisito y alternativas honestas —herramienta autorizada, aportación profesional, handoff o alcance distinto explícitamente acordado— y bloquea solo la parte dependiente. No instales, conectes cuentas, compres licencias ni envíes datos a servicios externos sin autorización aplicable; nunca guardes secretos. Descubrir no activa efectos externos.
+
+Arquitecto evalúa decisiones estructurales e integración solo cuando sean materiales; Diseñador gobierna dirección y producción visual/artística dentro de capacidades verificadas; Redactor estrategia, investigación, narrativa y contenido publicable adaptados al medio; Desarrollador implementación técnica, software e integraciones cuando correspondan. No se fuerzan arquitectura software, DOM ni SEO sobre otros medios. Jefe coordina y presenta decisiones humanas; Revisor verifica integridad, funcionalidad, riesgos y cumplimiento observable sin autoridad estética. Las restricciones de permisos efectivas pueden impedir producción directa de un owner: informa el límite, no transfiere autoría ni permite eludir la ACL. Los contratos web especializados conservan sus triggers y fast paths.
 
 ## Permisos
 

@@ -16,7 +16,7 @@ Formato recomendado por categoría:
 | Artefacto | Estado | Propósito |
 | --- | --- | --- |
 
-Usa la ruta canónica como artefacto. Si responsabilidad u origen aportan información material, puede añadirse una columna breve; nunca se utiliza para etiquetar contenido como generado por IA.
+Usa la ruta canónica como artefacto, o un destino externo verificable sin secretos si el formato nativo lo requiere y el acceso está autorizado. Si responsabilidad u origen aportan información material, puede añadirse una columna breve; nunca se utiliza para etiquetar contenido como generado por IA. Relaciona cada output con el entregable de `PROYECTO.md` cuando haya varios; distingue fuente editable de exportación si afecta su uso. No registres un entregable futuro como archivo existente.
 
 ## Estados
 
@@ -28,6 +28,8 @@ Usa la ruta canónica como artefacto. Si responsabilidad u origen aportan inform
 - `Deprecated`
 
 No todos los artefactos necesitan estado ni deben recorrer la secuencia completa; si una categoría no lo necesita, la columna puede omitirse. Si una implementación también fue verificada mediante QA, puede anotarse de forma breve cuando aporte valor, sin ampliar innecesariamente el catálogo.
+
+Estado y aprobación son individuales: `Approved` exige evidencia/decisión con scope, no implica aprobar otros outputs, QA técnico ni publicar. Referencia `DECISIONES.md` o la fuente de aprobación cuando aporte autoridad durable, sin copiarla. Los bloqueos operativos y próximos pasos viven en `ESTADO.md`; dependencias y destinos estables en el registro de `PROYECTO.md`.
 
 ## Reglas
 

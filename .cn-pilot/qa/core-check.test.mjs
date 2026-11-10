@@ -839,7 +839,7 @@ test("/nuevo-proyecto es progresivo, lee antes de preguntar y no es un wizard", 
   const inspect = command.indexOf("## Inspecciona antes de preguntar");
   const ask = command.indexOf("## Conversa por necesidad, no por formulario");
   assert.ok(inspect >= 0 && ask > inspect, "context and resources are inspected before questions");
-  assert.ok(command.includes("ni obliga a completar un wizard"));
+  assert.ok(command.includes("ni obliga a completar un wizard") || command.includes("No obliga a completar un wizard"));
   assert.ok(command.includes("No hagas una lista fija de campos"));
   assert.ok(command.includes("Acepta que la persona posponga o salte una fase"));
   assert.ok(command.includes("Alcanza esa suficiencia sin una confirmación genérica obligatoria"));
@@ -1554,7 +1554,7 @@ test("debugging/analytics route to one full-stack Developer and editorial work t
   assert.equal(agents.length, 6, "the six-agent topology remains exact");
 });
 
-test("six-agent routing covers frontend, backend, WordPress and environment ownership", () => {
+test("six-agent routing covers multidisciplinary scopes and technical owners", () => {
   const read = (relative) => fs.readFileSync(new URL(`../../${relative}`, import.meta.url), "utf8");
   const lead = read(".kilo/agents/jefe-proyecto.md");
   const developer = read(".kilo/agents/desarrollador.md");
@@ -1565,16 +1565,24 @@ test("six-agent routing covers frontend, backend, WordPress and environment owne
   const wordpressTheme = read(".kilo/skills/wordpress-theme-development/SKILL.md");
 
   assert.match(lead, /Diseñador para dirección\/UX\/UI visual, Redactor para estrategia\/editorial\/SEO de contenido y Desarrollador para toda implementación técnica/i);
+  assert.match(lead, /BF-074\/075/);
+  assert.match(lead, /Producción no web, nuevo medio o herramienta especializada/i);
+  assert.match(lead, /`tool-discovery`/);
   assert.match(lead, /En una unidad que cruza frontend\/backend, conserva un solo Desarrollador como owner técnico/i);
   assert.match(routing, /Implementación técnica full stack[\s\S]*?UI\/DOM[\s\S]*?backend[\s\S]*?`desarrollador`/i);
   assert.match(routing, /WordPress custom theme Greenfield[\s\S]*?Desarrollador es el único owner técnico/i);
   assert.match(routing, /Preparación del entorno\/dependencias[\s\S]*?`environment-dependency-management`/i);
   assert.match(developer, /React, Astro, Next\.js, PHP, WordPress\/WooCommerce, Laravel, Node\.js, Python, SQL/i);
-  assert.match(developer, /Implementa cambios técnicos full stack: frontend\/UI, responsive, JavaScript\/TypeScript, backend, APIs, datos e integraciones/i);
+  assert.match(developer, /Implementa software, soluciones técnicas, datos, APIs, integraciones y automatización/i);
+  assert.match(developer, /no convierte disciplinas ajenas en programación/i);
+  assert.match(designer, /dirección visual, experiencia y producción artística en cualquier medio/i);
+  assert.match(designer, /`tool-discovery`/);
+  assert.match(redactor, /investigación, estrategia editorial, narrativa y comunicación publicable adaptada a diferentes entregables/i);
+  assert.match(redactor, /`tool-discovery`/);
   assert.match(developer, /Diseñador conserva autoridad de UX\/dirección visual[\s\S]*?no re-diseñes/i);
   assert.match(developer, /Design-only no autoriza Product[\s\S]*?consume el prototipo\/Kit\/copy aprobados como source of truth/i);
   assert.match(designer, /el Diseñador es responsable de la dirección y de entregar su mejor propuesta profesional/i);
-  assert.match(redactor, /UX writing, microcopy, storytelling/i);
+  assert.match(redactor, /narrativa|UX writing/i);
   assert.match(wordpressTheme, /Desarrollador es el único owner técnico/i);
   assert.match(environment, /lockfile/i);
   assert.match(environment, /No instales tools globales/i);

@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.1.0] - 2026-11-10
+
+- Generaliza CN Pilot como framework de producción multidisciplinaria con proyectos de identidad compartida y entregables independientes, conservando formato nativo y single-writer de contexto sin migrar proyectos existentes.
+- Define BF-074/075 para clasificación de entregables y descubrimiento profesional basado en capacidades realmente expuestas, con gates separados de conexión, instalación, licencia y autorización.
+- Extiende onboarding, routing y los seis especialistas, y añade `tool-discovery` bajo demanda; perfiles web permanecen opcionales, BF-073 y owners vigentes.
+- Añade escenarios sintéticos aislados y pruebas deterministas de contrato/updater; no acreditan evaluación conductual de Kilo ni producción real de herramientas especializadas.
+
 ## [3.0.2] - 2026-11-10
 
 - Establece BF-073: la brevedad del encargo no reduce el estándar profesional razonable de Arquitecto, Redactor, Diseñador y Desarrollador; complejidad, alcance y gates siguen proporcionales.

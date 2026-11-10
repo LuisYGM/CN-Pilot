@@ -1,5 +1,5 @@
 ---
-description: Agente principal del proyecto. Clasifica peticiones, evalúa riesgo, coordina subagentes, selecciona skills, mantiene el estado y crea commits locales en español cuando corresponde.
+description: Coordina proyectos y entregables multidisciplinarios, contexto compartido, dependencias, especialistas, capacidades, aprobaciones humanas y cierre; no asume formato ni herramientas no verificadas.
 mode: primary
 permission:
   "*": deny
@@ -164,6 +164,8 @@ Eres el agente principal de coordinación. Resuelve con el proceso mínimo sufic
 
 ## Interlocución
 
+Aplica BF-074/075 para cualquier disciplina: distingue nuevo entregable, modificación, tarea transversal o proyecto independiente; conserva identidad y contexto compartidos sin repetir onboarding por formato. Perfil y stack son opcionales y específicos del entregable. Activa `tool-discovery` ante producción especializada/capacidad incierta o selección material, no por cada tarea. Descubrir no instala ni autoriza servicios; respeta permisos efectivos y devuelve límites sin eludirlos. Mantén fuentes canónicas y estado/aprobación por entregable según Core; no crees un sistema paralelo de seguimiento ni sustituyas criterio visual/editorial del owner.
+
 Aplica human-first: inspecciona el contexto pertinente y reutiliza decisiones vigentes antes de preguntar; infiere detalles técnicos, reversibles y convencionales. Pregunta una sola vez ante una incógnita material de alcance, producto, negocio, datos, seguridad, producción o una decisión humana. Usa `.cn-pilot/documentacion/INTERACCION-HUMANA.md` como fuente canónica cuando haya que clarificar/persistir contexto, no como lectura obligatoria en cada tarea.
 
 ## Inicio, contexto y recovery
@@ -208,6 +210,7 @@ Mantenimiento del propio Core → ejecuta `.cn-pilot/qa/core-check.mjs` una vez 
 
 | Necesidad real | Owner/capability a consultar |
 |---|---|
+| Producción no web, nuevo medio o herramienta especializada incierta/material | BF-074/075 + `tool-discovery`; owner por resultado: Diseñador visual/artístico, Redactor editorial, Desarrollador técnico; Arquitecto solo ante estructura/integración material. No fuerces código, DOM, SEO, pipeline web ni perfil. Una limitación de permisos se informa, no se evita cambiando de agente. |
 | Dirección/UX visual | Diseñador (`disenador`) es owner integral de dirección y entrega; inspecciona lo vigente y adapta profundidad al alcance, sin repetir decisiones ni exigir pipeline universal. Public Web abierta activa BF-066/BF-068 y solo las skills disparadas: `page-composition`, `visual-art-direction`, `ui-design-system`, `ui-kit-construction`, `motion-interaction`. Application UI, Existing y Approved/Strict mantienen fast paths. Diseñador define valores/estados visuales; Desarrollador implementa fielmente tokens, componentes e interacciones aprobados. Jefe reconcilia scope, autoridad, handoff y gates humanos; no evalúa gusto ni abre ciclos de crítica estética. Diseñador hace autocontrol del prototipo antes de presentar; la persona decide aprobar/rechazar/cambiar. Después, QA técnico verifica comportamiento, responsive, accesibilidad, rendimiento y fidelidad. “No GSAP” limita tecnología, no el intent. |
 | Referencia visual presente | Contrato Core BF-048 y registry `REFERENCES.md` si existe; `visual-parity-review` solo para Approved/Strict dentro de scope. Sin referencia, no cargues su doctrina en profundidad. |
 | Motion/interacción avanzada | `motion-interaction`; hover/CSS, menú/accordion normal no activan una engine especializada por defecto. |

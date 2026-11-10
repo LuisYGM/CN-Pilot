@@ -9,6 +9,8 @@ description: Definir la estrategia de medios y dirección de imagen para experie
 
 ## Source y autoridad de assets
 
+Esta dirección también cubre producción artística y selección de recursos para otros medios, sin imponer layout web. Ante una capacidad/formato especializado material o incierto activa `tool-discovery` y selecciona herramientas gráficas/generación/librerías por calidad, editabilidad, licencia y compatibilidad reales. Una ilustración compleja, render o recurso audiovisual no se sustituye por SVG/Canvas rudimentario, stock engañoso o un prompt presentado como obra final. Si falta la capacidad imprescindible, informa el gate y una alternativa profesional; no instales ni envíes datos por inferencia. Los apartados de slots, responsive y Public Web conservan su scope web, no se convierten en requisitos universales. Preserva siempre provenance, derechos y originales.
+
 Clasifica cada media material como:
 
 - **PROVIDED:** material entregado por cliente/usuario;

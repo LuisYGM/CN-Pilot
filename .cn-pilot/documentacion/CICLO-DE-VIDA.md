@@ -14,6 +14,12 @@ La profundidad documental también es proporcional: DIRECT no crea spec/matriz; 
 
 ## Recorrido adaptable
 
+Un proyecto puede representar una empresa, marca o iniciativa con múltiples entregables de cualquier disciplina. Primero distingue si la solicitud modifica un resultado, añade otro al mismo proyecto, afecta varios o pertenece a un proyecto independiente. Añadir una presentación tras una landing no requiere repetir `/nuevo-proyecto`, branding ni audiencia. Los perfiles y stacks solo orientan el entregable pertinente; no son campos obligatorios del proyecto universal.
+
+`PROYECTO.md` identifica entregables comprometidos, formatos/fuentes editables, owners, ubicaciones y dependencias materiales; `REQUISITOS.md` separa criterios comunes de diferencias. `ARTEFACTOS.md` indexa outputs reales y su estado; `DECISIONES.md` conserva aprobaciones durables con scope. `ESTADO.md` resume bloqueos y próximo trabajo útil, sin duplicar el índice. Una aprobación no se extiende a otros entregables ni publica nada. Un único resultado Existing sigue siendo válido sin migración, IDs ni documentos adicionales.
+
+Si producir requiere una herramienta especializada incierta, el owner comprueba primero runtime y entorno, distingue presencia de conexión/autorización/licencia y elige por calidad/formato/coste, no por familiaridad con código. La alternativa puede ser software gráfico, servicio autorizado, CLI o trabajo humano con handoff: no se finge una capacidad ausente ni se instala/conecta nada por inferencia. Consulta BF-075 y `tool-discovery` solo ante esa necesidad.
+
 Según el objetivo, el trabajo puede incluir contexto y discovery, requisitos, arquitectura, contenido, diseño, frontend/prototipo, desarrollo, QA, handoff, integración CMS, deployment y mantenimiento. Ninguna lista sustituye el scope real. Una etapa se añade solo si ayuda a decidir o entregar el resultado actual.
 
 Un bug conocido suele ir a diagnóstico → fix → retest. Una app puede necesitar entender flujo/estados antes de diseñar; no recibe automáticamente el recorrido de marketing web. Un diseño aprobado se implementa sin rediseño; una solicitud solo de diseño puede terminar en artefactos y handoff.
@@ -28,7 +34,7 @@ Un **UI Kit** define el sistema visual compartido; no es la Home. La **Flagship*
 
 - Inputs originales: `recursos/`.
 - Diseño, contenido y otros outputs auxiliares: `artefactos/`, cuando existen entregables.
-- Implementación activa: `producto/` si corresponde al layout Greenfield/importado. Existing operativo puede preservar su root por compatibilidad documentada.
+- Fuentes de producción activas/editables: `producto/` por defecto con estructura nativa, incluido software. Un documento editable autónomo también puede ser un entregable en `artefactos/` sin duplicarlo. Se preservan ubicaciones nativas existentes justificadas; las reglas de runtime, migración y hosting software no se imponen a audio, documentos o 3D. Existing software conserva sus contratos operativos y excepciones.
 - Memoria durable y decisiones: Project Context raíz; cada archivo mantiene su propósito.
 
 Registrar una ubicación no crea una carpeta. No se adopta, mueve ni publica material original por inferencia.

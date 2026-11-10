@@ -36,3 +36,5 @@ Limitaciones observadas en Kilo 7.8.8: `--agent` no inicia perfiles `mode: subag
 ## Escenarios
 
 `scenarios.json` contiene solicitud exacta, fixture, aceptación observable y evidencia para EVAL-001..006. Pilotos prioritarios: DIRECT, recovery y handoff a Revisor. Las definiciones y tests de esquema son insumos reproducibles, no sustituyen una ejecución Kilo ni otorgan PASS por adelantado.
+
+`multidisciplinary.json` define MULTI-01..04 para contexto compartido, entregables 2/3, capacidad 3D no conectada y routing Existing WordPress. `node --test .cn-pilot/qa/multidisciplinary.test.mjs` verifica contratos/aislamiento y prepara cada fixture en una carpeta temporal nueva, **sin Git ni commits**; el resultado dice `PREPARED_NOT_EXECUTED`/`INCONCLUSIVE`. Eso no verifica conducta. Una evaluación conductual requiere ejecutar explícitamente Kilo en cada workspace temporal nuevo, comprobar la sesión/evidencia real contra la aceptación y registrar PASS/FAIL/INCONCLUSIVE; una declaración dentro del prompt del fixture no prueba qué tools expone realmente ese runtime. Ningún escenario instala/connecta tools ni consulta servicios del proyecto.

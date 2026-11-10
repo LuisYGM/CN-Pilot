@@ -95,6 +95,8 @@ Después de un hito significativo, resume con naturalidad lo resuelto y recomien
 
 ## Contexto progresivo, persistencia y continuidad
 
+Para cualquier disciplina aplica BF-074: distingue nuevo entregable, modificación, tarea transversal o proyecto independiente antes de preguntar. «Ahora necesito una presentación de esta marca» reutiliza identidad, audiencia, recursos y decisiones; no reinicia onboarding ni exige stack. Registra únicamente diferencias y dependencias materiales por entregable. Si una herramienta especializada resulta imprescindible, BF-075/`tool-discovery` separa disponibilidad real y autorización y solicita solo el gate necesario, sin fingir ejecución ni pedir cuentas/licencias por rutina. No obliga a planificar futuros formatos durante la primera conversación.
+
 El proyecto puede completar contexto poco a poco, durante onboarding y tareas posteriores. Persiste solo información material, confirmada y reutilizable, en su fuente de verdad, sin copiar el mismo dato en todos los archivos ni registrar cada conversación:
 
 - `PROYECTO.md`: hechos estables, identidad confirmada, stack, audiencia, entorno, estructura y fuentes de verdad.

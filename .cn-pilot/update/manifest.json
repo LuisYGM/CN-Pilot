@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "cnPilotVersion": "3.0.2",
+  "cnPilotVersion": "3.1.0",
   "sourceRepository": "https://github.com/LuisYGM/cn-pilot.git",
   "stableBranch": "main",
   "sourceCommit": null,
@@ -11,23 +11,23 @@
   "managedFiles": [
     {
       "path": ".cn-pilot-version",
-      "sha256": "3fc0bf8d7ddbfe77eb4074c0b03d6567d7874a25ea4144aadea6686fcd5f6feb"
+      "sha256": "b2f44d3b6e29f8b1b73ea4735f006affc4d198e1fd9c7d50e736159b1ef636c6"
     },
     {
       "path": ".cn-pilot/CAMBIOS.md",
-      "sha256": "c00b5055b83ad635588841a9b81a9008bb9f60112f0e9886547f03522cb9646e"
+      "sha256": "9ddb360d68026aab26e36dbdec5a73b3f3f8bc0c37125b671633ff4b28564f97"
     },
     {
       "path": ".cn-pilot/MANIFIESTO.md",
-      "sha256": "21c7d4f7ff405c5fe79dad2eb1dc7eccd435d27edd3e17ebfd25fc9a594e1618"
+      "sha256": "b09a5076c0d5a95f0bdb3ffb358098ec53f3191b8a09fbbc357fe6fa7f724856"
     },
     {
       "path": ".cn-pilot/NUCLEO.md",
-      "sha256": "f9429403ee08f3092ef2caca759b6ccc31458f4ebb58e21757f8a697747ae159"
+      "sha256": "7fd234c04c13d31b4d117e71249e9f7a6d634a91f77644211332bf49835edc14"
     },
     {
       "path": ".cn-pilot/agent-evals/README.md",
-      "sha256": "b3faf18e68b9b61b7146ff95b44e21f7a7d5e649fdd79b607e076c540a449ce0"
+      "sha256": "3fc0d657b3e0bdff48f5ae7e123ef9e9a8a3c720b08b092cfe7adb58589e468f"
     },
     {
       "path": ".cn-pilot/agent-evals/fixtures/EVAL-001/producto/index.html",
@@ -106,6 +106,14 @@
       "sha256": "7ea1c539be4f2e98a706d072b5e96d5a5abb8e0f0726664e2dd12a545dd50b80"
     },
     {
+      "path": ".cn-pilot/agent-evals/multidisciplinary.json",
+      "sha256": "d9cddccf480e2b4de416e7e4e7c30e3c80ccd4225638bab97a6c7043603d3179"
+    },
+    {
+      "path": ".cn-pilot/agent-evals/prepare-multidisciplinary.mjs",
+      "sha256": "d44df4551a2ea837214814515a93cfe3e4659618ff3df70faf44955e13e7dbd1"
+    },
+    {
       "path": ".cn-pilot/agent-evals/prepare.mjs",
       "sha256": "be2de359ac419bc006c052dc46116d852a7b3116bb4541fcede6cd1d7f8a3f85"
     },
@@ -127,7 +135,7 @@
     },
     {
       "path": ".cn-pilot/documentacion/CICLO-DE-VIDA.md",
-      "sha256": "72d0e9c836d97d1c4b92bc53fe09ec3b957f0638998b37a8f7a38a0dd9032a81"
+      "sha256": "8503542f355fa1cc9201a45f11bea7e1de50289d14144c5b469d6c9d6db5529a"
     },
     {
       "path": ".cn-pilot/documentacion/COMANDOS.md",
@@ -143,7 +151,7 @@
     },
     {
       "path": ".cn-pilot/documentacion/EMPIEZA-AQUI.md",
-      "sha256": "46ec961f54b4c2b19e8ba3769817004ea95ec63cafcca2f2d9ebf5494b352e6a"
+      "sha256": "6dc1434a491162972a4e3145af703f6f7f5994932c47e3d80a120f724ff4055a"
     },
     {
       "path": ".cn-pilot/documentacion/ESTRATEGIA-DE-MODELOS.md",
@@ -163,7 +171,7 @@
     },
     {
       "path": ".cn-pilot/documentacion/INTERACCION-HUMANA.md",
-      "sha256": "57ce3fb94ac858b9165ea7caa20c5684fc088fa6534c6e4f8521b353e94255a0"
+      "sha256": "0b8e33b3ec737e865d90e66c838692d0dd27d6a02f5be9a9e576e3d21b3e6104"
     },
     {
       "path": ".cn-pilot/documentacion/README.md",
@@ -175,7 +183,7 @@
     },
     {
       "path": ".cn-pilot/documentacion/SKILLS-Y-CAPACIDADES.md",
-      "sha256": "4b17bd61133d18079e0187a0940b064861502510db2be9bb63a65fc92f1f03a0"
+      "sha256": "a3e224a11a95acdd5e42efa2ba79dde733ac4b44b0de541bce5d51f1b8c8cf0a"
     },
     {
       "path": ".cn-pilot/documentacion/SOLUCION-DE-PROBLEMAS.md",
@@ -287,7 +295,11 @@
     },
     {
       "path": ".cn-pilot/qa/core-check.test.mjs",
-      "sha256": "cfe5b8017d2628217bd6f74ac8fca7feb864e0f61a4cc0582f1beeb14d8464a7"
+      "sha256": "4669ede1719de199549ae78f9ab063fae85573f7e9b7fb5df0591b589fe86738"
+    },
+    {
+      "path": ".cn-pilot/qa/multidisciplinary.test.mjs",
+      "sha256": "3428a9ebd055cd73780be8a453d2b4265b849878b9a5a9a695f7a48f6c7af785"
     },
     {
       "path": ".cn-pilot/update/updater.mjs",
@@ -299,27 +311,27 @@
     },
     {
       "path": ".kilo/agents/arquitecto.md",
-      "sha256": "9855a24a7aa47874be41fc076d0c26f7235039a87951aeee4bc9615fd1899c58"
+      "sha256": "c83c28c2cb3ca83eb1eeb593adcfd0614d3c505d1aad8a36a61379cec39d23e2"
     },
     {
       "path": ".kilo/agents/desarrollador.md",
-      "sha256": "63c7101f1e64121a3b54d7a78a5c549500c74de2394e7b39a3f1bc99b7eb7f64"
+      "sha256": "7fc73311f0812d17db664a7d32be89f417e09a44ba5db96eb92d274c5ebe49ed"
     },
     {
       "path": ".kilo/agents/disenador.md",
-      "sha256": "3e84045e1eb6c824c260f97eca2bd939870661b659197bafc93b60b7c3ede368"
+      "sha256": "248a9f568939a29d64d60b8e0a4f702aaa95ac6120dbda062f66b6325b2d04ee"
     },
     {
       "path": ".kilo/agents/jefe-proyecto.md",
-      "sha256": "fbcb3067be76a3df65f69fb3d1e2b4539141d8aa7b173ba0a27ce639af2d43ce"
+      "sha256": "0b645d3ad3da0f35211cf2236ebd0513ae14bdbdc05e97148e394d9828cc5a61"
     },
     {
       "path": ".kilo/agents/redactor.md",
-      "sha256": "00a0d9faadfdd0b98df1529ca9b9400520a80b69b9287e3368c2183de0310d5d"
+      "sha256": "634a128e97bc812e4f08c3d7173746ed8f7e7fb52b03683220252970631adff1"
     },
     {
       "path": ".kilo/agents/revisor.md",
-      "sha256": "51bf09ca71dd13e83703e425d659a496a0bd6167657d15ad2d19d3d7c105484e"
+      "sha256": "1ad7383aa1d503c05fb039c4f3af5e2c3e83cd2430652743c44d705d3c41e580"
     },
     {
       "path": ".kilo/commands/cn-actualizar.md",
@@ -359,7 +371,7 @@
     },
     {
       "path": ".kilo/commands/nuevo-proyecto.md",
-      "sha256": "5fb67b50aa0fca511f0517c917d09d6ecb4b917c3d76c3453d489bf8c3ae9322"
+      "sha256": "6682351a68450940b1436bd4b7731d15f75e03630be96c1e7c6aab65b7e67199"
     },
     {
       "path": ".kilo/commands/plan.md",
@@ -522,6 +534,10 @@
       "sha256": "cf50735859d9cccb9d4365012cf6ee67ca17cdd351643b3de1e14500761b5ec9"
     },
     {
+      "path": ".kilo/skills/tool-discovery/SKILL.md",
+      "sha256": "1be0d1ade19b5be0b38a28b3735393a61dcafc35f6df42750a56877752f8b55b"
+    },
+    {
       "path": ".kilo/skills/ui-design-system/SKILL.md",
       "sha256": "d66e2cfe27a8eb750d676bf53765354dc3de8b104632b66cc2d8ad55caff2857"
     },
@@ -531,7 +547,7 @@
     },
     {
       "path": ".kilo/skills/visual-art-direction/SKILL.md",
-      "sha256": "7e241397455cfa01ced857ebf821bd02d150ac91e3e14e66d928845b5dda2bbd"
+      "sha256": "79faae4e1655973bb354eb374db7c74a50036359c368e527748fb9ada3bb98fa"
     },
     {
       "path": ".kilo/skills/visual-parity-review/SKILL.md",
@@ -567,10 +583,15 @@
     },
     {
       "path": "AGENTS.md",
-      "sha256": "837f9f263d7881d2755a43d57e3ee788a92695b98534d7a22d66382ea914ef09"
+      "sha256": "5a5d6b39f82dcbe68e7e33294399162d6126a908cc5504369984c98a2f3e95a6"
     }
   ],
-  "addedFiles": [],
+  "addedFiles": [
+    ".cn-pilot/agent-evals/multidisciplinary.json",
+    ".cn-pilot/agent-evals/prepare-multidisciplinary.mjs",
+    ".cn-pilot/qa/multidisciplinary.test.mjs",
+    ".kilo/skills/tool-discovery/SKILL.md"
+  ],
   "removedFiles": [],
   "migrations": [
     {

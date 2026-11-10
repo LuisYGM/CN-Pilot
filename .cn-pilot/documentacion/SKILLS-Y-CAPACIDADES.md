@@ -4,6 +4,16 @@ Las skills son procedimientos especializados que los agentes de CN Pilot cargan 
 
 ## Dirección, producto y contenido
 
+El proyecto y sus entregables pueden pertenecer a cualquier disciplina. Los siete perfiles existentes son especialización opcional; las skills web conservan su ámbito y no se convierten en procesos obligatorios para otros medios. Una skill es un procedimiento, no prueba instalación ni acceso a herramientas.
+
+## Descubrimiento transversal
+
+| Skill | Área que atiende |
+|---|---|
+| `tool-discovery` | Resultado → capacidad necesaria → evidencia runtime/entorno → selección profesional → activación autorizada. Distingue falta de conexión/autorización, instalación, cuenta/licencia/pago y capacidad desconocida. Solo ante elección o incertidumbre material, sin catálogo/proveedores por defecto. |
+
+La gestión de múltiples entregables vive en BF-074 y Project Context, no necesita otra skill obligatoria. `visual-art-direction` amplía selección y producción artística con herramientas verificadas; las 41 skills previas conservan sus triggers específicos.
+
 | Skill | Área que atiende |
 |---|---|
 | `product-discovery` | Comportamiento de producto cuando outcome, actores o flujos están abiertos. |

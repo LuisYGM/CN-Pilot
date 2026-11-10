@@ -5,14 +5,14 @@ agent: jefe-proyecto
 
 # Nuevo proyecto
 
-`/nuevo-proyecto` es la puerta de entrada recomendada para empezar o ubicar cualquier proyecto con CN Pilot. No significa crear una web nueva ni obliga a completar un wizard. Sirve para Greenfield y Existing, web pública, app/SaaS, WordPress, ecommerce, contenido, mantenimiento o evolución de código.
+`/nuevo-proyecto` es la puerta de entrada recomendada para empezar o ubicar cualquier proyecto con CN Pilot, de cualquier disciplina. Una marca, empresa, iniciativa o trabajo puede reunir varios entregables sin ser una web, aplicación ni repositorio de código. Una descripción como «Estoy creando una marca de videojuegos» basta para orientar el siguiente trabajo útil; no exige elegir perfil, CMS, stack ni actividades futuras. No obliga a completar un wizard ni se repite al añadir otro formato de salida.
 
 ## Inspecciona antes de preguntar
 
 - Reconcilia `AGENTS.md`, versión y Project Context (`PROYECTO.md`, `REQUISITOS.md`, `ESTADO.md`, `DECISIONES.md`, `ARTEFACTOS.md`) antes de preguntar o escribir.
 - Inspecciona `recursos/` de forma ligera: usa índices/brief/auditorías y detecta solo las familias pertinentes (branding, documentos, fotos, referencias, vídeo, código original o datos). No recorras cientos de archivos ni pidas información que ya aparece allí.
 - Reutiliza datos confirmados de auditorías, branding, sitemap, copy, referencias, assets e implementación; no vuelvas a preguntar lo que esos materiales resuelven salvo contradicción o información material ausente.
-- Identifica si el contexto ya describe el proyecto, qué está implementado, qué debe preservarse, el root real y si se trata de app, web pública, CMS, ecommerce o mantenimiento. Mira el código/manifiestos/configuración existentes solo hasta entender la petición actual; no inicies una auditoría completa por rutina.
+- Identifica si el contexto ya describe el proyecto, sus entregables/fuentes vigentes y qué preservar. Distingue entregable nuevo del mismo proyecto, modificación, tarea transversal y proyecto independiente (BF-074). Inspecciona código/manifiestos solo si el entregable es software y lo necesita; no inicies una auditoría completa por rutina.
 - Examina `README.md` para distinguir una copia genérica heredada, un README manual/mixto y el README del Core original. No clasifiques solo por `# CN Pilot` ni por la presencia de `.cn-pilot/`.
 - Si existe un checkpoint, sigue la identidad/origen y recovery de BF-047 antes de retomarlo; no importes su contenido o `nextAction` al proyecto nuevo ni lo copies a los documentos. Su ausencia es normal y no justifica crear runtime durante onboarding.
 
@@ -43,6 +43,8 @@ Para una copia derivada con README heredado, usa únicamente identidad, objetivo
 La operación es idempotente: en un proyecto ya inicializado no regeneres el README. Si el README existente es del proyecto, conserva su estructura y contenido manual; actualiza solo un delta material y seguro cuando esté dentro del scope. Un README generado debe identificarse como el proyecto en ejecuciones posteriores y no volver a coincidir con la presentación genérica del template.
 
 ## Contexto y límites
+
+Un proyecto comparte identidad, recursos, fuentes y decisiones sin imponer un formato. Registra entregables comprometidos solo cuando ayude a distinguir resultado, formato/fuente editable, owner, raíz/destino y dependencias; no exige documento por tarea, perfiles ni stack global. Una landing y una presentación de la misma marca son dos entregables del mismo proyecto: reutiliza branding, audiencia y decisiones, no repitas onboarding. Una aprobación no se propaga a otro entregable. Para elegir una capacidad especializada incierta activa `tool-discovery` (BF-075), sin instalar, conectar cuentas ni prometer producción no disponible. No explores herramientas de actividades futuras aún no solicitadas.
 
 - `PROYECTO.md`: hechos estables y fuentes de verdad; registra objetivo, público o tipo de partida solo si se conocen y aportan valor. Las clasificaciones internas/root/container se infieren de evidencia, nunca se presentan como campos.
 - `REQUISITOS.md`: alcance, comportamiento o criterios materiales que se hayan definido.

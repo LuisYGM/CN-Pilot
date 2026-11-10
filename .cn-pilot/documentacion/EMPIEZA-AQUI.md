@@ -20,11 +20,15 @@ Consulta [Configuración de Kilo](CONFIGURACION-KILO.md) si todavía no está in
 
    > Quiero crear una web WordPress para un restaurante. Tengo logo, fotos y referencias dentro de recursos.
 
+   > Estoy creando una marca de videojuegos. Primero quiero orientar la marca y preparar una presentación.
+
    > Este proyecto ya existe. Quiero rediseñar únicamente la Home sin cambiar el resto del sitio.
 
    > Hay un error al guardar pedidos; quiero encontrar la causa antes de tocar datos.
 
 Después puedes seguir hablando normalmente: no hace falta memorizar comandos ni elegir las skills o agentes para cada tarea. `/nuevo-proyecto` no crea código ni repite el onboarding si el proyecto ya está inicializado.
+
+No tienes que decidir todas las actividades futuras, ni elegir web, CMS, stack o perfil de antemano. Un mismo proyecto conserva identidad, recursos y decisiones al añadir entregables de otros medios. Las herramientas especializadas se descubren cuando el resultado las necesita: que una herramienta esté documentada no significa que esté conectada, licenciada o autorizada. Si falta una capacidad imprescindible, se explica la limitación y la alternativa profesional sin fingir que el resultado fue producido.
 
 ## Cómo responder
 
