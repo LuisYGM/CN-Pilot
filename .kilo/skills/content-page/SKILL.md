@@ -10,7 +10,7 @@ description: Crear contenido estructurado para páginas web antes o durante el d
 3. Propón según aplique arquitectura de contenido, propuesta principal, H1, hero, secciones H2/H3, narrativa, CTAs, enlaces internos, metatitle, metadescription, slug y notas para diseño.
 4. Toma decisiones profesionales sobre estructura, titulares, transiciones y jerarquía; no esperes un briefing exhaustivo.
 5. Separa copy creativo de hechos empresariales. No inventes cifras, experiencia, precios, garantías, certificaciones, cobertura, partners, testimonios, premios o capacidades no confirmadas.
-6. Si falta un hecho concreto, redacta alrededor de él cuando sea posible y marca únicamente el punto que necesita validación.
+6. Si falta un hecho concreto, redacta alrededor de él cuando sea posible y marca únicamente ese punto en el handoff o borrador editable; no llenes el copy publicable con disclaimers, notas internas o placeholders.
 7. En proyectos ficticios/exploratorios, crea una propuesta conceptual completa solo cuando esté autorizada.
 
 ### Content Enrichment Opportunity (BF-067)

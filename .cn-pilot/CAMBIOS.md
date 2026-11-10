@@ -1,5 +1,11 @@
 # Changelog
 
+## [3.0.2] - 2026-11-10
+
+- Establece BF-073: la brevedad del encargo no reduce el estándar profesional razonable de Arquitecto, Redactor, Diseñador y Desarrollador; complejidad, alcance y gates siguen proporcionales.
+- Refuerza iconografía SVG con licencia/provenance, atribución solo cuando sea obligatoria, contenido publicable, composición contextual de eyebrows y estados accesibles de botones.
+- Añade regresión determinista del contrato sin gates estéticos ni cambios de permisos, agentes, comandos o updater.
+
 ## [3.0.1] - 2026-11-10
 
 - Corrige el gate post-apply compartido por `update` y `bootstrap`: mantiene Core QA `WARN` global y permite commit solo ante el único warning documentado `core.optionalScaffold`/`recursos/README.md` ausente; warnings desconocidos, combinados, FAIL y errores del checker siguen bloqueados.

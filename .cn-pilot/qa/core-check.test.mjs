@@ -484,7 +484,7 @@ test("009A adapts visual ownership, delivery and approval to project context", (
     ["D user assets and authority are inspected first", pipeline, "inspecciona primero el índice/brief/recursos suministrados"],
     ["D fonts are researched through real copy and role samples", creative, "renderizando el idioma y copy del proyecto"],
     ["D media research precedes dependent composition", pipeline, "medios visuales materiales se seleccionan antes de cerrar las composiciones dependientes"],
-    ["D functional icon family is coherent", media, "una sola familia funcional"],
+    ["D functional SVG icon family is a professional default", media, "elige por defecto una sola familia profesional SVG"],
     ["E designer owns visual system", system, "El Diseñador responde por su criterio y entrega"],
     ["E the single Developer translates approved visual system", pipeline, "Desarrollador los traduce a tokens, variables y componentes del stack"],
     ["F relevant component states are specified", kit, "Muestra solo variantes/tamaños usados o aprobados"],
@@ -549,9 +549,9 @@ test("BF-068 Public Web Visual Quality Floor covers requirements A-S", () => {
     ["K intentional no-photo direction is valid", media, "Un «sin fotografía» intencional es una solución, no un placeholder"],
     ["L stock is not represented as project reality", media, "No infieras que una foto externa corresponde"],
     ["M asset research returns concrete candidates when chosen", media, "produce candidatos concretos"],
-    ["N one contextual functional icon family, no project-wide default", kit, "una sola familia de iconos funcionales elegida según la identidad/UI"],
+    ["N one project-compatible SVG icon family is the default when needed", kit, "una sola familia profesional SVG de iconos funcionales compatible con la identidad/UI"],
     ["N no mixing packs", kit, "No mezcles packs"],
-    ["O icon libraries are candidates, not a preset", media, "Lucide, Phosphor, Tabler u otra fuente legítima"],
+    ["O icon libraries are verified candidates, not a catalog obligation", media, "no una obligación de catálogo ni una preferencia universal"],
     ["O icon license does not grant trademark rights", media, "una licencia permisiva no elimina trademark/uso de marca"],
     ["O artwork SVG remains permitted", kit, "custom SVG se reserva para artwork/identidad"],
     ["P Quality Floor permits a deliberately sober direction", media, "Sobriedad deliberada es un resultado válido"],
@@ -1098,6 +1098,23 @@ test("installed Kilo resolves the six static security profiles", (t) => {
   assert.equal(resolveKiloPermission(revisor, "edit", "PROYECTO.md"), "deny");
   assert.equal(resolveKiloPermission(revisor, "external_directory", "C:/Users/secret"), "deny");
   assert.equal(resolveKiloPermission(revisor, "mcp_unreviewed_write", "remote/resource"), "deny");
+});
+
+test("professional defaults stay explicit without adding an aesthetic gate", () => {
+  const core = readCoreFile(".cn-pilot/NUCLEO.md");
+  assert.match(core, /Excelencia profesional por defecto \(BF-073\)/);
+  assert.match(core, /no añade fases, rondas ni gates estéticos automatizados/);
+  assert.match(core, /Todo botón activo expone hover y foco `:focus-visible` claramente visibles/);
+
+  for (const agent of ["arquitecto", "redactor", "disenador", "desarrollador"]) {
+    assert.match(readCoreFile(`.kilo/agents/${agent}.md`), /BF-073/);
+  }
+
+  const visualArt = readCoreFile(".kilo/skills/visual-art-direction/SKILL.md");
+  assert.match(visualArt, /familia profesional SVG/);
+  assert.match(visualArt, /No uses emojis ni caracteres Unicode como sustitutos improvisados de iconos/);
+  assert.match(visualArt, /solo muestra atribución si las condiciones verificadas la exigen/);
+  assert.match(readCoreFile(".kilo/skills/page-composition/SKILL.md"), /colócalo por defecto inmediatamente encima del título y dentro del mismo bloque/);
 });
 
 test("a missing SKILL.md is detected", (t) => {
@@ -1701,7 +1718,8 @@ test("BF-072 contractual UX defaults preserve scope, authority, and accessible i
   assert.match(core, /Header principal[\s\S]*?permanece visible durante el scroll[\s\S]*?position: sticky; top: 0[\s\S]*?Application UI/i);
   assert.match(core, /Existing fuera del scope conserva[\s\S]*?Approved\/Strict prevalece[\s\S]*?actualización del Core no modifica Product/i);
   assert.match(architecture, /sticky[\s\S]*?fixed[\s\S]*?scroll-padding-top[\s\S]*?CLS[\s\S]*?Application UI/i);
-  assert.match(architecture, /cursor: pointer[\s\S]*?hover perceptible[\s\S]*?:focus-visible[\s\S]*?transition: all[\s\S]*?layout shift[\s\S]*?Disabled/i);
+  assert.match(architecture, /cursor: pointer[\s\S]*?:focus-visible[\s\S]*?hover perceptible[\s\S]*?transition: all[\s\S]*?layout shift/i);
+  assert.match(architecture, /disabled\/loading\/error se expresan según los estados reales, sin aparentar clicabilidad/i);
   assert.match(responsive, /permanece visible durante scroll también en mobile[\s\S]*?menú móvil[\s\S]*?anchors/i);
   assert.match(kit, /Header\/Mobile Header[\s\S]*?navegación persistente/i);
   assert.match(kit, /cursor: pointer[\s\S]*?disabled/i);

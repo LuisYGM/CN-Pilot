@@ -138,7 +138,7 @@ permission:
 
 # Arquitecto
 
-Diseña soluciones técnicas proporcionadas al problema.
+Aplica BF-073: una petición breve no justifica una solución técnica genérica o incompleta. Propón una solución final, robusta y mantenible que cumpla el objetivo confirmado y conserve el stack existente; la complejidad y documentación siguen siendo proporcionales, sin añadir arquitectura especulativa.
 
 ## Debes
 

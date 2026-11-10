@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "cnPilotVersion": "3.0.1",
+  "cnPilotVersion": "3.0.2",
   "sourceRepository": "https://github.com/LuisYGM/cn-pilot.git",
   "stableBranch": "main",
   "sourceCommit": null,
@@ -11,11 +11,11 @@
   "managedFiles": [
     {
       "path": ".cn-pilot-version",
-      "sha256": "06e3fe4a7a1884d20d81cc7065ca8cfd4c394ec602c4d180ddc39bbd4f7da521"
+      "sha256": "3fc0bf8d7ddbfe77eb4074c0b03d6567d7874a25ea4144aadea6686fcd5f6feb"
     },
     {
       "path": ".cn-pilot/CAMBIOS.md",
-      "sha256": "ed744f08746581c286c7aff6022ab32a91e04a50edf2b09a136e9bf88e0e2c3c"
+      "sha256": "c00b5055b83ad635588841a9b81a9008bb9f60112f0e9886547f03522cb9646e"
     },
     {
       "path": ".cn-pilot/MANIFIESTO.md",
@@ -23,7 +23,7 @@
     },
     {
       "path": ".cn-pilot/NUCLEO.md",
-      "sha256": "0e63c59b4506add045427092c10ab978d9b96a1feea1e9b8a2fce1c13f992bf5"
+      "sha256": "f9429403ee08f3092ef2caca759b6ccc31458f4ebb58e21757f8a697747ae159"
     },
     {
       "path": ".cn-pilot/agent-evals/README.md",
@@ -287,7 +287,7 @@
     },
     {
       "path": ".cn-pilot/qa/core-check.test.mjs",
-      "sha256": "2bcb8fe222399433cdd5eaa9063c89215d731105eb0541b63a6df3db85e83c05"
+      "sha256": "cfe5b8017d2628217bd6f74ac8fca7feb864e0f61a4cc0582f1beeb14d8464a7"
     },
     {
       "path": ".cn-pilot/update/updater.mjs",
@@ -299,15 +299,15 @@
     },
     {
       "path": ".kilo/agents/arquitecto.md",
-      "sha256": "9044dd7d6324ba2c5e9c2514ae0686f4af121afb3f8a3b6651b08638694670f8"
+      "sha256": "9855a24a7aa47874be41fc076d0c26f7235039a87951aeee4bc9615fd1899c58"
     },
     {
       "path": ".kilo/agents/desarrollador.md",
-      "sha256": "b38e2292bf101be9aff5301febbc99bd2d9d087eac94be61cc480a3ed33f87b4"
+      "sha256": "63c7101f1e64121a3b54d7a78a5c549500c74de2394e7b39a3f1bc99b7eb7f64"
     },
     {
       "path": ".kilo/agents/disenador.md",
-      "sha256": "c70fad066788aeb6d2eee8a25363171d010f217f6fbbafcb4b5d81ab03ee3abf"
+      "sha256": "3e84045e1eb6c824c260f97eca2bd939870661b659197bafc93b60b7c3ede368"
     },
     {
       "path": ".kilo/agents/jefe-proyecto.md",
@@ -315,7 +315,7 @@
     },
     {
       "path": ".kilo/agents/redactor.md",
-      "sha256": "f25d3485b3ed79623559d475b59ae63ff4ed0ca8ef52e1ca9797285ef4b502f2"
+      "sha256": "00a0d9faadfdd0b98df1529ca9b9400520a80b69b9287e3368c2183de0310d5d"
     },
     {
       "path": ".kilo/agents/revisor.md",
@@ -411,7 +411,7 @@
     },
     {
       "path": ".kilo/skills/content-page/SKILL.md",
-      "sha256": "1c4f508f2cbb8e747d66412858ce579c5b31bf6bcf6d00f92419b89f764be21d"
+      "sha256": "dca4bfe3ff67570c035b7c26bad1eeb9911e245e829d81b318f4169a3e921b40"
     },
     {
       "path": ".kilo/skills/creative-web-experience/SKILL.md",
@@ -443,7 +443,7 @@
     },
     {
       "path": ".kilo/skills/frontend-architecture/SKILL.md",
-      "sha256": "a7c0acde6e71639d6c03624a75141c51f0f2314483e4bed9dc91f884c9d1e7c5"
+      "sha256": "5b32da5a3c20aefbd3d91766e92612064f76abcd893b50f1409f9b3ec4f6ca4d"
     },
     {
       "path": ".kilo/skills/frontend-responsive/SKILL.md",
@@ -463,7 +463,7 @@
     },
     {
       "path": ".kilo/skills/page-composition/SKILL.md",
-      "sha256": "1c02654e66b258f7278b9a09f792e12fc79c5cc5503e937f74fc524c0d0d3653"
+      "sha256": "3028d95445d42947244a9241823f6c4568820f176c64baf0af04b85c5f7a3977"
     },
     {
       "path": ".kilo/skills/performance-review/SKILL.md",
@@ -527,11 +527,11 @@
     },
     {
       "path": ".kilo/skills/ui-kit-construction/SKILL.md",
-      "sha256": "105cff9fddf9f6d481c404c7d349e023c59874dacfb251e2e2d99380bf6dfcbd"
+      "sha256": "52df118dab25fe5778f629b91c6802ce8f066c5f0411e7871d09e47d58ce18a6"
     },
     {
       "path": ".kilo/skills/visual-art-direction/SKILL.md",
-      "sha256": "53dee8772d0be87774704233683414bc2c57cdbca5ae64d978c29eaa4d0e63ec"
+      "sha256": "7e241397455cfa01ced857ebf821bd02d150ac91e3e14e66d928845b5dda2bbd"
     },
     {
       "path": ".kilo/skills/visual-parity-review/SKILL.md",
