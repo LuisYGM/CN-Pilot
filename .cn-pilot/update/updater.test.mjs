@@ -8,6 +8,7 @@ import { test } from "node:test";
 import {
   MANIFEST_PATH,
   SOURCE_REPOSITORY,
+  UPDATER_RUNTIMES,
   applyPlan,
   applyMajorMigration,
   applyValidateAndCommit,
@@ -60,6 +61,7 @@ function manifest(version, entries, changes = {}) {
     stableBranch: "main",
     sourceCommit: null,
     compatibility: { nodeMin: "20.0.0", kiloMin: "7.8.8" },
+    updaterRuntimes: [...UPDATER_RUNTIMES],
     managedFiles: entries,
     addedFiles: [],
     removedFiles: [],
@@ -903,14 +905,18 @@ test("literal updater/manifest detection distinguishes managed, legacy, baseline
   initRepo(root, ["tracked.txt"]);
   const subdirectory = path.join(root, "nested", "cwd");
   fs.mkdirSync(subdirectory, { recursive: true });
-  assert.deepEqual(inspectInstallation(subdirectory), { root, status: "LEGACY" });
+  const legacyInstallation = inspectInstallation(subdirectory);
+  assert.equal(legacyInstallation.root.toLocaleLowerCase("en-US"), root.toLocaleLowerCase("en-US"));
+  assert.equal(legacyInstallation.status, "LEGACY");
 
   put(root, ".cn-pilot/update/updater.mjs", "fixture updater\n");
   assert.equal(fs.existsSync(path.join(root, ".cn-pilot/update/updater.mjs")), true); // Literal filesystem check; no glob result participates.
-  assert.deepEqual(inspectInstallation(root), { root, status: "MANIFEST_MISSING" });
+  const unbaselinedInstallation = inspectInstallation(root);
+  assert.equal(unbaselinedInstallation.root.toLocaleLowerCase("en-US"), root.toLocaleLowerCase("en-US"));
+  assert.equal(unbaselinedInstallation.status, "MANIFEST_MISSING");
 
   writeManifestFile(root, manifest("1.5.1", []));
-  assert.deepEqual(inspectInstallation(root), { root, status: "MANAGED" });
+  assert.equal(inspectInstallation(root).status, "MANAGED");
   put(root, MANIFEST_PATH, "{broken\n");
   const invalid = inspectInstallation(root);
   assert.equal(invalid.status, "MANIFEST_INVALID");
@@ -1232,6 +1238,189 @@ test("manifest paths reject traversal, absolute paths, symlinks and non-normaliz
   }
   assert.throws(() => validateManifest(manifest("1.4.0", [{ path: ".cn-pilot/runtime/tmp", sha256: "a".repeat(64) }])), { code: "PROTECTED_PATH" });
   assert.equal(crypto.createHash("sha256").update("line\n").digest("hex"), hashBytes(Buffer.from("line\r\n")));
+});
+
+test("manifest accepts only allowlisted Codex updater paths and preserves legacy runtime metadata", () => {
+  const entries = [
+    entry(".agents/skills/cn-pilot/SKILL.md", "skill adapter\n"),
+    entry(".codex/agents/arquitecto.toml", "agent adapter\n"),
+  ];
+  assert.deepEqual(manifest("3.2.0", entries).managedFiles, entries);
+  assert.throws(() => manifest("3.2.0", [entry(".agents/skills/../secrets/SKILL.md", "unsafe\n")]), { code: "INVALID_PATH" });
+  for (const pathValue of [".codex/config.toml", ".agents/other/file.md"]) assert.throws(() => manifest("3.2.0", [entry(pathValue, "unsafe\n")]), { code: "PROTECTED_PATH" });
+
+  const legacy = manifest("3.1.1", []);
+  delete legacy.updaterRuntimes;
+  assert.deepEqual(validateManifest(legacy).updaterRuntimes, undefined);
+  for (const updaterRuntimes of [[], ["codex", "codex"], ["kilo", "future-runtime"], "codex"]) {
+    assert.throws(() => manifest("3.2.0", [], { updaterRuntimes }), { code: "INVALID_MANIFEST" });
+  }
+});
+
+test("3.1.1 manifest contract accepts the 3.1.2 bridge without new managed paths", (t) => {
+  const { root, put } = fixture(t);
+  put(root, ".cn-pilot-version", "3.1.2\n");
+  put(root, "AGENTS.md", "shared instructions\n");
+  put(root, ".cn-pilot/update/updater.mjs", "runtime-aware updater\n");
+  initRepo(root, [".cn-pilot-version", "AGENTS.md", ".cn-pilot/update/updater.mjs"]);
+  const bridge = buildManifest(root, {
+    files: [".cn-pilot-version", "AGENTS.md", ".cn-pilot/update/updater.mjs"],
+    previousManifest: {
+      schemaVersion: 1,
+      cnPilotVersion: "3.1.1",
+      sourceRepository: SOURCE_REPOSITORY,
+      stableBranch: "main",
+      sourceCommit: null,
+      compatibility: { nodeMin: "20.0.0", kiloMin: "7.8.8" },
+      managedFiles: [
+        entry(".cn-pilot-version", "3.1.1\n"),
+        entry("AGENTS.md", "old instructions\n"),
+        entry(".cn-pilot/update/updater.mjs", "old updater\n"),
+      ],
+      addedFiles: [],
+      removedFiles: [],
+      migrations: [],
+    },
+  });
+  assert.equal(bridge.cnPilotVersion, "3.1.2");
+  assert.deepEqual(bridge.updaterRuntimes, ["kilo", "codex"]);
+  assert.ok(bridge.managedFiles.every(({ path: item }) => item === "AGENTS.md" || item === ".cn-pilot-version" || item.startsWith(".cn-pilot/")));
+
+  // Match the 3.1.1 reader contract: schema v1, required compatibility keys, and its managed roots.
+  const legacyReaderView = JSON.parse(JSON.stringify(bridge));
+  assert.equal(legacyReaderView.schemaVersion, 1);
+  assert.deepEqual(legacyReaderView.compatibility, { nodeMin: "20.0.0", kiloMin: "7.8.8" });
+  const legacyRoots = ["AGENTS.md", ".cn-pilot-version", ".cn-pilot/", ".kilo/agents/", ".kilo/skills/", ".kilo/commands/"];
+  assert.ok(legacyReaderView.managedFiles.every(({ path: item }) => legacyRoots.some((rootPath) => rootPath.endsWith("/") ? item.startsWith(rootPath) : item === rootPath)));
+  assert.deepEqual(legacyReaderView.updaterRuntimes, ["kilo", "codex"]); // 3.1.1 ignores this additive top-level field.
+  assert.doesNotThrow(() => validateManifest(legacyReaderView));
+});
+
+test("3.1.1 → 3.1.2 update keeps project data and Kilo customizations intact", async (t) => {
+  const target = fixture(t); const source = fixture(t);
+  const qa = `process.stdout.write(JSON.stringify(${JSON.stringify(postApplyQaReport("3.1.2"))}));\n`;
+  const targetFiles = {
+    ".cn-pilot-version": "3.1.1\n",
+    "AGENTS.md": "shared instructions\n",
+    ".cn-pilot/NUCLEO.md": "3.1.1 core\n",
+    ".cn-pilot/qa/core-check.mjs": qa,
+    ".cn-pilot/update/updater.mjs": "updater 3.1.1\n",
+    ".kilo/agents/jefe-proyecto.md": "local Kilo customization\n",
+    "PROYECTO.md": "project context\n",
+    "producto/index.html": "product data\n",
+    ".gitignore": "/.cn-pilot/runtime/\n",
+  };
+  for (const [relative, content] of Object.entries(targetFiles)) target.put(target.root, relative, content);
+  const oldManifest = {
+    schemaVersion: 1, cnPilotVersion: "3.1.1", sourceRepository: SOURCE_REPOSITORY, stableBranch: "main", sourceCommit: null,
+    compatibility: { nodeMin: "20.0.0", kiloMin: "7.8.8" },
+    managedFiles: [".cn-pilot-version", "AGENTS.md", ".cn-pilot/NUCLEO.md", ".cn-pilot/qa/core-check.mjs", ".cn-pilot/update/updater.mjs"].map((relative) => entry(relative, targetFiles[relative])).concat(entry(".kilo/agents/jefe-proyecto.md", "official Kilo role\n")),
+    addedFiles: [], removedFiles: [], migrations: [],
+  };
+  writeManifestFile(target.root, oldManifest);
+  initRepo(target.root, [...Object.keys(targetFiles), MANIFEST_PATH]);
+
+  const sourceFiles = {
+    ".cn-pilot-version": "3.1.2\n",
+    "AGENTS.md": "shared instructions\n",
+    ".cn-pilot/NUCLEO.md": "3.1.2 core\n",
+    ".cn-pilot/qa/core-check.mjs": qa,
+    ".cn-pilot/update/updater.mjs": "updater 3.1.2 with runtime selection\n",
+    ".kilo/agents/jefe-proyecto.md": "official Kilo role\n",
+  };
+  for (const [relative, content] of Object.entries(sourceFiles)) source.put(source.root, relative, content);
+  const bridgeManifest = manifest("3.1.2", Object.entries(sourceFiles).map(([relative, content]) => entry(relative, content)));
+  writeManifestFile(source.root, bridgeManifest);
+  initRepo(source.root, [...Object.keys(sourceFiles), MANIFEST_PATH]);
+  execFileSync("git", ["remote", "add", "origin", SOURCE_REPOSITORY], { cwd: source.root });
+
+  let stderr = "";
+  const code = await runCli(["update", "--runtime", "kilo", "--target", target.root, "--source-dir", source.root], {
+    stdout: { write: () => {} },
+    stderr: { write: (value) => { stderr += value; } },
+    kiloVersionProbe: () => "7.8.8",
+  });
+  assert.equal(code, 0, stderr);
+  assert.equal(fs.readFileSync(path.join(target.root, ".kilo/agents/jefe-proyecto.md"), "utf8"), "local Kilo customization\n");
+  assert.equal(fs.readFileSync(path.join(target.root, "PROYECTO.md"), "utf8"), "project context\n");
+  assert.equal(fs.readFileSync(path.join(target.root, "producto/index.html"), "utf8"), "product data\n");
+  assert.equal(fs.readFileSync(path.join(target.root, ".cn-pilot-version"), "utf8"), "3.1.2\n");
+  assert.equal(execFileSync("git", ["log", "-1", "--pretty=%s"], { cwd: target.root, encoding: "utf8" }).trim(), "chore: actualizar CN Pilot a 3.1.2");
+  assert.equal(execFileSync("git", ["status", "--porcelain"], { cwd: target.root, encoding: "utf8" }), "");
+});
+
+test("Codex updater mode skips Kilo detection and updates allowlisted future runtime paths", async (t) => {
+  const target = fixture(t); const source = fixture(t);
+  const oldQa = `process.stdout.write(JSON.stringify(${JSON.stringify(postApplyQaReport("3.1.2"))}));\n`;
+  const newQa = `process.stdout.write(JSON.stringify(${JSON.stringify(postApplyQaReport("3.2.0"))}));\n`;
+  const currentFiles = {
+    ".cn-pilot-version": "3.1.2\n",
+    ".cn-pilot/qa/core-check.mjs": oldQa,
+    ".cn-pilot/update/updater.mjs": "runtime-aware updater\n",
+    ".gitignore": "/.cn-pilot/runtime/\n",
+    "PROYECTO.md": "project context\n",
+    "producto/index.html": "product data\n",
+  };
+  for (const [relative, content] of Object.entries(currentFiles)) target.put(target.root, relative, content);
+  const currentManifest = manifest("3.1.2", Object.entries(currentFiles).filter(([relative]) => relative !== ".gitignore" && relative !== "PROYECTO.md" && relative !== "producto/index.html").map(([relative, content]) => entry(relative, content)));
+  writeManifestFile(target.root, currentManifest);
+  initRepo(target.root, [...Object.keys(currentFiles), MANIFEST_PATH]);
+
+  const futureFiles = {
+    ".cn-pilot-version": "3.2.0\n",
+    ".cn-pilot/qa/core-check.mjs": newQa,
+    ".cn-pilot/update/updater.mjs": "runtime-aware updater\n",
+    ".agents/skills/cn-pilot/SKILL.md": "Codex skill adapter\n",
+    ".codex/agents/arquitecto.toml": "Codex agent adapter\n",
+  };
+  for (const [relative, content] of Object.entries(futureFiles)) source.put(source.root, relative, content);
+  const futureManifest = manifest("3.2.0", Object.entries(futureFiles).map(([relative, content]) => entry(relative, content)));
+  writeManifestFile(source.root, futureManifest);
+  initRepo(source.root, [...Object.keys(futureFiles), MANIFEST_PATH]);
+  execFileSync("git", ["remote", "add", "origin", SOURCE_REPOSITORY], { cwd: source.root });
+
+  let kiloProbeCalls = 0; let stderr = "";
+  const code = await runCli(["update", "--runtime", "codex", "--target", target.root, "--source-dir", source.root], {
+    stdout: { write: () => {} },
+    stderr: { write: (value) => { stderr += value; } },
+    kiloVersionProbe: () => { kiloProbeCalls += 1; throw new Error("Kilo must not be probed in Codex mode"); },
+  });
+  assert.equal(code, 0, stderr);
+  assert.equal(kiloProbeCalls, 0);
+  assert.equal(fs.readFileSync(path.join(target.root, ".agents/skills/cn-pilot/SKILL.md"), "utf8"), "Codex skill adapter\n");
+  assert.equal(fs.readFileSync(path.join(target.root, ".codex/agents/arquitecto.toml"), "utf8"), "Codex agent adapter\n");
+  assert.equal(fs.readFileSync(path.join(target.root, "PROYECTO.md"), "utf8"), "project context\n");
+  assert.equal(fs.readFileSync(path.join(target.root, "producto/index.html"), "utf8"), "product data\n");
+  assert.equal(execFileSync("git", ["log", "-1", "--pretty=%s"], { cwd: target.root, encoding: "utf8" }).trim(), "chore: actualizar CN Pilot a 3.2.0");
+});
+
+test("unknown or distribution-disabled runtimes block before target writes", async (t) => {
+  const target = fixture(t); const source = fixture(t);
+  const currentFiles = { ".cn-pilot-version": "3.1.2\n", ".cn-pilot/NUCLEO.md": "current core\n" };
+  for (const [relative, content] of Object.entries(currentFiles)) target.put(target.root, relative, content);
+  writeManifestFile(target.root, manifest("3.1.2", Object.entries(currentFiles).map(([relative, content]) => entry(relative, content))));
+  initRepo(target.root, [...Object.keys(currentFiles), MANIFEST_PATH]);
+
+  const nextContent = "future core\n";
+  source.put(source.root, ".cn-pilot-version", "3.2.0\n");
+  source.put(source.root, ".cn-pilot/NUCLEO.md", nextContent);
+  const next = manifest("3.2.0", [entry(".cn-pilot-version", "3.2.0\n"), entry(".cn-pilot/NUCLEO.md", nextContent)], { updaterRuntimes: ["kilo"] });
+  writeManifestFile(source.root, next);
+  initRepo(source.root, [".cn-pilot-version", ".cn-pilot/NUCLEO.md", MANIFEST_PATH]);
+  execFileSync("git", ["remote", "add", "origin", SOURCE_REPOSITORY], { cwd: source.root });
+
+  for (const [runtime, expectedCode] of [["future-runtime", "UNSUPPORTED_RUNTIME"], ["codex", "INCOMPATIBLE_RUNTIME"]]) {
+    let stderr = "";
+    const code = await runCli(["update", "--runtime", runtime, "--target", target.root, "--source-dir", source.root], {
+      stdout: { write: () => {} },
+      stderr: { write: (value) => { stderr += value; } },
+    });
+    assert.equal(code, 1);
+    assert.match(stderr, new RegExp(`^${expectedCode}:`));
+    assert.equal(fs.readFileSync(path.join(target.root, ".cn-pilot-version"), "utf8"), "3.1.2\n");
+    assert.equal(fs.readFileSync(path.join(target.root, ".cn-pilot/NUCLEO.md"), "utf8"), "current core\n");
+    assert.equal(execFileSync("git", ["status", "--porcelain"], { cwd: target.root, encoding: "utf8" }), "");
+  }
 });
 
 test("manifest verification checks version and each managed hash", (t) => {

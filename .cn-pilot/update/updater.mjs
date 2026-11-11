@@ -8,7 +8,8 @@ import { fileURLToPath } from "node:url";
 export const SOURCE_REPOSITORY = "https://github.com/LuisYGM/cn-pilot.git";
 export const STABLE_BRANCH = "main";
 export const MANIFEST_PATH = ".cn-pilot/update/manifest.json";
-export const MANAGED_ROOTS = ["AGENTS.md", ".cn-pilot-version", ".cn-pilot/", ".kilo/agents/", ".kilo/skills/", ".kilo/commands/"];
+export const MANAGED_ROOTS = ["AGENTS.md", ".cn-pilot-version", ".cn-pilot/", ".kilo/agents/", ".kilo/skills/", ".kilo/commands/", ".agents/skills/", ".codex/agents/"];
+export const UPDATER_RUNTIMES = Object.freeze(["kilo", "codex"]);
 export const PROJECT_OWNED_PATHS = [
   "PROYECTO.md", "REQUISITOS.md", "ESTADO.md", "DECISIONES.md", "ARTEFACTOS.md", "README.md",
   "producto/", "recursos/", "artefactos/", ".env", ".env.*", "secrets/",
@@ -60,6 +61,12 @@ export function compareVersions(left, right) {
   const a = semverParts(left); const b = semverParts(right);
   for (let index = 0; index < 3; index += 1) if (a[index] !== b[index]) return a[index] < b[index] ? -1 : 1;
   return 0;
+}
+
+function sameResolvedPath(left, right) {
+  const a = path.resolve(left);
+  const b = path.resolve(right);
+  return process.platform === "win32" ? a.toLocaleLowerCase("en-US") === b.toLocaleLowerCase("en-US") : a === b;
 }
 
 export function normalizeManagedPath(value) {
@@ -135,6 +142,14 @@ export function validateManifest(value) {
   if (manifest.sourceRepository !== SOURCE_REPOSITORY || manifest.stableBranch !== STABLE_BRANCH) fail("INVALID_SOURCE", "Manifest source must be the canonical CN Pilot main branch.");
   if (manifest.sourceCommit !== null && (typeof manifest.sourceCommit !== "string" || !/^[a-f0-9]{40,64}$/i.test(manifest.sourceCommit))) fail("INVALID_MANIFEST", "Manifest source commit is invalid.");
   if (!manifest.compatibility || manifest.compatibility.nodeMin !== "20.0.0" || manifest.compatibility.kiloMin !== "7.8.8") fail("INVALID_MANIFEST", "Manifest compatibility requirements are invalid.");
+  if (Object.hasOwn(manifest, "updaterRuntimes")) {
+    if (!Array.isArray(manifest.updaterRuntimes) || !manifest.updaterRuntimes.length) fail("INVALID_MANIFEST", "Manifest updater runtimes must be a non-empty array.");
+    const seenRuntimes = new Set();
+    for (const runtime of manifest.updaterRuntimes) {
+      if (!UPDATER_RUNTIMES.includes(runtime) || seenRuntimes.has(runtime)) fail("INVALID_MANIFEST", "Manifest updater runtimes contain an unsupported or duplicate runtime.");
+      seenRuntimes.add(runtime);
+    }
+  }
   if (!Array.isArray(manifest.managedFiles) || !Array.isArray(manifest.addedFiles) || !Array.isArray(manifest.removedFiles) || !Array.isArray(manifest.migrations)) fail("INVALID_MANIFEST", "Manifest file or migration lists are invalid.");
   const seen = new Set(); const portableNames = new Set();
   for (const item of manifest.managedFiles) {
@@ -241,6 +256,7 @@ export function buildManifest(root, { files = listTrackedManagedFiles(root), sou
     stableBranch: STABLE_BRANCH,
     sourceCommit: sourceCommit ?? null,
     compatibility: { nodeMin: "20.0.0", kiloMin: "7.8.8" },
+    updaterRuntimes: [...UPDATER_RUNTIMES],
     managedFiles,
     addedFiles: previousManifest ? names.filter((item) => !priorSet.has(item)) : [],
     removedFiles: previousManifest ? prior.filter((item) => !currentSet.has(item)) : [],
@@ -573,7 +589,7 @@ export function checkActiveTask(root) {
 
 export function inspectGit(root) {
   const top = run("git", ["rev-parse", "--show-toplevel"], root).stdout.trim();
-  if (path.resolve(top) !== path.resolve(root)) fail("NOT_REPOSITORY_ROOT", "Run CN Pilot updates from the project Git root.");
+  if (!sameResolvedPath(top, root)) fail("NOT_REPOSITORY_ROOT", "Run CN Pilot updates from the project Git root.");
   const branch = run("git", ["symbolic-ref", "--quiet", "--short", "HEAD"], root, { allowFailure: true });
   const head = run("git", ["rev-parse", "HEAD"], root).stdout.trim();
   if (!/^[a-f0-9]{40,64}$/i.test(head)) fail("INVALID_HEAD", "Git HEAD is unavailable.");
@@ -631,12 +647,19 @@ function detectKiloVersion() {
   return kiloVersion ?? null;
 }
 
-function checkCompatibility(manifest, { kiloVersionProbe = detectKiloVersion } = {}) {
+function checkCompatibility(manifest, { runtime = "kilo", kiloVersionProbe = detectKiloVersion } = {}) {
   const nodeOk = compareVersions(process.versions.node.split("-")[0].split(".").slice(0, 3).join("."), manifest.compatibility.nodeMin) >= 0;
-  const rawKiloVersion = kiloVersionProbe();
-  const kiloVersion = typeof rawKiloVersion === "string" ? rawKiloVersion.trim().match(/\d+\.\d+\.\d+/)?.[0] ?? null : null;
-  const kiloOk = kiloVersion ? compareVersions(kiloVersion, manifest.compatibility.kiloMin) >= 0 : false;
-  return { nodeVersion: process.versions.node, nodeOk, kiloVersion, kiloOk, ok: nodeOk && kiloOk };
+  if (!UPDATER_RUNTIMES.includes(runtime)) fail("UNSUPPORTED_RUNTIME", `Unsupported updater runtime: ${runtime}.`);
+  const updaterRuntimes = manifest.updaterRuntimes ?? ["kilo"];
+  const runtimeSupported = updaterRuntimes.includes(runtime);
+  let kiloVersion = null;
+  let runtimeOk = runtimeSupported;
+  if (runtime === "kilo" && runtimeSupported) {
+    const rawKiloVersion = kiloVersionProbe();
+    kiloVersion = typeof rawKiloVersion === "string" ? rawKiloVersion.trim().match(/\d+\.\d+\.\d+/)?.[0] ?? null : null;
+    runtimeOk = kiloVersion ? compareVersions(kiloVersion, manifest.compatibility.kiloMin) >= 0 : false;
+  }
+  return { runtime, nodeVersion: process.versions.node, nodeOk, runtimeSupported, runtimeVersion: kiloVersion, runtimeOk, kiloVersion, kiloOk: runtime === "kilo" ? runtimeOk : null, ok: nodeOk && runtimeOk };
 }
 
 function sourceRootFor(scriptPath) { return path.resolve(path.dirname(scriptPath), "../.."); }
@@ -646,7 +669,7 @@ function verifySource(root) {
   verifyManifestFiles(root, manifest);
   verifyTrackedManifest(root, manifest);
   const gitRoot = run("git", ["rev-parse", "--show-toplevel"], root).stdout.trim();
-  if (path.resolve(gitRoot) !== path.resolve(root)) fail("INVALID_SOURCE", "Upstream source is not a Git repository root.");
+  if (!sameResolvedPath(gitRoot, root)) fail("INVALID_SOURCE", "Upstream source is not a Git repository root.");
   const branch = run("git", ["symbolic-ref", "--quiet", "--short", "HEAD"], root, { allowFailure: true });
   if (!branch.ok || branch.stdout.trim() !== STABLE_BRANCH) fail("INVALID_SOURCE", "Upstream checkout is not the stable main branch.");
   const remote = run("git", ["remote", "get-url", "origin"], root).stdout.trim().replace(/\.git$/i, "").toLowerCase();
@@ -693,7 +716,7 @@ function checkUntrackedCollision(root, git, actions) {
   }
 }
 
-function writeStatus(root, upstream, commit, writer = process.stdout, { kiloVersionProbe = detectKiloVersion } = {}) {
+function writeStatus(root, upstream, commit, writer = process.stdout, { runtime = "kilo", kiloVersionProbe = detectKiloVersion } = {}) {
   const git = inspectGit(root);
   const installedVersion = versionFromFile(root);
   const active = checkActiveTask(root);
@@ -709,7 +732,7 @@ function writeStatus(root, upstream, commit, writer = process.stdout, { kiloVers
     const baseline = readManifest(root);
     plan = planUpdate(root, baseline, upstream);
   } catch (error) { localError = `${error.code ?? "BASELINE_ERROR"}: ${error.message}`; }
-  const compatibility = checkCompatibility(upstream, { kiloVersionProbe });
+  const compatibility = checkCompatibility(upstream, { runtime, kiloVersionProbe });
   const conflicts = plan?.conflicts.length ?? 0;
   const available = installedVersion !== "unknown" && (installedVersion !== upstream.cnPilotVersion || Boolean(plan?.actions.length));
   const localMods = plan ? new Set([
@@ -723,7 +746,8 @@ function writeStatus(root, upstream, commit, writer = process.stdout, { kiloVers
     `Update available: ${available ? "YES" : "NO"}`,
     `Source: LuisYGM/CN-Pilot ${STABLE_BRANCH} (${commit.slice(0, 12)})`,
     `Project Git: ${git.branch ?? "detached"} @ ${git.head.slice(0, 12)}; tracked changes ${git.trackedChanges.length ? "YES" : "no"}`,
-    `Compatibility: ${compatibility.nodeOk ? "Node PASS" : "Node BLOCK"}; ${compatibility.kiloOk ? "Kilo PASS" : "Kilo BLOCK/UNKNOWN"}`,
+    `Runtime: ${runtime}`,
+    `Compatibility: ${compatibility.nodeOk ? "Node PASS" : "Node BLOCK"}; ${runtime === "kilo" ? (compatibility.runtimeOk ? "Kilo PASS" : "Kilo BLOCK/UNKNOWN") : (compatibility.runtimeOk ? "Codex updater path PASS" : "Codex updater path BLOCK")}`,
     `Managed files: unchanged ${plan?.unchanged ?? "?"}; planned ${plan?.actions.length ?? "?"}; local modifications ${localMods}; conflicts ${conflicts}`,
     `Migration: ${majorMigration ? "MAJOR 1.x → 2.0 REQUIRED" : upstream.migrations.length ? "required" : "none"}`,
     ...(majorMigration ? [`Project data moves: ${majorMigration.moves.map(({ from, to }) => `${from} → ${to}`).join(", ") || "none"}`, `Project data preserved: ${majorMigration.preserved.map(({ path: item, reason }) => `${item} (${reason})`).join("; ") || "none"}`, `Migration conflicts: ${majorMigration.conflicts.map(({ from, to }) => `${from} → ${to}`).join(", ") || "none"}`] : []),
@@ -740,15 +764,20 @@ function writeStatus(root, upstream, commit, writer = process.stdout, { kiloVers
   return { installedVersion, upstreamVersion: upstream.cnPilotVersion, available, plan, majorMigration, compatibility, active, localError, commit };
 }
 
-async function updateExisting(root, sourceRoot, { autoCommit = true, kiloVersionProbe = detectKiloVersion } = {}) {
+async function updateExisting(root, sourceRoot, { autoCommit = true, runtime = "kilo", kiloVersionProbe = detectKiloVersion } = {}) {
   const git = inspectGit(root);
   if (!git.branch) fail("DETACHED_HEAD", "Update blocked: project is not on a named Git branch.");
   if (git.trackedChanges.length) fail("DIRTY_TRACKED_TREE", "Update blocked: tracked working tree changes present.");
   const active = checkActiveTask(root);
   if (active.blocked) fail("ACTIVE_TASK", `Update blocked: active CN Pilot task (${active.status}).`);
   const source = verifySource(sourceRoot);
-  const compatibility = checkCompatibility(source.manifest, { kiloVersionProbe });
-  if (!compatibility.ok) fail("INCOMPATIBLE_RUNTIME", `Update blocked: Node ${compatibility.nodeVersion} and Kilo ${compatibility.kiloVersion ?? "unknown"}; requires Node >=${source.manifest.compatibility.nodeMin}, Kilo >=${source.manifest.compatibility.kiloMin}.`);
+  const compatibility = checkCompatibility(source.manifest, { runtime, kiloVersionProbe });
+  if (!compatibility.ok) {
+    const requirement = runtime === "kilo"
+      ? `Kilo ${compatibility.kiloVersion ?? "unknown"}; requires Kilo >=${source.manifest.compatibility.kiloMin}`
+      : `${runtime} updater path is ${compatibility.runtimeSupported ? "available" : "not enabled by the distribution manifest"}`;
+    fail("INCOMPATIBLE_RUNTIME", `Update blocked: Node ${compatibility.nodeVersion} and ${requirement}; requires Node >=${source.manifest.compatibility.nodeMin}.`);
+  }
   const baseline = readManifest(root);
   const plan = planUpdate(root, baseline, source.manifest);
   checkUntrackedCollision(root, git, plan.actions);
@@ -806,7 +835,7 @@ export function planLegacyBootstrap(root, upstreamInput, preservePaths = []) {
   return { mode: "LEGACY BOOTSTRAP MODE", installedVersion: localVersion, latestVersion: upstream.cnPilotVersion, actions, reviewRequired, preserved, upstreamFiles: new Set(upstream.managedFiles.map((item) => item.path)) };
 }
 
-async function runLegacyBootstrap(targetRoot, sourceRoot, { approveLegacy = false, preserve = [], output = process.stdout, kiloVersionProbe = detectKiloVersion } = {}) {
+async function runLegacyBootstrap(targetRoot, sourceRoot, { approveLegacy = false, preserve = [], output = process.stdout, runtime = "kilo", kiloVersionProbe = detectKiloVersion } = {}) {
   const root = path.resolve(targetRoot);
   const git = inspectGit(root);
   if (!git.branch) fail("DETACHED_HEAD", "Legacy bootstrap blocked: project is not on a named Git branch.");
@@ -814,7 +843,7 @@ async function runLegacyBootstrap(targetRoot, sourceRoot, { approveLegacy = fals
   const active = checkActiveTask(root);
   if (active.blocked) fail("ACTIVE_TASK", `Legacy bootstrap blocked: active CN Pilot task (${active.status}).`);
   const source = verifySource(sourceRoot);
-  const compatibility = checkCompatibility(source.manifest, { kiloVersionProbe });
+  const compatibility = checkCompatibility(source.manifest, { runtime, kiloVersionProbe });
   if (!compatibility.ok) fail("INCOMPATIBLE_RUNTIME", "Legacy bootstrap blocked: runtime does not meet manifest requirements.");
   if (fs.existsSync(path.join(root, ...MANIFEST_PATH.split("/")))) fail("ALREADY_MANAGED", "Baseline manifest already exists; use normal update mode.");
   const plan = planLegacyBootstrap(root, source.manifest, preserve);
@@ -854,10 +883,12 @@ function parseArgs(argv) {
   const options = { command, preserve: [] };
   for (let index = 0; index < args.length; index += 1) {
     const arg = args[index];
-    if (["--target", "--source-dir", "--preserve"].includes(arg)) {
+    if (["--target", "--source-dir", "--preserve", "--runtime"].includes(arg)) {
       const value = args[++index];
       if (!value) fail("USAGE", `Missing value for ${arg}.`);
-      if (arg === "--preserve") options.preserve.push(value); else options[arg === "--target" ? "target" : "sourceDir"] = value;
+      if (arg === "--preserve") options.preserve.push(value);
+      else if (arg === "--runtime") options.runtime = value;
+      else options[arg === "--target" ? "target" : "sourceDir"] = value;
     } else if (arg === "--approve-legacy") options.approveLegacy = true;
     else if (arg === "--approve-migration") options.approveMigration = true;
     else if (arg === "--cleanup-source") options.cleanupSource = true;
@@ -870,7 +901,8 @@ function parseArgs(argv) {
 export async function runCli(argv = process.argv.slice(2), { stdout = process.stdout, stderr = process.stderr, kiloVersionProbe = detectKiloVersion } = {}) {
   try {
     const options = parseArgs(argv);
-    if (!options.command || !["manifest", "verify-manifest", "status", "update", "bootstrap", "migrate"].includes(options.command)) fail("USAGE", "Usage: updater.mjs manifest|verify-manifest|status|update|bootstrap|migrate [--target PATH] [--source-dir PATH] [--approve-legacy] [--approve-migration] [--preserve MANAGED_PATH] [--cleanup-source].");
+    if (!options.command || !["manifest", "verify-manifest", "status", "update", "bootstrap", "migrate"].includes(options.command)) fail("USAGE", "Usage: updater.mjs manifest|verify-manifest|status|update|bootstrap|migrate [--target PATH] [--source-dir PATH] [--runtime kilo|codex] [--approve-legacy] [--approve-migration] [--preserve MANAGED_PATH] [--cleanup-source].");
+    if (options.runtime && !["status", "update", "bootstrap"].includes(options.command)) fail("USAGE", "--runtime is only valid with status, update, and bootstrap.");
     if (options.command === "manifest" || options.command === "verify-manifest") {
       const root = path.resolve(options.target ?? ROOT);
       if (options.command === "manifest") {
@@ -934,7 +966,7 @@ export async function runCli(argv = process.argv.slice(2), { stdout = process.st
     if (options.command === "bootstrap") {
       const sourceRoot = options.sourceDir ? path.resolve(options.sourceDir) : sourceRootFor(fileURLToPath(import.meta.url));
       if (options.cleanupSource && sourceRoot !== path.join(target, ".cn-pilot", "runtime", "cn-pilot-update-source")) fail("UNSAFE_CLEANUP_PATH", "--cleanup-source only accepts the documented runtime bootstrap clone.");
-      const result = await runLegacyBootstrap(target, sourceRoot, { approveLegacy: options.approveLegacy, preserve: options.preserve, output: stdout, kiloVersionProbe });
+      const result = await runLegacyBootstrap(target, sourceRoot, { approveLegacy: options.approveLegacy, preserve: options.preserve, output: stdout, runtime: options.runtime ?? "kilo", kiloVersionProbe });
       if (result.applied && options.cleanupSource) {
         try { cleanupBootstrapSource(target, sourceRoot); }
         catch (error) { stderr.write(`Cleanup warning: update succeeded; temporary source remains (${error.code ?? "error"}).\n`); }
@@ -951,8 +983,8 @@ export async function runCli(argv = process.argv.slice(2), { stdout = process.st
     let result;
     await withSource(target, options.sourceDir, (sourceRoot) => {
       const source = verifySource(sourceRoot);
-      if (options.command === "status") result = writeStatus(target, source.manifest, source.commit, stdout, { kiloVersionProbe });
-      else return updateExisting(target, sourceRoot, { kiloVersionProbe }).then((value) => { result = value; });
+      if (options.command === "status") result = writeStatus(target, source.manifest, source.commit, stdout, { runtime: options.runtime ?? "kilo", kiloVersionProbe });
+      else return updateExisting(target, sourceRoot, { runtime: options.runtime ?? "kilo", kiloVersionProbe }).then((value) => { result = value; });
     });
     return 0;
   } catch (error) {

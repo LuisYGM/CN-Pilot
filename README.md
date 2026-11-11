@@ -1,6 +1,6 @@
 # CN Pilot
 
-**CN Pilot 3.1.1** es un sistema extensible de coordinación y producción profesional multidisciplinaria con agentes de **Kilo Code**. Un proyecto puede ser una marca, empresa, producto o iniciativa y reunir distintos entregables, no necesariamente una web, aplicación o repositorio de código.
+**CN Pilot 3.1.2** es un sistema extensible de coordinación y producción profesional multidisciplinaria con agentes de **Kilo Code**. Un proyecto puede ser una marca, empresa, producto o iniciativa y reunir distintos entregables, no necesariamente una web, aplicación o repositorio de código.
 
 Tú describes lo que quieres conseguir con tus propias palabras. Jefe de proyecto revisa el contexto, coordina a los especialistas necesarios y verifica el trabajo según su alcance y riesgo. No necesitas programar, diseñar prompts técnicos ni escoger agentes o skills. Tampoco tienes que seguir una fase fija.
 

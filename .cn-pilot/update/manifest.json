@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "cnPilotVersion": "3.1.1",
+  "cnPilotVersion": "3.1.2",
   "sourceRepository": "https://github.com/LuisYGM/cn-pilot.git",
   "stableBranch": "main",
   "sourceCommit": null,
@@ -8,22 +8,26 @@
     "nodeMin": "20.0.0",
     "kiloMin": "7.8.8"
   },
+  "updaterRuntimes": [
+    "kilo",
+    "codex"
+  ],
   "managedFiles": [
     {
       "path": ".cn-pilot-version",
-      "sha256": "6dc3b2dc3139b7d421b6fc26a7f853389a9b035ea4f2e9047b9516050dd6ac73"
+      "sha256": "905360921e63f419d6a111dd3216bf28402f367ab9aa69444d80e97419600d80"
     },
     {
       "path": ".cn-pilot/CAMBIOS.md",
-      "sha256": "0fe6766bc43d4ce39d9ac5423fc5364c7aca9a4410b0100ac2e6a966f9c97120"
+      "sha256": "eabc50b3c3eb94953340bedf94d3871d104156dfa4f44b9c6024da5dd9fef895"
     },
     {
       "path": ".cn-pilot/MANIFIESTO.md",
-      "sha256": "b09a5076c0d5a95f0bdb3ffb358098ec53f3191b8a09fbbc357fe6fa7f724856"
+      "sha256": "82fdb5fc0808af09acf4cdb94aadc4cb4a54cfacad2613cbe240931b21828d87"
     },
     {
       "path": ".cn-pilot/NUCLEO.md",
-      "sha256": "73403ac6873de414ecb0d875450846bdd776c4b7d01f9e8d5836bda7a1226d2b"
+      "sha256": "79db8e4e94876658e08ce7ed307ba0adf39f946288b822472059ce849f94ebdf"
     },
     {
       "path": ".cn-pilot/agent-evals/README.md",
@@ -131,7 +135,7 @@
     },
     {
       "path": ".cn-pilot/documentacion/ACTUALIZACIONES.md",
-      "sha256": "b5c15f65f3b95d1c7f9b610c1a034b55c98d6446b5c5f23ad6cae4d3ba18dabc"
+      "sha256": "d5df9d4519b78d5712f47e7629314e54c5dd8bc9d052fb0f35123839793d6cf0"
     },
     {
       "path": ".cn-pilot/documentacion/CICLO-DE-VIDA.md",
@@ -291,7 +295,7 @@
     },
     {
       "path": ".cn-pilot/qa/core-check.mjs",
-      "sha256": "a2f2809bb5b035261537cbbbd5ed6bb44f1e12d081fcee4f84f68c9eab74586e"
+      "sha256": "df27919f25e6e34cb8b97cd3c20849394395bb3e418dbf115d9f4c1760d0a5bf"
     },
     {
       "path": ".cn-pilot/qa/core-check.test.mjs",
@@ -299,15 +303,15 @@
     },
     {
       "path": ".cn-pilot/qa/multidisciplinary.test.mjs",
-      "sha256": "614e653f5b18ad71500b94112180f338643f21a37a38089486f1655eb0c02f50"
+      "sha256": "b24063087e41e873f142611269fa5f7313c627baf928f7047755c5cfee5a28b0"
     },
     {
       "path": ".cn-pilot/update/updater.mjs",
-      "sha256": "9eeb9a296c2958cd19540e67a6e2dbfaadcc652c9944f6f2f10eadc174d7191c"
+      "sha256": "348e4c2dfc0c76abf9e79ad349dfc2be14c4e50fcc7a957d6ac70dc3f6b064e8"
     },
     {
       "path": ".cn-pilot/update/updater.test.mjs",
-      "sha256": "e5b1b4d0d2a44b75ddada323dfe0fc213cf0b2aedfa564911841e05a89e74752"
+      "sha256": "a780273744969619dceb66af048bf3b346015304c7af6f706345af85c73a8d82"
     },
     {
       "path": ".kilo/agents/arquitecto.md",

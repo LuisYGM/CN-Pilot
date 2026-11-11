@@ -13,7 +13,7 @@ Inventario de CN Pilot Core. No sustituye `../ARTEFACTOS.md`, que registra entre
 - QA ejecutable read-only y on-demand del Core en `.cn-pilot/qa/` (Node built-in; sin dependencias npm)
 - Core portable en `.cn-pilot/` (config, documentación, perfiles y plantillas)
 - documentación para usuarios y referencia avanzada bajo `.cn-pilot/documentacion/` (mapa, onboarding, comandos, catálogo de skills y glosario incluidos)
-- updater versionado en `.cn-pilot/update/` (manifest SHA-256 reproducible; runtime y temporales excluidos)
+- updater versionado en `.cn-pilot/update/` (manifest SHA-256 reproducible, runtimes de updater Kilo/Codex y raíces futuras `.agents/skills/` / `.codex/agents/`; runtime y temporales excluidos)
 - registro base de artefactos del proyecto
 - configuración responsive versionada en `.cn-pilot/config/`
 - configuración Kilo compartible en `kilo.jsonc` y controles locales en `.gitignore` / `.kilocodeignore`

@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.1.2] - 2026-11-11
+
+- Añade selección explícita del runtime del updater (`kilo` o `codex`), conservando Kilo como default y sin exigir Kilo cuando Codex ejecuta una futura actualización.
+- Amplía el allowlist de distribución para las futuras rutas `.agents/skills/` y `.codex/agents/`; la distribución 3.1.2 todavía no incluye adaptadores Codex.
+- Mantiene manifiesto v1 y sus campos Kilo existentes; la metadata `updaterRuntimes` es aditiva para que instalaciones 3.1.1 puedan validar la distribución puente.
+- Añade regresión de actualización 3.1.1→3.1.2, pruebas de rutas/runtime y exposición de runtimes de updater en Core QA.
+
 ## [3.1.1] - 2026-11-10
 
 - Añade la suite multidisciplinaria al workflow Core QA de GitHub Actions.

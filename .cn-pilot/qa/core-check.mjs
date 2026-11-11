@@ -653,7 +653,7 @@ function checkManifest(root) {
 function checkDistributionManifest(root) {
   try {
     const result = verifyManifestMetadata(root);
-    return { status: "PASS", details: { version: result.manifest.cnPilotVersion, hashesDeclared: result.hashesDeclared, mode: "baseline metadata; local customization is permitted" } };
+    return { status: "PASS", details: { version: result.manifest.cnPilotVersion, hashesDeclared: result.hashesDeclared, updaterRuntimes: result.manifest.updaterRuntimes ?? ["kilo"], mode: "baseline metadata; local customization is permitted" } };
   } catch (error) {
     return { status: "FAIL", details: { code: String(error?.code ?? "INVALID_MANIFEST").replace(/[\r\n\t]/g, " ") } };
   }
@@ -898,6 +898,7 @@ function humanOutput(report) {
     if (check.id === "core.version") suffix = details.version ?? "";
     if (check.id === "core.projectContextVersion" && details.checked === false) suffix = "project-owned; cross-check skipped";
     if (check.id === "runtime.gitignore") suffix = details.expectedRule ?? "";
+    if (check.id === "distribution.manifest" && details.updaterRuntimes) suffix = `updater: ${details.updaterRuntimes.join(", ")}`;
     lines.push(`${(LABELS.get(check.id) ?? check.id).padEnd(27, ".")} ${check.status}${suffix ? ` (${suffix})` : ""}`);
   }
   lines.push(`Result: ${report.status}`);
