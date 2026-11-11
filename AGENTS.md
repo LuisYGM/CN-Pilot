@@ -34,3 +34,9 @@ Estas reglas son el **kernel compartido** de CN Pilot. El contrato completo de u
 
 - Git es opcional; cuando exista, trabaja sobre `main` por defecto y crea commit local solo para cambios completos/verificados, salvo prohibición explícita. Stagea únicamente la unidad pertinente y usa Conventional Commits con prefijo inglés y descripción española.
 - `push`, deploy/publicación, PR, merge, tag, release y otras acciones remotas requieren autorización explícita. No ejecutes `git reset --hard`, `git clean -fd` ni operaciones destructivas equivalentes.
+
+## Runtime Codex
+
+- En Codex, el agente raíz cumple el rol de Jefe de proyecto y conserva la coordinación y la escritura single-writer de Project Context. Para una disciplina especializada, delega con agentes nativos definidos en `.codex/agents/` cuando la tarea lo justifique; no delegues trabajo DIRECT por rutina ni asumas que un subagente tiene un filesystem o worktree aislado.
+- Los procedimientos compartidos siguen siendo canónicos en `.kilo/agents/`, `.kilo/skills/` y `.kilo/commands/`. Sigue el adaptador de `.cn-pilot/adapters/codex/RUNTIME.md` para cargarlos bajo demanda; el frontmatter y los permisos Kilo solo sirven en Kilo y no conceden permisos efectivos en Codex.
+- Los subagentes heredan la sandbox y las aprobaciones de la sesión raíz. Las instrucciones de Revisor expresan un límite de conducta, no una garantía técnica de solo lectura; la política efectiva la define la sesión de Codex.

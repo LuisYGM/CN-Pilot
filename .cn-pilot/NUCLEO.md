@@ -1,6 +1,6 @@
 # Núcleo de CN Pilot — Especificación 2.0
 
-**Versión:** `3.1.2`
+**Versión:** `3.2.0`
 
 Documento de referencia para mantenedores de CN Pilot. Una persona nueva debe empezar por [`documentacion/EMPIEZA-AQUI.md`](documentacion/EMPIEZA-AQUI.md); no necesita leer esta especificación para trabajar.
 
@@ -18,9 +18,13 @@ Cada proyecto define hasta dónde llega el repositorio y cómo se entrega cada a
 
 ## Capas de configuración
 
-El repositorio separa Core portable en `.cn-pilot/`, rutas técnicas requeridas por herramientas, contexto mutable, inputs del proyecto y código/artefactos. `.cn-pilot/config/responsive.json` es la fuente versionada para responsive de proyectos nuevos; los proyectos existentes conservan sus breakpoints salvo migración aprobada.
+El repositorio separa Core portable en `.cn-pilot/`, rutas técnicas requeridas por runtimes como `.kilo/`, `.codex/` y `.agents/`, contexto mutable, inputs del proyecto y código/artefactos. `.cn-pilot/config/responsive.json` es la fuente versionada para responsive de proyectos nuevos; los proyectos existentes conservan sus breakpoints salvo migración aprobada.
 
-Los MCPs y workflows de deployment no se activan ni distribuyen por defecto. Ante una solicitud explícita, prepara la configuración MCP local con base en el servidor, capability y configuración real; no se crea durante `/nuevo-proyecto`, no se leen/escriben archivos MCP protegidos ni se solicitan secretos. Si se solicita GitHub Actions y el método/destino están definidos y autorizados, crea un workflow específico para el proyecto. Los triggers automáticos requieren autorización independiente. `kilo.jsonc` conserva únicamente configuración general compartible sin secretos. Consulta `.cn-pilot/documentacion/CONFIGURACION.md`.
+Los MCPs y workflows de deployment no se activan ni distribuyen por defecto. Ante una solicitud explícita, prepara la configuración MCP local con base en el servidor, capability y configuración real; no se crea durante el onboarding, no se leen/escriben archivos MCP protegidos ni se solicitan secretos. Si se solicita GitHub Actions y el método/destino están definidos y autorizados, crea un workflow específico para el proyecto. Los triggers automáticos requieren autorización independiente. `kilo.jsonc` conserva únicamente configuración general compartible sin secretos. Consulta `.cn-pilot/documentacion/CONFIGURACION.md` y las guías específicas del runtime.
+
+## Adaptadores de runtime
+
+El Core mantiene un solo contrato de roles y procedimientos. Kilo Code usa sus agentes, skills y comandos canónicos en `.kilo/`; Codex usa el agente raíz como Jefe de proyecto, cinco agentes especialistas nativos bajo `.codex/agents/` y skills de descubrimiento `cnp-*` en `.agents/skills/`. Los adaptadores cargan los procedimientos desde las fuentes Kilo bajo demanda y no copian el Core. Los permisos efectivos dependen de la sesión/runtime, no de las instrucciones de los agentes. Consulta `.cn-pilot/adapters/codex/RUNTIME.md`.
 
 ## Capas de archivos y artefactos
 

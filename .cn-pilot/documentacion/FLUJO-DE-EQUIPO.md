@@ -9,7 +9,7 @@ Jefe de proyecto es el coordinador y contacto humano normal. Lee lo que ya exist
 | Diseñador | UX/UI visual, dirección artística, composición, UI Kit/prototipos, estados e intent de interacción/motion cuando la decisión visual está abierta. Human Visual Approval sigue siendo de la persona. |
 | Redactor | Estrategia editorial, copy comercial/editorial, SEO editorial, storytelling, UX writing y microcopy cuando el contenido/intención requiere resolución. No implementa código ni SEO técnico. |
 | Desarrollador | Único owner de implementación técnica full stack: UI/frontend/responsive/builders y backend/datos/APIs/WordPress; usa el stack existente y recibe inputs aprobados de Diseñador/Redactor. No hay handoff rutinario frontend↔backend. |
-| Revisor | Comprobación independiente read-only con evidencia; no implementa ni reemplaza QA primaria o gates humanos. |
+| Revisor | Comprobación independiente read-only con evidencia; en Codex la instrucción no limita técnicamente permisos, que hereda de la sesión raíz. No implementa ni reemplaza QA primaria o gates humanos. |
 
 Las skills se cargan por trigger, no en bloque. La tabla detallada de activación y secuencia está en `.kilo/agents/jefe-proyecto.md`; los procedimientos y acceptance viven en cada skill. Handoffs solo ocurren entre autoridades distintas o ante un gate real.
 
@@ -18,7 +18,7 @@ Las skills se cargan por trigger, no en bloque. La tabla detallada de activació
 La forma normal es una unidad de trabajo cada vez. Jefe de proyecto puede paralelizar solo si hay unidades realmente independientes, superficies separadas y beneficio de integración claro. En ese caso:
 
 - estabiliza primero contratos y archivos compartidos;
-- limita writers simultáneos y aísla sus cambios con worktrees cuando Git/Kilo lo permite;
+- limita writers simultáneos y usa worktrees solo cuando el runtime/Git permite comprobar el aislamiento real;
 - los readers/reviewers no cambian los archivos;
 - integra una unidad cada vez, verifica y conserva cualquier checkout con cambios no integrados.
 

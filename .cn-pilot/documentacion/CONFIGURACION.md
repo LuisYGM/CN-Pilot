@@ -1,13 +1,13 @@
 # Configuración de CN Pilot
 
-Referencia técnica para configuración compartible, responsive, Kilo/MCP, deployment opcional, secretos y variables de entorno. Si necesitas abrir el workspace/configurar Kilo como usuario, empieza por [Configuración de Kilo](CONFIGURACION-KILO.md). La selección de modelos se explica en [Estrategia de modelos](ESTRATEGIA-DE-MODELOS.md).
+Referencia técnica para configuración compartible, responsive, Kilo/MCP, deployment opcional, secretos y variables de entorno. Para iniciar, consulta [Configuración de Kilo](CONFIGURACION-KILO.md) o [Configuración de Codex](CONFIGURACION-CODEX.md). La selección de modelos se explica en [Estrategia de modelos](ESTRATEGIA-DE-MODELOS.md).
 
 ## Capas de configuración
 
 - **Convenciones universales:** fuentes versionadas y portables que aplican por defecto, como `.cn-pilot/config/responsive.json`.
 - **Configuración del proyecto:** decisiones compartibles del proyecto, sin secretos, como configuración general en `kilo.jsonc` o un workflow de deployment aprobado.
 - **Configuración local:** preferencias, autenticación y ajustes propios del desarrollador o máquina. Se mantienen fuera de Git.
-- **Selección de IA:** proveedor, modelos principal/pequeño/de subagentes/de compactación, overrides y esfuerzo de razonamiento pertenecen al usuario y al runtime de Kilo. El proyecto no los fija por defecto ni los registra como decisiones compartidas.
+- **Selección de IA:** proveedor, modelo, overrides y esfuerzo de razonamiento pertenecen al usuario y al runtime activo. El proyecto no los fija por defecto ni los registra como decisiones compartidas.
 - **Secretos:** tokens, API keys, passwords, claves privadas y credenciales. Nunca se versionan.
 - **Plantillas opcionales:** ejemplos inactivos bajo `.cn-pilot/plantillas/`; se consultan/adaptan solo cuando el alcance lo requiere.
 

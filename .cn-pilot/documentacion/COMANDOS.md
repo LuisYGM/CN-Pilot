@@ -1,6 +1,6 @@
 # Comandos opcionales
 
-La conversación normal con **Jefe de proyecto** es suficiente para la mayoría del trabajo. Los comandos son accesos directos; no son etapas obligatorias ni tienes que memorizarlos. El cuerpo y el comportamiento de cada uno permanecen en su archivo `.kilo/commands/`.
+La conversación normal con **Jefe de proyecto** es suficiente para la mayoría del trabajo. Los comandos son accesos directos; no son etapas obligatorias ni tienes que memorizarlos. El cuerpo canónico de cada uno permanece en `.kilo/commands/`. Kilo los expone como slash commands; Codex los ofrece como skills nativas `$cnp-*` que apuntan a esa fuente compartida. Consulta [Configuración de Codex](CONFIGURACION-CODEX.md) para el mapeo completo.
 
 | Comando | Para qué sirve |
 |---|---|

@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.2.0] - 2026-11-11
+
+- Añade integración nativa de Codex: el agente raíz conserva Jefe de proyecto, cinco especialistas TOML y 56 skills `cnp-*` cargan los contratos compartidos bajo demanda.
+- Mantiene las 42 skills, 14 comandos, seis agentes y configuración de Kilo como fuentes canónicas; un generador y Core QA detectan divergencia de wrappers.
+- Documenta el mapeo de comandos, límites de permisos heredados, delegación y actualización desde Codex sin exigir Kilo en instalaciones 3.1.2 o posteriores.
+- No fija modelos, sandbox ni política de aprobaciones en archivos de proyecto; la verificación conductual Codex de este entorno quedó limitada por el host de ejecución.
+
 ## [3.1.2] - 2026-11-11
 
 - Añade selección explícita del runtime del updater (`kilo` o `codex`), conservando Kilo como default y sin exigir Kilo cuando Codex ejecuta una futura actualización.

@@ -1,21 +1,21 @@
 # CN Pilot
 
-**CN Pilot 3.1.2** es un sistema extensible de coordinación y producción profesional multidisciplinaria con agentes de **Kilo Code**. Un proyecto puede ser una marca, empresa, producto o iniciativa y reunir distintos entregables, no necesariamente una web, aplicación o repositorio de código.
+**CN Pilot 3.2.0** es un sistema extensible de coordinación y producción profesional multidisciplinaria con integración nativa para **Kilo Code** y **OpenAI Codex**. Un proyecto puede ser una marca, empresa, producto o iniciativa y reunir distintos entregables, no necesariamente una web, aplicación o repositorio de código.
 
 Tú describes lo que quieres conseguir con tus propias palabras. Jefe de proyecto revisa el contexto, coordina a los especialistas necesarios y verifica el trabajo según su alcance y riesgo. No necesitas programar, diseñar prompts técnicos ni escoger agentes o skills. Tampoco tienes que seguir una fase fija.
 
-[Empieza aquí](.cn-pilot/documentacion/EMPIEZA-AQUI.md) · [Documentación](.cn-pilot/documentacion/README.md) · [Configuración de Kilo](.cn-pilot/documentacion/CONFIGURACION-KILO.md) · [Actualizaciones](.cn-pilot/documentacion/ACTUALIZACIONES.md) · [Solución de problemas](.cn-pilot/documentacion/SOLUCION-DE-PROBLEMAS.md) · [Repositorio](https://github.com/LuisYGM/cn-pilot)
+[Empieza aquí](.cn-pilot/documentacion/EMPIEZA-AQUI.md) · [Documentación](.cn-pilot/documentacion/README.md) · [Configuración de Kilo](.cn-pilot/documentacion/CONFIGURACION-KILO.md) · [Configuración de Codex](.cn-pilot/documentacion/CONFIGURACION-CODEX.md) · [Actualizaciones](.cn-pilot/documentacion/ACTUALIZACIONES.md) · [Solución de problemas](.cn-pilot/documentacion/SOLUCION-DE-PROBLEMAS.md) · [Repositorio](https://github.com/LuisYGM/cn-pilot)
 
 CN Pilot ayuda a evitar que tengas que traducir cada petición a una especificación técnica, reconstruir el contexto o coordinar por tu cuenta diseño, implementación y QA. Preserva las decisiones aprobadas y no hace push, publica ni modifica producción por defecto. Las acciones externas requieren alcance y autorización adecuados.
 
 ## Inicio rápido
 
-Necesitas VS Code, Kilo Code y una copia de CN Pilot en la carpeta de trabajo. Git es recomendable, pero opcional.
+Necesitas una copia de CN Pilot abierta como carpeta de trabajo y uno de los runtimes compatibles. Git es recomendable, pero opcional.
 
 1. Usa el repositorio como template, clónalo o copia sus archivos a la carpeta del proyecto.
-2. Abre esa carpeta en VS Code y configura Kilo Code. Sigue [la guía de configuración](.cn-pilot/documentacion/CONFIGURACION-KILO.md).
-3. Si Kilo solicita elegir un agente, selecciona **Jefe de proyecto**.
-4. Ejecuta `/nuevo-proyecto` y describe tu objetivo normalmente. Por ejemplo:
+2. Abre la carpeta en VS Code y usa Kilo Code o inicia Codex en la raíz del repositorio. Sigue la [guía de Kilo](.cn-pilot/documentacion/CONFIGURACION-KILO.md) o la [guía de Codex](.cn-pilot/documentacion/CONFIGURACION-CODEX.md).
+3. En Kilo, selecciona **Jefe de proyecto** si el runtime lo solicita y ejecuta `/nuevo-proyecto`. En Codex, el agente raíz es Jefe de proyecto; puedes invocar `$cnp-nuevo-proyecto` para abrir el mismo onboarding.
+4. Describe tu objetivo normalmente. Por ejemplo:
 
    > Quiero crear una web WordPress para un restaurante. Tengo logo, fotos y referencias dentro de recursos.
 
@@ -108,13 +108,13 @@ Jefe de proyecto suele ser tu interlocutor. Los otros cinco especialistas interv
 | Desarrollador | Implementación técnica, software full stack, APIs, SDK, CLI e integraciones/automatización cuando el resultado las necesita. |
 | Revisor | Revisión independiente de solo lectura, no implementa cambios. |
 
-Las **42 skills** son procedimientos especializados que se cargan bajo demanda; no tienes que elegirlas. Los **14 comandos** son atajos opcionales. Los más útiles al empezar son `/nuevo-proyecto`, `/cn-estado`, `/cn-actualizar`, `/diseno`, `/contenido`, `/depurar`, `/revision` y `/entrega`. Consulta [la lista completa y cuándo usar cada comando](.cn-pilot/documentacion/COMANDOS.md) y [el catálogo de capacidades](.cn-pilot/documentacion/SKILLS-Y-CAPACIDADES.md).
+Las **42 skills** canónicas y los **14 comandos** conservan su contenido compartido bajo `.kilo/`. Kilo expone sus comandos como slash commands; Codex ofrece entradas nativas `$cnp-*` que cargan esas mismas fuentes bajo demanda. Consulta [los comandos](.cn-pilot/documentacion/COMANDOS.md), [el catálogo de capacidades](.cn-pilot/documentacion/SKILLS-Y-CAPACIDADES.md) y [la configuración de Codex](.cn-pilot/documentacion/CONFIGURACION-CODEX.md).
 
 ## Git, seguridad y publicación
 
 Git es opcional. Cuando existe, CN Pilot puede crear un commit local al terminar una unidad verificada; el push sigue siendo manual. Tags, releases, PRs, merges y despliegues no se presuponen. Deployment puede prepararse o ejecutarse solo si el método existe, la tarea lo incluye y se cuenta con autorización.
 
-No guardes secretos en el repositorio ni pegues credenciales en el chat. Kilo, MCP y el proveedor/modelo se configuran según disponibilidad local; CN Pilot es nativo de Kilo Code, no un runtime universal. Que una herramienta esté conectada no autoriza a usarla para escribir en un servicio.
+No guardes secretos en el repositorio ni pegues credenciales en el chat. El runtime, proveedor/modelo y la política de permisos se configuran según disponibilidad local. Que una herramienta esté conectada no autoriza a usarla para escribir en un servicio.
 
 ## Documentación y compatibilidad
 
@@ -128,7 +128,7 @@ No guardes secretos en el repositorio ni pegues credenciales en el chat. Kilo, M
 - [Problemas frecuentes](.cn-pilot/documentacion/SOLUCION-DE-PROBLEMAS.md)
 - [Referencia Core para mantenedores](.cn-pilot/NUCLEO.md)
 
-La configuración de agentes, skills y comandos está preparada para **Kilo Code**. El proveedor y modelo se pueden elegir dentro de Kilo, según las opciones disponibles. No se declara integración nativa con otros runtimes.
+La integración nativa de Codex usa `.codex/agents/` y `.agents/skills/`; los adaptadores cargan bajo demanda los contratos compartidos de `.kilo/`. Las instrucciones de agentes no conceden permisos: la sandbox y las aprobaciones efectivas son las de la sesión del runtime. Consulta la [guía de Codex](.cn-pilot/documentacion/CONFIGURACION-CODEX.md) antes de usarlo.
 
 ## Licencia
 

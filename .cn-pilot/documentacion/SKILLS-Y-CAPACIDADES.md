@@ -1,6 +1,6 @@
 # Skills y capacidades
 
-Las skills son procedimientos especializados que los agentes de CN Pilot cargan bajo demanda según el objetivo, el stack y el riesgo. **No tienes que elegirlas ni aprender sus nombres.** Esta página solo permite descubrir qué áreas existen; el mapa canónico de activación/ownership está en `.kilo/agents/jefe-proyecto.md` y la operación en cada `SKILL.md`.
+Las skills son procedimientos especializados que los agentes de CN Pilot cargan bajo demanda según el objetivo, el stack y el riesgo. **No tienes que elegirlas ni aprender sus nombres.** Esta página solo permite descubrir qué áreas existen; el mapa canónico de activación/ownership está en `.kilo/agents/jefe-proyecto.md` y la operación en cada `SKILL.md`. Kilo carga las 42 fuentes `.kilo/skills/`; Codex descubre wrappers `cnp-*` que leen la misma fuente y los recursos necesarios. Los comandos Kilo también tienen wrappers bajo `cnp-*`.
 
 ## Dirección, producto y contenido
 

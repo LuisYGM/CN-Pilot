@@ -66,12 +66,15 @@ const ROOT_KILO_TOOL_KEYS = new Set(["*", "glob", "grep", "lsp", "question", "to
 const KILO_PLAYWRIGHT_AGENTS = new Set(["jefe-proyecto", "disenador", "desarrollador"]);
 const DESTRUCTIVE_GIT = ["git push --force*", "git push -f*", "git reset --hard*", "git clean*"];
 const CN_PILOT_AGENTS = ["arquitecto", "desarrollador", "disenador", "jefe-proyecto", "redactor", "revisor"];
+const CODEX_SPECIALISTS = ["arquitecto", "desarrollador", "disenador", "redactor", "revisor"];
+const CODEX_ADAPTER_VERSION = "3.2.0";
+const RUNTIME_DOC_PATH = ".cn-pilot/adapters/codex/RUNTIME.md";
 const REVIEW_OUTCOMES = ["APPROVED", "APPROVED WITH NOTES", "CHANGES REQUIRED", "BLOCKED"];
 const CANONICAL_REPOSITORY = "https://github.com/luisygm/cn-pilot";
 const LEGACY_ROLE_NAME = /\b(?:Dev Lead|Architect|Reviewer|Developer|Frontend\s*\/\s*Builder|Frontend\s+Builder|Content\s*\/\s*SEO|Content SEO(?: agent)?|UI\/UX Designer|Maquetador(?: frontend)?|Contenido\s*\/\s*SEO|Diseñador UI\/UX)\b/g;
 const ACTIVE_LANGUAGE_ROOTS = [
   ".cn-pilot/documentacion", ".cn-pilot/perfiles", ".cn-pilot/plantillas",
-  ".kilo/agents", ".kilo/commands", ".kilo/skills",
+  ".kilo/agents", ".kilo/commands", ".kilo/skills", ".agents/skills",
 ];
 const PROJECT_CONTEXT_DOCS = ["AGENTS.md", "README.md", "PROYECTO.md", "REQUISITOS.md", "ESTADO.md", "DECISIONES.md", "ARTEFACTOS.md"];
 const CN_PILOT_AGENT_HEADINGS = {
@@ -269,6 +272,7 @@ function checkSpanishFirst(root) {
   const paths = [".cn-pilot/NUCLEO.md"];
   const listingProblems = [];
   for (const directory of ACTIVE_LANGUAGE_ROOTS) {
+    if (directory === ".agents/skills" && inspectPath(root, directory).kind === "missing") continue;
     const listing = listFiles(root, directory, { extension: ".md", recursive: true });
     paths.push(...listing.files.filter((file) => !(directory === ".kilo/skills" && file.includes("/references/"))));
     listingProblems.push(...listing.problems);
@@ -327,6 +331,94 @@ function checkCommands(root, agentNames) {
     else if (!agentNames.has(agent)) problems.push({ path: relative, field: "agent", target: safeText(agent), code: "AGENT_TARGET_MISSING" });
   }
   return { count: listing.count + listing.symlinks.length, problems, symlinks: listing.symlinks };
+}
+
+function checkCodexAdapter(root, version) {
+  if (version && compareVersionParts(version, CODEX_ADAPTER_VERSION) < 0) {
+    return { status: "PASS", details: { checked: false, reason: `Codex adapter is introduced in ${CODEX_ADAPTER_VERSION}.` } };
+  }
+  const problems = [];
+  const runtime = readText(root, ".cn-pilot/adapters/codex/RUNTIME.md");
+  if (runtime.kind !== "ok") problems.push({ path: ".cn-pilot/adapters/codex/RUNTIME.md", code: runtime.code ?? runtime.kind });
+  else {
+    if (!runtime.text.includes("sandbox") || !runtime.text.includes("worktree") || !runtime.text.includes("Jefe de proyecto")) {
+      problems.push({ path: ".cn-pilot/adapters/codex/RUNTIME.md", code: "CODEX_RUNTIME_CONTRACT_INCOMPLETE" });
+    }
+    if (!runtime.text.includes("updater.mjs status --runtime codex") || !runtime.text.includes("updater.mjs update --runtime codex")) {
+      problems.push({ path: ".cn-pilot/adapters/codex/RUNTIME.md", code: "CODEX_UPDATER_MAPPING_MISSING" });
+    }
+  }
+
+  const agentListing = listFiles(root, ".codex/agents", { extension: ".toml" });
+  const actualAgents = agentListing.files.map((file) => path.posix.basename(file, ".toml")).sort();
+  const expectedAgents = [...CODEX_SPECIALISTS].sort();
+  if (agentListing.problems.length || agentListing.symlinks.length || JSON.stringify(actualAgents) !== JSON.stringify(expectedAgents)) {
+    problems.push({ path: ".codex/agents", code: "CODEX_AGENT_INVENTORY_MISMATCH", expected: expectedAgents, actual: actualAgents, unsafe: agentListing.symlinks });
+  }
+  for (const name of actualAgents) {
+    const relative = `.codex/agents/${name}.toml`;
+    const sourcePath = `.kilo/agents/${name}.md`;
+    const file = readText(root, relative);
+    const expectedHeading = `# ${CN_PILOT_AGENT_HEADINGS[name]}`;
+    if (file.kind !== "ok") { problems.push({ path: relative, code: file.code ?? file.kind }); continue; }
+    if (!new RegExp(`^name\\s*=\\s*"${name}"\\s*$`, "m").test(file.text)
+      || !/^description\s*=\s*".+"\s*$/m.test(file.text)
+      || !/^developer_instructions\s*=\s*".+"\s*$/m.test(file.text)
+      || !file.text.includes(sourcePath)
+      || !file.text.includes("ACL de Kilo")) {
+      problems.push({ path: relative, code: "CODEX_AGENT_CONTRACT_INVALID", source: sourcePath, expectedHeading });
+    }
+    if (/^\s*(?:sandbox_mode|approval_policy|model)\s*=/m.test(file.text)) {
+      problems.push({ path: relative, code: "CODEX_AGENT_OVERRIDES_SESSION_POLICY" });
+    }
+  }
+
+  const canonical = new Map();
+  const skillDirs = listDirectories(root, ".kilo/skills");
+  for (const slug of skillDirs.directories) {
+    const source = `.kilo/skills/${slug}/SKILL.md`;
+    const meta = readMetadata(root, source);
+    if (!meta.ok || !nonEmpty(meta.fields.description)) problems.push(meta.error ?? { path: source, code: "CANONICAL_SKILL_DESCRIPTION_MISSING" });
+    else canonical.set(slug, { source, description: meta.fields.description });
+  }
+  if (skillDirs.error) problems.push(skillDirs.error);
+  const commandFiles = listFiles(root, ".kilo/commands", { extension: ".md" });
+  for (const source of commandFiles.files) {
+    const slug = path.posix.basename(source, ".md");
+    const meta = readMetadata(root, source);
+    if (!meta.ok || !nonEmpty(meta.fields.description)) problems.push(meta.error ?? { path: source, code: "CANONICAL_COMMAND_DESCRIPTION_MISSING" });
+    else if (canonical.has(slug)) problems.push({ path: source, code: "CODEX_SKILL_NAME_COLLISION", slug });
+    else canonical.set(slug, { source, description: meta.fields.description });
+  }
+  if (commandFiles.problems.length || commandFiles.symlinks.length) problems.push(...commandFiles.problems, ...commandFiles.symlinks.map((file) => ({ path: file, code: "SYMLINK" })));
+
+  const codexSkills = listDirectories(root, ".agents/skills");
+  if (codexSkills.error) problems.push(codexSkills.error);
+  const actualSkills = codexSkills.directories.filter((name) => name.startsWith("cnp-")).sort();
+  const expectedSkills = [...canonical.keys()].map((slug) => `cnp-${slug}`).sort();
+  const unsafeSkills = codexSkills.symlinks.filter((name) => name.startsWith("cnp-"));
+  if (JSON.stringify(actualSkills) !== JSON.stringify(expectedSkills) || unsafeSkills.length) {
+    problems.push({ path: ".agents/skills", code: "CODEX_SKILL_INVENTORY_MISMATCH", expected: expectedSkills.length, actual: actualSkills.length, unsafe: unsafeSkills });
+  }
+  for (const codexName of actualSkills) {
+    const slug = codexName.slice("cnp-".length);
+    const expected = canonical.get(slug);
+    const relative = `.agents/skills/${codexName}/SKILL.md`;
+    const meta = readMetadata(root, relative);
+    const body = readText(root, relative);
+    if (!expected || !meta.ok || meta.fields.name !== codexName || meta.fields.description !== expected.description
+      || body.kind !== "ok" || !body.text.includes(RUNTIME_DOC_PATH) || !body.text.includes(expected.source)) {
+      problems.push({ path: relative, code: "CODEX_SKILL_SOURCE_MISMATCH", expectedSource: expected?.source ?? null });
+    }
+  }
+  const status = problems.length ? "FAIL" : "PASS";
+  return { status, details: { checked: true, specialistAgents: actualAgents.length, skillWrappers: actualSkills.length, canonicalSkills: skillDirs.directories.length, canonicalCommands: commandFiles.count, problems } };
+}
+
+function compareVersionParts(left, right) {
+  const a = String(left).split(".").map(Number); const b = String(right).split(".").map(Number);
+  for (let index = 0; index < 3; index += 1) if ((a[index] ?? 0) !== (b[index] ?? 0)) return (a[index] ?? 0) < (b[index] ?? 0) ? -1 : 1;
+  return 0;
 }
 
 function checkReviewerPermissions(root) {
@@ -604,7 +696,12 @@ function manifestRules(text) {
   const recognized = new Set();
   const rules = [
     ["agents", /^\s*-\s*(\d+)\s+agentes?\s+en\s+`([^`]+)`/i, ".kilo/agents", (root) => listFiles(root, ".kilo/agents", { extension: ".md" })],
+    ["codexAgents", /^\s*-\s*(\d+)\s+agentes especialistas Codex en\s+`([^`]+)`/i, ".codex/agents", (root) => listFiles(root, ".codex/agents", { extension: ".toml" })],
     ["skills", /^\s*-\s*(\d+)\s+skills\s*\([^)]*\.kilo\/skills\/\*\/SKILL\.md[^)]*\)/i, ".kilo/skills", (root) => ({ count: listDirectories(root, ".kilo/skills").directories.length })],
+    ["codexSkills", /^\s*-\s*(\d+)\s+skills nativas Codex `cnp-\*` en\s+`([^`]+)`/i, ".agents/skills", (root) => {
+      const listing = listDirectories(root, ".agents/skills");
+      return { count: listing.directories.filter((name) => name.startsWith("cnp-")).length, symlinks: listing.symlinks.filter((name) => name.startsWith("cnp-")), problems: listing.error ? [listing.error] : [] };
+    }],
     ["commands", /^\s*-\s*(\d+)\s+comandos?\s+en\s+`([^`]+)`/i, ".kilo/commands", (root) => listFiles(root, ".kilo/commands", { extension: ".md" })],
     ["profiles", /^\s*-\s*(\d+)\s+perfil(?:es)?\s+en\s+`([^`]+)`/i, ".cn-pilot/perfiles", (root) => listFiles(root, ".cn-pilot/perfiles", { extension: ".md" })],
     ["technicalSeoReferences", /^\s*-\s*(\d+)\s+documentos? de referencia bajo\s+`([^`]+)`/i, ".kilo/skills/technical-seo/references", (root) => listFiles(root, ".kilo/skills/technical-seo/references", { extension: ".md", recursive: true })],
@@ -831,6 +928,8 @@ export function runCoreChecks({ rootDir = DEFAULT_ROOT } = {}) {
   add("skills.frontmatter", skills.problems.length ? "FAIL" : skills.symlinks.length ? "WARN" : "PASS", { count: skills.count, problems: skills.problems, uninspectedSymlinks: skills.symlinks });
   const commands = checkCommands(root, agentInventory.names);
   add("commands.frontmatter", commands.problems.length ? "FAIL" : commands.symlinks.length ? "WARN" : "PASS", { count: commands.count, problems: commands.problems, uninspectedSymlinks: commands.symlinks });
+  const codexAdapter = checkCodexAdapter(root, version.version);
+  add("codex.adapter", codexAdapter.status, codexAdapter.details);
   const commandTargetsMissing = commands.problems.filter((problem) => problem.code === "AGENT_TARGET_MISSING");
   add("routing.commands", commandTargetsMissing.length ? "FAIL" : "PASS", { targetsChecked: commands.count, missing: commandTargetsMissing });
 
@@ -876,6 +975,7 @@ const LABELS = new Map([
   ["core.version", "Version"], ["core.projectContextVersion", "Project context version"], ["review.outcomes", "Review outcomes"],
   ["core.paths", "Core paths"], ["core.optionalScaffold", "Input scaffold"],
   ["agents.frontmatter", "Agents"], ["skills.frontmatter", "Skills"], ["commands.frontmatter", "Commands"],
+  ["codex.adapter", "Codex adapter"],
   ["agents.noStepCaps", "Agent step caps"],
   ["language.spanishFirst", "Spanish-first role terminology"],
   ["routing.commands", "Command routing"], ["routing.devLead", "Rutas de Jefe de proyecto"], ["permissions.reviewer", "Permisos de Revisor"],

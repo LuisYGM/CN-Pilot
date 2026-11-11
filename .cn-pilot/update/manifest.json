@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "cnPilotVersion": "3.1.2",
+  "cnPilotVersion": "3.2.0",
   "sourceRepository": "https://github.com/LuisYGM/cn-pilot.git",
   "stableBranch": "main",
   "sourceCommit": null,
@@ -14,20 +14,252 @@
   ],
   "managedFiles": [
     {
+      "path": ".agents/skills/cnp-accessibility-review/SKILL.md",
+      "sha256": "f8392735d6146225abfcd7e9398829953aa21463aace0cb967b20cb8f2d79181"
+    },
+    {
+      "path": ".agents/skills/cnp-analytics-instrumentation/SKILL.md",
+      "sha256": "844659f40e5fb7d9539097e9d025d1cd1cda907d9655dd2b71953b0fc0962aa6"
+    },
+    {
+      "path": ".agents/skills/cnp-api-integration/SKILL.md",
+      "sha256": "854cdf32a99e03eee5543f754022e9d9b5970f610883a70fef0574c0aaa62571"
+    },
+    {
+      "path": ".agents/skills/cnp-application-ui/SKILL.md",
+      "sha256": "a38d10ab853e759a3cbe668e56fb86e0eb6707b08aad18abf357b4aeabc1cac1"
+    },
+    {
+      "path": ".agents/skills/cnp-auth-access-control/SKILL.md",
+      "sha256": "c16c992570f08678c22cd6315934118560e7cc5874caa7d44abc2374db1a199d"
+    },
+    {
+      "path": ".agents/skills/cnp-automation-integrations/SKILL.md",
+      "sha256": "e5617c1a8f0953b12b0e585e0b419c597e5615198cbe71ac1fa17038868830eb"
+    },
+    {
+      "path": ".agents/skills/cnp-bricks/SKILL.md",
+      "sha256": "bd0b046f2b00512f9839b04a66f1caa0d75e9b5b525bbb7dee7a65827cc1f5c4"
+    },
+    {
+      "path": ".agents/skills/cnp-cn-actualizar/SKILL.md",
+      "sha256": "7f5250083d2b542ebf13f83eee8b1afe544e6a09efe373e73b83b80d771b7ceb"
+    },
+    {
+      "path": ".agents/skills/cnp-cn-estado/SKILL.md",
+      "sha256": "d6e15e164e656838f7b3a8218a883c39ed469490898945e086470f8e2c5d269f"
+    },
+    {
+      "path": ".agents/skills/cnp-commit/SKILL.md",
+      "sha256": "60854f662aa10a82b13d63b5435c3184c8c86ccdbd8f0c877f4a2d9050927a0c"
+    },
+    {
+      "path": ".agents/skills/cnp-contenido/SKILL.md",
+      "sha256": "8369c98c9b0923453a8eecb4bf5c6aff78a2770660828797b211761d1bbfa352"
+    },
+    {
+      "path": ".agents/skills/cnp-content-blog-seo/SKILL.md",
+      "sha256": "db3e34d134864b1cb22da51b8953c67daf1a14b1a69d50334ff397285bcdd0d6"
+    },
+    {
+      "path": ".agents/skills/cnp-content-page/SKILL.md",
+      "sha256": "e0629d3a833cb26cd543a032e9429a4ef7a43881df5358a23f80b6f4a93c5282"
+    },
+    {
+      "path": ".agents/skills/cnp-creative-web-experience/SKILL.md",
+      "sha256": "8b4f0a33b746ca051d9c1221e248810c62cb437800224056485647942acac7bb"
+    },
+    {
+      "path": ".agents/skills/cnp-database-migrations/SKILL.md",
+      "sha256": "45b6ad693d6a0ba689a15fdaddc20a185a9260254385083577396f32ce21ae85"
+    },
+    {
+      "path": ".agents/skills/cnp-deploy-wordpress/SKILL.md",
+      "sha256": "ff22146e8d923edac9515c0f38a2383272466004968cca86b65a714c041569ff"
+    },
+    {
+      "path": ".agents/skills/cnp-depurar/SKILL.md",
+      "sha256": "4592bd5fd9cebf74a5ae1a10a721165bbb780f252e0c9c57f10cad10502bb57b"
+    },
+    {
+      "path": ".agents/skills/cnp-desplegar-pruebas/SKILL.md",
+      "sha256": "3c9b52b903b8c903dfef8fea20c070e239c8d004a2f5d9f650f0eeb4e2296b0a"
+    },
+    {
+      "path": ".agents/skills/cnp-diagnostico/SKILL.md",
+      "sha256": "ed14dfe72c45f72eea478e5bc744fb2ceb06cd3eb1cc9ba028f6d89d07bc6d72"
+    },
+    {
+      "path": ".agents/skills/cnp-diseno/SKILL.md",
+      "sha256": "9e66f9b6d338f588121a32707584038d11874152282963042430b78095db525c"
+    },
+    {
+      "path": ".agents/skills/cnp-elementor/SKILL.md",
+      "sha256": "92aed2e6c5140a8cc84bbbc647521261931f9965d865826a4224f59c61dd7a54"
+    },
+    {
+      "path": ".agents/skills/cnp-entrega/SKILL.md",
+      "sha256": "f27faebed1a65e4973617dfa912b985c1829b2e4d6bb4ea41e4726178c704235"
+    },
+    {
+      "path": ".agents/skills/cnp-environment-dependency-management/SKILL.md",
+      "sha256": "e40e09c944684a608b82b9e14e16a478e3aea16749149f9e3ad671f257b9f1d0"
+    },
+    {
+      "path": ".agents/skills/cnp-existing-site-audit/SKILL.md",
+      "sha256": "d7627189b1a16c3dc01247b53c5dd06efc723afe6e2616e00ab372630e5f4c45"
+    },
+    {
+      "path": ".agents/skills/cnp-form-experience/SKILL.md",
+      "sha256": "8ae393128cc6def9adab633f11fe60d18aace3a9f2509a0de0843133b459a897"
+    },
+    {
+      "path": ".agents/skills/cnp-frontend-architecture/SKILL.md",
+      "sha256": "fa2620c35aac6f5102eaa23826826faf9d4826e208efd27d88b1169c2eb6c009"
+    },
+    {
+      "path": ".agents/skills/cnp-frontend-responsive/SKILL.md",
+      "sha256": "ddbab1b48a25abaeac0386f3bd03cf269ae74758875436f359adedbd0aed7c4e"
+    },
+    {
+      "path": ".agents/skills/cnp-git-checkpoint/SKILL.md",
+      "sha256": "53b86b435fb67ca2edf1c7f282ec73f82fda825d224bae16a0a59b32fea58ade"
+    },
+    {
+      "path": ".agents/skills/cnp-maintenance-operations/SKILL.md",
+      "sha256": "f6aeffc09966152836f8060302b3b9175e573f8926a921a1a9c40c03299547f7"
+    },
+    {
+      "path": ".agents/skills/cnp-motion-interaction/SKILL.md",
+      "sha256": "497b088681e7e4fc9a3f5e05c8f490340f1f7685e1c00697652af5d6bd3af98b"
+    },
+    {
+      "path": ".agents/skills/cnp-nuevo-proyecto/SKILL.md",
+      "sha256": "b2637d7214f29748a2bac9b7a8da6ca241a96a1795d0541c32872a01214954b3"
+    },
+    {
+      "path": ".agents/skills/cnp-page-composition/SKILL.md",
+      "sha256": "8182a9e24bf2e1966c83bfb8fd9e97fdd60feb639080d775d0a15296f0b0666b"
+    },
+    {
+      "path": ".agents/skills/cnp-performance-review/SKILL.md",
+      "sha256": "f5c5c1d301f6cfd3a8c1371a611952a9b93cf46a2e2c8e777361522224f956e3"
+    },
+    {
+      "path": ".agents/skills/cnp-plan/SKILL.md",
+      "sha256": "d96d33212f805727df5428a2d4cafae59d748f0a1b96b4709c17b4ae13cd3f6f"
+    },
+    {
+      "path": ".agents/skills/cnp-preparar-despliegue/SKILL.md",
+      "sha256": "decc1093bdef563dda6958a7b3dd370591c95f0f467c41f6a34c038eeb31aa00"
+    },
+    {
+      "path": ".agents/skills/cnp-product-discovery/SKILL.md",
+      "sha256": "f246ba278008ea7e15bb5498a4940c4eaf33abd06c5b62951bec92e78d101255"
+    },
+    {
+      "path": ".agents/skills/cnp-punto-control/SKILL.md",
+      "sha256": "1c72ee240fea682f325ce4c22cbc321a8c9071dc3e89bdf57caec76343ab2761"
+    },
+    {
+      "path": ".agents/skills/cnp-release-deployment/SKILL.md",
+      "sha256": "aca1ca3914b72dd1b3425b057993f2a25a119c9d8696d0f51ea10db7ec7f4d12"
+    },
+    {
+      "path": ".agents/skills/cnp-revision/SKILL.md",
+      "sha256": "0437fbd0e5617801ffa8702d50df0021aee468f138566e7264f814897847e73f"
+    },
+    {
+      "path": ".agents/skills/cnp-security-review/SKILL.md",
+      "sha256": "20e8af4c20f01e80ceadb02fe1da0f4c75cc9122883effa9285f3d98d029083b"
+    },
+    {
+      "path": ".agents/skills/cnp-source-grounded-development/SKILL.md",
+      "sha256": "e0b5f990b176900b257ff76a22674134bdb1c6a3cd09f0148558a20312d415ce"
+    },
+    {
+      "path": ".agents/skills/cnp-systematic-debugging/SKILL.md",
+      "sha256": "609db9b44514f0fc2ea47cf57c304953bda706e027c48aa907598b2b0c070c62"
+    },
+    {
+      "path": ".agents/skills/cnp-technical-seo/SKILL.md",
+      "sha256": "fad61294cfec93986a18e4fc5bd7eacdbd6527a4635a03918327c36b66ee7572"
+    },
+    {
+      "path": ".agents/skills/cnp-testing-strategy/SKILL.md",
+      "sha256": "cd1b4f82c0f121dd54a6206b66bc32ccffa5c4825ef3c0b497d6c8629db8d1c8"
+    },
+    {
+      "path": ".agents/skills/cnp-tool-discovery/SKILL.md",
+      "sha256": "be603df34729387b6f105bc1518909a2dc7b1aa0268b7083aa85bf1b7d9d2afd"
+    },
+    {
+      "path": ".agents/skills/cnp-ui-design-system/SKILL.md",
+      "sha256": "01ed5592057041b4599aeb375bee4ce1e13fa21e5f89c54716d6ca344831fcf7"
+    },
+    {
+      "path": ".agents/skills/cnp-ui-kit-construction/SKILL.md",
+      "sha256": "6dbfa31e8100df65d286e03c3262642670d758791a7759241be557aa60d98ee8"
+    },
+    {
+      "path": ".agents/skills/cnp-visual-art-direction/SKILL.md",
+      "sha256": "ff6805a55bfcbc6e239df314882b3be709a875369c6d5a0f94aacf169bebb38e"
+    },
+    {
+      "path": ".agents/skills/cnp-visual-parity-review/SKILL.md",
+      "sha256": "f995b6c86760922e5e682924b5c90430cb3b8228ce5e0dc0478e9d451760336f"
+    },
+    {
+      "path": ".agents/skills/cnp-web-strategy/SKILL.md",
+      "sha256": "cd5960cf45bb5fea179f0766804de1d0866e3a5c322ccc091704eb767831ce72"
+    },
+    {
+      "path": ".agents/skills/cnp-webapp-testing/SKILL.md",
+      "sha256": "de5475b871a19bde0dc35b23fa0ab6082cccd43c3d508364310a736df045a0dc"
+    },
+    {
+      "path": ".agents/skills/cnp-woocommerce/SKILL.md",
+      "sha256": "8c6e3a6d6fd843607ab038a76d8e82736821110a5ccc186a6cf099a6d71b9787"
+    },
+    {
+      "path": ".agents/skills/cnp-wordpress-content-modeling/SKILL.md",
+      "sha256": "9e4a804129a0c64e1a0e1dc2ec2ce193462f6b04bbdbae4be058e846aba8659e"
+    },
+    {
+      "path": ".agents/skills/cnp-wordpress-plugin/SKILL.md",
+      "sha256": "13f6e8d996d4fc4606c4a5065f6a17b2bfdc77c30a05de81bf759dd68d33eaa0"
+    },
+    {
+      "path": ".agents/skills/cnp-wordpress-theme-development/SKILL.md",
+      "sha256": "e8e41caa98fce9aad51ddbd1fc055be0b0706f4aa9c53aff5e3fadbe1d2613d2"
+    },
+    {
+      "path": ".agents/skills/cnp-wordpress/SKILL.md",
+      "sha256": "ec5138592fd6b5b1760815f8f776f68259cd60e9f80730765032a12616da5400"
+    },
+    {
       "path": ".cn-pilot-version",
-      "sha256": "905360921e63f419d6a111dd3216bf28402f367ab9aa69444d80e97419600d80"
+      "sha256": "33bdaf9e2d6bcbde2e4e613e865e403f8fe21fc621078d34c30b0bdc7f68d903"
     },
     {
       "path": ".cn-pilot/CAMBIOS.md",
-      "sha256": "eabc50b3c3eb94953340bedf94d3871d104156dfa4f44b9c6024da5dd9fef895"
+      "sha256": "22f4954e088238e36b0e4b8d36ad85b42d8fdee9d08bb5a8f4d1ad25ce57de44"
     },
     {
       "path": ".cn-pilot/MANIFIESTO.md",
-      "sha256": "82fdb5fc0808af09acf4cdb94aadc4cb4a54cfacad2613cbe240931b21828d87"
+      "sha256": "91f27bfbe06adccf6e46c27cc63d1e5c0c4c9cce2a216c671c5620080221a6e5"
     },
     {
       "path": ".cn-pilot/NUCLEO.md",
-      "sha256": "79db8e4e94876658e08ce7ed307ba0adf39f946288b822472059ce849f94ebdf"
+      "sha256": "5051870f3241d3c12a4ca567be917f83fa6ef3551c486cdda366bde6e33402fe"
+    },
+    {
+      "path": ".cn-pilot/adapters/codex/RUNTIME.md",
+      "sha256": "0c3af6b403d4cf91c510c12e95df461a1917f0c7342b5d850d0149977493f124"
+    },
+    {
+      "path": ".cn-pilot/adapters/codex/generate-skills.mjs",
+      "sha256": "c61377be2e23f77c5cf80fb640d91a01676bc949294af368d326474cf9ada75d"
     },
     {
       "path": ".cn-pilot/agent-evals/README.md",
@@ -135,7 +367,7 @@
     },
     {
       "path": ".cn-pilot/documentacion/ACTUALIZACIONES.md",
-      "sha256": "d5df9d4519b78d5712f47e7629314e54c5dd8bc9d052fb0f35123839793d6cf0"
+      "sha256": "fa22c2fbdb448536461b8c8a0411884f005db2f5d8efe42332c19b1ea2f4317f"
     },
     {
       "path": ".cn-pilot/documentacion/CICLO-DE-VIDA.md",
@@ -143,7 +375,11 @@
     },
     {
       "path": ".cn-pilot/documentacion/COMANDOS.md",
-      "sha256": "289fdf75c742c712333a67e790b6ff0691dc2586f28c0e11727c66b255143162"
+      "sha256": "64ee2c027feb86080a5cf832b94ff15612950f79071197f7f1af734816a144ee"
+    },
+    {
+      "path": ".cn-pilot/documentacion/CONFIGURACION-CODEX.md",
+      "sha256": "ca3e4fb34c1fe35b235d5bd4268296376bd4c676f55a90076c5a547c0922113c"
     },
     {
       "path": ".cn-pilot/documentacion/CONFIGURACION-KILO.md",
@@ -151,23 +387,23 @@
     },
     {
       "path": ".cn-pilot/documentacion/CONFIGURACION.md",
-      "sha256": "283c604aa017ad54af9bf02ebc94c19d3d52987bb33dfc8b6bf88b1f7c3e7869"
+      "sha256": "dff775aa7633adc2e05d4c267481a0dd0d4d072f5ec7457d54486bf550a0595b"
     },
     {
       "path": ".cn-pilot/documentacion/EMPIEZA-AQUI.md",
-      "sha256": "6dc1434a491162972a4e3145af703f6f7f5994932c47e3d80a120f724ff4055a"
+      "sha256": "9bfc7298fed96d17951e410d39377b3bf88fc80a1134e67299de1aa2ef845759"
     },
     {
       "path": ".cn-pilot/documentacion/ESTRATEGIA-DE-MODELOS.md",
-      "sha256": "2cf118ee27a700d93e8f3cc0cd3a0bf63328285d38a874ad79e794ffb07f6dc2"
+      "sha256": "8409fdbb9d61fa3e90558276ad500f2951d12bc157347354e90d09c9673ba75a"
     },
     {
       "path": ".cn-pilot/documentacion/FLUJO-DE-EQUIPO.md",
-      "sha256": "b200b10f9534d0bf8344e9933ca7529d463b90a83e9a7cf98a24169f46d2bb02"
+      "sha256": "131b6c8d1deabb6e31f6070696478140cf9ff1859e1e3c0c113efc51fc94503d"
     },
     {
       "path": ".cn-pilot/documentacion/FLUJO-GIT.md",
-      "sha256": "c6932169997b69ef5f55f6067474bef57ff36f700af17e5e74f98ce046c51dbd"
+      "sha256": "473ff6971b950fc2e2b4962713af112b58c043ccf462ee61d100a3c3167897d0"
     },
     {
       "path": ".cn-pilot/documentacion/GLOSARIO.md",
@@ -175,11 +411,11 @@
     },
     {
       "path": ".cn-pilot/documentacion/INTERACCION-HUMANA.md",
-      "sha256": "0b8e33b3ec737e865d90e66c838692d0dd27d6a02f5be9a9e576e3d21b3e6104"
+      "sha256": "bb16012866b2d34a32bcec80c4300d107a7fc53b5bc180547c9814854cca4519"
     },
     {
       "path": ".cn-pilot/documentacion/README.md",
-      "sha256": "290d43f704e325b5bc351c4b094c14da89acab4b3b86cc79aabad4d1bc56270f"
+      "sha256": "f08a12d4dd2b750f9aaf44ad9a4a2dd17a968448685bdd964cecf0cf3df4a69a"
     },
     {
       "path": ".cn-pilot/documentacion/SEGURIDAD.md",
@@ -187,11 +423,11 @@
     },
     {
       "path": ".cn-pilot/documentacion/SKILLS-Y-CAPACIDADES.md",
-      "sha256": "a3e224a11a95acdd5e42efa2ba79dde733ac4b44b0de541bce5d51f1b8c8cf0a"
+      "sha256": "7a9de9ec4fbf5e41521f6725e83f8b1e0ef246507d9993384c4f444f6dad9078"
     },
     {
       "path": ".cn-pilot/documentacion/SOLUCION-DE-PROBLEMAS.md",
-      "sha256": "574e2043cd59ad8ff061c107ba17b5e6463d0615eb6f139089adcedf4005ced7"
+      "sha256": "37288af4355fd8883e79591f66df0751c39ab5657c42cd344d62960667744380"
     },
     {
       "path": ".cn-pilot/perfiles/landing.md",
@@ -295,23 +531,43 @@
     },
     {
       "path": ".cn-pilot/qa/core-check.mjs",
-      "sha256": "df27919f25e6e34cb8b97cd3c20849394395bb3e418dbf115d9f4c1760d0a5bf"
+      "sha256": "a5aa22a477e7fa3fd73040de8af4a28463ea76ea0d50e72544c505f2fa05fb3c"
     },
     {
       "path": ".cn-pilot/qa/core-check.test.mjs",
-      "sha256": "db3adf34eb4230f2dacdeb8dcec952b81620176de1ad6db3800be686d4aa5d1b"
+      "sha256": "9d6b9c702f1e3b30fd2b35055e595136b99a63ba0c02ecf4edec115924d49082"
     },
     {
       "path": ".cn-pilot/qa/multidisciplinary.test.mjs",
-      "sha256": "b24063087e41e873f142611269fa5f7313c627baf928f7047755c5cfee5a28b0"
+      "sha256": "43e936bd013d90813a6c5bd536ecd7677d6516c6759cc2a42df83996b8eaf04e"
     },
     {
       "path": ".cn-pilot/update/updater.mjs",
-      "sha256": "09f5b2c6c35d9fe45a0dace4226ec16fbda466e6d321b54b4f927dbbc594ef17"
+      "sha256": "0a6a4dd204bf1e7a1649e23f9526706c2fb9df66ff54aa9c19b78755ebacfb72"
     },
     {
       "path": ".cn-pilot/update/updater.test.mjs",
-      "sha256": "8c80fcb254aa0f2be3f4edb57fca99f4555b84055752680713d9907b3ef22e48"
+      "sha256": "33fe220c06aa378b1f40a9d8123e820b9779c53c03e4fc95a3deae2509223e14"
+    },
+    {
+      "path": ".codex/agents/arquitecto.toml",
+      "sha256": "e891d7081a2f3073a973398b540a163baa6538c8d03fa16e27ab323c8097766b"
+    },
+    {
+      "path": ".codex/agents/desarrollador.toml",
+      "sha256": "12e2e2c7fdceebef9a8a9aaebbcc91805955224ee81b9eca579838f1dfba0fcd"
+    },
+    {
+      "path": ".codex/agents/disenador.toml",
+      "sha256": "bd34fd67cd38614bcd2841f76ab9358b396ecbc3a37a08acefadb1b18aaa1ea1"
+    },
+    {
+      "path": ".codex/agents/redactor.toml",
+      "sha256": "c4f2ec4fb3dbeaf6c35b2ba3234ff936fc63289bd716f1e9b814ca48603308b4"
+    },
+    {
+      "path": ".codex/agents/revisor.toml",
+      "sha256": "db2f92bcb8195ed9e41d66bc748482eb347b4fa6c53c38d1b5cd6a63d617b182"
     },
     {
       "path": ".kilo/agents/arquitecto.md",
@@ -587,10 +843,75 @@
     },
     {
       "path": "AGENTS.md",
-      "sha256": "5a5d6b39f82dcbe68e7e33294399162d6126a908cc5504369984c98a2f3e95a6"
+      "sha256": "899fd9c2a5e7d36222c21077a6b5d274b90b3f17875aca9d94e64067f806d7aa"
     }
   ],
-  "addedFiles": [],
+  "addedFiles": [
+    ".agents/skills/cnp-accessibility-review/SKILL.md",
+    ".agents/skills/cnp-analytics-instrumentation/SKILL.md",
+    ".agents/skills/cnp-api-integration/SKILL.md",
+    ".agents/skills/cnp-application-ui/SKILL.md",
+    ".agents/skills/cnp-auth-access-control/SKILL.md",
+    ".agents/skills/cnp-automation-integrations/SKILL.md",
+    ".agents/skills/cnp-bricks/SKILL.md",
+    ".agents/skills/cnp-cn-actualizar/SKILL.md",
+    ".agents/skills/cnp-cn-estado/SKILL.md",
+    ".agents/skills/cnp-commit/SKILL.md",
+    ".agents/skills/cnp-contenido/SKILL.md",
+    ".agents/skills/cnp-content-blog-seo/SKILL.md",
+    ".agents/skills/cnp-content-page/SKILL.md",
+    ".agents/skills/cnp-creative-web-experience/SKILL.md",
+    ".agents/skills/cnp-database-migrations/SKILL.md",
+    ".agents/skills/cnp-deploy-wordpress/SKILL.md",
+    ".agents/skills/cnp-depurar/SKILL.md",
+    ".agents/skills/cnp-desplegar-pruebas/SKILL.md",
+    ".agents/skills/cnp-diagnostico/SKILL.md",
+    ".agents/skills/cnp-diseno/SKILL.md",
+    ".agents/skills/cnp-elementor/SKILL.md",
+    ".agents/skills/cnp-entrega/SKILL.md",
+    ".agents/skills/cnp-environment-dependency-management/SKILL.md",
+    ".agents/skills/cnp-existing-site-audit/SKILL.md",
+    ".agents/skills/cnp-form-experience/SKILL.md",
+    ".agents/skills/cnp-frontend-architecture/SKILL.md",
+    ".agents/skills/cnp-frontend-responsive/SKILL.md",
+    ".agents/skills/cnp-git-checkpoint/SKILL.md",
+    ".agents/skills/cnp-maintenance-operations/SKILL.md",
+    ".agents/skills/cnp-motion-interaction/SKILL.md",
+    ".agents/skills/cnp-nuevo-proyecto/SKILL.md",
+    ".agents/skills/cnp-page-composition/SKILL.md",
+    ".agents/skills/cnp-performance-review/SKILL.md",
+    ".agents/skills/cnp-plan/SKILL.md",
+    ".agents/skills/cnp-preparar-despliegue/SKILL.md",
+    ".agents/skills/cnp-product-discovery/SKILL.md",
+    ".agents/skills/cnp-punto-control/SKILL.md",
+    ".agents/skills/cnp-release-deployment/SKILL.md",
+    ".agents/skills/cnp-revision/SKILL.md",
+    ".agents/skills/cnp-security-review/SKILL.md",
+    ".agents/skills/cnp-source-grounded-development/SKILL.md",
+    ".agents/skills/cnp-systematic-debugging/SKILL.md",
+    ".agents/skills/cnp-technical-seo/SKILL.md",
+    ".agents/skills/cnp-testing-strategy/SKILL.md",
+    ".agents/skills/cnp-tool-discovery/SKILL.md",
+    ".agents/skills/cnp-ui-design-system/SKILL.md",
+    ".agents/skills/cnp-ui-kit-construction/SKILL.md",
+    ".agents/skills/cnp-visual-art-direction/SKILL.md",
+    ".agents/skills/cnp-visual-parity-review/SKILL.md",
+    ".agents/skills/cnp-web-strategy/SKILL.md",
+    ".agents/skills/cnp-webapp-testing/SKILL.md",
+    ".agents/skills/cnp-woocommerce/SKILL.md",
+    ".agents/skills/cnp-wordpress-content-modeling/SKILL.md",
+    ".agents/skills/cnp-wordpress-plugin/SKILL.md",
+    ".agents/skills/cnp-wordpress-theme-development/SKILL.md",
+    ".agents/skills/cnp-wordpress/SKILL.md",
+    ".cn-pilot/adapters/codex/RUNTIME.md",
+    ".cn-pilot/adapters/codex/generate-skills.mjs",
+    ".cn-pilot/documentacion/CONFIGURACION-CODEX.md",
+    ".codex/agents/arquitecto.toml",
+    ".codex/agents/desarrollador.toml",
+    ".codex/agents/disenador.toml",
+    ".codex/agents/redactor.toml",
+    ".codex/agents/revisor.toml"
+  ],
   "removedFiles": [],
   "migrations": [
     {

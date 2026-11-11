@@ -4,18 +4,18 @@ Esta guía es el recorrido práctico del primer día. Para una descripción gene
 
 ## Lo que necesitas
 
-- VS Code y la extensión Kilo Code.
+- VS Code con Kilo Code, o OpenAI Codex con la raíz de CN Pilot abierta.
 - Una copia de CN Pilot abierta como carpeta de trabajo.
 - Git, si quieres historial y commits; no es obligatorio.
 - Briefs, referencias, logos o archivos existentes si ayudan al objetivo. Si los tienes, colócalos en `recursos/`; no alteres los originales para prepararlos.
 
-Consulta [Configuración de Kilo](CONFIGURACION-KILO.md) si todavía no está instalado/configurado. Proveedores y modelos se eligen dentro de Kilo; MCP es opcional.
+Consulta [Configuración de Kilo](CONFIGURACION-KILO.md) o [Configuración de Codex](CONFIGURACION-CODEX.md) según el runtime que uses. Proveedores, modelos y permisos efectivos pertenecen a la configuración/sesión de ese runtime; MCP es opcional.
 
 ## Inicia una conversación
 
-1. Abre la carpeta del proyecto en VS Code.
-2. Si Kilo solicita un agente, selecciona **Jefe de proyecto**. Es la entrada normal y coordina a los demás.
-3. Ejecuta `/nuevo-proyecto` para describir un proyecto nuevo o darle contexto a uno existente.
+1. Abre la raíz del proyecto en Kilo Code o Codex.
+2. En Kilo, selecciona **Jefe de proyecto** si te lo solicita. En Codex, el agente raíz cumple ese rol.
+3. Ejecuta `/nuevo-proyecto` en Kilo o invoca `$cnp-nuevo-proyecto` en Codex para orientar un proyecto nuevo o existente.
 4. Cuéntale qué quieres conseguir con lenguaje natural. Por ejemplo:
 
    > Quiero crear una web WordPress para un restaurante. Tengo logo, fotos y referencias dentro de recursos.

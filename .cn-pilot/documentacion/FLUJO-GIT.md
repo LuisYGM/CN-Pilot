@@ -12,7 +12,7 @@ Commit local y push son acciones distintas. Un commit puede formar parte del cie
 - Descripción siempre en español.
 - Mensaje basado en `git diff`.
 - Un commit = unidad lógica.
-- Kilo puede crear commits locales.
+- El runtime puede crear commits locales dentro de su política de sesión y aprobación.
 - Jefe de proyecto crea el commit local automáticamente cuando una tarea con cambios queda completa y verificada, salvo exclusión explícita o error bloqueante.
 - Push bajo aprobación humana.
 
@@ -74,7 +74,7 @@ refactor/permisos-usuarios
 
 ## GitHub Desktop
 
-1. Kilo trabaja/crea commits locales.
+1. Kilo o Codex trabaja y crea commits locales autorizados.
 2. Revisa en GitHub Desktop.
 3. `Push origin` cuando corresponda.
 4. Para trabajo individual, permanecer en `main` es válido y preferido cuando no exista una razón para aislar cambios.

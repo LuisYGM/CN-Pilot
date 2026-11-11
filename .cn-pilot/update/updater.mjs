@@ -458,6 +458,7 @@ export const POST_APPLY_QA_CHECK_IDS = Object.freeze([
   "language.spanishFirst",
   "skills.frontmatter",
   "commands.frontmatter",
+  "codex.adapter",
   "routing.commands",
   "routing.devLead",
   "permissions.reviewer",

@@ -1251,8 +1251,8 @@ test("manifest paths reject traversal, absolute paths, symlinks and non-normaliz
 
 test("manifest accepts only allowlisted Codex updater paths and preserves legacy runtime metadata", () => {
   const entries = [
-    entry(".agents/skills/cn-pilot/SKILL.md", "skill adapter\n"),
-    entry(".codex/agents/arquitecto.toml", "agent adapter\n"),
+    entry(".agents/skills/cnp-content-page/SKILL.md", "skill adapter\n"),
+    entry(".codex/agents/desarrollador.toml", "agent adapter\n"),
   ];
   assert.deepEqual(manifest("3.2.0", entries).managedFiles, entries);
   assert.throws(() => manifest("3.2.0", [entry(".agents/skills/../secrets/SKILL.md", "unsafe\n")]), { code: "INVALID_PATH" });
@@ -1379,8 +1379,8 @@ test("Codex updater mode skips Kilo detection and updates allowlisted future run
     ".cn-pilot-version": "3.2.0\n",
     ".cn-pilot/qa/core-check.mjs": newQa,
     ".cn-pilot/update/updater.mjs": "runtime-aware updater\n",
-    ".agents/skills/cn-pilot/SKILL.md": "Codex skill adapter\n",
-    ".codex/agents/arquitecto.toml": "Codex agent adapter\n",
+    ".agents/skills/cnp-content-page/SKILL.md": "Codex skill adapter\n",
+    ".codex/agents/desarrollador.toml": "Codex agent adapter\n",
   };
   for (const [relative, content] of Object.entries(futureFiles)) source.put(source.root, relative, content);
   const futureManifest = manifest("3.2.0", Object.entries(futureFiles).map(([relative, content]) => entry(relative, content)));
@@ -1396,8 +1396,8 @@ test("Codex updater mode skips Kilo detection and updates allowlisted future run
   });
   assert.equal(code, 0, stderr);
   assert.equal(kiloProbeCalls, 0);
-  assert.equal(fs.readFileSync(path.join(target.root, ".agents/skills/cn-pilot/SKILL.md"), "utf8"), "Codex skill adapter\n");
-  assert.equal(fs.readFileSync(path.join(target.root, ".codex/agents/arquitecto.toml"), "utf8"), "Codex agent adapter\n");
+  assert.equal(fs.readFileSync(path.join(target.root, ".agents/skills/cnp-content-page/SKILL.md"), "utf8"), "Codex skill adapter\n");
+  assert.equal(fs.readFileSync(path.join(target.root, ".codex/agents/desarrollador.toml"), "utf8"), "Codex agent adapter\n");
   assert.equal(fs.readFileSync(path.join(target.root, "PROYECTO.md"), "utf8"), "project context\n");
   assert.equal(fs.readFileSync(path.join(target.root, "producto/index.html"), "utf8"), "product data\n");
   assert.equal(execFileSync("git", ["log", "-1", "--pretty=%s"], { cwd: target.root, encoding: "utf8" }).trim(), "chore: actualizar CN Pilot a 3.2.0");

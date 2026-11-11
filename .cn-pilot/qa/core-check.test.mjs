@@ -119,6 +119,58 @@ function createFixture(t) {
   return { root, put };
 }
 
+test("Codex native agents and skills stay aligned with shared Kilo contracts", (t) => {
+  const fixture = createFixture(t);
+  const sourceRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../..");
+  for (const relative of [".cn-pilot/adapters/codex", ".codex/agents", ".agents/skills", ".kilo/skills", ".kilo/commands"]) {
+    const target = path.join(fixture.root, relative);
+    fs.rmSync(target, { recursive: true, force: true });
+    fs.mkdirSync(path.dirname(target), { recursive: true });
+    fs.cpSync(path.join(sourceRoot, relative), target, { recursive: true });
+  }
+  fixture.put(".cn-pilot-version", "3.2.0\n");
+  fixture.put(".cn-pilot/NUCLEO.md", "**Versión:** `3.2.0`\n");
+
+  let report = runCoreChecks({ rootDir: fixture.root });
+  let adapter = getCheck(report, "codex.adapter");
+  assert.equal(adapter.status, "PASS", JSON.stringify(adapter.details.problems));
+  assert.equal(adapter.details.specialistAgents, 5);
+  assert.equal(adapter.details.skillWrappers, 56);
+  assert.equal(adapter.details.canonicalSkills, 42);
+  assert.equal(adapter.details.canonicalCommands, 14);
+
+  const wrapperPath = path.join(fixture.root, ".agents/skills/cnp-content-page/SKILL.md");
+  fs.writeFileSync(wrapperPath, fs.readFileSync(wrapperPath, "utf8").replace(".kilo/skills/content-page/SKILL.md", ".kilo/skills/unknown/SKILL.md"), "utf8");
+  report = runCoreChecks({ rootDir: fixture.root });
+  adapter = getCheck(report, "codex.adapter");
+  assert.equal(adapter.status, "FAIL");
+  assert.ok(adapter.details.problems.some((problem) => problem.code === "CODEX_SKILL_SOURCE_MISMATCH"));
+
+  const isolated = createFixture(t);
+  for (const relative of [".cn-pilot/adapters/codex", ".codex/agents", ".agents/skills", ".kilo/skills", ".kilo/commands"]) {
+    const target = path.join(isolated.root, relative);
+    fs.rmSync(target, { recursive: true, force: true });
+    fs.mkdirSync(path.dirname(target), { recursive: true });
+    fs.cpSync(path.join(sourceRoot, relative), target, { recursive: true });
+  }
+  isolated.put(".cn-pilot-version", "3.2.0\n");
+  isolated.put(".cn-pilot/NUCLEO.md", "**Versión:** `3.2.0`\n");
+  const architectPath = path.join(isolated.root, ".codex/agents/arquitecto.toml");
+  fs.appendFileSync(architectPath, "\napproval_policy = \\\"never\\\"\n", "utf8");
+  report = runCoreChecks({ rootDir: isolated.root });
+  adapter = getCheck(report, "codex.adapter");
+  assert.equal(adapter.status, "FAIL");
+  assert.ok(adapter.details.problems.some((problem) => problem.code === "CODEX_AGENT_OVERRIDES_SESSION_POLICY"));
+});
+
+test("Codex wrapper generator reports source drift without writing", () => {
+  const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../..");
+  const result = spawnSync(process.execPath, [".cn-pilot/adapters/codex/generate-skills.mjs", "--check"], { cwd: root, encoding: "utf8" });
+  assert.equal(result.error, undefined);
+  assert.equal(result.status, 0, result.stderr);
+  assert.match(result.stdout, /match canonical Kilo sources: 56/);
+});
+
 function getCheck(report, id) {
   const check = report.checks.find((item) => item.id === id);
   assert.ok(check, `check ${id} exists`);
@@ -1610,7 +1662,7 @@ test("testing-strategy keeps one BF-057 full-stack section with prior behavior",
   assert.match(strategy, /No impongas slice overhead a un sitio estático/i);
 });
 
-test("human documentation matches Core version, entry points, commands and Kilo-native scope", () => {
+test("human documentation matches Core version, entry points, commands and multi-runtime scope", () => {
   const root = new URL("../../", import.meta.url);
   const read = (relative) => fs.readFileSync(new URL(relative, root), "utf8");
   const readme = read("README.md");
@@ -1623,7 +1675,8 @@ test("human documentation matches Core version, entry points, commands and Kilo-
 
   assert.match(readme, new RegExp(`CN Pilot ${version.replaceAll(".", "\\.")}`));
   assert.match(readme, /\[Empieza aquí\]\(\.cn-pilot\/documentacion\/EMPIEZA-AQUI\.md\)/);
-  assert.match(readme, /nativo de Kilo Code/i);
+  assert.match(readme, /integración nativa para \*\*Kilo Code\*\* y \*\*OpenAI Codex\*\*/i);
+  assert.match(readme, /CONFIGURACION-CODEX\.md/);
   assert.match(readme, /no necesitas programar, diseñar prompts técnicos/i);
   assert.match(readme, /no hace push, publica ni modifica producción por defecto/i);
   assert.doesNotMatch(readme, /multi-agent portability|universal multi-agent/i);
@@ -1638,6 +1691,7 @@ test("human documentation matches Core version, entry points, commands and Kilo-
   assert.match(docs, /COMANDOS\.md/);
   assert.match(docs, /SKILLS-Y-CAPACIDADES\.md/);
   assert.match(docs, /GLOSARIO\.md/);
+  assert.match(docs, /Configuración de Codex/);
   assert.equal(commandLinks.length, commands.size, "every current command has one catalog entry");
   assert.deepEqual([...new Set(commandLinks)].sort(), [...commands].sort(), "command catalog exactly matches the command filesystem");
 });

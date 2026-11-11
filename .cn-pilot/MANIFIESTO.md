@@ -5,7 +5,9 @@ Inventario de CN Pilot Core. No sustituye `../ARTEFACTOS.md`, que registra entre
 `.cn-pilot/runtime/` es estado operacional local e ignorado por Git; no forma parte del Core distribuido ni del manifiesto versionado.
 
 - 6 agentes en `.kilo/agents/`
+- 5 agentes especialistas Codex en `.codex/agents/` (Jefe de proyecto conserva el agente raíz)
 - 42 skills (`.kilo/skills/*/SKILL.md`), incluido descubrimiento de herramientas bajo demanda
+- 56 skills nativas Codex `cnp-*` en `.agents/skills/` (adaptadores de skills y comandos canónicos Kilo)
 - 6 documentos de referencia bajo `.kilo/skills/technical-seo/references/` (no son skills adicionales)
 - 14 comandos en `.kilo/commands/`
 - 7 perfiles en `.cn-pilot/perfiles/`
@@ -13,7 +15,8 @@ Inventario de CN Pilot Core. No sustituye `../ARTEFACTOS.md`, que registra entre
 - QA ejecutable read-only y on-demand del Core en `.cn-pilot/qa/` (Node built-in; sin dependencias npm)
 - Core portable en `.cn-pilot/` (config, documentación, perfiles y plantillas)
 - documentación para usuarios y referencia avanzada bajo `.cn-pilot/documentacion/` (mapa, onboarding, comandos, catálogo de skills y glosario incluidos)
-- updater versionado en `.cn-pilot/update/` (manifest SHA-256 reproducible, runtimes de updater Kilo/Codex y raíces futuras `.agents/skills/` / `.codex/agents/`; runtime y temporales excluidos)
+- updater versionado en `.cn-pilot/update/` (manifest SHA-256 reproducible, runtimes Kilo/Codex y rutas administradas para ambos adaptadores; runtime y temporales excluidos)
+- adaptación Codex en `.cn-pilot/adapters/codex/` con mapeo compartido y generador/check de wrappers `cnp-*`
 - registro base de artefactos del proyecto
 - configuración responsive versionada en `.cn-pilot/config/`
 - configuración Kilo compartible en `kilo.jsonc` y controles locales en `.gitignore` / `.kilocodeignore`

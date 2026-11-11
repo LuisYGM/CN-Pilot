@@ -6,6 +6,7 @@ Elige una guía según lo que quieras hacer. No necesitas leer el Core para trab
 
 - [README principal](../../README.md): qué es CN Pilot y cómo empezar en pocos minutos.
 - [Empieza aquí](EMPIEZA-AQUI.md): primeros pasos, conversación, proyecto nuevo o existente y aprobaciones.
+- [Configuración de Codex](CONFIGURACION-CODEX.md): agente raíz, skills nativas, subagentes y límites de sesión.
 - [Glosario](GLOSARIO.md): significado breve de los términos que aparecen en la documentación.
 
 ## Uso diario

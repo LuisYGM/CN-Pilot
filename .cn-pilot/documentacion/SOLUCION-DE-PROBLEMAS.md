@@ -6,15 +6,21 @@ Empieza por el síntoma que observas; no cambies configuración, borres estado n
 
 **Comprueba:** que abriste la carpeta correcta en VS Code, que Kilo Code está activo y que el workspace contiene `.kilo/agents/`. Selecciona `jefe-proyecto` si el selector de Kilo pide un agente; para cambios locales recientes de agent config/skills puede hacer falta recargar Kilo o iniciar una sesión nueva.
 
-**No hagas:** copiar agents a otro runtime ni ampliar permisos para hacerlos aparecer. Kilo Code es el runtime nativo; la lectura manual de archivos en otra herramienta no equivale a integración.
+**No hagas:** copiar agentes manualmente a otra ubicación ni ampliar permisos para hacerlos aparecer. Cada runtime compatible tiene sus archivos de integración; leer un archivo por fuera del runtime no lo registra como agente.
+
+## Codex no muestra agentes o skills de CN Pilot
+
+**Comprueba:** que Codex abrió la raíz del repositorio, exista `.codex/agents/` y las skills estén bajo `.agents/skills/cnp-*/SKILL.md`. En Codex, Jefe de proyecto es el agente raíz y los comandos se invocan como skills `$cnp-*`; no aparecen con sintaxis slash de Kilo. Las skills nativas cargan el contrato compartido de `.kilo/` bajo demanda.
+
+**Si sigue sin aparecer:** actualiza/rescan del workspace o inicia una sesión nueva. Verifica que el agente raíz tenga la política efectiva que esperas: los TOML no configuran permisos ni sandbox y Revisor no queda técnicamente read-only por su descripción. Consulta [Configuración de Codex](CONFIGURACION-CODEX.md).
 
 ## `/nuevo-proyecto` no aparece o no se reconoce
 
-Comprueba workspace y `.kilo/commands/nuevo-proyecto.md`, y que Kilo abrió la carpeta CN Pilot en lugar de una subcarpeta. Recarga la configuración si acabas de cambiar archivos. También puedes describir el objetivo en lenguaje natural a Jefe de proyecto: el comando es un atajo opcional.
+Comprueba workspace y `.kilo/commands/nuevo-proyecto.md` en Kilo, o `$cnp-nuevo-proyecto` y `.agents/skills/cnp-nuevo-proyecto/SKILL.md` en Codex. Abre la raíz CN Pilot en lugar de una subcarpeta. También puedes describir el objetivo en lenguaje natural a Jefe de proyecto: el comando es un atajo opcional.
 
 ## No se activa una skill que esperaba
 
-No selecciones manualmente una skill salvo que tu flujo de Kilo te lo pida. Describe el resultado y el stack confirmado; el agente activa procedimientos bajo demanda. Si la tarea es pequeña, condicional o no requiere esa especialidad, puede ser correcto que no se active. Para saber qué cubre cada una consulta [Skills y capacidades](SKILLS-Y-CAPACIDADES.md).
+No selecciones manualmente una skill en Kilo salvo que tu flujo lo pida; en Codex puedes invocar `$cnp-*` cuando quieras abrir un procedimiento específico. Describe el resultado y el stack confirmado; Jefe de proyecto activa procedimientos bajo demanda. Si la tarea es pequeña, condicional o no requiere esa especialidad, puede ser correcto que no se active. Para saber qué cubre cada una consulta [Skills y capacidades](SKILLS-Y-CAPACIDADES.md).
 
 ## CN Pilot hace demasiadas preguntas
 
@@ -22,7 +28,7 @@ Comprueba primero si los datos ya están en Project Context, código o `recursos
 
 ## Parece que se interrumpió y no continúa
 
-Comprueba si Kilo sigue ejecutando la sesión y si hay una pregunta o permiso pendiente en la interfaz. Los checkpoints solo ayudan a recuperar una tarea larga cuando el runtime se interrumpe; no implican que CN Pilot siga trabajando sin sesión. Reabre el workspace/sesión y resume el objetivo pendiente. No borres `active-task.json` ni worktrees/cambios dirty por rutina; Jefe de proyecto los inspecciona al recuperar.
+Comprueba si el runtime sigue ejecutando la sesión y si hay una pregunta o permiso pendiente. Los checkpoints solo ayudan a recuperar una tarea larga cuando la sesión se interrumpe; no implican que CN Pilot siga trabajando sin sesión. Reabre el workspace/sesión y resume el objetivo pendiente. No borres `active-task.json` ni worktrees/cambios dirty por rutina; Jefe de proyecto los inspecciona al recuperar.
 
 ## La web existente tiene una estructura de carpetas diferente
 
