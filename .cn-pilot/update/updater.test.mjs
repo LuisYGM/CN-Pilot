@@ -1422,6 +1422,51 @@ test("3.1.2 → 3.2.0 routes Codex and Kilo updaters with runtime-specific check
   assert.equal(execFileSync("git", ["log", "-1", "--pretty=%s"], { cwd: kiloTarget.root, encoding: "utf8" }).trim(), "chore: actualizar CN Pilot a 3.2.0");
 });
 
+test("current updater can move a 3.1.1 baseline directly to stable Codex paths", async (t) => {
+  const target = fixture(t); const source = fixture(t);
+  const targetFiles = {
+    ".cn-pilot-version": "3.1.1\n",
+    ".cn-pilot/qa/core-check.mjs": `process.stdout.write(JSON.stringify(${JSON.stringify(postApplyQaReport("3.1.1"))}));\n`,
+    ".cn-pilot/update/updater.mjs": "3.1.1 updater\n",
+    ".kilo/agents/jefe-proyecto.md": "Jefe 3.1.1\n",
+    "PROYECTO.md": "fixture project context\n",
+    "producto/index.html": "fixture product data\n",
+  };
+  for (const [relative, content] of Object.entries(targetFiles)) target.put(target.root, relative, content);
+  writeManifestFile(target.root, manifest("3.1.1", Object.entries(targetFiles)
+    .filter(([relative]) => relative !== "PROYECTO.md" && relative !== "producto/index.html")
+    .map(([relative, content]) => entry(relative, content))));
+  initRepo(target.root, [...Object.keys(targetFiles), MANIFEST_PATH]);
+
+  const sourceFiles = {
+    ".cn-pilot-version": "3.2.0\n",
+    ".cn-pilot/qa/core-check.mjs": `process.stdout.write(JSON.stringify(${JSON.stringify(postApplyQaReport("3.2.0"))}));\n`,
+    ".cn-pilot/update/updater.mjs": "3.2.0 updater\n",
+    ".kilo/agents/jefe-proyecto.md": "Jefe 3.2.0\n",
+    ".agents/skills/cnp-content-page/SKILL.md": "Codex skill adapter\n",
+    ".codex/agents/desarrollador.toml": "Codex agent adapter\n",
+  };
+  for (const [relative, content] of Object.entries(sourceFiles)) source.put(source.root, relative, content);
+  writeManifestFile(source.root, manifest("3.2.0", Object.entries(sourceFiles).map(([relative, content]) => entry(relative, content))));
+  initRepo(source.root, [...Object.keys(sourceFiles), MANIFEST_PATH]);
+  execFileSync("git", ["remote", "add", "origin", SOURCE_REPOSITORY], { cwd: source.root });
+
+  let stderr = "";
+  const code = await runCli(["update", "--runtime", "kilo", "--target", target.root, "--source-dir", source.root], {
+    stdout: { write: () => {} },
+    stderr: { write: (value) => { stderr += value; } },
+    kiloVersionProbe: () => "7.8.8",
+  });
+  assert.equal(code, 0, stderr);
+  assert.equal(fs.readFileSync(path.join(target.root, ".cn-pilot-version"), "utf8"), "3.2.0\n");
+  assert.equal(fs.readFileSync(path.join(target.root, ".agents/skills/cnp-content-page/SKILL.md"), "utf8"), "Codex skill adapter\n");
+  assert.equal(fs.readFileSync(path.join(target.root, ".codex/agents/desarrollador.toml"), "utf8"), "Codex agent adapter\n");
+  assert.equal(fs.readFileSync(path.join(target.root, "PROYECTO.md"), "utf8"), "fixture project context\n");
+  assert.equal(fs.readFileSync(path.join(target.root, "producto/index.html"), "utf8"), "fixture product data\n");
+  assert.equal(execFileSync("git", ["log", "-1", "--pretty=%s"], { cwd: target.root, encoding: "utf8" }).trim(), "chore: actualizar CN Pilot a 3.2.0");
+  assert.equal(execFileSync("git", ["status", "--porcelain"], { cwd: target.root, encoding: "utf8" }), "");
+});
+
 test("unknown or distribution-disabled runtimes block before target writes", async (t) => {
   const target = fixture(t); const source = fixture(t);
   const currentFiles = { ".cn-pilot-version": "3.1.2\n", ".cn-pilot/NUCLEO.md": "current core\n" };

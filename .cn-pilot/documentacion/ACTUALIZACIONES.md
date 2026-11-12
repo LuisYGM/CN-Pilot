@@ -16,6 +16,30 @@ Solo updater realmente ausente clasifica como `LEGACY`. Updater presente + manif
 
 Desde una instalación 3.1.2, Codex puede ejecutar manualmente el updater puente con `node .cn-pilot/update/updater.mjs status --runtime codex --target .` y luego `update --runtime codex --target .` si el plan es limpio y la solicitud autoriza aplicarlo. El puente valida Node y el runtime Codex habilitado en el manifest sin invocar `kilo`; aún no incluye skills ni agentes Codex. En 3.2.0+, `$cnp-cn-estado` y `$cnp-cn-actualizar` cargan estos mismos procedimientos. Desde 3.1.1, el primer salto requiere Kilo para instalar 3.1.2.
 
+### Instalaciones 3.1.1 que encuentran una versión estable posterior
+
+El updater 3.1.1 solo acepta las raíces managed Kilo y no puede leer un manifest que incluya `.agents/skills/` o `.codex/agents/`. Si `main` ya está en 3.2.0, no ejecutes el updater 3.1.1 contra esa fuente: se detendrá con `PROTECTED_PATH` antes de escribir. Usa el updater actual desde un clon oficial de `main`; este entiende el baseline 3.1.1 y aplica el manifest actual directamente, sin depender de que la versión antigua conozca las rutas nuevas:
+
+1. Desde el root Git, verifica `git status --short`, `git branch --show-current` y que no haya una tarea CN Pilot ACTIVE. El árbol tracked debe estar limpio y la branch nombrada.
+2. Comprueba con `lstat` que `.cn-pilot/runtime/cn-pilot-update-source` no existe y que sus directorios padre, si existen, no son symlinks/reparse points. Si la ruta ya existe o el probe da error, detente e inspecciónala; no la sobrescribas.
+3. Crea `.cn-pilot/runtime` solo si no existe como directorio real y clona la fuente estable:
+
+   ```text
+   git clone --depth 1 --branch main --single-branch --no-tags "https://github.com/LuisYGM/cn-pilot.git" ".cn-pilot/runtime/cn-pilot-update-source"
+   ```
+
+4. Revisa el plan ejecutando el updater de la fuente, no el updater instalado:
+
+   ```text
+   node ".cn-pilot/runtime/cn-pilot-update-source/.cn-pilot/update/updater.mjs" status --runtime kilo --target "."
+   node ".cn-pilot/runtime/cn-pilot-update-source/.cn-pilot/update/updater.mjs" update --runtime kilo --target "." --source-dir ".cn-pilot/runtime/cn-pilot-update-source"
+   ```
+
+   Si Codex está disponible y no se desea comprobar Kilo, se puede usar `--runtime codex`; la versión 3.1.1 solo puede invocar este procedimiento desde Kilo o desde Node en terminal.
+5. Comprueba que el updater informe Core QA `PASS`, el commit local, `git status --short` limpio y el contenido previo de Project Context y Product intacto. No uses `bootstrap`: el manifest 3.1.1 existe y el updater actual puede planificar la actualización normal. Conserva la fuente clonada para futuras actualizaciones o inspecciona su estado antes de cualquier limpieza.
+
+Esta ruta directa se valida junto a la ruta secuencial 3.1.1 → 3.1.2 → 3.2.0. El salto secuencial sigue siendo útil para comprobar el updater puente; las instalaciones 3.1.1 no tienen que esperar a que `main` publique 3.1.2 para llegar a la versión estable actual.
+
 ## Ownership
 
 La distribución de `.cn-pilot/update/manifest.json` registra SemVer, source repository/branch/commit, compatibilidad mínima, migraciones y el inventario exacto con SHA-256 de los archivos administrados. El hash normaliza únicamente CRLF→LF para que line endings de Windows no aparezcan como personalización. El manifiesto es metadata baseline y no se incluye a sí mismo en su lista (evita un hash recursivo); su estructura y versión se validan por separado.
