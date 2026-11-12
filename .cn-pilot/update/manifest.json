@@ -299,7 +299,7 @@
     },
     {
       "path": ".cn-pilot/qa/core-check.test.mjs",
-      "sha256": "f1c285f8f21b4f5d6c872c57f18f1b69211a6b7612d19b70a7dd382f96a3b89f"
+      "sha256": "db3adf34eb4230f2dacdeb8dcec952b81620176de1ad6db3800be686d4aa5d1b"
     },
     {
       "path": ".cn-pilot/qa/multidisciplinary.test.mjs",
@@ -307,11 +307,11 @@
     },
     {
       "path": ".cn-pilot/update/updater.mjs",
-      "sha256": "348e4c2dfc0c76abf9e79ad349dfc2be14c4e50fcc7a957d6ac70dc3f6b064e8"
+      "sha256": "09f5b2c6c35d9fe45a0dace4226ec16fbda466e6d321b54b4f927dbbc594ef17"
     },
     {
       "path": ".cn-pilot/update/updater.test.mjs",
-      "sha256": "a780273744969619dceb66af048bf3b346015304c7af6f706345af85c73a8d82"
+      "sha256": "8c80fcb254aa0f2be3f4edb57fca99f4555b84055752680713d9907b3ef22e48"
     },
     {
       "path": ".kilo/agents/arquitecto.md",

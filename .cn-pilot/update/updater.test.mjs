@@ -71,7 +71,8 @@ function manifest(version, entries, changes = {}) {
 }
 
 function postApplyQaReport(version, overrides = {}) {
-  const checks = POST_APPLY_QA_CHECK_IDS.map((id) => {
+  const ids = version === "3.2.0" ? [...POST_APPLY_QA_CHECK_IDS, "codex.adapter"] : POST_APPLY_QA_CHECK_IDS;
+  const checks = ids.map((id) => {
     const override = overrides[id];
     return { id, status: override?.status ?? "PASS", details: override?.details ?? {} };
   });
@@ -1102,6 +1103,14 @@ test("post-apply acceptance requires the complete Core QA inventory and allows o
   assert.equal(coreQa.status, "PASS");
   assert.deepEqual(coreQa.checks.map(({ id }) => id), POST_APPLY_QA_CHECK_IDS, "the gate inventory stays in sync with every Core QA check");
   assert.equal(classifyPostApplyQa(coreQa, coreQa.version).summary, "PASS");
+
+  const nextVersionQa = {
+    ...coreQa,
+    version: "3.2.0",
+    checks: [...coreQa.checks, { id: "codex.adapter", status: "PASS", details: {} }],
+  };
+  assert.equal(classifyPostApplyQa(nextVersionQa, "3.2.0").summary, "PASS", "the 3.1.2 bridge accepts the complete 3.2.0 QA inventory");
+  assert.equal(classifyPostApplyQa({ ...nextVersionQa, checks: coreQa.checks }, "3.2.0"), null, "the 3.1.2 bridge rejects a 3.2.0 report missing its new check");
 
   const optionalDetails = {
     path: "recursos/README.md",

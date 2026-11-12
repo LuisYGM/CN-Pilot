@@ -1091,7 +1091,11 @@ test("installed Kilo resolves the six static security profiles", (t) => {
 
   const revisor = profiles.revisor;
   for (const tool of ["write", "apply_patch", "bash", "grep", "task", "agent_manager", "background_process", "webfetch", "websearch", "skill"]) {
-    assert.equal(revisor.tools[tool], false, `Revisor ${tool} is disabled by resolved Kilo permissions`);
+    if (Object.hasOwn(revisor.tools, tool)) {
+      assert.equal(revisor.tools[tool], false, `Revisor ${tool} is disabled by resolved Kilo permissions`);
+    } else {
+      assert.equal(resolveKiloPermission(revisor, tool, "*"), "deny", `Revisor ${tool} is unavailable and denied by resolved Kilo permissions`);
+    }
   }
   assert.equal(revisor.tools.read, true);
   assert.equal(revisor.tools.glob, true);
