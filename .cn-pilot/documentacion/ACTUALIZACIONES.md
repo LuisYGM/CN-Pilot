@@ -36,6 +36,9 @@ El updater 3.1.1 solo acepta las raíces managed Kilo y no puede leer un manifes
    ```
 
    Si Codex está disponible y no se desea comprobar Kilo, se puede usar `--runtime codex`; la versión 3.1.1 solo puede invocar este procedimiento desde Kilo o desde Node en terminal.
+
+   `status` puede mostrar `Migration: required` porque el manifest conserva migraciones para versiones históricas. Eso no significa por sí solo que una instalación 3.1.1 deba migrar el proyecto. `update` no ejecuta migraciones; `migrate --approve-migration` requiere revisar antes su plan específico y aprobarlo por separado.
+
 5. Comprueba que el updater informe Core QA `PASS`, el commit local, `git status --short` limpio y el contenido previo de Project Context y Product intacto. No uses `bootstrap`: el manifest 3.1.1 existe y el updater actual puede planificar la actualización normal. Conserva la fuente clonada para futuras actualizaciones o inspecciona su estado antes de cualquier limpieza.
 
 Esta ruta directa se valida junto a la ruta secuencial 3.1.1 → 3.1.2 → 3.2.0. El salto secuencial sigue siendo útil para comprobar el updater puente; las instalaciones 3.1.1 no tienen que esperar a que `main` publique 3.1.2 para llegar a la versión estable actual.
