@@ -259,7 +259,7 @@
     },
     {
       "path": ".cn-pilot/adapters/codex/generate-skills.mjs",
-      "sha256": "c61377be2e23f77c5cf80fb640d91a01676bc949294af368d326474cf9ada75d"
+      "sha256": "52aa9ad7f787417dec9931a9bd6b33802c1a211edd50bbde8693b805a3db4c04"
     },
     {
       "path": ".cn-pilot/agent-evals/README.md",
@@ -535,19 +535,19 @@
     },
     {
       "path": ".cn-pilot/qa/core-check.test.mjs",
-      "sha256": "9d6b9c702f1e3b30fd2b35055e595136b99a63ba0c02ecf4edec115924d49082"
+      "sha256": "ca7bc606da59bcf0200be1c7ba14875fda5a6be8f9647ab285f5e7a1eac71cc1"
     },
     {
       "path": ".cn-pilot/qa/multidisciplinary.test.mjs",
-      "sha256": "43e936bd013d90813a6c5bd536ecd7677d6516c6759cc2a42df83996b8eaf04e"
+      "sha256": "3dd2d6d79a452610153331b1441864e21a6dc584ab2bfa0be41c63d9f473047b"
     },
     {
       "path": ".cn-pilot/update/updater.mjs",
-      "sha256": "0a6a4dd204bf1e7a1649e23f9526706c2fb9df66ff54aa9c19b78755ebacfb72"
+      "sha256": "463675f3d31d904b03ab53d158e39245d88dd49a207e8b7a521d64b255e7c9c4"
     },
     {
       "path": ".cn-pilot/update/updater.test.mjs",
-      "sha256": "33fe220c06aa378b1f40a9d8123e820b9779c53c03e4fc95a3deae2509223e14"
+      "sha256": "c796066d53f0f8ae2091fe7e193909a92a0eb6fb2a8877a27f7a9b08350c7bc2"
     },
     {
       "path": ".codex/agents/arquitecto.toml",

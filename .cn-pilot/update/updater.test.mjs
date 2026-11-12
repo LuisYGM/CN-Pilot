@@ -71,7 +71,9 @@ function manifest(version, entries, changes = {}) {
 }
 
 function postApplyQaReport(version, overrides = {}) {
-  const ids = version === "3.2.0" ? [...POST_APPLY_QA_CHECK_IDS, "codex.adapter"] : POST_APPLY_QA_CHECK_IDS;
+  const ids = version === "3.2.0" && !POST_APPLY_QA_CHECK_IDS.includes("codex.adapter")
+    ? [...POST_APPLY_QA_CHECK_IDS, "codex.adapter"]
+    : POST_APPLY_QA_CHECK_IDS.filter((id) => version === "3.2.0" || id !== "codex.adapter");
   const checks = ids.map((id) => {
     const override = overrides[id];
     return { id, status: override?.status ?? "PASS", details: override?.details ?? {} };
@@ -1104,13 +1106,15 @@ test("post-apply acceptance requires the complete Core QA inventory and allows o
   assert.deepEqual(coreQa.checks.map(({ id }) => id), POST_APPLY_QA_CHECK_IDS, "the gate inventory stays in sync with every Core QA check");
   assert.equal(classifyPostApplyQa(coreQa, coreQa.version).summary, "PASS");
 
-  const nextVersionQa = {
+  const legacyVersionQa = {
     ...coreQa,
-    version: "3.2.0",
-    checks: [...coreQa.checks, { id: "codex.adapter", status: "PASS", details: {} }],
+    version: "3.1.2",
+    checks: coreQa.checks.filter(({ id }) => id !== "codex.adapter"),
   };
+  assert.equal(classifyPostApplyQa(legacyVersionQa, "3.1.2").summary, "PASS", "legacy 3.1.2 inventory remains supported");
+  const nextVersionQa = { ...coreQa, version: "3.2.0" };
   assert.equal(classifyPostApplyQa(nextVersionQa, "3.2.0").summary, "PASS", "the 3.1.2 bridge accepts the complete 3.2.0 QA inventory");
-  assert.equal(classifyPostApplyQa({ ...nextVersionQa, checks: coreQa.checks }, "3.2.0"), null, "the 3.1.2 bridge rejects a 3.2.0 report missing its new check");
+  assert.equal(classifyPostApplyQa({ ...nextVersionQa, checks: legacyVersionQa.checks }, "3.2.0"), null, "the 3.1.2 bridge rejects a 3.2.0 report missing its new check");
 
   const optionalDetails = {
     path: "recursos/README.md",
@@ -1358,7 +1362,7 @@ test("3.1.1 → 3.1.2 update keeps project data and Kilo customizations intact",
   assert.equal(execFileSync("git", ["status", "--porcelain"], { cwd: target.root, encoding: "utf8" }), "");
 });
 
-test("Codex updater mode skips Kilo detection and updates allowlisted future runtime paths", async (t) => {
+test("3.1.2 → 3.2.0 routes Codex and Kilo updaters with runtime-specific checks", async (t) => {
   const target = fixture(t); const source = fixture(t);
   const oldQa = `process.stdout.write(JSON.stringify(${JSON.stringify(postApplyQaReport("3.1.2"))}));\n`;
   const newQa = `process.stdout.write(JSON.stringify(${JSON.stringify(postApplyQaReport("3.2.0"))}));\n`;
@@ -1401,6 +1405,21 @@ test("Codex updater mode skips Kilo detection and updates allowlisted future run
   assert.equal(fs.readFileSync(path.join(target.root, "PROYECTO.md"), "utf8"), "project context\n");
   assert.equal(fs.readFileSync(path.join(target.root, "producto/index.html"), "utf8"), "product data\n");
   assert.equal(execFileSync("git", ["log", "-1", "--pretty=%s"], { cwd: target.root, encoding: "utf8" }).trim(), "chore: actualizar CN Pilot a 3.2.0");
+
+  const kiloTarget = fixture(t);
+  for (const [relative, content] of Object.entries(currentFiles)) kiloTarget.put(kiloTarget.root, relative, content);
+  writeManifestFile(kiloTarget.root, currentManifest);
+  initRepo(kiloTarget.root, [...Object.keys(currentFiles), MANIFEST_PATH]);
+  let bridgeKiloProbeCalls = 0; let kiloStderr = "";
+  const kiloCode = await runCli(["update", "--runtime", "kilo", "--target", kiloTarget.root, "--source-dir", source.root], {
+    stdout: { write: () => {} },
+    stderr: { write: (value) => { kiloStderr += value; } },
+    kiloVersionProbe: () => { bridgeKiloProbeCalls += 1; return "7.8.8"; },
+  });
+  assert.equal(kiloCode, 0, kiloStderr);
+  assert.equal(bridgeKiloProbeCalls, 1, "Kilo runtime compatibility is checked for the 3.1.2 → 3.2.0 route");
+  assert.equal(fs.readFileSync(path.join(kiloTarget.root, ".agents/skills/cnp-content-page/SKILL.md"), "utf8"), "Codex skill adapter\n");
+  assert.equal(execFileSync("git", ["log", "-1", "--pretty=%s"], { cwd: kiloTarget.root, encoding: "utf8" }).trim(), "chore: actualizar CN Pilot a 3.2.0");
 });
 
 test("unknown or distribution-disabled runtimes block before target writes", async (t) => {

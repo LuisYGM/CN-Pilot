@@ -87,7 +87,7 @@ for (const item of entries) {
       if (directoryStat.isSymbolicLink() || !directoryStat.isDirectory()) throw new Error(`Unsafe generated skill directory: ${path.relative(ROOT, path.dirname(relative))}`);
       const stat = fs.lstatSync(relative);
       if (stat.isSymbolicLink() || !stat.isFile()) throw new Error(`Unsafe generated skill path: ${path.relative(ROOT, relative)}`);
-      actual = fs.readFileSync(relative, "utf8");
+      actual = fs.readFileSync(relative, "utf8").replace(/\r\n/g, "\n");
     } catch (error) { if (error?.code !== "ENOENT") throw error; }
     if (actual !== expected) differences.push(path.relative(ROOT, relative).replace(/\\/g, "/"));
   }

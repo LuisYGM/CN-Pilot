@@ -5,6 +5,7 @@ import os from "node:os";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { execFileSync } from "node:child_process";
+import { gunzipSync } from "node:zlib";
 import { suite, prepareMultidisciplinary } from "../agent-evals/prepare-multidisciplinary.mjs";
 import { buildManifest, listTrackedManagedFiles, planUpdate, verifyManifestFiles } from "../update/updater.mjs";
 
@@ -132,7 +133,7 @@ test("3.0.2 → 3.1.0: updater detecta las cuatro incorporaciones sin tocar cont
 
 test("3.2.0 manifest hashes match the candidate payload and inventory", () => {
   const manifest = JSON.parse(read(".cn-pilot/update/manifest.json"));
-  const previous = JSON.parse(execFileSync("git", ["show", "HEAD:.cn-pilot/update/manifest.json"], { cwd: root, encoding: "utf8" }));
+  const previous = JSON.parse(gunzipSync(fs.readFileSync(path.join(root, "tests/fixtures/cn-pilot-3.1.2-manifest.json.gz"))).toString("utf8"));
   const generated = buildManifest(root, { files: listTrackedManagedFiles(root), previousManifest: previous });
   assert.equal(manifest.cnPilotVersion, "3.2.0");
   assert.deepEqual(generated.managedFiles, manifest.managedFiles);
