@@ -8,6 +8,10 @@ Tú describes lo que quieres conseguir con tus propias palabras. Jefe de proyect
 
 CN Pilot ayuda a evitar que tengas que traducir cada petición a una especificación técnica, reconstruir el contexto o coordinar por tu cuenta diseño, implementación y QA. Preserva las decisiones aprobadas y no hace push, publica ni modifica producción por defecto. Las acciones externas requieren alcance y autorización adecuados.
 
+Codex es un runtime nativo de primera clase: al abrir la raíz del repositorio, el agente raíz coordina como Jefe de proyecto sin selección manual de agentes. Kilo conserva su integración propia. Ambos usan los contratos y las 42 skills compartidas, pero sus mecanismos de delegación y permisos tienen diferencias.
+
+En Kilo Code 7.8.8, EVAL-002 (Jefe delega a Desarrollador una escritura en `producto/**`) queda bloqueado porque la denegación de edición de Jefe se hereda en las sesiones `task`. La misma prueba aislada falla en 3.1.1 y 3.2.0; es una limitación preexistente, no una regresión de 3.2.0. Las restricciones se conservan y CN Pilot no promete paridad completa de comportamiento entre runtimes.
+
 ## Inicio rápido
 
 Necesitas una copia de CN Pilot abierta como carpeta de trabajo y uno de los runtimes compatibles. Git es recomendable, pero opcional.
