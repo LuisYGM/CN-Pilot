@@ -473,8 +473,8 @@ export const POST_APPLY_QA_CHECK_IDS = Object.freeze([
   "distribution.manifest",
 ]);
 
-// The 3.1.2 bridge must accept the one known QA inventory expansion in 3.2.0.
-// Earlier destination versions retain the historical bridge contract.
+// The 3.1.2 bridge must accept the Codex adapter check introduced in 3.2.0.
+// Later versions retain that expanded QA contract.
 const POST_APPLY_QA_3_1_2_CHECK_IDS = Object.freeze(POST_APPLY_QA_CHECK_IDS.filter((id) => id !== "codex.adapter"));
 const POST_APPLY_QA_3_2_CHECK_IDS = Object.freeze(POST_APPLY_QA_CHECK_IDS.includes("codex.adapter")
   ? [...POST_APPLY_QA_CHECK_IDS]
@@ -489,8 +489,9 @@ const OPTIONAL_POST_APPLY_WARNING = Object.freeze({
 });
 
 export function classifyPostApplyQa(qa, expectedVersion) {
-  const expectedCheckIds = expectedVersion === "3.2.0" ? POST_APPLY_QA_3_2_CHECK_IDS : POST_APPLY_QA_3_1_2_CHECK_IDS;
-  if (qa?.schemaVersion !== 1 || typeof expectedVersion !== "string" || qa.version !== expectedVersion
+  if (typeof expectedVersion !== "string" || !VERSION.test(expectedVersion)) return null;
+  const expectedCheckIds = compareVersions(expectedVersion, "3.2.0") >= 0 ? POST_APPLY_QA_3_2_CHECK_IDS : POST_APPLY_QA_3_1_2_CHECK_IDS;
+  if (qa?.schemaVersion !== 1 || qa.version !== expectedVersion
     || !Array.isArray(qa.checks) || !Array.isArray(qa.findings) || qa.checks.length !== expectedCheckIds.length) return null;
   const checkIds = qa.checks.map((check) => check?.id);
   const checkSet = new Set(checkIds);

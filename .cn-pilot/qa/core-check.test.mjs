@@ -16,6 +16,31 @@ function normalizeEol(text) {
   return String(text).replace(/\r\n?/g, "\n");
 }
 
+function isCanonicalCoreRepository(root) {
+  const result = spawnSync("git", ["-C", root, "remote", "get-url", "origin"], { encoding: "utf8" });
+  if (result.status !== 0) return false;
+  const origin = result.stdout.trim()
+    .replace(/^git@github\.com:/i, "https://github.com/")
+    .replace(/^ssh:\/\/git@github\.com\//i, "https://github.com/")
+    .replace(/\.git$/i, "")
+    .replace(/\/$/, "")
+    .toLowerCase();
+  return origin === "https://github.com/luisygm/cn-pilot";
+}
+
+test("README source identity recognizes only the canonical CN Pilot remote", (t) => {
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), "cn-pilot-readme-identity-"));
+  t.after(() => fs.rmSync(root, { recursive: true, force: true }));
+  const initialized = spawnSync("git", ["init", "--quiet", root], { encoding: "utf8" });
+  assert.equal(initialized.status, 0, initialized.stderr);
+  const canonicalRemote = spawnSync("git", ["-C", root, "remote", "add", "origin", "git@github.com:LuisYGM/CN-Pilot.git"], { encoding: "utf8" });
+  assert.equal(canonicalRemote.status, 0, canonicalRemote.stderr);
+  assert.equal(isCanonicalCoreRepository(root), true);
+  const derivedRemote = spawnSync("git", ["-C", root, "remote", "set-url", "origin", "https://github.com/LuisYGM/CN-flow.git"], { encoding: "utf8" });
+  assert.equal(derivedRemote.status, 0, derivedRemote.stderr);
+  assert.equal(isCanonicalCoreRepository(root), false);
+});
+
 function runKiloForPermissionTest(args) {
   if (process.platform === "win32") {
     const command = args.map((value) => `'${String(value).replace(/'/g, "''")}'`).join(" ");
@@ -1664,6 +1689,7 @@ test("testing-strategy keeps one BF-057 full-stack section with prior behavior",
 
 test("human documentation matches Core version, entry points, commands and multi-runtime scope", () => {
   const root = new URL("../../", import.meta.url);
+  const canonical = isCanonicalCoreRepository(fileURLToPath(root));
   const read = (relative) => fs.readFileSync(new URL(relative, root), "utf8");
   const readme = read("README.md");
   const version = read(".cn-pilot-version").trim();
@@ -1673,17 +1699,19 @@ test("human documentation matches Core version, entry points, commands and multi
   const commands = new Set(fs.readdirSync(new URL(".kilo/commands/", root)).filter((name) => name.endsWith(".md")).map((name) => `/${name.slice(0, -3)}`));
   const commandLinks = [...guide.matchAll(/`(\/[a-z0-9-]+)`/g)].map((match) => match[1]);
 
-  assert.match(readme, new RegExp(`CN Pilot ${version.replaceAll(".", "\\.")}`));
-  assert.match(readme, /\[Empieza aquí\]\(\.cn-pilot\/documentacion\/EMPIEZA-AQUI\.md\)/);
-  assert.match(readme, /integración nativa para \*\*Kilo Code\*\* y \*\*OpenAI Codex\*\*/i);
-  assert.match(readme, /CONFIGURACION-CODEX\.md/);
-  assert.match(readme, /no necesitas programar, diseñar prompts técnicos/i);
-  assert.match(readme, /no hace push, publica ni modifica producción por defecto/i);
-  assert.doesNotMatch(readme, /multi-agent portability|universal multi-agent/i);
-  assert.match(readme, /producto\/wp-content\//);
-  assert.match(readme, /No.*WordPress Core/i);
-  assert.match(readme, /instrumentación de analytics se crea cuando existe un objetivo de medición/i);
-  assert.match(readme, /Project Context/);
+  if (canonical) {
+    assert.match(readme, new RegExp(`CN Pilot ${version.replaceAll(".", "\\.")}`));
+    assert.match(readme, /\[Empieza aquí\]\(\.cn-pilot\/documentacion\/EMPIEZA-AQUI\.md\)/);
+    assert.match(readme, /integración nativa para \*\*Kilo Code\*\* y \*\*OpenAI Codex\*\*/i);
+    assert.match(readme, /CONFIGURACION-CODEX\.md/);
+    assert.match(readme, /no necesitas programar, diseñar prompts técnicos/i);
+    assert.match(readme, /no hace push, publica ni modifica producción por defecto/i);
+    assert.doesNotMatch(readme, /multi-agent portability|universal multi-agent/i);
+    assert.match(readme, /producto\/wp-content\//);
+    assert.match(readme, /No.*WordPress Core/i);
+    assert.match(readme, /instrumentación de analytics se crea cuando existe un objetivo de medición/i);
+    assert.match(readme, /Project Context/);
+  }
   assert.match(intro, /Decide tú/);
   assert.match(intro, /Pending/);
   assert.match(intro, /no hace falta memorizar comandos/i);
@@ -1698,6 +1726,7 @@ test("human documentation matches Core version, entry points, commands and multi
 
 test("documentation catalog inventories the actual agents and skills without requiring manual selection", () => {
   const root = new URL("../../", import.meta.url);
+  const canonical = isCanonicalCoreRepository(fileURLToPath(root));
   const catalog = fs.readFileSync(new URL("../../.cn-pilot/documentacion/SKILLS-Y-CAPACIDADES.md", import.meta.url), "utf8");
   const agentGuide = fs.readFileSync(new URL("../../README.md", import.meta.url), "utf8");
   const actualSkills = fs.readdirSync(new URL("../../.kilo/skills/", import.meta.url)).filter((name) => fs.existsSync(new URL(`../../.kilo/skills/${name}/SKILL.md`, import.meta.url))).sort();
@@ -1707,7 +1736,7 @@ test("documentation catalog inventories the actual agents and skills without req
   const agentLabels = ["Jefe de proyecto", "Arquitecto", "Diseñador", "Redactor", "Desarrollador", "Revisor"].sort();
   assert.deepEqual(listedSkills, actualSkills, "skill catalog has no omissions or invented skills");
   assert.equal(actualAgents.length, 6, "agent catalog has exactly six custom agents");
-  assert.deepEqual(listedAgents, agentLabels, "README describes the six real agents with human-facing names");
+  if (canonical) assert.deepEqual(listedAgents, agentLabels, "canonical CN Pilot README describes the six real agents with human-facing names");
   assert.ok(listedSkills.includes("environment-dependency-management"), "cross-stack environment management is catalogued");
   assert.ok(catalog.includes("No tienes que elegir") && catalog.includes("bajo demanda"), "skills stay discoverable without becoming a user selection chore");
 });
@@ -1752,17 +1781,21 @@ test("documentation navigation links resolve to existing files and headings", ()
 });
 
 test("human Project Context scaffolds explain ownership without updating real projects", () => {
+  const root = new URL("../../", import.meta.url);
+  const canonical = isCanonicalCoreRepository(fileURLToPath(root));
   const readme = fs.readFileSync(new URL("../../README.md", import.meta.url), "utf8");
   const project = fs.readFileSync(new URL("../../PROYECTO.md", import.meta.url), "utf8");
   const requirements = fs.readFileSync(new URL("../../REQUISITOS.md", import.meta.url), "utf8");
   const state = fs.readFileSync(new URL("../../ESTADO.md", import.meta.url), "utf8");
   const decisions = fs.readFileSync(new URL("../../DECISIONES.md", import.meta.url), "utf8");
   const artifacts = fs.readFileSync(new URL("../../ARTEFACTOS.md", import.meta.url), "utf8");
-  const contextStart = readme.indexOf("## Dónde va cada cosa");
-  const contextEnd = readme.indexOf("## Agentes", contextStart);
-  const summary = readme.slice(contextStart, contextEnd);
-  assert.ok(contextStart >= 0 && contextEnd > contextStart);
-  for (const file of ["PROYECTO.md", "REQUISITOS.md", "ESTADO.md", "DECISIONES.md", "ARTEFACTOS.md"]) assert.ok(summary.includes(file), `${file} has an onboarding explanation`);
+  if (canonical) {
+    const contextStart = readme.indexOf("## Dónde va cada cosa");
+    const contextEnd = readme.indexOf("## Agentes", contextStart);
+    const summary = readme.slice(contextStart, contextEnd);
+    assert.ok(contextStart >= 0 && contextEnd > contextStart);
+    for (const file of ["PROYECTO.md", "REQUISITOS.md", "ESTADO.md", "DECISIONES.md", "ARTEFACTOS.md"]) assert.ok(summary.includes(file), `${file} has an onboarding explanation`);
+  }
   assert.match(project, /facts|hechos estables|Identidad/i);
   assert.match(project, /no hace falta definir el público/i);
   assert.match(requirements, /Criterios de aceptación/);

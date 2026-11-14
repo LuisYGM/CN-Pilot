@@ -8,7 +8,7 @@
 - **Perfil especializado (opcional, por entregable si procede):** Pending / N/A
 - **Repositorio o carpeta:** Pending
 - **Control de versiones:** Git local / Git con remoto / No inicializado / Pending
-- **Versión de CN Pilot Core:** 3.2.0
+- **Versión de CN Pilot Core:** 3.2.1
 
 ## Objetivo
 

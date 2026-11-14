@@ -2,6 +2,8 @@
 
 CN Pilot se actualiza solo por solicitud explícita. `/cn-estado` consulta la rama estable `main`; `/cn-actualizar` instala archivos gestionados y crea un commit local tras Core QA. No hay auto-update, polling, channels alternativos, GitHub Releases, tags ni push.
 
+Desde la versión 3.2.1, los requisitos editoriales del README raíz solo se comprueban en el repositorio canónico de CN Pilot. Los proyectos derivados conservan su identidad de producto; el inventario y el resto de Core QA siguen ejecutándose.
+
 ## Preflight determinista de `/cn-estado` y `/cn-actualizar`
 
 Antes de invocar el updater, determina el Git root real y comprueba los paths literales con Node filesystem (nunca `Glob`). Desde cualquier subdirectorio Git, este probe read-only clasifica los paths sin depender del cwd relativo:
@@ -18,7 +20,7 @@ Desde una instalación 3.1.2, Codex puede ejecutar manualmente el updater puente
 
 ### Instalaciones 3.1.1 que encuentran una versión estable posterior
 
-El updater 3.1.1 solo acepta las raíces managed Kilo y no puede leer un manifest que incluya `.agents/skills/` o `.codex/agents/`. Si `main` ya está en 3.2.0, no ejecutes el updater 3.1.1 contra esa fuente: se detendrá con `PROTECTED_PATH` antes de escribir. Usa el updater actual desde un clon oficial de `main`; este entiende el baseline 3.1.1 y aplica el manifest actual directamente, sin depender de que la versión antigua conozca las rutas nuevas:
+El updater 3.1.1 solo acepta las raíces managed Kilo y no puede leer un manifest que incluya `.agents/skills/` o `.codex/agents/`. Si `main` ya está en 3.2.1 o posterior, no ejecutes el updater 3.1.1 contra esa fuente: se detendrá con `PROTECTED_PATH` antes de escribir. Usa el updater actual desde un clon oficial de `main`; este entiende el baseline 3.1.1 y aplica el manifest actual directamente, sin depender de que la versión antigua conozca las rutas nuevas:
 
 1. Desde el root Git, verifica `git status --short`, `git branch --show-current` y que no haya una tarea CN Pilot ACTIVE. El árbol tracked debe estar limpio y la branch nombrada.
 2. Comprueba con `lstat` que `.cn-pilot/runtime/cn-pilot-update-source` no existe y que sus directorios padre, si existen, no son symlinks/reparse points. Si la ruta ya existe o el probe da error, detente e inspecciónala; no la sobrescribas.
@@ -41,7 +43,7 @@ El updater 3.1.1 solo acepta las raíces managed Kilo y no puede leer un manifes
 
 5. Comprueba que el updater informe Core QA `PASS`, el commit local, `git status --short` limpio y el contenido previo de Project Context y Product intacto. No uses `bootstrap`: el manifest 3.1.1 existe y el updater actual puede planificar la actualización normal. Conserva la fuente clonada para futuras actualizaciones o inspecciona su estado antes de cualquier limpieza.
 
-Esta ruta directa se valida junto a la ruta secuencial 3.1.1 → 3.1.2 → 3.2.0. El salto secuencial sigue siendo útil para comprobar el updater puente; las instalaciones 3.1.1 no tienen que esperar a que `main` publique 3.1.2 para llegar a la versión estable actual.
+Esta ruta directa se valida junto a la ruta secuencial 3.1.1 → 3.1.2 → 3.2.1. El salto secuencial sigue siendo útil para comprobar el updater puente; las instalaciones 3.1.1 no tienen que esperar a que `main` publique 3.1.2 para llegar a la versión estable actual.
 
 ## Ownership
 

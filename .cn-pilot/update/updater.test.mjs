@@ -14,6 +14,7 @@ import {
   applyValidateAndCommit,
   buildManifest,
   classifyPostApplyQa,
+  compareVersions,
   checkActiveTask,
   cleanupBootstrapSource,
   commitManagedUpdate,
@@ -71,9 +72,10 @@ function manifest(version, entries, changes = {}) {
 }
 
 function postApplyQaReport(version, overrides = {}) {
-  const ids = version === "3.2.0" && !POST_APPLY_QA_CHECK_IDS.includes("codex.adapter")
+  const hasCodexAdapter = compareVersions(version, "3.2.0") >= 0;
+  const ids = hasCodexAdapter && !POST_APPLY_QA_CHECK_IDS.includes("codex.adapter")
     ? [...POST_APPLY_QA_CHECK_IDS, "codex.adapter"]
-    : POST_APPLY_QA_CHECK_IDS.filter((id) => version === "3.2.0" || id !== "codex.adapter");
+    : POST_APPLY_QA_CHECK_IDS.filter((id) => hasCodexAdapter || id !== "codex.adapter");
   const checks = ids.map((id) => {
     const override = overrides[id];
     return { id, status: override?.status ?? "PASS", details: override?.details ?? {} };
@@ -1115,6 +1117,9 @@ test("post-apply acceptance requires the complete Core QA inventory and allows o
   const nextVersionQa = { ...coreQa, version: "3.2.0" };
   assert.equal(classifyPostApplyQa(nextVersionQa, "3.2.0").summary, "PASS", "the 3.1.2 bridge accepts the complete 3.2.0 QA inventory");
   assert.equal(classifyPostApplyQa({ ...nextVersionQa, checks: legacyVersionQa.checks }, "3.2.0"), null, "the 3.1.2 bridge rejects a 3.2.0 report missing its new check");
+  const patchVersionQa = { ...coreQa, version: "3.2.1" };
+  assert.equal(classifyPostApplyQa(patchVersionQa, "3.2.1").summary, "PASS", "patch versions retain the 3.2.0 QA inventory");
+  assert.equal(classifyPostApplyQa({ ...patchVersionQa, checks: legacyVersionQa.checks }, "3.2.1"), null, "patch versions reject a report missing the Codex adapter check");
 
   const optionalDetails = {
     path: "recursos/README.md",
