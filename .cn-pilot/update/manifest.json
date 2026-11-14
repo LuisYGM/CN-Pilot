@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "cnPilotVersion": "3.2.0",
+  "cnPilotVersion": "3.2.1",
   "sourceRepository": "https://github.com/LuisYGM/cn-pilot.git",
   "stableBranch": "main",
   "sourceCommit": null,
@@ -239,11 +239,11 @@
     },
     {
       "path": ".cn-pilot-version",
-      "sha256": "33bdaf9e2d6bcbde2e4e613e865e403f8fe21fc621078d34c30b0bdc7f68d903"
+      "sha256": "3822728783049fc2f22a56d1ee74d62352c49fbf81c6b54b50830d6f61c3af22"
     },
     {
       "path": ".cn-pilot/CAMBIOS.md",
-      "sha256": "22f4954e088238e36b0e4b8d36ad85b42d8fdee9d08bb5a8f4d1ad25ce57de44"
+      "sha256": "26e80bfce3d64bc6d9bf4d9e06b379fa28997dd0445fe77e4625ecedc0c2c004"
     },
     {
       "path": ".cn-pilot/MANIFIESTO.md",
@@ -251,7 +251,7 @@
     },
     {
       "path": ".cn-pilot/NUCLEO.md",
-      "sha256": "5051870f3241d3c12a4ca567be917f83fa6ef3551c486cdda366bde6e33402fe"
+      "sha256": "9aeb3c93327f1ec7b82fef18a402b3a82b8776d5460dcbf33d5c02bd72acb360"
     },
     {
       "path": ".cn-pilot/adapters/codex/RUNTIME.md",
@@ -367,7 +367,7 @@
     },
     {
       "path": ".cn-pilot/documentacion/ACTUALIZACIONES.md",
-      "sha256": "a5b72e10c7087ae6ddf9e64ffd920e1330e68e16581acab1c09358b4935477d1"
+      "sha256": "8c49d25a545adaa084364c1dd2566cf785b39fe483bcad6c4619849cd6c49b8b"
     },
     {
       "path": ".cn-pilot/documentacion/CICLO-DE-VIDA.md",
@@ -535,19 +535,19 @@
     },
     {
       "path": ".cn-pilot/qa/core-check.test.mjs",
-      "sha256": "ca7bc606da59bcf0200be1c7ba14875fda5a6be8f9647ab285f5e7a1eac71cc1"
+      "sha256": "7b7798197d7b3aaedb222883d001c9a12f70ce6dbc8e1416fa609801fdfce6ea"
     },
     {
       "path": ".cn-pilot/qa/multidisciplinary.test.mjs",
-      "sha256": "3dd2d6d79a452610153331b1441864e21a6dc584ab2bfa0be41c63d9f473047b"
+      "sha256": "a3f55e406f910308680909255250f340782edaadedf36a59a964f5b3b3433d97"
     },
     {
       "path": ".cn-pilot/update/updater.mjs",
-      "sha256": "463675f3d31d904b03ab53d158e39245d88dd49a207e8b7a521d64b255e7c9c4"
+      "sha256": "6204e6419af91082d7ed33cbcf6e5549732e152e918b22471f0b082538819716"
     },
     {
       "path": ".cn-pilot/update/updater.test.mjs",
-      "sha256": "244c6675856e023f7def1068643660cff27d2bbd164a0fb4bca1d0359854db1d"
+      "sha256": "bd3a9fded05a587f72b9719f9a2ceb24a793420ede999316f255e0f285d8b76d"
     },
     {
       "path": ".codex/agents/arquitecto.toml",
@@ -846,72 +846,7 @@
       "sha256": "899fd9c2a5e7d36222c21077a6b5d274b90b3f17875aca9d94e64067f806d7aa"
     }
   ],
-  "addedFiles": [
-    ".agents/skills/cnp-accessibility-review/SKILL.md",
-    ".agents/skills/cnp-analytics-instrumentation/SKILL.md",
-    ".agents/skills/cnp-api-integration/SKILL.md",
-    ".agents/skills/cnp-application-ui/SKILL.md",
-    ".agents/skills/cnp-auth-access-control/SKILL.md",
-    ".agents/skills/cnp-automation-integrations/SKILL.md",
-    ".agents/skills/cnp-bricks/SKILL.md",
-    ".agents/skills/cnp-cn-actualizar/SKILL.md",
-    ".agents/skills/cnp-cn-estado/SKILL.md",
-    ".agents/skills/cnp-commit/SKILL.md",
-    ".agents/skills/cnp-contenido/SKILL.md",
-    ".agents/skills/cnp-content-blog-seo/SKILL.md",
-    ".agents/skills/cnp-content-page/SKILL.md",
-    ".agents/skills/cnp-creative-web-experience/SKILL.md",
-    ".agents/skills/cnp-database-migrations/SKILL.md",
-    ".agents/skills/cnp-deploy-wordpress/SKILL.md",
-    ".agents/skills/cnp-depurar/SKILL.md",
-    ".agents/skills/cnp-desplegar-pruebas/SKILL.md",
-    ".agents/skills/cnp-diagnostico/SKILL.md",
-    ".agents/skills/cnp-diseno/SKILL.md",
-    ".agents/skills/cnp-elementor/SKILL.md",
-    ".agents/skills/cnp-entrega/SKILL.md",
-    ".agents/skills/cnp-environment-dependency-management/SKILL.md",
-    ".agents/skills/cnp-existing-site-audit/SKILL.md",
-    ".agents/skills/cnp-form-experience/SKILL.md",
-    ".agents/skills/cnp-frontend-architecture/SKILL.md",
-    ".agents/skills/cnp-frontend-responsive/SKILL.md",
-    ".agents/skills/cnp-git-checkpoint/SKILL.md",
-    ".agents/skills/cnp-maintenance-operations/SKILL.md",
-    ".agents/skills/cnp-motion-interaction/SKILL.md",
-    ".agents/skills/cnp-nuevo-proyecto/SKILL.md",
-    ".agents/skills/cnp-page-composition/SKILL.md",
-    ".agents/skills/cnp-performance-review/SKILL.md",
-    ".agents/skills/cnp-plan/SKILL.md",
-    ".agents/skills/cnp-preparar-despliegue/SKILL.md",
-    ".agents/skills/cnp-product-discovery/SKILL.md",
-    ".agents/skills/cnp-punto-control/SKILL.md",
-    ".agents/skills/cnp-release-deployment/SKILL.md",
-    ".agents/skills/cnp-revision/SKILL.md",
-    ".agents/skills/cnp-security-review/SKILL.md",
-    ".agents/skills/cnp-source-grounded-development/SKILL.md",
-    ".agents/skills/cnp-systematic-debugging/SKILL.md",
-    ".agents/skills/cnp-technical-seo/SKILL.md",
-    ".agents/skills/cnp-testing-strategy/SKILL.md",
-    ".agents/skills/cnp-tool-discovery/SKILL.md",
-    ".agents/skills/cnp-ui-design-system/SKILL.md",
-    ".agents/skills/cnp-ui-kit-construction/SKILL.md",
-    ".agents/skills/cnp-visual-art-direction/SKILL.md",
-    ".agents/skills/cnp-visual-parity-review/SKILL.md",
-    ".agents/skills/cnp-web-strategy/SKILL.md",
-    ".agents/skills/cnp-webapp-testing/SKILL.md",
-    ".agents/skills/cnp-woocommerce/SKILL.md",
-    ".agents/skills/cnp-wordpress-content-modeling/SKILL.md",
-    ".agents/skills/cnp-wordpress-plugin/SKILL.md",
-    ".agents/skills/cnp-wordpress-theme-development/SKILL.md",
-    ".agents/skills/cnp-wordpress/SKILL.md",
-    ".cn-pilot/adapters/codex/RUNTIME.md",
-    ".cn-pilot/adapters/codex/generate-skills.mjs",
-    ".cn-pilot/documentacion/CONFIGURACION-CODEX.md",
-    ".codex/agents/arquitecto.toml",
-    ".codex/agents/desarrollador.toml",
-    ".codex/agents/disenador.toml",
-    ".codex/agents/redactor.toml",
-    ".codex/agents/revisor.toml"
-  ],
+  "addedFiles": [],
   "removedFiles": [],
   "migrations": [
     {

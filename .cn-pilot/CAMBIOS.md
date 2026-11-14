@@ -1,5 +1,11 @@
 # Changelog
 
+## [3.2.1] - 2026-11-14
+
+- Ajusta la QA documental para exigir la presentación del README solo en el repositorio canónico de CN Pilot. En repositorios derivados, la identidad del producto puede usar el README raíz sin desactivar las verificaciones del catálogo, los enlaces internos ni el resto de Core QA.
+- Añade regresión de identidad por remote canónico y conserva las comprobaciones documentales originales en el repositorio fuente.
+- Mantiene el inventario de QA introducido en 3.2.0 para actualizaciones posteriores desde la rama puente 3.1.2.
+
 ## [3.2.0] - 2026-11-11
 
 - Añade integración nativa de Codex: el agente raíz conserva Jefe de proyecto, cinco especialistas TOML y 56 skills `cnp-*` cargan los contratos compartidos bajo demanda.

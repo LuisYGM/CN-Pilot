@@ -1,6 +1,6 @@
 # CN Pilot
 
-**CN Pilot 3.2.0** es un sistema extensible de coordinación y producción profesional multidisciplinaria con integración nativa para **Kilo Code** y **OpenAI Codex**. Un proyecto puede ser una marca, empresa, producto o iniciativa y reunir distintos entregables, no necesariamente una web, aplicación o repositorio de código.
+**CN Pilot 3.2.1** es un sistema extensible de coordinación y producción profesional multidisciplinaria con integración nativa para **Kilo Code** y **OpenAI Codex**. Un proyecto puede ser una marca, empresa, producto o iniciativa y reunir distintos entregables, no necesariamente una web, aplicación o repositorio de código.
 
 Tú describes lo que quieres conseguir con tus propias palabras. Jefe de proyecto revisa el contexto, coordina a los especialistas necesarios y verifica el trabajo según su alcance y riesgo. No necesitas programar, diseñar prompts técnicos ni escoger agentes o skills. Tampoco tienes que seguir una fase fija.
 
