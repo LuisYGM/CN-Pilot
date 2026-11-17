@@ -43,7 +43,7 @@ BF-062 mantiene SERIAL por defecto. Si varias unidades son independientes y su i
 
 - `/commit` requiere un repositorio Git; sin Git informa que no aplica y no inicializa uno.
 - `/punto-control` verifica siempre, pero solo crea commit si Git existe.
-- `/nuevo-proyecto`, `/revision`, `/entrega` y `/preparar-despliegue` funcionan también sin Git.
+- `/nuevo-proyecto`, `/entrega` y `/preparar-despliegue` funcionan también sin Git.
 - Ramas, hashes, Pull Requests, Agent Manager con worktrees y operaciones `git worktree` requieren Git.
 
 ## Tipos

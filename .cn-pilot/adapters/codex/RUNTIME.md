@@ -16,7 +16,7 @@ En los comandos canónicos, `agent:` describe el routing original de Kilo: en Co
 
 ## Permisos, delegación y escritura
 
-La sandbox y la política de aprobación efectiva son las de la sesión raíz de Codex. Los TOML de agentes no las amplían ni restringen. La descripción de Revisor como solo lectura expresa intención conductual, no un permiso efectivo; para imponer lectura solamente, inicia Codex con una sandbox de solo lectura.
+La sandbox y la política de aprobación efectiva son las de la sesión raíz de Codex. Los TOML de agentes no las amplían ni restringen.
 
 Los subagentes nativos heredan contexto de permisos y sesión. No supongas aislamiento de filesystem, branch ni worktree. Favorece delegaciones de análisis independientes; serializa escritores que puedan tocar contexto o archivos compartidos. Usa un worktree solo después de comprobar que existe y que el escritor está trabajando ahí.
 

@@ -34,9 +34,9 @@ test("discovery: controles positivos y negativos del contrato, no de conducta", 
   for (const pattern of required) assert.throws(() => requireContracts("Herramienta documentada = instalada; generar SVG siempre.", [pattern]));
 });
 
-test("checkout 3.2.1 conserva seis agentes Kilo, siete perfiles y 42 skills; ACL intactas", () => {
-  const agents = ["arquitecto", "desarrollador", "disenador", "jefe-proyecto", "redactor", "revisor"];
-  assert.equal(fs.readdirSync(path.join(root, ".kilo/agents")).filter((name) => name.endsWith(".md")).length, 6);
+test("checkout 3.2.2 conserva cinco agentes Kilo, siete perfiles y 42 skills; ACL restantes intactas", () => {
+  const agents = ["arquitecto", "desarrollador", "disenador", "jefe-proyecto", "redactor"];
+  assert.equal(fs.readdirSync(path.join(root, ".kilo/agents")).filter((name) => name.endsWith(".md")).length, 5);
   assert.equal(fs.readdirSync(path.join(root, ".cn-pilot/perfiles")).length, 7);
   const checkoutSkills = execFileSync("git", ["ls-tree", "-r", "--name-only", "HEAD", "--", ".kilo/skills"], { cwd: root, encoding: "utf8" }).trim().split(/\r?\n/).filter((name) => name.endsWith("/SKILL.md"));
   assert.equal(checkoutSkills.length, 42);
@@ -45,12 +45,15 @@ test("checkout 3.2.1 conserva seis agentes Kilo, siete perfiles y 42 skills; ACL
     const relative = `.kilo/agents/${agent}.md`;
     const current = read(relative);
     const baseline = execFileSync("git", ["show", `HEAD:${relative}`], { cwd: root, encoding: "utf8" }).replace(/\r\n/g, "\n");
-    assert.equal(current.split("\n---\n")[0].replace(/^description:.*$/m, ""), baseline.split("\n---\n")[0].replace(/^description:.*$/m, ""), `Permisos/frontmatter ${agent}`);
+    const normalize = (value) => value.split("\n---\n")[0].replace(/^description:.*$/m, "").replace(/^\s*"revisor": allow\s*$/gm, "").replace(/\n{2,}/g, "\n").trim();
+    assert.equal(normalize(current), normalize(baseline), `Permisos/frontmatter ${agent}`);
     assert.match(current, /BF-074\/075/);
-    if (!["revisor", "jefe-proyecto"].includes(agent)) assert.match(current, /tool-discovery/);
+    if (agent !== "jefe-proyecto") assert.match(current, /tool-discovery/);
   }
   for (const relative of ["kilo.jsonc", ".cn-pilot/perfiles/sitio-wordpress.md"]) {
-    assert.equal(read(relative), execFileSync("git", ["show", `HEAD:${relative}`], { cwd: root, encoding: "utf8" }).replace(/\r\n/g, "\n"));
+    const current = read(relative);
+    const baseline = execFileSync("git", ["show", `HEAD:${relative}`], { cwd: root, encoding: "utf8" }).replace(/\r\n/g, "\n");
+    assert.equal(current, relative.includes("perfiles/") ? baseline.replace(" → Revisor según riesgo/acceptance", "") : baseline);
   }
   requireContracts(read(".cn-pilot/NUCLEO.md"), [/BF-073/, /Existing.*root.*excepción/, /BF-070/, /Approved\/Strict/]);
 });
@@ -131,11 +134,11 @@ test("3.0.2 → 3.1.0: updater detecta las cuatro incorporaciones sin tocar cont
   } finally { fs.rmSync(parent, { recursive: true, force: true }); }
 });
 
-test("3.2.1 manifest hashes match the candidate payload and inventory", () => {
+test("3.2.2 manifest hashes match the candidate payload and inventory", () => {
   const manifest = JSON.parse(read(".cn-pilot/update/manifest.json"));
   const previous = JSON.parse(gunzipSync(fs.readFileSync(path.join(root, "tests/fixtures/cn-pilot-3.2.0-manifest.json.gz"))).toString("utf8"));
   const generated = buildManifest(root, { files: listTrackedManagedFiles(root), previousManifest: previous });
-  assert.equal(manifest.cnPilotVersion, "3.2.1");
+  assert.equal(manifest.cnPilotVersion, "3.2.2");
   assert.deepEqual(generated.managedFiles, manifest.managedFiles);
   assert.deepEqual(generated.addedFiles, manifest.addedFiles);
   assert.deepEqual(generated.removedFiles, manifest.removedFiles);

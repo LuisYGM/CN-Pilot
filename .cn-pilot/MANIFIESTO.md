@@ -4,14 +4,14 @@ Inventario de CN Pilot Core. No sustituye `../ARTEFACTOS.md`, que registra entre
 
 `.cn-pilot/runtime/` es estado operacional local e ignorado por Git; no forma parte del Core distribuido ni del manifiesto versionado.
 
-- 6 agentes en `.kilo/agents/`
-- 5 agentes especialistas Codex en `.codex/agents/` (Jefe de proyecto conserva el agente raíz)
+- 5 agentes en `.kilo/agents/`
+- 4 agentes especialistas Codex en `.codex/agents/` (Jefe de proyecto conserva el agente raíz)
 - 42 skills (`.kilo/skills/*/SKILL.md`), incluido descubrimiento de herramientas bajo demanda
-- 56 skills nativas Codex `cnp-*` en `.agents/skills/` (adaptadores de skills y comandos canónicos Kilo)
+- 55 skills nativas Codex `cnp-*` en `.agents/skills/` (adaptadores de skills y comandos canónicos Kilo)
 - 6 documentos de referencia bajo `.kilo/skills/technical-seo/references/` (no son skills adicionales)
-- 14 comandos en `.kilo/commands/`
+- 13 comandos en `.kilo/commands/`
 - 7 perfiles en `.cn-pilot/perfiles/`
-- 9 archivos de plantilla en la raíz de `.cn-pilot/plantillas/` y 18 archivos en total bajo `.cn-pilot/plantillas/` (incluye subdirectorios)
+- 8 archivos de plantilla en la raíz de `.cn-pilot/plantillas/` y 17 archivos en total bajo `.cn-pilot/plantillas/` (incluye subdirectorios)
 - QA ejecutable read-only y on-demand del Core en `.cn-pilot/qa/` (Node built-in; sin dependencias npm)
 - Core portable en `.cn-pilot/` (config, documentación, perfiles y plantillas)
 - documentación para usuarios y referencia avanzada bajo `.cn-pilot/documentacion/` (mapa, onboarding, comandos, catálogo de skills y glosario incluidos)

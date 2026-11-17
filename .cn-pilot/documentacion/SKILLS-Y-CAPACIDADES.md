@@ -78,4 +78,4 @@ La gestión de múltiples entregables vive en BF-074 y Project Context, no neces
 | `release-deployment` | Preparación de release/deployment no WordPress. |
 | `git-checkpoint` | Preparación de commit local seguro y acotado. |
 
-Los seis agentes siguen siendo la entrada práctica. La política de ownership y triggers se mantiene en el routing de Jefe y procedimientos del Core; este índice no los reemplaza ni promete que una tecnología, herramienta o integración esté instalada o soportada sin evidencia.
+Los cinco agentes siguen siendo la entrada práctica. La política de ownership y triggers se mantiene en el routing de Jefe y procedimientos del Core; este índice no los reemplaza ni promete que una tecnología, herramienta o integración esté instalada o soportada sin evidencia.

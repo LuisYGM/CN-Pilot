@@ -103,7 +103,7 @@ El Kit entero y sus specimens reflow correctamente, sin overflow material ni ver
 
 ## Pre-approval check obligatorio y local
 
-Antes de Human Visual Approval, inspecciona las fuentes reales del Kit. Haz un único pase compacto y corrige en el mismo batch los incumplimientos; no traslades defectos básicos a Revisor/browser QA.
+Antes de Human Visual Approval, inspecciona las fuentes reales del Kit. Haz un único pase compacto y corrige en el mismo batch los incumplimientos; no traslades defectos básicos a una fase posterior de QA.
 
 1. **Root:** existe `html { font-size: 100%; }`; no hay override que cambie la equivalencia `1rem = 16px`.
 2. **Body:** body/base usa token real con mínimo de 16px; sub-16px solo en roles explícitos.

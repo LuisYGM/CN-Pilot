@@ -7,7 +7,7 @@
 - Git es opcional; instálalo si necesitas historial, commits o worktrees.
 - No necesitas instalar WordPress, Bricks, Node, MCP u otras herramientas hasta que el proyecto y su scope las requieran.
 
-Si Kilo solicita un agente, elige `jefe-proyecto`. Comprueba que aparecen los seis agentes del Core y empieza con `/nuevo-proyecto` o describe directamente la tarea cuando el proyecto ya está inicializado. [Empieza aquí](EMPIEZA-AQUI.md) cubre el recorrido de usuario.
+Si Kilo solicita un agente, elige `jefe-proyecto`. Comprueba que aparecen los cinco agentes del Core y empieza con `/nuevo-proyecto` o describe directamente la tarea cuando el proyecto ya está inicializado. [Empieza aquí](EMPIEZA-AQUI.md) cubre el recorrido de usuario.
 
 ## Configuración personal de proveedor y modelos
 
@@ -24,7 +24,7 @@ La configuración global/personal no se incluye al clonar el repositorio. Puede 
 ## Verificar agentes
 
 Deben estar disponibles:
-`jefe-proyecto`, `arquitecto`, `disenador`, `redactor`, `desarrollador`, `revisor`.
+`jefe-proyecto`, `arquitecto`, `disenador`, `redactor`, `desarrollador`.
 
 `jefe-proyecto` es primario; los otros cinco son subagentes. Kilo descubre agents desde `.kilo/agents/**/*.md`; el stem del filename es el identificador exacto disponible para delegación/selección. Estos nombres renombrados no tienen aliases automáticos; actualiza prompts/scripts locales que los referencien.
 

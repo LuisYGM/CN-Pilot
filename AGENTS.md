@@ -27,7 +27,7 @@ Estas reglas son el **kernel compartido** de CN Pilot. El contrato completo de u
 ## Ejecución y terminado
 
 - Preserva comportamiento y trabajo manual existente; elige un owner y carga solo las capacidades que necesita. Para una skill, usa su description para decidir si aplica y carga su cuerpo on-demand; la disponibilidad no justifica usarla.
-- Verifica el criterio afectado con evidencia proporcional antes de cerrar. `DIRECT` requiere comprobación focal y no documentos/IDs; `TASK` define acceptance y pruebas del comportamiento afectado cuando aporten valor; `STRUCTURAL` requiere plan, acceptance, gates, reconciliación de requisitos/unidades/evidencias, retests y Revisor independiente. El riesgo puede elevar rigor aunque el diff sea pequeño. No declares pruebas que no ejecutaste y detente al cumplir la Definition of Done.
+- Verifica el criterio afectado con evidencia proporcional antes de cerrar. `DIRECT` requiere comprobación focal y no documentos/IDs; `TASK` define acceptance y pruebas del comportamiento afectado cuando aporten valor; `STRUCTURAL` requiere plan, acceptance, gates, reconciliación de requisitos/unidades/evidencias y retests. El riesgo puede elevar rigor aunque el diff sea pequeño. No declares pruebas que no ejecutaste y detente al cumplir la Definition of Done.
 - Para trabajo largo/reanudable aplica BF-047 desde el inicio: checkpoint y gates compactos, recovery focalizada y cleanup de recursos propios; no repitas checks aún válidos.
 
 ## Git
@@ -39,4 +39,4 @@ Estas reglas son el **kernel compartido** de CN Pilot. El contrato completo de u
 
 - En Codex, el agente raíz cumple el rol de Jefe de proyecto y conserva la coordinación y la escritura single-writer de Project Context. Para una disciplina especializada, delega con agentes nativos definidos en `.codex/agents/` cuando la tarea lo justifique; no delegues trabajo DIRECT por rutina ni asumas que un subagente tiene un filesystem o worktree aislado.
 - Los procedimientos compartidos siguen siendo canónicos en `.kilo/agents/`, `.kilo/skills/` y `.kilo/commands/`. Sigue el adaptador de `.cn-pilot/adapters/codex/RUNTIME.md` para cargarlos bajo demanda; el frontmatter y los permisos Kilo solo sirven en Kilo y no conceden permisos efectivos en Codex.
-- Los subagentes heredan la sandbox y las aprobaciones de la sesión raíz. Las instrucciones de Revisor expresan un límite de conducta, no una garantía técnica de solo lectura; la política efectiva la define la sesión de Codex.
+- Los subagentes heredan la sandbox y las aprobaciones de la sesión raíz; la política efectiva la define la sesión de Codex.

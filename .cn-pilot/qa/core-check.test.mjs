@@ -86,12 +86,12 @@ function createFixture(t) {
   };
 
   const manifest = [
-    "- 6 agentes en `.kilo/agents/`",
+    "- 5 agentes en `.kilo/agents/`",
     "- 3 skills (`.kilo/skills/*/SKILL.md`)",
     "- 1 documento de referencia bajo `.kilo/skills/technical-seo/references/` (no es una skill adicional)",
-    "- 14 comandos en `.kilo/commands/`",
+    "- 13 comandos en `.kilo/commands/`",
     "- 1 perfil en `.cn-pilot/perfiles/`",
-    "- 2 archivos de plantilla en la raíz de `.cn-pilot/plantillas/` y 3 archivos en total bajo `.cn-pilot/plantillas/` (incluye subdirectorios)",
+    "- 1 archivo de plantilla en la raíz de `.cn-pilot/plantillas/` y 2 archivos en total bajo `.cn-pilot/plantillas/` (incluye subdirectorios)",
   ].join("\n") + "\n";
 
   put("PROYECTO.md", "# Project fixture\n");
@@ -128,7 +128,6 @@ function createFixture(t) {
   put("kilo.jsonc", readCoreFile("kilo.jsonc"));
   put(".gitignore", "/.cn-pilot/runtime/\n");
   put(".kilo/agents/jefe-proyecto.md", readCoreFile(".kilo/agents/jefe-proyecto.md"));
-  put(".kilo/agents/revisor.md", readCoreFile(".kilo/agents/revisor.md"));
   for (const agent of ["arquitecto", "redactor", "disenador", "desarrollador"]) {
     put(`.kilo/agents/${agent}.md`, readCoreFile(`.kilo/agents/${agent}.md`));
   }
@@ -136,13 +135,19 @@ function createFixture(t) {
   put(".kilo/skills/sample/SKILL.md", "---\nname: sample\ndescription: Skill de fixture\n---\n# Sample\n");
   put(".kilo/skills/technical-seo/SKILL.md", "---\nname: technical-seo\ndescription: Skill SEO de fixture\n---\n# SEO\n");
   put(".kilo/skills/technical-seo/references/audit.md", "# Referencia\n");
-  for (const command of ["nuevo-proyecto", "cn-estado", "cn-actualizar", "diseno", "contenido", "revision", "entrega", "diagnostico", "depurar", "desplegar-pruebas", "preparar-despliegue", "punto-control", "plan", "commit"]) {
+  for (const command of ["nuevo-proyecto", "cn-estado", "cn-actualizar", "diseno", "contenido", "entrega", "diagnostico", "depurar", "desplegar-pruebas", "preparar-despliegue", "punto-control", "plan", "commit"]) {
     put(`.kilo/commands/${command}.md`, `---\ndescription: Comando ${command}\nagent: jefe-proyecto\n---\n# ${command}\n`);
   }
-  put(".kilo/commands/revision.md", "---\ndescription: Comando de revisión\nagent: jefe-proyecto\n---\n# Revisión\n\nFinaliza con APPROVED, APPROVED WITH NOTES, CHANGES REQUIRED o BLOCKED y detente.\n");
-  put(".cn-pilot/plantillas/informe-revision.md", "# Informe de revisión\n\n## Resultado\nAPPROVED / APPROVED WITH NOTES / CHANGES REQUIRED / BLOCKED\n");
   return { root, put };
 }
+
+test("Core accepts exactly five active Kilo agents", (t) => {
+  const fixture = createFixture(t);
+  const report = runCoreChecks({ rootDir: fixture.root });
+  assert.equal(getCheck(report, "agents.frontmatter").status, "PASS");
+  assert.equal(getCheck(report, "agents.frontmatter").details.count, 5);
+  assert.equal(fs.existsSync(path.join(fixture.root, ".kilo/agents/revisor.md")), false);
+});
 
 test("Codex native agents and skills stay aligned with shared Kilo contracts", (t) => {
   const fixture = createFixture(t);
@@ -153,16 +158,16 @@ test("Codex native agents and skills stay aligned with shared Kilo contracts", (
     fs.mkdirSync(path.dirname(target), { recursive: true });
     fs.cpSync(path.join(sourceRoot, relative), target, { recursive: true });
   }
-  fixture.put(".cn-pilot-version", "3.2.0\n");
-  fixture.put(".cn-pilot/NUCLEO.md", "**Versión:** `3.2.0`\n");
+  fixture.put(".cn-pilot-version", "3.2.2\n");
+  fixture.put(".cn-pilot/NUCLEO.md", "**Versión:** `3.2.2`\n");
 
   let report = runCoreChecks({ rootDir: fixture.root });
   let adapter = getCheck(report, "codex.adapter");
   assert.equal(adapter.status, "PASS", JSON.stringify(adapter.details.problems));
-  assert.equal(adapter.details.specialistAgents, 5);
-  assert.equal(adapter.details.skillWrappers, 56);
+  assert.equal(adapter.details.specialistAgents, 4);
+  assert.equal(adapter.details.skillWrappers, 55);
   assert.equal(adapter.details.canonicalSkills, 42);
-  assert.equal(adapter.details.canonicalCommands, 14);
+  assert.equal(adapter.details.canonicalCommands, 13);
 
   const wrapperPath = path.join(fixture.root, ".agents/skills/cnp-content-page/SKILL.md");
   fs.writeFileSync(wrapperPath, fs.readFileSync(wrapperPath, "utf8").replace(".kilo/skills/content-page/SKILL.md", ".kilo/skills/unknown/SKILL.md"), "utf8");
@@ -178,8 +183,8 @@ test("Codex native agents and skills stay aligned with shared Kilo contracts", (
     fs.mkdirSync(path.dirname(target), { recursive: true });
     fs.cpSync(path.join(sourceRoot, relative), target, { recursive: true });
   }
-  isolated.put(".cn-pilot-version", "3.2.0\n");
-  isolated.put(".cn-pilot/NUCLEO.md", "**Versión:** `3.2.0`\n");
+  isolated.put(".cn-pilot-version", "3.2.2\n");
+  isolated.put(".cn-pilot/NUCLEO.md", "**Versión:** `3.2.2`\n");
   const architectPath = path.join(isolated.root, ".codex/agents/arquitecto.toml");
   fs.appendFileSync(architectPath, "\napproval_policy = \\\"never\\\"\n", "utf8");
   report = runCoreChecks({ rootDir: isolated.root });
@@ -193,7 +198,7 @@ test("Codex wrapper generator reports source drift without writing", () => {
   const result = spawnSync(process.execPath, [".cn-pilot/adapters/codex/generate-skills.mjs", "--check"], { cwd: root, encoding: "utf8" });
   assert.equal(result.error, undefined);
   assert.equal(result.status, 0, result.stderr);
-  assert.match(result.stdout, /match canonical Kilo sources: 56/);
+  assert.match(result.stdout, /match canonical Kilo sources: 55/);
 });
 
 function getCheck(report, id) {
@@ -223,11 +228,11 @@ test("known-good minimal fixture passes deterministic invariants", (t) => {
   assert.equal(report.status, "PASS", JSON.stringify(report.findings));
   assert.deepEqual(runCoreChecks({ rootDir: fixture.root }), report, "same read-only snapshot yields the same report");
   assert.equal(report.version, "2.8.0");
-   assert.equal(getCheck(report, "agents.frontmatter").details.count, 6);
+   assert.equal(getCheck(report, "agents.frontmatter").details.count, 5);
    assert.equal(getCheck(report, "skills.frontmatter").details.count, 3);
-  assert.equal(getCheck(report, "commands.frontmatter").details.count, 14);
-  assert.equal(getCheck(report, "templates.inventory").details.rootFiles, 2);
-  assert.equal(getCheck(report, "templates.inventory").details.totalFiles, 3);
+  assert.equal(getCheck(report, "commands.frontmatter").details.count, 13);
+  assert.equal(getCheck(report, "templates.inventory").details.rootFiles, 1);
+  assert.equal(getCheck(report, "templates.inventory").details.totalFiles, 2);
 });
 
 test("missing resources README remains exactly the documented optional-scaffold WARN", (t) => {
@@ -282,58 +287,6 @@ test("Core Project Context version is checked only for the canonical distributio
   assert.equal(check.status, "PASS");
   assert.equal(check.details.checked, false);
   assert.equal(report.status, "PASS", JSON.stringify(report.findings));
-});
-
-test("revision command and report template expose the same complete outcome set", (t) => {
-  const fixture = createFixture(t);
-  const expected = ["APPROVED", "APPROVED WITH NOTES", "BLOCKED", "CHANGES REQUIRED"];
-  let check = getCheck(runCoreChecks({ rootDir: fixture.root }), "review.outcomes");
-  assert.equal(check.status, "PASS");
-  assert.deepEqual(check.details.commandOutcomes, expected);
-  assert.deepEqual(check.details.templateOutcomes, expected);
-
-  fixture.put(".cn-pilot/plantillas/informe-revision.md", "# Review\n\n## Resultado\nAPPROVED / APPROVED WITH NOTES / CHANGES REQUIRED\n");
-  check = getCheck(runCoreChecks({ rootDir: fixture.root }), "review.outcomes");
-  assert.equal(check.status, "FAIL");
-  assert.deepEqual(check.details.missingFromTemplate, ["BLOCKED"]);
-
-  fixture.put(".kilo/commands/revision.md", "---\ndescription: Review\nagent: jefe-proyecto\n---\n# Review\nFinaliza con APPROVED, APPROVED WITH NOTES o CHANGES REQUIRED y detente.\n");
-  check = getCheck(runCoreChecks({ rootDir: fixture.root }), "review.outcomes");
-  assert.equal(check.status, "FAIL");
-  assert.deepEqual(check.details.missingFromCommand, ["BLOCKED"]);
-});
-
-test("review handoff preflight attaches usable evidence, recovers BLOCKED narrowly, and skips DIRECT overhead", () => {
-  const read = (relative) => fs.readFileSync(new URL(`../../${relative}`, import.meta.url), "utf8");
-  const command = read(".kilo/commands/revision.md");
-  const lead = read(".kilo/agents/jefe-proyecto.md");
-  const reviewer = read(".kilo/agents/revisor.md");
-  const core = read(".cn-pilot/NUCLEO.md");
-  const preflight = command.slice(command.indexOf("1. Preflight"), command.indexOf("11. No implementes"));
-
-  // A: real diff + paths + acceptance + available results must be attached in the task body.
-  assert.match(preflight, /diff real relevante[\s\S]*?archivos afectados[\s\S]*?acceptance relacionado[\s\S]*?resultados PASS/i);
-  assert.match(preflight, /realmente incluidos en el cuerpo[\s\S]*?pega el diff\/hunks[\s\S]*?no solo ruta/i);
-  assert.match(reviewer, /ruta o nombre de un diff no constituye diff adjunto/i);
-  assert.match(preflight, /Si no hay diff de código, adjunta fragmento\/evidencia del artefacto/i);
-
-  // B: missing evidence is caught before delegation and recovered by the coordinator if possible.
-  assert.match(preflight, /No invoques Revisor hasta que el preflight sea suficiente/i);
-  assert.match(preflight, /recupéralo mediante Git o lectura directa[\s\S]*?no preguntes a la persona/i);
-  assert.match(lead, /Antes de invocar Revisor[\s\S]*?Paths solos no cuentan como diff adjunto/i);
-
-  // C/D: unblock only the missing piece and retain prior PASS/diff for incremental review.
-  assert.match(preflight, /Reutiliza evidencia.*si objetivo y fuente\/superficies.*no cambiaron/i);
-  assert.match(preflight, /Si Revisor queda BLOCKED[\s\S]*?resuelve solo el hueco indicado[\s\S]*?no reinicies investigación\/tests\/revisión/i);
-  assert.match(preflight, /Tras correcciones adjunta diff incremental real/i);
-  assert.match(core, /Si Revisor devuelve `BLOCKED`[\s\S]*?reenvía únicamente el scope aún no revisado/i);
-
-  // E: DIRECT work does not acquire handoff/review artifacts without a material trigger.
-  assert.match(core, /DIRECT localizado no crea paquete de revisión ni delegación sin trigger/i);
-  assert.match(lead, /Revisor independiente solo cuando riesgo\/acceptance lo justifique/i);
-
-  // These are static source-contract checks, not an end-to-end Kilo behavior evaluation.
-  assert.match(command, /No invoques Revisor hasta que el preflight sea suficiente/i);
 });
 
 test("upstream GitHub Actions workflow is restricted, compatible, and runs the local QA commands", (t) => {
@@ -473,12 +426,11 @@ test("BF-062 supports controlled parallel modes, keeps single-writer isolation a
     ["parallel content requires stable page intent", policy, "page intent/contrato está suficientemente definido"],
     ["design approval stays a prerequisite", policy, "Diseño visual material no se implementa en paralelo antes del gate/aprobación vigente"],
     ["G preserve dirty worktree", lead, "Conserva cualquier worktree dirty/no reconciliado"],
-    ["H isolated blocker does not cancel peers", policy, "no cancela automáticamente unidades independientes"],
+    ["H isolated blocker does not cancel peers", policy, "Mantén el checkpoint global en `ACTIVE` mientras haya trabajo útil"],
     ["I sequential integration", policy, "una unidad a la vez"],
     ["J recovery reconciles real sessions", policy, "`git worktree list`"],
     ["J does not recreate existing worktree", policy, "no recrees un worktree/sesión que ya existe"],
     ["K Project Context remains single-writer", policy, "Especialistas no escriben `PROYECTO.md`"],
-    ["L Revisor remains read-only", policy, "Revisor permanece read-only"],
     ["M concurrency limits stay conservative", policy, "dos unidades por defecto"],
     ["M explicit maximum is three", policy, "tres como máximo"],
   ];
@@ -512,7 +464,6 @@ test("adaptive SDD contracts preserve DIRECT speed and require structural conver
   const architecture = read(".kilo/agents/arquitecto.md");
   const developer = read(".kilo/agents/desarrollador.md");
   const lead = read(".kilo/agents/jefe-proyecto.md");
-  const reviewer = read(".kilo/agents/revisor.md");
   const strategy = read(".kilo/skills/testing-strategy/SKILL.md");
 
   assert.match(core, /\*\*DIRECT\*\*[\s\S]*?no exige spec, IDs, matriz ni plan formal/i);
@@ -530,7 +481,6 @@ test("adaptive SDD contracts preserve DIRECT speed and require structural conver
   assert.match(architecture, /unidades esenciales y qué criterios demuestran[\s\S]*?no exijas estructura formal para DIRECT\/TASK acotado/i);
   assert.match(developer, /relaciona los criterios asignados con el resultado implementado y evidencia real[\s\S]*?no como completados/i);
   assert.match(lead, /reconcilia al cierre requisitos incluidos, criterios, unidades esenciales, evidencia y estados/i);
-  assert.match(reviewer, /requisitos incluidos y criterios relevantes tienen resultado verificable[\s\S]*?OUT OF SCOPE/i);
   assert.match(strategy, /mapa compacto[\s\S]*?requisitos incluidos → acceptance → unidad\/owner → evidencia adecuada → estado/i);
   assert.match(strategy, /contrato del Core son estáticas y no demuestran que un agente siga siempre bien el proceso/i);
 });
@@ -567,10 +517,8 @@ test("009A adapts visual ownership, delivery and approval to project context", (
     ["F relevant component states are specified", kit, "Muestra solo variantes/tamaños usados o aprobados"],
     ["G page composition starts from section purpose/content", page, "propósito/contenido; protagonista y jerarquía"],
     ["H approved implementation preserves fidelity", frontend, "Desarrollador implementa el resultado, no lo rediseña"],
-    ["H no automatic aesthetic loops", creative, "no se delega a Jefe, Desarrollador, Revisor ni a un ciclo automático de evaluación estética"],
     ["I human makes the aesthetic decision", pipeline, "esta aprobación humana decide aceptar, rechazar o solicitar cambios"],
     ["I prototype self-check is functional/resource-focused", pipeline, "autocontrol focal en Browser del funcionamiento/interacciones previstas, carga de recursos y defectos evidentes"],
-    ["I post-approval QA remains technical and owner-specific", core, "Tras aprobación, QA técnico de Desarrollador/Revisor verifica sus superficies y evidencia"],
     ["I post-approval QA covers required technical surfaces", core, "código, comportamiento, responsive, accesibilidad, rendimiento y fidelidad"],
     ["J Application UI does not get marketing pipeline", application, "no páginas de marketing"],
     ["J Existing/Approved keep fast paths", pipeline, "no genera exploración artificial"],
@@ -602,7 +550,6 @@ test("BF-068 Public Web Visual Quality Floor covers requirements A-S", () => {
   const media = read(".kilo/skills/visual-art-direction/SKILL.md");
   const creative = read(".kilo/skills/creative-web-experience/SKILL.md");
   const designer = read(".kilo/agents/disenador.md");
-  const reviewer = read(".kilo/agents/revisor.md");
   const floorStart = core.indexOf("### Visual Quality Floor de Public Web (BF-068)");
   const floorEnd = core.indexOf("\n## Arquitectura frontend y fidelidad (BF-069)", floorStart);
   assert.ok(floorStart >= 0 && floorEnd > floorStart, "the Quality Floor is scoped to public web and distinct from the visual pipeline");
@@ -634,7 +581,6 @@ test("BF-068 Public Web Visual Quality Floor covers requirements A-S", () => {
     ["P Quality Floor permits a deliberately sober direction", media, "Sobriedad deliberada es un resultado válido"],
     ["P anti-template swap test is present", creative, "si cambian logo/copy/fotos, ¿la propuesta se vendería casi intacta a otro sector?"],
     ["Q Flagship demonstrates approved sequences when material", motion, "El prototipo/Flagship demuestra el behavior definido por estado"],
-    ["R Revisor independently checks the canonical BF-068 contract", reviewer, "aplica read-only la aceptación normativa de `.cn-pilot/NUCLEO.md` → “Visual Quality Floor de Public Web (BF-068)”"],
     ["S Designer remains the Quality Floor owner", floor, "Diseñador es owner del Quality Floor"],
     ["S Core BF-068 remains the single public-web floor", designer, "usa BF-068 como el único contrato del floor Public Web"],
   ];
@@ -949,7 +895,7 @@ test("legacy path references outside migration history and updater fixtures are 
 
 test("command target must resolve to an existing agent", (t) => {
   const fixture = createFixture(t);
-  fixture.put(".kilo/commands/revision.md", "---\ndescription: Revisión\nagent: missing-agent\n---\n");
+  fixture.put(".kilo/commands/punto-control.md", "---\ndescription: punto de control\nagent: missing-agent\n---\n");
   const report = runCoreChecks({ rootDir: fixture.root });
   assert.equal(getCheck(report, "routing.commands").status, "FAIL");
 });
@@ -958,7 +904,7 @@ test("Dev Lead task target must resolve to an existing agent", (t) => {
   const fixture = createFixture(t);
   const file = ".kilo/agents/jefe-proyecto.md";
   const source = fs.readFileSync(path.join(fixture.root, file), "utf8");
-  fixture.put(file, source.replace('"revisor": allow', '"ghost-reviewer": allow'));
+  fixture.put(file, source.replace('"arquitecto": allow', '"ghost-reviewer": allow'));
   const report = runCoreChecks({ rootDir: fixture.root });
   assert.equal(getCheck(report, "routing.devLead").status, "FAIL");
 });
@@ -972,29 +918,11 @@ test("a destructive Git permission regression in Dev Lead fails", (t) => {
   assert.equal(getCheck(report, "security.devLead").status, "FAIL");
 });
 
-test("a weakened Reviewer permission fails the protected check", (t) => {
-  const fixture = createFixture(t);
-  const file = ".kilo/agents/revisor.md";
-  const source = fs.readFileSync(path.join(fixture.root, file), "utf8");
-  fixture.put(file, source.replace("  edit: deny", "  edit: allow"));
-  const report = runCoreChecks({ rootDir: fixture.root });
-  assert.equal(getCheck(report, "permissions.reviewer").status, "FAIL");
-});
-
-test("Reviewer background-process capability remains denied", (t) => {
-  const fixture = createFixture(t);
-  const file = ".kilo/agents/revisor.md";
-  const source = fs.readFileSync(path.join(fixture.root, file), "utf8");
-  fixture.put(file, source.replace("background_process: deny", "background_process: allow"));
-  const report = runCoreChecks({ rootDir: fixture.root });
-  assert.equal(getCheck(report, "permissions.reviewer").status, "FAIL");
-});
-
 test("security profiles deny sensitive routes, protect root config, and preserve normal Product writing", (t) => {
   const fixture = createFixture(t);
   const report = runCoreChecks({ rootDir: fixture.root });
   assert.equal(getCheck(report, "security.agentPermissions").status, "PASS");
-  assert.equal(getCheck(report, "security.agentPermissions").details.agentsChecked, 6);
+  assert.equal(getCheck(report, "security.agentPermissions").details.agentsChecked, 5);
   assert.equal(getCheck(report, "security.kiloPermissionDefaults").details.checked, false, "derived fixture does not enforce Core-owned Kilo config");
   const developer = normalizeEol(fs.readFileSync(path.join(fixture.root, ".kilo/agents/desarrollador.md"), "utf8"));
   assert.match(developer, /edit:\n\s+"\*": allow/);
@@ -1015,16 +943,6 @@ test("safe .env.example exceptions cannot override a later secrets-directory den
   const report = runCoreChecks({ rootDir: fixture.root });
   assert.equal(getCheck(report, "security.agentPermissions").status, "FAIL");
   assert.ok(getCheck(report, "security.agentPermissions").details.problems.some((problem) => problem.code === "SECRET_DIRECTORY_PRECEDENCE_INVALID"));
-});
-
-test("Revisor unknown tools and search bypasses remain denied", (t) => {
-  const fixture = createFixture(t);
-  const file = ".kilo/agents/revisor.md";
-  const source = fs.readFileSync(path.join(fixture.root, file), "utf8");
-  fixture.put(file, source.replace('  "*": deny', '  "*": ask').replace("  grep: deny", "  grep: allow"));
-  const report = runCoreChecks({ rootDir: fixture.root });
-  assert.equal(getCheck(report, "permissions.reviewer").status, "FAIL");
-  assert.equal(getCheck(report, "security.agentPermissions").status, "FAIL");
 });
 
 test("MCP tools require an explicit reviewed capability instead of inheriting permission for unrelated tools", (t) => {
@@ -1114,7 +1032,7 @@ test("Kilo root config fails closed on unknown tools only in the canonical Core 
   assert.equal(check.details.checked, false);
 });
 
-test("installed Kilo resolves the six static security profiles", (t) => {
+test("installed Kilo resolves the five static security profiles", (t) => {
   const version = runKiloForPermissionTest(["--version"]);
   if (version.error || version.status !== 0 || !/\d+\.\d+\.\d+/.test(version.stdout + version.stderr)) {
     t.skip("Kilo is not installed in this runner; static permission invariants still run in Core QA.");
@@ -1126,7 +1044,7 @@ test("installed Kilo resolves the six static security profiles", (t) => {
   const config = runKiloForPermissionTest(["config", "check"]);
   assert.equal(config.status, 0, `Kilo ${installedVersion} validates the active permission config`);
 
-  const agentNames = ["arquitecto", "desarrollador", "disenador", "jefe-proyecto", "redactor", "revisor"];
+  const agentNames = ["arquitecto", "desarrollador", "disenador", "jefe-proyecto", "redactor"];
   const profiles = Object.fromEntries(agentNames.map((name) => [name, parseKiloDebugAgent(name)]));
   for (const [name, profile] of Object.entries(profiles)) {
     const defaults = profile.permission.filter((rule) => rule.permission === "*");
@@ -1166,19 +1084,7 @@ test("installed Kilo resolves the six static security profiles", (t) => {
   assert.equal(profiles.desarrollador.tools.apply_patch, true);
   assert.equal(profiles["desarrollador"].tools.bash, true);
 
-  const revisor = profiles.revisor;
-  for (const tool of ["write", "apply_patch", "bash", "grep", "task", "agent_manager", "background_process", "webfetch", "websearch", "skill"]) {
-    if (Object.hasOwn(revisor.tools, tool)) {
-      assert.equal(revisor.tools[tool], false, `Revisor ${tool} is disabled by resolved Kilo permissions`);
-    } else {
-      assert.equal(resolveKiloPermission(revisor, tool, "*"), "deny", `Revisor ${tool} is unavailable and denied by resolved Kilo permissions`);
-    }
-  }
-  assert.equal(revisor.tools.read, true);
-  assert.equal(revisor.tools.glob, true);
-  assert.equal(resolveKiloPermission(revisor, "edit", "PROYECTO.md"), "deny");
-  assert.equal(resolveKiloPermission(revisor, "external_directory", "C:/Users/secret"), "deny");
-  assert.equal(resolveKiloPermission(revisor, "mcp_unreviewed_write", "remote/resource"), "deny");
+
 });
 
 test("professional defaults stay explicit without adding an aesthetic gate", () => {
@@ -1259,7 +1165,7 @@ test("No-op closure preserves durable decisions, visual authority, and active-ta
 
   assert.match(devLead, /No-op \/ Silent Closure/);
   assert.match(closure, /no edites archivos tracked, no stages ni crees commit/);
-  assert.match(closure, /La confirmación de push no autoriza otro push/);
+  assert.match(closure, /La confirmación por sí sola no abre otro ciclo de documentación, commit ni push/);
   assert.match(closure, /BF-063 integra la aprobación inequívoca como referencia Approved bajo BF-048/);
   assert.match(closure, /Decisiones durables comunicadas junto al cierre se persisten/);
   assert.match(closure, /active-task\.json` sigue preservando tareas activas, interrumpidas o bloqueadas/);
@@ -1283,8 +1189,9 @@ test("Progress Guard preserves recoverable work and bounded evidence without tre
   const devLead = fs.readFileSync(new URL("../../.kilo/agents/jefe-proyecto.md", import.meta.url), "utf8");
   const guard = core.slice(core.indexOf("#### Progress Guard"), core.indexOf("### No-op / Silent Closure"));
 
-  for (const contract of ["primer fallo", "Segundo fallo comparable", "STOP VERIFYING THAT SURFACE", "INCOMPLETE + RECOVERABLE", "BLOCKED_HUMAN", "BLOCKED_EXTERNAL", "Completion Mode", "BF-062", "recovery"])
+  for (const contract of ["primer fallo", "Segundo fallo comparable", "STOP VERIFYING THAT SURFACE", "INCOMPLETE + RECOVERABLE", "BLOCKED_HUMAN", "BLOCKED_EXTERNAL", "BF-062", "recovery"])
     assert.ok(guard.includes(contract), `Progress Guard keeps ${contract}`);
+  assert.ok(core.includes("Completion Mode"));
   assert.match(devLead, /La respuesta de un especialista que deja trabajo incompleto es un handoff/);
   assert.match(devLead, /Si acceptance sigue pendiente y el trabajo es recuperable.*continúa/s);
   assert.match(core, /No implementes un loop por strings\/texto\/exit code ambiguo/);
@@ -1293,7 +1200,7 @@ test("Progress Guard preserves recoverable work and bounded evidence without tre
 
 test("Agent Eval scenario registry is complete, safe, and distinct from behavioral results", () => {
   const suite = JSON.parse(readCoreFile(".cn-pilot/agent-evals/scenarios.json"));
-  const expectedIds = ["EVAL-001", "EVAL-002", "EVAL-003", "EVAL-004", "EVAL-005", "EVAL-006"];
+  const expectedIds = ["EVAL-001", "EVAL-002", "EVAL-003", "EVAL-004", "EVAL-005"];
   assert.equal(suite.schemaVersion, 1);
   assert.deepEqual(suite.scenarios.map(({ id }) => id), expectedIds);
   assert.deepEqual(suite.resultValues, ["PASS", "FAIL", "INCONCLUSIVE"]);
@@ -1301,7 +1208,6 @@ test("Agent Eval scenario registry is complete, safe, and distinct from behavior
   for (const id of ["EVAL-001", "EVAL-002", "EVAL-003", "EVAL-005"]) {
     assert.equal(suite.scenarios.find(({ id: scenarioId }) => scenarioId === id).expectedOwner, "desarrollador", `${id} routes technical implementation to the single full-stack owner`);
   }
-  assert.equal(suite.scenarios.find(({ id }) => id === "EVAL-006").expectedOwner, "revisor", "review remains assigned to the independent read-only owner");
   for (const id of ["EVAL-002", "EVAL-003"]) {
     const scenario = suite.scenarios.find(({ id: scenarioId }) => scenarioId === id);
     assert.ok(scenario.acceptance.some(({ observable }) => /un solo Desarrollador|único Desarrollador/.test(observable)), `${id} rejects artificial frontend/backend handoffs`);
@@ -1464,7 +1370,6 @@ test("visual direction preserves designer ownership without autonomous aesthetic
   assert.match(creative, /Existing conserva `continuity > novelty`/);
   assert.match(creative, /Approved\/Strict mantiene authority BF-048/);
   assert.match(creative, /responde por la calidad profesional de su propuesta/);
-  assert.match(creative, /no se delega a Jefe, Desarrollador, Revisor ni a un ciclo automático de evaluación estética/);
   assert.match(creative, /corrige en un mismo pase cualquier defecto evidente que impida evaluarlo/);
   assert.doesNotMatch(creative, /Creative Refinement Pass|Genericity Risk/);
   assert.match(composition, /Dos regiones pueden compartir composición si esa continuidad tiene función/);
@@ -1632,10 +1537,10 @@ test("debugging/analytics route to one full-stack Developer and editorial work t
   assert.match(redactor, /UX writing|microcopy/i);
   assert.doesNotMatch(redactor, /analytics-instrumentation/, "Redactor does not become the technical instrumentation owner");
   const agents = fs.readdirSync(new URL("../../.kilo/agents/", import.meta.url)).filter((file) => file.endsWith(".md"));
-  assert.equal(agents.length, 6, "the six-agent topology remains exact");
+  assert.equal(agents.length, 5, "the five-agent topology remains exact");
 });
 
-test("six-agent routing covers multidisciplinary scopes and technical owners", () => {
+test("five-agent routing covers multidisciplinary scopes and technical owners", () => {
   const read = (relative) => fs.readFileSync(new URL(`../../${relative}`, import.meta.url), "utf8");
   const lead = read(".kilo/agents/jefe-proyecto.md");
   const developer = read(".kilo/agents/desarrollador.md");
@@ -1732,11 +1637,10 @@ test("documentation catalog inventories the actual agents and skills without req
   const actualSkills = fs.readdirSync(new URL("../../.kilo/skills/", import.meta.url)).filter((name) => fs.existsSync(new URL(`../../.kilo/skills/${name}/SKILL.md`, import.meta.url))).sort();
   const listedSkills = [...catalog.matchAll(/^\| `([a-z0-9-]+)` \|/gm)].map((match) => match[1]).sort();
   const actualAgents = fs.readdirSync(new URL("../../.kilo/agents/", import.meta.url)).filter((name) => name.endsWith(".md"));
-  const listedAgents = [...agentGuide.matchAll(/^\| (Jefe de proyecto|Arquitecto|Diseñador|Redactor|Desarrollador|Revisor) \|/gm)].map((match) => match[1]).sort();
-  const agentLabels = ["Jefe de proyecto", "Arquitecto", "Diseñador", "Redactor", "Desarrollador", "Revisor"].sort();
+  const listedAgents = [...agentGuide.matchAll(/^\| (Jefe de proyecto|Arquitecto|Diseñador|Redactor|Desarrollador) \|/gm)].map((match) => match[1]).sort();
   assert.deepEqual(listedSkills, actualSkills, "skill catalog has no omissions or invented skills");
-  assert.equal(actualAgents.length, 6, "agent catalog has exactly six custom agents");
-  if (canonical) assert.deepEqual(listedAgents, agentLabels, "canonical CN Pilot README describes the six real agents with human-facing names");
+  assert.equal(actualAgents.length, 5, "agent catalog has exactly five custom agents");
+  if (canonical) assert.deepEqual(listedAgents, ["Arquitecto", "Desarrollador", "Diseñador", "Jefe de proyecto", "Redactor"], "canonical CN Pilot README describes the five real agents with human-facing names");
   assert.ok(listedSkills.includes("environment-dependency-management"), "cross-stack environment management is catalogued");
   assert.ok(catalog.includes("No tienes que elegir") && catalog.includes("bajo demanda"), "skills stay discoverable without becoming a user selection chore");
 });
@@ -1813,7 +1717,6 @@ test("BF-072 contractual UX defaults preserve scope, authority, and accessible i
   const responsive = read(".kilo/skills/frontend-responsive/SKILL.md");
   const motion = read(".kilo/skills/motion-interaction/SKILL.md");
   const accessibility = read(".kilo/skills/accessibility-review/SKILL.md");
-  const reviewer = read(".kilo/agents/revisor.md");
   assert.match(core, /Header principal[\s\S]*?permanece visible durante el scroll[\s\S]*?position: sticky; top: 0[\s\S]*?Application UI/i);
   assert.match(core, /Existing fuera del scope conserva[\s\S]*?Approved\/Strict prevalece[\s\S]*?actualización del Core no modifica Product/i);
   assert.match(architecture, /sticky[\s\S]*?fixed[\s\S]*?scroll-padding-top[\s\S]*?CLS[\s\S]*?Application UI/i);
@@ -1824,7 +1727,6 @@ test("BF-072 contractual UX defaults preserve scope, authority, and accessible i
   assert.match(kit, /cursor: pointer[\s\S]*?disabled/i);
   assert.match(motion, /transición CSS breve[\s\S]*?touch[\s\S]*?prefers-reduced-motion/i);
   assert.match(accessibility, /Header persistente[\s\S]*?anchors[\s\S]*?:focus-visible[\s\S]*?reduced motion/i);
-  assert.match(reviewer, /Header desaparece al scroll[\s\S]*?anchors[\s\S]*?layout shift[\s\S]*?disabled/i);
 });
 
 test("Implementation-first QA uses source gate, minimal evidence, grouped fixes, and valid PASS reuse", () => {
@@ -1837,7 +1739,6 @@ test("Implementation-first QA uses source gate, minimal evidence, grouped fixes,
   const strategy = read(".kilo/skills/testing-strategy/SKILL.md");
   const developer = read(".kilo/agents/desarrollador.md");
   const projectLead = read(".kilo/agents/jefe-proyecto.md");
-  const reviewer = read(".kilo/agents/revisor.md");
   assert.match(core, /Implementation first[\s\S]*?source-only[\s\S]*?defectos determinísticos[\s\S]*?no usa Browser[\s\S]*?check disponible más barato/i);
   assert.match(architecture, /Implementation Quality Gate[\s\S]*?archivos\/regiones recién escritos o cambiados[\s\S]*?box-sizing: border-box[\s\S]*?width: 100%[\s\S]*?minmax\(0,[\s\S]*?min-width: 0[\s\S]*?100vw[\s\S]*?heights fijas[\s\S]*?dead CSS\/JS[\s\S]*?no Browser/i);
   assert.match(architecture, /Approved\/Strict preserva fidelidad[\s\S]*?Existing aplica guardrails solo a código nuevo\/modificado/i);
@@ -1850,24 +1751,20 @@ test("Implementation-first QA uses source gate, minimal evidence, grouped fixes,
   assert.match(developer, /No abras Browser\/capturas tras cada sección o fix[\s\S]*?viewports solo responden una pregunta concreta/i);
   assert.match(developer, /agrupa hallazgos compatibles en una ronda[\s\S]*?retestea solo superficies afectadas/i);
   assert.match(projectLead, /source-only antes de Browser[\s\S]*?no actives un paquete omnibus[\s\S]*?conserva PASS no invalidado/i);
-  assert.match(reviewer, /defectos determinísticos visibles en source[\s\S]*?capture logging[\s\S]*?no exijas Browser/i);
 });
 
 test("Project Lead owns task-specific mandatory constraints and specialists cannot downgrade outcomes", () => {
   const read = (file) => fs.readFileSync(new URL(`../../${file}`, import.meta.url), "utf8");
   const core = read(".cn-pilot/NUCLEO.md");
   const lead = read(".kilo/agents/jefe-proyecto.md");
-  const reviewer = read(".kilo/agents/revisor.md");
   const governance = core.slice(core.indexOf("### Gobierno del outcome y handoff por owner"), core.indexOf("## Permisos"));
   assert.match(governance, /Jefe de proyecto es accountable del outcome[\s\S]*?invariantes Core[\s\S]*?handoff compacto/i);
   assert.match(governance, /El especialista controla el método[\s\S]*?no puede degradar el outcome en silencio[\s\S]*?antes de variar/i);
-  assert.match(governance, /`COMPLETED` no sustituye reconciliación[\s\S]*?vuelve al mismo owner[\s\S]*?Revisor es segunda opinión read-only/i);
   assert.match(governance, /`Decide tú`[\s\S]*?no autoriza saltar el Quality Floor[\s\S]*?opt-out explícito prevalece/i);
   assert.match(lead, /Antes de delegar, adjunta goal\/scope autorizado\/owner\/source of truth, contexto y restricciones pertinentes, acceptance\/resultado esperado, gates y evidencia disponible/i);
   assert.match(lead, /source of truth, decisiones materiales concretas[\s\S]*responsive, motion\/reduced-motion/i);
   assert.match(lead, /Jefe no instituye ciclos creativos\/capturas ni sustituye aprobación humana/i);
   assert.match(lead, /método es del especialista, mandatory defaults\/outcome no son opcionales[\s\S]*?omisión recuperable vuelve al mismo owner/i);
-  assert.match(reviewer, /No juzgues gusto ni sustituyas la aprobación humana/i);
 });
 
 test("Open public-web motion floor is executable, intent-first, and preserves authority exceptions", () => {
@@ -1879,7 +1776,6 @@ test("Open public-web motion floor is executable, intent-first, and preserves au
   const composition = read(".kilo/skills/page-composition/SKILL.md");
   const designer = read(".kilo/agents/disenador.md");
   const developer = read(".kilo/agents/desarrollador.md");
-  const reviewer = read(".kilo/agents/revisor.md");
   const floorStart = core.indexOf("### Visual Quality Floor de Public Web (BF-068)");
   const floorEnd = core.indexOf("## Arquitectura frontend y fidelidad (BF-069)", floorStart);
   const floor = core.slice(floorStart, floorEnd);
@@ -1905,7 +1801,4 @@ test("Open public-web motion floor is executable, intent-first, and preserves au
   assert.match(composition, /mapa compacto por región[\s\S]*?relación de continuidad o contraste/);
   assert.match(designer, /aplica el floor de motion de BF-068: define en la dirección qué relación narrativa\/visual cambia y por qué/i);
   assert.match(developer, /preserva BF-068 y el intent aprobado[\s\S]*?No sustituyas motion por fades genéricos ni inventes efectos/i);
-  assert.match(reviewer, /aplica read-only la aceptación normativa de `[\s\S]*?BF-068[\s\S]*?progresión scroll posterior al Hero[\s\S]*?momento memorable/i);
-  assert.match(reviewer, /No juzgues gusto ni sustituyas la aprobación humana/i);
-  assert.match(floor, /Revisor no sustituye el gate primario ni inicia Browser\/capturas\/auditorías por rutina/i);
 });

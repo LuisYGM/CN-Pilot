@@ -18,6 +18,6 @@ Solo se documenta un proveedor o modelo concreto como requisito **del proyecto/p
 
 Usa el enfoque menos costoso que complete la tarea con fiabilidad: menos sesiones e iteraciones, scope preciso, skills adecuadas y ninguna duplicación innecesaria. Una tarea compleja puede beneficiarse de mayor capacidad de razonamiento, pero la elección concreta de modelo o esfuerzo pertenece al desarrollador y al runtime. Evalúa el resultado, evidencia, QA y cumplimiento del alcance, no la marca ni la versión del modelo.
 
-Usa la delegación nativa del runtime para análisis o unidades claramente separables. Kilo puede aislar writers con worktrees; en Codex, no asumas aislamiento de filesystem, branch o worktree de un subagente. Limita writers paralelos y revisa cada unidad antes de integrarla. Revisor puede analizar solo el estado estable, pero en Codex el permiso de solo lectura debe imponerlo la sesión raíz.
+Usa la delegación nativa del runtime para análisis o unidades claramente separables. Kilo puede aislar writers con worktrees; en Codex, no asumas aislamiento de filesystem, branch o worktree de un subagente. Limita writers paralelos y verifica cada unidad antes de integrarla.
 
 Consulta [Configuración de Kilo](CONFIGURACION-KILO.md), [Configuración de Codex](CONFIGURACION-CODEX.md) y [Configuración](CONFIGURACION.md) para separar preferencias locales, configuración compartible y secretos. El `kilo.jsonc` versionado no fija modelos ni proveedor.

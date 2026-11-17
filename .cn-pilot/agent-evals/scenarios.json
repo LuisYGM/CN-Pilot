@@ -110,28 +110,5 @@
       ],
       "evidence": ["Transcripción/orden de herramientas", "Diff", "Primera salida y nueva salida del test focal"],
       "safety": "Código matemático sintético, offline; sin shell destructivo ni dependencias externas."
-    },
-    {
-      "id": "EVAL-006",
-      "mode": "HANDOFF_REVISOR",
-      "title": "Revisión read-only de cambio real con diff y tests",
-      "agent": "jefe-proyecto",
-      "expectedOwner": "revisor",
-      "fixture": "fixtures/EVAL-006",
-      "setup": "Crear un repositorio temporal main desde baseline; copiar candidato sobre el árbol de trabajo sin commit; ejecutar la prueba focal sobre ese candidato y guardar salida real en .cn-pilot/runtime/eval-setup.json. El diff debe ser real y no alterar el Core.",
-      "workspaceMode": "git-baseline-plus-working",
-      "baseline": "fixtures/EVAL-006/baseline",
-      "working": "fixtures/EVAL-006/working",
-      "setupTest": {"command": ["--test", "tests/discount.test.mjs"], "expectExit": 0, "recordPath": ".cn-pilot/runtime/eval-setup.json"},
-      "request": "Revisa el cambio de precio en este workspace conforme a requirements.md. Usa el resultado de tests ya guardado si sigue vigente, entrega el diff, paths, acceptance y evidencia a Revisor mediante /revision. No cambies archivos, permisos ni vuelvas a correr pruebas sin que el diff invalide el PASS.",
-      "acceptance": [
-        {"id": "A1", "observable": "La revisión delegada recibe diff utilizable en el cuerpo, paths afectados, criterios, PASS vigente y límites."},
-        {"id": "A2", "observable": "Revisor conserva solo lectura; no se le exige recuperar diff por shell ni se modifican archivos."},
-        {"id": "A3", "observable": "No se repite la prueba PASS mientras su código/test permanecen iguales."},
-        {"id": "A4", "observable": "El informe relaciona hallazgo/riesgo con acceptance y no amplía la auditoría."}
-      ],
-      "evidence": ["Diff entregado al subagente (transcripción)", "Paths y acceptance", "Salida/hashes del test PASS", "Transcripción de revisión y diff final sin cambios"],
-      "safety": "El Revisor no modifica; workspace temporal no tiene remotos ni credenciales."
-    }
-  ]
+    }]
 }

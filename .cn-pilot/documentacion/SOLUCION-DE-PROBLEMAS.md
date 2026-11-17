@@ -12,7 +12,7 @@ Empieza por el síntoma que observas; no cambies configuración, borres estado n
 
 **Comprueba:** que Codex abrió la raíz del repositorio, exista `.codex/agents/` y las skills estén bajo `.agents/skills/cnp-*/SKILL.md`. En Codex, Jefe de proyecto es el agente raíz y los comandos se invocan como skills `$cnp-*`; no aparecen con sintaxis slash de Kilo. Las skills nativas cargan el contrato compartido de `.kilo/` bajo demanda.
 
-**Si sigue sin aparecer:** actualiza/rescan del workspace o inicia una sesión nueva. Verifica que el agente raíz tenga la política efectiva que esperas: los TOML no configuran permisos ni sandbox y Revisor no queda técnicamente read-only por su descripción. Consulta [Configuración de Codex](CONFIGURACION-CODEX.md).
+**Si sigue sin aparecer:** actualiza/rescan del workspace o inicia una sesión nueva. Verifica que el agente raíz tenga la política efectiva que esperas: los TOML no configuran permisos ni sandbox Consulta [Configuración de Codex](CONFIGURACION-CODEX.md).
 
 ## `/nuevo-proyecto` no aparece o no se reconoce
 
@@ -44,7 +44,7 @@ Para Greenfield, el source propio se organiza conceptualmente en `producto/wp-co
 
 **Comportamiento esperado:** el CN Pilot continúa trabajando, verifica los archivos directamente y no registra la ausencia de Git como bloqueo. No ejecuta `git init` salvo petición explícita o alcance confirmado.
 
-`/commit` sí requiere Git y debe detener únicamente ese comando. `/nuevo-proyecto`, `/punto-control`, `/revision`, `/entrega` y `/preparar-despliegue` pueden operar sin Git. Las ramas, hashes, commits y worktrees no están disponibles.
+`/commit` sí requiere Git y debe detener únicamente ese comando. `/nuevo-proyecto`, `/punto-control`, `/entrega` y `/preparar-despliegue` pueden operar sin Git. Las ramas, hashes, commits y worktrees no están disponibles.
 
 ## El MCP no está disponible
 
@@ -64,7 +64,7 @@ Los agentes del repositorio no fijan modelos. La selección procede de la config
 
 1. Revisa `~/.config/kilo/kilo.jsonc` y cualquier archivo señalado por `KILO_CONFIG`.
 2. Comprueba el modelo y la variante activos en Kilo.
-3. Verifica que el ID del agente coincida con `jefe-proyecto`, `arquitecto`, `revisor` u otro agente real.
+3. Verifica que el ID del agente coincida con `jefe-proyecto`, `arquitecto` u otro agente real.
 4. Recarga Kilo o inicia una sesión nueva después de cambiar la configuración.
 
 Las sesiones nuevas de Agent Manager pueden heredar el modelo y la variante de la sesión que las crea, salvo configuración del desarrollador. Consulta [Configuración de IA en Kilo](ESTRATEGIA-DE-MODELOS.md).
@@ -132,7 +132,7 @@ Consulta [Configuración](CONFIGURACION.md#archivos-locales-y-secretos) y [Segur
 
 ## Un comando parece requerir Git
 
-Solo `/commit` depende estrictamente de Git. `/punto-control` crea commit únicamente si Git existe; en caso contrario verifica por archivos. `/revision`, `/entrega`, `/nuevo-proyecto` y `/preparar-despliegue` también contemplan carpetas sin Git.
+Solo `/commit` depende estrictamente de Git. `/punto-control` crea commit únicamente si Git existe; en caso contrario verifica por archivos. `/entrega`, `/nuevo-proyecto` y `/preparar-despliegue` también contemplan carpetas sin Git.
 
 `/desplegar-pruebas` requiere un entorno staging y un método de deployment documentado, no necesariamente Git. Agent Manager con worktrees, ramas, hashes, commits, merge, rebase, Pull Requests y `git worktree` sí dependen de Git.
 

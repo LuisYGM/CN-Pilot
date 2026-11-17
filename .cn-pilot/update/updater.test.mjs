@@ -569,19 +569,19 @@ test("2.8.7 to 2.8.8 updates permission policy files but preserves derived conte
   const newSecurity = "Kilo 7.8.8 direct-path ACLs; shell/MCP/host-runtime limitations documented\n";
   target.put(target.root, ".cn-pilot-version", "2.8.7\n");
   target.put(target.root, ".cn-pilot/NUCLEO.md", oldCore);
-  target.put(target.root, ".kilo/agents/revisor.md", oldAgent);
+  target.put(target.root, ".kilo/agents/desarrollador.md", oldAgent);
   target.put(target.root, ".cn-pilot/documentacion/SEGURIDAD.md", oldSecurity);
   const installed = manifest("2.8.7", [
     entry(".cn-pilot-version", "2.8.7\n"), entry(".cn-pilot/NUCLEO.md", oldCore),
-    entry(".kilo/agents/revisor.md", oldAgent), entry(".cn-pilot/documentacion/SEGURIDAD.md", oldSecurity),
+    entry(".kilo/agents/desarrollador.md", oldAgent), entry(".cn-pilot/documentacion/SEGURIDAD.md", oldSecurity),
   ]);
   source.put(source.root, ".cn-pilot-version", "2.8.8\n");
   source.put(source.root, ".cn-pilot/NUCLEO.md", newCore);
-  source.put(source.root, ".kilo/agents/revisor.md", newAgent);
+  source.put(source.root, ".kilo/agents/desarrollador.md", newAgent);
   source.put(source.root, ".cn-pilot/documentacion/SEGURIDAD.md", newSecurity);
   const latest = manifest("2.8.8", [
     entry(".cn-pilot-version", "2.8.8\n"), entry(".cn-pilot/NUCLEO.md", newCore),
-    entry(".kilo/agents/revisor.md", newAgent), entry(".cn-pilot/documentacion/SEGURIDAD.md", newSecurity),
+    entry(".kilo/agents/desarrollador.md", newAgent), entry(".cn-pilot/documentacion/SEGURIDAD.md", newSecurity),
   ]);
   source.put(source.root, ".cn-pilot/update/manifest.json", JSON.stringify(latest, null, 2));
   const plan = planUpdate(target.root, installed, latest);
@@ -592,7 +592,7 @@ test("2.8.7 to 2.8.8 updates permission policy files but preserves derived conte
   applyPlan(target.root, source.root, plan, latest);
   for (const [item, value] of Object.entries(protectedValues)) assert.equal(fs.readFileSync(path.join(target.root, item), "utf8"), value, `${item} remains unchanged`);
   assert.equal(fs.readFileSync(path.join(target.root, ".cn-pilot-version"), "utf8"), "2.8.8\n");
-  assert.equal(fs.readFileSync(path.join(target.root, ".kilo/agents/revisor.md"), "utf8"), newAgent);
+  assert.equal(fs.readFileSync(path.join(target.root, ".kilo/agents/desarrollador.md"), "utf8"), newAgent);
 });
 
 test("1.3.1 baseline detects the 1.4.0 MINOR distribution and added capability", (t) => {
@@ -740,6 +740,27 @@ test("F: upstream removal deletes only an unchanged baseline file", (t) => {
   assert.equal(plan.actions[0].type, "remove");
   applyPlan(root, source.root, plan, after);
   assert.equal(fs.existsSync(path.join(root, ".cn-pilot/docs/old.md")), false);
+});
+
+test("3.2.2 retires Revisor-only artifacts through compatible manifest removals", () => {
+  const previous = JSON.parse(execFileSync("git", ["show", "HEAD:.cn-pilot/update/manifest.json"], { cwd: process.cwd(), encoding: "utf8" }));
+  const current = JSON.parse(fs.readFileSync(path.join(process.cwd(), MANIFEST_PATH), "utf8"));
+  const retired = [
+    ".agents/skills/cnp-revision/SKILL.md",
+    ".cn-pilot/plantillas/informe-revision.md",
+    ".codex/agents/revisor.toml",
+    ".kilo/agents/revisor.md",
+    ".kilo/commands/revision.md",
+    ...["baseline/producto/discount.mjs", "working/producto/discount.mjs", "working/requirements.md", "working/tests/discount.test.mjs"]
+      .map((item) => `.cn-pilot/agent-evals/fixtures/EVAL-006/${item}`),
+  ];
+  assert.equal(previous.cnPilotVersion, "3.2.1");
+  assert.equal(current.cnPilotVersion, "3.2.2");
+  assert.deepEqual(current.removedFiles, [...retired].sort());
+  const managed = new Set(current.managedFiles.map(({ path: item }) => item));
+  for (const item of retired) assert.equal(managed.has(item), false, `${item} is not in the new payload`);
+  assert.equal(verifyManifestFiles(process.cwd(), current).verified, current.managedFiles.length);
+  assert.equal(verifyManifestMetadata(process.cwd(), current).hashesDeclared, current.managedFiles.length);
 });
 
 test("G: project-owned and mixed-ownership paths are rejected by manifest", () => {
@@ -1149,7 +1170,7 @@ test("post-apply acceptance requires the complete Core QA inventory and allows o
   assert.equal(failure.status, "FAIL");
   assert.equal(classifyPostApplyQa(failure, coreQa.version), null, "FAIL remains a hard block");
 
-  for (const omittedId of ["security.agentPermissions", "permissions.reviewer", "core.legacyReferences", "manifest.inventory", "distribution.manifest"]) {
+  for (const omittedId of ["security.agentPermissions", "agents.frontmatter", "core.legacyReferences", "manifest.inventory", "distribution.manifest"]) {
     const incomplete = { ...optionalWarning, checks: optionalWarning.checks.filter(({ id }) => id !== omittedId) };
     assert.equal(classifyPostApplyQa(incomplete, coreQa.version), null, `omitting ${omittedId} blocks acceptance`);
   }

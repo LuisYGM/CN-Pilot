@@ -1,6 +1,6 @@
 # CN Pilot
 
-**CN Pilot 3.2.1** es un sistema extensible de coordinación y producción profesional multidisciplinaria con integración nativa para **Kilo Code** y **OpenAI Codex**. Un proyecto puede ser una marca, empresa, producto o iniciativa y reunir distintos entregables, no necesariamente una web, aplicación o repositorio de código.
+**CN Pilot 3.2.2** es un sistema extensible de coordinación y producción profesional multidisciplinaria con integración nativa para **Kilo Code** y **OpenAI Codex**. Un proyecto puede ser una marca, empresa, producto o iniciativa y reunir distintos entregables, no necesariamente una web, aplicación o repositorio de código.
 
 Tú describes lo que quieres conseguir con tus propias palabras. Jefe de proyecto revisa el contexto, coordina a los especialistas necesarios y verifica el trabajo según su alcance y riesgo. No necesitas programar, diseñar prompts técnicos ni escoger agentes o skills. Tampoco tienes que seguir una fase fija.
 
@@ -70,7 +70,7 @@ Bricks, Elementor y WooCommerce se usan solo cuando están presentes y forman pa
 
 La instrumentación de analytics se crea cuando existe un objetivo de medición acordado. Puede cubrir eventos, formularios, navegación SPA, ecommerce y consentimiento según el stack; no rastrea todo automáticamente ni instala GA4/GTM.
 
-La QA es proporcional: se verifican los riesgos y criterios afectados, no todas las auditorías disponibles en cada tarea. CN Pilot puede paralelizar partes independientes si eso reduce tiempo; trabajar en serie es lo normal, y los archivos compartidos se estabilizan antes de dividir writers. Un Revisor independiente puede revisar cambios estructurales.
+La QA es proporcional: se verifican los riesgos y criterios afectados, no todas las auditorías disponibles en cada tarea. CN Pilot puede paralelizar partes independientes si eso reduce tiempo; trabajar en serie es lo normal, y los archivos compartidos se estabilizan antes de dividir writers.
 
 Una decisión de negocio, claim, precio, política, uso de producción o cambio difícil de revertir no se delega con «Decide tú». Tampoco se inventan testimonios, cifras, credenciales ni hechos comerciales.
 
@@ -110,9 +110,9 @@ Jefe de proyecto suele ser tu interlocutor. Los otros cinco especialistas interv
 | Redactor | Estrategia editorial, investigación, narrativa y comunicación publicable adaptada al medio; SEO solo cuando corresponde. |
 | Diseñador | Dirección visual, experiencia y producción artística dentro de capacidades verificadas; conserva revisión visual humana. |
 | Desarrollador | Implementación técnica, software full stack, APIs, SDK, CLI e integraciones/automatización cuando el resultado las necesita. |
-| Revisor | Revisión independiente de solo lectura, no implementa cambios. |
 
-Las **42 skills** canónicas y los **14 comandos** conservan su contenido compartido bajo `.kilo/`. Kilo expone sus comandos como slash commands; Codex ofrece entradas nativas `$cnp-*` que cargan esas mismas fuentes bajo demanda. Consulta [los comandos](.cn-pilot/documentacion/COMANDOS.md), [el catálogo de capacidades](.cn-pilot/documentacion/SKILLS-Y-CAPACIDADES.md) y [la configuración de Codex](.cn-pilot/documentacion/CONFIGURACION-CODEX.md).
+
+Las **42 skills** canónicas y los **13 comandos** conservan su contenido compartido bajo `.kilo/`. Kilo expone sus comandos como slash commands; Codex ofrece entradas nativas `$cnp-*` que cargan esas mismas fuentes bajo demanda. Consulta [los comandos](.cn-pilot/documentacion/COMANDOS.md), [el catálogo de capacidades](.cn-pilot/documentacion/SKILLS-Y-CAPACIDADES.md) y [la configuración de Codex](.cn-pilot/documentacion/CONFIGURACION-CODEX.md).
 
 ## Git, seguridad y publicación
 

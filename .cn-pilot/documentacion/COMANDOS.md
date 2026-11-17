@@ -17,6 +17,6 @@ La conversación normal con **Jefe de proyecto** es suficiente para la mayoría 
 | `/plan` | Preparar un plan de trabajo cuando sea útil o se solicite. |
 | `/preparar-despliegue` | Preparar el método de deployment acordado; no implica publicar. |
 | `/punto-control` | Verificar una unidad lógica y guardar checkpoint/commit local si corresponde. |
-| `/revision` | Solicitar una revisión independiente de solo lectura cuando sea pertinente. |
+
 
 Los comandos existentes pueden requerir capacidades del stack o acceso local. Push, publicación, deployment, tags, releases y acciones de producción no se autorizan por el nombre de un comando.

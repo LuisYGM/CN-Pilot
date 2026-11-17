@@ -448,7 +448,6 @@ export function applyPlan(targetRoot, sourceRoot, plan, upstreamInput) {
 export const POST_APPLY_QA_CHECK_IDS = Object.freeze([
   "core.version",
   "core.projectContextVersion",
-  "review.outcomes",
   "core.paths",
   "core.legacyPaths",
   "core.legacyReferences",
@@ -461,7 +460,6 @@ export const POST_APPLY_QA_CHECK_IDS = Object.freeze([
   "codex.adapter",
   "routing.commands",
   "routing.devLead",
-  "permissions.reviewer",
   "security.devLead",
   "security.agentPermissions",
   "security.kiloPermissionDefaults",
