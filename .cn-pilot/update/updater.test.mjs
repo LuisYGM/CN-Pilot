@@ -3,6 +3,7 @@ import crypto from "node:crypto";
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
+import { gunzipSync } from "node:zlib";
 import { execFileSync } from "node:child_process";
 import { test } from "node:test";
 import {
@@ -742,9 +743,10 @@ test("F: upstream removal deletes only an unchanged baseline file", (t) => {
   assert.equal(fs.existsSync(path.join(root, ".cn-pilot/docs/old.md")), false);
 });
 
-test("3.2.2 retires Revisor-only artifacts through compatible manifest removals", () => {
-  const previous = JSON.parse(execFileSync("git", ["show", "HEAD:.cn-pilot/update/manifest.json"], { cwd: process.cwd(), encoding: "utf8" }));
-  const current = JSON.parse(fs.readFileSync(path.join(process.cwd(), MANIFEST_PATH), "utf8"));
+test("3.2.2 Revisor retirement stays compatible with the versioned 3.2.1 manifest", () => {
+  const root = process.cwd();
+  const previous = JSON.parse(gunzipSync(fs.readFileSync(new URL("../../tests/fixtures/cn-pilot-3.2.1-manifest.json.gz", import.meta.url))).toString("utf8"));
+  const current = JSON.parse(fs.readFileSync(path.join(root, MANIFEST_PATH), "utf8"));
   const retired = [
     ".agents/skills/cnp-revision/SKILL.md",
     ".cn-pilot/plantillas/informe-revision.md",
@@ -753,14 +755,23 @@ test("3.2.2 retires Revisor-only artifacts through compatible manifest removals"
     ".kilo/commands/revision.md",
     ...["baseline/producto/discount.mjs", "working/producto/discount.mjs", "working/requirements.md", "working/tests/discount.test.mjs"]
       .map((item) => `.cn-pilot/agent-evals/fixtures/EVAL-006/${item}`),
-  ];
+  ].sort();
   assert.equal(previous.cnPilotVersion, "3.2.1");
-  assert.equal(current.cnPilotVersion, "3.2.2");
-  assert.deepEqual(current.removedFiles, [...retired].sort());
-  const managed = new Set(current.managedFiles.map(({ path: item }) => item));
-  for (const item of retired) assert.equal(managed.has(item), false, `${item} is not in the new payload`);
-  assert.equal(verifyManifestFiles(process.cwd(), current).verified, current.managedFiles.length);
-  assert.equal(verifyManifestMetadata(process.cwd(), current).hashesDeclared, current.managedFiles.length);
+  assert.equal(current.cnPilotVersion, "3.2.3");
+  const previousFiles = new Map(previous.managedFiles.map(({ path: item, sha256 }) => [item, sha256]));
+  const currentFiles = new Set(current.managedFiles.map(({ path: item }) => item));
+  for (const item of retired) {
+    assert.match(previousFiles.get(item) ?? "", /^[a-f0-9]{64}$/i, `${item} has a baseline SHA-256`);
+    assert.equal(currentFiles.has(item), false, `${item} is absent from the current inventory`);
+  }
+  const inventoryRemoved = [...previousFiles.keys()].filter((item) => !currentFiles.has(item)).sort();
+  assert.deepEqual(inventoryRemoved, retired);
+  const rebuilt = buildManifest(root, { previousManifest: previous });
+  assert.deepEqual(rebuilt.removedFiles, retired, "updater manifest generation retains the nine historical removals");
+  assert.deepEqual(rebuilt.managedFiles, current.managedFiles, "generated hashes and managed inventory match the published manifest");
+  assert.equal(verifyManifestFiles(root, current).verified, current.managedFiles.length);
+  assert.equal(verifyManifestMetadata(root, current).hashesDeclared, current.managedFiles.length);
+  assert.equal(verifyTrackedManifest(root, current).trackedFiles, current.managedFiles.length);
 });
 
 test("G: project-owned and mixed-ownership paths are rejected by manifest", () => {

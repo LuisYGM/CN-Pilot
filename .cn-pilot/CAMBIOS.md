@@ -1,5 +1,10 @@
 # Changelog
 
+## [3.2.3] - 2026-11-17
+
+- Publica la retirada del agente Revisor y de su flujo automatizado, manteniendo la revisión independiente bajo responsabilidad del usuario y las comprobaciones técnicas de cada especialista.
+- Corrige la regresión del test de updater con un manifiesto histórico 3.2.1 versionado; verifica las nueve rutas retiradas, los hashes, el inventario y la regeneración compatible. El test forma parte de los archivos administrados, por lo que el contrato SemVer exige incrementar PATCH.
+
 ## [3.2.1] - 2026-11-14
 
 - Ajusta la QA documental para exigir la presentación del README solo en el repositorio canónico de CN Pilot. En repositorios derivados, la identidad del producto puede usar el README raíz sin desactivar las verificaciones del catálogo, los enlaces internos ni el resto de Core QA.

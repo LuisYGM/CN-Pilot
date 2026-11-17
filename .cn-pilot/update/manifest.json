@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "cnPilotVersion": "3.2.2",
+  "cnPilotVersion": "3.2.3",
   "sourceRepository": "https://github.com/LuisYGM/cn-pilot.git",
   "stableBranch": "main",
   "sourceCommit": null,
@@ -235,11 +235,11 @@
     },
     {
       "path": ".cn-pilot-version",
-      "sha256": "79b9fb49a71869140833837e3a27ae1722a41faf59746519fde5e1346f9dd5b8"
+      "sha256": "8bac95a38f37afadb73bad656f4abdeaea9a73b43bc160a8ba2282b5d61018cf"
     },
     {
       "path": ".cn-pilot/CAMBIOS.md",
-      "sha256": "26e80bfce3d64bc6d9bf4d9e06b379fa28997dd0445fe77e4625ecedc0c2c004"
+      "sha256": "45a6bc3e5382ff28b498795721b88c1579bb1c20814c265d2485b24b6c689647"
     },
     {
       "path": ".cn-pilot/MANIFIESTO.md",
@@ -247,7 +247,7 @@
     },
     {
       "path": ".cn-pilot/NUCLEO.md",
-      "sha256": "c0e1d2bfaf5fc86af3960f7f3e80991aedbefbcb835bc127c4b36169b406eef6"
+      "sha256": "83755ff193a2ecab0cf38eecdaed9c2fa4e635877cb0f725f18edf1f06d3d0f8"
     },
     {
       "path": ".cn-pilot/adapters/codex/RUNTIME.md",
@@ -347,7 +347,7 @@
     },
     {
       "path": ".cn-pilot/documentacion/ACTUALIZACIONES.md",
-      "sha256": "bb80b7693f3dc894a467d5ff39e3a16519d8427919b078f00fc064adf8585dc9"
+      "sha256": "05d7f2ae949b27410d1f5a3e025725c676e491a775daca4b8f7bbf9076ad4be4"
     },
     {
       "path": ".cn-pilot/documentacion/CICLO-DE-VIDA.md",
@@ -515,7 +515,7 @@
     },
     {
       "path": ".cn-pilot/qa/multidisciplinary.test.mjs",
-      "sha256": "36e3a028b88ac574251c940b2f1c4a71244424effd9891549c388b2fe4844461"
+      "sha256": "f9e4b14d2f545514019f16349c05b6fb4357b323f87ff13d124b9188b3e09d24"
     },
     {
       "path": ".cn-pilot/update/updater.mjs",
@@ -523,7 +523,7 @@
     },
     {
       "path": ".cn-pilot/update/updater.test.mjs",
-      "sha256": "5a3956292d4006db06e3e2445d7f8bb7eae80ac9c9b26eeb94460e6cb4878307"
+      "sha256": "157e7785a8ef9436f791f403591502ef481182403a987d6aa5a504377166c622"
     },
     {
       "path": ".codex/agents/arquitecto.toml",
@@ -811,17 +811,7 @@
     }
   ],
   "addedFiles": [],
-  "removedFiles": [
-    ".agents/skills/cnp-revision/SKILL.md",
-    ".cn-pilot/agent-evals/fixtures/EVAL-006/baseline/producto/discount.mjs",
-    ".cn-pilot/agent-evals/fixtures/EVAL-006/working/producto/discount.mjs",
-    ".cn-pilot/agent-evals/fixtures/EVAL-006/working/requirements.md",
-    ".cn-pilot/agent-evals/fixtures/EVAL-006/working/tests/discount.test.mjs",
-    ".cn-pilot/plantillas/informe-revision.md",
-    ".codex/agents/revisor.toml",
-    ".kilo/agents/revisor.md",
-    ".kilo/commands/revision.md"
-  ],
+  "removedFiles": [],
   "migrations": [
     {
       "id": "cn-pilot-1x-to-2x-foundation",

@@ -134,11 +134,11 @@ test("3.0.2 → 3.1.0: updater detecta las cuatro incorporaciones sin tocar cont
   } finally { fs.rmSync(parent, { recursive: true, force: true }); }
 });
 
-test("3.2.2 manifest hashes match the candidate payload and inventory", () => {
+test("3.2.3 manifest hashes match the candidate payload and inventory", () => {
   const manifest = JSON.parse(read(".cn-pilot/update/manifest.json"));
-  const previous = JSON.parse(gunzipSync(fs.readFileSync(path.join(root, "tests/fixtures/cn-pilot-3.2.0-manifest.json.gz"))).toString("utf8"));
+  const previous = JSON.parse(gunzipSync(fs.readFileSync(path.join(root, "tests/fixtures/cn-pilot-3.2.2-manifest.json.gz"))).toString("utf8"));
   const generated = buildManifest(root, { files: listTrackedManagedFiles(root), previousManifest: previous });
-  assert.equal(manifest.cnPilotVersion, "3.2.2");
+  assert.equal(manifest.cnPilotVersion, "3.2.3");
   assert.deepEqual(generated.managedFiles, manifest.managedFiles);
   assert.deepEqual(generated.addedFiles, manifest.addedFiles);
   assert.deepEqual(generated.removedFiles, manifest.removedFiles);
